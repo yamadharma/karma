@@ -1,7 +1,0 @@
-#!/bin/bash
-if [ ! -f ~/GNUstep/Defaults/WMState ]
-    then
-    /usr/bin/wmaker.inst --batch
-fi
-
-/usr/bin/wmaker
