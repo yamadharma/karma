@@ -1,0 +1,36 @@
+# ChangeLog for sys-apps/paludis
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/ChangeLog,v 1.7 2006/05/31 16:53:20 dercorny Exp $
+
+*paludis-0.2.5 (31 May 2006)
+
+  31 May 2006; dercorny +paludis-0.2.5.ebuild:
+  Adding new upstream version
+
+  22 May 2006; John N. Laliberte <allanonjl@gentoo.org>
+  -paludis-0.2.1.ebuild, -paludis-0.2.2.ebuild, -paludis-0.2.3.ebuild:
+  prune old versions.
+
+*paludis-0.2.4 (21 May 2006)
+
+  21 May 2006; Fernando J. Pereda <ferdy@gentoo.org> +paludis-0.2.4.ebuild:
+  Version bump
+
+*paludis-0.2.3 (19 May 2006)
+
+  19 May 2006; Stephen Bennett <spb@gentoo.org> +paludis-0.2.3.ebuild:
+  Version bump
+
+  06 May 2006; Stephen Bennett <spb@gentoo.org> paludis-0.2.2.ebuild:
+  Added ~hppa
+
+  04 May 2006; Ferris McCormick <fmccor@gentoo.org> paludis-0.2.1.ebuild:
+  Add ~sparc keyword.  Builds and runs well enough on sparc to generate a
+  stage-1+ at least (system + xorg client + tcltk, ruby, etc.).
+
+*paludis-0.2.1 (03 May 2006)
+
+  03 May 2006; Stephen Bennett <spb@gentoo.org> +metadata.xml,
+  +paludis-0.2.1.ebuild:
+  Added new package.
+

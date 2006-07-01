@@ -1,0 +1,16 @@
+diff -Naur ../work/flamethrower-0.1.6/Makefile.PL flamethrower-0.1.6/Makefile.PL
+--- ../work/flamethrower-0.1.6/Makefile.PL	2003-11-18 02:59:59.000000000 +0300
++++ flamethrower-0.1.6/Makefile.PL	2005-08-23 12:46:05.870534440 +0400
+@@ -14,9 +14,9 @@
+ \t${install} \$(PREFIX)/lib/flamethrower/Flamethrower.pm
+ 
+ install_configs::
+-\tinstall -d \$(CONFDIR)/etc/init.d
+-\tinstall -m 644 etc/flamethrower.conf \$(CONFDIR)/etc/flamethrower
+-\tinstall -m 755 etc/init.d/flamethrower-server \$(CONFDIR)/etc/init.d
++\tinstall -d \$(DESTDIR)/\$(CONFDIR)/etc/init.d
++\tinstall -m 644 etc/flamethrower.conf \$(DESTDIR)/\$(CONFDIR)/etc/flamethrower
++\tinstall -m 755 etc/init.d/flamethrower-server \$(DESTDIR)/\$(CONFDIR)/etc/init.d
+ 
+ source_tarball :: tmp/flamethrower-$version.tar.bz2
+ 

@@ -1,0 +1,25 @@
+diff -Naur ../work/WindowMaker-0.90.0/WindowMaker/Defaults/WMWindowAttributes.in WindowMaker-0.90.0/WindowMaker/Defaults/WMWindowAttributes.in
+--- ../work/WindowMaker-0.90.0/WindowMaker/Defaults/WMWindowAttributes.in	2004-10-08 00:44:28.000000000 +0400
++++ WindowMaker-0.90.0/WindowMaker/Defaults/WMWindowAttributes.in	2004-10-26 13:25:00.768819560 +0400
+@@ -9,6 +9,7 @@
+   gmc.Gmc = {NoAppIcon = YES;};
+   XTerm = {Icon = Terminal.#extension#;};
+   NXTerm = {Icon = Terminal.#extension#;};
++  KOI8Term = {Icon = Terminal.#extension#;};
+   ScilabGraphic0.Xscilab = {KeepInsideScreen=YES;};
+   ScilabGraphic1.Xscilab = {KeepInsideScreen=YES;};
+   ScilabGraphic2.Xscilab = {KeepInsideScreen=YES;};
+@@ -78,6 +79,13 @@
+   kio_uiserver = {NoAppIcon = Yes;};
+   kcmshell = {NoAppIcon = Yes;};
+   kded = {NoAppIcon = Yes;};
++  GNUstep = {
++    DontSaveSession = Yes;
++  };
++  GWorkspace.GNUstep = {
++    DontSaveSession = Yes;
++    Omnipresent = Yes;
++  };
+   "." = {NoAppIcon = Yes;};
+   "*" = {Icon = defaultAppIcon.#extension#;SharedAppIcon = Yes;};
+ }

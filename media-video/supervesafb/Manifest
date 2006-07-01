@@ -1,0 +1,7 @@
+MD5 758f2c245ec7eaa0cee5b87ad892063f supervesafb-0.9_beta3.ebuild 1134
+MD5 22582090f522ca73f560b8536767322a supervesafb-1.1.ebuild 1012
+MD5 22582090f522ca73f560b8536767322a supervesafb-1.2.ebuild 1012
+MD5 5ca78ec4d7126cdf625dc9c5fbf8401f files/digest-supervesafb-0.9_beta3 72
+MD5 d282e4d842698e3ac8eb9b6b7a21f1a4 files/digest-supervesafb-1.1 66
+MD5 917a28950e6be3dfa27ec7c11844916d files/digest-supervesafb-1.2 66
+MD5 2f5d1562d31ff91e6523868493ddd5f0 files/init/gentoo-sysv/version/1.1/init.d/findmodes 419

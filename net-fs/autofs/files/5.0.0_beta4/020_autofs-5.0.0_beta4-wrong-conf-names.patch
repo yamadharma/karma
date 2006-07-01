@@ -1,0 +1,33 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index d3a726e..73f7d85 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -6,6 +6,7 @@
+   so that we always use nsswitch to locate master map.
+ - change default installed master map to include "+auto.master"
+   to pickup NIS master map.
++- correct config names in default.c (jpro@bas.ac.uk).
+ 
+ 2/6/2006 autofs-5.0.0_beta4
+ ---------------------------
+diff --git a/lib/defaults.c b/lib/defaults.c
+index 5156fea..b5fdae7 100644
+--- a/lib/defaults.c
++++ b/lib/defaults.c
+@@ -32,11 +32,11 @@ #define ENV_NAME_LOGGING		"DEFAULT_LOGGI
+ 
+ #define ENV_LDAP_SERVER			"DEFAULT_LDAP_SERVER"
+ 
+-#define ENV_NAME_MAP_OBJ_CLASS		"DEFAULT_MAP_OBJ_CLASS"
+-#define ENV_NAME_ENTRY_OBJ_CLASS	"DEFAULT_ENTRY_OBJ_CLASS"
+-#define ENV_NAME_MAP_ATTR		"DEFAULT_MAP_ATTR"
+-#define ENV_NAME_ENTRY_ATTR		"DEFAULT_ENTRY_ATTR"
+-#define ENV_NAME_VALUE_ATTR		"DEFAULT_VALUE_ATTR"
++#define ENV_NAME_MAP_OBJ_CLASS		"DEFAULT_MAP_OBJECT_CLASS"
++#define ENV_NAME_ENTRY_OBJ_CLASS	"DEFAULT_ENTRY_OBJECT_CLASS"
++#define ENV_NAME_MAP_ATTR		"DEFAULT_MAP_ATTRIBUTE"
++#define ENV_NAME_ENTRY_ATTR		"DEFAULT_ENTRY_ATTRIBUTE"
++#define ENV_NAME_VALUE_ATTR		"DEFAULT_VALUE_ATTRIBUTE"
+ 
+ #define ENV_AUTH_CONF_FILE		"DEFAULT_AUTH_CONF_FILE"
+ 

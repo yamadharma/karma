@@ -1,0 +1,33 @@
+# ChangeLog for games-fps/doomsday
+# Copyright 1999-2004 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/games-fps/doomsday/ChangeLog,v 1.7 2004/12/07 10:06:00 mr_bones_ Exp $
+
+*doomsday-1.8.3 (07 Dec 2004)
+
+  07 Dec 2004; Michael Sterrett <mr_bones_@gentoo.org> +doomsday-1.8.3.ebuild:
+  version bump (bug #72437)
+
+  28 Sep 2004; Sven Wegener <swegener@gentoo.org> :
+  Gentoo Technologies, Inc. -> Gentoo Foundation
+
+  05 Sep 2004; David Holm <dholm@gentoo.org> doomsday-1.8.1.ebuild:
+  Added to ~ppc.
+
+  01 Sep 2004; Chris Gianelloni <wolf31o2@gentoo.org>
+  -files/1.8.1-ambient-light.patch, doomsday-1.8.1.ebuild:
+  Reverting patch.  See bug #61072 for more details.
+
+  01 Sep 2004; Chris Gianelloni <wolf31o2@gentoo.org>
+  +files/1.8.1-ambient-light.patch:
+  I forgot to add the patch.
+
+*doomsday-1.8.1 (31 Aug 2004)
+
+  31 Aug 2004; Chris Gianelloni <wolf31o2@gentoo.org> +doomsday-1.8.1.ebuild:
+  Version bumped to 1.8.1 and adding 1.8.1-ambient-light.patch submitted by
+  dilipv@hotmail.com to bug #61072.
+
+*doomsday-1.8.0 (21 Jul 2004)
+
+  21 Jul 2004; Mike Frysinger <vapier@gentoo.org> :
+  Initial import.  Ebuild submitted by Hinrik Örn Sigurðsson #53793.

@@ -1,0 +1,58 @@
+diff --git a/gentoo/net-fs/autofs/files/autofs.conf b/gentoo/net-fs/autofs/files/autofs.conf
+index d8648e5..836a4a1 100644
+--- a/gentoo/net-fs/autofs/files/autofs.conf
++++ b/gentoo/net-fs/autofs/files/autofs.conf
+@@ -21,7 +21,7 @@ # Define the default LDAP schema to use 
+ #
+ # System default
+ #
+-#DEFAULT_MAP_OBJECT_CALSS="nisMap"
++#DEFAULT_MAP_OBJECT_CLASS="nisMap"
+ #DEFAULT_ENTRY_OBJECT_CLASS="nisObject"
+ #DEFAULT_MAP_ATTRIBUTE="nisMapName"
+ #DEFAULT_ENTRY_ATTRIBUTE="cn"
+@@ -29,13 +29,13 @@ #DEFAULT_VALUE_ATTRIBUTE="nisMapEntry"
+ #
+ # Other common LDAP nameing
+ #
+-#DEFAULT_MAP_OBJECT_CALSS="automountMap"
++#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+ #DEFAULT_ENTRY_OBJECT_CLASS="automount"
+ #DEFAULT_MAP_ATTRIBUTE="ou"
+ #DEFAULT_ENTRY_ATTRIBUTE="cn"
+ #DEFAULT_VALUE_ATTRIBUTE="automountInformation"
+ #
+-#DEFAULT_MAP_OBJECT_CALSS="automountMap"
++#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+ #DEFAULT_ENTRY_OBJECT_CLASS="automount"
+ #DEFAULT_MAP_ATTRIBUTE="automountMapName"
+ #DEFAULT_ENTRY_ATTRIBUTE="automountKey"
+diff --git a/redhat/autofs.sysconfig.in b/redhat/autofs.sysconfig.in
+index 50ccb6e..b6dfb09 100644
+--- a/redhat/autofs.sysconfig.in
++++ b/redhat/autofs.sysconfig.in
+@@ -21,7 +21,7 @@ # Define the default LDAP schema to use 
+ #
+ # System default
+ #
+-#DEFAULT_MAP_OBJECT_CALSS="nisMap"
++#DEFAULT_MAP_OBJECT_CLASS="nisMap"
+ #DEFAULT_ENTRY_OBJECT_CLASS="nisObject"
+ #DEFAULT_MAP_ATTRIBUTE="nisMapName"
+ #DEFAULT_ENTRY_ATTRIBUTE="cn"
+@@ -29,13 +29,13 @@ #DEFAULT_VALUE_ATTRIBUTE="nisMapEntry"
+ #
+ # Other common LDAP nameing
+ #
+-#DEFAULT_MAP_OBJECT_CALSS="automountMap"
++#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+ #DEFAULT_ENTRY_OBJECT_CLASS="automount"
+ #DEFAULT_MAP_ATTRIBUTE="ou"
+ #DEFAULT_ENTRY_ATTRIBUTE="cn"
+ #DEFAULT_VALUE_ATTRIBUTE="automountInformation"
+ #
+-#DEFAULT_MAP_OBJECT_CALSS="automountMap"
++#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+ #DEFAULT_ENTRY_OBJECT_CLASS="automount"
+ #DEFAULT_MAP_ATTRIBUTE="automountMapName"
+ #DEFAULT_ENTRY_ATTRIBUTE="automountKey"

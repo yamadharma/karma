@@ -1,0 +1,51 @@
+#!/sbin/runscript
+# Copyright 1999-2003 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: $
+
+if [ -z "${GNUSTEP_ROOT}" ]
+    then
+    GNUSTEP_ROOT=/usr/GNUstep
+fi
+
+
+start () 
+{
+    ebegin "Starting GNUstep services"
+    
+    # Check for necessary files
+    if [ -d ${GNUSTEP_ROOT}/System/Makefiles ]; then
+	GNUSTEP_MAKEFILES="${GNUSTEP_ROOT}/System/Makefiles"
+    else
+	exit 1
+    fi
+    
+    # Source GNUstep makefile
+    if [ -x $GNUSTEP_MAKEFILES/GNUstep.sh ]; then
+	. $GNUSTEP_MAKEFILES/GNUstep.sh
+    else
+	exit 1
+    fi
+    
+    # Start services
+    if [ -x $GNUSTEP_SYSTEM_ROOT/Tools/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gdomap ]; then
+	$GNUSTEP_SYSTEM_ROOT/Tools/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/gdomap
+    fi
+    if [ -x $GNUSTEP_SYSTEM_ROOT/Tools/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/$LIBRARY_COMBO/gdnc ]; then
+	$GNUSTEP_SYSTEM_ROOT/Tools/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/$LIBRARY_COMBO/gdnc
+    fi
+}
+
+stop () 
+{
+    ebegin "Stopping GNUstep services"
+    
+    # Kill processes
+    killall gdomap
+    killall gdnc
+}
+
+# Local Variables:
+# mode: sh
+# End:
+

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+PLAN9=${PLAN9:-@PLAN9_DEST@}
+export PLAN9
+
+${PLAN9}/bin/plumber

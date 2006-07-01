@@ -1,0 +1,7 @@
+MD5 3ca0c50d771ec43ebc99d8b93815cdf9 ChangeLog 9425
+MD5 6a73a3191925d45024cf48879c799e0e files/digest-wesnoth-1.0.1 67
+MD5 3831d294741fa1f1cf243836b6c1788d files/digest-wesnoth-1.0.2 67
+MD5 13b0026724f2607bd504117e7c0f3b90 files/digest-wesnoth-1.1.1 67
+MD5 2238ca275d6ab646096d612c46b1eb05 files/wesnothd.rc 619
+MD5 f17b9b8fa07a38914fe1c03268f51678 metadata.xml 158
+MD5 1680a326d94db2b648c521ee7f219971 wesnoth-1.1.1.ebuild 1986

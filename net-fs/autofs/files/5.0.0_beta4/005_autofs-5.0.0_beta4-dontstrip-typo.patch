@@ -1,0 +1,26 @@
+diff --git a/Makefile.rules b/Makefile.rules
+index 5a652fa..31d2706 100644
+--- a/Makefile.rules
++++ b/Makefile.rules
+@@ -26,7 +26,7 @@ CFLAGS    ?= -g -Wall -DDEBUG
+ LDFLAGS   = -g
+ STRIP     = :
+ else
+-ifdef DONTSCRIP
++ifdef DONTSTRIP
+ CFLAGS    = -O2 -g
+ LDFLAGS   = -g
+ STRIP     = :
+diff --git a/autofs.spec b/autofs.spec
+index c53d60a..2072e27 100644
+--- a/autofs.spec
++++ b/autofs.spec
+@@ -60,7 +60,7 @@ echo %{version}-%{release} > .version
+ 
+ %build
+ CFLAGS="$RPM_OPT_FLAGS -Wall" ./configure --libdir=%{_libdir} --enable-ignore-busy
+-CFLAGS="$RPM_OPT_FLAGS -Wall" DEBUG=1 make initdir=/etc/rc.d/init.d DONTSTRIP=1
++CFLAGS="$RPM_OPT_FLAGS -Wall" make initdir=/etc/rc.d/init.d DONTSTRIP=1
+ 
+ %install
+ rm -rf $RPM_BUILD_ROOT

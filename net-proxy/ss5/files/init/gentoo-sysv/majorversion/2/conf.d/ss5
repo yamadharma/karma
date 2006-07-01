@@ -1,0 +1,21 @@
+#  -b [host:port]|
+#      host:port specifies the host and the port number on that host on
+#      which ss5 runs, instead of the default port. When you omit host,
+#      ss5 uses 0.0.0.0 as the host value.
+#
+#   -n  val
+#      Run ss5 as a preforking process. -n option control
+#      the number of preforked processes.
+#
+#   -t     Run ss5 in threaded mode, if your operating
+#      system supports POSIX threads.
+#
+#   -u  val
+#      Run ss5 with the specified user name.
+#
+#   -v     Print a message containing the current  ss5
+#      version.
+#
+#   -s     Use syslog instead of ss5.log log file.
+
+OPTIONS="-t -s"

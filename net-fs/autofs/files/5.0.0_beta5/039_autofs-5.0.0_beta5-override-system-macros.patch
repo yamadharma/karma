@@ -1,0 +1,53 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index ced35cc..a1143ad 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -11,6 +11,7 @@
+ - fix mistake in parsing old style LDAP specs.
+ - update LDAP so that new query methos also works for old
+   syntax.
++- allow global macro defines to override system macros.
+ 
+ 20/6/2006 autofs-5.0.0_beta5
+ ---------------------------
+diff --git a/lib/macros.c b/lib/macros.c
+index a0d36b2..9453bfe 100644
+--- a/lib/macros.c
++++ b/lib/macros.c
+@@ -115,7 +115,7 @@ int macro_global_addvar(const char *str,
+ 		sv = sv->next;
+ 	}
+ 
+-	if (sv) {
++	if (sv && !sv->readonly) {
+ 		char *this = realloc(sv->val, strlen(value) + 1);
+ 		if (!this)
+ 			goto done;
+@@ -191,9 +191,6 @@ macro_addvar(struct substvar *table, con
+ 	struct substvar *lv = table;
+ 	int status;
+ 
+-	if (macro_is_systemvar(str, len))
+-		return table;
+-
+ 	status = pthread_mutex_lock(&table_mutex);
+ 	if (status)
+ 		fatal(status);
+@@ -239,6 +236,7 @@ macro_addvar(struct substvar *table, con
+ 		}
+ 		new->def = def;
+ 		new->val = val;
++		new->readonly = 0;
+ 		new->next = table;
+ 		lv = new;
+ 	}
+@@ -295,9 +293,6 @@ macro_removevar(struct substvar *table, 
+ 	struct substvar *last = NULL;
+ 	int status;
+ 
+-	if (macro_is_systemvar(str, len))
+-		return table;
+-
+ 	status = pthread_mutex_lock(&table_mutex);
+ 	if (status)
+ 		fatal(status);

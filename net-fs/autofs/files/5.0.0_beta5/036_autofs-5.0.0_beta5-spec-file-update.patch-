@@ -1,0 +1,21 @@
+diff --git a/autofs.spec b/autofs.spec
+index 9dad2fe..dbf1d73 100644
+--- a/autofs.spec
++++ b/autofs.spec
+@@ -60,7 +60,7 @@ echo %{version}-%{release} > .version
+ 
+ %build
+ CFLAGS="$RPM_OPT_FLAGS -Wall" ./configure --libdir=%{_libdir} --enable-ignore-busy
+-CFLAGS="$RPM_OPT_FLAGS -Wall" make initdir=/etc/rc.d/init.d DEBUG=1
++CFLAGS="$RPM_OPT_FLAGS -Wall" make initdir=/etc/rc.d/init.d DONTSTRIP=1
+ 
+ %install
+ rm -rf $RPM_BUILD_ROOT
+@@ -101,6 +101,7 @@ fi
+ %config(noreplace,missingok) /etc/auto.net
+ %config(noreplace,missingok) /etc/auto.smb
+ %config(noreplace) /etc/sysconfig/autofs
++%config(noreplace) /etc/autofs_ldap_auth.conf
+ %{_sbindir}/automount
+ %dir %{_libdir}/autofs
+ %{_libdir}/autofs/*

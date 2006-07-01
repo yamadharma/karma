@@ -1,0 +1,7 @@
+MD5 e9461889bcb3ec75002c66ae59cbf35c ChangeLog 876
+MD5 07450e0ec2d1b1fb3cbe08f3908d49ad files/digest-udpcast-20040222 67
+MD5 f7b97c79dec4b11bde01769669058839 files/digest-udpcast-20050226 67
+MD5 7cb4032029038d06751a4bb77e32edee files/digest-udpcast-20051223 67
+MD5 db21dc26a3f6b6a8a90667fc2933a7b1 metadata.xml 575
+MD5 f0e10bc3c9ef58b90de9c665ac6974f2 udpcast-20050226.ebuild 1303
+MD5 cc0395487757b3ad736c41dbaa2d305d udpcast-20051223.ebuild 1304

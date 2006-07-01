@@ -1,0 +1,26 @@
+diff -Naurp linux-2.4.20-wolk4.0-fullkernel/Documentation/Configure.help linux-2.4.20-wolk4.0-win4lin/Documentation/Configure.help
+--- linux-2.4.20-wolk4.0-fullkernel/Documentation/Configure.help	2002-12-25 04:28:53.000000000 +0100
++++ linux-2.4.20-wolk4.0-win4lin/Documentation/Configure.help	2002-12-25 06:19:20.000000000 +0100
+@@ -28493,6 +28493,22 @@ CONFIG_IPSEC_DEBUG
+   If you do not understand the goal of this feature, nor its possible
+   drawbacks, you should say 'N' here.
+ 
++Include NeTraverse Win4Lin Support
++CONFIG_MKI
++  With this enabled, you can use Win4Lin by netraverse.
++
++  It's a commercial product and if you want to use it, you must enable
++  this option. Product information: http://www.netraverse.com/
++
++  This driver will be build as a module ( = code which can be
++  inserted in and removed from the running kernel whenever you want).
++  The module will be called mki-adapter.o
++
++  Note, although this will not show you [M], instead it will show [*],
++  it will compile as a module.
++
++  If unsure, say N.
++
+ #
+ # A couple of things I keep forgetting:
+ #   capitalize: AppleTalk, Ethernet, DOS, DMA, FAT, FTP, Internet,

@@ -1,0 +1,26 @@
+/var/log/samhain/samhain.log {
+    size=1M
+    nocreate
+    compress
+    mail root@localhost
+    maillast
+    rotate 5
+
+    prerotate
+	if test -f /var/run/samhain.pid; then \
+	    PIN=`cat /var/run/samhain.pid`; \
+	    /bin/kill -ABRT $PIN; \
+	    sleep 1; \
+	    AA=0; \
+	    while test "x$AA" != "x120"; do \
+		let "AA = $AA + 1"; \
+		if test -f /var/run/samhain.pid; then \
+		    sleep 1; \
+		else \
+		    break; \
+		fi \
+	    done; \
+	fi
+    endscript
+
+}

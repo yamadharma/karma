@@ -1,0 +1,8 @@
+# ChangeLog for net-misc/dante
+# Copyright 2002 Gentoo Technologies, Inc.; Distributed under the GPL
+# $Header: /var/cvsroot/gentoo-x86/net-misc/rancid/ChangeLog,v 1.1 2005/04/29 19:20:03 mad Exp $
+
+*dante-1.1.9 (1 Feb 2002)
+
+  24 Apr 2004; Martin Hierling <mad@cc.fh-lippe.de> ChangeLog :
+   initial ebuild, dirty, someone should patch the makefile

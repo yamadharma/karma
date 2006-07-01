@@ -1,0 +1,38 @@
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: 
+
+inherit eutils
+
+DESCRIPTION="LibRCC is Russian Encoding Conversion Library"
+SRC_URI="http://dside.dyndns.org/rusxmms/librcc-${PV}.tar.bz2"
+SLOT="0"
+LICENSE="GPL-2"
+KEYWORDS="x86 amd64"
+DEPEND="librcd libxml2 sys-libs/db enca aspell libtranslate"
+
+src_unpack() {
+    unpack ${P}.tar.bz2
+}
+
+src_compile() {
+    ./autogen.sh
+    econf
+    make
+    make -C examples
+}
+
+src_install() {
+    into /usr
+    mkdir -p ${D}/usr/lib
+    mkdir -p ${D}/usr/include
+    mkdir -p ${D}/usr/lib/rcc/engines
+    mkdir -p ${D}/etc
+    make install DESTDIR=${D} INSTALLTOP=${D}/usr
+    rm -f ${D}/usr/lib/rcc/engines/*.a
+    rm -f ${D}/usr/lib/rcc/engines/*.la
+    install -m 644 examples/rcc.xml ${D}/etc
+    
+    make -C examples install DESTDIR=${D} INSTALLTOP=${D}/usr
+    rm -f ${D}/usr/bin/example*
+}

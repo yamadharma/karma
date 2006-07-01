@@ -1,0 +1,3 @@
+#!/bin/sh
+/usr/bin/dspam_clean -s -p -u 2>&1 > /dev/null
+                                                                                                                                          

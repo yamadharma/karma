@@ -1,0 +1,22 @@
+diff -Naurp linux-2.4.20-wolk4.0-fullkernel/arch/i386/config.in linux-2.4.20-wolk4.0-win4lin/arch/i386/config.in
+--- linux-2.4.20-wolk4.0-fullkernel/arch/i386/config.in	2002-12-25 04:28:53.000000000 +0100
++++ linux-2.4.20-wolk4.0-win4lin/arch/i386/config.in	2002-12-25 06:43:26.000000000 +0100
+@@ -603,6 +603,18 @@ source drivers/usb/Config.in
+ 
+ source net/bluetooth/Config.in
+ 
++# Win4Lin
++if [ "$CONFIG_MODULES" = "y" ]; then
++   mainmenu_option next_comment
++   comment 'Win4Lin - Windows Applications support'
++   bool 'Include NeTraverse Win4Lin Support' CONFIG_MKI
++   endmenu
++else
++   mainmenu_option next_comment
++   comment '- Win4Lin needs module support enabled!'
++   endmenu
++fi
++
+ mainmenu_option next_comment
+ comment 'Kernel hacking'
+ 

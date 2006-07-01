@@ -1,0 +1,24 @@
+# ChangeLog for www-client/htmlview
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/www-client/htmlview/ChangeLog,v 1.4 2006/04/08 19:06:00 flameeyes Exp $
+
+  08 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
+  htmlview-3.0.0-r1.ebuild:
+  Add ~amd64 keyword.
+
+*htmlview-3.0.0-r1 (08 Apr 2006)
+
+  08 Apr 2006; Donnie Berkholz <spyderous@gentoo.org>;
+  +htmlview-3.0.0-r1.ebuild:
+  Remove lots of invalid prefixes for tools, reported by flameeyes.
+
+  08 Apr 2006; <nixnut@gentoo.org> htmlview-3.0.0.ebuild:
+  Added ~ppc to satisfy dependency of app-shells/fish
+
+*htmlview-3.0.0 (12 Nov 2004)
+
+  12 Nov 2004; Mamoru KOMACHI <usata@gentoo.org> +metadata.xml,
+  +htmlview-3.0.0.ebuild:
+  Initial import. Ebuild submitted by Jose Romildo Malaquias
+  <romildo@uber.com.br>; bug #62737.
+

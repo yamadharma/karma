@@ -1,0 +1,11 @@
+--- linux-old/arch/i386/vmlinux.lds.S	2003-04-07 21:10:45.000000000 +0200
++++ linux-wolk4/arch/i386/vmlinux.lds.S	2003-04-08 19:54:05.000000000 +0200
+@@ -14,7 +14,7 @@ SECTIONS
+ 	LONG(startup_32 - __PAGE_OFFSET)
+ #endif
+ 
+-	SHORT(__KERNEL_CS)
++	SHORT(__BOOT_KERNEL_CS)
+ 	}
+ 
+   . = ALIGN(16);		/* Exception table */

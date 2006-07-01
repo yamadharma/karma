@@ -1,0 +1,184 @@
+--- WindowMaker-0.80.2/wrlib/misc.c.nai	2003-10-18 00:14:21 +0400
++++ WindowMaker-0.80.2/wrlib/misc.c	2003-10-18 00:20:27 +0400
+@@ -152,7 +152,7 @@
+ 	}
+     } else {
+ 	int bytes = image->width*image->height;
+-	int alpha, nalpha, r, g, b;
++	int alpha, nalpha, r, g, b, s;
+ 
+ 	alpha = color->alpha;
+ 	r = color->red * alpha;
+@@ -160,13 +160,49 @@
+ 	b = color->blue * alpha;
+ 	nalpha = 255 - alpha;
+ 
+-	for (i=0; i<bytes; i++) {
+-	    *d = (((int)*d * nalpha) + r)/256; d++;
+-	    *d = (((int)*d * nalpha) + g)/256; d++;
+-	    *d = (((int)*d * nalpha) + b)/256; d++;
+-	    if (image->format == RRGBAFormat) {
+-		d++;
++	s = (image->format == RRGBAFormat) ? 4 : 3;
++
++	for (i=0; i<bytes; i++, d+=s) {
++	    d[0] = (((int)d[0] * nalpha) + r)/256;
++	    d[1] = (((int)d[1] * nalpha) + g)/256;
++	    d[2] = (((int)d[2] * nalpha) + b)/256;
++	}
++    }
++}
++
++static __inline__ unsigned char
++clip(int c) {
++    if (c > 255) c=255;
++    return (unsigned char)c;
++}
++
++void
++RLightImage(RImage *image, RColor *color)
++{
++    unsigned char *d = image->data;
++    unsigned char *dd;
++    int alpha, r, g, b, s;
++
++    s = (image->format == RRGBAFormat) ? 4 : 3;
++    dd = d + s*image->width*image->height;
++
++    r = color->red;
++    g = color->green;
++    b = color->blue;
++
++    alpha = color->alpha;
++
++    if (r == 0 && g == 0 && b == 0) {
++	for (; d<dd; d+=s) {
++	    d[0] = clip(((int)d[0] * alpha)/128);
++	    d[1] = clip(((int)d[1] * alpha)/128);
++	    d[2] = clip(((int)d[2] * alpha)/128);
+ 	    }
++    } else {
++	for (; d<dd; d+=s) {
++	    d[0] = clip((((int)d[0] * alpha) + r)/128);
++	    d[1] = clip((((int)d[1] * alpha) + g)/128);
++	    d[2] = clip((((int)d[2] * alpha) + b)/128);
+ 	}
+     }
+ }
+--- WindowMaker-0.80.2/wrlib/wraster.h.nai	2003-10-18 00:14:21 +0400
++++ WindowMaker-0.80.2/wrlib/wraster.h	2003-10-18 00:20:27 +0400
+@@ -408,6 +408,8 @@
+  */
+ void RClearImage(RImage *image, RColor *color);
+ 
++void RLightImage(RImage *image, RColor *color);
++
+ void RFillImage(RImage *image, RColor *color);
+     
+ void RBevelImage(RImage *image, int bevel_type);
+--- WindowMaker-0.80.2/src/appicon.c.nai	2003-10-18 00:14:21 +0400
++++ WindowMaker-0.80.2/src/appicon.c	2003-10-18 00:20:27 +0400
+@@ -222,7 +222,7 @@
+ 
+ 
+ 
+-#ifdef NEWAPPICON
++#if 0 
+ static void
+ drawCorner(WIcon *icon, WWindow *wwin, int active)
+ {
+--- WindowMaker-0.80.2/src/application.c.nai	2003-10-18 00:14:21 +0400
++++ WindowMaker-0.80.2/src/application.c	2003-10-18 00:20:27 +0400
+@@ -465,6 +465,9 @@
+ 
+     XDeleteContext(dpy, wapp->main_window, wAppWinContext);
+     wAppMenuDestroy(wapp->menu);
++#ifdef NEWAPPICON
++    wApplicationDeactivate(wapp);
++#endif
+     if (wapp->app_icon) {
+         if (wapp->app_icon->docked && !wapp->app_icon->attracted) {
+ 	    wapp->app_icon->running = 0;
+--- WindowMaker-0.80.2/src/application.h.nai	2003-10-18 00:14:21 +0400
++++ WindowMaker-0.80.2/src/application.h	2003-10-18 00:20:27 +0400
+@@ -60,14 +60,20 @@
+ 
+ #ifdef NEWAPPICON
+ 
+-# define wApplicationActivate(wapp)	{\
+-		wapp->main_window_desc->flags.focused=1; \
++#define wApplicationActivate(wapp) do { \
++	if (wapp->app_icon) { \
++	    wIconSetHighlited(wapp->app_icon->icon, True); \
+ 		wAppIconPaint(wapp->app_icon);\
+-	}
+-#define wApplicationDeactivate(wapp)	{\
+-		wapp->main_window_desc->flags.focused=0;\
++	} \
++    } while (0)
++
++#define wApplicationDeactivate(wapp) do { \
++	if (wapp->app_icon) { \
++	    wIconSetHighlited(wapp->app_icon->icon, False); \
+ 		wAppIconPaint(wapp->app_icon);\
+-	}
++	} \
++    } while (0)
++
+ #endif
+ 
+ #endif
+--- WindowMaker-0.80.2/src/icon.c.nai	2003-10-18 00:14:21 +0400
++++ WindowMaker-0.80.2/src/icon.c	2003-10-18 00:20:27 +0400
+@@ -307,7 +307,7 @@
+ 
+ 
+ static Pixmap
+-makeIcon(WScreen *scr, RImage *icon, int titled, int shadowed, int tileType)
++makeIcon(WScreen *scr, RImage *icon, int titled, int shadowed, int tileType, int highlighted)
+ {
+     RImage *tile;
+     Pixmap pixmap;
+@@ -350,6 +350,13 @@
+         color.alpha = 150; /* about 60% */
+         RClearImage(tile, &color);
+     }
++    if (highlighted) {
++	RColor color;
++
++	color.red = color.green = color.blue = 0;
++	color.alpha = 160;
++	RLightImage(tile, &color);
++    }
+ 
+     if (!RConvertImage(scr->rcontext, tile, &pixmap)) {
+ 	wwarning(_("error rendering image:%s"), RMessageForError(RErrorCode));
+@@ -593,6 +600,7 @@
+     }
+     
+     icon->highlighted = flag;
++    icon->force_paint = True;
+     wIconPaint(icon);
+ }
+ 
+@@ -762,7 +770,7 @@
+ 
+           if (icon->image) {
+               icon->pixmap = makeIcon(scr, icon->image, icon->show_title,
+-				      icon->shadowed, icon->tile_type);
++				      icon->shadowed, icon->tile_type, icon->highlighted);
+           } else {
+               /* make default icons */
+ 
+@@ -790,9 +798,9 @@
+ 		  
+ 		  image = wIconValidateIconSize(scr, image);
+                   scr->def_icon_pixmap = makeIcon(scr, image, False, False,
+-						  icon->tile_type);
++						  icon->tile_type, icon->highlighted);
+                   scr->def_ticon_pixmap = makeIcon(scr, image, True, False,
+-						   icon->tile_type);
++						   icon->tile_type, icon->highlighted);
+ 		  if (image)
+ 		      RReleaseImage(image);
+               }

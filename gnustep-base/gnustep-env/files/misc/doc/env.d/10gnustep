@@ -1,0 +1,253 @@
+# {{{ GNUSTEP_TZ
+
+# Used to specify the timezone to be used if there is no timezone specified in the user defaults system. The
+# preferred mechanism is to use the `Local Time Zone` value from the user defaults system.
+
+# GNUSTEP_TZ="Europe/Moscow"
+
+# }}}
+# {{{ SOCKS5_SERVER
+
+# Specifies the default socks server to be used when making outgoing tcp/ip connections using NSFileHandle. This may
+# also specify a port after the host name (and spearated from it by a colon).
+# This environment variable is used only if the GSSOCKS user default is not set.
+
+# SOCKS5_SERVER=
+
+# }}}
+# {{{ Zombies
+
+# NSZombieEnabled
+# If this is set to YES, then deallocation of an object causes the object to be morphed into a Zombie ... a special
+# object which will call the GNUstep specific GSLogZombie() function to log the method call.
+# You can set a breakpoint in this function and examine the process memory if you are running under a debugger.
+# As this overrides actual object deallocation, all memory allocated for objects will be leaked!
+
+# NSZombieEnabled=NO
+
+# NSDeallocateZombies
+# This may be used in conjunction with NSZombieEnabled to specify whether the objects should really be deallocated.
+# If you set this to YES, the zombie logging will only work until the deallocated memory is re-used.
+
+# NSDeallocateZombies=YES
+
+# }}}
+# {{{ LIBRARY_COMBO
+
+# Used to override the default value of the combination of standard libraries used to build binaries. This value
+# locates the final subdirectory used to locate binaries.
+
+# LIBRARY_COMBO=
+
+# }}}
+# {{{ CRASH_ON_ABORT
+
+# The default exception handler will either cause the program to simply terminate, or to crash - leaving a core
+# dump. The standard behavior is to leave a core dump if the library was built for debugging, and to simply exit if
+# it was not.
+
+# The CRASH_ON_ABORT environment variable can be used to override this behavior. If this is defined to NO, FALSE, or
+# 0 then the program will simply exit when an exception occurs. Any other value of the variable will cause the
+# program to generate a core dump.
+
+# CRASH_ON_ABORT=NO
+
+# }}}
+# {{{ GSBackend
+
+# A string containing the name of the backend bundle to use for display specific GUI handling. The default is
+# "libgnustep-back". Custom backends can be created during compilation of the libraries. Any other choice for a name
+# is thus system specific.
+
+# GSBackend=libgnustep-back
+
+# }}}
+# {{{ GSBrowserCellFontify
+
+# A boolean value, NO by default. When the feature is on, NSBrowserCell draws non-leaf cells in bold system font.
+# For example, when the feature is on, in a SavePanel (or OpenPanel), directory entries are drawn in bold, while
+# simple files are drawn in non bold.
+
+# GSBrowserCellFontify=YES
+
+# }}}
+# {{{ GSAbortKey
+
+# The key used to abort the insertion of multi-stroke keybinding. Default is Control-g.
+
+# GSAbortKey=
+
+# }}}
+# {{{ GSAppKitUserBundles
+
+# An array listing the names of bundles that will be automatically loaded into every application at startup.
+# Typically these will be `theme` bundles that control the look of the application.
+
+# GSAppKitUserBundles=
+	   
+# }}}
+# {{{ GSQuoteKey
+
+# The key used to quote the next keystroke (so that it is not interpreted as a keybinding, but just inserted into
+# the text as it is). Default is Control-q.
+
+# GSQuoteKey
+	   
+# }}}
+# {{{ GSFileBrowserHideDotFiles
+
+# A boolean, by default NO. If you set it to YES, files that begin with a dot (`.`) are not shown in the NSSavePanel
+# or NSOpenPanel.
+
+# GSFileBrowserHideDotFiles=NO
+
+# }}}
+# {{{ GSInsertControlKeystrokes
+
+# A boolean, by default NO. If you set it to YES, keystrokes containing a Control are inserted into the text when
+# they can`t be interpreted as keybindings. By default, they are ignored and cause the computer to beep.
+	   
+# GSInsertControlKeystrokes=NO
+
+# }}}
+# {{{ GSKeyBindingsFiles
+
+# An array of strings, (DefaultKeyBindings) by default. The strings in this array (with .dict appended) are the
+# names of the files the library reads to load the keybindings. For each of these files (in the order), the library
+# first tries to read the file with that name from the $GNUSTEP_SYSTEM_ROOT/Libraries/Resources/KeyBindings/
+# directory, loading all the keybindings it finds in the file, then it loads the similar file from
+# $GNUSTEP_LOCAL_ROOT and then the similar one from $GNUSTEP_NETWORK_ROOT and at last the one from
+# $GNUSTEP_USER_ROOT. If you have a single set of customized keybindings which you want to be loaded in addition to
+# the default ones (or overriding some of the default ones), just add a DefaultKeybindings.dict file in your
+# ~/GNUstep/Libraries/Resources/KeyBindings/ directory, and keybindings from this file are automatically loaded in
+# addition to the default ones; you do not need to change this user default. If instead you want more keybinding
+# files to be loaded, or you do not want the system default keybindings file to be loaded, you might well need to
+# change it.
+
+# GSKeyBindingsFiles	   
+
+# }}}
+# {{{ GSKeyBindings
+
+# A dictionary, containing keybindings which are loaded by the library after the ones found in the
+# GSKeyBindingsFiles. Might be useful if you have only a couple of keybindings, and don`t want to write a custom
+# keybindings file. If you have many keybindings, it is recommended that you keep them in a file. The syntax of
+# keybindings entries and files is documented elsewhere.
+
+# GSKeyBindings	   
+
+# }}}
+# {{{ GSSavePanelShowProgress
+
+# A boolean value, NO by default. When the feature is on, the save panel and its subclasses (such as the open panel)
+# displays "Reading Directory ***.." (progressively adding dots) in the window titlebar while reading very big
+# directories (more than 100 entries). This is meant to make things friendlier for slow computers.
+
+# GSSavePanelShowProgress
+
+# }}}
+# {{{ GSUseFreedesktopThumbnails
+
+# A boolean value, NO by default. When the feature is on, thumbnail files according to the Freedesktop specification
+# are used in [NSWorkspace iconForFile:] when available.
+
+# GSUseFreedesktopThumbnails
+
+# }}}
+# {{{ GSUseWindowmakerIconBackground
+
+# A boolean value, NO by default. When set to YES, GNUstep uses the windowmaker icon background for app icons and
+# mini-windows.
+
+# Note that this only works when using back-art, and the XWindowBuffer-shape-hack default must be set to YES.
+
+# GSUseWindowmakerIconBackground	   
+
+# }}}
+# {{{ GSLogWorkspaceTimeout
+
+# A boolean value that defaults to NO. This is a obscure and probably not useful default. NSWorkspace tries to
+# receive distributed notifications, but if a distributed objects server cannot be found or some other error occurs,
+# it raises an exception which normally terminates the program. Setting this default causes NSWorkspace to just log
+# the problem without raising an exception.
+
+# GSLogWorkspaceTimeout	   
+
+# }}}
+# {{{ GSWorkspaceApplication
+
+# A string value that defaults to "GWorkspace". This defines the application NSWorkspace will try to connect to
+# process some operations that require an external application. This is a new feature and has not been tested.
+
+# GSWorkspaceApplication	   
+
+# }}}
+# {{{ NSInterfaceStyleDefault
+
+# A string describing the interface style. Setting this may change various aspects of how the library draws elements
+# and responds to user interaction. See the NSInterfaceStyle documentation for more information.
+
+# NSInterfaceStyleDefault
+
+# }}}
+# {{{ NSMenuInterfaceStyle
+
+# An interface style specific to menu operation. If not set the NSInterfaceStyleDefault value is used.
+
+# NSMenuInterfaceStyle
+
+# }}}
+# {{{ NSCommandKeys
+
+# A dictionary of command key equivalents for menu items. The key contains the title of the menu item and the value
+# is the command key equivalent. For instance, one might set the command key for the menu item "Copy" to "C".
+
+# NSCommandKeys	   
+
+# }}}
+# {{{ NSMeasurementUnit
+
+# A string describing the measurement unit for rulers (see the NSRulerView class documentation). The default is
+# Centimeters. Other possible values are Inches, Points, and Picas.
+	   
+# NSMeasurementUnit	   
+
+# }}}
+# {{{ NSPreviewApp
+
+# A string value that defaults to "gv". This defines the application NSPrintOperation will try to connect to preview
+# PostScript files, unless there is already an application registed as a Viewer of ps files.
+
+# NSPreviewApp	   
+
+# }}}
+# {{{ NSShowNonLocalizedStrings
+
+# This is mainly a developer option. If "YES", the application will display localization keys instead of strings in
+# its UI. This can be useful during development to see where a given string in the UI is "coming from". Default is
+# "NO".
+
+# NSShowNonLocalizedStrings	   
+
+# }}}
+# {{{ System Colors
+
+# System colors are standard colors for drawing various GUI elements, such as buttons, text, scroller, etc. They can
+# be set using the normal user defaults system. An NSColorList called "System" is stored in the users`s private
+# color list directory. This color list can also be manipulated through the NSColorList class (typically through a
+# preferences module).
+
+# System Colors	   
+
+# }}}
+# {{{ System Fonts
+
+# System Fonts may be set using the defaults system. System fonts are standard fonts for drawing text in GUI
+# elements. They include NSBoldFont, for instance. The value is the name of the font to use. There is also a
+# cooresponding size key (e.g. NSBoldFontSize) for specifying the point size of the font. The keys that can be used
+# for setting the system fonts are described in the documentation for NSFont.
+
+# System Fonts
+
+# }}}
+

@@ -1,0 +1,41 @@
+# Then, you call the greylisting rule with this 
+# reseval is a special eval which only runs after you have the result from
+# everything else (lets us not greylist a host that is sending spam, otherwise
+# this rule might set a sufficiently negative score that the next spam would
+# be allowed in)
+
+# Note the 'key' -> 'value'; syntax. It's a special hack to go through SA's
+# config parser. You need to keep that exact syntax
+# greylistsecs: how long you greylist a tuplet because whitelisting it
+# greylistnullfrom: set to 1 to also greylist mail with a null env from
+# greylistfourthbyte: keep the 4 bytes of the connecting host instead of 3
+
+loadplugin Greylisting @Greylisting@
+header GREYLIST_ISWHITE eval:greylisting("( 'dir' => '/var/spool/sa-exim/tuplets'; 'method' => 'dir'; 'greylistsecs' => '1800'; 'dontgreylistthreshold' => 11; 'connectiphdr' => 'X-SA-Exim-Connect-IP'; 'envfromhdr' => 'X-SA-Exim-Mail-From'; 'rcpttohdr' => 'X-SA-Exim-Rcpt-To'; 'greylistnullfrom' => 1; 'greylistfourthbyte' => 0 )")
+describe GREYLIST_ISWHITE The incoming server has been whitelisted for this receipient and sender
+score GREYLIST_ISWHITE  -1.5
+
+# Run SpamAssassin last, after all other rules.
+# (lets us not greylist a host that is sending spam, otherwise this rule might
+# set a sufficiently negative score that the next spam would be allowed in)
+
+priority GREYLIST_ISWHITE 99999
+
+# Note that SA greylisting depends on X-SA-Exim-Rcpt-To, so you have to ensure
+# that SAmaxrcptlistlength is set to a reasonably high value (up to 8000) instead
+# of the current default of 0 (you can remove the header in exim's system_filter
+# or a transport if you don't want it to show in user's mails, see "privacy
+# warning" in README)
+
+# Now, in case you aren't confused yet, you get even more knobs to play with :)
+# If a spammer resends you a spam until it gets whitelisted (or typically, it
+# gets sent to a relay that resends it to you), even if you are setup to
+# accept the spam at the point, you don't want to lower the SA score too much
+# just because the mail was resent to you several times (i.e. a rather negative
+# score for GREYLIST_ISWHITE). So, you can actually configure SA-Exim to temp
+# reject messages on a much higher score than usual, if they don't have the
+# GREYLIST_ISWHITE tag.
+# In other words, let's say you have this in sa-exim.conf:
+# SApermreject: 11.0
+# SAtempreject: 3.0
+# SAgreylistraisetempreject: 6.5

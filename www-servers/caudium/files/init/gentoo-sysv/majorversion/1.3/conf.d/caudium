@@ -1,0 +1,2 @@
+pidfile=/var/run/caudium/caudium.pid
+flags=""

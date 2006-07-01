@@ -1,0 +1,109 @@
+# ChangeLog for x11-misc/util-macros
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/x11-misc/util-macros/ChangeLog,v 1.23 2006/03/31 19:25:32 flameeyes Exp $
+
+  31 Mar 2006; Diego Pettenò <flameeyes@gentoo.org>
+  util-macros-1.0.1.ebuild:
+  Add ~x86-fbsd keyword.
+
+  22 Mar 2006; Donnie Berkholz <spyderous@gentoo.org>;
+  util-macros-1.0.1.ebuild:
+  (#122726) Add missing keywords; apps that depend on this were keyworded, so
+  it was tested and just got missed.
+
+  09 Mar 2006; Aron Griffis <agriffis@gentoo.org> util-macros-1.0.1.ebuild:
+  Mark 1.0.1 ~ia64
+
+  14 Feb 2006; Markus Rothe <corsair@gentoo.org> util-macros-1.0.1.ebuild:
+  Added ~ppc64
+
+  31 Jan 2006; Rene Nussbaumer <killerfox@gentoo.org>
+  util-macros-1.0.1.ebuild:
+  Unstable on hppa.
+
+  26 Dec 2005; Joshua Baergen <joshuabaergen@gentoo.org>
+  -util-macros-0.99.2-r1.ebuild, -util-macros-1.0.0.ebuild:
+  Pull old versions.
+
+  26 Dec 2005; Stefaan De Roeck <stefaan@gentoo.org>
+  util-macros-1.0.1.ebuild:
+  Marked ~alpha
+
+*util-macros-1.0.1 (23 Dec 2005)
+
+  23 Dec 2005; Donnie Berkholz <spyderous@gentoo.org>;
+  +util-macros-1.0.1.ebuild:
+  Bump for 7.0.
+
+*util-macros-1.0.0 (17 Dec 2005)
+
+  17 Dec 2005; Joshua Baergen <joshuabaergen@gentoo.org>
+  +util-macros-1.0.0.ebuild:
+  Bump for 7.0RC4.
+
+*util-macros-0.99.2-r1 (09 Dec 2005)
+
+  09 Dec 2005; Joshua Baergen <joshuabaergen@gentoo.org>
+  +files/driver-man-suffix.patch, -util-macros-0.99.2.ebuild,
+  +util-macros-0.99.2-r1.ebuild:
+  Along with the upcoming patch in x-modular.eclass, re-enable the installation
+  of driver manpages to 4x instead of 4. Fixes bug #29541.
+
+  09 Dec 2005; Donnie Berkholz <spyderous@gentoo.org>;
+  -util-macros-0.99.0.ebuild, -util-macros-0.99.0_p20051007.ebuild,
+  -util-macros-0.99.1.ebuild:
+  Pull old versions.
+
+  08 Dec 2005; Stephen P. Becker <geoman@gentoo.org>
+  util-macros-0.99.2.ebuild:
+  added ~mips keyword
+
+*util-macros-0.99.2 (04 Dec 2005)
+
+  04 Dec 2005; Joshua Baergen <joshuabaergen@gentoo.org>
+  +util-macros-0.99.2.ebuild:
+  Bump for 7.0RC3.
+
+*util-macros-0.99.1 (20 Oct 2005)
+
+  20 Oct 2005; Joshua Baergen <joshuabaergen@gentoo.org>
+  +util-macros-0.99.1.ebuild:
+  Bump for 7.0 RC1.
+
+  19 Oct 2005; Stephen P. Becker <geoman@gentoo.org>
+  util-macros-0.99.0_p20051007.ebuild:
+  added ~mips keyword
+
+*util-macros-0.99.0_p20051007 (08 Oct 2005)
+
+  08 Oct 2005; Joshua Baergen <joshuabaergen@gentoo.org>
+  +util-macros-0.99.0_p20051007.ebuild:
+  Add new snapshot to support libX11 snapshot.  Thanks to James Cloos in bug
+  #108300.
+
+  09 Sep 2005; Donnie Berkholz <spyderous@gentoo.org>; +metadata.xml:
+  Add metadata.
+
+  28 Aug 2005; MATSUU Takuto <matsuu@gentoo.org> util-macros-0.99.0.ebuild:
+  Marked ~sh
+
+  20 Aug 2005; Luca Barbato <lu_zero@gentoo.org> util-macros-0.99.0.ebuild:
+  Marked ~ppc
+
+  15 Aug 2005; Herbie Hopkins <herbs@gentoo.org> util-macros-0.99.0.ebuild:
+  Marked ~amd64
+
+  09 Aug 2005; Ferris McCormick <fmccor@gentoo.org>
+  util-macros-0.99.0.ebuild:
+  Add ~sparc keyword (X modular testing).
+
+  08 Aug 2005; Donnie Berkholz <spyderous@gentoo.org>;
+  util-macros-0.99.0.ebuild:
+  Fix description and remove xproto from build deps.
+
+*util-macros-0.99.0 (08 Aug 2005)
+
+  08 Aug 2005; Donnie Berkholz <spyderous@gentoo.org>;
+  +util-macros-0.99.0.ebuild:
+  Initial commit for modular X
+

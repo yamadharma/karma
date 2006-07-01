@@ -1,0 +1,333 @@
+--- linux/sound/usb/usbaudio.c	2003-07-01 12:28:59.000000000 +0200
++++ linux/sound/usb/usbaudio.c	2003-07-01 13:18:29.000000000 +0200
+@@ -25,6 +25,21 @@
+  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+  */
+ 
++#define SND_NEED_USB_WRAPPER
++#include <sound/driver.h>
++#include <linux/usb.h>
++
++#ifdef OLD_USB
++#define snd_usb_complete_callback(x) __old_ ## x
++static void __old_snd_complete_urb(struct urb *urb);
++static void __old_snd_complete_sync_urb(struct urb *urb);
++
++static void * usb_audio_probe(struct usb_device *dev, unsigned int ifnum,
++                              const struct usb_device_id *id);
++static void usb_audio_disconnect(struct usb_device *dev, void *ptr);
++static int usb_reset_configuration(struct usb_device *dev);
++#endif
++
+ 
+ #include <sound/driver.h>
+ #include <linux/bitops.h>
+@@ -1706,9 +1720,11 @@
+  * entry point for linux usb interface
+  */
+ 
++#ifndef OLD_USB
+ static int usb_audio_probe(struct usb_interface *intf,
+ 			   const struct usb_device_id *id);
+ static void usb_audio_disconnect(struct usb_interface *intf);
++#endif
+ 
+ static struct usb_device_id usb_audio_ids [] = {
+ #include "usbquirks.h"
+@@ -1721,10 +1737,15 @@
+ MODULE_DEVICE_TABLE (usb, usb_audio_ids);
+ 
+ static struct usb_driver usb_audio_driver = {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 5, 70)	/* FIXME: find right number */
+ 	.owner =	THIS_MODULE,
++#endif
+ 	.name =		"snd-usb-audio",
+ 	.probe =	usb_audio_probe,
+ 	.disconnect =	usb_audio_disconnect,
++#ifdef OLD_USB
++	.driver_list =	LIST_HEAD_INIT(usb_audio_driver.driver_list), 
++#endif
+ 	.id_table =	usb_audio_ids,
+ };
+ 
+@@ -2829,6 +2850,7 @@
+ 	}
+ }
+ 
++#ifndef OLD_USB
+ /*
+  * new 2.5 USB kernel API
+  */
+@@ -2849,6 +2871,8 @@
+ 	snd_usb_audio_disconnect(interface_to_usbdev(intf),
+ 				 dev_get_drvdata(&intf->dev));
+ }
++#endif
++
+ 
+ 
+ static int __init snd_usb_audio_init(void)
+@@ -2892,3 +2916,116 @@
+ __setup("snd-usb-audio=", snd_usb_audio_module_setup);
+ 
+ #endif /* !MODULE */
++
++#ifdef OLD_USB
++/*
++ * 2.4 USB kernel API
++ */
++static void *usb_audio_probe(struct usb_device *dev, unsigned int ifnum,
++			     const struct usb_device_id *id)
++{
++	return snd_usb_audio_probe(dev, usb_ifnum_to_if(dev, ifnum), id);
++}
++                                       
++static void usb_audio_disconnect(struct usb_device *dev, void *ptr)
++{
++	snd_usb_audio_disconnect(dev, ptr);
++}
++
++static void __old_snd_complete_urb(struct urb *urb)
++{
++	snd_complete_urb(urb, NULL);
++}
++
++static void __old_snd_complete_sync_urb(struct urb *urb)
++{
++	snd_complete_sync_urb(urb, NULL);
++}
++
++static int usb_reset_configuration(struct usb_device *dev)
++{
++	struct usb_host_config *config = dev->actconfig;
++
++	/* FIXME: replace with something more useful like in 2.6 code? */
++	return usb_set_configuration(dev, get_cfg_desc(config)->bConfigurationValue);
++}
++#endif
++
++/*
++ * workarounds / hacks for the older kernels follow below
++ */
++
++#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 5, 24)
++/* M-Audio Quattro has weird alternate settings.  the altsetting jumps
++ * from 0 to 4 or 3 insuccessively, and this screws up
++ * usb_set_interface() (at least on 2.4.18/19 and 2.4.21).
++ */
++
++/*
++ * the following is a stripped version of usb_set_interface() with the fix
++ * for insuccessive altsetting numbers.
++ */
++
++/* stripped version for isochronos only */
++static void hack_usb_set_maxpacket(struct usb_device *dev)
++{
++	int i, b;
++
++	for (i=0; i<dev->actconfig->bNumInterfaces; i++) {
++		struct usb_interface *ifp = dev->actconfig->interface + i;
++		struct usb_interface_descriptor *as = ifp->altsetting + ifp->act_altsetting;
++		struct usb_endpoint_descriptor *ep = as->endpoint;
++		int e;
++
++		for (e=0; e<as->bNumEndpoints; e++) {
++			b = ep[e].bEndpointAddress & USB_ENDPOINT_NUMBER_MASK;
++			if (usb_endpoint_out(ep[e].bEndpointAddress)) {
++				if (ep[e].wMaxPacketSize > dev->epmaxpacketout[b])
++					dev->epmaxpacketout[b] = ep[e].wMaxPacketSize;
++			}
++			else {
++				if (ep[e].wMaxPacketSize > dev->epmaxpacketin [b])
++					dev->epmaxpacketin [b] = ep[e].wMaxPacketSize;
++			}
++		}
++	}
++}
++
++/* stripped version */
++int snd_hack_usb_set_interface(struct usb_device *dev, int interface, int alternate)
++{
++	struct usb_interface *iface;
++	struct usb_interface_descriptor *iface_as;
++	int i, ret;
++
++	iface = usb_ifnum_to_if(dev, interface);
++	if (!iface)
++		return -EINVAL;
++	if (iface->num_altsetting == 1)
++		return 0;
++	if (alternate < 0 || alternate >= iface->num_altsetting)
++		return -EINVAL;
++
++	if ((ret = usb_control_msg(dev, usb_sndctrlpipe(dev, 0),
++				   USB_REQ_SET_INTERFACE, USB_RECIP_INTERFACE,
++				   iface->altsetting[alternate].bAlternateSetting,
++				   interface, NULL, 0, HZ * 5)) < 0)
++		return ret;
++
++	iface->act_altsetting = alternate;
++	iface_as = &iface->altsetting[alternate];
++	for (i = 0; i < iface_as->bNumEndpoints; i++) {
++		u8 ep = iface_as->endpoint[i].bEndpointAddress;
++		usb_settoggle(dev, ep&USB_ENDPOINT_NUMBER_MASK, usb_endpoint_out(ep), 0);
++	}
++	hack_usb_set_maxpacket(dev);
++	return 0;
++}
++
++#endif /* LINUX_VERSION < 2.5.24 */
++
++
++/*
++ * symbols
++ */
++EXPORT_NO_SYMBOLS;
+--- linux/sound/usb/usbmixer.c	2003-07-01 12:39:31.000000000 +0200
++++ linux/sound/usb/usbmixer.c	2003-07-01 12:39:45.000000000 +0200
+@@ -1,3 +1,6 @@
++#define SND_NEED_USB_WRAPPER
++#define __NO_VERSION__
++
+ /*
+  *   (Tentative) USB Audio Driver for ALSA
+  *
+--- linux/sound/usb/usbmidi.c	2003-07-01 12:38:24.000000000 +0200
++++ linux/sound/usb/usbmidi.c	2003-07-01 12:39:19.000000000 +0200
+@@ -1,3 +1,15 @@
++#define SND_NEED_USB_WRAPPER
++#define __NO_VERSION__
++#include <sound/driver.h>
++#include <linux/usb.h>
++
++#ifdef OLD_USB
++#define snd_usb_complete_callback(x) __old_ ## x
++static void __old_snd_usbmidi_in_urb_complete(struct urb* urb);
++static void __old_snd_usbmidi_in_midiman_complete(struct urb* urb);
++static void __old_snd_usbmidi_out_urb_complete(struct urb* urb);
++#endif
++
+ /*
+  * usbmidi.c - ALSA USB MIDI driver
+  *
+@@ -1102,3 +1114,20 @@
+ 					       GFP_KERNEL);
+ 	return 0;
+ }
++
++#ifdef OLD_USB
++static void __old_snd_usbmidi_in_urb_complete(struct urb* urb)
++{
++	snd_usbmidi_in_urb_complete(urb, NULL);
++}
++
++static void __old_snd_usbmidi_in_midiman_complete(struct urb* urb)
++{
++	snd_usbmidi_in_midiman_complete(urb, NULL);
++}
++
++static void __old_snd_usbmidi_out_urb_complete(struct urb* urb)
++{
++	snd_usbmidi_out_urb_complete(urb, NULL);
++}
++#endif
+--- linux/sound/core/sgbuf.c	2003-07-01 11:47:39.000000000 +0200
++++ linux/sound/core/sgbuf.c	2003-07-01 12:45:30.000000000 +0200
+@@ -85,7 +85,7 @@
+ 	}
+ 
+ 	sgbuf->size = size;
+-	dmab->area = vmap(sgbuf->page_table, sgbuf->pages, VM_MAP, PAGE_KERNEL);
++	dmab->area = vmap(sgbuf->page_table, sgbuf->pages);
+ 	if (! dmab->area)
+ 		goto _failed;
+ 	return dmab->area;
+--- linux/sound/drivers/dummy.c	2003-07-01 12:52:16.000000000 +0200
++++ linux/sound/drivers/dummy.c	2003-07-01 13:18:28.000000000 +0200
+@@ -21,7 +21,7 @@
+ #include <sound/driver.h>
+ #include <linux/version.h>
+ #include <linux/init.h>
+-#include <linux/jiffies.h>
++#include <linux/sched.h>
+ #include <linux/slab.h>
+ #include <linux/time.h>
+ #include <linux/wait.h>
+--- linux/sound/pcmcia/vx/vxpocket.h	2003-07-01 13:12:45.000000000 +0200
++++ linux/sound/pcmcia/vx/vxpocket.h	2003-07-01 13:14:20.000000000 +0200
+@@ -28,6 +28,8 @@
+ #include <pcmcia/cistpl.h>
+ #include <pcmcia/ds.h>
+ 
++#include "../compat_cs.h"
++
+ struct snd_vxp_entry {
+ 	dev_info_t *dev_info;
+ 
+--- linux/sound/pcmcia/compat_cs.h	2003-07-01 13:13:17.000000000 +0200
++++ linux/sound/pcmcia/compat_cs.h	2003-07-01 13:15:28.000000000 +0200
+@@ -0,0 +1,52 @@
++#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 5, 0) && (defined(CONFIG_PCMCIA) || defined(CONFIG_PCMCIA_MODULE))
++
++#include <pcmcia/cs_types.h>
++#include <pcmcia/cs.h>
++#include <pcmcia/cistpl.h>
++#include <pcmcia/ds.h>
++#include <pcmcia/version.h>
++
++struct cs_device_driver {
++	const char *name;
++};
++
++struct pcmcia_driver {
++	int                     use_count;
++	dev_link_t              *(*attach)(void);
++	void                    (*detach)(dev_link_t *);
++	struct module           *owner;
++	struct cs_device_driver	drv;
++};
++
++/* driver registration */
++static inline int snd_compat_pcmcia_register_driver(struct pcmcia_driver *driver)
++{
++	servinfo_t serv;
++
++	CardServices(GetCardServicesInfo, &serv);
++	if (serv.Revision != CS_RELEASE_CODE) {
++		printk(KERN_WARNING "%s: Card Services release does not match (%x != %x)!\n", driver->drv.name, serv.Revision, CS_RELEASE_CODE);
++		return -EIO;
++	}
++	register_pccard_driver((dev_info_t *)driver->drv.name, driver->attach, driver->detach);
++	return 0;
++}
++
++static inline void snd_compat_pcmcia_unregister_driver(struct pcmcia_driver *driver)
++{
++	unregister_pccard_driver((dev_info_t *)driver->drv.name);
++}
++
++#define pcmcia_register_driver(driver) snd_compat_pcmcia_register_driver(driver)
++#define pcmcia_unregister_driver(driver) snd_compat_pcmcia_unregister_driver(driver)
++
++/*
++ * print the error message related with cs
++ */
++static inline void cs_error(client_handle_t handle, int func, int ret)
++{
++	error_info_t err = { func, ret };
++	CardServices(ReportError, handle, &err);
++}
++
++#endif /* 2.5.0+ */
+--- linux/include/sound/core.h	2003-07-01 11:42:19.000000000 +0200
++++ linux/include/sound/core.h	2003-07-01 11:42:27.000000000 +0200
+@@ -25,7 +25,7 @@
+ #include <linux/sched.h>		/* wake_up() */
+ #include <asm/semaphore.h>		/* struct semaphore */
+ #include <linux/rwsem.h>		/* struct rw_semaphore */
+-#include <linux/workqueue.h>		/* struct workqueue_struct */
++// #include <linux/workqueue.h>		/* struct workqueue_struct */
+ 
+ /* Typedef's */
+ typedef struct timespec snd_timestamp_t;

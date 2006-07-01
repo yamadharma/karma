@@ -1,0 +1,861 @@
+diff -ur WindowMaker-0.80.0.old/src/actions.c WindowMaker-0.80.0/src/actions.c
+--- WindowMaker-0.80.0.old/src/actions.c	Fri Dec 21 15:38:08 2001
++++ WindowMaker-0.80.0/src/actions.c	Fri Feb 22 17:37:09 2002
+@@ -918,11 +918,7 @@
+     }
+ 
+     if (!wPreferences.disable_miniwindows) {
+-	if (!wwin->flags.icon_moved) {
+-	    PlaceIcon(wwin->screen_ptr, &wwin->icon_x, &wwin->icon_y);
+-	}
+ 	wwin->icon = wIconCreate(wwin);
+-
+ 	wwin->icon->mapped = 1;
+     }
+ 
+@@ -1050,6 +1046,9 @@
+ void
+ wDeiconifyWindow(WWindow  *wwin)
+ {
++
++    if (!wwin) { return; }
++    
+     wWindowChangeWorkspace(wwin, wwin->screen_ptr->current_workspace);
+ 
+     if (!wwin->flags.miniaturized)
+diff -ur WindowMaker-0.80.0.old/src/appicon.c WindowMaker-0.80.0/src/appicon.c
+--- WindowMaker-0.80.0.old/src/appicon.c	Mon Dec 17 21:43:48 2001
++++ WindowMaker-0.80.0/src/appicon.c	Wed Feb 20 16:25:15 2002
+@@ -160,6 +160,7 @@
+         aicon->wm_instance = wstrdup(leader_win->wm_instance);
+ 
+     aicon->icon = wIconCreate(leader_win);
++
+ #ifdef DEMATERIALIZE_ICON
+     {
+         XSetWindowAttributes attribs;
+@@ -177,6 +178,9 @@
+     aicon->icon->core->descriptor.handle_expose = iconExpose;
+     aicon->icon->core->descriptor.parent_type = WCLASS_APPICON;
+     aicon->icon->core->descriptor.parent = aicon;
++    /* halt default miniwindow focus events */
++    aicon->icon->core->descriptor.handle_enternotify = NULL;
++    aicon->icon->core->descriptor.handle_leavenotify = NULL;
+     AddToStackList(aicon->icon->core);
+     aicon->icon->show_title = 0;
+     wIconUpdate(aicon->icon);
+diff -ur WindowMaker-0.80.0.old/src/application.c WindowMaker-0.80.0/src/application.c
+--- WindowMaker-0.80.0.old/src/application.c	Fri Dec 21 15:38:08 2001
++++ WindowMaker-0.80.0/src/application.c	Wed Feb 20 16:25:15 2002
+@@ -317,6 +317,7 @@
+     /* application descriptor */
+     XSaveContext(dpy, main_window, wAppWinContext, (XPointer)wapp);
+ 
++#if 0
+     if (!WFLAGP(wapp->main_window_desc, no_appicon)) {
+         wapp->app_icon = NULL;
+         if (scr->last_dock)
+@@ -352,6 +353,9 @@
+     } else {
+ 	wapp->app_icon = NULL;
+     }
++#endif
++
++    wapp->app_icon = NULL;
+     
+     if (wapp->app_icon) {
+         wapp->app_icon->main_window = main_window;
+diff -ur WindowMaker-0.80.0.old/src/event.c WindowMaker-0.80.0/src/event.c
+--- WindowMaker-0.80.0.old/src/event.c	Mon Dec 17 21:43:48 2001
++++ WindowMaker-0.80.0/src/event.c	Fri Feb 22 17:21:22 2002
+@@ -58,6 +58,7 @@
+ #include "framewin.h"
+ #include "properties.h"
+ #include "balloon.h"
++#include "icon.h"
+ 
+ #ifdef GNOME_STUFF
+ # include "gnome.h"
+@@ -1096,12 +1097,18 @@
+ 	 *
+ 	 * set focus if in focus-follows-mouse mode and the event
+ 	 * is for the frame window and window doesn't have focus yet */
++
++	
+ 	if (wPreferences.focus_mode==WKF_SLOPPY
+-	    && wwin->frame->core->window==event->xcrossing.window
++	    /* Don't check that, we just need the focus, hence the
++	    // crossing window, it's anyway within the data.
++	    // && wwin->frame->core->window==event->xcrossing.window */
+ 	    && !scr->flags.doing_alt_tab) {
+-	    
+-	    if (!wwin->flags.focused && !WFLAGP(wwin, no_focusable))
++
++	    if (!wwin->flags.focused && !WFLAGP(wwin, no_focusable) &&
++		    (!wwin->flags.miniaturized)) {
+ 		wSetFocusTo(scr, wwin);
++	    }
+ 	    
+ 	    if (scr->autoRaiseTimer)
+ 		WMDeleteTimerHandler(scr->autoRaiseTimer);
+@@ -1138,14 +1145,6 @@
+ 	}
+     }
+ 
+-    if (event->xcrossing.window == event->xcrossing.root
+-	&& event->xcrossing.detail == NotifyNormal
+-	&& event->xcrossing.detail != NotifyInferior
+-	&& wPreferences.focus_mode != WKF_CLICK) {
+-
+-	wSetFocusTo(scr, scr->focused_window);
+-    }
+-
+ #ifdef BALLOON_TEXT
+     wBalloonEnteredObject(scr, desc);
+ #endif
+@@ -1162,18 +1161,8 @@
+         if(desc->handle_leavenotify)
+ 	    (*desc->handle_leavenotify)(desc, event);
+     }
+-    if (event->xcrossing.window == event->xcrossing.root
+-	&& event->xcrossing.mode == NotifyNormal
+-	&& event->xcrossing.detail != NotifyInferior
+-	&& wPreferences.focus_mode != WKF_CLICK) {
+-
+-	WScreen *scr = wScreenForRootWindow(event->xcrossing.root);
+-
+-	wSetFocusTo(scr, NULL);
+-    }
+ }
+ 
+-
+ #ifdef SHAPE
+ static void
+ handleShapeNotify(XEvent *event)
+@@ -1310,14 +1299,16 @@
+ 
+     wwin = wWindowFor(event->xfocus.window);
+     if (wwin && !wwin->flags.focused) {
+-	if (wwin->flags.mapped)
++	if (wwin->flags.mapped) {
+ 	    wSetFocusTo(wwin->screen_ptr, wwin);
+-	else
++	} else {
+ 	    wSetFocusTo(wwin->screen_ptr, NULL);
++	}
+     } else if (!wwin) {
+ 	WScreen *scr = wScreenForWindow(event->xfocus.window);
+-	if (scr)
++	if (scr) {
+ 	    wSetFocusTo(scr, NULL);
++	}
+     }
+ }
+ 
+@@ -1424,6 +1415,11 @@
+ 	    else {
+ 		wIconifyWindow(wwin);
+ 	    }
++	} else {
++	    if (activeIcon) {
++		wDeiconifyWindow(activeIcon->owner);
++		activeIcon = NULL;
++	    }
+ 	}
+ 	break;
+      case WKBD_HIDE:
+@@ -1507,7 +1503,8 @@
+ 	}
+ 	break;
+      case WKBD_CLOSE:
+-	if (ISMAPPED(wwin) && ISFOCUSED(wwin) && !WFLAGP(wwin, no_closable)) {
++	/* send close even if unclosable */
++	if (ISMAPPED(wwin) && ISFOCUSED(wwin) /* && !WFLAGP(wwin, no_closable) */) {
+ 	    CloseWindowMenu(scr);
+ 	    if (wwin->protocols.DELETE_WINDOW)
+ 	      wClientSendProtocol(wwin, _XA_WM_DELETE_WINDOW,
+diff -ur WindowMaker-0.80.0.old/src/framewin.c WindowMaker-0.80.0/src/framewin.c
+--- WindowMaker-0.80.0.old/src/framewin.c	Thu Jun  7 02:22:05 2001
++++ WindowMaker-0.80.0/src/framewin.c	Wed Feb 20 16:25:15 2002
+@@ -1467,7 +1467,6 @@
+     }
+ }
+ 
+-
+ static void 
+ resizebarMouseDown(WObjDescriptor *desc, XEvent *event)
+ {
+diff -ur WindowMaker-0.80.0.old/src/icon.c WindowMaker-0.80.0/src/icon.c
+--- WindowMaker-0.80.0.old/src/icon.c	Tue Jul 24 02:51:05 2001
++++ WindowMaker-0.80.0/src/icon.c	Fri Feb 22 17:45:15 2002
+@@ -49,13 +49,40 @@
+ 
+ #define MOD_MASK wPreferences.modifier_mask
+ 
++#define	    _NO	1
++#define	    _EA	2
++#define	    _SO	4
++#define	    _WE	8
++#define	    _RESIST 8
++
++typedef struct {
++
++    int oldx;
++    int oldy;
++
++    int	x;
++    int y;
++
++    int size;
++    int wind;
++
++    int wx;
++    int wy;
++
++} t_move;
++
+ extern Cursor wCursor[WCUR_LAST];
++extern XContext wWinContext;
+ 
++static int findEdge(int X, int x, int y, int wind, WIcon * icon, XID wid);
+ 
+ static void miniwindowExpose(WObjDescriptor *desc, XEvent *event);
+ static void miniwindowMouseDown(WObjDescriptor *desc, XEvent *event);
+ static void miniwindowDblClick(WObjDescriptor *desc, XEvent *event);
++static void miniwindowEnterNotify(WObjDescriptor *desc, XEvent *event);
++static void miniwindowLeaveNotify(WObjDescriptor *desc, XEvent *event);
+ 
++WIcon * activeIcon = NULL;
+ 
+ /****** Notification Observers ******/
+ 
+@@ -141,6 +168,8 @@
+     icon->core->descriptor.handle_mousedown = miniwindowMouseDown;
+     icon->core->descriptor.handle_expose = miniwindowExpose;
+     icon->core->descriptor.parent_type = WCLASS_MINIWINDOW;
++    icon->core->descriptor.handle_enternotify = miniwindowEnterNotify;
++    icon->core->descriptor.handle_leavenotify = miniwindowLeaveNotify;
+     icon->core->descriptor.parent = icon;
+     
+     icon->core->stacking = wmalloc(sizeof(WStacking));
+@@ -290,14 +319,23 @@
+ static void
+ drawIconTitle(WScreen *scr, Pixmap pixmap, int height)
+ {
++    int size = wPreferences.icon_size;
++
++    /* space */
+     XFillRectangle(dpy, pixmap, scr->icon_title_texture->normal_gc,
+-		   0, 0, wPreferences.icon_size, height+1);
+-    XDrawLine(dpy, pixmap, scr->icon_title_texture->light_gc, 0, 0,
+-	      wPreferences.icon_size, 0);
+-    XDrawLine(dpy, pixmap, scr->icon_title_texture->light_gc, 0, 0,
+-	      0, height+1);
++		   0, size-height-1, size, height+1);
++
++    /* bottom line */
++    XDrawLine(dpy, pixmap, scr->icon_title_texture->light_gc,
++	    0, size-1, size, size-1);
++
++    /* left */
++    XDrawLine(dpy, pixmap, scr->icon_title_texture->light_gc,
++	    0, size - height - 1, 0, size - 1);
++
++    /* right */
+     XDrawLine(dpy, pixmap, scr->icon_title_texture->dim_gc, 
+-	      wPreferences.icon_size-1, 0, wPreferences.icon_size-1, height+1);
++	    size - 1, size - height - 1, size - 1, size - 1);
+ }
+ 
+ 
+@@ -330,7 +368,8 @@
+ 	} else {
+ 	    h = (icon->height+theight > wPreferences.icon_size
+ 		 ? wPreferences.icon_size-theight : icon->height);
+-	    y = theight+((int)wPreferences.icon_size-theight-h)/2;
++	    //y = theight+((int)wPreferences.icon_size-theight-h)/2;
++	    y = ((int)wPreferences.icon_size-theight-h)/2;
+ 	    sy = (icon->height - h)/2;
+ 	}
+ 	RCombineArea(tile, icon, sx, sy, w, h, x, y);
+@@ -669,7 +708,7 @@
+ 	XSetWindowBorderWidth(dpy, icon->icon_win, 0);
+ 	XReparentWindow(dpy, icon->icon_win, icon->core->window,
+ 			(wPreferences.icon_size-width)/2,
+-			theight+(wPreferences.icon_size-height-theight)/2);
++			(wPreferences.icon_size-height-theight)/2);
+ 	if (resize)
+ 	  XResizeWindow(dpy, icon->icon_win, width, height);
+ 
+@@ -717,9 +756,9 @@
+ 	    
+ 	    if (h > wPreferences.icon_size - title_height - 2) {
+ 		h = wPreferences.icon_size - title_height - 2;
+-		y = title_height + 1;
++		y = 1;
+ 	    } else {
+-		y = (wPreferences.icon_size-h-title_height)/2+title_height + 1;
++		y = (wPreferences.icon_size-h-title_height)/2+ 1;
+ 	    }
+ 	} else {
+ 	    dotitle = 0;
+@@ -813,6 +852,7 @@
+     GC gc = scr->icon_title_gc;
+     int x;
+     char *tmp;
++    int theight;
+ 
+     if (icon->force_paint) {
+         icon->force_paint = 0;
+@@ -836,8 +876,11 @@
+ 	else
+ 	  x = (icon->core->width - w)/2;
+ 
++	theight = WMFontHeight(scr->icon_title_font);
++
+ 	WMDrawString(scr->wmscreen, icon->core->window, gc,
+-		     scr->icon_title_font, x, 1, tmp, l);
++		     scr->icon_title_font, x, wPreferences.icon_size-theight-1,
++		     tmp, l);
+ 	wfree(tmp);
+     }
+ 
+@@ -855,6 +898,27 @@
+     wIconPaint(desc->parent);
+ }
+ 
++static void
++miniwindowLeaveNotify(WObjDescriptor *desc, XEvent *event)
++{
++    WIcon *icon = desc->parent;
++
++    assert(icon->owner!=NULL);
++
++    activeIcon = NULL;
++}
++
++static void
++miniwindowEnterNotify(WObjDescriptor *desc, XEvent *event)
++{
++    WIcon *icon = desc->parent;
++
++    assert(icon->owner!=NULL);
++
++    activeIcon = icon;
++    wSetFocusTo(icon->owner->screen_ptr, NULL);
++}
++
+ 
+ static void
+ miniwindowDblClick(WObjDescriptor *desc, XEvent *event)
+@@ -866,6 +930,95 @@
+     wDeiconifyWindow(icon->owner);
+ }
+ 
++int findEdge(int X, int x, int y, int dir, WIcon * icon, XID wid) {
++
++    int edge; /* no edge */
++    int sign = 1;
++    int add = 0;
++    int add2;
++    int a = wPreferences.icon_size;
++
++    WWindow * i;
++
++    WScreen * scr = icon->core->screen_ptr;
++
++    switch (dir) {
++    case _WE:
++	add = a;
++	sign=-1;
++	edge = 0;
++	break;
++    case _EA:
++	edge = scr->scr_width;
++	break;
++    case _NO:
++	add = a;
++	sign=-1;
++	edge = 0;
++	break;
++    case _SO:
++	edge = scr->scr_height;
++	break;
++    }
++
++    add2 = a - add;
++
++    if ((X+add2) * sign - edge > 0) {
++	if ((X+add2) * sign - edge < _RESIST) { return (edge-add2); }
++    }
++
++    edge = -1;
++
++    i = icon->owner;
++
++    /*
++     * go to the end of window list (rewind)
++     */
++    while (i->next) {
++	i = i->next;
++    }
++
++    while (i) {
++
++	if (i->icon == icon) {
++	    i = i->prev;
++	    continue;
++	} // self
++
++
++	/* find whether the icon intersects with this icon */
++
++	if ((i->icon_x <= x + a) &&
++	    (i->icon_x + a >= x) &&
++	    (i->icon_y <= y + a) &&
++	    (i->icon_y + a >= y)) {
++
++	    int z = add;
++
++	    if (dir & (_EA|_WE)) {
++		z += i->icon_x;
++	    } else {
++		z += i->icon_y;
++	    }
++
++	    if ((X+add2 - z)*sign > 0) {
++		if ((X+add2 - z)*sign < _RESIST) {
++		    if (edge == -1) {
++			edge = z;
++		    } else {
++			if (z*sign < edge) {
++			    edge = z;
++			}
++		    }
++		}
++	    }
++	}
++	i = i->prev;
++    }
++
++    return (edge-add2);
++
++}
+ 
+ static void 
+ miniwindowMouseDown(WObjDescriptor *desc, XEvent *event)
+@@ -877,6 +1030,21 @@
+     int dx=event->xbutton.x, dy=event->xbutton.y;
+     int grabbed=0;
+     int clickButton=event->xbutton.button;
++    XID wid = event->xbutton.window;
++
++    int windX, windY;
++
++    t_move move;
++
++    activeIcon = icon;
++
++    move.oldx = event->xbutton.x_root;
++    move.oldy = event->xbutton.y_root;
++    move.size = wPreferences.icon_size;
++    move.x = move.oldx;
++    move.y = move.oldy;
++    move.wx = move.x - event->xbutton.x;
++    move.wy = move.y - event->xbutton.y;
+ 
+     if (WCHECK_STATE(WSTATE_MODAL))
+ 	return;
+@@ -939,9 +1107,54 @@
+ 		    break;
+ 		}
+ 	    }
+-	    x = ev.xmotion.x_root - dx;
+-	    y = ev.xmotion.y_root - dy;
+-	    XMoveWindow(dpy, icon->core->window, x, y);
++
++	    move.x = ev.xmotion.x_root;
++	    move.y = ev.xmotion.y_root;
++
++	    // XMoveWindow(dpy, icon->core->window, x, y);
++
++	    windX = move.x - move.oldx;
++	    windY = move.y - move.oldy;
++	    
++	    move.wind = 0;
++
++	    //move.wx = move.x - ev.xmotion.x;
++	    //move.wy = move.y - ev.xmotion.y;
++	    move.wx += windX;
++	    move.wy += windY;
++
++	    /* N
++	     *W E
++	     * S
++	     */
++
++	    if (windX < 0 ) move.wind |= _WE;
++	    if (windX > 0 ) move.wind |= _EA;
++	    if (windY < 0 ) move.wind |= _NO;
++	    if (windY > 0 ) move.wind |= _SO;
++
++	    /*
++	     * Wind says where are we moving,
++	     * (wx,wy) is icon LU corner
++	     */
++
++	    if ( move.wind & (_WE|_EA)) { // going left
++		int edge = findEdge(move.wx, move.wx, move.wy,
++		    move.wind & (_WE|_EA), icon, wid);
++		if (edge >= 0) { move.wx = edge; }
++	    }
++
++	    if ( move.wind & (_SO|_NO)) { // going left
++		int edge = findEdge(move.wy, move.wx, move.wy,
++		    move.wind & (_SO|_NO), icon, wid);
++		if (edge >= 0) { move.wy = edge; }
++	    }
++
++	    XMoveWindow(dpy, icon->core->window, move.wx, move.wy);
++
++	    move.oldx = move.x;
++	    move.oldy = move.y;
++
+ 	    break;
+ 
+ 	 case ButtonPress:
+@@ -951,13 +1164,15 @@
+ 	    if (ev.xbutton.button != clickButton)
+ 		break;
+ 
++	    /*
+ 	    if (wwin->icon_x!=x || wwin->icon_y!=y)
+ 	      wwin->flags.icon_moved = 1;
++	    */
+ 
+-	    XMoveWindow(dpy, icon->core->window, x, y);
++	    XMoveWindow(dpy, icon->core->window, move.wx, move.wy);
+ 
+-	    wwin->icon_x = x;
+-	    wwin->icon_y = y;
++	    wwin->icon_x = move.wx;
++	    wwin->icon_y = move.wy;
+ #ifdef DEBUG
+ 	    puts("End miniwindow move");
+ #endif
+diff -ur WindowMaker-0.80.0.old/src/icon.h WindowMaker-0.80.0/src/icon.h
+--- WindowMaker-0.80.0.old/src/icon.h	Wed Oct 21 07:43:54 1998
++++ WindowMaker-0.80.0/src/icon.h	Wed Feb 20 16:25:15 2002
+@@ -72,4 +72,6 @@
+ 
+ char *wIconStore(WIcon *icon);
+ 
++extern WIcon * activeIcon;
++
+ #endif /* WMICON_H_ */
+diff -ur WindowMaker-0.80.0.old/src/menu.c WindowMaker-0.80.0/src/menu.c
+--- WindowMaker-0.80.0.old/src/menu.c	Mon Dec 17 21:43:48 2001
++++ WindowMaker-0.80.0/src/menu.c	Wed Feb 20 16:25:15 2002
+@@ -159,11 +159,15 @@
+ 
+     memset(menu, 0, sizeof(WMenu));
+ 
++    /*
+ #ifdef SINGLE_MENULEVEL
+     tmp = WMSubmenuLevel;
+ #else
+     tmp = (main_menu ? WMMainMenuLevel : WMSubmenuLevel);
+ #endif
++*/
++
++    tmp = WMNormalLevel;
+ 
+     flags = WFF_SINGLE_STATE|WFF_BORDER;
+     if (title) {
+@@ -1966,8 +1970,7 @@
+ 	goto byebye;
+     }
+     entry_no = getEntryAt(menu, x, y);
+-    if (entry_no>=0) {
+-	entry = menu->entries[entry_no];
++    if ((entry_no>=0) && (entry = menu->entries[entry_no])) {
+ 
+ 	if (!close_on_exit && (bev->state & ControlMask) && smenu
+ 	    && entry->flags.editable) {
+@@ -2275,8 +2278,13 @@
+     int i;
+ 
+     if (!lower) {
++	/*
+ 	ChangeStackingLevel(menu->frame->core, (!menu->parent ? WMMainMenuLevel
+ 					  : WMSubmenuLevel));
++	*/
++
++	ChangeStackingLevel(menu->frame->core, WMNormalLevel);
++	
+ 	wRaiseFrame(menu->frame->core);
+ 	menu->flags.lowered = 0;
+     } else {
+@@ -2708,6 +2716,7 @@
+     WMPropList *menus, *menu, *key, *skey;
+ 
+     key = WMCreatePLString("Menus");
++    if (!scr->session_state) { return; }
+     menus = WMGetFromPLDictionary(scr->session_state, key);
+     WMReleasePropList(key);
+ 
+diff -ur WindowMaker-0.80.0.old/src/screen.c WindowMaker-0.80.0/src/screen.c
+--- WindowMaker-0.80.0.old/src/screen.c	Fri Dec 21 15:38:08 2001
++++ WindowMaker-0.80.0/src/screen.c	Wed Feb 20 16:25:15 2002
+@@ -1035,7 +1035,7 @@
+ 	wfree(path);
+     }
+ 
+-    if (!wPreferences.flags.noclip) {
++    if (scr->session_state && !wPreferences.flags.noclip) {
+         state = WMGetFromPLDictionary(scr->session_state, dClip);
+         scr->clip_icon = wClipRestoreState(scr, state);
+     }
+@@ -1049,7 +1049,7 @@
+         wWorkspaceManageEdge(scr);
+ #endif
+ 
+-    if (!wPreferences.flags.nodock) {
++    if (scr->session_state && !wPreferences.flags.nodock) {
+         state = WMGetFromPLDictionary(scr->session_state, dDock);
+         scr->dock = wDockRestoreState(scr, state, WM_DOCK);
+     }
+diff -ur WindowMaker-0.80.0.old/src/wconfig.h.in WindowMaker-0.80.0/src/wconfig.h.in
+--- WindowMaker-0.80.0.old/src/wconfig.h.in	Mon Dec 17 21:43:48 2001
++++ WindowMaker-0.80.0/src/wconfig.h.in	Wed Feb 20 16:25:15 2002
+@@ -498,7 +498,7 @@
+ #undef NO_MINIWINDOW_TITLES
+ 
+ 
+-#define FRAME_BORDER_COLOR "black"
++#define FRAME_BORDER_COLOR "#b2b2b2"
+ 
+ 
+ /* for boxes with high mouse sampling rates (SGI) */
+@@ -519,7 +519,7 @@
+ 
+ #define WM_PI 3.14159265358979323846
+ 
+-#define FRAME_BORDER_WIDTH 1	       /* width of window border for frames */
++#define FRAME_BORDER_WIDTH 3	       /* width of window border for frames */
+ 
+ #define RESIZEBAR_HEIGHT 8	       /* height of the resizebar */
+ #define RESIZEBAR_MIN_WIDTH 20	       /* min. width of handles-corner_width */
+diff -ur WindowMaker-0.80.0.old/src/window.c WindowMaker-0.80.0/src/window.c
+--- WindowMaker-0.80.0.old/src/window.c	Fri Dec 21 15:38:08 2001
++++ WindowMaker-0.80.0/src/window.c	Wed Feb 20 16:25:15 2002
+@@ -118,6 +118,7 @@
+ 
+ /* frame window (during window grabs) */
+ static void frameMouseDown(WObjDescriptor *desc, XEvent *event);
++static void frameLeaveNotify(WObjDescriptor *desc, XEvent *event);
+ 
+ /* close button */
+ static void windowCloseClick(WCoreWindow *sender, void *data, XEvent *event);
+@@ -489,6 +490,15 @@
+ 	&& wwin->user_flags.floating && wwin->defined_user_flags.floating)
+ 	wwin->user_flags.sunken = 0;
+ 
++    // set up icon posisition HERE !
++    
++    if (!wPreferences.disable_miniwindows) {
++	if (!wwin->flags.icon_moved) {
++	    PlaceIcon(wwin->screen_ptr, &wwin->icon_x, &wwin->icon_y);
++	    wwin->flags.icon_moved = 1;
++	}
++    }
++
+     WSETUFLAG(wwin, no_shadeable, WFLAGP(wwin, no_titlebar));
+ }
+ 
+@@ -1273,6 +1283,7 @@
+ 
+     /* setup the frame descriptor */
+     wwin->frame->core->descriptor.handle_mousedown = frameMouseDown;
++    wwin->frame->core->descriptor.handle_leavenotify = frameLeaveNotify;
+     wwin->frame->core->descriptor.parent = wwin;
+     wwin->frame->core->descriptor.parent_type = WCLASS_WINDOW;
+ 
+@@ -1398,8 +1409,9 @@
+     if (!wwin->flags.miniaturized && workspace == scr->current_workspace
+ 	&& !wwin->flags.hidden) {
+ 	if (((transientOwner && transientOwner->flags.focused)
+-	     || wPreferences.auto_focus) && !WFLAGP(wwin, no_focusable))
++	     || wPreferences.auto_focus) && !WFLAGP(wwin, no_focusable)) {
+ 	    wSetFocusTo(scr, wwin);
++	}
+     }
+     wWindowResetMouseGrabs(wwin);
+ 
+@@ -1501,7 +1513,7 @@
+     foo |= WFF_LANGUAGE_BUTTON;
+ #endif
+ 
+-    wwin->frame = wFrameWindowCreate(scr, WMFloatingLevel,
++    wwin->frame = wFrameWindowCreate(scr, WMNormalLevel,
+ 				     wwin->frame_x, wwin->frame_y,
+ 				     width, height,
+                      &wPreferences.window_title_clearance, foo,
+@@ -2983,7 +2995,7 @@
+     event->xbutton.state &= ValidModMask;
+ 
+     if (event->xbutton.button==Button1) {
+-	if (event->xbutton.state == 0) {
++	if (event->xbutton.state & ControlMask) {
+ 	    if (!WFLAGP(wwin, no_shadeable)) {
+ 		/* shade window */
+ 		if (wwin->flags.shaded)
+@@ -2994,7 +3006,7 @@
+ 	} else {
+ 	    int dir = 0;
+ 
+-	    if (event->xbutton.state & ControlMask)
++	    if (!event->xbutton.state)
+ 		dir |= MAX_VERTICAL;
+ 	    
+             if (event->xbutton.state & ShiftMask) {
+@@ -3025,6 +3037,12 @@
+     }
+ }
+ 
++static void
++frameLeaveNotify(WObjDescriptor *desc, XEvent *event) {
++    WWindow *wwin = desc->parent;
++    if ((event->xcrossing.detail & NotifyNonlinearVirtual)) { return; }
++    wSetFocusTo(wwin->screen_ptr, NULL);
++}
+ 
+ static void
+ frameMouseDown(WObjDescriptor *desc, XEvent *event)
+@@ -3035,32 +3053,39 @@
+     
+     CloseWindowMenu(wwin->screen_ptr);
+ 
++    if (IsDoubleClick(wwin->screen_ptr, event)) {
++	titlebarDblClick(NULL, wwin, event);
++	return;
++    }
++
+     if (/*wPreferences.focus_mode==WKF_CLICK
+ 	&&*/ !(event->xbutton.state&ControlMask)
+ 	&& !WFLAGP(wwin, no_focusable)) {
+ 	wSetFocusTo(wwin->screen_ptr, wwin);
+     }
+     if (event->xbutton.button == Button1) {
+-	wRaiseFrame(wwin->frame->core);
+     }
+     
+-    if (event->xbutton.state & MOD_MASK) {
++    // if (event->xbutton.state & MOD_MASK) { ** always move !
+ 	/* move the window */
+-	if (XGrabPointer(dpy, wwin->client_win, False, 
+-			 ButtonMotionMask|ButtonReleaseMask|ButtonPressMask,
+-			 GrabModeAsync, GrabModeAsync, None,
+-			 None, CurrentTime)!=GrabSuccess) {
++    if (XGrabPointer(dpy, wwin->client_win, False, 
++		     ButtonMotionMask|ButtonReleaseMask|ButtonPressMask,
++		     GrabModeAsync, GrabModeAsync, None,
++		     None, CurrentTime)!=GrabSuccess) {
+ #ifdef DEBUG0
+-	    wwarning("pointer grab failed for window move");
++	wwarning("pointer grab failed for window move");
+ #endif
+-	    return;
+-	}
+-	if (event->xbutton.button == Button3 && !WFLAGP(wwin, no_resizable))
+-	    wMouseResizeWindow(wwin, event);
+-	else 
+-	    wMouseMoveWindow(wwin, event);
+-	XUngrabPointer(dpy, CurrentTime);
++	return;
+     }
++    if (event->xbutton.button == Button3 && !WFLAGP(wwin, no_resizable))
++	wMouseResizeWindow(wwin, event);
++    else 
++	if (!wMouseMoveWindow(wwin, event)) {
++	    wRaiseFrame(wwin->frame->core);
++	}
++
++    XUngrabPointer(dpy, CurrentTime);
++    // }
+ }
+ 
+ 
+@@ -3089,13 +3114,6 @@
+     if (event->xbutton.button == Button1
+ 	|| event->xbutton.button == Button2) {
+ 	
+-	if (event->xbutton.button == Button1) {
+-	    if (event->xbutton.state & MOD_MASK) {
+-		wLowerFrame(wwin->frame->core);
+-	    } else {
+-		wRaiseFrame(wwin->frame->core);
+-	    }
+-	}
+ 	if ((event->xbutton.state & ShiftMask)
+ 	    && !(event->xbutton.state & ControlMask)) {
+ 	    wSelectWindow(wwin, !wwin->flags.selected);
+@@ -3113,7 +3131,15 @@
+ 	}
+ 
+ 	/* move the window */
+-	wMouseMoveWindow(wwin, event);
++	if (!wMouseMoveWindow(wwin, event)) {
++	    if (event->xbutton.button == Button1) {
++		if (event->xbutton.state & MOD_MASK) {
++		    wLowerFrame(wwin->frame->core);
++		} else {
++		    wRaiseFrame(wwin->frame->core);
++		}
++	    }
++	}
+ 
+ 	XUngrabPointer(dpy, CurrentTime);
+     } else if (event->xbutton.button == Button3 && event->xbutton.state==0
+diff -ur WindowMaker-0.80.0.old/src/winspector.c WindowMaker-0.80.0/src/winspector.c
+--- WindowMaker-0.80.0.old/src/winspector.c	Fri Dec 21 15:38:08 2001
++++ WindowMaker-0.80.0/src/winspector.c	Wed Feb 20 16:25:15 2002
+@@ -652,14 +652,20 @@
+     different |= insertAttribute(dict, winDic, ANoLanguageButton, value, flags);
+ #endif
+ 
+-    value = (WMGetButtonSelected(panel->appChk[0])!=0) ? Yes : No;
+-    different2 |= insertAttribute(dict, appDic, AStartHidden, value, flags);
++    if (wwin->main_window) {
+ 
+-    value = (WMGetButtonSelected(panel->appChk[1])!=0) ? Yes : No;
+-    different2 |= insertAttribute(dict, appDic, ANoAppIcon, value, flags);
++	value = (WMGetButtonSelected(panel->appChk[0])!=0) ? Yes : No;
++	different2 |= insertAttribute(dict,
++		appDic, AStartHidden, value, flags);
+ 
+-    value = (WMGetButtonSelected(panel->appChk[2])!=0) ? Yes : No;
+-    different2 |= insertAttribute(dict, appDic, ASharedAppIcon, value, flags);
++	value = (WMGetButtonSelected(panel->appChk[1])!=0) ? Yes : No;
++	different2 |= insertAttribute(dict,
++		appDic, ANoAppIcon, value, flags);
++
++	value = (WMGetButtonSelected(panel->appChk[2])!=0) ? Yes : No;
++	different2 |= insertAttribute(dict,
++		appDic, ASharedAppIcon, value, flags);
++    }
+ 
+     if (panel->inspected->fake_group) {
+         key2 = WMCreatePLString(panel->inspected->fake_group->identifier);
+diff -ur WindowMaker-0.80.0.old/src/workspace.c WindowMaker-0.80.0/src/workspace.c
+--- WindowMaker-0.80.0.old/src/workspace.c	Wed Oct  3 20:39:18 2001
++++ WindowMaker-0.80.0/src/workspace.c	Wed Feb 20 16:25:15 2002
+@@ -1036,6 +1036,8 @@
+ 
+     make_keys();
+ 
++    if (!scr->session_state) { return; }
++
+     parr = WMGetFromPLDictionary(scr->session_state, dWorkspaces);
+ 
+     if (!parr)

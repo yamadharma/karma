@@ -1,0 +1,29 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: $
+
+service=/usr/sbin/si_monitor
+servicename="SystemImager's installation monitoring: si_monitor... "
+pid_file=/var/run/si_monitor.pid
+
+
+depend () 
+{
+	use net
+}
+
+start () 
+{
+	ebegin "Starting $servicename"
+	start-stop-daemon --start --quiet --exec $service
+	eend $?
+}
+
+stop () 
+{
+	ebegin "Stopping $servicename"
+	start-stop-daemon --stop --quiet --exec $service
+	eend $?
+}
+

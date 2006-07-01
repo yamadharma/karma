@@ -1,0 +1,38 @@
+# ChangeLog for media-libs/x264-svn
+# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-libs/x264-svn/ChangeLog,v 1.10 2006/03/05 15:57:56 zypher Exp $
+
+  05 Mar 2006; Marc Hildebrand <zypher@gentoo.org> x264-svn-20060302-r1.ebuild:
+  Added mp4 capabilities (through gpac-0.4.1_pre20060122
+
+  03 Mar 2006; Luca Barbato <lu_zero@gentoo.org> x264-svn-20060302.ebuild:
+  Added --enable-pic, should solve bug #124783
+
+*x264-svn-20060302 (02 Mar 2006)
+
+  02 Mar 2006; Luca Barbato <lu_zero@gentoo.org> +x264-svn-20060302.ebuild:
+  New snapshot, tested on ppc
+
+  26 Oct 2005; Marc Hildebrand <zypher@gentoo.org>
+  x264-svn-20051004-r1.ebuild:
+  Removed --enable-visualize which causes too much trouble atm.
+
+  22 Oct 2005; Daniel Goller <morfic@gentoo.org>
+  x264-svn-20051004-r1.ebuild:
+  libdir fix and adding credit for Bret Towe, bug 109410
+
+  22 Oct 2005; Daniel Goller <morfic@gentoo.org>
+  x264-svn-20051004-r1.ebuild:
+  Added deps so it can go ~amd64
+
+  08 Oct 2005; Marc Hildebrand <zypher@gentoo.org> x264-svn-20051004.ebuild,
+  x264-svn-20051004-r1.ebuild:
+  Fixed wrong configure line. Fixes bug #108436
+
+  05 Oct 2005; Diego Pettenò <flameeyes@gentoo.org> metadata.xml:
+  Fixed wrong herd in metadata (it's video, not media-video).
+
+*x264-svn-20051004 (04 Oct 2005)
+
+  04 Oct 2005; Marc Hildebrand <zypher@gentoo.org> x264-svn-20051004.ebuild:
+  Initial import.

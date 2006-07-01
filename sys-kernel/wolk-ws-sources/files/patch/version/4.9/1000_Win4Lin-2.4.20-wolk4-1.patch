@@ -1,0 +1,20 @@
+--- linux-old/arch/i386/kernel/pci-pc.c	2003-04-07 20:24:53.000000000 +0200
++++ linux-wolk4/arch/i386/kernel/pci-pc.c	2003-04-08 19:52:15.000000000 +0200
+@@ -579,7 +579,7 @@ union bios32 {
+ #ifdef CONFIG_GRKERNSEC_PAX_KERNEXEC
+ #define __FLAT_KERNEL_CS 0x08
+ #else
+-#define __FLAT_KERNEL_CS __KERNEL_CS
++#define __FLAT_KERNEL_CS __BOOT_KERNEL_CS
+ #endif
+ 
+ static struct {
+@@ -1013,7 +1013,7 @@ struct irq_routing_table * __devinit pci
+ 		return NULL;
+ 	opt.table = (struct irq_info *) page;
+ 	opt.size = PAGE_SIZE;
+-	opt.segment = __KERNEL_DS;
++	opt.segment = __BOOT_KERNEL_DS;
+ 
+ 	DBG("PCI: Fetching IRQ routing table... ");
+ 	__asm__("push %%es\n\t"

@@ -1,0 +1,6 @@
+Add this to your ~/.mc/ini file for DN-like coloration:
+
+[Colors]
+base_color=normal=green,black:marked=,black:directory=white,black:link=gray,black:device=,black:special=red,black:executable=green,black:viewunderline=,black:editor=yellow,black:editnormal=lightgray,black:viewnormal=white,black
+
+Thanks to Peter V. Chernikoff

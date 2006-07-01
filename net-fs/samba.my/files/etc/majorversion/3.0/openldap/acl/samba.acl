@@ -1,0 +1,17 @@
+# $Header: $
+#
+# You should either include this file into your /etc/openldap/slapd.conf, or
+# add the contents (after editing), inside the db definition your samba
+# server will use.
+
+# Index the rid for samba:
+#index	rid		eq
+
+# Basic samba acl:
+access to attrs=sambaLMPassword,sambaNTPassword
+	by dn="cn=ldapadm\+(realm=DK\.SCI\.PFU\.EDU\.RU)" write
+	by dn="uid=ldapadm\+(realm=DK\.SCI\.PFU\.EDU\.RU)" write
+	by dn="uid=addadm\+(realm=DK\.SCI\.PFU\.EDU\.RU)" write	
+	by dn="uid=[^/]+/admin\+(realm=DK\.SCI\.PFU\.EDU\.RU)" write
+	by * none
+

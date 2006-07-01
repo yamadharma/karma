@@ -1,0 +1,23 @@
+#!/sbin/runscript
+# Copyright 1999-2002 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License, v2 or later
+# description: An OSPF v2 routing engine for use with Zebra
+
+DAEMON=/usr/sbin/ospfd
+
+depend() {
+    need net
+    after zebra
+}
+
+start() {
+    ebegin "Starting ospfd"
+    start-stop-daemon --start --quiet --exec ${DAEMON} -- -d
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping ospfd"
+    start-stop-daemon --stop --quiet --exec ${DAEMON}
+    eend $?
+}

@@ -1,0 +1,122 @@
+# ChangeLog for sys-process/htop
+# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sys-process/htop/ChangeLog,v 1.14 2006/03/31 01:30:55 flameeyes Exp $
+
+  31 Mar 2006; Diego Pettenò <flameeyes@gentoo.org> htop-0.6.ebuild:
+  Add ~x86-fbsd keyword.
+
+*htop-0.6 (28 Dec 2005)
+
+  28 Dec 2005; Wolfram Schlich <wschlich@gentoo.org> +htop-0.6.ebuild:
+  version bump
+
+*htop-0.5.4 (26 Nov 2005)
+
+  26 Nov 2005; Wolfram Schlich <wschlich@gentoo.org> +htop-0.5.4.ebuild:
+  version bump
+
+*htop-0.5.3 (19 Sep 2005)
+
+  19 Sep 2005; Wolfram Schlich <wschlich@gentoo.org> +htop-0.5.3.ebuild:
+  version bump
+
+  08 Aug 2005; Wolfram Schlich <wschlich@gentoo.org> -htop-0.3.1.ebuild,
+  -htop-0.3.2.ebuild, -htop-0.3.3.ebuild, -htop-0.3.ebuild,
+  -htop-0.4.1.ebuild, -htop-0.4.ebuild, -htop-0.5.ebuild:
+  remove outdated versions
+
+  08 Aug 2005; Wolfram Schlich <wschlich@gentoo.org> htop-0.5.2.ebuild:
+  fix USE=debug behavior
+
+  28 Jul 2005; <dang@gentoo.org> htop-0.5.2.ebuild:
+  Stable on amd64 per bug #100619
+
+  09 Jul 2005; Joseph Jezak <josejx@gentoo.org> htop-0.5.2.ebuild:
+  Marked ppc stable for bug #98372.
+
+  08 Jul 2005; Gustavo Zacarias <gustavoz@gentoo.org> htop-0.5.2.ebuild:
+  Stable on sparc wrt #98327
+
+  08 Jul 2005; Wolfram Schlich <wschlich@gentoo.org> htop-0.5.2.ebuild:
+  mark stable on x86
+
+*htop-0.5.2 (17 May 2005)
+
+  17 May 2005; Wolfram Schlich <wschlich@gentoo.org> +htop-0.5.2.ebuild:
+  version bump
+
+  05 Mar 2005; Joseph Jezak <josejx@gentoo.org> htop-0.5.ebuild:
+  Marked ppc stable for bug #82743.
+
+*htop-0.3.1 (03 Mar 2005)
+
+  03 Mar 2005; Ciaran McCreesh <ciaranm@gentoo.org> +metadata.xml,
+  +htop-0.3.1.ebuild, +htop-0.3.2.ebuild, +htop-0.3.3.ebuild,
+  +htop-0.3.ebuild, +htop-0.4.1.ebuild, +htop-0.4.ebuild, +htop-0.5.ebuild:
+  Moved from sys-apps/htop to sys-process/htop.
+
+  01 Mar 2005; Wolfram Schlich <wschlich@gentoo.org> htop-0.5.ebuild:
+  mark stable on x86
+
+  23 Feb 2005; Malcolm Lashley <malc@gentoo.org> htop-0.5.ebuild:
+  Stable on amd64 - Bug #82743
+
+*htop-0.5 (29 Nov 2004)
+
+  29 Nov 2004; Wolfram Schlich <wschlich@gentoo.org> +htop-0.5.ebuild:
+  version bump
+
+*htop-0.4.1 (27 Sep 2004)
+
+  27 Sep 2004; Wolfram Schlich <wschlich@gentoo.org> htop-0.4.1.ebuild:
+  mark stable on x86, add ~sparc
+
+  05 Sep 2004; Wolfram Schlich <wschlich@gentoo.org> :
+  version bump
+
+  03 Sep 2004; Pieter Van den Abeele <pvdabeel@gentoo.org> htop-0.3.1.ebuild,
+  htop-0.3.2.ebuild, htop-0.3.3.ebuild, htop-0.4.ebuild:
+  Masked htop-0.4.ebuild stable for ppc
+
+  03 Sep 2004; Pieter Van den Abeele <pvdabeel@gentoo.org> htop-0.3.1.ebuild,
+  htop-0.3.2.ebuild, htop-0.3.3.ebuild:
+  Masked htop-0.3.3.ebuild stable for ppc
+
+  03 Sep 2004; Pieter Van den Abeele <pvdabeel@gentoo.org> htop-0.3.1.ebuild,
+  htop-0.3.2.ebuild:
+  Masked htop-0.3.2.ebuild stable for ppc
+
+  03 Sep 2004; Pieter Van den Abeele <pvdabeel@gentoo.org> htop-0.3.1.ebuild:
+  Masked htop-0.3.1.ebuild stable for ppc
+
+*htop-0.4 (22 Aug 2004)
+
+  22 Aug 2004; Wolfram Schlich <wschlich@gentoo.org> +htop-0.4.ebuild:
+  version bump
+
+*htop-0.3.3 (21 Jun 2004)
+
+  21 Jun 2004; Wolfram Schlich <wschlich@gentoo.org> :
+  version bump
+
+*htop-0.3.2 (10 Jun 2004)
+
+  10 Jun 2004; Wolfram Schlich <wschlich@gentoo.org> htop-0.3.2.ebuild:
+  version bump
+
+  10 Jun 2004; Wolfram Schlich <wschlich@gentoo.org> htop-0.3.1.ebuild:
+  added debug options
+
+  03 Jun 2004; David Holm <dholm@gentoo.org> htop-0.3.1.ebuild:
+  Added to ~ppc.
+
+*htop-0.3.1 (29 May 2004)
+
+  29 May 2004; Wolfram Schlich <wschlich@gentoo.org> htop-0.3.1.ebuild:
+  version bump
+
+*htop-0.3 (27 May 2004)
+
+  27 May 2004; Wolfram Schlich <wschlich@gentoo.org> metadata.xml:
+  initial checkin
+

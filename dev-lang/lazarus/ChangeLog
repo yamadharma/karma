@@ -1,0 +1,32 @@
+# ChangeLog for dev-lang/lazarus
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/lazarus/ChangeLog,v 1.6 2006/02/23 19:43:27 gustavoz Exp $
+
+*lazarus-0.9.12 (23 Feb 2006)
+
+  23 Feb 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  +lazarus-0.9.12.ebuild:
+  New upstream version to match fpc 2.0.2
+
+  17 Dec 2005; Carsten Lohrke <carlo@gentoo.org> lazarus-0.9.10.ebuild:
+  clean up a bit
+
+  17 Nov 2005; Herbie Hopkins <herbs@gentoo.org> lazarus-0.9.10.ebuild:
+  Marked ~amd64.
+
+*lazarus-0.9.10 (06 Oct 2005)
+
+  06 Oct 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  +lazarus-0.9.10.ebuild:
+  Revbump for fpc 2.0.0, added ~ppc, solves bugs #103903, #102889, #99480, #90078
+
+  19 Apr 2005; Elfyn McBratney <beu@gentoo.org> metadata.xml:
+  Remove retired developer from metadata.xml.
+
+*lazarus-0.9.6 (02 Apr 2005)
+
+  02 Apr 2005; Chris White <chriswhite@gentoo.org> +metadata.xml,
+  +lazarus-0.9.6.ebuild:
+  Initial import into the tree. Closes bug #87486. Thanks to expose for the
+  ebuild!
+

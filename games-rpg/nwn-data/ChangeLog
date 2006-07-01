@@ -1,0 +1,48 @@
+# ChangeLog for games-rpg/nwn-data
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/games-rpg/nwn-data/ChangeLog,v 1.12 2006/03/31 21:37:23 wolf31o2 Exp $
+
+  31 Mar 2006; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Changed nomirror to mirror and nostrip to strip.
+
+  31 Jan 2006; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  This revision resolves the broken installation that happened after moving
+  nwn.png from FILESDIR to DISTFILES.
+
+  23 Jan 2006; Chris Gianelloni <wolf31o2@gentoo.org> -files/nwn.png,
+  nwn-data-1.29.ebuild:
+  Moved nwn.png to DISTDIR.
+
+  05 Jan 2006; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Removing games-rpg/nwn from RDEPEND.
+
+  05 Jan 2006; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Removed dependency on virtual/x11 and added RDEPEND on >=games-rpg/nwn-1.66-r1.
+
+  21 Dec 2005; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Added .metadata directory for possible use in the nwn ebuild.
+
+  02 Nov 2005; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Added license checking.
+
+  01 Nov 2005; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Fixed installation when not using USE=nowin.
+
+  17 Oct 2005; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Added nwmouse check from bug #106789 for bug #109619.
+
+  30 Sep 2005; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Fixed cosmetic errors on USE=-nowin.
+
+  22 Sep 2005; Chris Gianelloni <wolf31o2@gentoo.org> nwn-data-1.29.ebuild:
+  Added echo lines to inform users which CD they'll need.
+
+*nwn-data-1.29 (21 Sep 2005)
+
+  21 Sep 2005; Chris Gianelloni <wolf31o2@gentoo.org> +files/nwn.png,
+  +metadata.xml, +nwn-data-1.29.ebuild:
+  Initial import. Ebuild by me. This is the first ebuild for breaking up
+  Neverwinter Nights into 2 ebuilds. This ebuild also adds support for
+  installing the Shadows of Undrentide and Hordes of the Underdark expansion
+  packs from CD using USE=sou and USE=hou respectively.
+

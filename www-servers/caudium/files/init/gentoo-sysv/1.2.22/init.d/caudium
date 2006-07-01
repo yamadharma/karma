@@ -1,0 +1,24 @@
+#!/sbin/runscript
+# Copyright 1999-2002 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License, v2 or later
+
+#opts="start stop reload restart"
+caudiumhome=/usr/lib/caudium
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting caudium"
+	cd ${caudiumhome}
+	start-stop-daemon --start --quiet --pidfile ${pidfile} --exec ./start -- --pid-file=${pidfile}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping caudium"
+	start-stop-daemon --stop --quiet --pidfile $pidfile
+	eend $?
+}
+

@@ -1,0 +1,31 @@
+#!/sbin/runscript
+# Copyright 1999-2003 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+service=/usr/sbin/samhain
+service_pid=/var/run/samhain.pid
+service_name="samhain"
+
+depend () 
+{
+	need clock hostname logger
+}
+
+
+start () 
+{
+	ebegin "Starting ${service_name}"
+	start-stop-daemon --start --quiet --exec ${service}
+	eend $? "Failed to start ${service_name}"
+}
+
+stop () 
+{
+	ebegin "Stopping ${service_name}"
+	start-stop-daemon --stop --quiet --retry 15 --exec ${service}
+	rm -f ${service_pid}
+	eend $? "Failed to stop ${service_name}"
+}
+
+

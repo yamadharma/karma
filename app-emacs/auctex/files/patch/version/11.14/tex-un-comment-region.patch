@@ -1,0 +1,20 @@
+diff -Naur ../work/auctex-11.14/tex.el auctex-11.14/tex.el
+--- ../work/auctex-11.14/tex.el	2003-06-03 16:18:07.000000000 +0400
++++ auctex-11.14/tex.el	2003-06-03 16:22:06.000000000 +0400
+@@ -2393,10 +2393,12 @@
+ 
+ ;;; Comments
+ 
+-(defun TeX-un-comment-region (start end level)
+-  "Remove up to LEVEL comment characters from each line in the region."
+-  (interactive "*r\np") 
+-  (comment-region start end (- level)))
++;;(defun TeX-un-comment-region (start end level)
++;;  "Remove up to LEVEL comment characters from each line in the region."
++;;  (interactive "*r\np") 
++;;  (comment-region start end (- level)))
++
++(fset 'TeX-un-comment-region 'uncomment-region)
+ 
+ (defun TeX-un-comment (level)
+   "Delete up to LEVEL %'s from the beginning of each line in a comment."

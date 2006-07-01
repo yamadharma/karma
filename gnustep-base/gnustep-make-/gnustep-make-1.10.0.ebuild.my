@@ -1,0 +1,105 @@
+# Copyright 1999-2003 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+inherit doc-tex patch
+
+DESCRIPTION="GNUstep makefile package"
+HOMEPAGE="http://www.gnustep.org"
+SRC_URI="ftp://ftp.gnustep.org/pub/gnustep/core/${P}.tar.gz"
+LICENSE="LGPL-2.1"
+SLOT="0"
+KEYWORDS="x86"
+
+IUSE="doc noflattened"
+
+DEPEND="virtual/glibc
+	>=sys-devel/gcc-3.0.4
+	>=sys-devel/make-3.75"
+
+RDEPEND="${DEPEND}
+	sys-apps/man
+	sys-apps/texinfo"
+
+
+patch_OPTIONS="cleancvs"
+
+if [ -z "${GNUSTEP_ROOT}" ]
+    then
+    GNUSTEP_ROOT=/usr/GNUstep
+fi
+
+GNUSTEP_SYSTEM_ROOT=${GNUSTEP_ROOT}/System
+GNUSTEP_LOCAL_ROOT=${GNUSTEP_ROOT}/Local
+GNUSTEP_NETWORK_ROOT=${GNUSTEP_ROOT}/Network
+
+GNUSTEP_INSTALLATION_DIR=${D}${GNUSTEP_SYSTEM_ROOT}
+INSTALL_ROOT_DIR=${D}
+
+src_compile () 
+{
+    local myconf
+
+    myconf="--prefix=${GNUSTEP_ROOT}"
+    myconf="${myconf} --with-network-root=${GNUSTEP_ROOT}/Network"
+    myconf="${myconf} --with-tar=/bin/tar"
+
+    if ( use noflattened )    
+	then
+	myconf="${myconf} --disable-flattened"
+    fi
+    
+    ./configure \
+	--prefix=${GNUSTEP_ROOT} \
+	--mandir=/usr/share/man \
+	--infodir=/usr/share/info \
+	--enable-multi-platform \
+	--host=${CHOST} \
+	${myconf} \
+	|| die "./configure failed"
+	
+    make || die
+}
+
+src_install () 
+{
+    make \
+	GNUSTEP_SYSTEM_ROOT=${D}${GNUSTEP_ROOT}/System \
+	GNUSTEP_LOCAL_ROOT=${D}${GNUSTEP_ROOT}/Local \
+	GNUSTEP_NETWORK_ROOT=${D}${GNUSTEP_ROOT}/Network \
+	install || die "install failed"
+	
+    dodir /etc/env.d
+    echo "GNUSTEP_ROOT=${GNUSTEP_ROOT}" > ${D}/etc/env.d/10gnustep_env
+    echo "MANPATH=${GNUSTEP_SYSTEM_ROOT}/Library/Documentation/man:${GNUSTEP_LOCAL_ROOT}/Library/Documentation/man:${GNUSTEP_NETWORK_ROOT}/Library/Documentation/man" >> ${D}/etc/env.d/10gnustep_env
+    echo "INFOPATH=${GNUSTEP_SYSTEM_ROOT}/Library/Documentation/info:${GNUSTEP_LOCAL_ROOT}/Library/Documentation/info:${GNUSTEP_NETWORK_ROOT}/Library/Documentation/info" >> ${D}/etc/env.d/10gnustep_env
+    
+    
+    dodir /etc/profile.d
+    
+    echo -e "#!/bin/sh\n. ${GNUSTEP_ROOT}/System/Library/Makefiles/GNUstep.sh" > ${D}/etc/profile.d/gnustep.sh
+    echo -e "#!/bin/csh\nsource ${GNUSTEP_ROOT}/System/Library/Makefiles/GNUstep.csh" > ${D}/etc/profile.d/gnustep.csh
+    
+# {{{ Doc install
+
+    if ( use doc )
+	then 
+	cd ${S}/Documentation
+	make
+	make GNUSTEP_INSTALLATION_DIR=${D}${GNUSTEP_SYSTEM_ROOT} install
+    fi
+
+# }}}
+    
+}
+
+pkg_postinst ()
+{
+    env-update &> /dev/null
+    source /etc/profile
+}
+
+# Local Variables:
+# mode: sh
+# End:
+

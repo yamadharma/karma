@@ -1,0 +1,371 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index ca28b79..a59433f 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -1,4 +1,8 @@
+-?/6/2006 autofs-5.0.0_beta5
++?/6/2006 autofs-5.0.0
++---------------------
++- lookup_init cleanup and fix missed memory leak.
++
++20/6/2006 autofs-5.0.0_beta5
+ ---------------------------
+ - re-instate v4 directory cleanup.
+ - backout master map lookup changes made to beta3.
+diff --git a/modules/lookup_file.c b/modules/lookup_file.c
+index 28a5bd5..d598604 100644
+--- a/modules/lookup_file.c
++++ b/modules/lookup_file.c
+@@ -58,17 +58,18 @@ int lookup_init(const char *mapfmt, int 
+ 	char buf[MAX_ERR_BUF];
+ 	struct stat st;
+ 
+-	if (!(ctxt = malloc(sizeof(struct lookup_context)))) {
++	*context = NULL;
++
++	ctxt = malloc(sizeof(struct lookup_context));
++	if (!ctxt) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+ 		crit(LOGOPT_ANY, MODPREFIX "malloc: %s", estr);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+ 	if (argc < 1) {
+ 		crit(LOGOPT_ANY, MODPREFIX "No map name");
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -79,7 +80,6 @@ int lookup_init(const char *mapfmt, int 
+ 		      MODPREFIX "file map %s is not an absolute pathname",
+ 		      ctxt->mapname);
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -88,7 +88,6 @@ int lookup_init(const char *mapfmt, int 
+ 		     MODPREFIX "file map %s missing or not readable",
+ 		     ctxt->mapname);
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -96,7 +95,6 @@ int lookup_init(const char *mapfmt, int 
+ 		crit(LOGOPT_ANY, MODPREFIX "file map %s, could not stat",
+ 		     ctxt->mapname);
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 		
+@@ -109,7 +107,6 @@ int lookup_init(const char *mapfmt, int 
+ 	if (!ctxt->parse) {
+ 		crit(LOGOPT_ANY, MODPREFIX "failed to open parse context");
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 	*context = ctxt;
+diff --git a/modules/lookup_hesiod.c b/modules/lookup_hesiod.c
+index 7fd2474..da4052d 100644
+--- a/modules/lookup_hesiod.c
++++ b/modules/lookup_hesiod.c
+@@ -43,9 +43,11 @@ int lookup_init(const char *mapfmt, int 
+ 	struct lookup_context *ctxt = NULL;
+ 	char buf[MAX_ERR_BUF];
+ 
++	*context = NULL;
++
+ 	/* If we can't build a context, bail. */
+-	if ((*context = ctxt = (struct lookup_context *)
+-	     malloc(sizeof(struct lookup_context))) == NULL) {
++	ctxt = malloc(sizeof(struct lookup_context));
++	if (!ctxt) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+ 		crit(LOGOPT_ANY, MODPREFIX "malloc: %s", estr);
+ 		return 1;
+@@ -58,6 +60,7 @@ int lookup_init(const char *mapfmt, int 
+ 	if (hesiod_init(&(ctxt->hesiod_context)) != 0) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+ 		crit(LOGOPT_ANY, MODPREFIX "hesiod_init(): %s", estr);
++		free(ctxt);
+ 		return 1;
+ 	}
+ 
+@@ -66,7 +69,15 @@ int lookup_init(const char *mapfmt, int 
+ 		mapfmt = MAPFMT_DEFAULT;
+ 
+ 	/* Open the parser, if we can. */
+-	return !(ctxt->parser = open_parse(mapfmt, MODPREFIX, argc - 1, argv + 1));
++	ctxt->parser = open_parse(mapfmt, MODPREFIX, argc - 1, argv + 1);
++	if (!ctxt->parser) {
++		crit(LOGOPT_ANY, MODPREFIX "failed to open parse context");
++		free(ctxt);
++		return 1;
++	}
++	*context = ctxt;
++
++	return 0;
+ }
+ 
+ int lookup_read_master(struct master *master, time_t age, void *context)
+diff --git a/modules/lookup_hosts.c b/modules/lookup_hosts.c
+index 55e9fd1..f1bd68b 100644
+--- a/modules/lookup_hosts.c
++++ b/modules/lookup_hosts.c
+@@ -48,7 +48,10 @@ int lookup_init(const char *mapfmt, int 
+ 	struct lookup_context *ctxt;
+ 	char buf[MAX_ERR_BUF];
+ 
+-	if (!(*context = ctxt = malloc(sizeof(struct lookup_context)))) {
++	*context = NULL;
++
++	ctxt = malloc(sizeof(struct lookup_context));
++	if (!ctxt) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+ 		crit(LOGOPT_ANY, MODPREFIX "malloc: %s", estr);
+ 		return 1;
+@@ -56,7 +59,15 @@ int lookup_init(const char *mapfmt, int 
+ 
+ 	mapfmt = MAPFMT_DEFAULT;
+ 
+-	return !(ctxt->parse = open_parse(mapfmt, MODPREFIX, argc, argv));
++	ctxt->parse = open_parse(mapfmt, MODPREFIX, argc, argv);
++	if (!ctxt->parse) {
++		crit(LOGOPT_ANY, MODPREFIX "failed to open parse context");
++		free(ctxt);
++		return 1;
++	}
++	*context = ctxt;
++
++	return 0;
+ }
+ 
+ int lookup_read_master(struct master *master, time_t age, void *context)
+diff --git a/modules/lookup_ldap.c b/modules/lookup_ldap.c
+index aaaed2e..8a6faca 100644
+--- a/modules/lookup_ldap.c
++++ b/modules/lookup_ldap.c
+@@ -694,12 +694,13 @@ int lookup_init(const char *mapfmt, int 
+ 	int ret;
+ 	LDAP *ldap = NULL;
+ 
++	*context = NULL;
++
+ 	/* If we can't build a context, bail. */
+-	ctxt = (struct lookup_context *) malloc(sizeof(struct lookup_context));
++	ctxt = malloc(sizeof(struct lookup_context));
+ 	if (!ctxt) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+ 		crit(LOGOPT_ANY, MODPREFIX "malloc: %s", estr);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 	memset(ctxt, 0, sizeof(struct lookup_context));
+@@ -715,7 +716,6 @@ int lookup_init(const char *mapfmt, int 
+ 	if (!parse_server_string(argv[0], ctxt)) {
+ 		error(LOGOPT_ANY, MODPREFIX "cannot parse server string");
+ 		free_context(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -723,7 +723,6 @@ int lookup_init(const char *mapfmt, int 
+ 	if (!get_default_schema(ctxt)) {
+ 		error(LOGOPT_ANY, MODPREFIX "cannot set default schema");
+ 		free_context(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -736,7 +735,6 @@ #if WITH_SASL
+ 	if (ret) {
+ 		error(LOGOPT_ANY, MODPREFIX "cannot initialize auth setup");
+ 		free_context(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ #endif
+@@ -745,7 +743,6 @@ #endif
+ 	if (!ldap) {
+ 		error(LOGOPT_ANY, MODPREFIX "cannot connect to server");
+ 		free_context(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -757,7 +754,6 @@ #endif
+ 	if (!ctxt->parse) {
+ 		crit(LOGOPT_ANY, MODPREFIX "failed to open parse context");
+ 		free_context(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 	*context = ctxt;
+diff --git a/modules/lookup_multi.c b/modules/lookup_multi.c
+index 996ed39..c64a141 100644
+--- a/modules/lookup_multi.c
++++ b/modules/lookup_multi.c
+@@ -49,7 +49,8 @@ int lookup_init(const char *my_mapfmt, i
+ 	int i, j, an;
+ 	char *estr;
+ 
+-	if (!(*context = ctxt = malloc(sizeof(struct lookup_context))))
++	ctxt = malloc(sizeof(struct lookup_context));
++	if (!ctxt)
+ 		goto nomem;
+ 
+ 	memset(ctxt, 0, sizeof(struct lookup_context));
+@@ -121,7 +122,6 @@ error_out:
+ 		if (ctxt->argl)
+ 			free(ctxt->argl);
+ 		free(ctxt);
+-		*context = NULL;
+ 	}
+ 	return 1;
+ }
+diff --git a/modules/lookup_nisplus.c b/modules/lookup_nisplus.c
+index 6ea418e..6cb0d6c 100644
+--- a/modules/lookup_nisplus.c
++++ b/modules/lookup_nisplus.c
+@@ -37,17 +37,18 @@ int lookup_init(const char *mapfmt, int 
+ 	struct lookup_context *ctxt;
+ 	char buf[MAX_ERR_BUF];
+ 
+-	if (!(ctxt = malloc(sizeof(struct lookup_context)))) {
++	*context = NULL;
++
++	ctxt = malloc(sizeof(struct lookup_context));
++	if (!ctxt) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+ 		crit(LOGOPT_ANY, MODPREFIX "%s", estr);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+ 	if (argc < 1) {
+ 		crit(LOGOPT_ANY, MODPREFIX "No map name");
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 	ctxt->mapname = argv[0];
+@@ -60,7 +61,6 @@ int lookup_init(const char *mapfmt, int 
+ 	if (!ctxt->domainname) {
+ 		crit(LOGOPT_ANY, MODPREFIX "NIS+ domain not set");
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -71,7 +71,6 @@ int lookup_init(const char *mapfmt, int 
+ 	if (!ctxt->parse) {
+ 		crit(LOGOPT_ANY, MODPREFIX "failed to open parse context");
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 	*context = ctxt;
+diff --git a/modules/lookup_program.c b/modules/lookup_program.c
+index e20054b..e527f52 100644
+--- a/modules/lookup_program.c
++++ b/modules/lookup_program.c
+@@ -47,7 +47,10 @@ int lookup_init(const char *mapfmt, int 
+ 	struct lookup_context *ctxt;
+ 	char buf[MAX_ERR_BUF];
+ 
+-	if (!(*context = ctxt = malloc(sizeof(struct lookup_context)))) {
++	*context = NULL;
++
++	ctxt = malloc(sizeof(struct lookup_context));
++	if (!ctxt) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+ 		crit(LOGOPT_ANY, MODPREFIX "malloc: %s", estr);
+ 		return 1;
+@@ -56,7 +59,6 @@ int lookup_init(const char *mapfmt, int 
+ 	if (argc < 1) {
+ 		crit(LOGOPT_ANY, MODPREFIX "No map name");
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 	ctxt->mapname = argv[0];
+@@ -66,7 +68,6 @@ int lookup_init(const char *mapfmt, int 
+ 		     MODPREFIX "program map %s is not an absolute pathname",
+ 		     ctxt->mapname);
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -75,14 +76,21 @@ int lookup_init(const char *mapfmt, int 
+ 		     MODPREFIX "program map %s missing or not executable",
+ 		     ctxt->mapname);
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+ 	if (!mapfmt)
+ 		mapfmt = MAPFMT_DEFAULT;
+ 
+-	return !(ctxt->parse = open_parse(mapfmt, MODPREFIX, argc - 1, argv + 1));
++	ctxt->parse = open_parse(mapfmt, MODPREFIX, argc - 1, argv + 1);
++	if (!ctxt->parse) {
++		crit(LOGOPT_ANY, MODPREFIX "failed to open parse context");
++		free(ctxt);
++		return 1;
++	}
++	*context = ctxt;
++
++	return 0;
+ }
+ 
+ int lookup_read_master(struct master *master, time_t age, void *context)
+diff --git a/modules/lookup_yp.c b/modules/lookup_yp.c
+index 7eea62b..84b4feb 100644
+--- a/modules/lookup_yp.c
++++ b/modules/lookup_yp.c
+@@ -62,17 +62,19 @@ int lookup_init(const char *mapfmt, int 
+ 	char buf[MAX_ERR_BUF];
+ 	int err;
+ 
+-	if (!(ctxt = malloc(sizeof(struct lookup_context)))) {
++	*context = NULL;
++
++	ctxt = malloc(sizeof(struct lookup_context));
++	if (!ctxt) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+ 		crit(LOGOPT_ANY, MODPREFIX "%s", estr);
+-		*context = NULL;
+ 		return 1;
+ 	}
++	memset(ctxt, 0, sizeof(struct lookup_context));
+ 
+ 	if (argc < 1) {
+ 		crit(LOGOPT_ANY, MODPREFIX "no map name");
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 	ctxt->mapname = argv[0];
+@@ -85,7 +87,6 @@ int lookup_init(const char *mapfmt, int 
+ 		debug(LOGOPT_NONE, MODPREFIX "map %s: %s", ctxt->mapname,
+ 		       yperr_string(err));
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 
+@@ -96,7 +97,6 @@ int lookup_init(const char *mapfmt, int 
+ 	if (!ctxt->parse) {
+ 		crit(LOGOPT_ANY, MODPREFIX "failed to open parse context");
+ 		free(ctxt);
+-		*context = NULL;
+ 		return 1;
+ 	}
+ 	*context = ctxt;

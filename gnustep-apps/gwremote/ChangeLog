@@ -1,0 +1,27 @@
+# ChangeLog for gnustep-apps/gwnet
+# Copyright 1999-2004 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/gnustep-apps/gwnet/ChangeLog,v 1.4 2004/12/04 20:23:19 fafhrd Exp $
+
+*gwnet-0.1_pre20041203 (04 Dec 2004)
+
+  04 Dec 2004; Armando Di Cianno <fafhrd@gentoo.org>
+  +gwnet-0.1_pre20041203.ebuild:
+  General version bump
+
+  11 Nov 2004; Armando Di Cianno <fafhrd@gentoo.org>
+  gwnet-0.1_pre20040928.ebuild:
+  Mass Update: gnustep.eclass revamped to allow configurable root install;
+  gnustep-base/libs/apps updated to utilize new gnustep.eclass (only versions
+  bumped where files would change); some KEYWORDS were accidentally dropped
+  between version bumps of packages -- this has been resolved; windowmaker
+  correctly supports gnustep now
+
+  17 Oct 2004; David Holm <dholm@gentoo.org> gwnet-0.1_pre20040928.ebuild:
+  Added to ~ppc.
+
+*gwnet-0.1_pre20040928 (05 Oct 2004)
+
+  05 Oct 2004; Armando Di Cianno <fafhrd@gentoo.org> +metadata.xml,
+  +gwnet-0.1_pre20040928.ebuild:
+  Original package added; keyworded for ~x86
+

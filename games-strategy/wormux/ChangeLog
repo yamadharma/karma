@@ -1,0 +1,45 @@
+# ChangeLog for games-strategy/wormux
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/games-strategy/wormux/ChangeLog,v 1.9 2006/04/27 07:09:32 mr_bones_ Exp $
+
+*wormux-0.7.1 (27 Apr 2006)
+
+  27 Apr 2006; Michael Sterrett <mr_bones_@gentoo.org>
+  +files/wormux-0.7.1-fix-gettext-Makefile.patch,
+  +files/wormux-0.7.1-user-CFLAGS.patch, +wormux-0.7.1.ebuild:
+  version bump
+
+  24 Apr 2006; <squinky86@gentoo.org> wormux-0.7.ebuild:
+  Add ~amd64 keyword; bug #130942.
+
+*wormux-0.7 (05 Apr 2006)
+
+  05 Apr 2006; Michael Sterrett <mr_bones_@gentoo.org>
+  +files/wormux-0.7-fix-gettext-Makefile.patch,
+  +files/wormux-0.7-gcc41.patch, +files/wormux-0.7-user-CFLAGS.patch,
+  +wormux-0.7.ebuild:
+  version bump - ebuild and patches submitted by TGL via bug #119425
+
+  26 Feb 2006; Mark Loeser <halcy0n@gentoo.org>
+  +files/wormux-0.5.1-gcc41.patch, wormux-0.5.1.ebuild:
+  Add patch to fix compilation with gcc-4.1 by Konrad Campowsky <frollen AT cs
+  DOT tu-berlin DOT de>; bug #120078
+
+  23 Feb 2006; <Tupone@gentoo.org> wormux-0.5.1.ebuild:
+  Modular X dependency fix
+
+*wormux-0.5.1 (02 Jul 2005)
+
+  02 Jul 2005; Mike Frysinger <vapier@gentoo.org> +wormux-0.5.1.ebuild:
+  Version bump #97724 by Slobodan D. Sredojevic.
+
+  09 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org> wormux-0.5.0.ebuild:
+  added ~amd64 KEYWORD, fixes #84531
+
+  01 Mar 2005; Michael Sterrett <mr_bones_@gentoo.org> wormux-0.5.0.ebuild:
+  ppc has not clanlib; stable for x86
+
+*wormux-0.5.0 (16 Dec 2004)
+
+  16 Dec 2004; Mike Frysinger <vapier@gentoo.org> :
+  Initial import.  Ebuild submitted by [a bunch of people] #52679.

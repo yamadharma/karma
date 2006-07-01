@@ -1,0 +1,169 @@
+diff -dPNur id3lib-3.8.3-orig/configure.in id3lib-3.8.3-new/configure.in
+--- id3lib-3.8.3-orig/configure.in	2003-03-02 01:23:00.000000000 +0100
++++ id3lib-3.8.3-new/configure.in	2005-07-19 22:03:12.000000000 +0200
+@@ -217,6 +217,20 @@
+   LIBS="$LIBS $ICONV_LIB"
+ fi
+ 
++AC_CHECK_LIB(rcc, rccInit,[
++    AC_CHECK_HEADERS(librcc.h,[
++       LIBRCC_LIBS="-lrcc"
++       LIBRCC_INCLUDES="-DHAVE_LIBRCC"
++    ],[
++       LIBRCC_LIBS=""
++       LIBRCC_INCLUDES=""
++])],[
++    LIBRCC_LIBS=""
++    LIBRCC_INCLUDES=""
++])
++AC_SUBST(LIBRCC_LIBS)
++AC_SUBST(LIBRCC_INCLUDES)
++
+ dnl Check for c++ features
+ AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+@@ -315,5 +329,5 @@
+   src/Makefile                  \
+   examples/Makefile             \
+   prj/Makefile			\
+-  libprj/Makefile
++  libprj/Makefile		
+ )
+diff -dPNur id3lib-3.8.3-orig/src/field_string_ascii.cpp id3lib-3.8.3-new/src/field_string_ascii.cpp
+--- id3lib-3.8.3-orig/src/field_string_ascii.cpp	2003-03-02 01:23:00.000000000 +0100
++++ id3lib-3.8.3-new/src/field_string_ascii.cpp	2005-07-19 21:34:12.000000000 +0200
+@@ -27,6 +27,7 @@
+ #include "field_impl.h"
+ #include "id3/utils.h" // has <config.h> "id3/id3lib_streams.h" "id3/globals.h" "id3/id3lib_strings.h"
+ #include "io_helpers.h"
++#include "rccpatch.h"
+ 
+ using namespace dami;
+ 
+@@ -92,8 +93,15 @@
+       buffer != NULL && maxLength > 0)
+   {
+     String data = this->GetText();
++    char *recoded = rccPatchRecode(data.data(), (size_t)data.size(), (size_t*)&size);
++    if (recoded) {
++	size = dami::min(maxLength, size);
++	::memcpy(buffer, recoded, size);
++	free(recoded);
++    } else {
+     size = dami::min(maxLength, data.size());
+     ::memcpy(buffer, data.data(), size);
++    }
+     if (size < maxLength)
+     {
+       buffer[size] = '\0';
+diff -dPNur id3lib-3.8.3-orig/src/Makefile.am id3lib-3.8.3-new/src/Makefile.am
+--- id3lib-3.8.3-orig/src/Makefile.am	2003-03-02 01:23:00.000000000 +0100
++++ id3lib-3.8.3-new/src/Makefile.am	2005-07-19 21:38:31.000000000 +0200
+@@ -17,7 +17,7 @@
+ zlib_include = 
+ endif
+ 
+-INCLUDES = \
++INCLUDES = @LIBRCC_INCLUDES@ \
+   @ID3LIB_DEBUG_FLAGS@ -I$(top_srcdir)/include/id3 -I$(top_srcdir)/include $(zlib_include)
+ 
+ noinst_HEADERS =                \
+@@ -31,7 +31,8 @@
+   header_tag.h                  \
+   mp3_header.h                  \
+   tag_impl.h                    \
+-  spec.h                        
++  spec.h                        \
++  rccpatch.h
+ 
+ id3lib_sources =                \
+   c_wrapper.cpp                 \
+@@ -66,7 +67,8 @@
+   tag_parse_v1.cpp              \
+   tag_render.cpp                \
+   utils.cpp                     \
+-  writers.cpp                   
++  writers.cpp                   \
++  rccpatch.cpp
+ 
+ lib_LTLIBRARIES   = libid3.la 
+ 
+@@ -77,6 +79,7 @@
+ endif
+ 
+ libid3_la_LDFLAGS = \
++  @LIBRCC_LIBS@ \
+   -lz \
+   -version-info $(LT_VERSION) \
+   -release $(LT_RELEASE) \
+diff -dPNur id3lib-3.8.3-orig/src/rccpatch.cpp id3lib-3.8.3-new/src/rccpatch.cpp
+--- id3lib-3.8.3-orig/src/rccpatch.cpp	1970-01-01 01:00:00.000000000 +0100
++++ id3lib-3.8.3-new/src/rccpatch.cpp	2005-07-19 22:10:47.000000000 +0200
+@@ -0,0 +1,60 @@
++#include <stdlib.h>
++
++#include "../config.h"
++
++#ifdef HAVE_LIBRCC
++# include <librcc.h>
++#endif /* HAVE_LIBRCC */
++
++
++#ifdef HAVE_LIBRCC
++# define ID3_CLASS 0
++# define OUT_CLASS 1
++static rcc_class classes[] = {
++    { "id3", RCC_CLASS_STANDARD, NULL, NULL, "ID3 Encoding", 0 },
++    { "out", RCC_CLASS_STANDARD, NULL, NULL, "Output Encoding", 0 },
++    { NULL, RCC_CLASS_STANDARD, NULL, NULL, NULL, 0 }
++};
++
++static int rcc_initialized = 0;
++#endif /* HAVE_LIBRCC */
++
++
++void rccPatchFree() {
++#ifdef HAVE_LIBRCC
++    if (rcc_initialized) {
++       rccFree();
++       rcc_initialized = 0;
++    }
++#endif /* HAVE_LIBRCC */
++}
++
++void rccPatchInit() {
++#ifdef HAVE_LIBRCC
++    if (rcc_initialized) return;
++    rccInit();
++    rccInitDefaultContext(NULL, 0, 0, classes, 0);
++    rccLoad(NULL, "xmms");
++    rccInitDb4(NULL, NULL, 0);
++    rcc_initialized = 1;
++#endif /* HAVE_LIBRCC */
++}
++
++static void rccPatchTryInit() {
++#ifdef HAVE_LIBRCC
++    if (!rcc_initialized) {
++	rccPatchInit();
++	if (rcc_initialized) atexit(rccPatchFree);	
++    }
++#endif /* HAVE_LIBRCC */
++}
++
++char *rccPatchRecode(const char *str, size_t len, size_t *rlen) {
++#ifdef HAVE_LIBRCC
++    char *res;
++    rccPatchTryInit();
++    return rccSizedRecode(NULL, ID3_CLASS, OUT_CLASS, str, len, rlen);
++#else
++    return NULL;
++#endif /* HAVE_LIBRCC */
++}
+diff -dPNur id3lib-3.8.3-orig/src/rccpatch.h id3lib-3.8.3-new/src/rccpatch.h
+--- id3lib-3.8.3-orig/src/rccpatch.h	1970-01-01 01:00:00.000000000 +0100
++++ id3lib-3.8.3-new/src/rccpatch.h	2005-07-19 21:34:51.000000000 +0200
+@@ -0,0 +1,3 @@
++void rccPatchFree();
++void rccPatchInit();
++char *rccPatchRecode(const char *str, size_t size_t, size_t *size_t);

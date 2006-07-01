@@ -1,0 +1,5 @@
+MD5 70b3bba526a8d36d3bb23a87d37e9188 cyrus-imapd-2.2.12.tar.gz 1961161
+MD5 2356f374e029163f42e9e18b53166cc7 cyrus-imapd-2.2.12-autocreate-0.9.4.diff 77326
+MD5 6082b166e81200ed0642d002ab7196dc cyrus-imapd-2.2.12-autoreply-0.1-0.diff 644
+MD5 983a18fadc9b4a86bcd8a9d16a1ba9a5 cyrus-imapd-2.2.12-autosievefolder-0.6.diff 8047
+MD5 02bf76e81e754d72d24a917dfac1940f cyrus-imapd-2.2.12-rmquota+deletemailbox-0.2-1.diff 16892

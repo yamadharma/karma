@@ -1,0 +1,52 @@
+--- /dev/null	2003-07-01 17:28:39.000000000 +0200
++++ linux/sound/core/ioctl32/compat.h	2003-07-01 17:29:59.000000000 +0200
+@@ -0,0 +1,16 @@
++#include <linux/types.h>
++
++/* FIXME: it is valid for x86_64, check other archs */
++
++typedef s32		compat_time_t;
++
++struct compat_timespec {
++	compat_time_t   tv_sec;
++	s32             tv_nsec;
++};
++
++struct compat_timeval {
++	compat_time_t   tv_sec;
++	s32             tv_usec;
++};
++
+--- linux/sound/core/ioctl32/pcm32.c	2003-07-01 17:27:21.000000000 +0200
++++ linux/sound/core/ioctl32/pcm32.c	2003-07-01 17:30:20.000000000 +0200
+@@ -21,7 +21,7 @@
+ #include <sound/driver.h>
+ #include <linux/time.h>
+ #include <linux/slab.h>
+-#include <linux/compat.h>
++#include "compat.h"
+ #include <sound/core.h>
+ #include <sound/pcm.h>
+ #include "ioctl32.h"
+--- linux/sound/core/ioctl32/timer32.c	2003-07-01 17:27:35.000000000 +0200
++++ linux/sound/core/ioctl32/timer32.c	2003-07-01 17:27:52.000000000 +0200
+@@ -21,7 +21,7 @@
+ #include <sound/driver.h>
+ #include <linux/time.h>
+ #include <linux/fs.h>
+-#include <linux/compat.h>
++#include "compat.h"
+ #include <sound/core.h>
+ #include <sound/timer.h>
+ #include <asm/uaccess.h>
+--- linux/sound/core/ioctl32/rawmidi32.c	2003-07-01 17:27:32.000000000 +0200
++++ linux/sound/core/ioctl32/rawmidi32.c	2003-07-01 17:28:57.000000000 +0200
+@@ -21,7 +21,7 @@
+ #include <sound/driver.h>
+ #include <linux/time.h>
+ #include <linux/fs.h>
+-#include <linux/compat.h>
++#include "compat.h"
+ #include <sound/core.h>
+ #include <sound/rawmidi.h>
+ #include <asm/uaccess.h>

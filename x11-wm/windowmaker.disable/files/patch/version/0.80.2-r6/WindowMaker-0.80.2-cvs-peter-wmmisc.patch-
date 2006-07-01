@@ -1,0 +1,94 @@
+--- WindowMaker-0.80.2/src/defaults.c.wmmisc	2003-10-16 23:09:26 +0400
++++ WindowMaker-0.80.2/src/defaults.c	2003-10-16 23:11:25 +0400
+@@ -2212,7 +2212,7 @@
+ 
+ #ifdef HAVE_DLFCN_H
+         if (function) {
+-            initFunc = dlsym(function->handle, "initWindowMaker");
++            initFunc = (void (*)(Display *, Colormap))dlsym(function->handle, "initWindowMaker");
+             if (initFunc) {
+                 initFunc(dpy, scr->w_colormap);
+             } else {
+@@ -3221,7 +3221,7 @@
+     if (scr->icon_title_texture) {
+         wTextureDestroy(scr, (WTexture*)scr->icon_title_texture);
+     }
+-    /* // ?? why is this necessary? color was already parsed and alloc'ed */
++    /* ?? why is this necessary? color was already parsed and alloc'ed */
+     XQueryColor (dpy, scr->w_colormap, color);
+     scr->icon_title_texture = wTextureMakeSolid(scr, color);
+ 
+--- WindowMaker-0.80.2/src/screen.c.wmmisc	2003-10-16 23:09:26 +0400
++++ WindowMaker-0.80.2/src/screen.c	2003-10-16 23:11:25 +0400
+@@ -1188,8 +1188,8 @@
+ 
+ #ifdef VIRTUAL_DESKTOP
+         /*
+-         *      * create inputonly windows at the border of screen
+-         *           */
++	 * create inputonly windows at the border of screen
++	 */
+         wWorkspaceManageEdge(scr);
+ #endif
+ 
+--- WindowMaker-0.80.2/src/texture.c.wmmisc	2003-10-16 23:09:26 +0400
++++ WindowMaker-0.80.2/src/texture.c	2003-10-16 23:11:25 +0400
+@@ -441,7 +441,7 @@
+     }
+     
+     /* find the function */
+-    texture->render = dlsym(texture->handle, func);
++    texture->render = (RImage*(*)(int, char**, int, int, int))dlsym(texture->handle, func);
+     if (!texture->render) {
+         wwarning(_("function \"%s\" not found in library \"%s\""), func, lib);
+ 	wfree(argv);
+--- WindowMaker-0.80.2/src/window.c.wmmisc	2003-10-16 23:09:26 +0400
++++ WindowMaker-0.80.2/src/window.c	2003-10-16 23:11:25 +0400
+@@ -1090,7 +1090,7 @@
+ 	if (win_state && win_state->state->w > 0) {
+ 	    x = win_state->state->x;
+ 	    y = win_state->state->y;
+-	} else if ((wwin->transient_for==None
++	} else if ((wwin->transient_for!=None
+ 		    || wPreferences.window_placement!=WPM_MANUAL)
+ 		   && !scr->flags.startup 
+ 		   && workspace == scr->current_workspace
+@@ -1145,7 +1145,7 @@
+ 	     * Make spash screens come out in the center of a head
+ 	     * trouble is that most splashies never get here
+ 	     * they are managed trough atoms but god knows where.
+-	     * Dan, do you know ?
++	     * Dan, do you know ? -peter
+ 	     * 
+ 	     * Most of them are not managed, they are set
+ 	     * OverrideRedirect, which means we can't do anything about
+--- WindowMaker-0.80.2/util/wmsetbg.c.wmmisc	2003-10-16 23:09:25 +0400
++++ WindowMaker-0.80.2/util/wmsetbg.c	2003-10-16 23:11:25 +0400
+@@ -720,14 +720,14 @@
+ 	    goto function_cleanup;
+ 	}
+ 
+-	initFunc = dlsym(handle, "initWindowMaker");
++	initFunc = (void (*)(Display*, Colormap))dlsym(handle, "initWindowMaker");
+         if (!initFunc) {
+ 	    wwarning("could not initialize library %s", lib);
+ 	    goto function_cleanup;
+         }
+         initFunc(dpy, DefaultColormap(dpy, scr));
+ 
+-        mainFunc = dlsym(handle, func);
++        mainFunc = (RImage* (*)(int, char**, int, int, int))dlsym(handle, func);
+         if (!mainFunc) {
+             wwarning("could not find function %s::%s", lib, func);
+ 	    goto function_cleanup;
+--- WindowMaker-0.80.2/configure.ac.wmmisc	2003-10-16 23:09:26 +0400
++++ WindowMaker-0.80.2/configure.ac	2003-10-16 23:11:25 +0400
+@@ -228,7 +228,7 @@
+ 
+        AC_CACHE_CHECK(whether gcc supports MMX(tm) inline asm,
+                       ac_cv_c_inline_mmx,
+-                      [AC_TRY_LINK(,[asm ("movq %mm0, %mm1");],
++                      [AC_TRY_LINK(,[__asm__ ("movq %mm0, %mm1");],
+                       ac_cv_c_inline_mmx=yes,
+                       ac_cv_c_inline_mmx=no)])
+ 

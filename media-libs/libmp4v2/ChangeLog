@@ -1,0 +1,44 @@
+# ChangeLog for media-libs/libmp4v2
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-libs/libmp4v2/ChangeLog,v 1.13 2006/04/08 21:35:29 tester Exp $
+
+  08 Apr 2006; Olivier Crête <tester@gentoo.org> libmp4v2-1.4.1.ebuild:
+  stable on amd64
+
+  20 Mar 2006; Fernando J. Pereda <ferdy@gentoo.org> libmp4v2-1.4.1.ebuild:
+  Add ~alpha wrt bug #111427. Tested by Thomas Cort <tcort@cs.ubishops.ca>.
+
+  10 Mar 2006; Aron Griffis <agriffis@gentoo.org> libmp4v2-1.4.1.ebuild:
+  Mark 1.4.1 ~ia64. #124699
+
+  08 Jan 2006; Jeroen Roovers <jer@gentoo.org> libmp4v2-1.4.1.ebuild:
+  Marked ~hppa (bug #111427).
+
+  08 Jan 2006; Joseph Jezak <josejx@gentoo.org> libmp4v2-1.4.1.ebuild:
+  Marked ~ppc for bug #115265.
+
+  02 Jan 2006; Olivier Crête <tester@gentoo.org>
+  +files/mpeg4ip-1.4.1-disable-sdl-test.patch, libmp4v2-1.4.1.ebuild:
+  Disabled sdl-config check, fixing bug #117450, thanks dsd
+
+  22 Dec 2005; Markus Rothe <corsair@gentoo.org> libmp4v2-1.4.1.ebuild:
+  Added ~ppc64; bug #116022
+
+  22 Dec 2005; Gustavo Zacarias <gustavoz@gentoo.org> libmp4v2-1.4.1.ebuild:
+  Keyworded ~sparc wrt #116022
+
+  20 Dec 2005; Mark Loeser <halcy0n@gentoo.org> libmp4v2-1.4.1.ebuild:
+  Adding eutils to inherit
+
+  20 Dec 2005; Olivier Crête <tester@gentoo.org>
+  +files/mpeg4ip-1.4.1-disable-faac-test.patch, libmp4v2-1.4.1.ebuild:
+  Remove check for faac
+
+  20 Dec 2005; Diego Pettenò <flameeyes@gentoo.org> libmp4v2-1.4.1.ebuild:
+  Add missing multilib inherit for $(get_libdir).
+
+*libmp4v2-1.4.1 (20 Dec 2005)
+
+  20 Dec 2005; Olivier Crête <tester@gentoo.org> ChangeLog:
+  Separated libmp4v2 from mpeg4ip
+

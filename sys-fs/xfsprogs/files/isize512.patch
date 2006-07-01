@@ -1,0 +1,12 @@
+diff -Naur ../work/xfsprogs-2.6.25/mkfs/xfs_mkfs.h xfsprogs-2.6.25/mkfs/xfs_mkfs.h
+--- ../work/xfsprogs-2.6.25/mkfs/xfs_mkfs.h	2004-10-08 07:19:18.000000000 +0400
++++ xfsprogs-2.6.25/mkfs/xfs_mkfs.h	2005-03-25 12:00:08.700589904 +0300
+@@ -33,7 +33,7 @@
+ #define	__XFS_MKFS_H__
+ 
+ #define	XFS_DFL_BLOCKSIZE_LOG	12		/* 4096 byte blocks */
+-#define	XFS_DINODE_DFL_LOG	8		/* 256 byte inodes */
++#define	XFS_DINODE_DFL_LOG	9		/* 512 byte inodes */
+ #define	XFS_MIN_DATA_BLOCKS	100
+ #define	XFS_MIN_INODE_PERBLOCK	2		/* min inodes per block */
+ #define	XFS_DFL_IMAXIMUM_PCT	25		/* max % of space for inodes */

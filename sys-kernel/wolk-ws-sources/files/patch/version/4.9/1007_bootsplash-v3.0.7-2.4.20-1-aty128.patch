@@ -1,0 +1,55 @@
+--- linux/drivers/video/aty128fb.c.orig	2002-11-14 12:33:31.000000000 +0100
++++ linux/drivers/video/aty128fb.c	2002-11-14 12:45:16.000000000 +0100
+@@ -2406,6 +2406,44 @@
+             aty128_st_pal(i, i, i, i, info);
+     }
+ 
++#ifdef CONFIG_FBCON_SPLASHSCREEN
++
++    /* splash-screen needs true-color */
++
++    switch (info->current_par.crtc.depth) {
++    case 8:
++	aty128_st_pal(palreg, red, green, blue, info);
++	break;
++#ifdef FBCON_HAS_CFB16
++    case 15:
++	info->fbcon_cmap.cfb16[regno] =
++		((red   & 0xf8) <<  7) |
++		((green & 0xf8) <<  2) |
++		((blue  & 0xf8) >>  3);
++	break;
++    case 16:
++	info->fbcon_cmap.cfb16[regno] =
++		((red   & 0xf8) <<  8) |
++		((green & 0xfc) <<  3) |
++		((blue  & 0xf8) >>  3);
++	break;
++#endif
++#ifdef FBCON_HAS_CFB24
++    case 24:
++	info->fbcon_cmap.cfb24[regno] =
++		(red << 16) | (green << 8) | blue;
++	break;
++#endif
++#ifdef FBCON_HAS_CFB32
++    case 32:
++	info->fbcon_cmap.cfb32[regno] =
++		(red << 16) | (green << 8) | blue;
++	break;
++#endif
++    }
++
++#else
++
+     /* initialize palette */
+ 
+     palreg = regno;
+@@ -2448,6 +2486,7 @@
+         }
+ #endif
+ 	}
++#endif /* CONFIG_FBCON_SPLASHSCREEN */
+     return 0;
+ }
+ 

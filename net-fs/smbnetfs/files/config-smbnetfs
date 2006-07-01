@@ -1,0 +1,8 @@
+#!/bin/sh
+
+mkdir -p ~/.smb
+ln -sf /etc/samba/smb.conf ~/.smb/smb.conf
+zcat /usr/share/doc/@PF@/smbnetfs.conf.gz > ~/.smb/smbnetfs.conf
+touch ~/.smb/smbnetfs.auth
+touch ~/.smb/smbnetfs.host
+chmod 600 ~/.smb/smbnetfs.*

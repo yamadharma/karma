@@ -1,0 +1,83 @@
+# ChangeLog for dev-lang/spidermonkey
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/spidermonkey/ChangeLog,v 1.18 2006/02/28 01:58:50 vapier Exp $
+
+*spidermonkey-1.5-r1 (28 Feb 2006)
+
+  28 Feb 2006; Mike Frysinger <vapier@gentoo.org>
+  +files/spidermonkey-1.5-build.patch, +spidermonkey-1.5-r1.ebuild:
+  Clean up build system to not suck #123564 by Jeroen Roovers.
+
+*spidermonkey-1.5 (19 Feb 2006)
+
+  19 Feb 2006; Marcelo Goes <vanquirius@gentoo.org>
+  -spidermonkey-1.5_rc6.ebuild, +spidermonkey-1.5.ebuild:
+  1.5 version bump for bug 121076. Request by Sascha Geschwandtner <s dot
+  geschwandtner at gmx dot de>.
+
+  06 Dec 2005; Jeroen Roovers <jer@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Cleaned up more tc stuff.
+
+  02 Dec 2005; Jeroen Roovers <jer@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  src_install needs CC at least, apparently. :-(
+
+  02 Dec 2005; Jeroen Roovers <jer@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  More cleanups (call tc-get* only 3 times).
+
+  02 Dec 2005; Jeroen Roovers <jer@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Removed extraneous BUILD_OPT variable assignment
+
+  02 Dec 2005; Jeroen Roovers <jer@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Added AR from toolchain-funs as well for the fun of it. Slight cleanup.
+
+  02 Dec 2005; Jeroen Roovers <jer@gentoo.org>
+  files/spidermonkey-1.5_rc6-va_copy-fix.patch,
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Fixed patch to support hppa, changed ebuild to use toolchain-funcs
+
+  17 Aug 2005; Josh Grebe <squash@gentoo.org> spidermonkey-1.5_rc5.ebuild:
+  GOod on sparc, bug #89510
+
+  01 Aug 2005; Joseph Jezak <josejx@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Marked ppc stable.
+
+  31 Jul 2005; Markus Rothe <corsair@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Stable on ppc64 (bug #100841)
+
+  30 Jul 2005; Diego Pettenò <flameeyes@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Stable on amd64 (dependency of gxine).
+
+  18 Apr 2005; Markus Rothe <corsair@gentoo.org>
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Added ~ppc64 to KEYWORDS; bug #89510
+
+  19 Feb 2005; Michael Hanselmann <hansmi@gentoo.org>
+  +files/spidermonkey-1.5_rc6-va_copy-fix.patch,
+  spidermonkey-1.5_rc6-r1.ebuild:
+  Added patch from bug 81473. It fixes va_copy vs. VA_COPY.
+
+*spidermonkey-1.5_rc6-r1 (04 Sep 2004)
+
+  04 Sep 2004; Mamoru KOMACHI <usata@gentoo.org>
+  +spidermonkey-1.5_rc6-r1.ebuild:
+  spidermonkey-1.5_rc6.ebuild doesn't install all the headers needed by
+  sablotron to build with JavaScript support. Also moved headers to
+  /usr/include/js.
+
+*spidermonkey-1.5_rc6 (04 Sep 2004)
+
+  04 Sep 2004; Mamoru KOMACHI <usata@gentoo.org> +spidermonkey-1.5_rc6.ebuild:
+  Version bumped. Install headers, too. See bug #24502.
+
+*spidermonkey-1.5_rc5 (23 Feb 2003)
+
+  23 Feb 2003; Mike Frysinger <vapier@gentoo.org> :
+  Initial import.  Ebuild submitted by Asser Femø <asser@diku.dk>.

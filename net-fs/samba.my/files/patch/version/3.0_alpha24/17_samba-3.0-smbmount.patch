@@ -1,0 +1,29 @@
+--- source/client/smbmount.c.orig	2003-03-08 23:20:35.000000000 -0500
++++ source/client/smbmount.c	2003-03-08 23:21:07.000000000 -0500
+@@ -762,7 +762,7 @@
+ 					*lp = 0;
+ 					pstrcpy(password,lp+1);
+ 					got_pass = True;
+-					memset(strchr_m(opteq+1,'%')+1,'X',strlen(password));
++					memset(strchr_m(opteq+1,'%')+1,'\0',strlen(password));
+ 				}
+ 				if ((lp=strchr_m(username,'/'))) {
+ 					*lp = 0;
+@@ -772,7 +772,7 @@
+ 				  !strcmp(opts, "password")) {
+ 				pstrcpy(password,opteq+1);
+ 				got_pass = True;
+-				memset(opteq+1,'X',strlen(password));
++				memset(opteq+1,'\0',strlen(password));
+ 			} else if(!strcmp(opts, "credentials")) {
+ 				pstrcpy(credentials,opteq+1);
+ 			} else if(!strcmp(opts, "netbiosname")) {
+@@ -882,7 +882,7 @@
+ 			*p = 0;
+ 			pstrcpy(password,p+1);
+ 			got_pass = True;
+-			memset(strchr_m(getenv("USER"),'%')+1,'X',strlen(password));
++			memset(strchr_m(getenv("USER"),'%')+1,'\0',strlen(password));
+ 		}
+ 		strupper(username);
+ 	}

@@ -1,0 +1,22 @@
+--- old/sound/isa/gus/interwave.c	2003-09-02 21:48:11.000000000 +0200
++++ new/sound/isa/gus/interwave.c	2003-09-03 09:16:00.000000000 +0200
+@@ -766,7 +766,7 @@ static int __devinit snd_interwave_probe
+ 	}
+ 
+ 	if ((err = snd_gus_create(card,
+-				  port[dev],
++				  snd_port[dev],
+ 				  -xirq, xdma1, xdma2,
+ 				  0, 32,
+ 				  pcm_channels[dev], effect[dev], &gus)) < 0) {
+--- old/sound/isa/sb/sb16.c	2003-09-02 21:48:11.000000000 +0200
++++ new/sound/isa/sb/sb16.c	2003-09-03 09:22:09.000000000 +0200
+@@ -406,7 +406,7 @@ static int __init snd_sb16_probe(int dev
+ 	unsigned long flags;
+ 	int err;
+ 
+-	card = snd_card_new(index[dev], id[dev], THIS_MODULE,
++	card = snd_card_new(snd_index[dev], snd_id[dev], THIS_MODULE,
+ 			    sizeof(struct snd_card_sb16));
+ 	if (card == NULL)
+ 		return -ENOMEM;

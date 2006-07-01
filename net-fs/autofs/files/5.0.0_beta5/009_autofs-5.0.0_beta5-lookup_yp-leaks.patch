@@ -1,0 +1,62 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index bdd9fe6..b9a1e87 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -2,6 +2,7 @@
+ ---------------------
+ - lookup_init cleanup and fix missed memory leak.
+ - use nis map order to check if update is needed.
++- fix couple of memory leaks in lookup_yp.c.
+ 
+ 20/6/2006 autofs-5.0.0_beta5
+ ---------------------------
+diff --git a/modules/lookup_yp.c b/modules/lookup_yp.c
+index 5f4ad7d..36563a9 100644
+--- a/modules/lookup_yp.c
++++ b/modules/lookup_yp.c
+@@ -87,6 +87,7 @@ static unsigned int get_map_order(const 
+ 				return 0;
+ 
+ 			last_changed = atol(order);
++			free(order);
+ 
+ 			return (unsigned int) last_changed;
+ 		}
+@@ -347,10 +348,6 @@ static int lookup_one(struct autofs_poin
+ 
+ 	strcpy(mapname, ctxt->mapname);
+ 
+-	mapent = alloca(MAPENT_MAX_LEN + 1);
+-	if (!mapent)
+-		return 0;
+-
+ 	/*
+ 	 * For reasons unknown, the standard YP definitions doesn't
+ 	 * define input strings as const char *.  However, my
+@@ -382,6 +379,7 @@ static int lookup_one(struct autofs_poin
+ 	cache_writelock(mc);
+ 	ret = cache_update(mc, source, key, mapent, age);
+ 	cache_unlock(mc);
++	free(mapent);
+ 
+ 	return ret;
+ }
+@@ -402,10 +400,6 @@ static int lookup_wild(struct autofs_poi
+ 
+ 	strcpy(mapname, ctxt->mapname);
+ 
+-	mapent = alloca(MAPENT_MAX_LEN + 1);
+-	if (!mapent)
+-		return 0;
+-
+ 	ret = yp_match((char *) ctxt->domainname,
+ 		       mapname, "*", 1, &mapent, &mapent_len);
+ 
+@@ -431,6 +425,7 @@ static int lookup_wild(struct autofs_poi
+ 	cache_writelock(mc);
+ 	ret = cache_update(mc, source, "*", mapent, age);
+ 	cache_unlock(mc);
++	free(mapent);
+ 
+ 	return ret;
+ }

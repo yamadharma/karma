@@ -1,0 +1,2848 @@
+--- linux-2.4.21/sound/isa/sb/es968.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/sb/es968.c	2003-07-23 18:29:09.000000000 +0200
+@@ -30,6 +30,14 @@
+ #include <sound/sb.h>
+ #include "es968.isapnp"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define irq snd_irq
++#define dma8 snd_dma8
++
+ #define chip_t sb_t
+ 
+ #define PFX "es968: "
+@@ -70,6 +78,8 @@
+ 	struct pnp_dev *dev;
+ };
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_es968_pnpids[] = {
+ 	{ .id = "ESS0968", .devs = { { "@@@0968" }, } },
+ 	{ .id = "", } /* end */
+@@ -133,6 +143,8 @@
+ 	return 0;
+ }
+ 
++#define id snd_id
++
+ static int __init snd_card_es968_probe(int dev,
+ 					struct pnp_card_link *pcard,
+ 					const struct pnp_card_device_id *pid)
+@@ -179,7 +191,7 @@
+ 	strcpy(card->driver, "ES968");
+ 	strcpy(card->shortname, "ESS ES968");
+ 	sprintf(card->longname, "%s soundcard, %s at 0x%lx, irq %d, dma %d",
+-		card->shortname, chip->name, chip->port, irq[dev], dma8[dev]);
++		card->shortname, chip->name, port[dev], irq[dev], dma8[dev]);
+ 
+ 	if ((error = snd_card_register(card)) < 0) {
+ 		snd_card_free(card);
+--- linux-2.4.21/sound/isa/sb/sb8.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/sb/sb8.c	2003-07-23 18:29:09.000000000 +0200
+@@ -30,6 +30,14 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define irq snd_irq
++#define dma8 snd_dma8
++
+ #define chip_t sb_t
+ 
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+@@ -130,6 +138,7 @@
+ 				    port[dev]);
+ 		return -ENODEV;
+ 	}
++#undef port
+ 
+ 	if ((err = snd_sb8dsp_pcm(chip, 0, NULL)) < 0) {
+ 		snd_card_free(card);
+@@ -179,6 +188,8 @@
+ 	return 0;
+ }
+ 
++#define port snd_port
++
+ static int __init snd_card_sb8_legacy_auto_probe(unsigned long xport)
+ {
+         static int dev;
+--- linux-2.4.21/sound/isa/sb/sb16.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/sb/sb16.c	2003-07-23 18:34:45.000000000 +0200
+@@ -42,6 +42,22 @@
+ #include "sb16.isapnp"
+ #endif
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define isapnp snd_isapnp
++#define port snd_port
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define awe_port snd_awe_port
++#define irq snd_irq
++#define dma8 snd_dma8
++#define dma16 snd_dma16
++#define mic_agc snd_mic_agc
++#define csp snd_csp
++#define seq_ports snd_seq_ports
++
+ #define chip_t sb_t
+ 
+ #ifdef SNDRV_SBAWE
+@@ -119,11 +135,11 @@
+ MODULE_PARM_DESC(mpu_port, "MPU-401 port # for SB16 driver.");
+ MODULE_PARM_SYNTAX(mpu_port, SNDRV_ENABLED ",allows:{{0x330},{0x300}},dialog:list");
+ MODULE_PARM(fm_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(fm_port, "FM port # for SB16 PnP driver.");
++MODULE_PARM_DESC(fm_port, "FM port # for SB16 driver.");
+ MODULE_PARM_SYNTAX(fm_port, SNDRV_ENABLED ",allows:{{0x388},{0x38c},{0x390},{0x394}},dialog:list");
+ #ifdef SNDRV_SBAWE_EMU8000
+ MODULE_PARM(awe_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(awe_port, "AWE port # for SB16 PnP driver.");
++MODULE_PARM_DESC(awe_port, "AWE port # for SB16 driver.");
+ MODULE_PARM_SYNTAX(awe_port, SNDRV_ENABLED ",allows:{{0x620},{0x640},{0x660},{0x680}},dialog:list");
+ #endif
+ MODULE_PARM(irq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+@@ -162,6 +178,8 @@
+ 
+ static snd_card_t *snd_sb16_legacy[SNDRV_CARDS] = SNDRV_DEFAULT_PTR;
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_sb16_pnpids[] = {
+ #ifndef SNDRV_SBAWE
+ 	/* Sound Blaster 16 PnP */
+@@ -353,6 +371,8 @@
+ 	return 0;
+ }
+ 
++#define id snd_id
++
+ #endif /* CONFIG_PNP */
+ 
+ static int __init snd_sb16_probe(int dev,
+@@ -443,7 +463,8 @@
+ 		snd_printdd("SB 16 chip was not detected at 0x%lx\n", port[dev]);
+ 		return -ENODEV;
+ 	}
+-	chip->mpu_port = mpu_port[dev];
++#undef mpu_port
++	chip->mpu_port = snd_mpu_port[dev];
+ #ifdef CONFIG_PNP
+ 	if (!isapnp[dev] && (err = snd_sb16dsp_configure(chip)) < 0) {
+ #else
+@@ -494,6 +515,7 @@
+ #ifdef CONFIG_SND_SB16_CSP
+ 	/* CSP chip on SB16ASP/AWE32 */
+ 	if ((chip->hardware == SB_HW_16) && csp[dev]) {
++#undef csp
+ 		snd_sb_csp_new(chip, synth != NULL ? 1 : 0, &xcsp);
+ 		if (xcsp) {
+ 			chip->csp = xcsp->private_data;
+@@ -529,7 +551,7 @@
+ 	strcpy(card->shortname, chip->name);
+ 	sprintf(card->longname, "%s at 0x%lx, irq %i, dma ",
+ 		chip->name,
+-		chip->port,
++		port[dev],
+ 		xirq);
+ 	if (xdma8 >= 0)
+ 		sprintf(card->longname + strlen(card->longname), "%d", xdma8);
+@@ -669,6 +691,9 @@
+ 
+ #ifndef MODULE
+ 
++#define csp snd_csp
++#define mpu_port snd_mpu_port
++
+ /* format is: snd-sb16=enable,index,id,isapnp,
+ 		       port,mpu_port,fm_port,
+ 		       irq,dma8,dma16,
+--- linux-2.4.21/sound/isa/gus/gusclassic.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/gus/gusclassic.c	2003-07-23 18:34:45.000000000 +0200
+@@ -32,6 +32,18 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define irq snd_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++#define joystick_dac snd_joystick_dac
++#define channels snd_channels
++#define pcm_channels snd_pcm_channels
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Gravis UltraSound Classic");
+ MODULE_LICENSE("GPL");
+@@ -66,10 +78,10 @@
+ MODULE_PARM_DESC(irq, "IRQ # for GUS Classic driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_ENABLED ",allows:{{3},{5},{9},{11},{12},{15}},dialog:list");
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for GUS Classic driver.");
++MODULE_PARM_DESC(dma1, "1st DMA # for GUS Classic driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_ENABLED ",allows:{{1},{3},{5},{6},{7}},dialog:list");
+ MODULE_PARM(dma2, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma2, "DMA2 # for GUS Classic driver.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for GUS Classic driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_ENABLED ",allows:{{1},{3},{5},{6},{7}},dialog:list");
+ MODULE_PARM(joystick_dac, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+ MODULE_PARM_DESC(joystick_dac, "Joystick DAC level 0.59V-4.52V or 0.389V-2.98V for GUS Classic driver.");
+@@ -125,7 +137,8 @@
+ 	gus->equal_irq = 0;
+ 	gus->codec_flag = 0;
+ 	gus->max_flag = 0;
+-	gus->joystick_dac = joystick_dac[dev];
++#undef joystick_dac
++	gus->joystick_dac = snd_joystick_dac[dev];
+ }
+ 
+ static int __init snd_gusclassic_probe(int dev)
+@@ -207,7 +220,9 @@
+ 			return err;
+ 		}
+ 	}
++#undef port
+ 	sprintf(card->longname + strlen(card->longname), " at 0x%lx, irq %d, dma %d", gus->gf1.port, xirq, xdma1);
++#define port snd_port
+ 	if (dma2 >= 0)
+ 		sprintf(card->longname + strlen(card->longname), "&%d", xdma2);
+ 	if ((err = snd_card_register(card)) < 0) {
+@@ -269,6 +284,8 @@
+ 
+ #ifndef MODULE
+ 
++#define joystick_dac snd_joystick_dac
++
+ /* format is: snd-gusclassic=enable,index,id,
+ 			     port,irq,
+ 			     dma1,dma2,
+--- linux-2.4.21/sound/isa/gus/gusextreme.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/gus/gusextreme.c	2003-07-23 18:29:09.000000000 +0200
+@@ -35,6 +35,22 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define gf1_port snd_gf1_port
++#define mpu_port snd_mpu_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define gf1_irq snd_gf1_irq
++#define dma8 snd_dma8
++#define dma1 snd_dma1
++#define joystick_dac snd_joystick_dac
++#define channels snd_channels
++#define pcm_channels snd_pcm_channels
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Gravis UltraSound Extreme");
+ MODULE_LICENSE("GPL");
+@@ -124,6 +140,7 @@
+ 	 * 0x260 = 2,2,1
+ 	 */
+ 
++#undef port
+ 	spin_lock_irqsave(&es1688->mixer_lock, flags);
+ 	snd_es1688_mixer_write(es1688, 0x40, 0x0b);	/* don't change!!! */
+ 	spin_unlock_irqrestore(&es1688->mixer_lock, flags);
+@@ -173,7 +190,8 @@
+ 
+ static void __init snd_gusextreme_init(int dev, snd_gus_card_t * gus)
+ {
+-	gus->joystick_dac = joystick_dac[dev];
++#undef joystick_dac
++	gus->joystick_dac = snd_joystick_dac[dev];
+ }
+ 
+ static int __init snd_gusextreme_mixer(es1688_t *chip)
+@@ -255,6 +273,7 @@
+ 		}
+ 	}
+ 
++#define port snd_port
+ 	if ((err = snd_es1688_create(card, port[dev], mpu_port[dev],
+ 				     xess_irq, xmpu_irq, xess_dma,
+ 				     ES1688_HW_1688, &es1688)) < 0) {
+@@ -284,6 +303,7 @@
+		return err;
+ 	}
+ 	if (!gus->ess_flag) {
++#undef port
+ 		snd_printdd("GUS Extreme soundcard was not detected at 0x%lx\n", gus->gf1.port);
+ 		snd_card_free(card);
+ 		return -ENODEV;
+@@ -322,6 +342,7 @@
+ 		}
+ 	}
+ 
++#undef mpu_port
+ 	if (es1688->mpu_port >= 0x300) {
+ 		if ((err = snd_mpu401_uart_new(card, 0, MPU401_HW_ES1688,
+ 					       es1688->mpu_port, 0,
+@@ -343,6 +364,9 @@
+ 	return 0;
+ }
+ 
++#define port snd_port
++#define mpu_port snd_mpu_port
++
+ static int __init snd_gusextreme_legacy_auto_probe(unsigned long xport)
+ {
+         static int dev;
+@@ -401,6 +425,8 @@
+ 
+ #ifndef MODULE
+ 
++#define joystick_dac snd_joystick_dac
++
+ /* format is: snd-gusextreme=enable,index,id,
+ 			     port,gf1_port,mpu_port,
+ 			     irq,gf1_irq,mpu_irq,
+--- linux-2.4.21/sound/isa/gus/interwave.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/gus/interwave.c	2003-07-23 18:34:45.000000000 +0200
+@@ -41,6 +41,21 @@
+ #include <sound/initval.h>
+ #include "interwave.isapnp"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define isapnp snd_isapnp
++#define port snd_port
++#define port_tc snd_port_tc
++#define irq snd_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++#define joystick_dac snd_joystick_dac
++#define pcm_channels snd_pcm_channels
++#define effect snd_effect
++#define midi snd_midi
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_CLASSES("{sound}");
+ MODULE_LICENSE("GPL");
+@@ -99,10 +114,10 @@
+ MODULE_PARM_DESC(irq, "IRQ # for InterWave driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_ENABLED ",allows:{{3},{5},{9},{11},{12},{15}},dialog:list");
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for InterWave driver.");
++MODULE_PARM_DESC(dma1, "1st DMA # for InterWave driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA_DESC);
+ MODULE_PARM(dma2, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma2, "DMA2 # for InterWave driver.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for InterWave driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_DMA_DESC);
+ MODULE_PARM(joystick_dac, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+ MODULE_PARM_DESC(joystick_dac, "Joystick DAC level 0.59V-4.52V or 0.389V-2.98V for InterWave driver.");
+@@ -139,6 +154,8 @@
+ 
+ #ifdef CONFIG_PNP
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_interwave_pnpids[] = {
+ #ifndef SNDRV_STB
+ 	/* Gravis UltraSound Plug & Play */
+@@ -161,6 +178,8 @@
+ 
+ MODULE_DEVICE_TABLE(pnp_card, snd_interwave_pnpids);
+ 
++#define id snd_id
++
+ #endif /* CONFIG_PNP */
+ 
+ 
+@@ -208,6 +227,8 @@
+ 	.getdata  = snd_interwave_i2c_getdataline,
+ };
+ 
++#undef port
++
+ static int __devinit snd_interwave_detect_stb(struct snd_interwave *iwcard,
+ 					      snd_gus_card_t * gus, int dev,
+ 					      snd_i2c_bus_t **rbus)
+@@ -513,10 +534,14 @@
+ 	gus->codec_flag = 1;
+ 	gus->interwave = 1;
+ 	gus->max_flag = 1;
+-	gus->joystick_dac = joystick_dac[dev];
++#undef joystick_dac
++	gus->joystick_dac = snd_joystick_dac[dev];
+ 
+ }
+ 
++#undef index
++#undef id
++
+ #define INTERWAVE_CONTROLS (sizeof(snd_interwave_controls)/sizeof(snd_kcontrol_new_t))
+ 
+ static snd_kcontrol_new_t snd_interwave_controls[] = {
+@@ -563,7 +588,9 @@
+ 	if ((err = snd_ctl_rename_id(card, &id1, &id2)) < 0)
+ 		return err;
+ 	/* reassign AUXB to CD */
++#undef index
+ 	strcpy(id1.name, "Aux Playback Switch"); id1.index = 1;
++#define index snd_index
+ 	strcpy(id2.name, "CD Playback Switch");
+ 	if ((err = snd_ctl_rename_id(card, &id1, &id2)) < 0)
+ 		return err;
+@@ -576,6 +603,9 @@
+ 
+ #ifdef CONFIG_PNP
+ 
++#define port snd_port
++#undef id
++
+ static int __devinit snd_interwave_pnp(int dev, struct snd_interwave *iwcard,
+ 				       struct pnp_card_link *card,
+ 				       const struct pnp_card_device_id *id)
+@@ -656,6 +686,9 @@
+ 	kfree(cfg);
+ 	return 0;
+ }
++
++#define id snd_id
++
+ #endif /* CONFIG_PNP */
+ 
+ static void snd_interwave_free(snd_card_t *card)
+@@ -691,6 +724,8 @@
+ 	char *str;
+ 	int err;
+ 
++#define index snd_index
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE,
+ 			    sizeof(struct snd_interwave));
+ 	if (card == NULL)
+@@ -746,6 +781,7 @@
+ 		snd_card_free(card);
+ 		return err;
+ 	}
++#undef port
+ 	iwcard->gus_status_reg = gus->gf1.reg_irqstat;
+ 	iwcard->pcm_status_reg = gus->gf1.port + 0x10c + 2;
+ 
+@@ -806,7 +842,9 @@
+ 		id1.iface = id2.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
+ 		strcpy(id1.name, "Master Playback Switch");
+ 		strcpy(id2.name, id1.name);
++#undef index
+ 		id2.index = 1;
++#define index snd_index
+ 		if ((err = snd_ctl_rename_id(card, &id1, &id2)) < 0) {
+ 			snd_card_free(card);
+ 			return err;
+@@ -861,6 +899,8 @@
+ 	return 0;
+ }
+ 
++#define port snd_port
++
+ static int __devinit snd_interwave_probe_legacy_port(unsigned long xport)
+ {
+ 	static int dev;
+@@ -978,6 +1018,8 @@
+ 
+ #ifndef MODULE
+ 
++#define joystick_dac snd_joystick_dac
++
+ /* format is: snd-interwave=enable,index,id,isapnp,
+ 			    port[,port_tc],irq,
+ 			    dma1,dma2,
+--- linux-2.4.21/sound/isa/gus/gusmax.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/gus/gusmax.c	2003-07-23 18:34:45.000000000 +0200
+@@ -33,6 +33,18 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define irq snd_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++#define joystick_dac snd_joystick_dac
++#define channels snd_channels
++#define pcm_channels snd_pcm_channels
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Gravis UltraSound MAX");
+ MODULE_LICENSE("GPL");
+@@ -67,10 +79,10 @@
+ MODULE_PARM_DESC(irq, "IRQ # for GUS MAX driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_ENABLED ",allows:{{3},{5},{9},{11},{12},{15}},dialog:list");
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for GUS MAX driver.");
++MODULE_PARM_DESC(dma1, "1st DMA # for GUS MAX driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA_DESC);
+ MODULE_PARM(dma2, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma2, "DMA2 # for GUS MAX driver.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for GUS MAX driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_DMA_DESC);
+ MODULE_PARM(joystick_dac, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+ MODULE_PARM_DESC(joystick_dac, "Joystick DAC level 0.59V-4.52V or 0.389V-2.98V for GUS MAX driver.");
+@@ -155,8 +167,12 @@
+ {
+ 	gus->equal_irq = 1;
+ 	gus->codec_flag = 1;
+-	gus->joystick_dac = joystick_dac[dev];
++#undef joystick_dac
++	gus->joystick_dac = snd_joystick_dac[dev];
+ 	/* init control register */
++#undef port
++#undef dma1
++#undef dma2
+ 	gus->max_cntrl_val = (gus->gf1.port >> 4) & 0x0f;
+ 	if (gus->gf1.dma1 > 3)
+ 		gus->max_cntrl_val |= 0x10;
+@@ -188,7 +204,9 @@
+ 	if ((err = snd_ctl_rename_id(card, &id1, &id2)) < 0)
+ 		return err;
+ 	/* reassign AUXB to CD */
++#undef index
+ 	strcpy(id1.name, "Aux Playback Switch"); id1.index = 1;
++#define index snd_index
+ 	strcpy(id2.name, "CD Playback Switch");
+ 	if ((err = snd_ctl_rename_id(card, &id1, &id2)) < 0)
+ 		return err;
+@@ -255,6 +273,8 @@
+ 			return -EBUSY;
+ 		}
+ 	}
++#define dma1 snd_dma1
++#define dma2 snd_dma2
+ 	xdma1 = dma1[dev];
+ 	if (xdma1 == SNDRV_AUTO_DMA) {
+ 		if ((xdma1 = snd_legacy_find_free_dma(possible_dmas)) < 0) {
+@@ -272,6 +292,7 @@
+ 		}
+ 	}
+ 
++#define port snd_port
+ 	if ((err = snd_gus_create(card,
+ 				  port[dev],
+ 				  -xirq, xdma1, xdma2,
+@@ -281,6 +302,7 @@
+ 		snd_card_free(card);
+ 		return err;
+ 	}
++#undef port
+ 	if ((err = snd_gusmax_detect(gus)) < 0) {
+ 		snd_card_free(card);
+ 		return err;
+@@ -358,6 +380,8 @@
+ 	return 0;
+ }
+ 
++#define port snd_port
++
+ static int __init snd_gusmax_legacy_auto_probe(unsigned long xport)
+ {
+ 	static int dev;
+@@ -409,6 +433,8 @@
+ 
+ #ifndef MODULE
+ 
++#define joystick_dac snd_joystick_dac
++
+ /* format is: snd-gusmax=enable,index,id,
+ 			 port,irq,
+ 			 dma1,dma2,
+--- linux-2.4.21/sound/isa/dt019x.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/dt019x.c	2003-07-23 18:29:09.000000000 +0200
+@@ -34,6 +34,17 @@
+ #include <sound/sb.h>
+ #include "dt019x.isapnp"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma8 snd_dma8
++
+ #define chip_t sb_t
+ 
+ #define PFX "dt019x: "
+@@ -89,6 +100,8 @@
+ 	struct pnp_dev *devopl;
+ };
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_dt019x_pnpids[] = {
+ 	/* DT197A30 */
+ 	{ .id = "RWB1688", .devs = { { "@@@0001" }, { "@X@0001" }, { "@H@0001" }, } },
+@@ -198,6 +211,8 @@
+ 	return 0;
+ }
+ 
++#define id snd_id
++
+ static int __devinit snd_card_dt019x_probe(int dev, struct pnp_card_link *pcard, const struct pnp_card_device_id *pid)
+ {
+ 	int error;
+@@ -269,7 +284,7 @@
+ 	strcpy(card->driver, "DT-019X");
+ 	strcpy(card->shortname, "Diamond Tech. DT-019X");
+ 	sprintf(card->longname, "%s soundcard, %s at 0x%lx, irq %d, dma %d",
+-		card->shortname, chip->name, chip->port,
++		card->shortname, chip->name, port[dev],
+ 		irq[dev], dma8[dev]);
+ 	if ((error = snd_card_register(card)) < 0) {
+ 		snd_card_free(card);
+--- linux-2.4.21/sound/isa/sscape.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/sscape.c	2003-07-23 18:29:09.000000000 +0200
+@@ -42,6 +42,14 @@
+ 
+ #define chip_t cs4231_t
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma snd_dma
+ 
+ MODULE_AUTHOR("Chris Rankin");
+ MODULE_DESCRIPTION("ENSONIQ SoundScape PnP driver");
+@@ -79,12 +87,14 @@
+ MODULE_PARM_SYNTAX(dma, SNDRV_DMA8_DESC);
+   
+ #ifdef CONFIG_PNP
++#undef id
+ static struct pnp_card_device_id sscape_pnpids[] = {
+ 	{ .id = "ENS3081", .devs = { { "ENS0000" } } },
+ 	{ .id = "" }	/* end */
+ };
+ 
+ MODULE_DEVICE_TABLE(pnp_card, sscape_pnpids);
++#define id snd_id
+ #endif
+ 
+ static snd_card_t *sscape_card[SNDRV_CARDS];
+@@ -320,6 +330,8 @@
+ }
+ 
+ 
++#undef port
++
+ /*
+  * Check that the MIDI subsystem is operational. If it isn't,
+  * then we will hang the computer if we try to use it ...
+@@ -1099,9 +1111,11 @@
+ 
+ 		strcpy(card->driver, "SoundScape");
+ 		strcpy(card->shortname, pcm->name);
++#undef irq
+ 		snprintf(card->longname, sizeof(card->longname),
+ 		         "%s at 0x%lx, IRQ %d, DMA %d\n",
+ 		         pcm->name, chip->port, chip->irq, chip->dma1);
++#define irq snd_irq
+ 		chip->set_playback_format = ad1845_playback_format;
+ 		chip->set_capture_format = ad1845_capture_format;
+ 		sscape->chip = chip;
+@@ -1111,6 +1125,7 @@
+ 	return err;
+ }
+ 
++#define port snd_port
+ 
+ struct params
+ {
+@@ -1340,6 +1355,7 @@
+ 	return 0;
+ }
+ 
++#undef id
+ static int __devinit sscape_pnp_detect(struct pnp_card_link *pcard,
+ 				       const struct pnp_card_device_id *pid)
+ {
+@@ -1394,6 +1410,7 @@
+ 		/*
+ 		 * Read the correct parameters off the ISA PnP bus ...
+ 		 */
++#define id snd_id
+ 		this = init_params(&sscape_params[sscape_cards],
+ 				   index[idx],
+ 				   id[idx],
+--- linux-2.4.21/sound/isa/als100.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/als100.c	2003-07-23 18:29:09.000000000 +0200
+@@ -33,6 +33,18 @@
+ #include <sound/sb.h>
+ #include "als100.isapnp"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma8 snd_dma8
++#define dma16 snd_dma16
++
+ #define chip_t sb_t
+ 
+ #define PFX "als100: "
+@@ -99,6 +111,7 @@
+ 	struct pnp_dev *devopl;
+ };
+ 
++#undef id
+ static struct pnp_card_device_id snd_als100_pnpids[] = {
+ 	/* ALS100 - PRO16PNP */
+ 	{ .id = "ALS0001", .devs = { { "@@@0001" }, { "@X@0001" }, { "@H@0001" } } },
+@@ -209,6 +222,7 @@
+ 	kfree(cfg);
+ 	return 0;
+ }
++#define id snd_id
+ 
+ static int __init snd_card_als100_probe(int dev,
+ 					struct pnp_card_link *pcard,
+@@ -279,7 +293,7 @@
+ 	strcpy(card->driver, "ALS100");
+ 	strcpy(card->shortname, "Avance Logic ALS100");
+ 	sprintf(card->longname, "%s soundcard, %s at 0x%lx, irq %d, dma %d&%d",
+-		card->shortname, chip->name, chip->port,
++		card->shortname, chip->name, port[dev],
+ 		irq[dev], dma8[dev], dma16[dev]);
+ 	if ((error = snd_card_register(card)) < 0) {
+ 		snd_card_free(card);
+--- linux-2.4.21/sound/isa/ad1848/ad1848.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/ad1848/ad1848.c	2003-07-23 18:34:45.000000000 +0200
+@@ -30,6 +30,15 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define irq snd_irq
++#define dma1 snd_dma1
++#define thinkpad snd_thinkpad
++
+ #define chip_t ad1848_t
+ 
+ MODULE_AUTHOR("Tugrul Galatali <galatalt@stuy.edu>, Jaroslav Kysela <perex@suse.cz>");
+@@ -64,7 +73,7 @@
+ MODULE_PARM_DESC(irq, "IRQ # for AD1848 driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_IRQ_DESC);
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for AD1848 driver.");
++MODULE_PARM_DESC(dma1, "DMA # for AD1848 driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA_DESC);
+ MODULE_PARM(thinkpad, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+ MODULE_PARM_DESC(thinkpad, "Enable only for the onboard CS4248 of IBM Thinkpad 360/750/755 series.");
+@@ -118,7 +127,7 @@
+ 	strcpy(card->shortname, pcm->name);
+ 
+ 	sprintf(card->longname, "%s at 0x%lx, irq %d, dma %d",
+-		pcm->name, chip->port, irq[dev], dma1[dev]);
++		pcm->name, port[dev], irq[dev], dma1[dev]);
+ 
+ 	if (thinkpad[dev]) {
+ 		strcat(card->longname, " [Thinkpad]");
+--- linux-2.4.21/sound/isa/cmi8330.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/cmi8330.c	2003-07-23 18:34:45.000000000 +0200
+@@ -59,6 +59,19 @@
+ /* #define ENABLE_SB_MIXER */
+ #define PLAYBACK_ON_SB
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define isapnp snd_isapnp
++#define sbport snd_sbport
++#define sbdma8 snd_sbdma8
++#define sbdma16 snd_sbdma16
++#define sbirq snd_sbirq
++#define wssport snd_wssport
++#define wssirq snd_wssirq
++#define wssdma snd_wssdma
++
+ /*
+  */
+ MODULE_AUTHOR("George Talusan <gstalusan@uwaterloo.ca>");
+@@ -97,26 +110,26 @@
+ #endif
+ 
+ MODULE_PARM(sbport, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(sbport, "Port # for CMI8330 SB driver.");
++MODULE_PARM_DESC(sbport, "SoundBlaster Port # for CMI8330 driver.");
+ MODULE_PARM_SYNTAX(sbport, SNDRV_ENABLED ",allows:{{0x220,0x280,0x20}},prefers:{0x220},base:16,dialog:list");
+ MODULE_PARM(sbirq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(sbirq, "IRQ # for CMI8330 SB driver.");
++MODULE_PARM_DESC(sbirq, "SoundBlaster IRQ # for CMI8330 driver.");
+ MODULE_PARM_SYNTAX(sbirq, SNDRV_ENABLED ",allows:{{5},{7},{9},{10},{11},{12}},prefers:{5},dialog:list");
+ MODULE_PARM(sbdma8, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(sbdma8, "DMA8 for CMI8330 SB driver.");
++MODULE_PARM_DESC(sbdma8, "SoundBlaster DMA8 for CMI8330 driver.");
+ MODULE_PARM_SYNTAX(sbdma8, SNDRV_DMA8_DESC ",prefers:{1}");
+ MODULE_PARM(sbdma16, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(sbdma16, "DMA16 for CMI8330 SB driver.");
++MODULE_PARM_DESC(sbdma16, "SoundBlaster DMA16 for CMI8330 driver.");
+ MODULE_PARM_SYNTAX(sbdma16, SNDRV_ENABLED ",allows:{{5},{7}},prefers:{5},dialog:list");
+ 
+ MODULE_PARM(wssport, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(wssport, "Port # for CMI8330 WSS driver.");
++MODULE_PARM_DESC(wssport, "WSS Port # for CMI8330 driver.");
+ MODULE_PARM_SYNTAX(wssport, SNDRV_ENABLED ",allows:{{0x530},{0xe80,0xf40,0xc0}},prefers:{0x530},base:16,dialog:list");
+ MODULE_PARM(wssirq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(wssirq, "IRQ # for CMI8330 WSS driver.");
++MODULE_PARM_DESC(wssirq, "WSS IRQ # for CMI8330 driver.");
+ MODULE_PARM_SYNTAX(wssirq, SNDRV_ENABLED ",allows:{{5},{7},{9},{10},{11},{12}},prefers:{11},dialog:list");
+ MODULE_PARM(wssdma, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(wssdma, "DMA for CMI8330 WSS driver.");
++MODULE_PARM_DESC(wssdma, "WSS DMA for CMI8330 driver.");
+ MODULE_PARM_SYNTAX(wssdma, SNDRV_DMA8_DESC ",prefers:{0}");
+ 
+ #define CMI8330_RMUX3D    16
+@@ -173,6 +186,8 @@
+ 
+ #ifdef CONFIG_PNP
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_cmi8330_pnpids[] = {
+ 	{ .id = "CMI0001", .devs = { { "@@@0001" }, { "@X@0001" } } },
+ 	{ .id = "" }
+@@ -180,8 +195,11 @@
+ 
+ MODULE_DEVICE_TABLE(pnp_card, snd_cmi8330_pnpids);
+ 
++#define id snd_id
++
+ #endif
+ 
++#undef index
+ 
+ static struct ad1848_mix_elem snd_cmi8330_controls[] __initdata = {
+ AD1848_DOUBLE("Master Playback Volume", 0, CMI8330_MASTVOL, CMI8330_MASTVOL, 4, 0, 15, 0),
+@@ -289,6 +307,9 @@
+ }
+ 
+ #ifdef CONFIG_PNP
++
++#undef id
++
+ static int __devinit snd_cmi8330_pnp(int dev, struct snd_cmi8330 *acard,
+ 				     struct pnp_card_link *card,
+ 				     const struct pnp_card_device_id *id)
+@@ -360,6 +381,9 @@
+ 	kfree(cfg);
+ 	return 0;
+ }
++
++#define id snd_id
++
+ #endif
+ 
+ /*
+@@ -472,6 +496,7 @@
+ #ifdef CONFIG_PNP
+ 	}
+ #endif
++#define index snd_index
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE,
+ 			    sizeof(struct snd_cmi8330));
+ 	if (card == NULL) {
+@@ -543,7 +568,7 @@
+ 	strcpy(card->shortname, "C-Media CMI8330/C3D");
+ 	sprintf(card->longname, "%s at 0x%lx, irq %d, dma %d",
+ 		card->shortname,
+-		acard->wss->port,
++		wssport[dev],
+ 		wssirq[dev],
+ 		wssdma[dev]);
+ 
+--- linux-2.4.21/sound/isa/cs423x/cs4236.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/cs423x/cs4236.c	2003-07-23 18:34:45.000000000 +0200
+@@ -35,6 +35,21 @@
+ #include "cs4236.isapnp"
+ #endif
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define isapnp snd_isapnp
++#define port snd_port
++#define cport snd_cport
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define sb_port snd_sb_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++
+ #define chip_t cs4231_t
+ 
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+@@ -128,7 +143,7 @@
+ MODULE_PARM_DESC(fm_port, "FM port # for " IDENT " driver.");
+ MODULE_PARM_SYNTAX(fm_port, SNDRV_PORT12_DESC);
+ MODULE_PARM(sb_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(sb_port, "SB port # for " IDENT " driver (optional).");
++MODULE_PARM_DESC(sb_port, "SoundBlaster port # for " IDENT " driver (optional).");
+ MODULE_PARM_SYNTAX(sb_port, SNDRV_PORT12_DESC);
+ MODULE_PARM(irq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+ MODULE_PARM_DESC(irq, "IRQ # for " IDENT " driver.");
+@@ -137,10 +152,10 @@
+ MODULE_PARM_DESC(mpu_irq, "MPU-401 IRQ # for " IDENT " driver.");
+ MODULE_PARM_SYNTAX(mpu_irq, SNDRV_IRQ_DESC);
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for " IDENT " driver.");
++MODULE_PARM_DESC(dma1, "1st DMA # for " IDENT " driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA_DESC);
+ MODULE_PARM(dma2, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma2, "DMA2 # for " IDENT " driver.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for " IDENT " driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_DMA_DESC);
+ 
+ struct snd_card_cs4236 {
+@@ -178,6 +193,7 @@
+         }
+ 
+ 
++#undef id
+ #ifdef CS4232
+ static struct pnp_card_device_id snd_cs423x_pnpids[] = {
+ 	/* Philips PCA70PS */
+@@ -389,6 +405,7 @@
+ 	kfree(cfg);
+ 	return 0;
+ }
++#define id snd_id
+ #endif /* CONFIG_PNP */
+ 
+ static void snd_card_cs4236_free(snd_card_t *card)
+@@ -527,7 +544,7 @@
+ 	strcpy(card->shortname, pcm->name);
+ 	sprintf(card->longname, "%s at 0x%lx, irq %i, dma %i",
+ 		pcm->name,
+-		chip->port,
++		port[dev],
+ 		irq[dev],
+ 		dma1[dev]);
+ 	if (dma1[dev] >= 0)
+--- linux-2.4.21/sound/isa/cs423x/cs4231.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/cs423x/cs4231.c	2003-07-23 18:34:45.000000000 +0200
+@@ -30,6 +30,17 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define mpu_port snd_mpu_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++
+ #define chip_t cs4231_t
+ 
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+@@ -70,10 +81,10 @@
+ MODULE_PARM_DESC(mpu_irq, "MPU-401 IRQ # for CS4231 driver.");
+ MODULE_PARM_SYNTAX(mpu_irq, SNDRV_IRQ_DESC);
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for CS4231 driver.");
++MODULE_PARM_DESC(dma1, "1st DMA # for CS4231 driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA_DESC);
+ MODULE_PARM(dma2, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma2, "DMA2 # for CS4231 driver.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for CS4231 driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_DMA_DESC);
+ 
+ static snd_card_t *snd_cs4231_cards[SNDRV_CARDS] = SNDRV_DEFAULT_PTR;
+@@ -138,7 +149,7 @@
+ 	strcpy(card->driver, "CS4231");
+ 	strcpy(card->shortname, pcm->name);
+ 	sprintf(card->longname, "%s at 0x%lx, irq %d, dma %d",
+-		pcm->name, chip->port, irq[dev], dma1[dev]);
++		pcm->name, port[dev], irq[dev], dma1[dev]);
+ 	if (dma2[dev] >= 0)
+ 		sprintf(card->longname + strlen(card->longname), "&%d", dma2[dev]);
+ 	if ((err = snd_card_register(card)) < 0) {
+--- linux-2.4.21/sound/isa/wavefront/wavefront.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/wavefront/wavefront.c	2003-07-23 18:34:45.000000000 +0200
+@@ -33,6 +33,22 @@
+ 
+ #define chip_t cs4231_t
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define isapnp snd_isapnp
++#define cs4232_pcm_port snd_cs4232_pcm_port
++#define cs4232_pcm_irq snd_cs4232_pcm_irq
++#define cs4232_mpu_port snd_cs4232_mpu_port
++#define cs4232_mpu_irq snd_cs4232_mpu_irq
++#define ics2115_port snd_ics2115_port
++#define ics2115_irq snd_ics2115_irq
++#define fm_port snd_fm_port
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++#define use_cs4232_midi snd_use_cs4232_midi
++
+ MODULE_AUTHOR("Paul Barton-Davis <pbd@op.net>");
+ MODULE_DESCRIPTION("Turtle Beach Wavefront");
+ MODULE_LICENSE("GPL");
+@@ -65,35 +81,35 @@
+ MODULE_PARM_SYNTAX(enable, SNDRV_ENABLE_DESC);
+ #ifdef CONFIG_PNP
+ MODULE_PARM(isapnp, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(isapnp, "ISA PnP detection for WaveFront soundcards.");
++MODULE_PARM_DESC(isapnp, "ISA PnP detection for specified soundcard.");
+ MODULE_PARM_SYNTAX(isapnp, SNDRV_ISAPNP_DESC);
+ #endif
+ MODULE_PARM(cs4232_pcm_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(cs4232_pcm_port, "Port # for CS4232 PCM interface.");
++MODULE_PARM_DESC(cs4232_pcm_port, "Port # for WaveFont driver.");
+ MODULE_PARM_SYNTAX(cs4232_pcm_port, SNDRV_PORT12_DESC);
+ MODULE_PARM(cs4232_pcm_irq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(cs4232_pcm_irq, "IRQ # for CS4232 PCM interface.");
++MODULE_PARM_DESC(cs4232_pcm_irq, "IRQ # for WaveFront driver.");
+ MODULE_PARM_SYNTAX(cs4232_pcm_irq, SNDRV_ENABLED ",allows:{{5},{7},{9},{11},{12},{15}},dialog:list");
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for CS4232 PCM interface.");
++MODULE_PARM_DESC(dma1, "1st DMA # for WaveFront driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA_DESC);
+ MODULE_PARM(dma2, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma2, "DMA2 # for CS4232 PCM interface.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for WaveFront driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_DMA_DESC);
+ MODULE_PARM(cs4232_mpu_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(cs4232_mpu_port, "port # for CS4232 MPU-401 interface.");
++MODULE_PARM_DESC(cs4232_mpu_port, "MPU-401 Port # for WaveFront driver.");
+ MODULE_PARM_SYNTAX(cs4232_mpu_port, SNDRV_PORT12_DESC);
+ MODULE_PARM(cs4232_mpu_irq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(cs4232_mpu_irq, "IRQ # for CS4232 MPU-401 interface.");
++MODULE_PARM_DESC(cs4232_mpu_irq, "MPU-401 IRQ # for WaveFront driver.");
+ MODULE_PARM_SYNTAX(cs4232_mpu_irq, SNDRV_ENABLED ",allows:{{9},{11},{12},{15}},dialog:list");
+ MODULE_PARM(ics2115_irq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(ics2115_irq, "IRQ # for ICS2115.");
++MODULE_PARM_DESC(ics2115_irq, "ICS2115 IRQ # for WaveFront driver.");
+ MODULE_PARM_SYNTAX(ics2115_irq, SNDRV_ENABLED ",allows:{{9},{11},{12},{15}},dialog:list");
+ MODULE_PARM(ics2115_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(ics2115_port, "Port # for ICS2115.");
++MODULE_PARM_DESC(ics2115_port, "ICS2115 Port # for WaveFront driver.");
+ MODULE_PARM_SYNTAX(ics2115_port, SNDRV_PORT12_DESC);
+ MODULE_PARM(fm_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(fm_port, "FM port #.");
++MODULE_PARM_DESC(fm_port, "FM port # for WaveFront driver.");
+ MODULE_PARM_SYNTAX(fm_port, SNDRV_PORT12_DESC);
+ MODULE_PARM(use_cs4232_midi, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+ MODULE_PARM_DESC(use_cs4232_midi, "Use CS4232 MPU-401 interface (inaccessibly located inside your computer)");
+@@ -103,6 +119,8 @@
+ 
+ #ifdef CONFIG_PNP
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_wavefront_pnpids[] = {
+ 	/* Tropez */
+ 	{ .id = "CSC7532", .devs = { { "CSC0000" }, { "CSC0010" }, { "PnPb006" }, { "CSC0004" } } },
+@@ -276,6 +294,8 @@
+ 	return 0;
+ }
+ 
++#define id snd_id
++
+ #endif /* CONFIG_PNP */
+ 
+ static irqreturn_t snd_wavefront_ics2115_interrupt(int irq, 
+--- linux-2.4.21/sound/isa/opl3sa2.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/opl3sa2.c	2003-07-23 18:34:45.000000000 +0200
+@@ -35,6 +35,21 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define isapnp snd_isapnp
++#define port snd_port
++#define sb_port snd_sb_port
++#define wss_port snd_wss_port
++#define fm_port snd_fm_port
++#define midi_port snd_midi_port
++#define irq snd_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++#define opl3sa3_ymode snd_opl3sa3_ymode
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Yamaha OPL3SA2+");
+ MODULE_LICENSE("GPL");
+@@ -94,15 +109,18 @@
+ MODULE_PARM_DESC(irq, "IRQ # for OPL3-SA driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_ENABLED ",allows:{{0},{1},{3},{5},{9},{11},{12},{15}},dialog:list");
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for OPL3-SA driver.");
++MODULE_PARM_DESC(dma1, "1st DMA # for OPL3-SA driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_ENABLED ",allows:{{1},{3},{5},{6},{7}},dialog:list");
+ MODULE_PARM(dma2, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma2, "DMA2 # for OPL3-SA driver.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for OPL3-SA driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_ENABLED ",allows:{{1},{3},{5},{6},{7}},dialog:list");
+ MODULE_PARM(opl3sa3_ymode, "1-" __MODULE_STRING(SNDRV_CARDS) "i"); /* SL Added */
+ MODULE_PARM_DESC(opl3sa3_ymode, "Speaker size selection for 3D Enhancement mode: Desktop/Large Notebook/Small Notebook/HiFi.");
+ MODULE_PARM_SYNTAX(opl3sa3_ymode, SNDRV_ENABLED ",allows:{{0,3}},dialog:list");  /* SL Added */
+ 
++#undef port
++#undef irq
++
+ /* control ports */
+ #define OPL3SA2_PM_CTRL		0x01
+ #define OPL3SA2_SYS_CTRL		0x02
+@@ -162,6 +180,8 @@
+ 
+ #ifdef CONFIG_PNP
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_opl3sa2_pnpids[] = {
+ 	/* Yamaha YMF719E-S (Genius Sound Maker 3DX) */
+ 	{ .id = "YMH0020", .devs = { { "YMH0021" } } },
+@@ -177,6 +197,8 @@
+ 
+ MODULE_DEVICE_TABLE(pnp_card, snd_opl3sa2_pnpids);
+ 
++#define id snd_id
++
+ #endif /* CONFIG_PNP */
+ 
+ 
+@@ -298,6 +320,8 @@
+ 	return 0;
+ }
+ 
++#undef id
++
+ static irqreturn_t snd_opl3sa2_interrupt(int irq, void *dev_id, struct pt_regs *regs)
+ {
+ 	unsigned short status;
+@@ -474,6 +498,8 @@
+ 	return change;
+ }
+ 
++#undef index
++
+ #define OPL3SA2_CONTROLS (sizeof(snd_opl3sa2_controls)/sizeof(snd_kcontrol_new_t))
+ 
+ static snd_kcontrol_new_t snd_opl3sa2_controls[] = {
+@@ -625,7 +651,13 @@
+ 
+ #endif /* CONFIG_PM */
+ 
++#define port snd_port
++#define irq snd_irq
++
+ #ifdef CONFIG_PNP
++
++#undef id
++
+ static int __init snd_opl3sa2_pnp(int dev, opl3sa2_t *chip,
+ 				  struct pnp_card_link *card,
+ 				  const struct pnp_card_device_id *id)
+@@ -683,8 +715,14 @@
+ 	kfree(cfg);
+ 	return 0;
+ }
++
++#define id snd_id
++
+ #endif /* CONFIG_PNP */
+ 
++#undef irq
++#undef port
++
+ static int snd_opl3sa2_free(opl3sa2_t *chip)
+ {
+ #ifdef CONFIG_PM
+@@ -724,7 +762,7 @@
+ #ifdef CONFIG_PNP
+ 	if (!isapnp[dev]) {
+ #endif
+-		if (port[dev] == SNDRV_AUTO_PORT) {
++		if (snd_port[dev] == SNDRV_AUTO_PORT) {
+ 			snd_printk("specify port\n");
+ 			return -EINVAL;
+ 		}
+@@ -743,6 +781,8 @@
+ #ifdef CONFIG_PNP
+ 	}
+ #endif
++#define index snd_index
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+@@ -762,8 +802,8 @@
+ #endif
+ 	chip->ymode = opl3sa3_ymode[dev] & 0x03 ; /* initialise this card from supplied (or default) parameter*/ 
+ 	chip->card = card;
+-	chip->port = port[dev];
+-	xirq = irq[dev];
++	chip->port = snd_port[dev];
++	xirq = snd_irq[dev];
+ 	xdma1 = dma1[dev];
+ 	xdma2 = dma2[dev];
+ 	if (xdma2 < 0)
+--- linux-2.4.21/sound/isa/es1688/es1688.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/es1688/es1688.c	2003-07-23 18:29:09.000000000 +0200
+@@ -34,6 +34,16 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define mpu_port snd_mpu_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma8 snd_dma8
++
+ #define chip_t es1688_t
+ 
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+@@ -130,8 +140,8 @@
+ 		return err;
+ 	}
+ 
+-	if ((snd_opl3_create(card, chip->port, chip->port + 2, OPL3_HW_OPL3, 0, &opl3)) < 0) {
+-		printk(KERN_ERR "es1688: opl3 not detected at 0x%lx\n", chip->port);
++	if ((snd_opl3_create(card, port[dev], port[dev] + 2, OPL3_HW_OPL3, 0, &opl3)) < 0) {
++		printk(KERN_ERR "es1688: opl3 not detected at 0x%lx\n", port[dev]);
+ 	} else {
+ 		if ((err = snd_opl3_hwdep_new(opl3, 0, 1, NULL)) < 0) {
+ 			snd_card_free(card);
+@@ -141,7 +151,7 @@
+ 
+ 	if (xmpu_irq >= 0) {
+ 		if ((err = snd_mpu401_uart_new(card, 0, MPU401_HW_ES1688,
+-					       chip->mpu_port, 0,
++					       mpu_port[dev], 0,
+ 					       xmpu_irq,
+ 					       SA_INTERRUPT,
+ 					       NULL)) < 0) {
+@@ -151,7 +161,7 @@
+ 	}
+ 	strcpy(card->driver, "ES1688");
+ 	strcpy(card->shortname, pcm->name);
+-	sprintf(card->longname, "%s at 0x%lx, irq %i, dma %i", pcm->name, chip->port, xirq, xdma);
++	sprintf(card->longname, "%s at 0x%lx, irq %i, dma %i", pcm->name, port[dev], xirq, xdma);
+ 	if ((err = snd_card_register(card)) < 0) {
+ 		snd_card_free(card);
+ 		return err;
+--- linux-2.4.21/sound/isa/ad1816a/ad1816a.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/ad1816a/ad1816a.c	2003-07-23 18:29:09.000000000 +0200
+@@ -31,6 +31,18 @@
+ #include <sound/opl3.h>
+ #include "ad1816a.isapnp"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++
+ #define chip_t ad1816a_t
+ 
+ #define PFX "ad1816a: "
+@@ -94,6 +106,8 @@
+ 	struct pnp_dev *devmpu;
+ };
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_ad1816a_pnpids[] = {
+ 	/* Analog Devices AD1815 */
+ 	{ .id = "ADS7150", .devs = { { .id = "ADS7150" }, { .id = "ADS7151" } } },
+@@ -193,6 +207,8 @@
+ 	return 0;
+ }
+ 
++#define id snd_id
++
+ static int __devinit snd_card_ad1816a_probe(int dev, struct pnp_card_link *pcard,
+ 					    const struct pnp_card_device_id *pid)
+ {
+@@ -258,7 +274,7 @@
+ 	strcpy(card->driver, "AD1816A");
+ 	strcpy(card->shortname, "ADI SoundPort AD1816A");
+ 	sprintf(card->longname, "%s soundcard, SS at 0x%lx, irq %d, dma %d&%d",
+-		card->shortname, chip->port, irq[dev], dma1[dev], dma2[dev]);
++		card->shortname, port[dev], irq[dev], dma1[dev], dma2[dev]);
+ 
+ 	if ((error = snd_card_register(card)) < 0) {
+ 		snd_card_free(card);
+--- linux-2.4.21/sound/isa/azt2320.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/azt2320.c	2003-07-23 18:29:09.000000000 +0200
+@@ -44,6 +44,19 @@
+ #include <sound/opl3.h>
+ #include "azt2320.isapnp"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define wss_port snd_wss_port
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++
+ #define chip_t cs4231_t
+ 
+ #define PFX "azt2320: "
+@@ -110,6 +123,8 @@
+ 	struct pnp_dev *devmpu;
+ };
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_azt2320_pnpids[] = {
+ 	/* PRO16V */
+ 	{ .id = "AZT1008", .devs = { { "AZT1008" }, { "AZT2001" }, } },
+@@ -208,6 +223,7 @@
+ 	kfree (cfg);
+ 	return 0;
+ }
++#define id snd_id
+ 
+ /* same of snd_sbdsp_command by Jaroslav Kysela */
+ static int __devinit snd_card_azt2320_command(unsigned long port, unsigned char val)
+@@ -313,7 +329,7 @@
+ 	strcpy(card->driver, "AZT2320");
+ 	strcpy(card->shortname, "Aztech AZT2320");
+ 	sprintf(card->longname, "%s soundcard, WSS at 0x%lx, irq %i, dma %i&%i",
+-		card->shortname, chip->port, irq[dev], dma1[dev], dma2[dev]);
++		card->shortname, port[dev], irq[dev], dma1[dev], dma2[dev]);
+ 
+ 	if ((error = snd_card_register(card)) < 0) {
+ 		snd_card_free(card);
+--- linux-2.4.21/sound/isa/opti9xx/opti92x-ad1848.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/opti9xx/opti92x-ad1848.c	2003-07-23 18:34:45.000000000 +0200
+@@ -60,6 +60,19 @@
+ #endif
+ #endif
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define isapnp snd_isapnp
++#define port snd_port
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define irq snd_irq
++#define mpu_irq snd_mpu_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++
+ MODULE_AUTHOR("Massimo Piccioni <dafastidio@libero.it>");
+ MODULE_CLASSES("{sound}");
+ MODULE_LICENSE("GPL");
+@@ -81,7 +94,7 @@
+ 
+ static int index = SNDRV_DEFAULT_IDX1;	/* Index 0-MAX */
+ static char *id = SNDRV_DEFAULT_STR1;		/* ID for this card */
+-//static int enable = SNDRV_DEFAULT_ENABLE1;	/* Enable this card */
++static int enable = SNDRV_DEFAULT_ENABLE1;	/* Enable this card */
+ static int isapnp = 1;			/* Enable ISA PnP detection */
+ static long port = SNDRV_DEFAULT_PORT1; 	/* 0x530,0xe80,0xf40,0x604 */
+ static long mpu_port = SNDRV_DEFAULT_PORT1;	/* 0x300,0x310,0x320,0x330 */
+@@ -99,9 +112,9 @@
+ MODULE_PARM(id, "s");
+ MODULE_PARM_DESC(id, "ID string for opti9xx based soundcard.");
+ MODULE_PARM_SYNTAX(id, SNDRV_ID_DESC);
+-//MODULE_PARM(enable, "i");
+-//MODULE_PARM_DESC(enable, "Enable opti9xx soundcard.");
+-//MODULE_PARM_SYNTAX(enable, SNDRV_ENABLE_DESC);
++MODULE_PARM(enable, "i");
++MODULE_PARM_DESC(enable, "Enable opti9xx soundcard.");
++MODULE_PARM_SYNTAX(enable, SNDRV_ENABLE_DESC);
+ MODULE_PARM(isapnp, "i");
+ MODULE_PARM_DESC(isapnp, "Enable ISA PnP detection for specified soundcard.");
+ MODULE_PARM_SYNTAX(isapnp, SNDRV_ISAPNP_DESC);
+@@ -115,20 +128,28 @@
+ MODULE_PARM_DESC(fm_port, "FM port # for opti9xx driver.");
+ MODULE_PARM_SYNTAX(fm_port, SNDRV_PORT_DESC);
+ MODULE_PARM(irq, "i");
+-MODULE_PARM_DESC(irq, "WSS irq # for opti9xx driver.");
++MODULE_PARM_DESC(irq, "WSS IRQ # for opti9xx driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_IRQ_DESC);
+ MODULE_PARM(mpu_irq, "i");
+ MODULE_PARM_DESC(mpu_irq, "MPU-401 irq # for opti9xx driver.");
+ MODULE_PARM_SYNTAX(mpu_irq, SNDRV_IRQ_DESC);
+ MODULE_PARM(dma1, "i");
+-MODULE_PARM_DESC(dma1, "1st dma # for opti9xx driver.");
++MODULE_PARM_DESC(dma1, "1st DMA # for opti9xx driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA_DESC);
+ #if defined(CS4231) || defined(OPTi93X)
+ MODULE_PARM(dma2, "i");
+-MODULE_PARM_DESC(dma2, "2nd dma # for opti9xx driver.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for opti9xx driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_DMA_DESC);
+ #endif	/* CS4231 || OPTi93X */
+ 
++#undef irq
++#undef port
++#undef fm_port
++#undef mpu_port
++#undef mpu_irq
++#undef dma1
++#undef dma2
++
+ #define OPTi9XX_HW_DETECT	0
+ #define OPTi9XX_HW_82C928	1
+ #define OPTi9XX_HW_82C929	2
+@@ -286,6 +307,8 @@
+ 
+ #ifdef CONFIG_PNP
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_opti9xx_pnpids[] = {
+ #ifndef OPTi93X
+ 	/* OPTi 82C924 */
+@@ -299,6 +322,8 @@
+ 	{ .id = "" }
+ };
+ 
++#define id snd_id
++
+ MODULE_DEVICE_TABLE(pnp_card, snd_opti9xx_pnpids);
+ 
+ #endif	/* CONFIG_PNP */
+@@ -1604,6 +1629,7 @@
+ 
+ #define OPTi93X_CONTROLS (sizeof(snd_opti93x_controls)/sizeof(snd_kcontrol_new_t))
+ 
++#undef index
+ static snd_kcontrol_new_t snd_opti93x_controls[] = {
+ OPTi93X_DOUBLE("Master Playback Switch", 0, OPTi93X_OUT_LEFT, OPTi93X_OUT_RIGHT, 7, 7, 1, 1),
+ OPTi93X_DOUBLE("Master Playback Volume", 0, OPTi93X_OUT_LEFT, OPTi93X_OUT_RIGHT, 1, 1, 31, 1), 
+@@ -1711,7 +1737,18 @@
+ 	return -ENODEV;
+ }
+ 
++#define port snd_port
++#define irq snd_irq
++#define fm_port snd_fm_port
++#define mpu_port snd_mpu_port
++#define mpu_irq snd_mpu_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++
+ #ifdef CONFIG_PNP
++
++#undef id
++
+ static int __devinit snd_card_opti9xx_pnp(opti9xx_t *chip, struct pnp_card_link *card,
+ 					  const struct pnp_card_device_id *pid)
+ {
+@@ -1794,6 +1831,9 @@
+ 	kfree(cfg);
+ 	return pid->driver_data;
+ }
++
++#define id snd_id
++
+ #endif	/* CONFIG_PNP */
+ 
+ #if 0
+@@ -1940,6 +1980,9 @@
+ 
+ 	if (pcard && !snd_opti9xx_first_hit)
+ 		return -EBUSY;
++
++#define index snd_index
++
+ 	if (!(card = snd_card_new(index, id, THIS_MODULE,
+ 				  sizeof(opti9xx_t))))
+ 		return -ENOMEM;
+@@ -1984,14 +2027,20 @@
+ 		return -ENOMEM;
+ 	}
+ 
++#undef fm_port
++#undef mpu_port
++#undef irq
++#undef mpu_irq
++#undef dma1
++#undef dma2
+ 	chip->wss_base = port;
+-	chip->fm_port = fm_port;
+-	chip->mpu_port = mpu_port;
+-	chip->irq = irq;
+-	chip->mpu_irq = mpu_irq;
+-	chip->dma1 = dma1;
++	chip->fm_port = snd_fm_port;
++	chip->mpu_port = snd_mpu_port;
++	chip->irq = snd_irq;
++	chip->mpu_irq = snd_mpu_irq;
++	chip->dma1 = snd_dma1;
+ #if defined(CS4231) || defined(OPTi93X)
+-	chip->dma2 = dma2;
++	chip->dma2 = snd_dma2;
+ #endif
+ 
+ #ifdef CONFIG_PNP
+@@ -2235,6 +2284,13 @@
+ 
+ #ifndef MODULE
+ 
++#define irq snd_irq
++#define fm_port snd_fm_port
++#define mpu_port snd_mpu_port
++#define mpu_irq snd_mpu_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++
+ /* format is: snd-opti9xx=enable,index,id,isapnp,
+ 			  port,mpu_port,fm_port,
+ 			  irq,mpu_irq,
+@@ -2242,7 +2298,6 @@
+ 
+ static int __init alsa_card_opti9xx_setup(char *str)
+ {
+-	int __attribute__ ((__unused__)) enable = 1;
+ 	int __attribute__ ((__unused__)) pnp = INT_MAX;
+ 
+ 	(void)(get_option(&str,&enable) == 2 &&
+--- linux-2.4.21/sound/isa/es18xx.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/es18xx.c	2003-07-23 18:34:45.000000000 +0200
+@@ -1867,6 +1867,18 @@
+ 
+ /* Card level */
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define isapnp snd_isapnp
++#define port snd_port
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define irq snd_irq
++#define dma1 snd_dma1
++#define dma2 snd_dma2
++
+ MODULE_AUTHOR("Christian Fischbach <fishbach@pool.informatik.rwth-aachen.de>, Abramo Bagnara <abramo@alsa-project.org>");  
+ MODULE_DESCRIPTION("ESS ES18xx AudioDrive");
+ MODULE_LICENSE("GPL");
+@@ -1924,10 +1936,10 @@
+ MODULE_PARM_DESC(irq, "IRQ # for ES18xx driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_IRQ_DESC ",prefers:{5}");
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA 1 # for ES18xx driver.");
++MODULE_PARM_DESC(dma1, "1st DMA # for ES18xx driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA8_DESC ",prefers:{1}");
+ MODULE_PARM(dma2, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma2, "DMA 2 # for ES18xx driver.");
++MODULE_PARM_DESC(dma2, "2nd DMA # for ES18xx driver.");
+ MODULE_PARM_SYNTAX(dma2, SNDRV_ENABLED ",allows:{{0},{1},{3},{5}},dialog:list,prefers:{0}");
+ 
+ struct snd_audiodrive {
+@@ -1941,6 +1953,8 @@
+ 
+ #ifdef CONFIG_PNP
+ 
++#undef id
++
+ static struct pnp_card_device_id snd_audiodrive_pnpids[] = {
+ 	/* ESS 1868 (integrated on Compaq dual P-Pro motherboard and Genius 18PnP 3D) */
+ 	{ .id = "ESS1868", .devs = { { "ESS1868" }, { "ESS0000" } } },
+@@ -2036,6 +2050,9 @@
+ 	kfree(cfg);
+ 	return 0;
+ }
++
++#define id snd_id
++
+ #endif /* CONFIG_PNP_ */
+ 
+ static int __devinit snd_audiodrive_probe(int dev, struct pnp_card_link *pcard,
+@@ -2107,6 +2124,7 @@
+ 	}
+ 
+ 	if (fm_port[dev] > 0 && fm_port[dev] != SNDRV_AUTO_PORT) {
++#undef fm_port
+ 		if (snd_opl3_create(card, chip->fm_port, chip->fm_port + 2, OPL3_HW_OPL3, 0, &opl3) < 0) {
+ 			snd_printk(KERN_ERR PFX "opl3 not detected at 0x%lx\n", chip->fm_port);
+ 		} else {
+@@ -2116,10 +2134,11 @@
+ 			}
+ 		}
+ 	}
++#define fm_port snd_fm_port
+ 
+ 	if (mpu_port[dev] > 0 && mpu_port[dev] != SNDRV_AUTO_PORT) {
+ 		if ((err = snd_mpu401_uart_new(card, 0, MPU401_HW_ES18XX,
+-					       chip->mpu_port, 0,
++					       mpu_port[dev], 0,
+ 					       xirq, 0,
+ 					       &rmidi)) < 0) {
+ 			snd_card_free(card);
+@@ -2143,12 +2162,12 @@
+ 	if (xdma1 != xdma2)
+ 		sprintf(card->longname, "%s at 0x%lx, irq %d, dma1 %d, dma2 %d",
+ 			card->shortname,
+-			chip->port,
++			port[dev],
+ 			xirq, xdma1, xdma2);
+ 	else
+ 		sprintf(card->longname, "%s at 0x%lx, irq %d, dma %d",
+ 			card->shortname,
+-			chip->port,
++			port[dev],
+ 			xirq, xdma1);
+ 	if ((err = snd_card_register(card)) < 0) {
+ 		snd_card_free(card);
+--- linux-2.4.21/sound/isa/sgalaxy.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/isa/sgalaxy.c	2003-07-23 18:34:45.000000000 +0200
+@@ -36,6 +36,15 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define sbport snd_sbport
++#define wssport snd_wssport
++#define irq snd_irq
++#define dma1 snd_dma1
++
+ MODULE_AUTHOR("Christopher Butler <chrisb@sandy.force9.co.uk>");
+ MODULE_DESCRIPTION("Aztech Sound Galaxy");
+ MODULE_LICENSE("GPL");
+@@ -66,7 +75,7 @@
+ MODULE_PARM_DESC(irq, "IRQ # for Sound Galaxy driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_ENABLED ",allows:{{7},{9},{10},{11}},dialog:list");
+ MODULE_PARM(dma1, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(dma1, "DMA1 # for Sound Galaxy driver.");
++MODULE_PARM_DESC(dma1, "DMA # for Sound Galaxy driver.");
+ MODULE_PARM_SYNTAX(dma1, SNDRV_DMA8_DESC);
+ 
+ #define SGALAXY_AUXC_LEFT 18
+@@ -178,6 +187,8 @@
+ 	return snd_sgalaxy_setup_wss(wssport[dev], irq, dma);
+ }
+ 
++#undef index
++
+ static struct ad1848_mix_elem snd_sgalaxy_controls[] = {
+ AD1848_DOUBLE("Aux Playback Switch", 0, SGALAXY_AUXC_LEFT, SGALAXY_AUXC_RIGHT, 7, 7, 1, 1),
+ AD1848_DOUBLE("Aux Playback Volume", 0, SGALAXY_AUXC_LEFT, SGALAXY_AUXC_RIGHT, 0, 0, 31, 0)
+@@ -235,6 +246,7 @@
+ 		snd_printk("specify WSS port\n");
+ 		return -EINVAL;
+ 	}
++#define index snd_index
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/via82xx.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/via82xx.c	2003-07-23 18:29:47.000000000 +0200
+@@ -59,6 +59,14 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define mpu_port snd_mpu_port
++#define ac97_clock snd_ac97_clock
++#define dxs_support snd_dxs_support
++
+ #if 0
+ #define POINTER_DEBUG
+ #endif
+@@ -1350,6 +1358,9 @@
+  *  Mixer part
+  */
+ 
++#undef index
++#undef id
++
+ static int snd_via8233_capture_source_info(snd_kcontrol_t *kcontrol, snd_ctl_elem_info_t *uinfo)
+ {
+ 	static char *texts[2] = {
+@@ -1952,6 +1963,8 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define index snd_index
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/nm256/nm256.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/nm256/nm256.c	2003-07-23 18:29:09.000000000 +0200
+@@ -39,6 +39,17 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define playback_bufsize snd_playback_bufsize
++#define capture_bufsize snd_capture_bufsize
++#define force_ac97 snd_force_ac97
++#define buffer_top snd_buffer_top
++#define use_cache snd_use_cache
++#define vaio_hack snd_vaio_hack
++
+ #define CARD_NAME "NeoMagic 256AV/ZX"
+ #define DRIVER_NAME "NM256"
+ 
+@@ -1191,6 +1202,7 @@
+ 	spin_unlock_irqrestore(&chip->reg_lock, flags);
+ }
+ 
++#undef id
+ /* create an ac97 mixer interface */
+ static int __devinit
+ snd_nm256_mixer(nm256_t *chip)
+@@ -1226,6 +1238,7 @@
+ 	}
+ 	return 0;
+ }
++#define id snd_id
+ 
+ /* 
+  * See if the signature left by the NM256 BIOS is intact; if so, we use
+--- linux-2.4.21/sound/pci/vx222/vx222.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/vx222/vx222.c	2003-07-23 18:33:04.000000000 +0200
+@@ -32,6 +32,11 @@
+ 
+ #define CARD_NAME "VX222"
+ 
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define ibl snd_ibl
++
+ MODULE_AUTHOR("Takashi Iwai <tiwai@suse.de>");
+ MODULE_DESCRIPTION("Digigram VX222 V2/Mic");
+ MODULE_LICENSE("GPL");
+@@ -60,6 +65,7 @@
+ MODULE_PARM_DESC(ibl, "Capture IBL size.");
+ MODULE_PARM_SYNTAX(ibl, SNDRV_ENABLED);
+ 
++#undef ibl
+ /*
+  */
+ 
+@@ -233,7 +239,7 @@
+ 		snd_card_free(card);
+ 		return err;
+ 	}
+-	vx->core.ibl.size = ibl[dev];
++	vx->core.ibl.size = snd_ibl[dev];
+ 
+ 	sprintf(card->longname, "%s at 0x%lx & 0x%lx, irq %i",
+ 		card->shortname, vx->port[0], vx->port[1], vx->core.irq);
+--- linux-2.4.21/sound/pci/fm801.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/fm801.c	2003-07-23 18:29:09.000000000 +0200
+@@ -35,6 +35,11 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ #define chip_t fm801_t
+ 
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+--- linux-2.4.21/sound/pci/rme9652/rme9652.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/rme9652/rme9652.c	2003-07-23 18:29:09.000000000 +0200
+@@ -38,6 +38,12 @@
+ #include <asm/current.h>
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define precise_ptr snd_preceise_ptr
++
+ static int index[SNDRV_CARDS] = SNDRV_DEFAULT_IDX;	/* Index 0-MAX */
+ static char *id[SNDRV_CARDS] = SNDRV_DEFAULT_STR;	/* ID for this card */
+ static int enable[SNDRV_CARDS] = SNDRV_DEFAULT_ENABLE_PNP;	/* Enable this card */
+@@ -62,6 +68,9 @@
+ MODULE_DEVICES("{{RME,Hammerfall},"
+ 		"{RME,Hammerfall-Light}}");
+ 
++#undef index
++#undef id
++
+ /* The Hammerfall has two sets of 24 ADAT + 2 S/PDIF channels, one for
+    capture, one for playback. Both the ADAT and S/PDIF channels appear
+    to the host CPU in the same block of memory. There is no functional
+@@ -2696,6 +2705,8 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define index snd_index
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE,
+ 			    sizeof(rme9652_t));
+ 
+--- linux-2.4.21/sound/pci/rme9652/hdsp.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/rme9652/hdsp.c	2003-07-23 18:29:09.000000000 +0200
+@@ -43,6 +43,13 @@
+ #include <asm/current.h>
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define precise_ptr snd_precise_ptr
++#define line_outs_monitor snd_line_outs_monitor 
++
+ static int index[SNDRV_CARDS] = SNDRV_DEFAULT_IDX;	/* Index 0-MAX */
+ static char *id[SNDRV_CARDS] = SNDRV_DEFAULT_STR;	/* ID for this card */
+ static int enable[SNDRV_CARDS] = SNDRV_DEFAULT_ENABLE_PNP;	/* Enable this card */
+@@ -71,6 +78,9 @@
+ MODULE_DEVICES("{{RME Hammerfall-DSP},"
+ 	        "{RME HDSP-9652}}");
+ 
++#undef index
++#undef id
++
+ #define HDSP_MAX_CHANNELS        26
+ #define DIGIFACE_SS_CHANNELS     26
+ #define DIGIFACE_DS_CHANNELS     14
+@@ -4266,6 +4276,8 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define index snd_index
++#define id snd_id
+ 	if (!(card = snd_card_new(index[dev], id[dev], THIS_MODULE, sizeof(hdsp_t))))
+ 		return -ENOMEM;
+ 
+--- linux-2.4.21/sound/pci/cmipci.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/cmipci.c	2003-07-23 18:29:09.000000000 +0200
+@@ -43,6 +43,14 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define mpu_port snd_mpu_port
++#define fm_port snd_fm_port
++#define soft_ac3 snd_soft_ac3
++
+ MODULE_AUTHOR("Takashi Iwai <tiwai@suse.de>");
+ MODULE_DESCRIPTION("C-Media CMI8x38 PCI");
+ MODULE_LICENSE("GPL");
+@@ -1444,6 +1452,7 @@
+ 					event |= SNDRV_CTL_EVENT_MASK_VALUE;
+ 				}
+ 				ctl->vd[0].access |= SNDRV_CTL_ELEM_ACCESS_INACTIVE;
++#undef id
+ 				snd_ctl_notify(cm->card, event, &ctl->id);
+ 			}
+ 		}
+@@ -3134,6 +3143,7 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/azt3328.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/azt3328.c	2003-07-23 18:29:09.000000000 +0200
+@@ -155,6 +155,12 @@
+ #define snd_azf3328_dbgio(chip, where)
+ #endif
+ 	    
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define joystick snd_joystick
++
+ static int index[SNDRV_CARDS] = SNDRV_DEFAULT_IDX;	/* Index 0-MAX */
+ static char *id[SNDRV_CARDS] = SNDRV_DEFAULT_STR;	/* ID for this card */
+ static int enable[SNDRV_CARDS] = SNDRV_DEFAULT_ENABLE_PNP;	/* Enable this card */
+--- linux-2.4.21/sound/pci/korg1212/korg1212.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/korg1212/korg1212.c	2003-07-23 18:29:09.000000000 +0200
+@@ -37,6 +37,11 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ // ----------------------------------------------------------------------------
+ // Debug Stuff
+ // ----------------------------------------------------------------------------
+--- linux-2.4.21/sound/pci/emu10k1/emu10k1.c-dist	2003-07-23 18:28:16.000000000 +0200
++++ linux-2.4.21/sound/pci/emu10k1/emu10k1.c	2003-07-23 18:29:09.000000000 +0200
+@@ -40,6 +40,17 @@
+ #include <sound/emu10k1_synth.h>
+ #endif
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define extin snd_extin
++#define extout snd_extout
++#define seq_ports snd_seq_ports
++#define max_synth_voices snd_max_synth_voices
++#define max_buffer_size snd_max_buffer_size
++#define enable_ir snd_enable_ir
++
+ static int index[SNDRV_CARDS] = SNDRV_DEFAULT_IDX;	/* Index 0-MAX */
+ static char *id[SNDRV_CARDS] = SNDRV_DEFAULT_STR;	/* ID for this card */
+ static int enable[SNDRV_CARDS] = SNDRV_DEFAULT_ENABLE_PNP;	/* Enable this card */
+@@ -166,8 +177,10 @@
+ 		arg = SNDRV_SEQ_DEVICE_ARGPTR(wave);
+ 		strcpy(wave->name, "Emu-10k1 Synth");
+ 		arg->hwptr = emu;
++#undef index
++#undef seq_ports
+ 		arg->index = 1;
+-		arg->seq_ports = seq_ports[dev];
++		arg->seq_ports = snd_seq_ports[dev];
+ 		arg->max_voices = max_synth_voices[dev];
+ 	}
+ #endif
+@@ -229,6 +242,8 @@
+ 
+ #ifndef MODULE
+ 
++#define index snd_index
++#define seq_ports snd_seq_ports
+ /* format is: snd-emu10k1=enable,index,id,
+ 			  seq_ports,max_synth_voices */
+ 
+--- linux-2.4.21/sound/pci/maestro3.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/maestro3.c	2003-07-23 18:29:09.000000000 +0200
+@@ -48,6 +48,13 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define external_amp snd_external_amp
++#define amp_gpio snd_amp_gpio
++
+ MODULE_AUTHOR("Zach Brown <zab@zabbo.net>, Takashi Iwai <tiwai@suse.de>");
+ MODULE_DESCRIPTION("ESS Maestro3 PCI");
+ MODULE_LICENSE("GPL");
+--- linux-2.4.21/sound/pci/cs46xx/cs46xx.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/cs46xx/cs46xx.c	2003-07-23 18:29:09.000000000 +0200
+@@ -34,6 +34,14 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define external_amp snd_external_amp
++#define thinkpad snd_thinkpad
++#define mmap_valid snd_mmap_valid
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Cirrus Logic Sound Fusion CS46XX");
+ MODULE_LICENSE("GPL");
+--- linux-2.4.21/sound/pci/sonicvibes.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/sonicvibes.c	2003-07-23 18:29:09.000000000 +0200
+@@ -41,6 +41,14 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define reverb snd_reverb
++#define mge snd_mge
++#define dmaio snd_dmaio
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("S3 SonicVibes PCI");
+ MODULE_LICENSE("GPL");
+@@ -596,6 +604,9 @@
+ 	return result;
+ }
+ 
++#undef id
++#undef index
++
+ static irqreturn_t snd_sonicvibes_interrupt(int irq, void *dev_id, struct pt_regs *regs)
+ {
+ 	sonicvibes_t *sonic = snd_magic_cast(sonicvibes_t, dev_id, return IRQ_NONE);
+@@ -1450,6 +1461,8 @@
+ 		return -ENOENT;
+ 	}
+  
++#define index snd_index
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/rme96.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/rme96.c	2003-07-23 18:29:09.000000000 +0200
+@@ -41,6 +41,11 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ /* note, two last pcis should be equal, it is not a bug */
+ 
+ MODULE_AUTHOR("Anders Torger <torger@ludd.luth.se>");
+@@ -1193,6 +1198,8 @@
+ 	.mask = 0
+ };
+ 
++#undef id
++
+ static int
+ snd_rme96_playback_spdif_open(snd_pcm_substream_t *substream)
+ {
+@@ -2497,6 +2504,7 @@
+ 		dev++;
+ 		return -ENOENT;
+ 	}
++#define id snd_id
+ 	if ((card = snd_card_new(index[dev], id[dev], THIS_MODULE,
+ 				 sizeof(rme96_t))) == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/cs4281.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/cs4281.c	2003-07-23 18:29:09.000000000 +0200
+@@ -36,6 +36,12 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define dual_codec snd_dual_codec
++
+ 
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Cirrus Logic CS4281");
+--- linux-2.4.21/sound/pci/trident/trident.c-dist	2003-07-23 18:28:16.000000000 +0200
++++ linux-2.4.21/sound/pci/trident/trident.c	2003-07-23 18:29:09.000000000 +0200
+@@ -30,6 +30,13 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define pcm_channels snd_pcm_channels
++#define wavetable_size snd_wavetable_size
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>, <audio@tridentmicro.com>");
+ MODULE_DESCRIPTION("Trident 4D-WaveDX/NX & SiS SI7018");
+ MODULE_LICENSE("GPL");
+--- linux-2.4.21/sound/pci/mixart/mixart.c-dist	2003-07-23 18:28:57.000000000 +0200
++++ linux-2.4.21/sound/pci/mixart/mixart.c	2003-07-23 18:29:09.000000000 +0200
+@@ -37,6 +37,11 @@
+ 
+ #define CARD_NAME "miXart"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ MODULE_AUTHOR("Digigram <alsa@digigram.com>");
+ MODULE_DESCRIPTION("Digigram " CARD_NAME);
+ MODULE_LICENSE("GPL");
+--- linux-2.4.21/sound/pci/es1968.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/es1968.c	2003-07-23 18:29:09.000000000 +0200
+@@ -109,6 +109,16 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define pcm_substreams_p snd_pcm_substreams_p
++#define pcm_substreams_c snd_pcm_substreams_c
++#define total_bufsize snd_totalbufsize
++#define clock snd_clock
++#define use_pm snd_use_pm
++
+ #define chip_t es1968_t
+ 
+ #define CARD_NAME "ESS Maestro1/2"
+@@ -1965,6 +1975,9 @@
+ 
+ /*
+  */
++
++#undef id
++
+ static void es1968_update_hw_volume(unsigned long private_data)
+ {
+ 	es1968_t *chip = snd_magic_cast(es1968_t, (void*)private_data, return);
+@@ -2708,6 +2721,7 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (!card)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/pdplus/pdplus.c-dist	2003-07-23 18:28:52.000000000 +0200
++++ linux-2.4.21/sound/pci/pdplus/pdplus.c	2003-07-23 18:29:09.000000000 +0200
+@@ -339,6 +339,11 @@
+ 
+ /* ********************************************************************** */
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ static int   index[SNDRV_CARDS]  = SNDRV_DEFAULT_IDX;     /* Index 0-MAX */
+ static char *id[SNDRV_CARDS]     = SNDRV_DEFAULT_STR;     /* ID for this card */
+ static int   enable[SNDRV_CARDS] = SNDRV_DEFAULT_ENABLE;  /* Enable switches */
+@@ -381,6 +386,9 @@
+ MODULE_PARM_SYNTAX(debug_level, "global");
+ #endif
+ 
++#undef index
++#undef id
++
+ /* ********************************************************************** */
+ 
+ #if OVERRIDE_DEBUG_IO_VIRT
+@@ -6096,6 +6104,8 @@
+                 LEAVE (-ENOENT);
+         }
+ 
++#define index snd_index
++#define id snd_id
+         card = snd_card_new (index[dev], id[dev], THIS_MODULE, 0);
+         if (card == NULL)
+                 LEAVE (-ENOMEM);
+--- linux-2.4.21/sound/pci/ali5451/ali5451.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/ali5451/ali5451.c	2003-07-23 18:29:09.000000000 +0200
+@@ -42,6 +42,12 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define pcm_channels snd_pcm_channels
++
+ MODULE_AUTHOR("Matt Wu <Matt_Wu@acersoftech.com.cn>");
+ MODULE_DESCRIPTION("ALI M5451");
+ MODULE_LICENSE("GPL");
+@@ -1751,6 +1757,8 @@
+ 	return 0;
+ }
+ 
++#undef index
++
+ #define ALI5451_SPDIF(xname, xindex, value) \
+ { .iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname, .index = xindex,\
+ .info = snd_ali5451_spdif_info, .get = snd_ali5451_spdif_get, \
+@@ -2216,6 +2224,7 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define index snd_index
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/rme32.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/rme32.c	2003-07-23 18:29:09.000000000 +0200
+@@ -73,6 +73,11 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ static int index[SNDRV_CARDS] = SNDRV_DEFAULT_IDX;	/* Index 0-MAX */
+ static char *id[SNDRV_CARDS] = SNDRV_DEFAULT_STR;	/* ID for this card */
+ static int enable[SNDRV_CARDS] = SNDRV_DEFAULT_ENABLE_PNP;	/* Enable this card */
+@@ -864,6 +869,8 @@
+ 	.mask = 0
+ };
+ 
++#undef id
++
+ static int snd_rme32_playback_spdif_open(snd_pcm_substream_t * substream)
+ {
+ 	unsigned long flags;
+@@ -1941,6 +1948,7 @@
+ 	if (dev >= SNDRV_CARDS) {
+ 		return -ENODEV;
+ 	}
++#define id snd_id
+ 	if ((card = snd_card_new(index[dev], id[dev], THIS_MODULE,
+ 				 sizeof(rme32_t))) == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/ice1712/ice1724.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/ice1712/ice1724.c	2003-07-23 18:29:09.000000000 +0200
+@@ -44,6 +44,10 @@
+ #include "revo.h"
+ #include "aureon.h"
+ 
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("ICEnsemble ICE1724 (Envy24HT)");
+ MODULE_LICENSE("GPL");
+@@ -1466,6 +1470,8 @@
+ 	return change;
+ }
+ 
++#undef id
++
+ static int snd_vt1724_pro_route_analog_get(snd_kcontrol_t * kcontrol, snd_ctl_elem_value_t *ucontrol)
+ {
+ 	ice1712_t *ice = snd_kcontrol_chip(kcontrol);
+@@ -1865,6 +1871,7 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/ice1712/ice1712.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/ice1712/ice1712.c	2003-07-23 18:29:09.000000000 +0200
+@@ -67,6 +67,12 @@
+ #include "ews.h"
+ #include "hoontech.h"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define omni snd_omni
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("ICEnsemble ICE1712 (Envy24)");
+ MODULE_LICENSE("GPL");
+@@ -252,6 +258,10 @@
+ /*
+  * consumer ac97 digital mix
+  */
++
++#undef index
++#undef id
++
+ static int snd_ice1712_digmix_route_ac97_info(snd_kcontrol_t *kcontrol, snd_ctl_elem_info_t *uinfo)
+ {
+ 	uinfo->type = SNDRV_CTL_ELEM_TYPE_BOOLEAN;
+@@ -2335,6 +2345,7 @@
+ 	return snd_ice1712_free(ice);
+ }
+ 
++#undef omni
+ static int __devinit snd_ice1712_create(snd_card_t * card,
+ 					struct pci_dev *pci,
+ 					int omni,
+@@ -2471,6 +2482,8 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define index snd_index
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+@@ -2478,6 +2491,7 @@
+ 	strcpy(card->driver, "ICE1712");
+ 	strcpy(card->shortname, "ICEnsemble ICE1712");
+ 	
++#define omni snd_omni
+ 	if ((err = snd_ice1712_create(card, pci, omni[dev], &ice)) < 0) {
+ 		snd_card_free(card);
+ 		return err;
+--- linux-2.4.21/sound/pci/ymfpci/ymfpci.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/ymfpci/ymfpci.c	2003-07-23 18:34:45.000000000 +0200
+@@ -30,6 +30,14 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define fm_port snd_fm_port
++#define mpu_port snd_mpu_port
++#define rear_switch snd_rear_switch
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Yamaha DS-XG PCI");
+ MODULE_LICENSE("GPL");
+@@ -58,10 +66,10 @@
+ MODULE_PARM_DESC(enable, "Enable Yamaha DS-XG soundcard.");
+ MODULE_PARM_SYNTAX(enable, SNDRV_ENABLE_DESC);
+ MODULE_PARM(mpu_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(mpu_port, "MPU-401 Port.");
++MODULE_PARM_DESC(mpu_port, "MPU-401 port # for YMFPCI driver.");
+ MODULE_PARM_SYNTAX(mpu_port, SNDRV_ENABLED);
+ MODULE_PARM(fm_port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(fm_port, "FM OPL-3 Port.");
++MODULE_PARM_DESC(fm_port, "FM port # for YMFPCI driver.");
+ MODULE_PARM_SYNTAX(fm_port, SNDRV_ENABLED);
+ MODULE_PARM(rear_switch, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+ MODULE_PARM_DESC(rear_switch, "Enable shared rear/line-in switch");
+--- linux-2.4.21/sound/pci/intel8x0.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/intel8x0.c	2003-07-23 18:29:09.000000000 +0200
+@@ -41,6 +41,14 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define ac97_clock snd_ac97_clock
++#define joystick_port snd_joystick_port
++#define mpu_port snd_mpu_port
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Intel 82801AA,82901AB,i810,i820,i830,i840,i845,MX440; SiS 7012; Ali 5455");
+ MODULE_LICENSE("GPL");
+--- linux-2.4.21/sound/pci/ens1370.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/ens1370.c	2003-07-23 18:29:09.000000000 +0200
+@@ -40,6 +40,11 @@
+ #include <sound/initval.h>
+ #include <sound/asoundef.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ #define chip_t ensoniq_t
+ 
+ #ifndef CHIP1371
+@@ -1277,6 +1282,9 @@
+  *  Mixer section
+  */
+ 
++#undef id
++#undef index
++
+ /*
+  * ENS1371 mixer (including SPDIF interface)
+  */
+@@ -2290,6 +2298,8 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define index snd_index
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/pci/als4000.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/als4000.c	2003-07-23 18:29:09.000000000 +0200
+@@ -72,6 +72,12 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define joystick_port snd_joystick_port
++
+ MODULE_AUTHOR("Bart Hartgers <bart@etpmod.phys.tue.nl>");
+ MODULE_DESCRIPTION("Avance Logic ALS4000");
+ MODULE_LICENSE("GPL");
+--- linux-2.4.21/sound/pci/es1938.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pci/es1938.c	2003-07-23 18:29:09.000000000 +0200
+@@ -63,6 +63,11 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++
+ #define chip_t es1938_t
+ 
+ MODULE_AUTHOR("Jaromir Koutek <miri@punknet.cz>");
+@@ -1155,6 +1160,8 @@
+ 		return snd_es1938_read(chip, reg);
+ }
+ 
++#undef index
++#undef id
+ #define ES1938_SINGLE(xname, xindex, reg, shift, mask, invert) \
+ { .iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname, .index = xindex, \
+   .info = snd_es1938_info_single, \
+@@ -1619,6 +1626,8 @@
+ 		return -ENOENT;
+ 	}
+ 
++#define index snd_index
++#define id snd_id
+ 	card = snd_card_new(index[dev], id[dev], THIS_MODULE, 0);
+ 	if (card == NULL)
+ 		return -ENOMEM;
+--- linux-2.4.21/sound/ppc/powermac.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/ppc/powermac.c	2003-07-23 18:29:09.000000000 +0200
+@@ -27,6 +27,12 @@
+ #include "awacs.h"
+ #include "burgundy.h"
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define enable_beep snd_enable_beep
++
+ #define CHIP_NAME "PMac"
+ 
+ MODULE_DESCRIPTION("PowerMac");
+--- linux-2.4.21/sound/usb/usbaudio.c-dist	2003-07-23 18:28:24.000000000 +0200
++++ linux-2.4.21/sound/usb/usbaudio.c	2003-07-23 18:30:10.000000000 +0200
+@@ -63,6 +63,13 @@
+ MODULE_CLASSES("{sound}");
+ MODULE_DEVICES("{{Generic,USB Audio}}");
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define vid snd_vid
++#define pid snd_pid
++#define nrpacks snd_nrpacks
+ 
+ static int index[SNDRV_CARDS] = SNDRV_DEFAULT_IDX;	/* Index 0-MAX */
+ static char *id[SNDRV_CARDS] = SNDRV_DEFAULT_STR;	/* ID for this card */
+@@ -2623,6 +2630,7 @@
+ static int snd_usb_audio_free(snd_usb_audio_t *chip)
+ {
+ 	down(&register_mutex);
++#undef index
+ 	usb_chip[chip->index] = NULL;
+ 	up(&register_mutex);
+ 	snd_magic_kfree(chip);
+@@ -2782,7 +2790,9 @@
+ 			if (enable[i] && ! usb_chip[i] &&
+ 			    (vid[i] == -1 || vid[i] == dev->descriptor.idVendor) &&
+ 			    (pid[i] == -1 || pid[i] == dev->descriptor.idProduct)) {
++#define index snd_index
+ 				card = snd_card_new(index[i], id[i], THIS_MODULE, 0);
++#undef index
+ 				if (card == NULL) {
+ 					snd_printk(KERN_ERR "cannot create a card instance %d\n", i);
+ 					goto __error;
+--- linux-2.4.21/sound/core/oss/pcm_oss.c-dist	2003-07-23 18:28:16.000000000 +0200
++++ linux-2.4.21/sound/core/oss/pcm_oss.c	2003-07-23 18:34:49.000000000 +0200
+@@ -41,9 +41,14 @@
+ #include <linux/soundcard.h>
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define dsp_map snd_dsp_map
++#define adsp_map snd_adsp_map
++#define nonblock_open snd_nonblock_open
++
+ static int dsp_map[SNDRV_CARDS] = {[0 ... (SNDRV_CARDS-1)] = 0};
+ static int adsp_map[SNDRV_CARDS] = {[0 ... (SNDRV_CARDS-1)] = 1};
+-static int nonblock_open;
++static int nonblock_open = 1;
+ 
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>, Abramo Bagnara <abramo@alsa-project.org>");
+ MODULE_DESCRIPTION("PCM OSS emulation for ALSA.");
+--- linux-2.4.21/sound/core/pcm_native.c-dist	2003-07-23 18:28:16.000000000 +0200
++++ linux-2.4.21/sound/core/pcm_native.c	2003-07-23 18:29:09.000000000 +0200
+@@ -1420,7 +1420,7 @@
+ }
+ 
+ /* WARNING: Don't forget to fput back the file */
+-extern int snd_major;
++extern int _snd_major;
+ static struct file *snd_pcm_file_fd(int fd)
+ {
+ 	struct file *file;
+@@ -1431,7 +1431,7 @@
+ 		return 0;
+ 	inode = file->f_dentry->d_inode;
+ 	if (!S_ISCHR(inode->i_mode) ||
+-	    major(inode->i_rdev) != snd_major) {
++	    major(inode->i_rdev) != _snd_major) {
+ 		fput(file);
+ 		return 0;
+ 	}
+--- linux-2.4.21/sound/core/rawmidi.c-dist	2003-07-23 18:28:17.000000000 +0200
++++ linux-2.4.21/sound/core/rawmidi.c	2003-07-23 18:29:09.000000000 +0200
+@@ -33,6 +33,10 @@
+ #include <sound/minors.h>
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define midi_map snd_midi_map
++#define amidi_map snd_amidi_map
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Midlevel RawMidi code for ALSA.");
+ MODULE_LICENSE("GPL");
+--- linux-2.4.21/sound/core/sound.c-dist	2003-07-23 18:28:48.000000000 +0200
++++ linux-2.4.21/sound/core/sound.c	2003-07-23 18:29:09.000000000 +0200
+@@ -33,10 +33,20 @@
+ #include <linux/kmod.h>
+ #include <linux/devfs_fs_kernel.h>
+ 
++/* changed module options */
++#ifdef major
++#undef major
++#endif
++#define major snd_major
++#define cards_limit snd_cards_limit
++#define device_mode snd_device_mode
++#define device_gid snd_device_gid
++#define device_uid snd_device_uid
++
+ #define SNDRV_OS_MINORS 256
+ 
+ static int major = CONFIG_SND_MAJOR;
+-int snd_major;
++int _snd_major;
+ static int cards_limit = SNDRV_CARDS;
+ static int device_mode = S_IFCHR | S_IRUGO | S_IWUGO;
+ static int device_gid = 0;
+@@ -339,7 +349,7 @@
+ #endif
+ 	int card;
+ 
+-	snd_major = major;
++	_snd_major = major;
+ 	snd_ecards_limit = cards_limit;
+ 	for (card = 0; card < SNDRV_CARDS; card++)
+ 		INIT_LIST_HEAD(&snd_minors_hash[card]);
+@@ -418,7 +428,7 @@
+ #endif /* ifndef MODULE */
+ 
+   /* sound.c */
+-EXPORT_SYMBOL(snd_major);
++EXPORT_SYMBOL(_snd_major);
+ EXPORT_SYMBOL(snd_ecards_limit);
+ #if defined(CONFIG_KMOD)
+ EXPORT_SYMBOL(snd_request_card);
+--- linux-2.4.21/sound/core/info.c-dist	2003-07-23 18:28:48.000000000 +0200
++++ linux-2.4.21/sound/core/info.c	2003-07-23 18:29:09.000000000 +0200
+@@ -33,6 +33,11 @@
+ #include <linux/devfs_fs_kernel.h>
+ #include <stdarg.h>
+ 
++/* changed module options */
++#define device_mode snd_device_mode
++#define device_gid snd_device_gid
++#define device_uid snd_device_uid
++
+ /*
+  *
+  */
+--- linux-2.4.21/sound/drivers/serialmidi.c-dist	2003-07-23 18:28:54.000000000 +0200
++++ linux-2.4.21/sound/drivers/serialmidi.c	2003-07-23 18:29:09.000000000 +0200
+@@ -34,6 +34,15 @@
+ #include <sound/initval.h>
+ #include <linux/delay.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define sdev snd_sdev
++#define speed snd_speed
++#define adaptor snd_adaptor
++#define outs snd_outs
++
+ #define SNDRV_SERIAL_MAX_OUTS		16 /* min 16 */
+ #define TX_BUF_SIZE			256
+ 
+--- linux-2.4.21/sound/drivers/serial-u16550.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/drivers/serial-u16550.c	2003-07-23 18:34:45.000000000 +0200
+@@ -44,6 +44,19 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define irq snd_irq
++#define speed snd_speed
++#define base snd_base
++#define outs snd_outs
++#define ins snd_ins
++#define adaptor snd_adaptor
++
++
+ MODULE_DESCRIPTION("MIDI serial u16550");
+ MODULE_LICENSE("GPL");
+ MODULE_CLASSES("{sound}");
+@@ -81,13 +94,13 @@
+ MODULE_PARM_DESC(id, "ID string for Serial MIDI.");
+ MODULE_PARM_SYNTAX(id, SNDRV_ID_DESC);
+ MODULE_PARM(enable, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(enable, "Enable UART16550A chip.");
++MODULE_PARM_DESC(enable, "Enable UART16550A driver.");
+ MODULE_PARM_SYNTAX(enable, SNDRV_ENABLE_DESC);
+ MODULE_PARM(port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(port, "Port # for UART16550A chip.");
++MODULE_PARM_DESC(port, "Port # for UART16550A driver.");
+ MODULE_PARM_SYNTAX(port, SNDRV_PORT12_DESC);
+ MODULE_PARM(irq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(irq, "IRQ # for UART16550A chip.");
++MODULE_PARM_DESC(irq, "IRQ # for UART16550A driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_IRQ_DESC);
+ MODULE_PARM(speed, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+ MODULE_PARM_DESC(speed, "Speed in bauds.");
+--- linux-2.4.21/sound/drivers/dummy.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/drivers/dummy.c	2003-07-23 18:29:09.000000000 +0200
+@@ -32,6 +32,13 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define pcm_devs snd_pcm_devs
++#define pcm_substreams snd_pcm_substreams
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("Dummy soundcard (/dev/null)");
+ MODULE_LICENSE("GPL");
+@@ -416,6 +423,8 @@
+ 	return 0;
+ }
+ 
++#undef index
++
+ #define DUMMY_VOLUME(xname, xindex, addr) \
+ { .iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname, .index = xindex, \
+   .info = snd_dummy_volume_info, \
+@@ -548,6 +557,8 @@
+ 	return 0;
+ }
+ 
++#define index snd_index
++
+ static int __init snd_card_dummy_probe(int dev)
+ {
+ 	snd_card_t *card;
+--- linux-2.4.21/sound/drivers/mpu401/mpu401.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/drivers/mpu401/mpu401.c	2003-07-23 18:34:45.000000000 +0200
+@@ -30,6 +30,13 @@
+ #include <sound/initval.h>
+ #include <linux/delay.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define port snd_port
++#define irq snd_irq
++
+ MODULE_AUTHOR("Jaroslav Kysela <perex@suse.cz>");
+ MODULE_DESCRIPTION("MPU-401 UART");
+ MODULE_LICENSE("GPL");
+@@ -45,19 +52,19 @@
+ #endif
+ 
+ MODULE_PARM(index, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(index, "Index value for MPU-401 device.");
++MODULE_PARM_DESC(index, "Index value for MPU-401 driver.");
+ MODULE_PARM_SYNTAX(index, SNDRV_INDEX_DESC);
+ MODULE_PARM(id, "1-" __MODULE_STRING(SNDRV_CARDS) "s");
+-MODULE_PARM_DESC(id, "ID string for MPU-401 device.");
++MODULE_PARM_DESC(id, "ID string for MPU-401 driver.");
+ MODULE_PARM_SYNTAX(id, SNDRV_ID_DESC);
+ MODULE_PARM(enable, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(enable, "Enable MPU-401 device.");
++MODULE_PARM_DESC(enable, "Enable MPU-401 driver.");
+ MODULE_PARM_SYNTAX(enable, SNDRV_ENABLE_DESC);
+ MODULE_PARM(port, "1-" __MODULE_STRING(SNDRV_CARDS) "l");
+-MODULE_PARM_DESC(port, "Port # for MPU-401 device.");
++MODULE_PARM_DESC(port, "Port # for MPU-401 driver.");
+ MODULE_PARM_SYNTAX(port, SNDRV_PORT12_DESC);
+ MODULE_PARM(irq, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+-MODULE_PARM_DESC(irq, "IRQ # for MPU-401 device.");
++MODULE_PARM_DESC(irq, "IRQ # for MPU-401 driver.");
+ MODULE_PARM_SYNTAX(irq, SNDRV_IRQ_DESC);
+ #ifdef CONFIG_X86_PC9800
+ MODULE_PARM(pc98ii, "1-" __MODULE_STRING(SNDRV_CARDS) "i");
+--- linux-2.4.21/sound/drivers/virmidi.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/drivers/virmidi.c	2003-07-23 18:29:09.000000000 +0200
+@@ -51,8 +51,11 @@
+ #define SNDRV_GET_ID
+ #include <sound/initval.h>
+ 
+-/* hack: OSS defines midi_devs, so undefine it (versioned symbols) */
+-#undef midi_devs
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define midi_devs snd_midi_devs
+ 
+ MODULE_AUTHOR("Takashi Iwai <tiwai@suse.de>");
+ MODULE_DESCRIPTION("Dummy soundcard for virtual rawmidi devices");
+--- linux-2.4.21/sound/drivers/mtpav.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/drivers/mtpav.c	2003-07-23 18:34:45.000000000 +0200
+@@ -63,6 +63,13 @@
+ 
+ #include <asm/io.h>
+ 
++/* changed module options */
++#define index snd_index
++#define id snd_id
++#define port snd_port
++#define irq snd_irq
++#define hwports snd_hwports
++
+ /*
+  *      globals
+  */
+@@ -90,13 +97,13 @@
+ MODULE_PARM_DESC(id, "ID string for MotuMTPAV MIDI.");
+ MODULE_PARM_SYNTAX(id, SNDRV_ID_DESC);
+ MODULE_PARM(port, "l");
+-MODULE_PARM_DESC(port, "Parallel port # for MotuMTPAV MIDI.");
++MODULE_PARM_DESC(port, "Port # for MotuMTPAV MIDI driver.");
+ MODULE_PARM_SYNTAX(port, SNDRV_ENABLED ",allows:{{0x378},{0x278}},dialog:list");
+ MODULE_PARM(irq, "i");
+-MODULE_PARM_DESC(irq, "Parallel IRQ # for MotuMTPAV MIDI.");
++MODULE_PARM_DESC(irq, "IRQ # for MotuMTPAV MIDI driver.");
+ MODULE_PARM_SYNTAX(irq,  SNDRV_ENABLED ",allows:{{7},{5}},dialog:list");
+ MODULE_PARM(hwports, "i");
+-MODULE_PARM_DESC(hwports, "Hardware ports # for MotuMTPAV MIDI.");
++MODULE_PARM_DESC(hwports, "Hardware ports # for MotuMTPAV MIDI driver.");
+ MODULE_PARM_SYNTAX(hwports, SNDRV_ENABLED ",allows:{{1,8}},dialog:list");
+ 
+ /*
+--- linux-2.4.21/sound/pcmcia/vx/vxpocket.c-dist	2003-07-23 18:28:45.000000000 +0200
++++ linux-2.4.21/sound/pcmcia/vx/vxpocket.c	2003-07-23 18:34:01.000000000 +0200
+@@ -46,6 +46,11 @@
+ #define CARD_NAME	"VXPocket"
+ #endif
+ 
++#define index snd_index
++#define id snd_id
++#define enable snd_enable
++#define ibl snd_ibl
++
+ MODULE_AUTHOR("Takashi Iwai <tiwai@suse.de>");
+ MODULE_DESCRIPTION("Digigram " CARD_NAME);
+ MODULE_LICENSE("GPL");
+@@ -76,6 +81,7 @@
+ MODULE_PARM_DESC(ibl, "Capture IBL size for " CARD_NAME " soundcard.");
+ MODULE_PARM_SYNTAX(ibl, SNDRV_ENABLED);
+  
++#undef ibl
+ 
+ /*
+  */
+@@ -129,7 +135,7 @@
+ 	.enable_table = enable,
+ 	.irq_mask_p = &irq_mask,
+ 	.irq_list = irq_list,
+-	.ibl = ibl,
++	.ibl = snd_ibl,
+ 
+ 	/* h/w config */
+ 	.hardware = &vxp_hw,

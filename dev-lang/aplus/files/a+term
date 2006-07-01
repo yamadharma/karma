@@ -1,0 +1,11 @@
+#!/bin/sh
+# $XFree86: xc/programs/xterm/uxterm,v 1.4 2001/10/24 01:21:25 dickey Exp $
+# wrapper script to setup xterm with KOI8-R locale
+
+program=xterm
+found=no
+
+# for testing:
+test -f ./xterm && program=./xterm
+
+exec $program -class AplusTerm -title 'A+ xterm' "$@"

@@ -1,0 +1,5 @@
+MD5 1a95557ef28d7eda54304378538ad5ce fusesmb-0.6.0.ebuild 1105
+MD5 22308684a331461c71fee62b9b54078f fusesmb-0.7.0.ebuild 1117
+MD5 5dbf6ab779717cc95824d61a0b9e79c3 files/digest-fuse-1.1 60
+MD5 61a7b09c4f2524ece57cae7092b35177 files/digest-fusesmb-0.6.0 65
+MD5 6b9cdf31d624578a25d9cc6a085cf806 files/digest-fusesmb-0.7.0 65

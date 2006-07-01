@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>no-herd</herd>
+<maintainer>
+  <email>paul@varnerfamily.org</email>
+  <name>Paul Varner</name>
+  <description>Package author</description>
+</maintainer>
+
+<longdescription>
+kernelmod-rebuild is a script to rebuild packages that build kernel modules
+such as nvidia-kernel.
+</longdescription>
+</pkgmetadata>

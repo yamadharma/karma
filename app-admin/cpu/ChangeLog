@@ -1,0 +1,38 @@
+# ChangeLog for app-admin/superadduser
+# Copyright 2002 Gentoo Technologies, Inc.; Distributed under the GPL
+# $Header: /home/cvsroot/gentoo-x86/app-admin/superadduser/ChangeLog,v 1.9 2003/02/10 21:58:20 latexer Exp $
+
+  06 Dec 2002; Rodney Rees <manson@gentoo.org> : changed sparc ~sparc keywords
+ 
+*superadduser-1.0-r2 (18 Aug 2002)
+
+  10 Feb 2003; Peter Johanson <latexer@gentoo.org> superadduser-1.0-r2.ebuild :
+  Added ~alpha to KEYWORDS.
+
+  04 Sep 2002; Karl Trygve Kalleberg <karltk@gentoo.org> superadduser-1.0-r2.ebuild files/digest-superadduser-1.0-r2:
+  Fixed a bug when chowning home directories. Fixes #7464.
+
+  18 Aug 2002; Karl Trygve Kalleberg <karltk@gentoo.org> superadduser-1.0-r2.ebuild files/digest-superadduser-1.0-r2:
+  Fixed script so that the home directories are properly chowned. Script 
+  files moved to files/1.0.
+
+  Removed superadduser-1.0-r1.ebuild files/digest-superadduser-1.0-r1
+
+*superadduser-1.0-r1 (16 Apr 2002)
+
+  30 Jul 2002; Calum Selkirk <cselkirk@gentoo.org> superadduser-1.0-r1 :
+
+  Added ppc to KEYWORDS
+
+  16 Apr 2002; Donny Davies <woodchip@gentoo.org> superadduser-1.0-r1 :
+
+  Fix it so it actually installs :)
+    o s/files/${FILESDIR}/
+    o s/superadduser.1/superadduser.8/
+    o fix shadow dependancy
+
+*superadduser-1.0 (09 Apr 2002)
+
+  09 Apr 2002; Karl Trygve Kalleberg <karltk@gentoo.org> superadduser-1.0.ebuild files/digest-superadduser-1.0 files/superadduser files/superadduser.8:
+
+  An interactive wrapper for shadow's useradd.

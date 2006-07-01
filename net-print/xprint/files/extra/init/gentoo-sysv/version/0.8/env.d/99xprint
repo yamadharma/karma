@@ -1,0 +1,1 @@
+XPSERVERLIST="`/bin/sh /etc/init.d/xprint get_xpserverlist`"

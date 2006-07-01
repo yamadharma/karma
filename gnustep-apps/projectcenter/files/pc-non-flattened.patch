@@ -1,0 +1,9 @@
+diff -Naur ../work/ProjectCenter-0.4.3/GNUmakefile.preamble ProjectCenter-0.4.3/GNUmakefile.preamble
+--- ../work/ProjectCenter-0.4.3/GNUmakefile.preamble	2005-11-18 19:27:44.000000000 +0300
++++ ProjectCenter-0.4.3/GNUmakefile.preamble	2006-02-01 14:01:42.000000000 +0300
+@@ -61,3 +61,5 @@
+ 
+ # Additional directories to be created during installation
+ ADDITIONAL_INSTALL_DIRS +=
++
++ADDITIONAL_LIB_DIRS += -L./Library/ProjectCenter.framework/Versions/Current/${GNUSTEP_HOST_CPU}/${GNUSTEP_HOST_OS}/${LIBRARY_COMBO}

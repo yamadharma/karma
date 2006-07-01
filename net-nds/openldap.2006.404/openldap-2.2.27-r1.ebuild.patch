@@ -1,0 +1,42 @@
+--- openldap-2.2.28.ebuild	2005-08-22 17:52:41.081918072 +0400
++++ openldap-2.2.28-r1.ebuild	2005-08-22 18:12:36.435196752 +0400
+@@ -140,6 +140,8 @@
+ 	# Security bug #96767 
+ 	# http://bugzilla.padl.com/show_bug.cgi?id=210
+ 	EPATCH_OPTS="-p1 -d ${S}" epatch ${FILESDIR}/${PN}-2.2.26-tls-fix-connection-test.patch
++	
++	EPATCH_OPTS="-p1 -d ${S}" epatch ${FILESDIR}/smbk5pwd-2.3.5.patch
+ 
+ 	# ensure correct SLAPI path by default
+ 	sed -i -e 's,\(#define LDAPI_SOCK\).*,\1 "/var/run/openldap/slapd.sock",' \
+@@ -247,6 +249,13 @@
+ 		die "failed to compile kerberos module"
+ 	fi
+ 
++	if ! use minimal && use kerberos && use samba
++	    then
++		cd ${S}/contrib/slapd-modules/smbk5pwd/ && \
++		emake || \
++		die "failed to compile kerberos module"
++	fi
++
+ 	# now build old compat lib
+ 	cd ${OLD_S} && \
+ 	econf \
+@@ -324,6 +333,16 @@
+ 			doins ${S}/contrib/slapd-modules/passwd/pw-kerberos.so || \
+ 			die "failed to install kerberos passwd module"
+ 		fi
++		if use kerberos && use samba  
++		    then
++			insinto /usr/$(get_libdir)/openldap/openldap
++			doins ${S}/contrib/slapd-modules/smbk5pwd/.libs/smbk5pwd.so.0.0.0 
++			doins ${S}/contrib/slapd-modules/smbk5pwd/.libs/smbk5pwd.a 
++			doins ${S}/contrib/slapd-modules/smbk5pwd/smbk5pwd.la
++			dosym /usr/lib/openldap/openldap/smbk5pwd.so.0.0.0 /usr/lib/openldap/openldap/smbk5pwd.so.0
++			dosym /usr/lib/openldap/openldap/smbk5pwd.so.0.0.0 /usr/lib/openldap/openldap/smbk5pwd.so
++			chmod +x ${D}/usr/lib/openldap/openldap/smbk5pwd.so.0.0.0 
++		fi
+ 	fi
+ 
+ 	# install MDK's ssl cert script

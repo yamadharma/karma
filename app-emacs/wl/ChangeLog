@@ -1,0 +1,52 @@
+# ChangeLog for app-emacs/wl
+# Copyright 2002-2003 Gentoo Technologies, Inc.; Distributed under the GPL v2
+# $Header: /home/cvsroot/gentoo-x86/app-emacs/wl/ChangeLog,v 1.11 2003/07/29 02:59:33 usata Exp $
+
+*wl-2.11.4.20030728 (29 Jul 2003)
+
+  29 Jul 2003; Mamoru KOMACHI <usata@gentoo.org> wl-2.11.4.20030728.ebuild:
+  New beta version.
+
+*wl-2.10.1-r1 (09 Jul 2003)
+
+  09 Jul 2003; Masatomo Nakano <nakano@gentoo.org> wl-2.10.1-r1.ebuild:
+  Marked as stable.
+
+*wl-2.10.1 (06 Jul 2003)
+
+  07 Jul 2003; Masatomo Nakano <nakano@gentoo.org> wl-2.10.1.ebuild:
+  Added ssl support.
+
+  06 Jul 2003; Masatomo Nakano <nakano@gentoo.org> wl-2.10.1.ebuild:
+  Version bumped as unstable.
+
+*wl-2.10.0-r1 (18 Jun 2003)
+
+  03 Jul 2003; Masatomo Nakano <nakano@gentoo.org> wl-2.10.0-r1.ebuild:
+  Marked stable for x86
+
+  18 Jun 2003; Masatomo Nakano <nakano@gentoo.org> wl-2.10.0-r1.ebuild:
+  Fixed ebuild bug.
+
+*wl-2.10.0 (13 Dec 2002)
+
+  29 May 2003; YAMAKURA Makoto <yakina@gentoo.org> wl-2.10.0.ebuild, wl-2.8.1.ebuild:
+  Added S
+
+  24 Dec 2002; Masatomo Nakano <nakano@gentoo.org> ChangeLog,
+  wl-2.10.0.ebuild
+
+	Changed Keywords from ~x86 to x86.
+
+  13 Dec 2002; Masatomo Nakano <nakano@gentoo.org> ChangeLog,
+  wl-2.10.0.ebuild, files/digest-wl-2.10.0
+
+  Version bump.
+
+*wl-2.8.1 (31 Oct 2002)
+
+  31 Oct 2002; Matthew Kennedy <mkennedy@gentoo.org> ChangeLog,
+  wl-2.8.1.ebuild, files/70wl-gentoo.el, 
+  files/digest-wl-2.8.1 :
+
+  Initial import.

@@ -1,0 +1,45 @@
+#!/bin/sh
+# $XFree86: xc/programs/xterm/uxterm,v 1.4 2001/10/24 01:21:25 dickey Exp $
+# wrapper script to setup xterm with KOI8-R locale
+
+program=xterm
+found=no
+
+export LANG=ru_RU.KOI8-R 
+# Check environment variables that xterm does, in the same order:
+for name in LC_ALL LC_CTYPE LANG
+do
+	eval 'value=$'$name
+	if test -n "$value" ; then
+		case $value in
+		*.KOI8-R)
+			found=yes
+			;;
+		C|POSIX)
+			# Yes, I know this is not the same - but why are you
+			# here then?
+			value=en_US
+			;;
+		esac
+		break
+	fi
+done
+
+# If we didn't find one that used KOI8-R, modify the safest one.  Not everyone
+# has a proper locale installed (and there appears to be no trivial/portable way
+# to determine whether it is, from a shell script).  We could check if the
+# user's shell does not reset unknown locale specifiers, but not all shells do.
+if test $found != yes ; then
+	if test -n "$value" ; then
+		eval ${name}=`echo ${value} |sed -e 's/\..*//'`.KOI8-R
+		eval export ${name}
+	else
+		LC_CTYPE=ru_RU.KOI8-R
+		export LC_CTYPE
+	fi
+fi
+
+# for testing:
+test -f ./xterm && program=./xterm
+
+exec $program -class KOI8Term -title 'KOI8 xterm' "$@"

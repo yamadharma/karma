@@ -1,0 +1,7 @@
+MD5 72c8d22e50caaf5dd42b1823f5874206 metadata.xml 160
+MD5 ed84924fe7c9133d558898a9278de113 gnustep-1.9.0.ebuild 1975
+MD5 2352482ebc0ce3f88d43cadace7c7708 gnustep-1.9.1.ebuild 1975
+MD5 2eb0249e161fa07289514ab73a2d37fd gnustep-1.9.2.ebuild 1988
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-gnustep-1.9.0 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-gnustep-1.9.1 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-gnustep-1.9.2 0

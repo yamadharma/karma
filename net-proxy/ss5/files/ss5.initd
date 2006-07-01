@@ -1,0 +1,41 @@
+#!/sbin/runscript
+# Copyright 1999-2003 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: $
+
+service_name="ss5"
+service=/usr/bin/ss5
+
+depend () 
+{
+    need net
+}
+
+checkconfig () 
+{
+    if [ ! -f /etc/ss5/ss5.conf ]  
+	then
+	eerror "You need to setup /etc/ss5/ss5.conf first"
+	return 1
+    fi
+}
+
+start () 
+{
+    checkconfig || return 1
+    
+    ebegin "Starting ${service_name}"
+    start-stop-daemon --start --quiet --pidfile /var/run/ss5.pid \
+    	--make-pidfile --background --exec ${service} -- ${OPTIONS}
+    eend $? "Failed to start ${service_name}"
+}
+
+stop () 
+{
+    ebegin "Stopping ${service_name}"
+    start-stop-daemon --stop --quiet --pidfile /var/run/ss5.pid
+    eend $? "Failed to stop ${service_name}"
+
+    # clean stale lockfile
+    [ -f /var/lock/subsys/ss5 ] && rm -f /var/lock/subsys/ss5
+}

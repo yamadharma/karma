@@ -1,0 +1,7 @@
+MD5 80f51130d210f3f39a6a401e98e5cf60 files/digest-libtranslate-0.99 69
+MD5 80f51130d210f3f39a6a401e98e5cf60 files/digest-libtranslate-0.99-r1 69
+MD5 7d4d85c2c0881034d4113a65c2307da9 files/libtranslate-0.99-charsetparse.diff 1361
+MD5 b6da2048edec744ba65a47c5b45baca8 files/libtranslate-0.99-condfix.diff 900
+MD5 9f517697cf9919d0c353b3a393ed7e96 files/libtranslate-ds-memory.patch 555
+MD5 bd08a61d403c908d935a4c8997d7aa58 files/libtranslate-ds-timed.patch.bz2 2863
+MD5 31a8657e3719264bee782f9798af50e1 libtranslate-0.99-r1.ebuild 856

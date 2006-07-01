@@ -1,0 +1,13 @@
+--- linux/sound/pci/ac97/ac97_codec.c	2003-07-01 15:49:44.000000000 +0200
++++ linux/sound/pci/ac97/ac97_codec.c	2003-07-01 15:49:48.000000000 +0200
+@@ -1624,8 +1624,10 @@
+ 		if (ac97_reset_wait(ac97, HZ/2, 0) < 0 &&
+ 		    ac97_reset_wait(ac97, HZ/2, 1) < 0) {
+ 			snd_printk("AC'97 %d:%d does not respond - RESET\n", ac97->num, ac97->addr);
++#if 0 // anyway proceed to next..
+ 			snd_ac97_free(ac97);
+ 			return -ENXIO;
++#endif
+ 		}
+ 	}
+       __access_ok:

@@ -1,0 +1,25 @@
+#!/sbin/runscript
+# Copyright 1999-2002 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License, v2 or later
+# description: GNU Zebra routing manager
+
+DAEMON=/usr/sbin/bird
+
+depend() 
+{
+    need net
+}
+
+start() 
+{
+    ebegin "Starting bird"
+    start-stop-daemon --start --quiet --exec ${DAEMON}
+    eend $?
+}
+
+stop() 
+{
+    ebegin "Stopping bird"
+    start-stop-daemon --stop --quiet --exec ${DAEMON}
+    eend $?
+}

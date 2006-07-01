@@ -1,0 +1,42 @@
+#!/sbin/runscript
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+# FIXME: Status output
+# FIXME: More detail on failures
+# FIXME: Make env into vars at build time
+
+OPENNMS_DIR=/opt/opennms
+
+depend() {
+	need net tomcat5
+	after ssh
+	use postgres
+}
+
+start() {
+	ebegin "Starting OpenNMS"
+	${OPENNMS_DIR}/bin/opennms.sh start > /dev/null
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping OpenNMS"
+	${OPENNMS_DIR}/bin/opennms.sh stop > /dev/null
+	eend $?
+}
+
+# svc_stop/start?
+#restart() {
+#	ebegin "Restarting OpenNMS"
+#	${OPENNMS_DIR}/bin/opennms.sh restart > /dev/null
+#	eend $?
+#}
+
+status() {
+	ebegin "OpenNMS status"
+	${OPENNMS_DIR}/bin/opennms.sh status > /dev/null
+	
+	eend $?
+}

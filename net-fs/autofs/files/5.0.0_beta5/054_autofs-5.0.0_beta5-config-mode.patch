@@ -1,0 +1,57 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index 40fb783..2cdb121 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -14,6 +14,7 @@
+ - allow global macro defines to override system macros.
+ - cleanup defaults_read_config.
+ - add rfc2307-bis example map configurations.
++- change mode of of config file install to 644.
+ 
+ 20/6/2006 autofs-5.0.0_beta5
+ ---------------------------
+diff --git a/autofs.spec b/autofs.spec
+index dbf1d73..2204329 100644
+--- a/autofs.spec
++++ b/autofs.spec
+@@ -73,7 +73,7 @@ mkdir -p -m755 $RPM_BUILD_ROOT/etc/sysco
+ make install mandir=%{_mandir} initdir=/etc/rc.d/init.d INSTALLROOT=$RPM_BUILD_ROOT
+ make -C redhat
+ install -m 755 redhat/autofs.init $RPM_BUILD_ROOT/etc/rc.d/init.d/autofs
+-install -m 755 redhat/autofs.sysconfig $RPM_BUILD_ROOT/etc/sysconfig/autofs
++install -m 644 redhat/autofs.sysconfig $RPM_BUILD_ROOT/etc/sysconfig/autofs
+ 
+ %clean
+ [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
+diff --git a/redhat/autofs.init.in b/redhat/autofs.init.in
+index 57174f0..a5e1f31 100644
+--- a/redhat/autofs.init.in
++++ b/redhat/autofs.init.in
+@@ -30,7 +30,7 @@ export PATH
+ #
+ # load customized configuation settings
+ #
+-if [ -x $confdir/autofs ]; then
++if [ -r $confdir/autofs ]; then
+ 	. $confdir/autofs
+ fi
+ 
+diff --git a/samples/Makefile b/samples/Makefile
+index f65658a..d68c7b3 100644
+--- a/samples/Makefile
++++ b/samples/Makefile
+@@ -46,12 +46,12 @@ autofs.conf: autofs.conf.default
+ 	@echo "Installing autofs default configuation in $(autofsconfdir)"
+ 	@if test -z "$(CONFIG)" ; \
+ 	then \
+-		install -v autofs.conf.default -m 755 \
++		install -v autofs.conf.default -m 644 \
+ 			$(INSTALLROOT)$(autofsconfdir)/autofs.conf.new ; \
+ 		echo "Found existing backup of configuration file." ; \
+ 		echo "Installed package default configuration file as \"autofs.conf.new\"." ; \
+ 	else \
+-		install -v autofs.conf.default -m 755 $(CONFIG) \
++		install -v autofs.conf.default -m 644 $(CONFIG) \
+ 				$(INSTALLROOT)$(autofsconfdir)/autofs ; \
+ 		echo "Installed package configuration configuration as \"autofs\"." ; \
+ 		if test -z "$(CEXISTS)" ; \

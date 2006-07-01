@@ -1,0 +1,150 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index c5fb124..13d0679 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -7,6 +7,7 @@
+ - correct spelling error in default config.
+ - fix default auth config not being installed.
+ - change LDAP query method as my test db was incorrect.
++- change ldap defaults code to handle missing auth config.
+ 
+ 20/6/2006 autofs-5.0.0_beta5
+ ---------------------------
+diff --git a/lib/defaults.c b/lib/defaults.c
+index 3e6ec8a..0170f9b 100644
+--- a/lib/defaults.c
++++ b/lib/defaults.c
+@@ -185,7 +185,7 @@ const char *defaults_get_master_map(void
+ 
+ 	master = get_env_string(ENV_NAME_MASTER_MAP);
+ 	if (!master)
+-		return default_master_map_name;
++		return strdup(default_master_map_name);
+ 
+ 	return (const char *) master;
+ }
+@@ -253,7 +253,7 @@ const char *defaults_get_map_obj_class(v
+ 
+ 	moc = get_env_string(ENV_NAME_MAP_OBJ_CLASS);
+ 	if (!moc)
+-		return default_map_obj_class;
++		return strdup(default_map_obj_class);
+ 
+ 	return (const char *) moc;
+ }
+@@ -264,7 +264,7 @@ const char *defaults_get_entry_obj_class
+ 
+ 	eoc = get_env_string(ENV_NAME_ENTRY_OBJ_CLASS);
+ 	if (!eoc)
+-		return default_entry_obj_class;
++		return strdup(default_entry_obj_class);
+ 
+ 	return (const char *) eoc;
+ }
+@@ -275,7 +275,7 @@ const char *defaults_get_map_attr(void)
+ 
+ 	ma = get_env_string(ENV_NAME_MAP_ATTR);
+ 	if (!ma)
+-		return default_map_attr;
++		return strdup(default_map_attr);
+ 
+ 	return (const char *) ma;
+ }
+@@ -286,7 +286,7 @@ const char *defaults_get_entry_attr(void
+ 
+ 	ea = get_env_string(ENV_NAME_ENTRY_ATTR);
+ 	if (!ea)
+-		return default_entry_attr;
++		return strdup(default_entry_attr);
+ 
+ 	return (const char *) ea;
+ }
+@@ -297,7 +297,7 @@ const char *defaults_get_value_attr(void
+ 
+ 	va = get_env_string(ENV_NAME_VALUE_ATTR);
+ 	if (!va)
+-		return default_value_attr;
++		return strdup(default_value_attr);
+ 
+ 	return (const char *) va;
+ }
+@@ -308,7 +308,7 @@ const char *defaults_get_auth_conf_file(
+ 
+ 	cf = get_env_string(ENV_AUTH_CONF_FILE);
+ 	if (!cf)
+-		return default_auth_conf_file;
++		return strdup(default_auth_conf_file);
+ 
+ 	return (const char *) cf;
+ }
+diff --git a/lib/master.c b/lib/master.c
+index b0c5b58..d61df03 100644
+--- a/lib/master.c
++++ b/lib/master.c
+@@ -666,7 +666,7 @@ struct master *master_new(const char *na
+ 		return NULL;
+ 
+ 	if (!name)
+-		tmp = strdup(defaults_get_master_map());
++		tmp = defaults_get_master_map();
+ 	else
+ 		tmp = strdup(name);
+ 
+diff --git a/modules/lookup_ldap.c b/modules/lookup_ldap.c
+index 2910d38..45d755d 100644
+--- a/modules/lookup_ldap.c
++++ b/modules/lookup_ldap.c
+@@ -251,7 +251,7 @@ int authtype_requires_creds(const char *
+  *  The idea is that a -1 return value should abort the program.  A 0
+  *  return value requires more checking.  If ctxt->authtype is filled in,
+  *  then no further action is necessary.  If it is not, the caller is free
+- *  to then use another method to determine how to connec to the server.
++ *  to then use another method to determine how to connect to the server.
+  */
+ int parse_ldap_config(struct lookup_context *ctxt)
+ {
+@@ -281,6 +281,17 @@ int parse_ldap_config(struct lookup_cont
+ 	 */
+ 	memset(&st, 0, sizeof(st));
+ 	if (stat(auth_conf, &st) == -1 || st.st_size == 0) {
++		/* Auth config doesn't exist so disable TLS and auth */
++		if (errno == EEXIST) {
++			ctxt->auth_conf = auth_conf;
++			ctxt->use_tls = LDAP_TLS_DONT_USE;
++			ctxt->tls_required = LDAP_TLS_DONT_USE;
++			ctxt->auth_required = 0;
++			ctxt->sasl_mech = NULL;
++			ctxt->user = NULL;
++			ctxt->secret = NULL;
++			return 0;
++		}
+ 		error(LOGOPT_ANY,
+ 		      MODPREFIX "stat(2) failed with error %s.",
+ 		      strerror(errno));
+@@ -485,9 +496,9 @@ int ldap_auth_init(struct lookup_context
+ 	/*
+ 	 *  If sasl_mech was not filled in, it means that there was no
+ 	 *  mechanism specified in the configuration file.  Try to auto-
+-	 *  select one.
++	 *  select one if there are credentials.
+ 	 */
+-	if (ctxt->sasl_mech == NULL) {
++	if (ctxt->sasl_mech == NULL && ctxt->user != NULL) {
+ 		ret = sasl_choose_mech(ctxt, &ctxt->sasl_mech);
+ 		if (ret != 0)
+ 			return -1;
+@@ -666,6 +677,14 @@ free_moc:
+ 
+ static void free_context(struct lookup_context *ctxt)
+ {
++	if (ctxt->map_obj_class) {
++		free(ctxt->map_obj_class);
++		free(ctxt->entry_obj_class);
++		free(ctxt->map_attr);
++		free(ctxt->entry_attr);
++	}
++	if (ctxt->auth_conf)
++		free(ctxt->auth_conf);
+ 	if (ctxt->sasl_mech)
+ 		free(ctxt->sasl_mech);
+ 	if (ctxt->user)

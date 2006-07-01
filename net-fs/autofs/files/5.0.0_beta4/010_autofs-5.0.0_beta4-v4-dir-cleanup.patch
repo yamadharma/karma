@@ -1,0 +1,46 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index d3277c0..c3b83df 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -1,3 +1,7 @@
++?/6/2006 autofs-5.0.0_beta5
++---------------------------
++- re-instate v4 directory cleanup.
++
+ 2/6/2006 autofs-5.0.0_beta4
+ ---------------------------
+ - fix memory alloc error in nis lookup module.
+diff --git a/daemon/automount.c b/daemon/automount.c
+index 52275b0..f45b9ab 100644
+--- a/daemon/automount.c
++++ b/daemon/automount.c
+@@ -333,9 +333,6 @@ static int umount_ent(struct autofs_poin
+ 		if (ap->state == ST_SHUTDOWN_FORCE) {
+ 			msg("forcing umount of %s", path);
+ 			rv = spawnll(log_debug, PATH_UMOUNT, PATH_UMOUNT, "-l", path, NULL);
+-			status = pthread_mutex_unlock(&ap->state_mutex);
+-			if (status)
+-				fatal(status);
+ 		}
+ 
+ 		/*
+@@ -516,7 +513,7 @@ int umount_multi(struct autofs_point *ap
+ 
+ 	if (!tree_get_mnt_list(mnts, &list, path, incl)) {
+ 		debug(ap->logopt, "no mounts found under %s", path);
+-/*		check_rm_dirs(ap, path, incl); */
++		check_rm_dirs(ap, path, incl);
+ 		return 0;
+ 	}
+ 
+@@ -548,8 +545,8 @@ int umount_multi(struct autofs_point *ap
+ 	}
+ 
+ 	/* Delete detritus like unwanted mountpoints and symlinks */
+-/*	if (left == 0)
+-		check_rm_dirs(ap, path, incl); */
++	if (left == 0)
++		check_rm_dirs(ap, path, incl);
+ 
+ 	return left;
+ }

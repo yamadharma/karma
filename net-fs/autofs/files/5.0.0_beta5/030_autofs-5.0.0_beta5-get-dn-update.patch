@@ -1,0 +1,118 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index 77fde7e..ced35cc 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -9,6 +9,8 @@
+ - change LDAP query method as my test db was incorrect.
+ - change ldap defaults code to handle missing auth config.
+ - fix mistake in parsing old style LDAP specs.
++- update LDAP so that new query methos also works for old
++  syntax.
+ 
+ 20/6/2006 autofs-5.0.0_beta5
+ ---------------------------
+diff --git a/modules/lookup_ldap.c b/modules/lookup_ldap.c
+index 9794c5f..7fa2157 100644
+--- a/modules/lookup_ldap.c
++++ b/modules/lookup_ldap.c
+@@ -709,6 +709,8 @@ static void free_context(struct lookup_c
+ 		free(ctxt->secret);
+ 	if (ctxt->mapname)
+ 		free(ctxt->mapname);
++	if (ctxt->qdn)
++		ldap_memfree(ctxt->qdn);
+ 	if (ctxt->server)
+ 		free(ctxt->server);
+ 	if (ctxt->base)
+@@ -725,6 +727,7 @@ static int get_query_dn(LDAP *ldap, stru
+ 	LDAPMessage *result, *e;
+ 	char *class, *key;
+ 	char *attrs[2];
++	int scope;
+ 	int rv, l;
+ 
+ 	class = ctxt->map_obj_class;
+@@ -761,17 +764,18 @@ static int get_query_dn(LDAP *ldap, stru
+ 			      MODPREFIX "error forming query string");
+ 			return 0;
+ 		}
++		scope = LDAP_SCOPE_ONE;
+ 	} else {
+ 		if (sprintf(query, "(objectclass=%s)", class) >= l) {
+ 			debug(LOGOPT_NONE,
+ 			      MODPREFIX "error forming query string");
+ 			return 0;
+ 		}
++		scope = LDAP_SCOPE_BASE;
+ 	}
+ 	query[l] = '\0';
+ 
+-	rv = ldap_search_s(ldap, ctxt->base, LDAP_SCOPE_ONE,
+-			   query, attrs, 0, &result);
++	rv = ldap_search_s(ldap, ctxt->base, scope, query, attrs, 0, &result);
+ 
+ 	if ((rv != LDAP_SUCCESS) || !result) {
+ 		error(LOGOPT_NONE,
+@@ -898,6 +902,7 @@ int lookup_read_master(struct master *ma
+ 	char **keyValue = NULL;
+ 	char **values = NULL;
+ 	char *attrs[3];
++	int scope = LDAP_SCOPE_SUBTREE;
+ 	LDAP *ldap;
+ 
+ 	class = ctxt->entry_obj_class;
+@@ -932,8 +937,7 @@ int lookup_read_master(struct master *ma
+ 	debug(LOGOPT_NONE,
+ 	      MODPREFIX "searching for \"%s\" under \"%s\"", query, ctxt->qdn);
+ 
+-	rv = ldap_search_s(ldap, ctxt->qdn,
+-			   LDAP_SCOPE_SUBTREE, query, attrs, 0, &result);
++	rv = ldap_search_s(ldap, ctxt->qdn, scope, query, attrs, 0, &result);
+ 
+ 	if ((rv != LDAP_SUCCESS) || !result) {
+ 		error(LOGOPT_NONE,
+@@ -1043,6 +1047,7 @@ static int read_one_map(struct autofs_po
+ 	char **keyValue = NULL;
+ 	char **values = NULL;
+ 	char *attrs[3];
++	int scope = LDAP_SCOPE_SUBTREE;
+ 	LDAP *ldap;
+ 
+ 	if (ctxt == NULL) {
+@@ -1083,8 +1088,7 @@ static int read_one_map(struct autofs_po
+ 	debug(ap->logopt,
+ 	      MODPREFIX "searching for \"%s\" under \"%s\"", query, ctxt->qdn);
+ 
+-	rv = ldap_search_s(ldap, ctxt->qdn, LDAP_SCOPE_SUBTREE,
+-			   query, attrs, 0, &result);
++	rv = ldap_search_s(ldap, ctxt->qdn, scope, query, attrs, 0, &result);
+ 
+ 	if ((rv != LDAP_SUCCESS) || !result) {
+ 		debug(ap->logopt,
+@@ -1253,6 +1257,7 @@ static int lookup_one(struct autofs_poin
+ 	char **keyValue;
+ 	char **values = NULL;
+ 	char *attrs[3];
++	int scope = LDAP_SCOPE_SUBTREE;
+ 	LDAP *ldap;
+ 	char *mapent = NULL;
+ 	int ret = CHE_OK;
+@@ -1303,8 +1308,7 @@ static int lookup_one(struct autofs_poin
+ 	if (!ldap)
+ 		return CHE_FAIL;
+ 
+-	rv = ldap_search_s(ldap, ctxt->qdn, LDAP_SCOPE_SUBTREE,
+-			   query, attrs, 0, &result);
++	rv = ldap_search_s(ldap, ctxt->qdn, scope, query, attrs, 0, &result);
+ 
+ 	if ((rv != LDAP_SUCCESS) || !result) {
+ 		crit(ap->logopt, MODPREFIX "query failed for %s", query);
+@@ -1565,8 +1569,6 @@ #if WITH_SASL
+ 	EVP_cleanup();
+ 	ERR_free_strings();
+ #endif
+-	if (ctxt->qdn)
+-		ldap_memfree(ctxt->qdn);
+ 	free_context(ctxt);
+ 	return rv;
+ }

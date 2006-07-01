@@ -1,0 +1,12 @@
+diff -Naur ../work/GWorkspace-0.6.3/configure.ac GWorkspace-0.6.3/configure.ac
+--- ../work/GWorkspace-0.7.1/Inspector/configure.ac	2004-05-28 17:38:23.458440728 +0400
++++ GWorkspace-0.7.1/Inspector/configure.ac	2004-05-28 17:44:31.534484664 +0400
+@@ -41,7 +41,7 @@
+ # We need PDFKit
+ #--------------------------------------------------------------------
+ save_CPPFLAGS="$CPPFLAGS"
+-CPPFLAGS="$CPPFLAGS -x objective-c -I$GNUSTEP_SYSTEM_ROOT/Library/Headers -I$GNUSTEP_LOCAL_ROOT/Library/Headers"
++CPPFLAGS="$CPPFLAGS -x objective-c -I$GNUSTEP_SYSTEM_ROOT/Library/Headers -I$GNUSTEP_LOCAL_ROOT/Library/Headers -I$GNUSTEP_SYSTEM_ROOT/Library/Headers/$LIBRARY_COMBO -I$GNUSTEP_LOCAL_ROOT/Library/Headers/$LIBRARY_COMBO -I$GNUSTEP_SYSTEM_ROOT/Library/Headers/$LIBRARY_COMBO/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS -I$GNUSTEP_LOCAL_ROOT/Library/Headers/$LIBRARY_COMBO/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS"
+ 
+ AC_CHECK_HEADERS(PDFKit/PDFDocument.h, have_pdfkit=yes, have_pdfkit=no)
+ 

@@ -1,0 +1,732 @@
+This is a multi-part message in MIME format.
+--------------000509080502040401060209
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Marc and Daniel,
+
+I have attached two patch files which will apply on top of
+a linux-2.4.20 kernel that has already been patched with
+Wolk4.0s Pre10.
+
+Older versions of Win4Lin (Win4Lin <= 4.0.14, Win4Lin Terminal
+Server <= 2.0.14, RPM version <= 5.3.14) will work fine with this
+patch as long as you don't have GRKERNSEC enabled.  If you want
+to run with GRKERNSEC, you should run Win4lin 4.0.15, WTS 2.0.15
+or later.
+
+The 4.0.15 RPM should be available tomorrow (it is in QA today).
+
+
+Richard <rwb>
+
+-- 
+Richard W. Bass
+Systems Software Architect
+NeTraverse, Inc.
+
+--------------000509080502040401060209
+Content-Type: text/plain;
+ name="Kernel-Win4Lin-Wolk40sPre10.0_2.4.20.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="Kernel-Win4Lin-Wolk40sPre10.0_2.4.20.patch"
+
+diff -auP wolk4/arch/i386/boot/compressed/head.S wolk4-win4lin/arch/i386/boot/compressed/head.S
+--- wolk4/arch/i386/boot/compressed/head.S	2000-07-05 12:03:12.000000000 -0700
++++ wolk4-win4lin/arch/i386/boot/compressed/head.S	2003-02-03 09:35:46.000000000 -0800
+@@ -31,7 +31,7 @@
+ startup_32:
+ 	cld
+ 	cli
+-	movl $(__KERNEL_DS),%eax
++	movl $(__BOOT_KERNEL_DS),%eax
+ 	movl %eax,%ds
+ 	movl %eax,%es
+ 	movl %eax,%fs
+@@ -101,7 +101,7 @@ startup_32:
+ 	popl %eax	# hcount
+ 	movl $0x100000,%edi
+ 	cli		# make sure we don't get interrupted
+-	ljmp $(__KERNEL_CS), $0x1000 # and jump to the move routine
++	ljmp $(__BOOT_KERNEL_CS), $0x1000 # and jump to the move routine
+ 
+ /*
+  * Routine (template) for moving the decompressed kernel in place,
+diff -auP wolk4/arch/i386/boot/compressed/misc.c wolk4-win4lin/arch/i386/boot/compressed/misc.c
+--- wolk4/arch/i386/boot/compressed/misc.c	2002-11-28 15:53:09.000000000 -0800
++++ wolk4-win4lin/arch/i386/boot/compressed/misc.c	2003-02-03 09:35:46.000000000 -0800
+@@ -301,7 +301,7 @@
+ struct {
+ 	long * a;
+ 	short b;
+-	} stack_start = { & user_stack [STACK_SIZE] , __KERNEL_DS };
++	} stack_start = { & user_stack [STACK_SIZE] , __BOOT_KERNEL_DS };
+ 
+ static void setup_normal_output_buffer(void)
+ {
+diff -auP wolk4/arch/i386/boot/setup.S wolk4-win4lin/arch/i386/boot/setup.S
+--- wolk4/arch/i386/boot/setup.S	2003-02-03 08:47:24.000000000 -0800
++++ wolk4-win4lin/arch/i386/boot/setup.S	2003-02-03 09:35:46.000000000 -0800
+@@ -881,7 +881,7 @@
+ 	.byte 0x66, 0xea			# prefix + jmpi-opcode
+ code32:	.long	0x1000				# will be set to 0x100000
+ 						# for big kernels
+-	.word	__KERNEL_CS
++	.word	__BOOT_KERNEL_CS
+ 
+ # Here's a bunch of information about your current kernel..
+ kernel_version:	.ascii	UTS_RELEASE
+@@ -1093,7 +1093,7 @@
+ 	.word	0				# idt limit = 0
+ 	.word	0, 0				# idt base = 0L
+ gdt_48:
+-	.word	0x8000				# gdt limit=2048,
++	.word	0x8000				# gdt limit=2048 + reserve,
+ 						#  256 GDT entries
+ 
+ 	.word	0, 0				# gdt base (filled in later)
+diff -auP wolk4/arch/i386/kernel/entry.S wolk4-win4lin/arch/i386/kernel/entry.S
+--- wolk4/arch/i386/kernel/entry.S	2003-02-03 08:47:24.000000000 -0800
++++ wolk4-win4lin/arch/i386/kernel/entry.S	2003-02-03 09:35:46.000000000 -0800
+@@ -251,6 +251,11 @@
+ 	cli				# need_resched and signals atomic test
+ 	cmpl $0,need_resched(%ebx)
+ 	jne reschedule
++#ifdef CONFIG_MKI
++	pushl %esp
++	call SYMBOL_NAME(mki_ret_user)
++	addl $4,%esp
++#endif /* CONFIG_MKI */
+ 	cmpl $0,sigpending(%ebx)
+ 	jne signal_return
+ restore_all:
+@@ -290,6 +295,13 @@
+ 	movl $-ENOSYS,EAX(%esp)
+ 	jmp ret_from_sys_call
+ 
++#ifdef CONFIG_MKI
++	ALIGN
++ENTRY(mki_process_trapret)
++	GET_CURRENT(%ebx)
++	jmp ret_from_exception
++#endif /* CONFIG_MKI */
++
+ 	ALIGN
+ ENTRY(ret_from_intr)
+ 	GET_CURRENT(%ebx)
+diff -auP wolk4/arch/i386/kernel/head.S wolk4-win4lin/arch/i386/kernel/head.S
+--- wolk4/arch/i386/kernel/head.S	2003-02-03 08:47:24.000000000 -0800
++++ wolk4-win4lin/arch/i386/kernel/head.S	2003-02-03 09:35:46.000000000 -0800
+@@ -47,7 +47,7 @@ startup_32:
+  * Set segments to known values
+  */
+ 	cld
+-	movl $(__KERNEL_DS),%eax
++	movl $(__BOOT_KERNEL_DS),%eax
+ 	movl %eax,%ds
+ 	movl %eax,%es
+ 	movl %eax,%fs
+@@ -115,7 +115,7 @@ startup_32:
+ #endif
+ 
+ 	/* Set up the stack pointer */
+-	lss stack_start,%esp
++	lss boot_stack_start,%esp
+ 
+ #ifdef CONFIG_SMP
+ 	orw  %bx,%bx
+@@ -358,6 +358,10 @@ ignore_int:
+ .data
+ ready:	.byte 0
+ 
++ENTRY(boot_stack_start)
++	.long SYMBOL_NAME(init_task_union)+8192
++	.long __BOOT_KERNEL_DS
++
+ ENTRY(stack_start)
+ 	.long SYMBOL_NAME(init_task_union)+8192
+ 	.long __KERNEL_DS
+@@ -445,19 +449,6 @@ ENTRY(empty_zero_page)
+ 
+ .text
+ 
+-/*
+- * Real beginning of normal "text" segment
+- */
+-ENTRY(stext)
+-ENTRY(_stext)
+-
+-/*
+- * This starts the data section. Note that the above is all
+- * in the text section because it has alignment requirements
+- * that we cannot fulfill any other way.
+- */
+-.section .rodata,"a"
+-
+ ALIGN
+ /*
+  * This contains typically 140 quadwords, depending on NR_CPUS.
+@@ -460,6 +451,15 @@
+ 	.quad 0x00409b0000000000        /* 0x48 APM CS    code */
+ 	.quad 0x00009b0000000000        /* 0x50 APM CS 16 code (16 bit) */
+ 	.quad 0x0040930000000000        /* 0x58 APM DS    data */
++#ifdef CONFIG_MKI
++/* increase the ENTRIES_AFTER_KERNEL constant in segment.h if more */
++/* entries are added after 0x18 above */
++	.fill __GDT_SLOTS_RESERVED-(2+ENTRIES_AFTER_KERNEL_DS),8,0 
++					/* fill to page boundary + 2 slots */
++	.quad 0x00cf9a000000ffff	/* 0x1010 kernel 4GB code at 0x00000000 */
++	.quad 0x00cf92000000ffff	/* 0x1018 kernel 4GB data at 0x00000000 */
++	.fill ENTRIES_AFTER_KERNEL_DS,8,0 
++#endif
+ 	.fill NR_CPUS*16,8,0		/* space for TSS's and LDT's, 128byte aligned for new x86 CPUs */
+ 
+ #ifdef CONFIG_GRKERNSEC_PAX_SEGMEXEC
+@@ -480,5 +480,28 @@
+ 	.quad 0x00409b0000000000	/* 0x48 APM CS    code */
+ 	.quad 0x00009b0000000000	/* 0x50 APM CS 16 code (16 bit) */
+ 	.quad 0x0040930000000000	/* 0x58 APM DS    data */
++#ifdef CONFIG_MKI
++/* increase the ENTRIES_AFTER_KERNEL constant in segment.h if more */
++/* entries are added after 0x18 above */
++	.fill __GDT_SLOTS_RESERVED-(2+ENTRIES_AFTER_KERNEL_DS),8,0 
++					/* fill to page boundary + 2 slots */
++	.quad 0x00cf9a000000ffff	/* 0x1010 kernel 4GB code at 0x00000000 */
++	.quad 0x00cf92000000ffff	/* 0x1018 kernel 4GB data at 0x00000000 */
++	.fill ENTRIES_AFTER_KERNEL_DS,8,0 
++#endif
+ 	.fill NR_CPUS*16,8,0		/* space for TSS's and LDT's, 128byte aligned for new x86 CPUs */
+ #endif
++
++/*
++ * Real beginning of normal "text" segment
++ */
++ENTRY(stext)
++ENTRY(_stext)
++
++/*
++ * This starts the data section. Note that the above is all
++ * in the text section because it has alignment requirements
++ * that we cannot fulfill any other way.
++ */
++.section .rodata,"a"
++
+diff -auP wolk4/arch/i386/kernel/process.c wolk4-win4lin/arch/i386/kernel/process.c
+--- wolk4/arch/i386/kernel/process.c	2003-02-03 08:47:24.000000000 -0800
++++ wolk4-win4lin/arch/i386/kernel/process.c	2003-02-03 09:35:46.000000000 -0800
+@@ -52,6 +52,9 @@
+ #ifdef CONFIG_MATH_EMULATION
+ #include <asm/math_emu.h>
+ #endif
++#ifdef CONFIG_MKI
++#include <asm/mki.h>
++#endif
+ #include <asm/apic.h>
+ 
+ #if defined(CONFIG_KMSGDUMP)
+@@ -1007,6 +1010,11 @@
+ 	asm volatile("movl %%fs,%0":"=m" (*(int *)&prev->fs));
+ 	asm volatile("movl %%gs,%0":"=m" (*(int *)&prev->gs));
+ 
++#ifdef CONFIG_MKI
++	if (next_p->mki_task_info)
++		CALL_MKI_HOOK(MKI_HOOK_SWITCH_TO, next_p, NULL);
++#endif /* CONFIG_MKI */
++
+ 	/*
+ 	 * Restore %fs and %gs if needed.
+ 	 */
+diff -auP wolk4/arch/i386/kernel/signal.c wolk4-win4lin/arch/i386/kernel/signal.c
+--- wolk4/arch/i386/kernel/signal.c	2002-08-02 17:39:42.000000000 -0700
++++ wolk4-win4lin/arch/i386/kernel/signal.c	2003-02-05 12:14:25.000000000 -0800
+@@ -19,6 +19,7 @@
+ #include <linux/unistd.h>
+ #include <linux/stddef.h>
+ #include <linux/tty.h>
++#include <linux/config.h>
+ #include <linux/personality.h>
+ #include <asm/ucontext.h>
+ #include <asm/uaccess.h>
+@@ -592,8 +593,16 @@
+ 	 * kernel mode. Just return without doing anything
+ 	 * if so.
+ 	 */
++#ifdef CONFIG_MKI
++	/* When we are in vm86 mode don't do the quick return */
++	if (((regs->eflags & 0x20000) == 0) &&
++	    ((regs->xcs & 3) != 3)) {
++		return 1;
++	}
++#else
+ 	if ((regs->xcs & 3) != 3)
+ 		return 1;
++#endif
+ 
+ 	if (!oldset)
+ 		oldset = &current->blocked;
+diff -auP wolk4/arch/i386/kernel/smpboot.c wolk4-win4lin/arch/i386/kernel/smpboot.c
+--- wolk4/arch/i386/kernel/smpboot.c	2003-02-03 08:47:24.000000000 -0800
++++ wolk4-win4lin/arch/i386/kernel/smpboot.c	2003-02-03 09:35:46.000000000 -0800
+@@ -540,6 +540,11 @@
+ 	unsigned short ss;
+ } stack_start;
+ 
++extern struct {
++	void * esp;
++	unsigned short ss;
++} boot_stack_start;
++
+ static int __init fork_by_hand(void)
+ {
+ 	struct pt_regs regs;
+@@ -858,6 +863,7 @@
+ 	/* So we see what's up   */
+ 	printk("Booting processor %d/%d eip %lx\n", cpu, apicid, start_eip);
+ 	stack_start.esp = (void *) (1024 + PAGE_SIZE + (char *)idle);
++	boot_stack_start.esp = (void *) (1024 + PAGE_SIZE + (char *)idle);
+ 
+ 	/*
+ 	 * This grunge runs the startup process for
+diff -auP wolk4/arch/i386/kernel/trampoline.S wolk4-win4lin/arch/i386/kernel/trampoline.S
+--- wolk4/arch/i386/kernel/trampoline.S	2002-11-28 15:53:09.000000000 -0800
++++ wolk4-win4lin/arch/i386/kernel/trampoline.S	2003-02-03 09:35:46.000000000 -0800
+@@ -26,6 +26,7 @@
+  *	entries except for the gdt one..
+  */
+ 
++#include <linux/config.h>
+ #include <linux/linkage.h>
+ #include <asm/segment.h>
+ #include <asm/page.h>
+@@ -54,7 +54,7 @@ r_base = .
+ 	lmsw	%ax		# into protected mode
+ 	jmp	flush_instr
+ flush_instr:
+-	ljmpl	$__KERNEL_CS, $SYMBOL_NAME(startup_32)-__PAGE_OFFSET
++	ljmpl	$__BOOT_KERNEL_CS, $SYMBOL_NAME(startup_32)-__PAGE_OFFSET
+ 			# jump to startup_32 in arch/i386/kernel/head.S
+ 
+ idt_48:
+diff -auP wolk4/arch/i386/Makefile wolk4-win4lin/arch/i386/Makefile
+--- wolk4/arch/i386/Makefile	2003-02-03 08:47:24.000000000 -0800
++++ wolk4-win4lin/arch/i386/Makefile	2003-02-05 12:13:10.000000000 -0800
+@@ -124,6 +124,11 @@
+ DRIVERS += arch/i386/math-emu/math.o
+ endif
+ 
++ifdef CONFIG_MKI
++SUBDIRS += arch/i386/mki
++CORE_FILES += arch/i386/mki/mki.o
++endif
++
+ arch/i386/kernel: dummy
+ 	$(MAKE) linuxsubdirs SUBDIRS=arch/i386/kernel
+ 
+diff -auP wolk4/arch/i386/mki/Makefile wolk4-win4lin/arch/i386/mki/Makefile
+--- wolk4/arch/i386/mki/Makefile	1969-12-31 16:00:00.000000000 -0800
++++ wolk4-win4lin/arch/i386/mki/Makefile	2003-02-03 09:35:46.000000000 -0800
+@@ -0,0 +1,27 @@
++#
++# Makefile for the Merge Kernel Interface (MKI).
++#
++# Copyright 1999-2001 by NeTraverse Inc.
++# This source code is provided "AS IS", free of charge
++# and without restrictions.
++# NeTraverse (and it's third party suppliers and licensors) make no warranty
++# to its use, performance, or suitability for any particular purpose.
++# In no event, shall NeTraverse (and it's third party suppliers and licensors)
++# be liable for any damages resulting in the use of this source code.
++# The entire risk arising out of the use of this source code remains
++# with you.
++#
++#**********************************************************************
++#  This software may be used and distributed according to the terms
++#  of the GNU General Public License, incorporated herein by reference.
++#
++# Note! Dependencies are done automagically by 'make dep', which also
++# removes any old dependencies. DON'T put your own dependencies here
++# unless it's something special (ie not a .c file).
++#
++# Note 2! The CFLAGS definitions are now in the main makefile...
++
++all: mki.o
++#OX_OBJS := mki.o
++export-objs := mki.o
++include $(TOPDIR)/Rules.make
+diff -auP wolk4/arch/i386/mki/mki.c wolk4-win4lin/arch/i386/mki/mki.c
+--- wolk4/arch/i386/mki/mki.c	1969-12-31 16:00:00.000000000 -0800
++++ wolk4-win4lin/arch/i386/mki/mki.c	2003-02-03 09:35:46.000000000 -0800
+@@ -0,0 +1,100 @@
++/*
++ * Copyright 1999-2001 by NeTraverse Inc.
++ * This source code is provided "AS IS", free of charge
++ * and without restrictions.
++ * NeTraverse (and it's third party suppliers and licensors) make no warranty
++ * to its use, performance, or suitability for any particular purpose.
++ * In no event, shall NeTraverse (and it's third party suppliers and licensors)
++ * be liable for any damages resulting in the use of this source code.
++ * The entire risk arising out of the use of this source code remains
++ * with you.
++ *
++ ***********************************************************************
++ *  This software may be used and distributed according to the terms
++ *  of the GNU General Public License, incorporated herein by reference.
++ */
++/*
++ * These hooks will get populated by the mki-adapter module
++ */
++
++#include <linux/config.h>
++#include <linux/version.h>
++#include <linux/module.h>
++#include <linux/types.h>
++#include <linux/spinlock.h>
++
++#include <asm/system.h>
++#include <asm/pgtable.h>
++#include <asm/mki.h>
++#include <asm/mkiversion.h>
++
++void mhi_void_hook(void *parm1, void *parm2)
++{
++	return;
++}
++
++void (*mhi_hooks[])(void *, void *) =
++{
++	&mhi_void_hook, /* MKI_HOOK_RET_USER */
++	&mhi_void_hook, /* MKI_HOOK_SWITCH_TO */
++	&mhi_void_hook, /* MKI_HOOK_SWITCH_AWAY */
++	&mhi_void_hook, /* MKI_HOOK_EXIT */
++	&mhi_void_hook, /* MKI_HOOK_SWAP */
++};
++
++void mki_ret_user(unsigned long *r0ptr)
++{
++	CALL_MKI_HOOK(MKI_HOOK_RET_USER, r0ptr, NULL);
++}
++
++EXPORT_SYMBOL_NOVERS(mhi_void_hook);
++EXPORT_SYMBOL_NOVERS(mhi_hooks);
++EXPORT_SYMBOL_NOVERS(mki_ret_user);
++extern void mki_process_trapret(void);
++EXPORT_SYMBOL_NOVERS(mki_process_trapret);
++
++//some data that we need for the other modules
++#include <linux/sched.h>
++#include <asm/processor.h>
++#include <asm/desc.h>
++EXPORT_SYMBOL_NOVERS(init_tss);
++EXPORT_SYMBOL_NOVERS(idt);
++EXPORT_SYMBOL_NOVERS(gdt_table);
++//EXPORT_SYMBOL_NOVERS(runqueue_lock);
++EXPORT_SYMBOL_NOVERS(mmu_cr4_features);
++
++//and some functions
++#include <linux/mm.h>
++EXPORT_SYMBOL_NOVERS(handle_mm_fault);
++EXPORT_SYMBOL_NOVERS(make_pages_present);
++#ifdef CONFIG_SMP
++EXPORT_SYMBOL_NOVERS(kick_if_running);
++EXPORT_SYMBOL_NOVERS(smp_send_reschedule);
++extern void flush_tlb_all(void);
++EXPORT_SYMBOL_NOVERS(flush_tlb_all);
++#endif
++
++/* pte and pmd allocation changed in 2.4.3 */
++#if LINUX_VERSION_CODE < KERNEL_VERSION(2,4,3)
++#include <asm/pgalloc.h>
++EXPORT_SYMBOL_NOVERS(__handle_bad_pmd);
++EXPORT_SYMBOL_NOVERS(get_pte_slow);
++#else
++EXPORT_SYMBOL_NOVERS(__pmd_alloc);
++#ifdef pte_offset_map	  /* HIGHPTE patch present */
++EXPORT_SYMBOL_NOVERS(pte_alloc_map);
++#else
++EXPORT_SYMBOL_NOVERS(pte_alloc);
++#endif
++#endif
++
++#include <asm/uaccess.h>
++EXPORT_SYMBOL_NOVERS(search_exception_table);
++extern int sys_mprotect(unsigned long, size_t, unsigned long);
++EXPORT_SYMBOL_NOVERS(sys_mprotect);
++extern int sys_ftruncate(int, unsigned long);
++EXPORT_SYMBOL_NOVERS(sys_ftruncate);
++extern int sys_munmap(unsigned long, size_t);
++EXPORT_SYMBOL_NOVERS(sys_munmap);
++void do_exit(long code);
++EXPORT_SYMBOL_NOVERS(do_exit);
+diff -auP wolk4/arch/i386/mm/fault.c wolk4-win4lin/arch/i386/mm/fault.c
+--- wolk4/arch/i386/mm/fault.c	2003-02-03 08:47:24.000000000 -0800
++++ wolk4-win4lin/arch/i386/mm/fault.c	2003-02-03 09:35:46.000000000 -0800
+@@ -306,7 +306,12 @@
+ 	up_read(&mm->mmap_sem);
+ 
+ 	/* User mode accesses just cause a SIGSEGV */
+-	if (error_code & 4) {
++#ifdef CONFIG_MKI
++	if (user_mode(regs))
++#else
++  	if (error_code & 4)
++#endif
++	{
+ #ifdef CONFIG_GRKERNSEC_PAX_SEGMEXEC
+ 		if (current->flags & PF_PAX_SEGMEXEC) {
+ 
+diff -auP wolk4/drivers/ide/ide-cd.c wolk4-win4lin/drivers/ide/ide-cd.c
+--- wolk4/drivers/ide/ide-cd.c	2003-02-03 08:47:27.000000000 -0800
++++ wolk4-win4lin/drivers/ide/ide-cd.c	2003-02-03 09:35:46.000000000 -0800
+@@ -1613,6 +1613,8 @@
+ 	if (pc->sense == NULL)
+ 		pc->sense = &sense;
+ 
++	generic_unplug_device(&drive->queue); 
++
+ 	/* Start of retry loop. */
+ 	do {
+ 		struct buffer_head bh;
+diff -auP wolk4/include/asm-i386/desc.h wolk4-win4lin/include/asm-i386/desc.h
+--- wolk4/include/asm-i386/desc.h	2003-02-03 08:47:37.000000000 -0800
++++ wolk4-win4lin/include/asm-i386/desc.h	2003-02-03 09:35:46.000000000 -0800
+@@ -2,6 +2,7 @@
+ #define __ARCH_DESC_H
+ 
+ #include <asm/ldt.h>
++#include <linux/config.h>
+ 
+ /*
+  * The layout of the GDT under Linux:
+@@ -35,7 +36,7 @@
+  *
+  * Entry into gdt where to find first TSS.
+  */
+-#define __FIRST_TSS_ENTRY 12
++#define __FIRST_TSS_ENTRY (12+__GDT_SLOTS_RESERVED)
+ #define __FIRST_LDT_ENTRY (__FIRST_TSS_ENTRY+1)
+ 
+ #define __TSS(n) (((n)<<4) + __FIRST_TSS_ENTRY)
+diff -auP wolk4/include/asm-i386/mki.h wolk4-win4lin/include/asm-i386/mki.h
+--- wolk4/include/asm-i386/mki.h	1969-12-31 16:00:00.000000000 -0800
++++ wolk4-win4lin/include/asm-i386/mki.h	2003-02-03 09:49:56.000000000 -0800
+@@ -0,0 +1,38 @@
++/* 
++ * Copyright 1999-2001 by NeTraverse Inc.
++ * This source code is provided "AS IS", free of charge 
++ * and without restrictions.
++ * NeTraverse (and it's third party suppliers and licensors) make no warranty
++ * to its use, performance, or suitability for any particular purpose.
++ * In no event, shall NeTraverse (and it's third party suppliers and licensors)
++ * be liable for any damages resulting in the use of this source code.
++ * The entire risk arising out of the use of this source code remains
++ * with you.
++ * 
++ ***********************************************************************
++ *  This software may be used and distributed according to the terms
++ *  of the GNU General Public License, incorporated herein by reference.
++ */
++
++
++#ifdef CONFIG_MKI
++#ifndef INCLUDE_MKI_H
++#define INCLUDE_MKI_H
++
++extern void mhi_void_hook(void *, void *);
++extern void (*mhi_hooks[])(void *, void *);
++
++#define CALL_MKI_HOOK(hook, arg1, arg2)  mhi_hooks[hook](arg1, arg2)
++
++/* for mki-adapter module */
++#define MKI_HOOK_TABLE_EXISTS	1
++
++/* constants for hook table  */
++#define MKI_HOOK_RET_USER 		0
++#define MKI_HOOK_SWITCH_TO 		1
++#define MKI_HOOK_SWITCH_AWAY 		2
++#define MKI_HOOK_EXIT			3
++#define MKI_HOOK_SWAP			4
++
++#endif /* INCLUDE_MKI_H */
++#endif /* CONFIG_MKI */
+diff -auP wolk4/include/asm-i386/mkiversion.h wolk4-win4lin/include/asm-i386/mkiversion.h
+--- wolk4/include/asm-i386/mkiversion.h	1969-12-31 16:00:00.000000000 -0800
++++ wolk4-win4lin/include/asm-i386/mkiversion.h	2003-02-03 09:57:29.000000000 -0800
+@@ -0,0 +1,25 @@
++/*
++ * Copyright 1999-2001 by NeTraverse Inc.
++ * This source code is provided "AS IS", free of charge
++ * and without restrictions.
++ * NeTraverse (and it's third party suppliers and licensors) make no warranty
++ * to its use, performance, or suitability for any particular purpose.
++ * In no event, shall NeTraverse (and it's third party suppliers and licensors)
++ * be liable for any damages resulting in the use of this source code.
++ * The entire risk arising out of the use of this source code remains
++ * with you.
++ *
++ ***********************************************************************
++ *  This software may be used and distributed according to the terms
++ *  of the GNU General Public License, incorporated herein by reference.
++ */
++
++#ifdef CONFIG_MKI
++#ifndef INCLUDE_MKI_VERSION_H
++#define INCLUDE_MKI_VERSION_H
++
++int mki_version_3_0_1 = 0;
++EXPORT_SYMBOL_NOVERS(mki_version_3_0_1);
++
++#endif /* INCLUDE_MKI_H */
++#endif /* CONFIG_MKI */
+diff -auP wolk4/include/asm-i386/segment.h wolk4-win4lin/include/asm-i386/segment.h
+--- wolk4/include/asm-i386/segment.h	1997-12-01 10:34:12.000000000 -0800
++++ wolk4-win4lin/include/asm-i386/segment.h	2003-02-03 09:49:56.000000000 -0800
+@@ -1,8 +1,22 @@
+ #ifndef _ASM_SEGMENT_H
+ #define _ASM_SEGMENT_H
++#include <linux/config.h>
+ 
+-#define __KERNEL_CS	0x10
+-#define __KERNEL_DS	0x18
++#ifdef CONFIG_MKI
++/* this number increases if more entries than 
++ * this are added after 0x18 in head.S */
++#define ENTRIES_AFTER_KERNEL_DS  8
++#define ENTRIES_BEFORE_KERNEL_CS 2
++#define __GDT_SLOTS_RESERVED   512     /* Reserve a page full. */
++#else
++#define __GDT_SLOTS_RESERVED   0
++#endif
++
++#define __BOOT_KERNEL_CS	0x10
++#define __BOOT_KERNEL_DS	0x18
++
++#define __KERNEL_CS	(__GDT_SLOTS_RESERVED*8) + 0x10
++#define __KERNEL_DS	(__GDT_SLOTS_RESERVED*8) + 0x18
+ 
+ #define __USER_CS	0x23
+ #define __USER_DS	0x2B
+diff -auP wolk4/include/linux/sched.h wolk4-win4lin/include/linux/sched.h
+--- wolk4/include/linux/sched.h	2003-02-03 08:47:39.000000000 -0800
++++ wolk4-win4lin/include/linux/sched.h	2003-02-03 09:49:58.000000000 -0800
+@@ -496,6 +496,15 @@
+ 	unsigned long next_cap_timer;
+ 	int cap_left;
+ 	unsigned cap_cpu_limit;
++
++#ifdef CONFIG_MKI
++/* mki task info structure */
++	void *mki_task_info;
++#define MKI_INIT_TASK mki_task_info: NULL,
++#else
++#define MKI_INIT_TASK
++#endif
++
+ };
+ 
+ 
+@@ -617,6 +626,7 @@
+     next_cap_timer:	0,						\
+     cap_left:		-1,						\
+     cap_cpu_limit:	HZ,						\
++    MKI_INIT_TASK							\
+ }
+ 
+ 
+diff -auP wolk4/kernel/exit.c wolk4-win4lin/kernel/exit.c
+--- wolk4/kernel/exit.c	2003-02-03 08:47:40.000000000 -0800
++++ wolk4-win4lin/kernel/exit.c	2003-02-03 09:35:47.000000000 -0800
+@@ -26,6 +26,9 @@
+ #include <asm/uaccess.h>
+ #include <asm/pgtable.h>
+ #include <asm/mmu_context.h>
++#ifdef CONFIG_MKI
++#include <asm/mki.h>
++#endif
+ 
+ /* RSBAC */
+ #ifdef CONFIG_RSBAC
+@@ -519,6 +522,11 @@
+ #ifdef CONFIG_BSD_PROCESS_ACCT
+ 	acct_process(code);
+ #endif
++
++#ifdef CONFIG_MKI
++	CALL_MKI_HOOK(MKI_HOOK_EXIT, NULL, NULL);
++#endif
++
+ #if defined(CONFIG_TUX) || defined(CONFIG_TUX_MODULE)
+ 	if (current->tux_info) {
+ #ifdef CONFIG_TUX_DEBUG
+diff -auP wolk4/kernel/fork.c wolk4-win4lin/kernel/fork.c
+--- wolk4/kernel/fork.c	2003-02-03 08:47:40.000000000 -0800
++++ wolk4-win4lin/kernel/fork.c	2003-02-03 09:35:47.000000000 -0800
+@@ -739,6 +739,10 @@
+ 	atomic_inc(&p->user->__count);
+ 	atomic_inc(&p->user->processes);
+ 
++#ifdef CONFIG_MKI
++	p->mki_task_info = NULL;
++#endif
++
+ 	/*
+ 	 * Counter increases are protected by
+ 	 * the kernel lock so nr_threads can't
+diff -auP wolk4/kernel/sched.c wolk4-win4lin/kernel/sched.c
+--- wolk4/kernel/sched.c	2003-02-03 08:47:40.000000000 -0800
++++ wolk4-win4lin/kernel/sched.c	2003-02-03 09:35:47.000000000 -0800
+@@ -28,6 +28,9 @@
+ #include <linux/sched_runqueue.h>
+ #include <linux/grsecurity.h>
+ #include <linux/console.h>
++#ifdef CONFIG_MKI
++#include <asm/mki.h>
++#endif
+ 
+ /*
+  * Convert user-nice values [ -20 ... 0 ... 19 ]
+@@ -549,6 +552,9 @@
+ 	struct mm_struct *mm = next->mm;
+ 	struct mm_struct *oldmm = prev->active_mm;
+ 
++#ifdef CONFIG_MKI
++	CALL_MKI_HOOK(MKI_HOOK_SWITCH_AWAY, prev, NULL);
++#endif
+ 	if (unlikely(!mm)) {
+ 		next->active_mm = oldmm;
+ 		atomic_inc(&oldmm->mm_count);
+diff -auP wolk4/mm/vmscan.c wolk4-win4lin/mm/vmscan.c
+--- wolk4/mm/vmscan.c	2003-02-03 08:47:40.000000000 -0800
++++ wolk4-win4lin/mm/vmscan.c	2003-02-03 09:35:47.000000000 -0800
+@@ -881,6 +881,11 @@
+ 			rebalance_dirty_zone(zone, BATCH_WORK_AMOUNT, GFP_KSWAPD);
+ }
+ 
++#include <linux/config.h>
++#ifdef CONFIG_MKI
++#include <asm/mki.h>
++#endif
++
+ /*
+  * Worker function for kswapd and try_to_free_pages, we get
+  * called whenever there is a shortage of free/inactive_clean
+@@ -905,6 +910,19 @@
+ 	ret += shrink_dqcache_memory(DEF_PRIORITY, gfp_mask);
+ #endif
+ 
++#ifdef CONFIG_MKI
++#ifndef MKI_HARD_PRIORITY
++#define MKI_HARD_PRIORITY 1
++#define MKI_NORMAL_PRIORITY 6
++#endif
++	if (free_low(ANY_ZONE) > 0) {
++		CALL_MKI_HOOK(MKI_HOOK_SWAP, 
++			(void *) MKI_HARD_PRIORITY, (void *)gfp_mask);
++	} else {
++		CALL_MKI_HOOK(MKI_HOOK_SWAP, 
++			(void *) MKI_NORMAL_PRIORITY, (void *)gfp_mask);
++	}
++#endif
+ 	/*
+ 	 * Reclaim unused slab cache memory.
+ 	 */

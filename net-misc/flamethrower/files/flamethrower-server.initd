@@ -1,0 +1,30 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: $
+
+service=/usr/bin/flamethrowerd
+servicename="The Flamethrower multicast daemon"
+pid_file=/var/run/flamethrower-server.pid
+
+opts="${opts} reload"
+
+depend () 
+{
+	use net
+}
+
+start () 
+{
+	ebegin "Starting $servicename"
+	start-stop-daemon --start --quiet --exec $service -- --config-file /etc/flamethrower/flamethrower.conf --pid-file $pid_file >/dev/null 2>&1
+	eend $?
+}
+
+stop () 
+{
+	ebegin "Stopping $servicename"
+	start-stop-daemon --stop --quiet --pidfile $pid_file
+	eend $?
+}
+

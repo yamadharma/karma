@@ -1,0 +1,73 @@
+diff --git a/lib/master.c b/lib/master.c
+index d61df03..a0a7ae8 100644
+--- a/lib/master.c
++++ b/lib/master.c
+@@ -616,8 +616,6 @@ void master_remove_mapent(struct master_
+ 
+ void master_free_mapent_sources(struct master_mapent *entry, unsigned int free_cache)
+ {
+-	int status;
+-
+ 	master_source_writelock(entry);
+ 
+ 	if (entry->maps) {
+@@ -659,7 +657,7 @@ void master_free_mapent(struct master_ma
+ struct master *master_new(const char *name, unsigned int timeout, unsigned int ghost)
+ {
+ 	struct master *master;
+-	char *tmp;
++	const char *tmp;
+ 
+ 	master = malloc(sizeof(struct master));
+ 	if (!master)
+diff --git a/lib/rpc_subs.c b/lib/rpc_subs.c
+index 143dbdd..6ce4cf7 100644
+--- a/lib/rpc_subs.c
++++ b/lib/rpc_subs.c
+@@ -28,6 +28,7 @@ #include <netdb.h>
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+ #include <sys/fcntl.h>
++#include <rpcsvc/ypclnt.h>
+ #include <errno.h>
+ 
+ #include "mount.h"
+diff --git a/modules/lookup_ldap.c b/modules/lookup_ldap.c
+index 7fa2157..130a0c6 100644
+--- a/modules/lookup_ldap.c
++++ b/modules/lookup_ldap.c
+@@ -1227,8 +1227,6 @@ int lookup_read_map(struct autofs_point 
+ {
+ 	struct lookup_context *ctxt = (struct lookup_context *) context;
+ 	int rv = LDAP_SUCCESS;
+-	char *key;
+-	int keylen;
+ 	int ret;
+ 
+ 	ret = read_one_map(ap, ctxt, age, &rv);
+diff --git a/modules/lookup_yp.c b/modules/lookup_yp.c
+index 36563a9..25bc6db 100644
+--- a/modules/lookup_yp.c
++++ b/modules/lookup_yp.c
+@@ -436,7 +436,7 @@ static int check_map_indirect(struct aut
+ {
+ 	struct map_source *source = ap->entry->current;
+ 	struct mapent_cache *mc = source->mc;
+-	struct mapent *me, *exists;
++	struct mapent *exists;
+ 	unsigned int map_order;
+ 	int need_map = 0;
+ 	int ret = 0;
+diff --git a/modules/mount_nfs.c b/modules/mount_nfs.c
+index e25988d..a67d01c 100644
+--- a/modules/mount_nfs.c
++++ b/modules/mount_nfs.c
+@@ -47,7 +47,7 @@ int mount_init(void **context)
+ {
+ 	/* Make sure we have the local mount method available */
+ 	if (!mount_bind) {
+-		if (mount_bind = open_mount("bind", MODPREFIX));
++		if ((mount_bind = open_mount("bind", MODPREFIX)));
+ 			init_ctr++;
+ 	} else
+ 		init_ctr++;

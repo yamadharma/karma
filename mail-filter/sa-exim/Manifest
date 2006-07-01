@@ -1,0 +1,7 @@
+MD5 c5a695c30bedcc327335376fbc9a431e files/digest-sa-exim-4.2 62
+MD5 244c40b1d97030d8c37d4a0acfca5f1c files/digest-sa-exim-4.2.1 64
+MD5 94ed29c32696f464e036a8c23a812809 files/sa-exim.cf 2419
+MD5 a3ac3edd2f9b5cd5b43d4a1d69083605 files/sa-exim_localscan.conf 309
+MD5 06dd3cc51e395ab6b5a26a08d478a20b metadata.xml 224
+MD5 12ad542c180ef2c2040224eaa74e3080 sa-exim-4.2.1.ebuild 1791
+MD5 12ad542c180ef2c2040224eaa74e3080 sa-exim-4.2.ebuild 1791

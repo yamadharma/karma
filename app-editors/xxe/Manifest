@@ -1,0 +1,7 @@
+MD5 8fcfedd343e902539635534c097d8694 ChangeLog 3675
+MD5 dffd46174e78b327c834fc3e4b1cf848 metadata.xml 160
+MD5 e4106efd57a8fb02970f06fe70fc60ed xxe-2.11.ebuild 1266
+MD5 c06d6be31feacd54910028be6972e0d2 xxe-3.0.ebuild 1790
+MD5 c6cc8ce1e745ada03637082cac1f0347 files/xxe.desktop 219
+MD5 6b8c0a97a9d219161697e0541abd639f files/digest-xxe-2.11 65
+MD5 6b8877c5a9416715f4f97f6e93b67e45 files/digest-xxe-3.0 410

@@ -1,0 +1,146 @@
+# ChangeLog for app-misc/beagle
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-misc/beagle/ChangeLog,v 1.28 2006/04/29 18:19:12 metalgod Exp $
+
+*beagle-0.2.6 (29 Apr 2006)
+
+  29 Apr 2006; Luis Medinas <metalgod@gentoo.org> +beagle-0.2.6.ebuild:
+  Version Bump.
+
+*beagle-0.2.5 (22 Apr 2006)
+
+  22 Apr 2006; Luis Medinas <metalgod@gentoo.org>
+  +files/beagle-0.2.5-crawltweek.patch, files/crawl-portage,
+  +beagle-0.2.5.ebuild:
+  Version Bump. Removed multilib patch that was accept by upstream. Closes 
+  bug #130711, #130233.
+
+  12 Apr 2006; Diego Pettenò <flameeyes@gentoo.org> beagle-0.2.4-r1.ebuild,
+  beagle-0.2.4-r2.ebuild:
+  Replace /bin/false to -1 or enewuser won't work.
+
+*beagle-0.2.4-r2 (10 Apr 2006)
+
+  10 Apr 2006; Luis Medinas <metalgod@gentoo.org>
+  files/beagle-0.2.4-crawltweek.patch, +files/beagle-0.2.4-searchfix.patch,
+  files/crawl-portage, +beagle-0.2.4-r2.ebuild:
+  Revbump to modify the crawl-portage to use portdir instead of /usr/portage.
+  Added kde paths to our crawltweek patch and add a upstream patch to fix a
+  search crash thanks to Arif Lukito <maxima.bugs@gmail.com> and Pat Double
+  <double@inebraska.com>.
+
+  09 Apr 2006; Stefan Jones <cretin@gentoo.org> beagle-0.2.4-r1.ebuild:
+  You want chown not chmod :-)
+
+*beagle-0.2.4-r1 (09 Apr 2006)
+
+  09 Apr 2006; Luis Medinas <metalgod@gentoo.org>
+  +files/beagle-0.2.4-crawltweek.patch, +files/crawl-portage,
+  +beagle-0.2.4-r1.ebuild:
+  Enable support for beagle crawl thanks to Pat Double <double@inebraska.com>.
+  Added a patch to fix crawl searches path's.
+
+*beagle-0.2.4 (08 Apr 2006)
+
+  08 Apr 2006; Luis Medinas <metalgod@gentoo.org>
+  +files/beagle-0.2.4-CVE-2006-1296.patch, +beagle-0.2.4.ebuild:
+  Version Bump. This version includes a new ebuild filter.
+
+  06 Apr 2006; Luis Medinas <metalgod@gentoo.org> beagle-0.2.3-r1.ebuild:
+  Update wv dependency. Thanks to B. Keroack <mutualaid@gmail.com> cloes bug
+  #128589.
+
+*beagle-0.2.3-r1 (30 Mar 2006)
+
+  30 Mar 2006; Luis Medinas <metalgod@gentoo.org>
+  -files/beagle-0.1.1-null-task-source.patch,
+  -files/beagle-0.1.1-uri-serialization.patch,
+  -files/beagle-0.2.1-noguisettings.patch,
+  +files/beagle-0.2.3-CVE-2006-1296.patch, -beagle-0.1.1.ebuild,
+  -beagle-0.1.2.ebuild, -beagle-0.2.1.ebuild, -beagle-0.2.1-r1.ebuild,
+  -beagle-0.2.2.1.ebuild, -beagle-0.2.3.ebuild, +beagle-0.2.3-r1.ebuild:
+  Added a patch to fix the security hole on beagle-status fixes bug #128136.
+  Removed older and affected versions.
+
+  25 Mar 2006; Joseph Jezak <josejx@gentoo.org> beagle-0.2.2.1.ebuild,
+  beagle-0.2.3.ebuild:
+  Marked ~ppc for bug #123847.
+
+  20 Mar 2006; Luis Medinas <metalgod@gentoo.org> beagle-0.2.2.1.ebuild,
+  beagle-0.2.3.ebuild:
+  Added ~amd64 keyword. Closes bug #111904.
+
+*beagle-0.2.3 (18 Mar 2006)
+
+  18 Mar 2006; Luis Medinas <metalgod@gentoo.org> +beagle-0.2.3.ebuild:
+  Version Bump.
+
+*beagle-0.2.2.1 (07 Mar 2006)
+
+  07 Mar 2006; Luis Medinas <metalgod@gentoo.org> +beagle-0.2.2.1.ebuild:
+  Version Bump. Quick fix from upstream to fix 64bit issue.
+
+*beagle-0.2.2 (07 Mar 2006)
+
+  07 Mar 2006; Luis Medinas <metalgod@gentoo.org> +beagle-0.2.2.ebuild:
+  Version Bump from upstream.
+
+*beagle-0.2.1-r1 (04 Mar 2006)
+
+  04 Mar 2006; Luis Medinas <metalgod@gentoo.org>
+  +files/beagle-0.2.1-noguisettings.patch, +beagle-0.2.1-r1.ebuild:
+  Added a patch from Daniel Drake <dsd@gentoo.org> to fix desktop entry if the
+  gui is disable. Fixes bug #124192.
+
+  26 Feb 2006; Luis Medinas <metalgod@gentoo.org> beagle-0.2.1.ebuild:
+  Added a sqlite version fix. Closes bug #123928.
+
+  24 Feb 2006; Luis Medinas <metalgod@gentoo.org> beagle-0.2.1.ebuild:
+  Add librsvg missing dependency fixes bug #123902. Remove ~amd64 keywords for
+  now.
+
+*beagle-0.2.1 (23 Feb 2006)
+
+  23 Feb 2006; Luis Medinas <metalgod@gentoo.org>
+  +files/beagle-0.2.1-multilib.patch, metadata.xml, +beagle-0.2.1.ebuild:
+  Version Bump. Closes bug #116654 and #119740. Added myself as temporary
+  maintainer.
+
+  14 Dec 2005; Doug Goldstein <cardoe@gentoo.org> beagle-0.1.2.ebuild:
+  Fix my typo on the modular X depends. Simplify the depends as well.
+
+  27 Nov 2005; Herbie Hopkins <herbs@gentoo.org> beagle-0.1.2.ebuild:
+  Multilib fix.
+
+  22 Nov 2005; Joseph Jezak <josejx@gentoo.org> beagle-0.1.2.ebuild:
+  Marked ~ppc for bug #110551.
+
+*beagle-0.1.2 (14 Nov 2005)
+
+  14 Nov 2005; Daniel Drake <dsd@gentoo.org> +beagle-0.1.2.ebuild:
+  Version bump; this version does not support .doc file indexing due to bug
+  #111228
+
+  06 Nov 2005; Simon Stelling <blubb@gentoo.org> beagle-0.1.1.ebuild:
+  remove ~amd64 keyword again as it requires gmime to be built with USE=mono,
+  but mono is masked on amd64; bug 111702
+
+  06 Nov 2005; Simon Stelling <blubb@gentoo.org> beagle-0.1.1.ebuild:
+  added ~amd64 keyword
+
+  03 Nov 2005; Daniel Drake <dsd@gentoo.org> beagle-0.1.1.ebuild:
+  We aren't compatible with wv-1.2.0 yet, so depend on 1.0.3-r1 for now (will
+  be properly fixed in next beagle release).
+
+  25 Oct 2005; Daniel Drake <dsd@gentoo.org> beagle-0.1.1.ebuild:
+  Stop using gnome2 eclass. Use emake -j1 to prevent compilation errors -
+  solves the USE=webservices problem.
+
+*beagle-0.1.1 (24 Oct 2005)
+
+  24 Oct 2005; Daniel Drake <dsd@gentoo.org>
+  +files/beagle-0.1.1-null-task-source.patch,
+  +files/beagle-0.1.1-uri-serialization.patch, +metadata.xml,
+  +beagle-0.1.1.ebuild:
+  Initial import, thanks to everyone on bug #67768
+

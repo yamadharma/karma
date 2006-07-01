@@ -1,0 +1,152 @@
+diff --git a/CHANGELOG b/CHANGELOG
+index 7c193e8..3397b3b 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -5,6 +5,7 @@
+ - fix couple of memory leaks in lookup_yp.c.
+ - fix pasre error in replicated server module.
+ - correct spelling error in default config.
++- fix default auth config not being installed.
+ 
+ 20/6/2006 autofs-5.0.0_beta5
+ ---------------------------
+diff --git a/samples/Makefile b/samples/Makefile
+index 2123dc8..f65658a 100644
+--- a/samples/Makefile
++++ b/samples/Makefile
+@@ -30,7 +30,7 @@ autofs.init:
+ 	@echo
+ ifneq ($(initdir),)
+ 	install -d -m 755 $(INSTALLROOT)$(initdir)
+-	install -c rc.autofs -m 755 $(INSTALLROOT)$(initdir)/autofs
++	install rc.autofs -m 755 $(INSTALLROOT)$(initdir)/autofs
+ else
+ 	if test -d $(INSTALLROOT)/etc/rc.d ; then \
+ 		install -c rc.autofs -m 755 $(INSTALLROOT)/etc/rc.d ; \
+@@ -46,12 +46,12 @@ autofs.conf: autofs.conf.default
+ 	@echo "Installing autofs default configuation in $(autofsconfdir)"
+ 	@if test -z "$(CONFIG)" ; \
+ 	then \
+-		install -v -c autofs.conf.default -m 755 \
++		install -v autofs.conf.default -m 755 \
+ 			$(INSTALLROOT)$(autofsconfdir)/autofs.conf.new ; \
+ 		echo "Found existing backup of configuration file." ; \
+ 		echo "Installed package default configuration file as \"autofs.conf.new\"." ; \
+ 	else \
+-		install -v -c autofs.conf.default -m 755 $(CONFIG) \
++		install -v autofs.conf.default -m 755 $(CONFIG) \
+ 				$(INSTALLROOT)$(autofsconfdir)/autofs ; \
+ 		echo "Installed package configuration configuration as \"autofs\"." ; \
+ 		if test -z "$(CEXISTS)" ; \
+@@ -60,6 +60,29 @@ autofs.conf: autofs.conf.default
+ 		fi ; \
+ 	fi
+ 
++AUTH = $(shell test -e $(INSTALLROOT)$(autofsmapdir)/autofs_ldap_auth.conf.orig || echo "-b --suffix=.orig")
++AEXISTS = $(shell test -e $(INSTALLROOT)$(autofsmapdir)/autofs_ldap_auth.conf || echo "no")
++
++.PHONY: autofs_ldap_auth.conf
++autofs_ldap_auth.conf:
++	@echo
++	@echo "Installing autofs ldap auth config \"autofs_ldap_auth.conf\" in $(autofsmapdir)"
++	@if test -z "$(AUTH)" ; \
++	then \
++		install -v autofs_ldap_auth.conf -m 600 \
++			$(INSTALLROOT)$(autofsmapdir)/autofs_ldap_auth.conf.new ; \
++		echo "Found existing backup of auth config \"autofs_ldap_auth.conf\"." ; \
++		echo "Installed package auth config as \"autofs_ldap_auth.conf.new\"." ; \
++	else \
++		install -v autofs_ldap_auth.conf -m 600 $(AUTH) \
++				$(INSTALLROOT)$(autofsmapdir)/autofs_ldap_auth.conf ; \
++		echo "Installed package auth config as \"autofs_ldap_auth.conf\"." ; \
++		if test -z "$(SEXISTS)" ; \
++		then \
++			echo "Backup of existing auth config made to \".utofs_ldap_auth.conf.orig\"." ; \
++		fi ; \
++	fi
++
+ MASTER = $(shell test -e $(INSTALLROOT)$(autofsmapdir)/auto.master.orig || echo "-b --suffix=.orig")
+ MEXISTS = $(shell test -e $(INSTALLROOT)$(autofsmapdir)/auto.master || echo "no")
+ 
+@@ -69,12 +92,12 @@ auto.master:
+ 	@echo "Installing autofs default master map in $(autofsmapdir)"
+ 	@if test -z "$(MASTER)" ; \
+ 	then \
+-		install -v -c auto.master -m 644 \
++		install -v auto.master -m 644 \
+ 			$(INSTALLROOT)$(autofsmapdir)/auto.master.new ; \
+ 		echo "Found existing backup of master map." ; \
+ 		echo "Installed package default master map as \"auto.master.new\"." ; \
+ 	else \
+-		install -v -c auto.master -m 644 $(MASTER) \
++		install -v auto.master -m 644 $(MASTER) \
+ 				$(INSTALLROOT)$(autofsmapdir)/auto.master ; \
+ 		echo "Installed package master map as \"auto.master\"." ; \
+ 		if test -z "$(MEXISTS)" ; \
+@@ -92,12 +115,12 @@ auto.misc:
+ 	@echo "Installing autofs sample map \"auto.misc\" in $(autofsmapdir)"
+ 	@if test -z "$(MISC)" ; \
+ 	then \
+-		install -v -c auto.misc -m 644 \
++		install -v auto.misc -m 644 \
+ 			$(INSTALLROOT)$(autofsmapdir)/auto.misc.new ; \
+ 		echo "Found existing backup of sample map \"auto.misc\"." ; \
+ 		echo "Installed package sample as \"auto.misc.new\"." ; \
+ 	else \
+-		install -v -c auto.misc -m 644 $(MISC) \
++		install -v auto.misc -m 644 $(MISC) \
+ 				$(INSTALLROOT)$(autofsmapdir)/auto.misc ; \
+ 		echo "Installed package sample map as \"auto.misc\"." ; \
+ 		if test -z "$(MEXISTS)" ; \
+@@ -115,12 +138,12 @@ auto.net:
+ 	@echo "Installing autofs sample map \"auto.net\" in $(autofsmapdir)"
+ 	@if test -z "$(NET)" ; \
+ 	then \
+-		install -v -c auto.net -m 755 \
++		install -v auto.net -m 755 \
+ 			$(INSTALLROOT)$(autofsmapdir)/auto.net.new ; \
+ 		echo "Found existing backup of sample map \"auto.net\"." ; \
+ 		echo "Installed package sample as \"auto.net.new\"." ; \
+ 	else \
+-		install -v -c auto.net -m 755 $(NET) \
++		install -v auto.net -m 755 $(NET) \
+ 				$(INSTALLROOT)$(autofsmapdir)/auto.net ; \
+ 		echo "Installed package sample map as \"auto.net\"." ; \
+ 		if test -z "$(NEXISTS)" ; \
+@@ -138,12 +161,12 @@ auto.smb:
+ 	@echo "Installing autofs sample map \"auto.smb\" in $(autofsmapdir)"
+ 	@if test -z "$(SMB)" ; \
+ 	then \
+-		install -v -c auto.smb -m 755 \
++		install -v auto.smb -m 755 \
+ 			$(INSTALLROOT)$(autofsmapdir)/auto.smb.new ; \
+ 		echo "Found existing backup of sample map \"auto.smb\"." ; \
+ 		echo "Installed package sample as \"auto.smb.new\"." ; \
+ 	else \
+-		install -v -c auto.net -m 755 $(SMB) \
++		install -v auto.net -m 755 $(SMB) \
+ 				$(INSTALLROOT)$(autofsmapdir)/auto.smb ; \
+ 		echo "Installed package sample map as \"auto.smb\"." ; \
+ 		if test -z "$(SEXISTS)" ; \
+@@ -152,7 +175,8 @@ auto.smb:
+ 		fi ; \
+ 	fi
+ 
+-install: rc.autofs autofs.conf.default dirs autofs.init autofs.conf $(SAMPLES)
++install: rc.autofs autofs.conf.default dirs autofs.init autofs.conf \
++		autofs_ldap_auth.conf $(SAMPLES)
+ 	@echo
+ 
+ clean:
+diff --git a/samples/autofs_ldap_auth.conf b/samples/autofs_ldap_auth.conf
+index feb6a2e..265571e 100644
+--- a/samples/autofs_ldap_auth.conf
++++ b/samples/autofs_ldap_auth.conf
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" ?>
+ <autofs_ldap_sasl_conf
+-	usetls="yes"
++	usetls="no"
+ 	tlsrequired="no"
+ 	authrequired="no"
+ 	authtype="DIGEST-MD5"

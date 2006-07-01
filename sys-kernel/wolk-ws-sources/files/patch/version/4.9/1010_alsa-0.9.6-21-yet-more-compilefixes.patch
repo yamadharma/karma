@@ -1,0 +1,20 @@
+--- old/include/sound/pnp.h	2003-09-06 20:55:54.000000000 +0200
++++ new/include/sound/pnp.h	2003-09-06 21:19:14.000000000 +0200
+@@ -198,7 +198,7 @@ void pnp_init_resource_table(struct pnp_
+ int pnp_manual_config_dev(struct pnp_dev *dev, struct pnp_resource_table *res, int mode);
+ int pnp_activate_dev(struct pnp_dev *dev);
+ static inline int pnp_is_active(struct pnp_dev *dev) { return dev->p.active; }
+-
++/*
+ #else
+ 
+ static inline struct pnp_dev * pnp_request_card_device(struct pnp_card_link *clink, const char * id, struct pnp_dev * from) { return NULL; }
+@@ -211,7 +211,7 @@ static inline void pnp_init_resource_tab
+ static inline int pnp_manual_config_dev(struct pnp_dev *dev, struct pnp_resource_table *res, int mode) { return -ENODEV; }
+ static inline int pnp_activate_dev(struct pnp_dev *dev) { return -ENODEV; }
+ static inline int pnp_is_active(struct pnp_dev * dev) { return -ENODEV; }
+-
++*/
+ #endif
+ 
+ 

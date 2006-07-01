@@ -1,0 +1,12 @@
+diff -Naur ../work/GWorkspace-0.6.5/Desktop/Preferences/DesktopPrefs.m gworkspace/Desktop/Preferences/DesktopPrefs.m
+--- ../work/GWorkspace-0.6.5/Desktop/Preferences/DesktopPrefs.m	2004-05-14 22:04:26.000000000 +0400
++++ gworkspace/Desktop/Preferences/DesktopPrefs.m	2004-07-01 14:36:55.238106920 +0400
+@@ -204,7 +204,7 @@
+       removables = [defaults arrayForKey: @"GSRemovableMediaPaths"];
+       
+       if ((removables == nil) || ([removables count] == 0)) {
+-        removables = [NSArray arrayWithObjects: @"/mnt/floppy", @"/mnt/cdrom", nil];
++        removables = [NSArray arrayWithObjects: @"/mnt/floppy", @"/mnt/cdrom", @"/media/floppy", @"/media/cdrom", nil];
+         NSRunAlertPanel(nil, 
+                NSLocalizedString(@"The mount points for removable media are not defined. Using default values.", @""), 
+                NSLocalizedString(@"OK", @""), 

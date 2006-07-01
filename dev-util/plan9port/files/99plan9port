@@ -1,0 +1,3 @@
+PLAN9='@PLAN9_DEST@'
+PATH='@PLAN9_DEST@/bin'
+

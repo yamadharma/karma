@@ -1,0 +1,29 @@
+--- tools/run/opennms.sh	2005-05-25 15:31:52.000000000 -0230
++++ tools/run/opennms.sh	2005-08-08 15:20:40.000000000 -0230
+@@ -28,7 +28,7 @@
+ #
+ 
+ #### ------------> DO NOT CHANGE VARIABLES IN THIS FILE <------------- ####
+-#### Create $OPENNMS_HOME/etc/opennms.conf and put overrides in there. ####
++#### All overrides go in /etc/conf.d/opennms                           ####
+ #### ------------> DO NOT CHANGE VARIABLES IN THIS FILE <------------- ####
+ 
+ # Home directory for OpenNMS.
+@@ -78,13 +78,13 @@
+ unset http_proxy
+ 
+ #### ------------> DO NOT CHANGE VARIABLES IN THIS FILE <------------- ####
+-#### Create $OPENNMS_HOME/etc/opennms.conf and put overrides in there. ####
++#### All overrides go in /etc/conf.d/opennms                           ####
+ #### ------------> DO NOT CHANGE VARIABLES IN THIS FILE <------------- ####
+ 
+ 
+-# Load opennms.conf, if it exists, to override above configuration options.
+-if [ -f $OPENNMS_HOME/etc/opennms.conf ]; then
+-    . $OPENNMS_HOME/etc/opennms.conf
++# Load /etc/conf.d/opennms to override above configuration options.
++if [ -f /etc/conf.d/opennms ]; then
++    source /etc/conf.d/opennms
+ fi
+ 
+ show_help () {

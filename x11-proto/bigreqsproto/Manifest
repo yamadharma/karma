@@ -1,0 +1,22 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+MD5 2dbb897681888b8e758ccf5d8df50c7d ChangeLog 2033
+RMD160 836066f100e40dfcd880a7442d8ff98886d85b7b ChangeLog 2033
+SHA256 21de837dd166c731dfdf141b49d758b0069efa27b9eb9ec782fd64ef230337ce ChangeLog 2033
+MD5 09d6f466e5787d3bba50731df16a3efd bigreqsproto-1.0.2.ebuild 503
+RMD160 0bca3dfa6b6e2a692031e699423de74ccfb47690 bigreqsproto-1.0.2.ebuild 503
+SHA256 64edba08c80db014e49273179de9a70a5b40c430c197c0d1c9b387805c38b5ce bigreqsproto-1.0.2.ebuild 503
+MD5 df0cce1c1ae0666cdcc769871b697c53 files/digest-bigreqsproto-1.0.2 256
+RMD160 15f3cbf27a901fc655af1d4a5febc6a5c986b297 files/digest-bigreqsproto-1.0.2 256
+SHA256 30767cc7466a5a71897238bf9e8dc61e0e36f2690578de6f420246ce27dccb3f files/digest-bigreqsproto-1.0.2 256
+MD5 a37bab73e2f24b213932c30997d3d360 metadata.xml 156
+RMD160 c1274bdccf57603d580de0075ba07a35b7509560 metadata.xml 156
+SHA256 5101ab0d4cc8c7125eea733c44e86962769bd77acaf53b69223b9cadcdd29055 metadata.xml 156
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQFELYPuAiZjviIA2XgRAkR6AKCcomQNDNKot3R0TGHnG3qw0TMhvQCcCO4V
+8A69pMQUyYtOUqp8pzenPGc=
+=Ly/2
+-----END PGP SIGNATURE-----

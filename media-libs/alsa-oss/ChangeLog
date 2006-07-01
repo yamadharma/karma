@@ -1,0 +1,31 @@
+# ChangeLog for media-libs/alsa-oss
+# Copyright 2002-2003 Gentoo Technologies, Inc.; Distributed under the GPL v2
+# $Header: /home/cvsroot/gentoo-x86/media-libs/alsa-oss/ChangeLog,v 1.10 2003/02/12 07:06:04 vapier Exp $
+
+  06 Dec 2002; Rodney Rees <manson@gentoo.org> : changed sparc ~sparc keywords
+ 
+*alsa-oss-0.9.0_rc1 (27 Apr 2002)
+   
+  20 Oct 2002; Calum Selkirk <cselkirk@gentoo.org> alsa-oss-0.9.0_rc1.ebuild :
+
+  Added ppc to KEYWORDS.
+
+  22 Jul 2002; Daniel Ahlberg <aliz@gentoo.org> alsa-oss-0.9.0_rc1.ebuild :
+  
+  Fixed typo.
+
+  22 May 2002; Arcady Genkin <agenkin@thpoon.com>
+	alsa-oss-0.9.0_rc1.ebuild :
+
+  Now installs the man pages under /usr/share/man.
+
+  17 Feb 2002; Arcady Genkin <agenkin@thpoon.com>
+	alsa-oss-0.9.0_rc1.ebuild :
+
+  Quick update to version 0.9.0rc1.
+
+*alsa-oss-0.9.0.1_beta10 (17 Feb 2002)
+
+  17 Feb 2002; Arcady Genkin <agenkin@thpoon.com> alsa-oss-0.9.0.1_beta10 :
+
+  First version of this package.

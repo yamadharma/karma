@@ -1,0 +1,13 @@
+--- php-4.2.2/sapi/caudium/caudium.c.caudium-phpini	Tue Feb 19 21:46:29 2002
++++ php-4.2.2/sapi/caudium/caudium.c	Wed Aug  7 10:32:09 2002
+@@ -510,6 +510,10 @@
+ 	 val && val->type == PIKE_T_STRING) {
+ 	php_register_variable(ind->u.string->str, val->u.string->str,
+ 			      track_vars_array TSRMLS_CC );
++	/* Change the ini-entrys if the Variable begins with PHP_ bonis@bonis.de */
++	if(strncmp(ind->u.string->str,"PHP_",4)==0) {
++		zend_alter_ini_entry(ind->u.string->str+4, strlen(ind->u.string->str)+1-4, strdup(val->u.string->str), strlen(val->u.string->str), PHP_INI_USER, PHP_INI_STAGE_RUNTIME);
++	}
+       }
+     }
+   }

@@ -1,0 +1,30 @@
+# fonts for Unicode locales. 
+
+#style "gtk-default-ru" { 
+#fontset = "\
+#-*-fixed-medium-*-*-*-18-*-*-*-*-*-iso10646-*\,
+#-*-fixed-medium-*-*-*-18-*-*-*-*-*-iso10646-*\,
+#-*-fixed-medium-*-*-*-18-*-*-*-*-*-iso10646-*\,
+#-*-fixed-medium-*-*-*-18-*-*-*-*-*-iso10646-*\,
+#"
+#}
+
+style "gtk-default-ru" {
+        fontset = "-xos4-terminus-medium-r-normal-*-*-120-*-*-c-*-iso10646-1,*-r-*"
+}
+
+
+#style "gtk-default-ru" {
+#	fontset = "-misc-fixed-medium-r-semicondensed-*-*-120-*-*-c-*-koi8-r,*-r-*"
+#}
+
+#fontset = "\ 
+#-rfx-*-medium-r-normal-sans-12-120-75-75-*-*-iso10646-1\, 
+#-rfx-*-medium-r-normal-sans-12-120-75-75-*-*-iso10646-1\, 
+#-rfx-*-medium-r-normal-sans-12-120-75-75-*-*-iso10646-1\, 
+#-rfx-*-medium-r-normal-sans-12-120-75-75-*-*-iso10646-1\, 
+#" 
+#} 
+
+class "GtkWidget" style "gtk-default-ru"
+

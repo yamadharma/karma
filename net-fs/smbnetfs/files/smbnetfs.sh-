@@ -1,0 +1,13 @@
+#!/bin/sh
+
+MY_USER=`whoami`
+MY_PS=`ps -u $MY_USER -o comm= | grep smbnetfs$`
+
+if [ -z "$MY_PS" -a -f ~/.smbnetfs ]
+    then
+    if [ ! -d ~/net/smb ]
+	then
+	mkdir -p ~/net/smb
+    fi    
+    smbnetfs ~/net/smb
+fi    

@@ -1,0 +1,22 @@
+#!/sbin/runscript
+# Copyright 1998-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	use dns logger mysql postgresql net
+}
+
+start()	{
+	ebegin "Starting Tomcat"
+	start-stop-daemon --start --quiet --chuid tomcat:tomcat --exec ${CATALINA_HOME}/bin/catalina.sh -- ${TOMCAT_START}
+	sleep 5
+	eend $?
+}
+
+stop()	{
+	ebegin "Stopping Tomcat"
+	start-stop-daemon --start --quiet --chuid tomcat:tomcat --exec ${CATALINA_HOME}/bin/catalina.sh -- ${TOMCAT_STOP}
+	sleep 5
+	eend $?
+}

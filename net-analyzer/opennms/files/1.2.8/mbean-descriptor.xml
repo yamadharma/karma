@@ -1,0 +1,21 @@
+  <mbean         name="OpenNMSTomcatRealm"
+          description="OpenNMS Web Console"
+               domain="Catalina"
+                group="Realm"
+                 type="org.opennms.web.authenticate.OpenNMSTomcatRealm">
+
+    <attribute   name="className"
+          description="Fully qualified class name of the managed object"
+                 type="java.lang.String"
+            writeable="false"/>
+
+    <attribute   name="debug"
+          description="The debugging detail level for this component"
+                 type="int"/>
+
+    <operation name="start" description="Start" impact="ACTION" returnType="void" />
+    <operation name="stop" description="Stop" impact="ACTION" returnType="void" />
+    <operation name="init" description="Init" impact="ACTION" returnType="void" />
+    <operation name="destroy" description="Destroy" impact="ACTION" returnType="void" />
+
+  </mbean>

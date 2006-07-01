@@ -1,0 +1,9 @@
+diff -dPNur unzip-5.50/unzpriv.h unzip-5.50-new/unzpriv.h
+--- unzip-5.50/unzpriv.h	Sun Feb 17 21:01:48 2002
++++ unzip-5.50-new/unzpriv.h	Tue Jun 10 07:16:23 2003
+@@ -2424,4 +2424,5 @@
+          !(((islochdr) || (isuxatt)) && \
+            ((hostver) == 25 || (hostver) == 26 || (hostver) == 40))) || \
+         (hostnum) == FS_HPFS_ || \
++	(hostnum) == UNIX_ || \
+         ((hostnum) == FS_NTFS_ && (hostver) == 50)) { \

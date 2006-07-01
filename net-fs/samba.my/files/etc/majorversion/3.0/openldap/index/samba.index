@@ -1,0 +1,4 @@
+index           sambaSID                        eq
+index           sambaPrimaryGroupSID            eq
+index           sambaDomainName                 eq
+

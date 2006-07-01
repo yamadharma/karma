@@ -1,0 +1,4 @@
+
+[Colors]
+base_color=normal=,black:marked=,black:directory=white,black:link=gray,black:device=,black:special=red,black:executable=green,black:viewunderline=,black:editor=yellow,black:editnormal=lightgray,black:viewnormal=white,black:hidden=gray,black:temp=gray,black:doc=brown,black:archive=brightmagenta,black:source=cyan,black:media=green,black:graph=brightcyan,black:database=brightred,black
+

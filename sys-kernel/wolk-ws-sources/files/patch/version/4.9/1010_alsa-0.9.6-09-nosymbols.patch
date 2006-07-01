@@ -1,0 +1,481 @@
+--- linux/sound/arm/sa11xx-uda1341.c	2003-05-05 12:08:06.000000000 +0200
++++ linux/sound/arm/sa11xx-uda1341.c	2003-07-01 15:17:30.000000000 +0200
+@@ -1018,3 +1018,5 @@
+  * indent-tabs-mode: t
+  * End:
+  */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/sb/emu8000_synth.c	2002-05-27 12:42:34.000000000 +0200
++++ linux/sound/isa/sb/emu8000_synth.c	2003-07-01 15:17:30.000000000 +0200
+@@ -132,3 +132,5 @@
+ 
+ module_init(alsa_emu8000_init)
+ module_exit(alsa_emu8000_exit)
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/sb/es968.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/sb/es968.c	2003-07-01 15:17:30.000000000 +0200
+@@ -268,3 +268,5 @@
+ __setup("snd-es968=", alsa_card_es968_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/sb/sb8.c	2003-04-23 12:05:02.000000000 +0200
++++ linux/sound/isa/sb/sb8.c	2003-07-01 15:17:30.000000000 +0200
+@@ -252,3 +252,5 @@
+ __setup("snd-sb8=", alsa_card_sb8_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/sb/sb16.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/sb/sb16.c	2003-07-01 15:17:30.000000000 +0200
+@@ -723,3 +723,7 @@
+ #endif
+ 
+ #endif /* ifndef MODULE */
++
++#ifndef SNDRV_SBAWE
++EXPORT_NO_SYMBOLS;
++#endif
+--- linux/sound/isa/sb/emu8000_pcm.c	2003-02-10 12:30:49.000000000 +0100
++++ linux/sound/isa/sb/emu8000_pcm.c	2003-07-01 15:17:30.000000000 +0200
+@@ -709,3 +709,5 @@
+ 
+ 	return 0;
+ }
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/gus/gusclassic.c	2002-10-22 11:34:01.000000000 +0200
++++ linux/sound/isa/gus/gusclassic.c	2003-07-01 15:17:30.000000000 +0200
+@@ -298,3 +298,5 @@
+ __setup("snd-gusclassic=", alsa_card_gusclassic_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/gus/gusextreme.c	2002-10-22 11:34:01.000000000 +0200
++++ linux/sound/isa/gus/gusextreme.c	2003-07-01 15:17:30.000000000 +0200
+@@ -432,3 +432,5 @@
+ __setup("snd-gusextreme=", alsa_card_gusextreme_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/gus/gus_synth.c	2003-05-16 11:02:25.000000000 +0200
++++ linux/sound/isa/gus/gus_synth.c	2003-07-01 15:17:30.000000000 +0200
+@@ -320,3 +320,5 @@
+ 
+ module_init(alsa_gus_synth_init)
+ module_exit(alsa_gus_synth_exit)
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/gus/interwave.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/gus/interwave.c	2003-07-01 15:17:30.000000000 +0200
+@@ -1021,3 +1021,5 @@
+ #endif
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/gus/gusmax.c	2003-04-23 12:05:01.000000000 +0200
++++ linux/sound/isa/gus/gusmax.c	2003-07-01 15:17:30.000000000 +0200
+@@ -438,3 +438,5 @@
+ __setup("snd-gusmax=", alsa_card_gusmax_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/dt019x.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/dt019x.c	2003-07-01 15:17:30.000000000 +0200
+@@ -361,3 +361,5 @@
+ __setup("snd-dt019x=", alsa_card_dt019x_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/sscape.c	2003-07-01 15:19:39.000000000 +0200
++++ linux/sound/isa/sscape.c	2003-07-01 15:19:45.000000000 +0200
+@@ -1557,3 +1557,4 @@
+ 
+ #endif
+ 
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/als100.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/als100.c	2003-07-01 15:17:30.000000000 +0200
+@@ -374,3 +374,5 @@
+ __setup("snd-als100=", alsa_card_als100_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/ad1848/ad1848.c	2002-10-22 11:34:01.000000000 +0200
++++ linux/sound/isa/ad1848/ad1848.c	2003-07-01 15:17:30.000000000 +0200
+@@ -176,3 +176,5 @@
+ __setup("snd-ad1848=", alsa_card_ad1848_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/cmi8330.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/cmi8330.c	2003-07-01 15:17:30.000000000 +0200
+@@ -677,3 +677,5 @@
+ __setup("snd-cmi8330=", alsa_card_cmi8330_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/cs423x/cs4236.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/cs423x/cs4236.c	2003-07-01 15:17:30.000000000 +0200
+@@ -667,3 +667,5 @@
+ #endif
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/cs423x/cs4231.c	2002-10-22 11:34:01.000000000 +0200
++++ linux/sound/isa/cs423x/cs4231.c	2003-07-01 15:17:30.000000000 +0200
+@@ -207,3 +207,5 @@
+ __setup("snd-cs4231=", alsa_card_cs4231_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/wavefront/wavefront.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/wavefront/wavefront.c	2003-07-01 15:17:30.000000000 +0200
+@@ -774,3 +774,5 @@
+ __setup("snd-wavefront=", alsa_card_wavefront_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/opl3sa2.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/opl3sa2.c	2003-07-01 15:17:30.000000000 +0200
+@@ -966,3 +966,5 @@
+ __setup("snd-opl3sa2=", alsa_card_opl3sa2_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/es1688/es1688.c	2002-10-22 11:34:01.000000000 +0200
++++ linux/sound/isa/es1688/es1688.c	2003-07-01 15:17:30.000000000 +0200
+@@ -238,3 +238,5 @@
+ __setup("snd-es1688=", alsa_card_es1688_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/ad1816a/ad1816a.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/ad1816a/ad1816a.c	2003-07-01 15:17:30.000000000 +0200
+@@ -353,3 +353,5 @@
+ __setup("snd-ad1816a=", alsa_card_ad1816a_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/azt2320.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/azt2320.c	2003-07-01 15:17:30.000000000 +0200
+@@ -408,3 +408,5 @@
+ __setup("snd-azt2320=", alsa_card_azt2320_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/opti9xx/opti92x-ad1848.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/opti9xx/opti92x-ad1848.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2276,3 +2276,5 @@
+ #endif
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/es18xx.c	2003-07-01 15:17:13.000000000 +0200
++++ linux/sound/isa/es18xx.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2304,3 +2304,5 @@
+ __setup("snd-es18xx=", alsa_card_es18xx_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/isa/sgalaxy.c	2003-04-23 12:05:00.000000000 +0200
++++ linux/sound/isa/sgalaxy.c	2003-07-01 15:17:30.000000000 +0200
+@@ -352,3 +352,5 @@
+ __setup("snd-sgalaxy=", alsa_card_sgalaxy_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/via82xx.c	2003-07-01 15:18:24.000000000 +0200
++++ linux/sound/pci/via82xx.c	2003-07-01 15:18:29.000000000 +0200
+@@ -2093,3 +2093,5 @@
+ __setup("snd-via82xx=", alsa_card_via82xx_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/nm256/nm256.c	2003-06-18 12:42:29.000000000 +0200
++++ linux/sound/pci/nm256/nm256.c	2003-07-01 15:17:30.000000000 +0200
+@@ -1707,3 +1707,5 @@
+ __setup("snd-nm256=", alsa_card_nm256_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/vx222/vx222.c	2003-07-01 15:19:23.000000000 +0200
++++ linux/sound/pci/vx222/vx222.c	2003-07-01 15:19:29.000000000 +0200
+@@ -309,3 +309,5 @@
+ __setup("snd-vx222=", alsa_card_vx222_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/fm801.c	2003-06-02 14:56:44.000000000 +0200
++++ linux/sound/pci/fm801.c	2003-07-01 15:17:30.000000000 +0200
+@@ -1161,3 +1161,5 @@
+ __setup("snd-fm801=", alsa_card_fm801_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/rme9652/rme9652.c	2003-05-05 12:08:09.000000000 +0200
++++ linux/sound/pci/rme9652/rme9652.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2771,3 +2771,5 @@
+ __setup("snd-rme9652=", alsa_card_rme9652_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/rme9652/hdsp.c	2003-06-27 19:54:30.000000000 +0200
++++ linux/sound/pci/rme9652/hdsp.c	2003-07-01 15:17:30.000000000 +0200
+@@ -4327,3 +4327,5 @@
+ __setup("snd-hdsp=", alsa_card_hdsp_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/cmipci.c	2003-05-07 17:48:45.000000000 +0200
++++ linux/sound/pci/cmipci.c	2003-07-01 15:17:30.000000000 +0200
+@@ -3234,3 +3234,5 @@
+ __setup("snd-cmipci=", alsa_card_cmipci_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/azt3328.c	2003-07-01 15:18:05.000000000 +0200
++++ linux/sound/pci/azt3328.c	2003-07-01 15:18:12.000000000 +0200
+@@ -1619,3 +1619,5 @@
+ __setup("snd-azf3328=", alsa_card_azf3328_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/korg1212/korg1212.c	2003-05-09 16:13:52.000000000 +0200
++++ linux/sound/pci/korg1212/korg1212.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2566,3 +2566,5 @@
+ 
+ #endif /* ifndef MODULE */
+ 
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/emu10k1/emu10k1_synth.c	2002-05-27 12:42:36.000000000 +0200
++++ linux/sound/pci/emu10k1/emu10k1_synth.c	2003-07-01 15:17:30.000000000 +0200
+@@ -117,3 +117,5 @@
+ 
+ module_init(alsa_emu10k1_synth_init)
+ module_exit(alsa_emu10k1_synth_exit)
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/maestro3.c	2003-07-01 15:08:12.000000000 +0200
++++ linux/sound/pci/maestro3.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2791,3 +2791,5 @@
+ __setup("snd-maestro3=", alsa_card_maestro3_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/cs46xx/cs46xx.c	2003-06-18 12:42:29.000000000 +0200
++++ linux/sound/pci/cs46xx/cs46xx.c	2003-07-01 15:17:30.000000000 +0200
+@@ -237,3 +237,5 @@
+ __setup("snd-cs46xx=", alsa_card_cs46xx_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/sonicvibes.c	2003-06-23 11:12:34.000000000 +0200
++++ linux/sound/pci/sonicvibes.c	2003-07-01 15:17:30.000000000 +0200
+@@ -1573,3 +1573,5 @@
+ __setup("snd-sonicvibes=", alsa_card_sonicvibes_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/rme96.c	2003-04-23 12:05:06.000000000 +0200
++++ linux/sound/pci/rme96.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2593,3 +2593,5 @@
+ __setup("snd-rme96=", alsa_card_rme96_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/cs4281.c	2003-06-23 11:12:32.000000000 +0200
++++ linux/sound/pci/cs4281.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2206,3 +2206,5 @@
+ __setup("snd-cs4281=", alsa_card_cs4281_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/trident/trident_synth.c	2003-05-16 11:02:26.000000000 +0200
++++ linux/sound/pci/trident/trident_synth.c	2003-07-01 15:17:30.000000000 +0200
+@@ -1023,3 +1023,5 @@
+ 
+ module_init(alsa_trident_synth_init)
+ module_exit(alsa_trident_synth_exit)
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/es1968.c	2003-06-18 12:42:29.000000000 +0200
++++ linux/sound/pci/es1968.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2868,3 +2868,5 @@
+ __setup("snd-es1968=", alsa_card_es1968_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/ali5451/ali5451.c	2003-06-18 12:42:29.000000000 +0200
++++ linux/sound/pci/ali5451/ali5451.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2314,3 +2314,5 @@
+ __setup("snd-ali5451=", alsa_card_ali_setup);
+ 
+ #endif /* ifndef */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/rme32.c	2003-04-23 12:05:06.000000000 +0200
++++ linux/sound/pci/rme32.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2029,3 +2029,5 @@
+ __setup("snd-rme32=", alsa_card_rme32_setup);
+ 
+ #endif				/* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/ice1712/ice1724.c	2003-07-01 15:19:02.000000000 +0200
++++ linux/sound/pci/ice1712/ice1724.c	2003-07-01 15:19:11.000000000 +0200
+@@ -2006,3 +2006,5 @@
+ __setup("snd-ice1724=", alsa_card_ice1724_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/ice1712/ice1712.c	2003-06-04 13:00:50.000000000 +0200
++++ linux/sound/pci/ice1712/ice1712.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2619,3 +2619,5 @@
+ __setup("snd-ice1712=", alsa_card_ice1712_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/ymfpci/ymfpci.c	2003-06-23 11:12:45.000000000 +0200
++++ linux/sound/pci/ymfpci/ymfpci.c	2003-07-01 15:17:30.000000000 +0200
+@@ -328,3 +328,5 @@
+ __setup("snd-ymfpci=", alsa_card_ymfpci_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/intel8x0.c	2003-06-27 19:51:26.000000000 +0200
++++ linux/sound/pci/intel8x0.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2629,3 +2629,5 @@
+ __setup("snd-intel8x0=", alsa_card_intel8x0_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/ens1370.c	2003-06-23 11:12:32.000000000 +0200
++++ linux/sound/pci/ens1370.c	2003-07-01 15:17:30.000000000 +0200
+@@ -2405,3 +2405,5 @@
+ #endif
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/als4000.c	2003-04-23 12:05:04.000000000 +0200
++++ linux/sound/pci/als4000.c	2003-07-01 15:17:30.000000000 +0200
+@@ -748,3 +748,5 @@
+ __setup("snd-als4000=", alsa_card_als4000_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pci/es1938.c	2003-06-23 11:12:33.000000000 +0200
++++ linux/sound/pci/es1938.c	2003-07-01 15:17:30.000000000 +0200
+@@ -1739,3 +1739,5 @@
+ __setup("snd-es1938=", alsa_card_es1938_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/ppc/powermac.c	2003-03-04 11:49:08.000000000 +0100
++++ linux/sound/ppc/powermac.c	2003-07-01 15:17:30.000000000 +0200
+@@ -196,3 +196,5 @@
+ __setup("snd-pmac=", alsa_card_pmac_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/drivers/opl3/opl3_seq.c	2003-03-25 16:13:53.000000000 +0100
++++ linux/sound/drivers/opl3/opl3_seq.c	2003-07-01 15:17:30.000000000 +0200
+@@ -312,3 +312,5 @@
+ 
+ module_init(alsa_opl3_seq_init)
+ module_exit(alsa_opl3_seq_exit)
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/drivers/serial-u16550.c	2003-04-23 12:04:53.000000000 +0200
++++ linux/sound/drivers/serial-u16550.c	2003-07-01 15:17:30.000000000 +0200
+@@ -989,3 +989,5 @@
+ __setup("snd-serial=", alsa_card_serial_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/drivers/dummy.c	2003-07-01 15:16:59.000000000 +0200
++++ linux/sound/drivers/dummy.c	2003-07-01 15:17:30.000000000 +0200
+@@ -640,3 +640,5 @@
+ __setup("snd-dummy=", alsa_card_dummy_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/drivers/mpu401/mpu401.c	2003-01-22 10:16:23.000000000 +0100
++++ linux/sound/drivers/mpu401/mpu401.c	2003-07-01 15:17:30.000000000 +0200
+@@ -166,3 +166,5 @@
+ __setup("snd-mpu401=", alsa_card_mpu401_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/drivers/virmidi.c	2002-11-25 11:11:26.000000000 +0100
++++ linux/sound/drivers/virmidi.c	2003-07-01 15:17:30.000000000 +0200
+@@ -184,3 +184,5 @@
+ __setup("snd-virmidi=", alsa_card_virmidi_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/drivers/mtpav.c	2003-04-23 12:04:53.000000000 +0200
++++ linux/sound/drivers/mtpav.c	2003-07-01 15:17:30.000000000 +0200
+@@ -822,3 +822,5 @@
+ __setup("snd-mtpav=", alsa_card_mtpav_setup);
+ 
+ #endif /* ifndef MODULE */
++
++EXPORT_NO_SYMBOLS;
+--- linux/sound/pcmcia/vx/vxpocket.c	2003-07-01 15:20:41.000000000 +0200
++++ linux/sound/pcmcia/vx/vxpocket.c	2003-07-01 15:20:52.000000000 +0200
+@@ -173,3 +173,5 @@
+ 
+ module_init(init_vxpocket);
+ module_exit(exit_vxpocket);
++
++EXPORT_NO_SYMBOLS;

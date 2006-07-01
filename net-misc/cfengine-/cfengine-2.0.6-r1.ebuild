@@ -1,0 +1,49 @@
+# Copyright 1999-2002 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: /home/cvsroot/gentoo-x86/net-misc/cfengine/cfengine-2.0.3.ebuild,v 1.5 2002/07/06 14:39:35 phoenix Exp $
+
+S=${WORKDIR}/${P}
+DESCRIPTION="An agent/software robot and a high level policy language for building expert systems to administrate and configure large computer networks"
+SRC_URI="ftp://ftp.iu.hio.no/pub/cfengine/${P}.tar.gz"
+HOMEPAGE="http://www.iu.hio.no/cfengine/"
+
+DEPEND="virtual/glibc
+	>=sys-libs/db-3.2*
+	dev-libs/openssl"
+RDEPEND="${DEPEND}"
+SLOT="0"
+LICENSE="GPL-2"
+KEYWORDS="x86 sparc sparc64"
+
+src_compile() 
+{
+	local myconf
+	myconf="--with-berkeleydb=/usr --with-workdir=/var/lib/cfengine"
+	econf ${myconf} || die
+	emake || die
+}
+
+src_install () 
+{
+	emake DESTDIR=${D} install || die
+	dodoc AUTHORS ChangeLog COPYING DOCUMENTATION NEWS README SURVEY TODO
+	dodoc doc/*.html
+	doinfo doc/*.info*
+        docinto examples; dodoc ${D}/usr/share/cfengine/*.example
+        rm -rf ${D}/usr/share/cfengine ${D}/usr/doc
+	#
+	exeinto /etc/init.d
+	newexe ${FILESDIR}/rc/cfengine.rc-2 cfengine
+}
+
+pkg_postinst() 
+{
+	#{{{ key generation
+	
+	/usr/sbin/cfkey
+	
+	#}}}
+
+	mkdir -p /var/lib/cfengine/bin
+	cp /usr/sbin/cfagent /var/lib/cfengine/bin/cfagent
+}

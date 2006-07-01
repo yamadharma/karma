@@ -1,0 +1,5 @@
+MD5 202375b32b2a80a367a2230716144988 files/digest-id3lib-3.8.3-r4 64
+MD5 875a7dcafeef2a995039075941fb47ae files/id3lib-3.8.3-test_io.patch 281
+MD5 e896e39ce5196f4fd2ca6fc7553e2c60 files/id3lib-3.8.3-zlib.patch 833
+MD5 3edb12a294cd6e8ed47735d8ce1887cb files/id3lib-ds-rcc.patch 4778
+MD5 013a537336c9c362a0516e161d6335a2 id3lib-3.8.3-r4.ebuild 1277

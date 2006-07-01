@@ -1,0 +1,6 @@
+MD5 07cdf2982d97010cf3fdddbab2fd8f9f ChangeLog 1489
+MD5 9a79e3680d6aa7f92aa064304860c850 files/digest-lightsquid-1.5 62
+MD5 a64ea8a99e843f90fd79be315a12f57b files/digest-lightsquid-1.6_beta 67
+MD5 bc99215957bff0dea214e215b9af0d10 lightsquid-1.5.ebuild 932
+MD5 3be9112ada89606966e1e277397ea635 lightsquid-1.6_beta.ebuild 936
+MD5 2c3158204cfb4b9c36b8bc78e8421b16 metadata.xml 223

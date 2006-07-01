@@ -1,0 +1,34 @@
+#!/sbin/runscript
+# Copyright 1999-2002 Gentoo Technologies, Inc.
+
+opts="start stop status restart"
+
+servicename="opennms"
+OPENNMS_HOME=/opt/opennms
+
+depend () 
+{
+    need net tomcat4 postgresql
+}
+
+start () 
+{
+    ebegin "Starting ${servicename}"
+    ${OPENNMS_HOME}/bin/opennms.sh start
+    eend $?
+}
+
+stop () 
+{
+    ebegin "Stopping ${servicename}"
+    ${OPENNMS_HOME}/bin/opennms.sh stop
+    ${OPENNMS_HOME}/bin/opennms.sh kill
+    eend $?
+}
+
+status () 
+{
+    ebegin "Status ${servicename}"
+    ${OPENNMS_HOME}/bin/opennms.sh status
+    eend $?
+}

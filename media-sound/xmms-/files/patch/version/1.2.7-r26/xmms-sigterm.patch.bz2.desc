@@ -1,0 +1,1 @@
+Save playlist, etc on SIGTERM and SIGINT, bug #13604.
