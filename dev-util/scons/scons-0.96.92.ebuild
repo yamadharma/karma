@@ -11,7 +11,7 @@ HOMEPAGE="http://www.scons.org"
 
 SLOT="0"
 LICENSE="as-is"
-KEYWORDS="~alpha amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc x86"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.0"
