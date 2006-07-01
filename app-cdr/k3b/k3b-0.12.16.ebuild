@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-cdr/k3b/k3b-0.12.14.ebuild,v 1.1 2006/03/07 23:33:36 carlo Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-cdr/k3b/k3b-0.12.16.ebuild,v 1.1 2006/06/30 17:27:01 flameeyes Exp $
 
 inherit kde eutils
 
@@ -35,7 +35,7 @@ RDEPEND="${DEPEND}
 	dvdr? ( app-cdr/dvd+rw-tools )
 	css? ( media-libs/libdvdcss )
 	encode? ( media-sound/sox
-	          media-video/transcode )
+			  media-video/transcode )
 	vcd? ( media-video/vcdimager )"
 
 DEPEND="${DEPEND}
@@ -46,17 +46,18 @@ need-kde 3.4
 I18N="${PN}-i18n-${PV}"
 
 # Supported languages and translated documentation
-LANGS="af bg br bs ca cs cy da de el en_GB es et eu fr ga he hi hu is it ja lt mk nb nl nn pa pl pt pt_BR ro ru se sl sr sr@Latn sv ta tr uk zh_CN"
+LANGS="af bg bn br bs ca cs cy da de el en_GB es et eu fr ga he hi hu is it ja km lt mk ms nb nds nl nn pa pl pt pt_BR ro ru se sl sr sr@Latn sv ta tr uk zh_CN"
 
 for X in ${LANGS}; do
 	SRC_URI="${SRC_URI} linguas_${X}? ( mirror://sourceforge/k3b/${I18N}.tar.bz2 )"
+	IUSE="${IUSE} linguas_${X}"
 done
 
 pkg_setup() {
-	if use hal && ! built_with_use sys-apps/dbus qt; then
+	if use hal && ! built_with_use sys-apps/dbus qt3; then
 		eerror "You are trying to compile ${CATEGORY}/${PF} with the \"hal\" USE flag enabled,"
-		eerror "but sys-apps/dbus is not built with Qt support."
-		die
+		eerror "but sys-apps/dbus is not built with Qt3 support."
+		die "rebuild sys-apps/dbus with the qt3 useflag"
 	fi
 
 	kde_pkg_setup
@@ -96,26 +97,20 @@ src_compile() {
 	kde_src_compile
 
 	# Build process of K3b-i18n
-	local _S=${S}
 	if [ -d "${WORKDIR}/${I18N}" ]; then
-		S="${WORKDIR}/${I18N}"
-		cd "${S}"
+		KDE_S="${WORKDIR}/${I18N}" \
 		kde_src_compile
 	fi
-	S=${_S}
 }
 
 src_install() {
 	kde_src_install
 	dodoc FAQ KNOWNBUGS PERMISSIONS
 
-	local _S=${S}
 	if [ -d "${WORKDIR}/${I18N}" ]; then
-		S="${WORKDIR}/${I18N}"
-		cd "${S}"
+		KDE_S="${WORKDIR}/${I18N}" \
 		kde_src_install
 	fi
-	S=${_S}
 
 	# Move menu entry
 	if use kde; then
