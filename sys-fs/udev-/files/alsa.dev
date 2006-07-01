@@ -1,6 +1,0 @@
-#!/bin/sh -e
-
-if [ -x /usr/sbin/alsactl ]
-    then
-    exec /usr/sbin/alsactl restore 0
-fi    
