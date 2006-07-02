@@ -1,6 +1,56 @@
 # ChangeLog for media-video/lsdvd
-# Copyright 2000-2004 Gentoo Technologies, Inc.; Distributed under the GPL v2
-# $Header: /home/cvsroot/gentoo-x86/media-video/lsdvd/ChangeLog,v 1.7 2004/03/19 10:01:29 mr_bones_ Exp $
+# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-video/lsdvd/ChangeLog,v 1.22 2006/05/03 20:54:15 flameeyes Exp $
+
+  03 May 2006; Diego Pettenò <flameeyes@gentoo.org> metadata.xml:
+  Update metadata to list media-video@gentoo.org as maintainer.
+
+  03 Apr 2006; Gustavo Zacarias <gustavoz@gentoo.org> lsdvd-0.15.ebuild:
+  Stable on sparc
+
+  01 Apr 2006; Aron Griffis <agriffis@gentoo.org> lsdvd-0.15.ebuild:
+  Mark 0.15 ~ia64
+
+*lsdvd-0.16 (01 Apr 2006)
+
+  01 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +files/lsdvd-0.16-types.patch, +lsdvd-0.16.ebuild:
+  Version bump, update patch to build with lates dvdread.
+
+  01 Apr 2006; Diego Pettenò <flameeyes@gentoo.org> lsdvd-0.10.ebuild,
+  lsdvd-0.15.ebuild:
+  Update homepage and download URL, thanks to Steve Dibb in bug #128324.
+
+  28 Mar 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +files/lsdvd-0.15-types.patch, lsdvd-0.15.ebuild:
+  Add patch to allow building against latest libdvdread. Bug #127840.
+
+  15 Mar 2006; Markus Rothe <corsair@gentoo.org> lsdvd-0.15.ebuild:
+  Added ~ppc64
+
+*lsdvd-0.15 (08 Jun 2005)
+
+  08 Jun 2005; Jan Brinkmann <luckyduck@gentoo.org> -lsdvd-0.7.ebuild,
+  lsdvd-0.10.ebuild, +lsdvd-0.15.ebuild:
+  New upstream version, fixes #95183.
+
+  01 May 2005; Michael Hanselmann <hansmi@gentoo.org> lsdvd-0.10.ebuild:
+  Stable on ppc.
+
+  24 Apr 2005; Simon Stelling <blubb@gentoo.org> lsdvd-0.10.ebuild:
+  stable on amd64
+
+  19 Apr 2005; Bryan Østergaard <kloeri@gentoo.org> metadata.xml:
+  Remove retired developer from metadata.xml.
+
+  31 Oct 2004; <iggy@gentoo.org> lsdvd-0.10.ebuild:
+  0.10 to x86
+
+  13 Aug 2004; Chris White <chriswhite@gentoo.org> +metadata.xml:
+  Adding missing metadata.xml.  Taking over as maintainer.
+
+  14 Apr 2004; Jason Wever <weeve@gentoo.org> lsdvd-0.10.ebuild:
+  Added ~sparc keyword.
 
   19 Mar 2004; Michael Sterrett <mr_bones_@gentoo.org> lsdvd-0.10.ebuild,
   lsdvd-0.7.ebuild:

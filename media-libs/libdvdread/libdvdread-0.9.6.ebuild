@@ -1,8 +1,8 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/libdvdread/libdvdread-0.9.5-r1.ebuild,v 1.1 2006/03/28 23:49:45 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-libs/libdvdread/libdvdread-0.9.6.ebuild,v 1.1 2006/05/09 19:11:41 flameeyes Exp $
 
-inherit eutils autotools
+inherit eutils libtool autotools
 
 DESCRIPTION="Provides a simple foundation for reading DVD-Video images."
 SRC_URI="http://www.dtek.chalmers.se/groups/dvd/dist/${P}.tar.gz"
@@ -22,6 +22,7 @@ src_unpack() {
 	epatch "${FILESDIR}/${P}-udfsymbols.patch"
 
 	eautoreconf
+	elibtoolize
 }
 
 src_compile() {
