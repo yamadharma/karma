@@ -1,6 +1,138 @@
 # ChangeLog for media-libs/freetype
-# Copyright 2002-2004 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/freetype/ChangeLog,v 1.54 2004/08/02 03:32:16 tgall Exp $
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-libs/freetype/ChangeLog,v 1.87 2006/07/03 03:57:09 tcort Exp $
+
+  03 Jul 2006; Thomas Cort <tcort@gentoo.org> freetype-2.1.10-r2.ebuild:
+  Stable on amd64 wrt security Bug #124828.
+
+  01 Jul 2006; Thomas Cort <tcort@gentoo.org> freetype-2.1.10-r2.ebuild:
+  Stable on alpha wrt security Bug #124828.
+
+  01 Jul 2006; Lars Weiler <pylon@gentoo.org> freetype-2.1.10-r2.ebuild:
+  Stable on ppc; bug #124828.
+
+  30 Jun 2006; Markus Rothe <corsair@gentoo.org> freetype-2.1.10-r2.ebuild:
+  Stable on ppc64; bug #124828
+
+*freetype-2.1.10-r2 (22 Jun 2006)
+
+  22 Jun 2006; Marinus Schraal <foser@gentoo.org> freetype-2.1.10-r1.ebuild :
+  Updated security patchset to deal with crashers (#124828,#137388)
+
+  20 Jun 2006; Marinus Schraal <foser@gentoo.org> metadata.xml :
+  Add fonts@gentoo.org as herd
+
+*freetype-2.1.10-r1 (19 Jun 2006)
+
+  19 Jun 2006; Marinus Schraal <foser@gentoo.org> freetype-2.1.10-r1.ebuild,
+  freetype-2.1.10-security_batch.patch, freetype-2.1.10-revert_pointer.patch,
+  freetype-2.1.10-fix_synth.patch :
+  Add patch to fix overflows (#124828)
+  Add patch to ensure compatability with <xorg-7 (#99089)
+  Add patch to fix artificial bold alignment (#127872)
+
+*freetype-2.2.1 (19 Jun 2006)
+
+  19 Jun 2006; Marinus Schraal <foser@gentoo.org> freetype-2.2.1.ebuild :
+  New release
+
+  31 Mar 2006; Diego Pettenò <flameeyes@gentoo.org> freetype-2.1.10.ebuild:
+  Add ~x86-fbsd keyword dropping virtual/libc dependency.
+
+*freetype-1.3.1-r5 (09 Oct 2005)
+
+  09 Oct 2005; Marinus Schraal <foser@gentoo.org> freetype-1.3.1-r5.ebuild :
+  Add patch to remove redundant header inclusions that break bsd (#104016)
+  Fix uclibctoolize -> elibtoolize
+
+  07 Sep 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  freetype-1.3.1-r4.ebuild:
+  Stable on sparc
+
+  28 Aug 2005; MATSUU Takuto <matsuu@gentoo.org> freetype-2.1.9-r1.ebuild:
+  Stable on sh.
+
+*freetype-2.1.10 (12 Jul 2005)
+
+  12 Jul 2005; Marinus Schraal <foser@gentoo.org> freetype-2.1.10.ebuild :
+  New release (#95969)
+
+  26 Mar 2005; Lina Pezzella <j4rg0n@gentoo.org> freetype-2.1.9-r1.ebuild:
+  Stable ppc-macos
+
+  23 Mar 2005; Seemant Kulleen <seemant@gentoo.org>
+  freetype-2.1.9-r1.ebuild:
+  change dep from net-www/mozilla to www-client/mozilla
+
+  18 Mar 2005; Seemant Kulleen <seemant@gentoo.org>
+  freetype-2.1.9-r1.ebuild:
+  Dependency update: net-www/mozilla-firefox -> www-client/mozilla-firefox.
+
+  13 Mar 2005; Donnie Berkholz <spyderous@gentoo.org>;
+  freetype-2.1.9-r1.ebuild:
+  Stable x86 so xorg-x11-6.8.2 can go stable.
+
+  11 Mar 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  freetype-2.1.9-r1.ebuild:
+  Stable on sparc
+
+  10 Mar 2005; Danny van Dyk <kugelfang@gentoo.org>
+  freetype-2.1.9-r1.ebuild:
+  Marked stable on amd64.
+
+  09 Mar 2005; Stephen P. Becker <geoman@gentoo.org>
+  freetype-2.1.9-r1.ebuild:
+  stable on mips - bug 83598
+
+  08 Mar 2005; Bryan Østergaard <kloeri@gentoo.org>
+  freetype-2.1.9-r1.ebuild:
+  Stable on alpha, bug 83598.
+
+  20 Feb 2005; Hardave Riar <hardave@gentoo.org> freetype-1.3.1-r4.ebuild:
+  Stable on mips
+
+  17 Feb 2005; Markus Rothe <corsair@gentoo.org> freetype-2.1.9-r1.ebuild:
+  Stable on ppc64
+
+  17 Feb 2005; Luca Barbato <lu_zero@gentoo.org> freetype-2.1.9-r1.ebuild:
+  Marked ppc
+
+  16 Jan 2005; Mike Frysinger <vapier@gentoo.org> freetype-2.1.5-r1.ebuild,
+  freetype-2.1.9-r1.ebuild:
+  Get rid of useless C++ checks.
+
+  15 Jan 2005; Lina Pezzella <j4rg0n@gentoo.org> freetype-2.1.9-r1.ebuild:
+  Unstable ppc-macos.
+
+*freetype-2.1.9-r1 (24 Dec 2004)
+
+  24 Dec 2004; foser <foser@gentoo.org> freetype-2.1.9-r1.ebuild :
+  Add a patch to fix a bytecode interpreter bug (#75424)
+
+  22 Dec 2004; foser <foser@gentoo.org> freetype-2.1.9.ebuild :
+  Add block for libwmf which wont build with this version
+
+  20 Nov 2004; Aron Griffis <agriffis@gentoo.org> freetype-2.1.9.ebuild:
+  Add RDEPEND to block versions of moz/ff/tb lacking the freetype-2.1.8+ binary
+  compatibility patch
+
+  03 Nov 2004; Bret Curtis <psi29a@gentoo.org> freetype-1.3.1-r4.ebuild,
+  freetype-2.1.9.ebuild:
+  marked ~mips for testing
+
+  17 Oct 2004; Mamoru KOMACHI <usata@gentoo.org> freetype-1.3.1-r3.ebuild,
+  freetype-1.3.1-r4.ebuild:
+  Don't install t1asm and getafm. They conflict with t1lib (t1asm) and
+  psutils (getafm). This closes bug #53261. Marked -r4 stable on x86,
+  alpha and ppc.
+
+  10 Oct 2004; Jeremy Huddleston <eradicator@gentoo.org>
+  freetype-2.1.5-r1.ebuild, freetype-2.1.9.ebuild:
+  multilib fixes.
+
+  05 Oct 2004; Jeremy Huddleston <eradicator@gentoo.org>
+  freetype-1.3.1-r4.ebuild:
+  multilib fixups.
 
   01 Aug 2004; Tom Gall <tgall@gentoo.org> freetype-1.3.1-r4.ebuild:
   stable on ppc64, bug #57583
