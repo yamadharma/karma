@@ -1,6 +1,48 @@
 # ChangeLog for media-sound/amarok
 # Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/amarok/ChangeLog,v 1.137 2006/05/18 21:45:16 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/amarok/ChangeLog,v 1.146 2006/07/03 19:37:56 flameeyes Exp $
+
+  03 Jul 2006; Diego Pettenò <flameeyes@gentoo.org> amarok-1.4.1-r1.ebuild:
+  Remove pl docs, as they were broken on release.
+
+*amarok-1.4.1-r1 (03 Jul 2006)
+
+  03 Jul 2006; Diego Pettenò <flameeyes@gentoo.org> -amarok-1.4.1.ebuild,
+  +amarok-1.4.1-r1.ebuild:
+  Rename lastfm.protocol file to amaroklasfm.protocol to avoid collisions with
+  lastfmplayer. Thanks to Michael Weyershäuser in bug #139032.
+
+*amarok-1.4.1 (03 Jul 2006)
+
+  03 Jul 2006; Diego Pettenò <flameeyes@gentoo.org> -amarok-1.4.0a.ebuild,
+  -amarok-1.4.1_beta1.ebuild, +amarok-1.4.1.ebuild:
+  Bump to latest version and remove old ones.
+
+*amarok-1.4.1_beta1 (18 Jun 2006)
+
+  18 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +amarok-1.4.1_beta1.ebuild:
+  Add new version (beta).
+
+*amarok-1.4.0a-r1 (18 Jun 2006)
+
+  18 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +files/amarok-1.4.0a-strict-aliasing.patch, +amarok-1.4.0a-r1.ebuild:
+  Add patch to fix strict-aliasing breakage.
+
+  08 Jun 2006; Diego Pettenò <flameeyes@gentoo.org> amarok-1.4.0a.ebuild:
+  Update description line for 1.4.0a ebuild as now it's Amarok rather than
+  amaroK.
+
+  28 May 2006; Diego Pettenò <flameeyes@gentoo.org> amarok-1.3.8.ebuild,
+  amarok-1.4.0a.ebuild:
+  Fix libvisual-plugins dependency on the 0.2 slot.
+
+  25 May 2006; Diego Pettenò <flameeyes@gentoo.org> amarok-1.4.0a.ebuild:
+  Remove xx value for translation.
+
+  24 May 2006; Diego Pettenò <flameeyes@gentoo.org> amarok-1.4.0a.ebuild:
+  Add ~x86-fbsd keyword.
 
 *amarok-1.4.0a (18 May 2006)
 
