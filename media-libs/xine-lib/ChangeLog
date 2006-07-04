@@ -1,6 +1,183 @@
 # ChangeLog for media-libs/xine-lib
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/xine-lib/ChangeLog,v 1.338 2006/04/26 22:22:46 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-libs/xine-lib/ChangeLog,v 1.372 2006/07/03 23:18:46 flameeyes Exp $
+
+*xine-lib-1.1.2_pre20060630-r1 (03 Jul 2006)
+
+  03 Jul 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-lib-1.1.2_pre20060606-r2.ebuild,
+  -xine-lib-1.1.2_pre20060606-r3.ebuild, -xine-lib-1.1.2_pre20060630.ebuild,
+  +xine-lib-1.1.2_pre20060630-r1.ebuild:
+  Add a patch to fix missing timeout on network streaming, and remove old
+  versions.
+
+*xine-lib-1.1.2_pre20060630 (30 Jun 2006)
+
+  30 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-lib-1.1.2_pre20060630.ebuild:
+  New snapshot with reduced patchset, near to 1.1.2 final release.
+
+  17 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060606-r3.ebuild:
+  Bump patchset with a new patch for 5.1 AAC support.
+
+*xine-lib-1.1.2_pre20060606-r3 (17 Jun 2006)
+
+  17 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-lib-1.1.2_pre20060606-r3.ebuild:
+  Add revbump to fix strict-aliasing rules.
+
+*xine-lib-1.1.2_pre20060606-r2 (15 Jun 2006)
+
+  15 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-lib-1.1.2_pre20060606-r1.ebuild,
+  +xine-lib-1.1.2_pre20060606-r2.ebuild:
+  New revision to fix bug #136870.
+
+  10 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060606-r1.ebuild:
+  Bump patchset to fix typo.
+
+  10 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.1-r3.ebuild, xine-lib-1.1.2_pre20060328-r9.ebuild,
+  xine-lib-1.1.2_pre20060328-r11.ebuild:
+  Disable nls for all older versions, as it's broken and doesn't work anyway.
+
+*xine-lib-1.1.2_pre20060606-r1 (10 Jun 2006)
+
+  10 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-lib-1.1.2_pre20060606.ebuild, +xine-lib-1.1.2_pre20060606-r1.ebuild:
+  Bump revision fixing definitely the i18n issues so that they work.
+
+  09 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060606.ebuild:
+  Bump patchset to fix issues with streams after security fix. Use emake for
+  install stage.
+
+  07 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r11.ebuild:
+  Don't apply both 237 and 240 when using gcc 3.3, better safe than sorry.
+
+  07 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060606.ebuild:
+  Remove the patch removal and add support for updating translations.
+
+  07 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r9.ebuild,
+  xine-lib-1.1.2_pre20060328-r11.ebuild:
+  Don't skip the visibility patch if GCC does not support it, as the
+  constantise patch then fails to apply. Stable on -r11 is asked already.
+
+*xine-lib-1.1.2_pre20060606 (06 Jun 2006)
+
+  06 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-lib-1.1.2_pre20060606.ebuild:
+  Add new snapshot with new patchset (reduced).
+
+  06 Jun 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r11.ebuild:
+  ppc stable, bug #135734
+
+  06 Jun 2006; Markus Rothe <corsair@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r11.ebuild:
+  Stable on ppc64; bug #135734
+
+*xine-lib-1.1.2_pre20060328-r11 (05 Jun 2006)
+
+  05 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-lib-1.1.2_pre20060328-r1.ebuild,
+  -xine-lib-1.1.2_pre20060328-r10.ebuild,
+  +xine-lib-1.1.2_pre20060328-r11.ebuild:
+  Add new revision hopefully fixing the Altivec problems on PowerPC, drop old
+  revisions.
+
+  05 Jun 2006; Markus Rothe <corsair@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r9.ebuild:
+  Stable on ppc64; bug #134951
+
+  03 Jun 2006; Rene Nussbaumer <killerfox@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r9.ebuild:
+  Stable on hppa. See bug #134951.
+
+  03 Jun 2006; Mark Loeser <halcy0n@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r9.ebuild:
+  Stable on x86; bug #134951
+
+  02 Jun 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r9.ebuild:
+  ppc stable, bug #134951
+
+*xine-lib-1.1.2_pre20060328-r10 (02 Jun 2006)
+
+  02 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-lib-1.1.2_pre20060328-r10.ebuild:
+  Add new revision with a fix for stream containing ' character.
+
+  01 Jun 2006; Jason Wever <weeve@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r9.ebuild:
+  Stable on SPARC wrt security bug #134951.
+
+  01 Jun 2006; Thomas Cort <tcort@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r9.ebuild:
+  Stable on alpha wrt security Bug #134951.
+
+  01 Jun 2006; Luis Medinas <metalgod@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r9.ebuild:
+  Stable on amd64 for security bug #134951.
+
+*xine-lib-1.1.2_pre20060328-r9 (31 May 2006)
+
+  31 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-lib-1.1.2_pre20060328-r6.ebuild,
+  -xine-lib-1.1.2_pre20060328-r7.ebuild,
+  -xine-lib-1.1.2_pre20060328-r8.ebuild,
+  +xine-lib-1.1.2_pre20060328-r9.ebuild:
+  Patchset bump to fix the buffer overflow reported in bug #134951. Also
+  disable the visibility patch if the compiler does not support
+  -fvisibility=hidden.
+
+*xine-lib-1.1.2_pre20060328-r8 (28 May 2006)
+
+  28 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-lib-1.1.2_pre20060328-r8.ebuild:
+  Bump patchset, added patch to fix FLAC reporting no audio (KDE Bug #128217.
+
+  26 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r7.ebuild:
+  Don't force un-parallel make.
+
+  24 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r7.ebuild:
+  Add ~x86-fbsd keyword.
+
+*xine-lib-1.1.2_pre20060328-r7 (22 May 2006)
+
+  22 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-lib-1.1.2_pre20060328-r7.ebuild:
+  Add new revision with a patch to allow playing of m4b files.
+
+  17 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-lib-1.1.2_pre20060328-r2.ebuild,
+  -xine-lib-1.1.2_pre20060328-r5.ebuild:
+  Drop old versions.
+
+  14 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r6.ebuild:
+  Filter -fforce-addr in any case, bug #132416.
+
+*xine-lib-1.1.2_pre20060328-r6 (09 May 2006)
+
+  09 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-lib-1.1.2_pre20060328-r6.ebuild:
+  Add patch to play correctly 5.1 AAC streams.
+
+  07 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r5.ebuild:
+  Enable forcefully fast install.
+
+  30 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-lib-1.1.2_pre20060328-r5.ebuild:
+  Drop warning about omitted frame pointer as it's already fixed.
 
   26 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
   xine-lib-1.1.2_pre20060328-r5.ebuild:
