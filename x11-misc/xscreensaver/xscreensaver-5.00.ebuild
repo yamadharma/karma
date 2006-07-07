@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-misc/xscreensaver/xscreensaver-4.24.ebuild,v 1.2 2006/03/08 10:36:52 nelchael Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-misc/xscreensaver/xscreensaver-5.00.ebuild,v 1.3 2006/06/11 13:08:16 nelchael Exp $
 
 inherit eutils flag-o-matic pam fixheadtails autotools
 
@@ -76,24 +76,11 @@ src_unpack() {
 	unpack "${A}"
 	cd "${S}"
 
-	# disable rpm -q checking, otherwise it breaks sandbox if rpm is installed
-	# bug #118028:
-	epatch "${FILESDIR}/${P}-norpm.patch"
-
-	# tweaks the default configuration (driver/XScreenSaver.ad.in)
-	epatch "${FILESDIR}/${P}-settings.patch"
-
-	# makes the blank screen REALLY blank
-	epatch "${FILESDIR}/${P}-silent.patch"
+	# Bug fixes:
+	epatch "${FILESDIR}/${P}-gentoo.patch"
 
 	# disable not-safe-for-work xscreensavers
 	use offensive || epatch "${FILESDIR}/${P}-nsfw.patch"
-
-	# Patch webcollage to work:
-	epatch "${FILESDIR}/${P}-words.patch"
-
-	# Fix for modular X:
-	epatch "${FILESDIR}/${P}-app-defaults.patch"
 
 	eautoreconf
 
@@ -154,10 +141,7 @@ src_install() {
 		insinto /usr/share/gnome/capplets
 		doins driver/screensaver-properties.desktop
 
-		dodir /usr/share/pixmaps
-		insinto /usr/share/pixmaps
-		newins "${S}/utils/images/logo-50.xpm"
-		xscreensaver.xpm
+		newicon "${S}/utils/images/logo-50.xpm" xscreensaver.xpm
 
 		dodir /usr/share/control-center-2.0/capplets
 		insinto /usr/share/control-center-2.0/capplets
@@ -170,6 +154,13 @@ src_install() {
 
 	use pam && fperms 755 /usr/bin/xscreensaver
 	pamd_mimic_system xscreensaver auth
+
+	# Fix bug #135549:
+	rm -f "${D}/usr/share/xscreensaver/config/electricsheep.xml"
+	rm -f "${D}/usr/share/xscreensaver/config/fireflies.xml"
+	dodir /usr/share/man/man6x
+	mv "${D}/usr/share/man/man6/worm.6" \
+		"${D}/usr/share/man/man6x/worm.6x"
 
 }
 
@@ -195,5 +186,11 @@ pkg_postinst() {
 		ewarn "root privledges. You have been warned."
 		ewarn
 	fi
+
+	ewarn
+	ewarn "In XScreenSaver 5.00 API was changed. All third party screen savers"
+	ewarn "need to be ported to the new API. Until then they will not work."
+	ewarn
+	epause
 
 }
