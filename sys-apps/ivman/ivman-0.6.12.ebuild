@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/ivman/ivman-0.6.11.ebuild,v 1.1 2006/04/18 11:54:39 genstef Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/ivman/ivman-0.6.12.ebuild,v 1.1 2006/06/15 23:31:33 genstef Exp $
 
 inherit eutils
 

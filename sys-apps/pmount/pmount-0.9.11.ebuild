@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/pmount/pmount-0.9.6.ebuild,v 1.6 2006/01/04 19:35:14 cardoe Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/pmount/pmount-0.9.11.ebuild,v 1.2 2006/07/05 06:03:03 vapier Exp $
 
 inherit eutils flag-o-matic
 
@@ -10,15 +10,13 @@ SRC_URI="http://www.piware.de/projects/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sh ~sparc x86"
 IUSE="crypt"
 
 DEPEND=">=sys-apps/dbus-0.33
-	>=sys-apps/hal-0.5.1
+	>=sys-apps/hal-0.5.2
 	>=sys-fs/sysfsutils-1.3.0
 	crypt? ( sys-fs/cryptsetup-luks )"
-
-DOCS="AUTHORS CHANGES"
 
 pkg_setup() {
 	enewgroup plugdev
@@ -32,8 +30,9 @@ src_unpack() {
 }
 
 src_install () {
-	#this is where we mount stuff
-	keepdir /media
+	# this is where we mount stuff
+	# moved to hal as of 0.5.7-r1
+	#keepdir /media
 
 	# Must be run SETUID
 	exeinto /usr/bin

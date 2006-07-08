@@ -1,6 +1,42 @@
 # ChangeLog for sys-apps/pmount
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/pmount/ChangeLog,v 1.15 2006/01/04 19:35:14 cardoe Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/pmount/ChangeLog,v 1.25 2006/06/16 19:43:14 steev Exp $
+
+*pmount-0.9.11 (16 Jun 2006)
+
+  16 Jun 2006; Steev Klimaszewski <steev@gentoo.org> +pmount-0.9.11.ebuild:
+  Version bump to 0.9.11.  Closes Bug 136694.  Thanks to Daniel Webert
+  <rockoo@gmail.com> for the report.
+
+  29 Apr 2006; Steev Klimaszewski <steev@gentoo.org> pmount-0.9.9.ebuild:
+  hal now does the keepdir on /media so that we don't get collisions from pmount
+  and gnome-mount (which can co-exist). Bug 130795.
+
+*pmount-0.9.9 (28 Apr 2006)
+
+  28 Apr 2006; Steev Klimaszewski <steev@gentoo.org> +pmount-0.9.9.ebuild:
+  New upstream release of pmount.  Fixes some bugs with hal 0.5.7
+
+  03 Feb 2006; Aron Griffis <agriffis@gentoo.org> pmount-0.9.6.ebuild:
+  Mark 0.9.6 stable on ia64
+
+  03 Feb 2006; Guy Martin <gmsoft@gentoo.org> pmount-0.9.6.ebuild:
+  Stable on hppa.
+
+  22 Jan 2006; Markus Rothe <corsair@gentoo.org> pmount-0.9.6.ebuild:
+  Stable on ppc64
+
+  22 Jan 2006; <dang@gentoo.org> pmount-0.9.6.ebuild:
+  Marked stable on amd64 per bug #119634
+
+  22 Jan 2006; Tobias Scherbaum <dertobi123@gentoo.org> pmount-0.9.6.ebuild:
+  Marked ppc stable for bug #119634; Stabilize Gnome-2.12.2
+
+  22 Jan 2006; Joshua Jackson <tsunam@gentoo.org> pmount-0.9.6.ebuild:
+  Stable on x86 for bug #119634; Stabilize Gnome-2.12.2
+
+  20 Jan 2006; Gustavo Zacarias <gustavoz@gentoo.org> pmount-0.9.6.ebuild:
+  Stable on sparc wrt #119634
 
   04 Jan 2006; Doug Goldstein <cardoe@gentoo.org> pmount-0.9.6.ebuild:
   Change sysfsutils dep to 1.3.0
