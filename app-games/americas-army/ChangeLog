@@ -1,8 +1,0 @@
-# ChangeLog for app-games/americas-army
-# Copyright 2000-2003 Gentoo Technologies, Inc.; Distributed under the GPL v2
-# $Header: /home/cvsroot/gentoo-x86/app-games/americas-army/ChangeLog,v 1.1 2003/06/21 08:12:50 vapier Exp $
-
-*americas-army-170 (21 Jun 2003)
-
-  21 Jun 2003; Mike Frysinger <vapier@gentoo.org> :
-  Initial import.  Ebuild submitted by Chris Gianelloni <wolf31o2@hotmail.com> #21947.

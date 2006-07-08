@@ -15,7 +15,7 @@ S=${WORKDIR}/emacs-${MY_PV}
 
 LICENSE="GPL-2"
 SLOT="23"
-KEYWORDS="alpha ~amd64 arm hppa ia64 ppc ppc64 s390 ~sh sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86"
 IUSE="gif jpeg nls png spell tiff"
 
 RDEPEND="${GS_DEPEND}
