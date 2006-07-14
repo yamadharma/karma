@@ -1,0 +1,132 @@
+# ChangeLog for dev-perl/net-server
+# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-perl/net-server/ChangeLog,v 1.34 2006/07/10 23:25:23 agriffis Exp $
+
+  10 Jul 2006; Aron Griffis <agriffis@gentoo.org> net-server-0.93.ebuild:
+  Mark 0.93 stable on ia64
+
+  05 Jul 2006; Christian Hartmann <ian@gentoo.org>
+  net-server-0.87-r1.ebuild, net-server-0.88.ebuild, net-server-0.90.ebuild,
+  net-server-0.93.ebuild:
+  Fixed RDEPEND wrt bug #134781
+
+  29 Jun 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  net-server-0.93.ebuild:
+  Stable on hppa
+
+  12 Jun 2006; Michael Cummings <mcummings@gentoo.org>
+  net-server-0.90.ebuild, net-server-0.93.ebuild:
+  Marking sparc stable
+
+  25 May 2006; Guy Martin <gmsoft@gentoo.org> net-server-0.88.ebuild,
+  net-server-0.93.ebuild:
+  Stable on hppa.
+
+  14 May 2006; Diego Pettenò <flameeyes@gentoo.org> net-server-0.93.ebuild:
+  Add ~x86-fbsd keyword.
+
+*net-server-0.93 (04 Apr 2006)
+
+  04 Apr 2006; <mcumming@gentoo.org> +net-server-0.93.ebuild:
+  Bug 128710, bumped in support of amavisd-new :)
+
+  17 Mar 2006; Chris White <chriswhite@gentoo.org> net-server-0.88.ebuild:
+  Marked amd64 stable for 0.88.
+
+  04 Feb 2006; Aron Griffis <agriffis@gentoo.org> net-server-0.88.ebuild,
+  net-server-0.90.ebuild:
+  Mark 0.88 stable on alpha, mark 0.90 ~alpha
+
+  04 Feb 2006; Aron Griffis <agriffis@gentoo.org> net-server-0.88.ebuild,
+  net-server-0.90.ebuild:
+  Mark 0.88 stable on ia64, mark 0.90 ~ia64
+
+  21 Jan 2006; Markus Rothe <corsair@gentoo.org> net-server-0.88.ebuild:
+  Stable on ppc64
+
+  15 Jan 2006; Michael Hanselmann <hansmi@gentoo.org>
+  net-server-0.88.ebuild:
+  Stable on ppc.
+
+  13 Jan 2006; Michael Cummings <mcummings@gentoo.org>
+  net-server-0.88.ebuild:
+  Marking sparc x86 stable
+
+*net-server-0.90 (08 Jan 2006)
+
+  08 Jan 2006; Michael Cummings <mcummings@gentoo.org>
+  +net-server-0.90.ebuild:
+  Version bump, bug 115971
+
+*net-server-0.88 (19 Nov 2005)
+
+  19 Nov 2005; <mcumming@gentoo.org> +net-server-0.88.ebuild:
+  Version bump
+
+  02 Sep 2005; Michael Hanselmann <hansmi@gentoo.org>
+  net-server-0.87-r1.ebuild:
+  Stable on ppc.
+
+  26 Aug 2005; Aron Griffis <agriffis@gentoo.org> net-server-0.87.ebuild:
+  add ~ia64
+
+  19 Aug 2005; Michael Hanselmann <hansmi@gentoo.org>
+  net-server-0.87-r1.ebuild:
+  Added to ~ppc.
+
+  07 Jul 2005; Markus Rothe <corsair@gentoo.org> net-server-0.87-r1.ebuild:
+  Stable on ppc64
+
+  18 Jun 2005; Markus Rothe <corsair@gentoo.org> net-server-0.87-r1.ebuild:
+  added ~ppc64
+
+  15 Jun 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  net-server-0.87-r1.ebuild:
+  Stable on sparc
+
+  13 Jun 2005; Andrej Kacian <ticho@gentoo.org> net-server-0.87-r1.ebuild:
+  Stable on x86 and amd64, as dependency for mail-filter/postgrey.
+
+  07 May 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  net-server-0.85.ebuild:
+  Stable on sparc
+
+  01 May 2005; Michael Hanselmann <hansmi@gentoo.org>
+  net-server-0.85.ebuild:
+  Stable on ppc.
+
+*net-server-0.87-r1 (30 Apr 2005)
+
+  30 Apr 2005; Michael Cummings <mcummings@gentoo.org>
+  net-server-0.85.ebuild, +net-server-0.87-r1.ebuild:
+  Added dep for IO-Multiplex, bug 71536
+
+  29 Apr 2005; Michael Cummings <mcummings@gentoo.org>
+  net-server-0.85.ebuild, net-server-0.87.ebuild:
+  Cleaning for mirror
+
+  13 Apr 2005; Simon Stelling <blubb@gentoo.org> net-server-0.85.ebuild:
+  stable on amd64
+
+  06 Feb 2005; Markus Rothe <corsair@gentoo.org> net-server-0.87.ebuild:
+  Stable on ppc64
+
+  30 Dec 2004; Ciaran McCreesh <ciaranm@gentoo.org> :
+  Change encoding to UTF-8 for GLEP 31 compliance
+
+  29 Dec 2004; Markus Rothe <corsair@gentoo.org> net-server-0.87.ebuild:
+  Added ~ppc64 to KEYWORDS
+
+*net-server-0.87 (06 Jun 2004)
+
+  06 Jun 2004; Michael Cummings <mcummings@gentoo.org> net-server-0.87.ebuild:
+  new version on cpan
+
+  30 May 2004; Bryan Østergaard <kloeri@gentoo.org> net-server-0.85.ebuild:
+  Stable on alpha.
+
+*net-server-0.85 (27 Jun 2003)
+
+  27 Jun 2003; Michael Cummings <mcummings@gentoo.org> net-server-0.85.ebuild:
+  ebuild submitted by Max Kalika <alkern23@yahoo.com> in bug 21432
+
