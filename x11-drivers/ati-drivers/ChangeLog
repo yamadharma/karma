@@ -1,6 +1,153 @@
 # ChangeLog for x11-drivers/ati-drivers
-# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/x11-drivers/ati-drivers/ChangeLog,v 1.14 2005/12/19 01:14:41 anarchy Exp $
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/x11-drivers/ati-drivers/ChangeLog,v 1.44 2006/07/09 17:24:02 lu_zero Exp $
+
+  09 Jul 2006; Luca Barbato <lu_zero@gentoo.org>
+  ati-drivers-8.26.18-r1.ebuild:
+  Typo spotted by Gothgirl
+
+*ati-drivers-8.26.18-r1 (06 Jul 2006)
+
+  06 Jul 2006; Luca Barbato <lu_zero@gentoo.org> files/09ati,
+  +files/atieventsd.rc6, +ati-drivers-8.26.18-r1.ebuild:
+  Add support for acpi, thanks to Armando Di Cianno <armando@goodship.net> for
+  the initial ebuild, see bug #138414
+
+*ati-drivers-8.26.18 (27 Jun 2006)
+
+  27 Jun 2006; Luca Barbato <lu_zero@gentoo.org> ati-drivers-8.25.18.ebuild,
+  +ati-drivers-8.26.18.ebuild:
+  New version
+
+  03 Jun 2006; Joshua Baergen <joshuabaergen@gentoo.org>
+  ati-drivers-8.14.13-r2.ebuild, ati-drivers-8.14.13-r3.ebuild,
+  ati-drivers-8.14.13-r4.ebuild, ati-drivers-8.14.13-r5.ebuild,
+  ati-drivers-8.16.20.ebuild, ati-drivers-8.16.20-r1.ebuild,
+  ati-drivers-8.18.6.ebuild, ati-drivers-8.18.6-r1.ebuild,
+  ati-drivers-8.18.8.ebuild, ati-drivers-8.18.8-r1.ebuild,
+  ati-drivers-8.18.8-r2.ebuild, ati-drivers-8.19.10.ebuild,
+  ati-drivers-8.20.8.ebuild, ati-drivers-8.21.7.ebuild,
+  ati-drivers-8.21.7-r1.ebuild, ati-drivers-8.22.5.ebuild,
+  ati-drivers-8.23.7.ebuild, ati-drivers-8.24.8.ebuild,
+  ati-drivers-8.25.18.ebuild:
+  Actually block xorg-server, rather than depending on an older version.
+
+  03 Jun 2006; Joshua Baergen <joshuabaergen@gentoo.org>
+  ati-drivers-8.14.13-r2.ebuild, ati-drivers-8.14.13-r3.ebuild,
+  ati-drivers-8.14.13-r4.ebuild, ati-drivers-8.14.13-r5.ebuild,
+  ati-drivers-8.16.20.ebuild, ati-drivers-8.16.20-r1.ebuild,
+  ati-drivers-8.18.6.ebuild, ati-drivers-8.18.6-r1.ebuild,
+  ati-drivers-8.18.8.ebuild, ati-drivers-8.18.8-r1.ebuild,
+  ati-drivers-8.18.8-r2.ebuild, ati-drivers-8.19.10.ebuild,
+  ati-drivers-8.20.8.ebuild, ati-drivers-8.21.7.ebuild,
+  ati-drivers-8.21.7-r1.ebuild, ati-drivers-8.22.5.ebuild,
+  ati-drivers-8.23.7.ebuild, ati-drivers-8.24.8.ebuild,
+  ati-drivers-8.25.18.ebuild:
+  None of these drivers will work with xorg-server 1.1, so block it.
+
+  27 May 2006; Luca Barbato <lu_zero@gentoo.org> ChangeLog:
+  Manifest fix
+
+  26 May 2006; Luca Barbato <lu_zero@gentoo.org> ati-drivers-8.25.18.ebuild:
+  QA warnings suppression
+
+*ati-drivers-8.25.18 (25 May 2006)
+
+  25 May 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +ati-drivers-8.25.18.ebuild:
+  revision bump
+
+  07 May 2006; Jory A. Pratt <anarchy@gentoo.org> ati-drivers-8.24.8.ebuild:
+  marked 8.24.8 for ~amd64 and ~x86
+
+  02 May 2006; Luca Barbato <lu_zero@gentoo.org> ati-drivers-8.24.8.ebuild:
+  Preserve LIBGL_DRIVERS_PATH
+
+  02 May 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +files/ati-drivers-8.23.7-gcc41.patch, ati-drivers-8.23.7.ebuild,
+  ati-drivers-8.24.8.ebuild:
+  mem_map fix, 2.6.17 support add
+
+  29 Apr 2006; Marien Zwart <marienz@gentoo.org>
+  files/digest-ati-drivers-8.18.8, files/digest-ati-drivers-8.18.8-r1,
+  files/digest-ati-drivers-8.18.8-r2, files/digest-ati-drivers-8.19.10,
+  files/digest-ati-drivers-8.20.8, files/digest-ati-drivers-8.21.7,
+  files/digest-ati-drivers-8.23.7, Manifest:
+  Fix SHA256 digests.
+
+*ati-drivers-8.24.8 (17 Apr 2006)
+
+  17 Apr 2006; Luca Barbato <lu_zero@gentoo.org> +ati-drivers-8.24.8.ebuild:
+  New driver
+
+  10 Apr 2006; <chrb@gentoo.org> ati-drivers-8.23.7.ebuild:
+  Add warning about UseFastTLS and multi-threaded apps, #126805
+
+  21 Mar 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +files/ati-drivers-8.23.7-noiommu.patch, ati-drivers-8.23.7.ebuild:
+  2.6.16 support wrt bug#122335
+
+  21 Mar 2006; Jory A. Pratt <anarchy@gentoo.org> ati-drivers-8.23.7.ebuild:
+  fixed patch for 2.6.16 wrt #126151
+
+*ati-drivers-8.23.7 (13 Mar 2006)
+
+  13 Mar 2006; Luca Barbato <lu_zero@gentoo.org> +ati-drivers-8.23.7.ebuild:
+  New drivers
+
+  08 Mar 2006; Michele Noberasco <s4t4n@gentoo.org> ati-drivers-8.21.7-r1.ebuild:
+  Stable for x86. See bug #124215.
+
+*ati-drivers-8.21.7-r1 (08 Mar 2006)
+
+  08 Mar 2006; <anarchy@gentoo.org> +ati-drivers-8.21.7-r1.ebuild:
+  revision for opengl-update on 8.21.7
+
+  23 Feb 2006; <anarchy@gentoo.org>
+  +files/ati-drivers-8.22.5-intermodule.patch, ati-drivers-8.22.5.ebuild:
+  intermodule fix for kernel 2.6.16 wrt bug#123643
+
+  22 Feb 2006; Luca Barbato <lu_zero@gentoo.org>
+  ati-drivers-8.14.13-r3.ebuild, ati-drivers-8.14.13-r5.ebuild,
+  ati-drivers-8.16.20-r1.ebuild, ati-drivers-8.18.6.ebuild,
+  ati-drivers-8.18.6-r1.ebuild, ati-drivers-8.18.8.ebuild,
+  ati-drivers-8.18.8-r1.ebuild, ati-drivers-8.18.8-r2.ebuild,
+  ati-drivers-8.19.10.ebuild, ati-drivers-8.20.8.ebuild,
+  ati-drivers-8.21.7.ebuild, ati-drivers-8.22.5.ebuild:
+  Fix for postrm, thanks to TGL <degrenier@easyconnect.fr> for spotting the
+  issue and providing the fix for it in bug #123664
+
+*ati-drivers-8.22.5 (10 Feb 2006)
+
+  10 Feb 2006; <anarchy@gentoo.org> +ati-drivers-8.22.5.ebuild:
+  revision bump, full support for 2.6.15
+
+  04 Feb 2006; Marien Zwart <marienz@gentoo.org> ati-drivers-8.21.7.ebuild:
+  Do not doexe the same file twice (previous commit "fixed" something a second
+  time...). Spotted by Anarchy.
+
+  03 Feb 2006; Marien Zwart <marienz@gentoo.org> ati-drivers-8.21.7.ebuild:
+  Install in the correct location when modular xorg-server is installed but
+  the xorg-x11 meta is not. Add RESTRICT=stricter.
+
+  21 Jan 2006; <anarchy@gentoo.org>
+  +files/ati-drivers-8.21.7-linux-2.6.15.patch, ati-drivers-8.21.7.ebuild:
+  2.6.15 patch added, small fix for libfglrxdrm.so
+
+*ati-drivers-8.21.7 (21 Jan 2006)
+
+  21 Jan 2006; Luca Barbato <lu_zero@gentoo.org> +ati-drivers-8.21.7.ebuild:
+  New version
+
+  21 Jan 2006; <anarchy@gentoo.org> ati-drivers-8.20.8.ebuild:
+  corrected missing file for modular X
+
+  11 Jan 2006; Luca Barbato <lu_zero@gentoo.org> ati-drivers-8.20.8.ebuild:
+  Fixed bug #113872
+
+  03 Jan 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +files/ati-drivers-8.20.8-linux-2.6.15.patch, ati-drivers-8.20.8.ebuild:
+  patched 8.20.8 for kernel-2.6.15
 
   19 Dec 2005; Jory A. Pratt <anarchy@gentoo.org> ati-drivers-8.20.8.ebuild:
   fixed for modular X
@@ -369,7 +516,7 @@
   Multilib cleanups.
 
   19 Jan 2005; Luca Barbato <lu_zero@gentoo.org> ati-drivers-8.8.25.ebuild:
-  typo in the multilib support section, fixed thanks Robert FÃ¼hricht
+  typo in the multilib support section, fixed thanks Robert Führicht
   <the_master_of_disaster@gmx.at>
 
   19 Jan 2005; Luca Barbato <lu_zero@gentoo.org> ati-drivers-8.8.25.ebuild:

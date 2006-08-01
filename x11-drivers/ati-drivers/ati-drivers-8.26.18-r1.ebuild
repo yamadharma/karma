@@ -1,22 +1,25 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-drivers/ati-drivers/ati-drivers-8.20.8.ebuild,v 1.3 2005/12/19 01:43:36 anarchy Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-drivers/ati-drivers/ati-drivers-8.26.18-r1.ebuild,v 1.2 2006/07/09 17:24:02 lu_zero Exp $
 
-IUSE="opengl"
+IUSE="acpi doc opengl"
 
-inherit eutils rpm multilib linux-info linux-mod toolchain-funcs
+inherit eutils rpm multilib linux-mod linux-info toolchain-funcs
 
 DESCRIPTION="Ati precompiled drivers for r350, r300, r250 and r200 chipsets"
 HOMEPAGE="http://www.ati.com"
-SRC_URI="x86? ( mirror://gentoo/ati-driver-installer-${PV}-i386.run )
+SRC_URI="x86? ( mirror://gentoo/ati-driver-installer-${PV}-x86.run )
 	 amd64? ( mirror://gentoo/ati-driver-installer-${PV}-x86_64.run )"
 
 LICENSE="ATI"
-KEYWORDS="amd64 x86"
+KEYWORDS="-* ~amd64 ~x86"
 
 RDEPEND="|| ( x11-base/xorg-server virtual/x11 )
+	 || ( x11-apps/xauth virtual/x11 )
+	 !>=x11-base/xorg-server-1.0.99
 	 app-admin/eselect-opengl
-	 || ( sys-libs/libstdc++-v3 =sys-devel/gcc-3.3* )"
+	 || ( sys-libs/libstdc++-v3 =sys-devel/gcc-3.3* )
+	 acpi? ( sys-power/acpid )"
 
 DEPEND=">=virtual/linux-sources-2.4
 	${RDEPEND}"
@@ -24,18 +27,25 @@ DEPEND=">=virtual/linux-sources-2.4
 PROVIDE="virtual/opengl"
 
 ATIBIN="${D}/opt/ati/bin"
-RESTRICT="nostrip multilib-pkg-force"
+RESTRICT="nostrip multilib-pkg-force stricter"
 
 MODULE_NAMES="fglrx(video:${WORKDIR}/common/lib/modules/fglrx/build_mod)"
 
+QA_EXECSTACK_x86="usr/lib/xorg/modules/dri/fglrx_dri.so"
+QA_EXECSTACK_amd64="usr/lib64/xorg/modules/dri/fglrx_dri.so usr/lib32/xorg/modules/dri/fglrx_dri.so"
+QA_TEXTREL_x86="usr/lib/xorg/modules/dri/fglrx_dri.so usr/lib/opengl/ati/lib/libGL.so.1.2"
+QA_TEXTREL_amd64="usr/lib64/xorg/modules/dri/fglrx_dri.so usr/lib32/opengl/ati/lib/libGL.so.1.2 usr/lib32/xorg/modules/dri/fglrx_dri.so usr/lib32/xorg/modules/dri/atiogl_a_dri.so"
 
-choose_driver_folder() {
+choose_driver_paths() {
+	ARCH_DIR="${WORKDIR}/arch"
+	COMMON_DIR="${WORKDIR}/common"
+
 	#new modular X paths, 0 is a workaround.
 	if has_version "x11-base/xorg-server"; then
-		BASE_NAME="${WORKDIR}/x690"
+		BASE_DIR="${WORKDIR}/x690"
 		xlibdir="xorg"
 	else
-		BASE_NAME="${WORKDIR}/x$(get_version_component_range 1 ${X11_IMPLEM_V})"
+		BASE_DIR="${WORKDIR}/x$(get_version_component_range 1 ${X11_IMPLEM_V})"
 		xlibdir=""
 
 		# Determine if we are facing X.org 6.8.99 aka 6.9
@@ -43,14 +53,17 @@ choose_driver_folder() {
 		   [ "$(get_version_component_range 2 ${X11_IMPLEM_V})" = 8 ] &&
 		   [ "$(get_version_component_range 3 ${X11_IMPLEM_V})" = 99 ]
 		then
-			BASE_NAME="${BASE_NAME}90"
+			BASE_DIR="${BASE_DIR}90"
 		else
-			BASE_NAME="${BASE_NAME}$(get_version_component_range 2 ${X11_IMPLEM_V})0"
+			BASE_DIR="${BASE_DIR}$(get_version_component_range 2 ${X11_IMPLEM_V})0"
 		fi
 	fi
 
 	if use amd64 ; then
-		BASE_NAME="${BASE_NAME}_64a"
+		BASE_DIR="${BASE_DIR}_64a"
+		ARCH_DIR="${ARCH_DIR}/x86_64"
+	else
+		ARCH_DIR="${ARCH_DIR}/x86"
 	fi
 }
 
@@ -93,6 +106,11 @@ pkg_setup(){
 	# Set up X11 implementation
 	if has_version "x11-base/xorg-server"; then
 		X11_IMPLEM=xorg-x11
+	elif has_version "<x11-base/xorg-x11-6.8.99"; then
+		X11_IMPLEM=xorg-x11
+		X11_IMPLEM_V="$(best_version x11-base/xorg-x11)"
+		X11_IMPLEM_V="${X11_IMPLEM_V/${X11_IMPLEM}-/}"
+		X11_IMPLEM_V="${X11_IMPLEM_V##*\/}"
 	else
 		X11_IMPLEM_P="$(best_version virtual/x11)"
 		X11_IMPLEM="${X11_IMPLEM_P%-[0-9]*}"
@@ -101,7 +119,7 @@ pkg_setup(){
 		X11_IMPLEM_V="${X11_IMPLEM_V##*\/}"
 	fi
 	einfo "X11 implementation is ${X11_IMPLEM}."
-	choose_driver_folder
+	choose_driver_paths
 }
 
 src_unpack() {
@@ -111,17 +129,32 @@ src_unpack() {
 	sh ${DISTDIR}/${A} --extract ${WORKDIR} &> /dev/null
 	eend $? || die "unpack failed"
 
-	rm -rf ${BASE_NAME}/usr/X11R6/bin/{fgl_glxgears,fireglcontrolpanel}
+	rm -rf ${ARCH_DIR}/usr/X11R6/bin/{fgl_glxgears,fireglcontrolpanel}
 
 	cd ${WORKDIR}/common/lib/modules/fglrx/build_mod
 
+	#if kernel_is ge 2 6 16; then
+	#	epatch ${FILESDIR}/${PN}-8.22.5-intermodule.patch
+	#	epatch ${FILESDIR}/${PN}-8.23.7-noiommu.patch
+	#	epatch ${FILESDIR}/${PN}-8.23.7-gcc41.patch
+	#fi
+	if use acpi
+	then
+		sed -i \
+		-e "s/\/var\/lib\/xdm\/authdir/\/etc\/X11\/xdm\/authdir/" \
+		-e "s/\/var\/lib\/gdm/\/var\/gdm/" \
+		-e "s/#ffff#/#ffff##:.*MIT-MAGIC-COOKIE/" \
+		"${WORKDIR}/common/etc/ati/authatieventsd.sh" \
+			|| die "sed failed."
+	fi
 }
-
 
 src_compile() {
 	einfo "Building the DRM module..."
 	cd ${WORKDIR}/common/lib/modules/fglrx/build_mod
-	ln -s ${BASE_NAME}/lib/modules/fglrx/build_mod/libfglrx_ip.a.GCC$(gcc-major-version)
+	ln -s \
+	${ARCH_DIR}/lib/modules/fglrx/build_mod/libfglrx_ip.a.GCC$(gcc-major-version) \
+	|| die "cannot find precompiled core"
 
 	if kernel_is 2 6
 	then
@@ -188,24 +221,50 @@ src_install() {
 		src_install-libs
 	fi &> /dev/null
 
-	#apps
+	#apps, man pages, and conf files
 	exeinto /opt/ati/bin
-	doexe ${BASE_NAME}/usr/X11R6/bin/*
-
+	doexe ${ARCH_DIR}/usr/X11R6/bin/*
+	if use acpi
+	then
+		exeinto /opt/ati/sbin
+		doexe ${ARCH_DIR}/usr/sbin/*
+		insinto /opt/ati/man/man8
+		doins common/usr/share/man/man8/*
+		doinitd ${FILESDIR}/atieventsd.rc6 atieventsd
+		dodir /etc/conf.d
+		echo 'ATIEVENTSDOPTS=""' > ${D}/etc/conf.d/atieventsd
+	fi
 	#ati custom stuff
 	insinto /usr
 	doins -r ${WORKDIR}/common/usr/include
 
+	# doc's
+	if use doc; then
+		dodir /usr/share/doc/fglrx
+		cp -pPR common/usr/share/doc/fglrx/* \
+			${D}/usr/share/doc/fglrx
+	fi
+
 	#env.d entry
 	cp ${FILESDIR}/09ati ${T}/
 
+	if use acpi
+	then
+		local ATIETC="${WORKDIR}/common/usr/share/doc/fglrx/examples/etc/acpi"
+		exeinto /etc/acpi
+		doexe ${ATIETC}/ati-powermode.sh
+		insinto /etc/acpi/events
+		doins ${ATIETC}/events/a-ac-aticonfig
+		doins ${ATIETC}/events/a-lid-aticonfig
+	fi
+
 	#Work around hardcoded path in 32bit libGL.so on amd64, bug 101539
 	if has_multilib_profile && [ $(get_abi_LIBDIR x86) = "lib32" ] ; then
-		ATI_LIBGL_PATH="/usr/lib32/modules/dri/:/usr/$(get_libdir)/modules/dri"
+		ATI_LIBGL_PATH="/usr/lib/dri:/usr/$(get_libdir)/dri:/usr/lib32/${xlibdir}/modules/dri/:/usr/$(get_libdir)/${xlibdir}/modules/dri"
 	fi
 		cat >>${T}/09ati <<EOF
 
-LIBGL_DRIVERS_PATH="$ATI_LIBGL_PATH"
+LIBGL_DRIVERS_PATH="\$LIBGL_DRIVERS_PATH:$ATI_LIBGL_PATH"
 EOF
 
 	doenvd ${T}/09ati
@@ -228,7 +287,7 @@ src_install-libs() {
 
 	# The GLX libraries
 	exeinto ${ATI_ROOT}/lib
-	doexe ${BASE_NAME}/usr/X11R6/${pkglibdir}/libGL.so.1.2
+	doexe ${ARCH_DIR}/usr/X11R6/${pkglibdir}/libGL.so.1.2
 	dosym libGL.so.1.2 ${ATI_ROOT}/lib/libGL.so.1
 	dosym libGL.so.1.2 ${ATI_ROOT}/lib/libGL.so
 
@@ -256,28 +315,38 @@ src_install-libs() {
 
 	exeinto ${X11_LIB_DIR}/modules/drivers
 	# In X.org 6.8.99 / 6.9 this is a .so
-	doexe ${BASE_NAME}/usr/X11R6/${pkglibdir}/modules/drivers/fglrx_drv.*o
+	doexe ${BASE_DIR}/usr/X11R6/${pkglibdir}/modules/drivers/fglrx_drv.*o
 
 	exeinto ${X11_LIB_DIR}/modules/dri
-	doexe ${BASE_NAME}/usr/X11R6/${pkglibdir}/modules/dri/fglrx_dri.so
-	doexe ${BASE_NAME}/usr/X11R6/${pkglibdir}/modules/dri/atiogl_a_dri.so
+	doexe ${ARCH_DIR}/usr/X11R6/${pkglibdir}/modules/dri/fglrx_dri.so
+	doexe ${ARCH_DIR}/usr/X11R6/${pkglibdir}/modules/dri/atiogl_a_dri.so
 
 	exeinto ${X11_LIB_DIR}/modules/linux
 	# In X.org 6.8.99 / 6.9 this is a .so
-	if has_version ">=x11-base/xorg-x11-6.8.99"
+	if has_version ">=x11-base/xorg-x11-6.8.99" || \
+		has_version "x11-base/xorg-server"
 	then
-		doexe ${BASE_NAME}/usr/X11R6/${pkglibdir}/modules/linux/libfglrxdrm.so
+		doexe ${BASE_DIR}/usr/X11R6/${pkglibdir}/modules/linux/libfglrxdrm.so
 	else
-		doexe ${BASE_NAME}/usr/X11R6/${pkglibdir}/modules/linux/libfglrxdrm.a
+		doexe ${BASE_DIR}/usr/X11R6/${pkglibdir}/modules/linux/libfglrxdrm.a
 	fi
-	cp -pPR ${BASE_NAME}/usr/X11R6/${pkglibdir}/lib{fglrx_*,aticonfig} \
-			${D}/${X11_LIB_DIR}
+
+	if has_version ">=x11-base/xorg-x11-6.8.99" || \
+		has_version "x11-base/xorg-server"
+	then
+		cp -pPR ${ARCH_DIR}/usr/X11R6/${pkglibdir}/lib{fglrx_*,aticonfig} \
+			${D}/usr/$(get_libdir)
+	else
+		cp -pPR ${ARCH_DIR}/usr/X11R6/${pkglibdir}/lib{fglrx_*,aticonfig.a} \
+			${D}/usr/$(get_libdir)
+	fi
+
 	#Not the best place
 	insinto ${X11_DIR}/include/X11/extensions
-	doins ${BASE_NAME}/usr/X11R6/include/X11/extensions/fglrx_gamma.h
+	doins ${COMMON_DIR}/usr/X11R6/include/X11/extensions/fglrx_gamma.h
 
 	dodir /etc
-	cp -pPR ${BASE_NAME}/etc/* ${D}/etc/
+	cp -pPR ${COMMON_DIR}/etc/* ${D}/etc/
 }
 
 
@@ -293,10 +362,15 @@ pkg_postinst() {
 	ewarn "the intended behaviour please add opengl to your useflag and issue"
 	ewarn "# emerge -Nu ati-drivers"
 	fi
+	echo
+	einfo "If you experience unexplained segmentation faults and kernel crashes"
+	einfo "with this driver and multi-threaded applications such as wine,"
+	einfo "set UseFastTLS in xorg.conf to either 0 or 1, but not 2."
 	# DRM module
 	linux-mod_pkg_postinst
 }
 
 pkg_postrm() {
+	linux-mod_pkg_postrm
 	/usr/bin/eselect opengl set --use-old xorg-x11
 }

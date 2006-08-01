@@ -1,15 +1,12 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-im/sim/sim-0.9.4_pre060504.ebuild,v 1.1 2006/05/05 17:42:35 pva Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-im/sim/sim-0.9.4.ebuild,v 1.1 2006/07/06 16:48:41 pva Exp $
 
-inherit kde-functions eutils debug flag-o-matic libtool
-
-myver=${PV##*_pre}
+inherit kde-functions eutils debug flag-o-matic
 
 DESCRIPTION="Simple Instant Messenger (with KDE support). ICQ/AIM/Jabber/MSN/Yahoo."
 HOMEPAGE="http://sim-im.org/"
-#SRC_URI="http://developer.berlios.de/projects/sim-im/${P}.tar.bz2"
-SRC_URI="mirror://gentoo/${PN}-${myver}.tar.bz2"
+SRC_URI="http://download.berlios.de/sim-im/${P}.tar.bz2"
 LICENSE="GPL-2"
 
 SLOT="0"
@@ -24,19 +21,16 @@ RDEPEND="kde? ( kde-base/kdelibs
 		 ssl? ( dev-libs/openssl )
 		 dev-libs/libxml2
 		 dev-libs/libxslt
+		 sys-libs/zlib
 		 || ( x11-libs/libXScrnSaver virtual/x11 )"
 
 DEPEND="${RDEPEND}
 	sys-devel/flex
 	app-arch/zip
-	|| ( x11-proto/scrnsaverproto virtual/x11 )"
-
-S=${WORKDIR}/${PN}-${myver}
+	|| ( x11-proto/scrnsaverproto virtual/x11 )
+	>=sys-devel/libtool-1.5.22"
 
 pkg_setup() {
-	if [ -n ${myver} ] ; then
-		ewarn "Building svn version exported on ${myver}."
-	fi
 	if use kde ; then
 		if use spell; then
 			if ! built_with_use kde-base/kdelibs spell ; then
@@ -68,16 +62,11 @@ src_unpack() {
 	need-autoconf 2.5
 	need-automake 1.7
 
-	# To avoid questions setting version to the right one :)
-	sed -i -e "s:sim,0.9.5:sim,${PV%%_pre*}:" configure.in.in
-	sed -i -e "s: SVN \" __DATE__: SVN ${myver}\":" sim/sim.cpp
-
 	if use kde ; then
-		set-kdedir 3
+	set-kdedir 3
 	fi
 
-	make -f admin/Makefile.common || die "Failed to create Makefiles..."
-	elibtoolize --reverse-deps
+	libtoolize --automake --force
 }
 
 src_compile() {
@@ -99,5 +88,5 @@ src_compile() {
 
 src_install() {
 	make DESTDIR="${D}" install || die "make install failed."
-	dodoc TODO README AUTHORS.sim ChangeLog AUTHORS
+	dodoc TODO README AUTHORS.sim jisp-resources.txt ChangeLog
 }

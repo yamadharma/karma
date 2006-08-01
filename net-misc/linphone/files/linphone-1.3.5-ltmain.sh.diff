@@ -1,0 +1,41 @@
+--- linphone-1.3.5/ltmain.sh.orig	2006-06-15 20:06:23.000000000 +0200
++++ linphone-1.3.5/ltmain.sh	2006-06-15 20:10:03.000000000 +0200
+@@ -4227,6 +4227,38 @@
+ 	  # to the just-reset $cmds.
+ 	  eval cmds=\"\$cmds~\$rm $delfiles\"
+ 	fi
++	# remove system lib seatch paths from final (re-)link arguments
++	# as these tend to break staging (ask for details... stkn@gentoo.org)
++	tmp_deplibs=
++	for dep in $deplibs; do
++	  case "$dep" in
++	    -L*)
++		dir_found=no
++		for x in $sys_lib_search_path_spec; do
++		  # remove trailing slash and
++		  # add leading -L (we're a little lazy here... simplifies check)
++		  x="-L`$echo "$x" | $SED 's/\/$//'`"
++		  if test "$x" = "$dep"; then
++		    dir_found=yes
++		  fi
++		done
++		if test "$dir_found" = no; then
++		  # not a default search path, add
++		  tmp_deplibs="$tmp_deplibs $dep"
++		fi
++		unset dir_found
++		;;
++	     *)
++		# let other options pass unfiltered
++		tmp_deplibs="$tmp_deplibs $dep"
++		;;
++	  esac
++	done
++	if test -n "$tmp_deplibs"; then
++	  deplibs="$tmp_deplibs"
++	fi
++	unset tmp_deplibs
++
+ 	save_ifs="$IFS"; IFS='~'
+ 	for cmd in $cmds; do
+ 	  IFS="$save_ifs"

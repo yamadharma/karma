@@ -4,9 +4,9 @@
 
 inherit check-reqs db-use debug eutils fdo-mime flag-o-matic java-pkg-2 kde-functions mono multilib
 
-IUSE="access agg berkdb binfilter boost bsh cairo cups debug eds firefox gnome
-hsqldb icu java jpeg kde ldap mono nas nosound odbc odk pam portaudio seamonkey
-sndfile vba webdav wpd xalan xml xmlsec xt"
+IUSE="access agg binfilter boost bsh cairo cups debug eds firefox gnome hsqldb
+icu java jpeg kde ldap mono nas nosound odbc odk pam portaudio seamonkey sndfile
+vba webdav wpd xalan xml xmlsec xt"
 
 LANGS="af ar be_BY bg bn bs ca cs cy da de el en_GB en_US en_ZA es et fa fi fr
 gu_IN he hi_IN hr hu it ja km ko lt mk nb nl nn nr ns pa_IN pl pt pt_BR ru rw
@@ -29,7 +29,7 @@ HOMEPAGE="http://go-oo.org"
 LICENSE="LGPL-2"
 SLOT="0"
 KEYWORDS="x86 amd64 ~ppc ~ppc64 ~sparc"
-RESTRICT="nostrip"
+RESTRICT="binchecks strip"
 
 SRC_URI="http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-core.tar.bz2
 	http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-system.tar.bz2
@@ -49,11 +49,12 @@ NSS_DEP=">=dev-libs/nspr-4.6.2
 	>=dev-libs/nss-3.11-r1"
 
 RDEPEND="!app-office/openoffice-bin
-	( || ( ( x11-libs/libXaw x11-libs/libXinerama ) virtual/x11 ) )
+	|| ( ( x11-libs/libXaw x11-libs/libXinerama ) virtual/x11 )
 	virtual/libc
 	dev-libs/expat
 	dev-libs/libxslt
 	>=dev-libs/STLport-4.6.2-r2
+	>=sys-libs/db-4.3
 	sys-libs/zlib
 	>=dev-lang/python-2.3.4
 	>=media-libs/freetype-2.1.10-r2
@@ -81,8 +82,7 @@ RDEPEND="!app-office/openoffice-bin
 	mono? ( >=dev-lang/mono-1.1.6 )
 	xml? ( >=dev-libs/libxml2-2.0 )
 	access? ( >=app-office/mdbtools-0.6_pre20051109 )
-	agg? ( =media-libs/agg-2.3* )
-	berkdb? ( >=sys-libs/db-4.2.52_p2-r1 )
+	agg? ( >=x11-libs/agg-2.3 )
 	boost? ( >=dev-libs/boost-1.30.2 )
 	bsh? ( >=dev-java/bsh-2.0_beta4 )
 	hsqldb? ( >=dev-db/hsqldb-1.8.0.4 )
@@ -101,8 +101,7 @@ RDEPEND="!app-office/openoffice-bin
 	linguas_zh_CN? ( >=media-fonts/arphicfonts-0.1-r2 )
 	linguas_zh_TW? ( >=media-fonts/arphicfonts-0.1-r2 )
 	amd64? ( >=dev-libs/boost-1.33.1
-		java? ( !gcj? ( >=dev-db/hsqldb-1.8.0.4 )
-				gcj? ( >=sys-libs/db-4.2.52_p2-r1 ) ) )"
+		java? ( !gcj? ( >=dev-db/hsqldb-1.8.0.4 ) ) )"
 
 DEPEND="${RDEPEND}
 	!dev-util/dmake
@@ -110,7 +109,7 @@ DEPEND="${RDEPEND}
 		   x11-proto/xproto x11-proto/xineramaproto ) virtual/x11 )
 	>=sys-devel/gcc-3.2.1
 	amd64? ( >=sys-devel/gcc-4 )
-	app-shells/tcsh
+	>=app-shells/tcsh-6.14-r3
 	dev-util/pkgconfig
 	>=dev-lang/perl-5.0
 	sys-devel/flex
@@ -134,17 +133,22 @@ DEPEND="${RDEPEND}
 PROVIDE="virtual/ooo"
 
 pkg_setup() {
-	use java && java-pkg-2_pkg_setup
-
 	if use gnome && ! built_with_use sys-apps/dbus gtk; then
-		eerror " dbus built without gtk support!"
-		eerror " emerge it with USE=\"gtk\""
+		eerror "dbus built without gtk support!"
+		eerror "emerge it with USE=\"gtk\""
 		die "bad luck"
 	fi
 
 	if use xmlsec && ! built_with_use dev-libs/xmlsec mozilla; then
-		eerror " xmlsec built without nss support!"
-		eerror " emerge it with USE=\"mozilla\""
+		eerror "xmlsec built without nss support!"
+		eerror "emerge it with USE=\"mozilla\""
+		die "bad luck"
+	fi
+
+	if is-flagq -ffast-math ; then
+		eerror "Using broken cflag in global scope!"
+		eerror
+		eerror "	-ffast-math"
 		die "bad luck"
 	fi
 
@@ -173,6 +177,8 @@ pkg_setup() {
 	else
 		export LINGUAS_OOO="${LINGUAS//_/-}"
 	fi
+
+	use java && java-pkg-2_pkg_setup
 
 	if ! use java; then
 		ewarn "You are building with java-support disabled, this results in some"
@@ -205,12 +211,10 @@ src_unpack() {
 	unpack ooo-build-${SRC}.tar.gz
 
 	cd ${S}
+	epatch ${FILESDIR}/config.diff
 	epatch ${FILESDIR}/gentoo.diff
 
-	local db_ver="$(db_findver '>=sys-libs/db-4.2')"
-	if [ "${db_ver}" == "4.2" ] ; then
-		epatch ${FILESDIR}/db-4.2-fix.diff
-	fi
+	local db_ver="$(db_findver '>=sys-libs/db-4.3')"
 
 	# Defaults
 	echo "--with-vendor=\\\"Gentoo Foundation\\\"" > ${CONFFILE}
@@ -219,6 +223,7 @@ src_unpack() {
 	echo "--disable-qadevooo" >> ${CONFFILE}
 	echo "--enable-fontconfig" >> ${CONFFILE}
 	echo "--enable-libsn" >> ${CONFFILE}
+	echo "--with-system-db" >> ${CONFFILE}
 	echo "--with-system-expat" >> ${CONFFILE}
 	echo "--with-system-stdlibs" >> ${CONFFILE}
 	echo "--with-x" >> ${CONFFILE}
@@ -237,7 +242,6 @@ src_unpack() {
 
 	# System
 	echo "`use_with agg system-agg`" >> ${CONFFILE}
-	echo "`use_with berkdb system-db`" >> ${CONFFILE}
 	echo "`use_with boost system-boost`" >> ${CONFFILE}
 	echo "`use_enable cups`" >> ${CONFFILE}
 	echo "`use_enable eds evolution2`" >> ${CONFFILE}
@@ -268,7 +272,7 @@ src_unpack() {
 	echo "`use_enable gnome lockdown`" >> ${CONFFILE}
 
 	# Java
-	use java && use berkdb && echo "--with-db-jar=/usr/lib/db-${db_ver}.jar" >> ${CONFFILE}
+	use java && echo "--with-db-jar=/usr/lib/db-${db_ver}.jar" >> ${CONFFILE}
 	echo "`use_with bsh system-beanshell`" >> ${CONFFILE}
 	use bsh && echo "--with-beanshell-jar=/usr/share/bsh/lib/bsh.jar" >> ${CONFFILE}
 	echo "`use_with hsqldb system-hsqldb`" >> ${CONFFILE}
@@ -298,17 +302,16 @@ src_unpack() {
 	# AMD64
 	if use amd64 ; then
 		echo "--with-system-boost" >> ${CONFFILE}
-		if use java ; then
-			if use gcj ; then
-				echo "--with-system-db" >> ${CONFFILE}
-			else
-				echo "--with-system-hsqldb" >> ${CONFFILE}
-				echo "--with-hsqldb-jar=/usr/share/hsqldb/lib/hsqldb.jar" >> ${CONFFILE}
-			fi
+		if use java && ! use gcj ; then
+			echo "--with-system-hsqldb" >> ${CONFFILE}
+			echo "--with-hsqldb-jar=/usr/share/hsqldb/lib/hsqldb.jar" >> ${CONFFILE}
 		fi
 	fi
 
-	cp ${FILESDIR}/gentoo-no-plain-gcj.diff patches/src680
+	# test binfilter fixes
+	cp ${FILESDIR}/binfilter-stl.diff patches/src680
+	# ldflags sanity
+	cp ${FILESDIR}/sane-ldflags.diff patches/src680
 }
 
 src_compile() {
@@ -317,6 +320,10 @@ src_compile() {
 	addpredict "/root/.gconfd"
 	addpredict "/root/.gnome"
 
+	# Enable compiler cache?
+	local COMPILER_CACHE=""
+	[[ -x "$(which ccache 2>/dev/null)" ]] && COMPILER_CACHE="ccache"
+
 	# Should the build use multiprocessing? Not enabled by default, as it tends to break 
 	[ "${WANT_MP}" == "true" ] && export JOBS="`echo "${MAKEOPTS}" | sed -e "s/ //" | sed -e "s/.*-j\([0-9]\+\).*/\1/"`"
 
@@ -324,11 +331,11 @@ src_compile() {
 	filter-flags "-funroll-loops"
 	filter-flags "-fprefetch-loop-arrays"
 	filter-flags "-fno-default-inline"
-	filter-flags "-ffast-math"
 	replace-flags "-O3" "-O2"
 
 	# Now for our optimization flags ...
 	export ARCH_FLAGS="${CXXFLAGS}"
+	export LINKFLAGSOPTIMIZE="${LDFLAGS}"
 
 	cd ${S}
 	autoconf
@@ -340,6 +347,7 @@ src_compile() {
 		--with-arch="${ARCH}" \
 		--with-srcdir="${DISTDIR}" \
 		--with-lang="${LINGUAS_OOO}" \
+		--with-gcc-speedup="${COMPILER_CACHE}" \
 		--with-num-cpus="${JOBS}" \
 		--with-binsuffix="2" \
 		--with-installed-ooo-dirname="openoffice" \

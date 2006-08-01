@@ -1,0 +1,39 @@
+--- xmlhelp/source/helpprovider/makefile.mk.orig	2006-07-13 23:28:19.000000000 +0200
++++ xmlhelp/source/helpprovider/makefile.mk	2006-07-13 23:29:30.000000000 +0200
+@@ -48,6 +48,10 @@
+ .INCLUDE: settings.mk
+ .INCLUDE: sv.mk
+ 
++.IF "$(OS)"=="LINUX"
++LINKFLAGSOPTIMIZE=-Wl,-O1
++.ENDIF
++
+ SLOFILES=\
+ 	$(SLO)$/helpcontentprovider.obj
+ 
+--- xmlhelp/source/treeview/makefile.mk.orig	2006-07-13 23:28:36.000000000 +0200
++++ xmlhelp/source/treeview/makefile.mk	2006-07-13 23:29:46.000000000 +0200
+@@ -49,6 +49,10 @@
+ CFLAGS+=-DSYSTEM_EXPAT
+ .ENDIF
+ 
++.IF "$(OS)"=="LINUX"
++LINKFLAGSOPTIMIZE=-Wl,-O1
++.ENDIF
++
+ SLOFILES=\
+ 	$(SLO)$/tvfactory.obj  \
+ 	$(SLO)$/tvread.obj
+--- xmlhelp/util/makefile.mk.orig	2006-07-13 13:08:52.000000000 +0200
++++ xmlhelp/util/makefile.mk	2006-07-13 23:24:24.000000000 +0200
+@@ -67,6 +67,10 @@
+ .INCLUDE: pkg_config.mk
+ .ENDIF
+ 
++.IF "$(OS)"=="LINUX"
++LINKFLAGSOPTIMIZE=-Wl,-O1
++.ENDIF
++
+ # --- Shared-Library ---------------------------------------------------
+ 
+ SHL1TARGET=$(TARGET)$(UCP_VERSION)
