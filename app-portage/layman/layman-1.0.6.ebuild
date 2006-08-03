@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-portage/layman/layman-1.0.4.ebuild,v 1.1 2006/06/28 06:50:35 wrobel Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-portage/layman/layman-1.0.6.ebuild,v 1.1 2006/07/25 12:38:19 wrobel Exp $
 
 inherit eutils distutils
 
