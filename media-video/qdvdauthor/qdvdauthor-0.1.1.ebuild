@@ -20,6 +20,7 @@ DEPEND=">=media-video/dvdauthor-0.6.11
 	media-sound/sox
 	media-sound/lame
 	media-libs/libogg
+	media-video/videotrans
 	$(qt_min_version 3.2)"
 
 # TODO:
