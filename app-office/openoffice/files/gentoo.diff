@@ -18,19 +18,3 @@
  # fixes warnings about problematic return values
  warning-return-values-binfilter.diff
  # fixes warnings about that a variable is used unitialized
-@@ -1071,12 +1073,14 @@
- XINC-XLIB-default-locations.diff, i#65976
- # Fix R_X86_64_PC32 ld error in svtools
- svtools-R_X86_64_PC32.diff
-+# Hack to sanitize ldflags
-+sane-ldflags.diff
- 
- [ GentooOnly ]
- SectionOwner => aprosky
- 
- version-2-0-pre.diff, pmladek
--gentoo-splash.diff, pmladek
-+#gentoo-splash.diff, pmladek
- # Fix for build breakage on PPC
- stlport-ppc-buildfix.diff, aprosky
- # Allow build to proceed with PaX enabled

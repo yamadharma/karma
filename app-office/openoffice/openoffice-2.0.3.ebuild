@@ -16,9 +16,10 @@ for X in ${LANGS} ; do
 	IUSE="${IUSE} linguas_${X}"
 done
 
+MY_PV="${PV}.0"
 PATCHLEVEL="OOC680"
-SRC="ooc680-m7"
-S="${WORKDIR}/ooo-build-${SRC}"
+SRC="OOO_2_0_3"
+S="${WORKDIR}/ooo-build-${MY_PV}"
 
 DISTRO="GentooUnstable"
 CONFFILE="${S}/distro-configs/${DISTRO}.conf.in"
@@ -35,7 +36,8 @@ SRC_URI="http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-core.tar.bz2
 	http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-system.tar.bz2
 	http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-lang.tar.bz2
 	binfilter? ( http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-binfilter.tar.bz2 )
-	http://go-oo.org/packages/${PATCHLEVEL}/ooo-build-${SRC}.tar.gz
+	odk? ( http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-sdk_oo.tar.bz2 )
+	http://go-oo.org/packages/${PATCHLEVEL}/ooo-build-${MY_PV}.tar.gz
 	!wpd? ( http://go-oo.org/packages/libwpd/libwpd-0.8.3.tar.gz )
 	mono? ( http://go-oo.org/packages/SRC680/cli_types.dll
 			http://go-oo.org/packages/SRC680/cli_types_bridgetest.dll )
@@ -208,7 +210,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ooo-build-${SRC}.tar.gz
+	unpack ooo-build-${MY_PV}.tar.gz
 
 	cd ${S}
 	epatch ${FILESDIR}/config.diff
@@ -310,8 +312,6 @@ src_unpack() {
 
 	# test binfilter fixes
 	cp ${FILESDIR}/binfilter-stl.diff patches/src680
-	# ldflags sanity
-	cp ${FILESDIR}/sane-ldflags.diff patches/src680
 }
 
 src_compile() {

@@ -9,21 +9,3 @@
  
  # do not pack any potential .orig files with ppds
  psprint_config-no-orig.diff, jholesov
-@@ -876,6 +876,8 @@
- [ BFBuildBits ]
- SectionOwner => pmladek
- 
-+# binfilter stlport fixes
-+binfilter-stl.diff
- # fixes warnings about problematic return values
- warning-return-values-binfilter.diff
- # fixes warnings about that a variable is used unitialized
-@@ -1083,6 +1085,8 @@
- svtools-R_X86_64_PC32.diff
- # Fix shell checks
- fix-shell-checks.diff, i#67139
-+# Hack to sanitize ldflags
-+sane-ldflags.diff
- 
- [ GentooOnly ]
- SectionOwner => aprosky
