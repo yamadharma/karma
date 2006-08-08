@@ -21,7 +21,8 @@ LICENSE="LucentPL-1.02"
 KEYWORDS="x86 sparc alpha ia64 s390 ppc amd64"
 
 DEPEND="virtual/libc"
-RDEPEND="virtual/libc"
+RDEPEND="virtual/libc
+	sys-fs/fuse"
 
 PLAN9_DEST=/usr/plan9
 
@@ -51,6 +52,8 @@ src_install ()
 {
 	dodir ${PLAN9_DEST}
 	cp -R ${S}/* ${D}/${PLAN9_DEST}
+	
+	dosym ${PLAN9_DEST}/bin/9 /usr/bin/9
 
 	tar xjvf ${DISTDIR}/pgw.tar.bz2 -C ${D}/${PLAN9_DEST}/dict
 	tar xjvf ${DISTDIR}/roget.tar.bz2 -C ${D}/${PLAN9_DEST}/dict
@@ -81,8 +84,8 @@ src_install ()
 	dosed -i -e "s:@PLAN9_DEST@:$PLAN9_DEST:g" /etc/env.d/99plan9port
 
 	exeinto /etc/X11/xinit/xinitrc.d
-	doexe ${FILESDIR}/99-plumber
-	dosed -i -e "s:@PLAN9_DEST@:$PLAN9_DEST:g" /etc/X11/xinit/xinitrc.d/99-plumber
+	doexe ${FILESDIR}/99-plan9serve
+	dosed -i -e "s:@PLAN9_DEST@:$PLAN9_DEST:g" /etc/X11/xinit/xinitrc.d/99-plan9serve
 		
 	exeinto /etc/X11/Sessions/
 	doexe ${FILESDIR}/rio 
