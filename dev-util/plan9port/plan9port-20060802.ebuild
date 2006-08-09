@@ -39,6 +39,11 @@ src_unpack ()
 
 src_compile () 
 {
+	if ! use X
+	    then
+	    echo "WSYSTYPE=nowsys" > LOCAL.config
+	fi
+
 	./INSTALL
 
 	PLAN9=`pwd` export PLAN9
@@ -95,11 +100,6 @@ src_install ()
 	doins ${FILESDIR}/rio.desktop
 	
 	dodoc CHANGES LICENSE README TODO install.txt
-	
-	if ! use X
-	    then
-	    echo "WSYSTYPE=nowsys" > ${D}/${PLAN9_DEST}/LOCAL.config
-	fi
 }
 
 pkg_postinst ()
