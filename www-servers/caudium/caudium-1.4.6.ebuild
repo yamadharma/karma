@@ -28,25 +28,7 @@ DEPEND=">=dev-lang/pike-7.6.24
 
 RDEPEND="${DEPEND}"
 	
-#dev-util/yacc
-#	sys-libs/db
-#	dev-lang/perl
-#	>=sys-libs/zlib-1.1.4
-#	>=sys-libs/gdbm-1.8
-#	>=dev-libs/expat-1.95.2
-#	>=dev-libs/openssl-0.9.6e"
-#	ldap? =net-nds/openldap-2*
-#IUSE="ldap"
-
-
-#src_unpack() 
-#{
-#    unpack ${A}
-#    cd ${S}
-#    sed -i -e "s:CAUDIUM_SERVERDIR="$prefix/caudium/server/::"
-#}
-
-src_compile() 
+src_compile () 
 {
     local myconf
     myconf="${myconf} --with-serverdir=/usr/lib/caudium"
@@ -87,7 +69,7 @@ src_install ()
     chown -R www:www ${D}/etc/caudium
 }
 
-pkg_postinst () 
+pkg_preinst() 
 {
         enewgroup www 412
 	enewuser www 412 -1 /srv/localhost/www www
