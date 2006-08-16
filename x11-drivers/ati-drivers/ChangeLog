@@ -1,6 +1,24 @@
 # ChangeLog for x11-drivers/ati-drivers
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/x11-drivers/ati-drivers/ChangeLog,v 1.44 2006/07/09 17:24:02 lu_zero Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-drivers/ati-drivers/ChangeLog,v 1.47 2006/08/04 12:20:19 chrb Exp $
+
+*ati-drivers-8.27.10-r1 (04 Aug 2006)
+
+  04 Aug 2006; Chris Bainbridge <chrb@gentoo.org>
+  +files/ati-powermode.sh.patch, files/atieventsd.rc6,
+  +ati-drivers-8.27.10-r1.ebuild:
+  Fix to work with xorg 7.0, fix eventsd init script, fix power state restore,
+  thanks to Armando Di Cianno and Christian Affolter in bug #139458
+
+*ati-drivers-8.27.10 (01 Aug 2006)
+
+  01 Aug 2006; Luca Barbato <lu_zero@gentoo.org>
+  +ati-drivers-8.27.10.ebuild:
+  New version
+
+  20 Jul 2006; Simon Stelling <blubb@gentoo.org>
+  ati-drivers-8.21.7-r1.ebuild:
+  stable on amd64
 
   09 Jul 2006; Luca Barbato <lu_zero@gentoo.org>
   ati-drivers-8.26.18-r1.ebuild:
