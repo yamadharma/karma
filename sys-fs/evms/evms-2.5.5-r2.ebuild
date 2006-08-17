@@ -46,10 +46,9 @@ src_compile() {
 		--libdir=/$(get_libdir) \
 		--sbindir=/sbin \
 		--includedir=/usr/include \
-		--disable-nls \
+		$(use_enable nls) \
 		${excluded_interfaces} || die "Failed configure"
 	emake || die "Failed emake"
-#	$(use_enable nls) \
 }
 
 src_install() {

@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/unionfs/unionfs-1.1.4-r2.ebuild,v 1.2 2006/05/09 09:30:40 satya Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/unionfs/unionfs-1.3.ebuild,v 1.1 2006/08/01 10:34:14 satya Exp $
 
 inherit eutils linux-mod
 
@@ -11,7 +11,24 @@ LICENSE="GPL-2"
 KEYWORDS="x86 amd64 ~ppc"
 IUSE="acl debug nfs"
 
+local_version_info() {
+	ewarn
+	ewarn "you need the proper kernel version!"
+	ewarn
+	einfo "kernel: 2.4.x (x>19)    Version: 1.0.14"
+	einfo "kernel: 2.6.x (x<9)     Version: Not Supported"
+	einfo "kernel: 2.6.9 - 2.6.15  Version: 1.1.5"
+	einfo "kernel: 2.6.16          Version: 1.2"
+	einfo "kernel: 2.6.17          Version: 1.3"
+}
+
 pkg_setup() {
+	# kernel version check
+	if ! kernel_is eq 2 6 17; then
+		local_version_info
+		die
+	fi
+
 	linux-mod_pkg_setup
 
 	MODULE_NAMES="unionfs(kernel/fs/${PN}:)"
@@ -24,7 +41,6 @@ src_unpack() {
 
 	unpack ${A}
 	cd ${S}
-	epatch ${FILESDIR}/unionfs-1.1.3-15-kernel_mutex.patch
 
 	if ! use debug; then
 		echo "UNIONFS_DEBUG_CFLAG=" >> ${user_Makefile}
@@ -37,21 +53,18 @@ src_unpack() {
 		EXTRACFLAGS="${EXTRACFLAGS} -DNFS_SECURITY_HOLE"
 	fi
 
-	[[ ${KV_MAJOR} -ge 2 && ${KV_MINOR} -ge 6 && ${KV_PATCH} -ge 16 ]] && \
-		EXTRACFLAGS="${EXTRACFLAGS} -DUNIONFS_UNSUPPORTED"
-
 	echo "EXTRACFLAGS=${EXTRACFLAGS}" >> ${user_Makefile}
 	einfo EXTRACFLAGS: ${EXTRACFLAGS}
 }
 
 src_install() {
-	doman man/unionfs.4 man/unionctl.8 man/uniondbg.8 man/unionimap.8
-
 	linux-mod_src_install
 
 	dodoc INSTALL NEWS README ChangeLog patch-kernel.sh
 
-	into / # ${D}/sbin: usr could be unionfs mounted: bug #129960
-	dosbin unionctl uniondbg unionimap snapmerge
+	emake PREFIX="${D}" install-utils # Makefile is bugged
+	#doman man/unionfs.4 man/unionctl.8 man/uniondbg.8 man/unionimap.8
+	#into / # ${D}/sbin: usr could be unionfs mounted: bug #129960
+	#dosbin utils/unionctl utils/uniondbg utils/unionimap
 }
 

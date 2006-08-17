@@ -1,6 +1,57 @@
 # ChangeLog for sys-fs/udev
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/ChangeLog,v 1.197 2006/06/19 12:43:56 uberlord Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/ChangeLog,v 1.208 2006/07/19 17:13:39 azarah Exp $
+
+  19 Jul 2006; Martin Schlemmer <azarah@gentoo.org> udev-096-r1.ebuild:
+  Remove redundent 10-udev.hotplug symlink. Noticed by Walt
+  <wa1ter@myrealbox.com>.
+
+*udev-096-r1 (17 Jul 2006)
+
+  17 Jul 2006; Martin Schlemmer <azarah@gentoo.org>
+  +files/udev.rules-096-r1, +udev-096-r1.ebuild:
+  Fix path issues, bug #140668.
+
+*udev-096 (15 Jul 2006)
+
+  15 Jul 2006; Martin Schlemmer <azarah@gentoo.org> +files/udev.rules-096,
+  +files/udev-096-udevtrigger.patch, +files/udev-start-096.sh,
+  +udev-096.ebuild:
+  Update version. Enable firmware loading, bug #138126. Add patches from bug
+  #119989.
+
+  06 Jul 2006; Joshua Kinard <kumba@gentoo.org> udev-090-r1.ebuild:
+  Marked stable on mips.
+
+  05 Jul 2006; Martin Schlemmer <azarah@gentoo.org> files/seq_node.sh:
+  Fix some logic issues and typo's.
+
+  04 Jul 2006; Marien Zwart <marienz@gentoo.org> Manifest:
+  Fix Manifest (a couple of files mysteriously ended up with an off-by-one
+  size and different checksums).
+
+  03 Jul 2006; <plasmaroo@gentoo.org> udev-090-r1.ebuild:
+  Stable on IA64.
+
+  02 Jul 2006; Joel Martin <kanaka@gentoo.org> udev-084.ebuild,
+  udev-085.ebuild, udev-086.ebuild, udev-087.ebuild, udev-087-r1.ebuild,
+  udev-089.ebuild, udev-089-r1.ebuild, udev-089-r2.ebuild, udev-090.ebuild,
+  udev-090-r1.ebuild, udev-094.ebuild:
+  From version 84 the CROSS variable changed to CROSS_COMPILE. Change
+  everything 084 and later.
+
+  28 Jun 2006; Martin Schlemmer <azarah@gentoo.org> Manifest:
+  Bah, repoman.
+
+*udev-094 (28 Jun 2006)
+
+  28 Jun 2006; Martin Schlemmer <azarah@gentoo.org> +files/udev.rules-094,
+  +files/seq_node.sh, +udev-094.ebuild:
+  Update version. Fix some '==' vs '=' errors with rules file. Add hopeful
+  sufficient replacement script for depriciated '%e' directive.
+
+  28 Jun 2006; Bryan Østergaard <kloeri@gentoo.org> udev-087-r1.ebuild:
+  Stable on alpha.
 
 *udev-090-r1 (19 Jun 2006)
 *udev-087-r1 (19 Jun 2006)

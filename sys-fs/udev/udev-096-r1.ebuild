@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/udev-090-r1.ebuild,v 1.1 2006/06/19 12:43:56 uberlord Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/udev-096-r1.ebuild,v 1.2 2006/07/19 17:13:39 azarah Exp $
 
 inherit eutils flag-o-matic
 
@@ -29,6 +29,8 @@ src_unpack() {
 
 	# patches go here...
 	#epatch ${FILESDIR}/${P}-udev_volume_id.patch
+	# Add --no-scan-{block,bus,class} options to udevtrigger, bug #119989
+	epatch ${FILESDIR}/${P}-udevtrigger.patch
 
 	# No need to clutter the logs ...
 	sed -ie '/^DEBUG/ c\DEBUG = false' Makefile
@@ -50,7 +52,17 @@ src_unpack() {
 src_compile() {
 	filter-flags -fprefetch-loop-arrays
 	local myconf=
-	local extras="extras/scsi_id extras/volume_id extras/ata_id extras/run_directory extras/usb_id extras/floppy extras/cdrom_id extras/firmware"
+	local extras="extras/ata_id \
+				  extras/cdrom_id \
+				  extras/dasd_id \
+				  extras/edd_id \
+				  extras/firmware \
+				  extras/floppy \
+				  extras/path_id \
+				  extras/run_directory \
+				  extras/scsi_id \
+				  extras/usb_id \
+				  extras/volume_id"
 
 	use selinux && myconf="${myconf} USE_SELINUX=true"
 
@@ -63,7 +75,7 @@ src_compile() {
 	make \
 		EXTRAS="${extras}" \
 		udevdir="/dev/" \
-		CROSS=${mycross} \
+		CROSS_COMPILE=${mycross} \
 		${myconf} || die
 }
 
@@ -76,19 +88,23 @@ src_install() {
 	into /
 	dosbin udev			|| die "Required binary not installed properly"
 	dosbin udevd		|| die "Required binary not installed properly"
-	dosbin udevsend		|| die "Required binary not installed properly"
+	#dosbin udevsend		|| die "Required binary not installed properly"
 	dosbin udevstart	|| die "Required binary not installed properly"
 	dosbin udevtrigger	|| die "Required binary not installed properly"
 	dosbin udevcontrol	|| die "Required binary not installed properly"
 	dosbin udevsettle	|| die "Required binary not installed properly"
-	dosbin extras/run_directory/udev_run_devd	|| die "Required helper not installed properly"
-	dosbin extras/run_directory/udev_run_hotplugd	|| die "Required helper not installed properly"
-	dosbin extras/ata_id/ata_id		|| die "Required helper not installed properly"
-	dosbin extras/volume_id/vol_id	|| die "Required helper not installed properly"
-	dosbin extras/scsi_id/scsi_id	|| die "Required helper not installed properly"
-	dosbin extras/usb_id/usb_id		|| die "Required helper not installed properly"
-	dosbin extras/path_id/path_id	|| die "Required helper not installed properly"
-	dosbin extras/cdrom_id/cdrom_id	|| die "Required helper not installed properly"
+	# Helpers
+	exeinto /lib/udev
+	doexe extras/run_directory/udev_run_devd	|| die "Required helper not installed properly"
+	doexe extras/run_directory/udev_run_hotplugd	|| die "Required helper not installed properly"
+	doexe extras/ata_id/ata_id		|| die "Required helper not installed properly"
+	doexe extras/volume_id/vol_id	|| die "Required helper not installed properly"
+	doexe extras/scsi_id/scsi_id	|| die "Required helper not installed properly"
+	doexe extras/usb_id/usb_id		|| die "Required helper not installed properly"
+	doexe extras/path_id/path_id	|| die "Required helper not installed properly"
+	doexe extras/cdrom_id/cdrom_id	|| die "Required helper not installed properly"
+	doexe extras/dasd_id/dasd_id	|| die "Required helper not installed properly"
+	doexe extras/edd_id/edd_id		|| die "Required helper not installed properly"
 
 	# vol_id library (needed by mount and HAL)
 	dolib extras/volume_id/lib/*.a extras/volume_id/lib/*.so*
@@ -109,7 +125,8 @@ src_install() {
 	#doexe extras/scsi-devfs.sh
 	#doexe extras/raid-devfs.sh
 	doexe extras/floppy/create_floppy_devices	|| die "Required binary not installed properly"
-	doexe extras/firmware/firmware_helper		|| die "Required binary not installed properly"
+	doexe extras/firmware/firmware.sh			|| die "Required binary not installed properly"
+	doexe ${FILESDIR}/seq_node.sh				|| die "Required binary not installed properly"
 
 	# Our udev config file
 	insinto /etc/udev
@@ -118,16 +135,14 @@ src_install() {
 	# Our rules files
 	insinto /etc/udev/rules.d/
 	newins etc/udev/gentoo/udev.rules 50-udev.rules
-	newins ${FILESDIR}/udev.rules-089 50-udev.rules
+	newins ${FILESDIR}/udev.rules-096-r1 50-udev.rules
 	newins ${FILESDIR}/05-udev-early.rules-079 05-udev-early.rules
+	# We cover most of these, but add them for good measure and as examples
+	doins etc/udev/60-*.rules
 
 	# scsi_id configuration
 	insinto /etc
 	doins extras/scsi_id/scsi_id.config
-
-	# set up symlinks in /etc/hotplug.d/default
-	dodir /etc/hotplug.d/default
-	dosym ../../../sbin/udevsend /etc/hotplug.d/default/10-udev.hotplug
 
 	# set up the /etc/dev.d directory tree
 	dodir /etc/dev.d/default
@@ -147,7 +162,7 @@ src_install() {
 
 	# our udev hooks into the rc system
 	insinto /lib/rcscripts/addons
-	newins "${FILESDIR}"/udev-start-089.sh udev-start.sh
+	newins "${FILESDIR}"/udev-start-096.sh udev-start.sh
 	doins "${FILESDIR}"/udev-stop.sh
 
 	dodoc ChangeLog FAQ README TODO RELEASE-NOTES
@@ -175,6 +190,12 @@ pkg_preinst() {
 	if [ -h "${ROOT}/etc/hotplug.d/default/05-wait_for_sysfs.hotplug" ]
 	then
 		rm -f ${ROOT}/etc/hotplug.d/default/05-wait_for_sysfs.hotplug
+	fi
+
+	# delete the old wait_for_sysfs.hotplug symlink if it is present
+	if [ -h "${ROOT}/etc/hotplug.d/default/10-udev.hotplug" ]
+	then
+		rm -f ${ROOT}/etc/hotplug.d/default/10-udev.hotplug
 	fi
 
 	# is there a stale coldplug initscript? (CONFIG_PROTECT leaves it behind)
