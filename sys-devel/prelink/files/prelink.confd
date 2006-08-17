@@ -1,7 +1,7 @@
 # Set this to no to disable prelinking altogether
 # (if you change this from yes to no prelink -ua
 # will be run next night to undo prelinking)
-PRELINKING=yes
+PRELINKING=no
 
 # Options to pass to prelink
 # -m	Try to conserve virtual memory by allowing overlapping
@@ -21,17 +21,17 @@ PRELINK_OPTS=-mR
 PRELINK_FULL_TIME_INTERVAL=14
 
 # How often should prelink run (in days) even if
-# no packages have been upgraded via rpm.
+# no packages have been upgraded via portage.
 # If $PRELINK_FULL_TIME_INTERVAL days have not elapsed
 # yet since last normal mode prelinking, last
 # quick mode prelinking happened less than
-# $PRELINK_NONRPM_CHECK_INTERVAL days ago
-# and no packages have been upgraded by rpm
+# $PRELINK_NOEMER_CHECK_INTERVAL days ago
+# and no packages have been upgraded by portage
 # since last quick mode prelinking, prelink
 # will not do anything.
 # Change to
-# PRELINK_NONRPM_CHECK_INTERVAL=0
-# if you want to disable the rpm database timestamp
-# check (especially if you don't use rpm/up2date/yum/apt-rpm
+# PRELINK_NOEMER_CHECK_INTERVAL=0
+# if you want to disable the portage database timestamp
+# check (especially if you don't use portage
 # exclusively to upgrade system libraries and/or binaries).
-PRELINK_NONRPM_CHECK_INTERVAL=7
+PRELINK_NOEMER_CHECK_INTERVAL=7
