@@ -212,4 +212,3 @@ diff -Naur ../work/mc-4.1.40-pre9/vfs/Makefile.in mc-4.1.40-pre9/vfs/Makefile.in
  	-$(RMF) $(DESTDIR)$(libdir)/extfs/extfs.ini
  	-$(RMF) $(DESTDIR)$(libdir)/extfs/README
  	-rmdir $(DESTDIR)$(libdir)/extfs
-

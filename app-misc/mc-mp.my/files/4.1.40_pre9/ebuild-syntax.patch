@@ -11,4 +11,3 @@ diff -Naur ../work/mc-4.1.40-pre9/PowerPack/syntax/Syntax mc-4.1.40-pre9/PowerPa
  file .\*(S|s)yntax$ Syntax\sHighlighting\sdefinitions
  
  context default cyan
-

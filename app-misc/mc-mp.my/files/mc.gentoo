@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # A little fix so mc exits into it's current working directory
-MC_ENV=/usr/lib/mc/bin/mc.sh
+MC_ENV=/usr/share/mc/bin/mc.sh
 
 for i in $MC_ENV; do
 	if [ -x $i ]; then

@@ -1,5 +1,7 @@
 #!/sbin/runscript
-###
+# Copyright 1999-2003 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: $
 # description: The Midnight Commander server allows users on remote machines \
 #	       to use the Midnight Commander file manager to manipulate their \
 #	       files on the machine running the server. The server  \
@@ -9,20 +11,24 @@
 service_name="mcserv"
 service="/usr/bin/mcserv" 
 
-depend() {
+depend () 
+{
 	need net portmap
 }
 
-start() {
+start () 
+{
 	ebegin "Starting ${service_name}"
 	start-stop-daemon --start --quiet --exec ${service} -- -d
 	result=$?
 	eend $result
 }
 
-stop() {
+stop () 
+{
 	ebegin "Stopping ${service_name}"
 	start-stop-daemon --stop --quiet --exec ${service}
 	result=$?
 	eend $result
 }
+
