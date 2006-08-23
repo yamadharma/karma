@@ -15,8 +15,8 @@ RDEPEND=">=x11-libs/gtk+-1.2.10-r11 x11-base/xorg-x11 media-fonts/terminus-font"
 DEPEND="${RDEPEND}"
 
 src_install() {
-	dodir /usr/lib/X11/locale/ru_RU.UTF-8
-	insinto /usr/lib/X11/locale/ru_RU.UTF-8/
+	dodir /usr/share/X11/locale/ru_RU.UTF-8
+	insinto /usr/share/X11/locale/ru_RU.UTF-8/
 	doins ${FILESDIR}/XLC_LOCALE
 	doins ${FILESDIR}/XI18N_OBJS
 	doins ${FILESDIR}/Compose
@@ -29,8 +29,8 @@ src_install() {
 }
 
 pkg_postinst() {
-    perl -pi -e 's|en_US.UTF-8/Compose\s+ru_RU.UTF-8|ru_RU.UTF-8/Compose		ru_RU.UTF-8|' /usr/lib/X11/locale/compose.dir
-    perl -pi -e 's|en_US.UTF-8/Compose:\s+ru_RU.UTF-8|ru_RU.UTF-8/Compose:		ru_RU.UTF-8|' /usr/lib/X11/locale/compose.dir
-    perl -pi -e 's|en_US.UTF-8/XLC_LOCALE\s+ru_RU.UTF-8|ru_RU.UTF-8/XLC_LOCALE			ru_RU.UTF-8|' /usr/lib/X11/locale/locale.dir
-    perl -pi -e 's|en_US.UTF-8/XLC_LOCALE:\s+ru_RU.UTF-8|ru_RU.UTF-8/XLC_LOCALE:			ru_RU.UTF-8|' /usr/lib/X11/locale/locale.dir
+    perl -pi -e 's|en_US.UTF-8/Compose\s+ru_RU.UTF-8|ru_RU.UTF-8/Compose ru_RU.UTF-8|' /usr/share/X11/locale/compose.dir
+    perl -pi -e 's|en_US.UTF-8/Compose:\s+ru_RU.UTF-8|ru_RU.UTF-8/Compose: ru_RU.UTF-8|' /usr/share/X11/locale/compose.dir
+    perl -pi -e 's|en_US.UTF-8/XLC_LOCALE\s+ru_RU.UTF-8|ru_RU.UTF-8/XLC_LOCALE 	ru_RU.UTF-8|' /usr/share/X11/locale/locale.dir
+    perl -pi -e 's|en_US.UTF-8/XLC_LOCALE:\s+ru_RU.UTF-8|ru_RU.UTF-8/XLC_LOCALE: ru_RU.UTF-8|' /usr/share/X11/locale/locale.dir
 }
