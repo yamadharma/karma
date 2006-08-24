@@ -1,0 +1,70 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: $
+
+. /etc/systemimager/bittorrent.conf
+
+service=`(which bittorrent-tracker || which bttrack) 2>/dev/null`
+servicename="SystemImager's BitTorrent daemons"
+
+pid_file_tracker=/var/run/systemimager-server-bttracker.pid
+pid_file_seeder=/var/run/systemimager-server-btseeder.pid
+
+depend () 
+{
+	use net
+}
+
+checkconfig () 
+{
+
+	[ -z $BT_TRACKER_PORT ] &&
+	    eerror  "error in /etc/systemimager/bittorrent.conf: BT_TRACKER_PORT not specified!" &&
+	    return 1
+	[ -z $BT_TRACKER_STATE ] &&
+	    eerror  "error in /etc/systemimager/bittorrent.conf: BT_TRACKER_STATE not specified!" &&
+	    return 1
+	[ -z $BT_TRACKER_LOG ] &&
+	    return  "error in /etc/systemimager/bittorrent.conf: BT_TRACKER_LOG not specified!" &&
+	    exit 1
+}
+
+start () 
+{
+	ebegin "Starting $servicename"
+
+	# Remove the previous state file (if present).
+	rm -f $BT_TRACKER_STATE
+
+	# Start tracker in background.
+	start-stop-daemon --start --quiet --exec $service -- --port $BT_TRACKER_PORT --dfile $BT_TRACKER_STATE --logfile $BT_TRACKER_LOG
+
+	# Start first seeder in background.
+	if [ -z $BT_IMAGES ] 
+	    then
+    	    echo -e "\n\tWARNING: BT_IMAGES is not set in /etc/systemimager/bittorrent.conf!\n"
+    	    echo -e "\tIf you don't set this option you must run si_installbtimage to use BitTorrent transport"
+    	    echo -e "\tSee 'perldoc si_installbtimage' for more details..."
+    	    echo done.
+    	    return 0
+	else
+    	    BT_IMAGES="--images $BT_IMAGES"
+	fi
+	[ ! -z $BT_OVERRIDES ] && BT_OVERRIDES="--overrides $BT_OVERRIDES"
+	[ "$BT_COMPRESS" = "y" ] && BT_COMPRESS='--compress'
+	[ "$BT_UPDATE" = "y" ] && BT_UPDATE='--update'
+	/usr/sbin/si_installbtimage --quiet $BT_COMPRESS $BT_UPDATE $BT_IMAGES $BT_OVERRIDES
+
+	eend $?
+}
+
+stop () 
+{
+	ebegin "Stopping $servicename"
+	start-stop-daemon --stop --quiet --pidfile $pid_file_tracker
+	retval=$?
+	start-stop-daemon --stop --quiet --pidfile $pid_file_seeder
+	retval=$? + $retval
+	eend $retval
+}
