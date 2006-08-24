@@ -1,6 +1,34 @@
 # ChangeLog for net-p2p/mldonkey
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/net-p2p/mldonkey/ChangeLog,v 1.121 2006/05/18 17:49:44 squinky86 Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-p2p/mldonkey/ChangeLog,v 1.126 2006/07/05 01:35:59 gustavoz Exp $
+
+  05 Jul 2006; Gustavo Zacarias <gustavoz@gentoo.org> mldonkey-2.7.7.ebuild:
+  Keyworded ~sparc wrt #139014, use ~sparc ocaml
+
+*mldonkey-2.7.7 (20 Jun 2006)
+
+  20 Jun 2006; Jon Hood <squinky86@gentoo.org> -mldonkey-2.7.6.ebuild,
+  +mldonkey-2.7.7.ebuild:
+  Version bump, remove buggy version. Resolves #137314. Thanks spiralvoice
+  <spiralvoice@hotmail.com>!
+
+*mldonkey-2.7.6-r1 (18 Jun 2006)
+
+  18 Jun 2006; Karol Wojtaszek <sekretarz@gentoo.org>
+  +files/mldonkey-2.7.6-magic.patch, +mldonkey-2.7.6-r1.ebuild:
+  Add patch which fixes a serious performance problem when MLDonkey
+  downloads lots of new files or torrents with a lot (>100) subfiles, bug #136700
+
+  09 Jun 2006; Karol Wojtaszek <sekretarz@gentoo.org>
+  -mldonkey-2.5.21-r2.ebuild, -mldonkey-2.6.5.ebuild,
+  -mldonkey-2.6.7.ebuild, -mldonkey-2.7.5.ebuild:
+  Ebuild clean up
+
+*mldonkey-2.7.6 (09 Jun 2006)
+
+  09 Jun 2006; Karol Wojtaszek <sekretarz@gentoo.org>
+  +mldonkey-2.7.6.ebuild:
+  Version bump. Removed threads USE flag. Bug #133944 and #127016
 
 *mldonkey-2.7.5 (18 May 2006)
 
