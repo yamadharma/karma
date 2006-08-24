@@ -129,6 +129,8 @@ src_compile ()
 {
 #	unset CFLAGS
 
+	MAKEOPTS="-j1"
+	
 	filter-flags -fstack-protector
 	filter-flags -fPIC
 
