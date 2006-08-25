@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.8.2-r1.ebuild,v 1.2 2006/07/11 17:45:50 agriffis Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.9.ebuild,v 1.1 2006/08/24 18:46:31 marienz Exp $
 
 inherit distutils bash-completion elisp-common eutils
 
@@ -20,6 +20,19 @@ DEPEND=">=dev-lang/python-2.4
 
 PYTHON_MODNAME="bzrlib"
 
+DOCS="HACKING NEWS NEWS.developers"
+
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+
+	# Make bzr work with recent versions of diffutils.
+	epatch "${FILESDIR}/${P}-binary-diff.patch"
+
+	# Install the manpage in /usr/share/man instead of /usr/man
+	epatch "${FILESDIR}/${PN}-0.8-fix-manpage-location.patch"
+}
 
 src_compile() {
 	distutils_src_compile
@@ -44,6 +57,10 @@ pkg_postinst() {
 	distutils_pkg_postinst
 	use emacs && elisp-site-regen
 	bash-completion_pkg_postinst
+
+	einfo "If you just upgraded from a version of bzr older than 0.9"
+	einfo "you should rename your ~/.bazaar/branches.conf to locations.conf"
+	einfo "(see /usr/share/doc/${PF}/NEWS.gz)"
 }
 
 pkg_postrm() {

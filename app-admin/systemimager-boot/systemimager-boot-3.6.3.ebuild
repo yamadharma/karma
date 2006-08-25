@@ -80,11 +80,12 @@ SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="x86 amd64"
 
-DEPEND="${DEPEND}
-	app-arch/rpm"
+DEPEND="${DEPEND}"
 RDEPEND="${RDEPEND}"
-#SANDBOX_DISABLED="1"
+
 FEATURES="-ccache -distcc"
+
+MAKEOPTS="${MAKEOPTS} -j1"
 
 boot_flavor=standard
 
@@ -128,8 +129,6 @@ src_unpack ()
 src_compile () 
 {
 #	unset CFLAGS
-
-	MAKEOPTS="-j1"
 	
 	filter-flags -fstack-protector
 	filter-flags -fPIC
@@ -141,13 +140,14 @@ src_compile ()
 #    make -i binaries || die "Compiling error"
 
 #    make binaries || die "Compiling error"    
-	cd ${S}
-	export CC=/usr/bin/gcc
-	export CXX=/usr/bin/g++ 
-	./configure || die "Config error"    
+#	cd ${S}
+#	export CC=/usr/bin/gcc
+#	export CXX=/usr/bin/g++ 
+	econf || die "Config error"    
+#	./configure || die "Config error"    
 #	make kernel || die "Compiling error"    	
 #	make
-	make || die "Compiling error"    
+	emake || die "Compiling error"    
 }
 
 src_install () 

@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bazaar/bazaar-1.4.2.ebuild,v 1.2 2006/01/14 16:24:06 arj Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bazaar/bazaar-1.4.2-r1.ebuild,v 1.1 2006/07/21 20:02:46 arj Exp $
 
 inherit eutils
 
@@ -12,7 +12,7 @@ HOMEPAGE="http://bazaar.canonical.com/"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="x86 amd64 ~ppc"
+KEYWORDS="~x86 ~amd64 ~ppc"
 IUSE=""
 
 DIR="thelove@canonical.com---dists--bazaar--1.4"
@@ -26,7 +26,7 @@ DEPEND="sys-apps/coreutils
 	sys-apps/util-linux
 	sys-apps/debianutils
 	sys-devel/make
-	>=net-misc/neon-0.24.7
+	>=net-misc/neon-0.26.1
 	>=app-crypt/gpgme-1.0.2"
 
 src_unpack() {
@@ -41,6 +41,7 @@ src_unpack() {
 
 	epatch ${FILESDIR}/baz-gpgme-fix.patch
 	epatch ${FILESDIR}/neon-0.24-fix.patch
+	epatch ${FILESDIR}/neon-0.26-fix.patch
 }
 
 src_compile() {
