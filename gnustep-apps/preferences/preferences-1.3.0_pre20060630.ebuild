@@ -19,7 +19,7 @@ DESCRIPTION="Preferences is the GNUstep program with which you define your own p
 HOMEPAGE="http://www.nongnu.org/backbone/apps.html"
 
 LICENSE="GPL-2"
-KEYWORDS="x86 ~ppc"
+KEYWORDS="x86 amd64 ~ppc"
 SLOT="0"
 
 IUSE="${IUSE}"

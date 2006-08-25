@@ -12,7 +12,7 @@ HOMEPAGE="http://bazaar.canonical.com/"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~x86 ~amd64 ~ppc"
+KEYWORDS="x86 amd64 ~ppc"
 IUSE=""
 
 DIR="thelove@canonical.com---dists--bazaar--1.4"

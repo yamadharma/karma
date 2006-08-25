@@ -13,7 +13,7 @@ HOMEPAGE="http://giesler.biz/bjoern/en/sw_addr.html"
 SRC_URI="ftp://ftp.gnustep.org/pub/gnustep/contrib/${P/a/A}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="x86"
+KEYWORDS="x86 amd64"
 
 IUSE="${IUSE} ldap"
 DEPEND="${GS_DEPEND}"

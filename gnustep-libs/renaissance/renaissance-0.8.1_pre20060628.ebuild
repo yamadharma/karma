@@ -15,7 +15,7 @@ S=${WORKDIR}/${PN}
 DESCRIPTION="GNUstep Renaissance allows you to describe your user interfaces in simple and intuitive XML files."
 HOMEPAGE="http://www.gnustep.it/Renaissance/index.html"
 
-KEYWORDS="x86"
+KEYWORDS="x86 amd64"
 LICENSE="LGPL-2.1"
 SLOT="0"
 

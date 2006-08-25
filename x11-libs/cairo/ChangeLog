@@ -1,6 +1,63 @@
 # ChangeLog for x11-libs/cairo
 # Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/cairo/ChangeLog,v 1.67 2006/04/15 01:28:14 geoman Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/cairo/ChangeLog,v 1.79 2006/08/09 07:06:42 compnerd Exp $
+
+*cairo-1.2.2 (09 Aug 2006)
+
+  09 Aug 2006; Saleem Abdulrasool <compnerd@gentoo.org> +cairo-1.2.2.ebuild:
+  version bump from upstream
+
+*cairo-1.2.0-r1 (04 Aug 2006)
+
+  04 Aug 2006; Doug Goldstein <cardoe@gentoo.org>
+  +files/cairo-1.2.0-disappearing-text.patch,
+  +files/cairo-1.2.0-remove-flush.patch, -cairo-1.2.0.ebuild,
+  +cairo-1.2.0-r1.ebuild:
+  Fixing bugs #139946, 140125, 142696
+
+  14 Jul 2006; Simon Stelling <blubb@gentoo.org> cairo-1.0.4.ebuild:
+  RESTRICT test phase for latest stable too; bug 118106
+
+  10 Jul 2006; Doug Goldstein <cardoe@gentoo.org>
+  -files/cairo-1.1.6-poppler-revert.patch, -cairo-1.1.6.ebuild,
+  -cairo-1.1.6-r1.ebuild, -cairo-1.1.8.ebuild:
+  remove beta versions, RESTRICT=test and drop those depends which caused circular deps
+
+  09 Jul 2006; Doug Goldstein <cardoe@gentoo.org> cairo-1.2.0.ebuild:
+  add notice about revdep-rebuild. add DirectFB backend support. Clean up warnings.
+
+*cairo-1.2.0 (01 Jul 2006)
+
+  01 Jul 2006; Doug Goldstein <cardoe@gentoo.org> +cairo-1.2.0.ebuild:
+  rev bump adding new stable release. gets lots of warnings but some Gentoo
+  devs wanted it in masked... so here ya go
+
+  25 Jun 2006; Javier Villavicencio <the_paya@gentoo.org>
+  cairo-1.0.4.ebuild:
+  Add ~x86-fbsd keyword.
+
+*cairo-1.1.8 (23 Jun 2006)
+
+  23 Jun 2006; Saleem Abdulrasool <compnerd@gentoo.org> +cairo-1.1.8.ebuild:
+  version bump for the snapshot
+
+  03 Jun 2006; Saleem Abdulrasool <compnerd@gentoo.org>
+  cairo-1.1.6-r1.ebuild:
+  Adding missing \\ to ebuild
+
+*cairo-1.1.6-r1 (03 Jun 2006)
+
+  03 Jun 2006; Doug Goldstein <cardoe@gentoo.org> +cairo-1.1.6-r1.ebuild:
+  Add support for the new stable backends
+
+  20 May 2006; Saleem Abdulrasool <compnerd@gentoo.org>
+  +files/cairo-1.1.6-poppler-revert.patch, cairo-1.1.6.ebuild:
+  adding missed file, adjusting style for foser
+
+*cairo-1.1.6 (19 May 2006)
+
+  19 May 2006; Saleem Abdulrasool <compnerd@gentoo.org> +cairo-1.1.6.ebuild:
+  Version bump from upstream (bumped at Cardoe's request)
 
   15 Apr 2006; Stephen P. Becker <geoman@gentoo.org> cairo-1.0.4.ebuild:
   stable on mips
