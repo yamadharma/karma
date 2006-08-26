@@ -44,6 +44,9 @@ SHA256 c5c5adf71cd3668ee385505b4b6c8746735915b6698380191fdedd03dabc3dd1 files/di
 MD5 68ab4be6276607f3dd10ebfdac5fb70a files/digest-terminus-font-4.09 256
 RMD160 3e81ca3e9047e774a224e138ec960d9386245dd5 files/digest-terminus-font-4.09 256
 SHA256 a9f072ed98877f17968afd3a5e97cfae6dbbe39cb73b6179b3b5d07e4c6764c3 files/digest-terminus-font-4.09 256
+MD5 68b329da9893e34099c7d8ad5cb9c940 files/digest-terminus-font-4.12 1
+RMD160 c0da025038ed83c687ddc430da9846ecb97f3998 files/digest-terminus-font-4.12 1
+SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b files/digest-terminus-font-4.12 1
 MD5 01c81ccdcf98f5a6d57b6f35e8631157 files/digest-terminus-font-4.14 256
 RMD160 f93b4477267e2a3a3bd55c89c6a6553d272a6b88 files/digest-terminus-font-4.14 256
 SHA256 24d9155fde70171cabed2dfcfb0d1674910022bb185ded74584d091b07810aa4 files/digest-terminus-font-4.14 256

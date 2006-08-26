@@ -1,14 +1,8 @@
-MD5 7778f84fba2c00e39b50362884476b1e files/digest-librcc-0.1.1 65
-MD5 d2be066dc07de11c17d9f6b916ec7699 files/digest-librcc-0.1.2 65
-MD5 507fcdb6fd78d10dc6e27f93c44ddf9a files/digest-librcc-0.2.0 65
-MD5 0627bc886bde57667a1ca2f9a1bce2bb files/digest-librcc-0.2.1 65
-MD5 ab58d917b79493233efec492832ae5cb files/digest-librcc-0.2.2 65
-MD5 2542a8a0ccc0bbf289b6bd90eccaa2d2 files/digest-librcc-0.2.3 65
-MD5 2542a8a0ccc0bbf289b6bd90eccaa2d2 files/digest-librcc-0.2.3-r1 65
-MD5 3b56e45dbb73d1f1cf22e19d95e30463 librcc-0.1.1.ebuild 702
-MD5 3b56e45dbb73d1f1cf22e19d95e30463 librcc-0.1.2.ebuild 702
-MD5 b650d7f889dfeefa0cb8f66a624f04eb librcc-0.2.0.ebuild 822
-MD5 940b526afce4d1cef2d47e0cbb8ae9c0 librcc-0.2.1.ebuild 889
-MD5 940b526afce4d1cef2d47e0cbb8ae9c0 librcc-0.2.2.ebuild 889
+DIST librcc-0.2.3.tar.bz2 362702 RMD160 6ec724c500603a45528705443ad946c8cb929bc8 SHA1 ee583a26d18bd546b9e46b6dc9dbe53fe539fbe7 SHA256 39ef2d61bc97bc72ec61144a50b865e2e067ddbd120ffa4c1dadba5ee6b974e3
+EBUILD librcc-0.2.3-r1.ebuild 906 RMD160 3ecb227bb9bd0e8a3ea49de2d887f6aa37b665bd SHA1 58907f8b110f8aa2db1d9cdeba4ddf0f6af7174d SHA256 9572e64bd41a2cddae18366596991676a140a16770f4d611427e1e16c546584e
 MD5 7eafe8e14174a00a22f21e445d2780d6 librcc-0.2.3-r1.ebuild 906
-MD5 940b526afce4d1cef2d47e0cbb8ae9c0 librcc-0.2.3.ebuild 889
+RMD160 3ecb227bb9bd0e8a3ea49de2d887f6aa37b665bd librcc-0.2.3-r1.ebuild 906
+SHA256 9572e64bd41a2cddae18366596991676a140a16770f4d611427e1e16c546584e librcc-0.2.3-r1.ebuild 906
+MD5 15014032e3f605ebf5928197539947c3 files/digest-librcc-0.2.3-r1 241
+RMD160 72aa648e282a5507901501ba2181f97413107864 files/digest-librcc-0.2.3-r1 241
+SHA256 9508103226b0265518235e0675b14944ac28b988ed65527200e2081d57bdc6be files/digest-librcc-0.2.3-r1 241
