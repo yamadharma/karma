@@ -1,9 +1,76 @@
 # ChangeLog for media-video/gpac
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/gpac/ChangeLog,v 1.9 2006/03/05 15:51:08 zypher Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/gpac/ChangeLog,v 1.24 2006/08/08 04:31:29 beandog Exp $
+
+  08 Aug 2006; Steve Dibb <steve@gentoo.org> gpac-0.4.1_pre20060122.ebuild,
+  gpac-0.4.1_pre20060122-r1.ebuild, gpac-0.4.2.ebuild:
+  Inherit eutils
+
+*gpac-0.4.2 (01 Aug 2006)
+
+  01 Aug 2006; Patrick McLean <chutzpah@gentoo.org>
+  +files/gpac-0.4.2-DESTDIR.patch, +files/gpac-0.4.2-configure-ogg.patch,
+  +files/gpac-0.4.2-nostrip.patch, +files/gpac-0.4.2-soname.patch,
+  +files/gpac-0.4.2-static-defs.patch, +gpac-0.4.2.ebuild:
+  Version bump. Add patch to stop the makefile from stripping binaries (bug
+  #137639). Add patch so library has a SONAME field.
+
+  01 Aug 2006; Patrick McLean <chutzpah@gentoo.org>
+  gpac-0.4.1_pre20060122-r1.ebuild:
+  Various fixups, change "js" USE flag to "javascript", fix up usage of "aac"
+  USE flag.
+
+*gpac-0.4.1_pre20060122-r1 (13 Jul 2006)
+
+  13 Jul 2006; Patrick McLean <chutzpah@gentoo.org>
+  +files/gpac-0.4.1_pre20060122-DESTDIR.patch,
+  +gpac-0.4.1_pre20060122-r1.ebuild:
+  New revision. Rework ebuild to be less repetitive and more readable. Remove
+  mozilla USE flag since it isn't working anymore (bug #127141). Fix for
+  multilib-strict (bug #127145).
+
+  05 Jul 2006; Michael Sterrett <mr_bones_@gentoo.org> gpac-0.2.1.ebuild,
+  gpac-0.4.0.ebuild, gpac-0.4.1_pre20060122.ebuild:
+  xml2 use flag changed to xml
+
+  23 Jun 2006; Simon Stelling <blubb@gentoo.org>
+  gpac-0.4.1_pre20060122.ebuild:
+  adding missing 'inherit multilib'
+
+  07 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  gpac-0.4.1_pre20060122.ebuild:
+  Remove mpeg? () dependency that is misplaced. Thanks to Jakub Moc in bug
+  #135985.
+
+  12 May 2006; Diego Pettenò <flameeyes@gentoo.org> gpac-0.4.0.ebuild:
+  Remove ECVS_* variables.
+
+  29 Apr 2006; Luis Medinas <metalgod@gentoo.org>
+  gpac-0.4.1_pre20060122.ebuild:
+  Stable on amd64.
+
+  17 Apr 2006; Markus Rothe <corsair@gentoo.org>
+  gpac-0.4.1_pre20060122.ebuild:
+  Stable on ppc64; bug #127969
+
+  17 Apr 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  gpac-0.4.1_pre20060122.ebuild:
+  ppc stable, bug #127969
+
+  17 Apr 2006; Joshua Jackson <tsunam@gentoo.org>
+  gpac-0.4.1_pre20060122.ebuild:
+  Marking Stable for x264 and Mplayer; bug #127969
+
+  18 Mar 2006; Markus Rothe <corsair@gentoo.org>
+  gpac-0.4.1_pre20060122.ebuild:
+  Added ~ppc64
 
 *gpac-0.4.1_pre20060122 (22 Jan 2006)
 
+  08 Mar 2006; Marc Hildebrand <zypher@gentoo.org> gpac-0.4.1_pre20060122.ebuild:
+  Removed svg useflag, switched to --enable-scg per default,
+  should resolve bug #125312.
+  
   05 Mar 2006; Marc Hildebrand <zypher@gentoo.org> gpac-0.4.1_pre20060122.ebuild:
   Added ~ppc keyword.
   
