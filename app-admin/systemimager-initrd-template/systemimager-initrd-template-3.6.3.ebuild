@@ -71,20 +71,11 @@ src_compile ()
 {
         econf || die "Config error"    
 	emake build_dir
-#	emake manpages
 }
 
 src_install () 
 {
         einstall DESTDIR=${D} install_initrd_template
-    
-#	newinitd ${FILESDIR}/systemimager-server-flamethrowerd.initd systemimager-server-flamethrowerd
-#	newinitd ${FILESDIR}/systemimager-server-netbootmond.initd systemimager-server-netbootmond
-#	newinitd ${FILESDIR}/systemimager-server-rsyncd.initd systemimager-server-rsyncd
-#	newinitd ${FILESDIR}/systemimager-server-monitord.initd  systemimager-server-monitord
-#	
-#	keepdir -r /var
-#	    
-#	dodoc README* RELEASE* CHANGE.LOG COPYING CREDITS DEVELOPER_GUIDELINES ERRATA
+
 }
 
