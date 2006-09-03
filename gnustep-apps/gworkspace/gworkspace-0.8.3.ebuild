@@ -44,6 +44,8 @@ src_compile ()
 	egnustep_make || die "make failed"
 	
 	cd ${S}/GWMetadata	
+	#FIX for error in path
+#	export LDFLAGS="$LDFLAGS -L${S}/DBKit/obj"
 	econf || die "GWMetadata configure failed"
 	egnustep_make || die "GWMetadata make failed"
 }

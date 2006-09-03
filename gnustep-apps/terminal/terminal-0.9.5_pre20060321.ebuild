@@ -18,7 +18,7 @@ S=${WORKDIR}/${ECVS_MODULE}/Applications/${PN/t/T}
 DESCRIPTION="A terminal emulator for GNUstep"
 HOMEPAGE="http://www.nongnu.org/terminal/"
 
-KEYWORDS="x86 ~ppc"
+KEYWORDS="x86 amd64 ~ppc"
 LICENSE="GPL-2"
 SLOT="0"
 

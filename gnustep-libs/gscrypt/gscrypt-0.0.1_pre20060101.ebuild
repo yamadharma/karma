@@ -23,6 +23,6 @@ SRC_URI=""
 SLOT="0"
 
 LICENSE="GPL-2"
-KEYWORDS="x86"
+KEYWORDS="x86 amd64"
 
 	

@@ -1,6 +1,59 @@
 # ChangeLog for app-mobilephone/obexftp
-# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-mobilephone/obexftp/ChangeLog,v 1.3 2005/12/17 15:40:28 metalgod Exp $
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-mobilephone/obexftp/ChangeLog,v 1.13 2006/06/25 04:53:43 mrness Exp $
+
+  25 Jun 2006; Alin Nastac <mrness@gentoo.org> obexftp-0.19-r1.ebuild:
+  Stable on x86 (#122262).
+
+  03 Jun 2006; Alin Nastac <mrness@gentoo.org>
+  +files/obexftp-0.21-sdp-detection.patch, obexftp-0.21.ebuild:
+  Detect and make use of SDP support only when bluetooth USE flag is enabled
+  (#135344).
+
+*obexftp-0.21 (02 Jun 2006)
+
+  02 Jun 2006; Alin Nastac <mrness@gentoo.org>
+  +files/obexftp-0.21-cobex_write.patch, -obexftp-0.19.ebuild,
+  +obexftp-0.21.ebuild:
+  Version bump.
+
+*obexftp-0.19-r1 (06 May 2006)
+
+  06 May 2006; Alin Nastac <mrness@gentoo.org>
+  -files/obexftp-0.10.7-t610-jpg.patch,
+  +files/obexftp-0.19-cobex_write.patch, metadata.xml,
+  -obexftp-0.10.7-r1.ebuild, +obexftp-0.19-r1.ebuild:
+  Take over the maintainership of this package. Fix obexftp freeze when
+  sending file to Sony Ericsson z520 over usb cable using cdc_acm, thanks to
+  Simon Ruggier <Simon80@gmail.com> (#131603).
+
+  25 Feb 2006; Alin Nastac <mrness@gentoo.org> obexftp-0.18.ebuild:
+  Stable on x86.
+
+*obexftp-0.19 (09 Feb 2006)
+
+  09 Feb 2006; Andrej Kacian <ticho@gentoo.org> +obexftp-0.19.ebuild:
+  Version bump. 0.19 depends on >=openobex-1.1.
+
+  08 Feb 2006; Andrej Kacian <ticho@gentoo.org> ChangeLog:
+  Use fixlocalpod in src_install() to fix bug #117772 by Jan Kundrát <jkt at
+  gentoo.org>.
+
+  04 Feb 2006; Andrej Kacian <ticho@gentoo.org> obexftp-0.18.ebuild:
+  Require openobex-1.0.x, because it doesn't work with older nor newer.
+
+*obexftp-0.18 (22 Jan 2006)
+
+  22 Jan 2006; Alin Nastac <mrness@gentoo.org> -obexftp-0.18_beta4.ebuild,
+  +obexftp-0.18.ebuild:
+  Version bump (#119498).
+
+*obexftp-0.18_beta4 (03 Jan 2006)
+
+  03 Jan 2006; Alin Nastac <mrness@gentoo.org> obexftp-0.10.7-r1.ebuild,
+  +obexftp-0.18_beta4.ebuild:
+  Fix dependencies by adding bluez-libs to RDEPEND and removing bluez-utils
+  from DEPEND. Version bump to the latest beta release (#111996).
 
   17 Dec 2005; Luis Medinas <metalgod@gentoo.org> obexftp-0.10.7-r1.ebuild:
   Added ~amd64 keyword. Closes bug #115846.
