@@ -40,10 +40,10 @@ MODULE_INIT_TOOLS_VERSION="3.2.1"
 
 case $ARCH in
     x86) 
-    LINUX_VERSION=2.6.12.2
+    LINUX_VERSION=2.6.16.5
     ;;
     amd64)
-    LINUX_VERSION=2.6.12.2
+    LINUX_VERSION=2.6.16.5
     ;;
 esac    
 
@@ -86,7 +86,7 @@ KEYWORDS="x86 amd64"
 DEPEND="${DEPEND}"
 RDEPEND="${RDEPEND}"
 
-SANDBOX_DISABLED="1"
+#SANDBOX_DISABLED="1"
 FEATURES="${FEATURES} -ccache -distcc"
 
 
@@ -129,12 +129,15 @@ src_unpack ()
 	
 	cp ${DISTDIR}/module-init-tools-${MODULE_INIT_TOOLS_VERSION}.tar.bz2 ${S}/initrd_source/src
 	
-	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:" ${S}/Makefile
+	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:g" ${S}/initrd_source/initrd.rul 
+	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:g" ${S}/make.d/boel_binaries.inc
 	
 }
 
 src_compile () 
 {
+#	unset CFLAGS
+	
 	filter-flags -fstack-protector
 	filter-flags -fPIC
 
@@ -142,7 +145,7 @@ src_compile ()
 	export OPTIMIZER=${CFLAGS}
 	export DEBUG=-DNDEBUG
 
-	# MKLIBS compile
+# MKLIBS compile
 	cd ${WORKDIR}/mklibs-${MKLIBS_VERSION}
 	econf || die "mklibs configuration error"
 	emake || die "mklibs compilation error"
@@ -150,8 +153,21 @@ src_compile ()
 	cd ${S}/initrd_source
 	ln -sf ${WORKDIR}/mklibs-${MKLIBS_VERSION}/src/mklibs-copy.py mklibs
 
+#    emake kernel || die "Kernel compiling error"
+#    make kernel || die "Kernel compiling error"
+#    make -f ${S}/initrd_source/initrd.rul INITRD_DIR=${S}/initrd_source || die "Initrd.img compiling error"
+#    make boel_binaries_tarball || die "BOEL tarball compiling error"
+#    make -i binaries || die "Compiling error"
+
+#    make binaries || die "Compiling error"    
+
 	cd ${S}
+#	export CC=/usr/bin/gcc
+#	export CXX=/usr/bin/g++ 
 	econf || die "Config error"    
+#	./configure || die "Config error"    
+#	make kernel || die "Compiling error"    	
+#	make
 	emake ${MAKEOPTS} \
 	    kernel \
     	    initrd \
@@ -161,6 +177,7 @@ src_compile ()
 
 src_install () 
 {
+#	einstall DESTDIR=${D} install_binaries || die "Installing error"
 	einstall DESTDIR=${D} \
 	    install_kernel \
 	    install_initrd \
