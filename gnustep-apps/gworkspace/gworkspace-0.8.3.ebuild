@@ -1,39 +1,48 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnustep-apps/gworkspace/gworkspace-0.7.1.ebuild,v 1.1 2005/04/15 04:35:57 fafhrd Exp $
+# $Header: $
 
-inherit gnustep gnuconfig
+inherit gnustep
 
 S=${WORKDIR}/${P/gw/GW}
 
-DESCRIPTION="A workspace manager for GNUstep."
+DESCRIPTION="A workspace manager for GNUstep"
 HOMEPAGE="http://www.gnustep.it/enrico/gworkspace/"
 SRC_URI="http://www.gnustep.it/enrico/gworkspace/${P}.tar.gz"
 
-KEYWORDS="~ppc x86 amd64"
+KEYWORDS="~ppc ~x86"
 LICENSE="GPL-2"
 SLOT="0"
 
-IUSE="${IUSE} pdfkit doc"
-#	>=dev-db/sqlite-3.2.8
+IUSE="pdf doc"
 DEPEND="${GS_DEPEND}
 	gnustep-apps/systempreferences
 	>=dev-db/sqlite-3.2.8
-	pdfkit? ( =gnustep-libs/pdfkit-0.9* )
+	pdf? ( =gnustep-libs/pdfkit-0.9* )
 	!gnustep-apps/desktop
 	!gnustep-apps/recycler"
 RDEPEND="${GS_RDEPEND}
 	gnustep-apps/systempreferences
 	>=dev-db/sqlite-3.2.8
-	pdfkit? ( =gnustep-libs/pdfkit-0.9* )
+	pdf? ( =gnustep-libs/pdfkit-0.9* )
 	!gnustep-apps/desktop
 	!gnustep-apps/recycler"
 
 egnustep_install_domain "System"
 
+src_unpack() {
+	egnustep_env
 
-src_compile () 
-{
+	unpack ${A}
+
+	# FIX compile mdextractor
+	sed -i -e "s:-L../../DBKit:-L../../../DBKit:g" \
+		-e "s:-I../../DBKit:-I../../../DBKit:g" \
+		${S}/GWMetadata/gmds/mdextractor/GNUmakefile.preamble
+}
+
+
+src_compile() {
 	egnustep_env
 
         # Non-flattened env
@@ -41,17 +50,15 @@ src_compile ()
 	export LDFLAGS="$LDFLAGS -L$GNUSTEP_SYSTEM_ROOT/Library/Libraries -L$GNUSTEP_LOCAL_ROOT/Library/Libraries -L$GNUSTEP_SYSTEM_ROOT/Library/Libraries/$LIBRARY_COMBO -L$GNUSTEP_LOCAL_ROOT/Library/Libraries/$LIBRARY_COMBO -L$GNUSTEP_SYSTEM_ROOT/Library/Libraries/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/$LIBRARY_COMBO -L$GNUSTEP_LOCAL_ROOT/Library/Libraries/$GNUSTEP_HOST_CPU/$GNUSTEP_HOST_OS/$LIBRARY_COMBO" 
 
 	econf || die "configure failed"
+	
 	egnustep_make || die "make failed"
 	
-	cd ${S}/GWMetadata	
-	#FIX for error in path
-#	export LDFLAGS="$LDFLAGS -L${S}/DBKit/obj"
+	cd ${S}/GWMetadata
 	econf || die "GWMetadata configure failed"
 	egnustep_make || die "GWMetadata make failed"
 }
 
-src_install () 
-{
+src_install() {
 	egnustep_env
 
 	egnustep_install
