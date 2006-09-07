@@ -10,7 +10,7 @@ DESCRIPTION="A workspace manager for GNUstep"
 HOMEPAGE="http://www.gnustep.it/enrico/gworkspace/"
 SRC_URI="http://www.gnustep.it/enrico/gworkspace/${P}.tar.gz"
 
-KEYWORDS="~ppc ~x86"
+KEYWORDS="~ppc x86 amd64"
 LICENSE="GPL-2"
 SLOT="0"
 
