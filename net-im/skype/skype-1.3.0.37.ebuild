@@ -1,62 +1,70 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-im/skype/skype-1.2.0.21-r1.ebuild,v 1.2 2006/03/03 14:03:49 blubb Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-im/skype/skype-1.3.0.37.ebuild,v 1.1 2006/08/23 00:14:31 humpback Exp $
 
-inherit eutils qt3 rpm
+inherit eutils qt3
 
 
 #If you want to know when this package will be marked stable please see the Changelog
-RESTRICT="nomirror"
+RESTRICT="nomirror nostrip"
 AVATARV="1.0"
 DESCRIPTION="${PN} is a P2P-VoiceIP client."
-HOMEPAGE="http://www.${PN}.com/"
+MY_PN=${PN}-beta
+HOMEPAGE="http://www.skype.com/"
 SRC_URI="http://dev.gentoo.org/~humpback/skype-avatars-${AVATARV}.tgz
-		http://download.skype.com/linux/${P}-1mdk.i586.rpm"
+		!static? ( http://download.skype.com/linux/${MY_PN}-${PV}.tar.bz2 )
+		static? ( http://download.skype.com/linux/${MY_PN}_staticQT-${PV}.tar.bz2 )"
+
 LICENSE="skype-eula"
 SLOT="0"
 KEYWORDS="x86 amd64"
-IUSE="static arts esd"
+IUSE="static"
 DEPEND="
 	amd64? ( >=app-emulation/emul-linux-x86-xlibs-1.2
 		>=app-emulation/emul-linux-x86-baselibs-2.1.1
+		>=app-emulation/emul-linux-x86-soundlibs-2.3
 		!static? ( >=app-emulation/emul-linux-x86-qtlibs-1.1 ) )
-	x86? ( >=sys-libs/glibc-2.3.2 )"
+	x86? ( >=sys-libs/glibc-2.3.2
+		!static? ( $(qt_min_version 3.2) ) )"
 RDEPEND="${DEPEND}
 	>=sys-apps/dbus-0.23.4"
 
+QA_EXECSTACK_x86="opt/skype/skype"
+QA_EXECSTACK_amd64="opt/skype/skype"
+
 src_unpack() {
-	rpm_unpack ${DISTDIR}/${P}-1mdk.i586.rpm
-	cd ${WORKDIR}/usr/share
+	if use static;
+	then
+		unpack ${MY_PN}_staticQT-${PV}.tar.bz2
+	else
+		unpack ${MY_PN}-${PV}.tar.bz2
+	fi
+	cd ${P}
 	unpack skype-avatars-${AVATARV}.tgz
+
 }
 
 src_install() {
 	## Install the wrapper script
-	cd ${WORKDIR}/usr/share
-	mv ${WORKDIR}/usr/bin/skype skype.bin
-	mv ${WORKDIR}/etc/dbus-1/system.d/skype.conf skype.conf
-	mv applications/skype.desktop skype.desktop
-	mv skype/* .
-	mv doc/${P}/LICENSE LICENSE
-	mv doc/${P}/README README
-	mkdir ${WORKDIR}/temp
-	cp pixmaps/skype.png ${WORKDIR}/temp/skype.png
-	rm -rf skype
-	cp ${FILESDIR}/sDaemonWrapper-r1 skype
-	cp ${FILESDIR}/skype-callto-handler skype-callto-handler
+	#mv skype skype
+	#cp ${FILESDIR}/sDaemonWrapper-r1 skype
+
+	# remove mprotect() restrictions for PaX usage - see Bug 100507
+	[[ -x /sbin/chpax ]] && /sbin/chpax -m skype
 
 	dodir /opt/${PN}
 	exeopts -m0755
 	exeinto /opt/${PN}
 	doexe skype
-	doexe skype.bin
+	doexe ${FILESDIR}/skype.sh
+	dosym /opt/skype/skype.sh /usr/bin/skype
+
 	doexe skype-callto-handler
 	insinto /opt/${PN}/sound
 	doins sound/*.wav
-	cd ${WORKDIR}/usr/share
+
 	insinto /opt/${PN}/lang
 	doins lang/*.qm
-	cd ${WORKDIR}/usr/share
 	#Skype still shows ALL languagues no matter what were installed
 	#for i in ${LINGUAS}; do
 	#	if [ -f lang/${PN}_${i}.qm ]; then
@@ -64,32 +72,31 @@ src_install() {
 	#	fi;
 	#done;
 	insinto /etc/dbus-1/system.d
-	cd ${WORKDIR}/usr/share
-	doins skype.conf
+	newins ${FILESDIR}/skype.debus.config skype.conf
 
 	insinto /opt/${PN}/avatars
-	cd ${WORKDIR}/usr/share
 	doins avatars/*.jpg
 
 	insinto /opt/${PN}
-	cd ${WORKDIR}/usr/share
-	make_desktop_entry skype "Skype VoIP" skype
-	insinto /usr/share/pixmaps
-	doins pixmaps/skype.png
+	for SIZE in 16 32 48
+	do
+		insinto /usr/share/icons/hicolor/${SIZE}x${SIZE}/apps
+		newins ${S}/icons/${PN}_${SIZE}_32.png ${PN}.png
+	done
 
-	cd ${WORKDIR}/usr/share
-#	for SIZE in 16 32 48
-#	do
-#		insinto /usr/share/icons/hicolor/${SIZE}x${SIZE}/apps
-#		newins ${WORKDIR}/usr/share/icons/${PN}_${SIZE}_32.png ${PN}.png
-#	done
-	fowners root:audio /opt/skype/skype.bin
+	# The skype icon doesn't show up in gnome for some reason
+	# Putting the icon in /usr/share/pixmaps seems to solve it
+	insinto /usr/share/pixmaps
+	newins ${S}/icons/${PN}_48_32.png ${PN}.png
+
 	fowners root:audio /opt/skype/skype
 	fowners root:audio /opt/skype/skype-callto-handler
+
+	insinto /usr/share/applications/
+	doins skype.desktop
+
 	dodir /usr/bin/
-	dosym /opt/skype/skype /usr/bin/skype
 	# Install the Documentation
-	cd ${WORKDIR}/usr/share
 	dodoc README LICENSE
 
 	# TODO: Optional configuration of callto:// in KDE, Mozilla and friends
@@ -99,13 +106,14 @@ pkg_postinst() {
 	einfo "Have a look at ${PORTDIR}/licenses/${LICENSE} before running this software"
 	einfo "If you have sound problems please visit: "
 	einfo "http://forum.skype.com/bb/viewtopic.php?t=4489"
-	if ( use arts );
-	then
-		ewarn "Dont forget to configure your arts to work in Full-Duplex mode"
-		ewarn "Open controlcenter, go to \"Sound & Multimedia\"->\"Sound System\""
-		ewarn "On the \"Hardware\" tab, check the box next to \"Full duplex\"."
-	fi
-	##I do not know if this is true for this version. But will leave the note here
+	# This will always be true in future, since skype stores the contacts in
+	# the peer-to-peer network.
 	ewarn "If you are upgrading and skype does not autologin do a manual login"
 	ewarn "you will not lose your contacts."
+
+	ewarn ""
+	ewarn "This release no longer uses the old wrapper because skype now uses
+	ALSA"
+	ewarn ""
+
 }
