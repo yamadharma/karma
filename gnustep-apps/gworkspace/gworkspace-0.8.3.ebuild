@@ -16,31 +16,15 @@ SLOT="0"
 
 IUSE="pdf doc"
 DEPEND="${GS_DEPEND}
-	gnustep-apps/systempreferences
-	>=dev-db/sqlite-3.2.8
 	pdf? ( =gnustep-libs/pdfkit-0.9* )
 	!gnustep-apps/desktop
 	!gnustep-apps/recycler"
 RDEPEND="${GS_RDEPEND}
-	gnustep-apps/systempreferences
-	>=dev-db/sqlite-3.2.8
 	pdf? ( =gnustep-libs/pdfkit-0.9* )
 	!gnustep-apps/desktop
 	!gnustep-apps/recycler"
 
 egnustep_install_domain "System"
-
-src_unpack() {
-	egnustep_env
-
-	unpack ${A}
-
-	# FIX compile mdextractor
-	sed -i -e "s:-L../../DBKit:-L../../../DBKit:g" \
-		-e "s:-I../../DBKit:-I../../../DBKit:g" \
-		${S}/GWMetadata/gmds/mdextractor/GNUmakefile.preamble
-}
-
 
 src_compile() {
 	egnustep_env
@@ -52,10 +36,6 @@ src_compile() {
 	econf || die "configure failed"
 	
 	egnustep_make || die "make failed"
-	
-	cd ${S}/GWMetadata
-	econf || die "GWMetadata configure failed"
-	egnustep_make || die "GWMetadata make failed"
 }
 
 src_install() {
@@ -63,9 +43,6 @@ src_install() {
 
 	egnustep_install
 
-	cd ${S}/GWMetadata	
-	egnustep_install
-	
 	if ( use doc ) 
 	    then
 	    dodir /usr/share/doc/${PF}

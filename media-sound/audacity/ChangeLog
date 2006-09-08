@@ -1,6 +1,57 @@
 # ChangeLog for media-sound/audacity
-# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/audacity/ChangeLog,v 1.37 2005/12/26 14:38:49 lu_zero Exp $
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-sound/audacity/ChangeLog,v 1.48 2006/09/06 14:33:04 josejx Exp $
+
+  06 Sep 2006; Joseph Jezak <josejx@gentoo.org> audacity-1.3.0b.ebuild:
+  Marked ppc stable for bug #145033.
+
+  04 Sep 2006; MATSUU Takuto <matsuu@gentoo.org> -files/audacity.desktop,
+  -audacity-1.2.1.ebuild, -audacity-1.2.3.ebuild,
+  -audacity-1.2.4b-r1.ebuild:
+  Removed old versions
+
+  04 Sep 2006; Saleem Abdulrasool <compnerd@gentoo.org>
+  audacity-1.3.0b.ebuild:
+  stable on x86 (bug #145033)
+
+  03 Sep 2006; Jason Wever <weeve@gentoo.org> audacity-1.3.0b.ebuild:
+  Stable on SPARC wrt bug #145033.
+
+  02 Sep 2006; Markus Rothe <corsair@gentoo.org> audacity-1.3.0b.ebuild:
+  Stable on ppc64; bug #145033
+
+  06 Aug 2006; MATSUU Takuto <matsuu@gentoo.org>
+  +files/audacity-1.3.0b-x86.patch, audacity-1.2.4b-r1.ebuild,
+  audacity-1.3.0b.ebuild:
+  Added RESTICT="test", Bug 100067.
+  Fixed compilation on x86, Bug 139936.
+
+*audacity-1.3.0b (06 Jun 2006)
+
+  06 Jun 2006; MATSUU Takuto <matsuu@gentoo.org> -audacity-1.2.2.ebuild,
+  -audacity-1.2.3-r1.ebuild, -audacity-1.2.4b.ebuild,
+  Version bumped, Bug 124120.
+  Removed old versions.
+
+  27 Feb 2006; MATSUU Takuto <matsuu@gentoo.org> audacity-1.2.4b-r1.ebuild:
+  Added epatch ${FILESDIR}/${PN}-1.2.3-x86.patch, Bug 121634.
+
+*audacity-1.2.4b-r1 (03 Jan 2006)
+
+  03 Jan 2006; MATSUU Takuto <matsuu@gentoo.org> +audacity-1.2.4b-r1.ebuild:
+  Removed some use flag. Bug 113948.
+  Clean up ebuild.
+
+*audacity-1.2.4b (01 Jan 2006)
+
+  01 Jan 2006; MATSUU Takuto <matsuu@gentoo.org>
+  +files/audacity-1.2.3-gcc41.patch, +audacity-1.2.4b.ebuild:
+  Version Bumped, Bug 113948.
+  Restricted to wxGTK-2.4* with wxgtk1, Bug 100741.
+  Fixed gcc-4.1 compile issue, Bug 113754.
+  Fixed docs install issue, Bug 116615.
+  Removed gtk2 USE flag, Bug 106560.
+  Added ladspa, mp3 and soundtouch USE flag.
 
   26 Dec 2005; Luca Barbato <lu_zero@gentoo.org> audacity-1.2.1.ebuild,
   audacity-1.2.2.ebuild, audacity-1.2.3.ebuild, audacity-1.2.3-r1.ebuild:
