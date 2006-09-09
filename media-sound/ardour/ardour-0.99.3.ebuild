@@ -1,12 +1,12 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/ardour/ardour-0.99.ebuild,v 1.2 2005/09/26 11:53:29 eldad Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/ardour/ardour-0.99.3.ebuild,v 1.1 2006/05/13 17:11:21 eldad Exp $
 
 inherit eutils
 
 DESCRIPTION="multi-track hard disk recording software"
 HOMEPAGE="http://ardour.org/"
-SRC_URI="http://ardour.org/releases/${P/_/}.tar.bz2"
+SRC_URI="http://ardour.org/files/releases/${P/_/}.tar.bz2"
 RESTRICT="nomirror"
 
 LICENSE="GPL-2"
@@ -14,23 +14,10 @@ SLOT="0"
 KEYWORDS="x86 amd64 ~ppc"
 IUSE="nls debug sse altivec"
 
-# Ardour 0.99!
-# This is the first ebuild that can be marked stable, since it's out of beta finally.
-
-# From beta30 release notes:
-#  plugin latency compensation now working correctly (we believe)
-#  This really requires JACK 0.100.0 or above to work
-#  properly, but even without that, they result in notable improvements
-#  in the way Ardour aligns newly recorded material.
-#
-# As media-sound/jack-audio-connection-kit-0.100.0 is still -arch and it is not required for beta30
-# only suggested, RDEPEND needs to be updated as media-sound/jack-audio-connection-kit-0.100.0 gets
-# into ~arch. (2005 Sep 14 eldad)
-
 RDEPEND="dev-util/pkgconfig
 	>=media-libs/liblrdf-0.3.6
 	>=media-libs/raptor-1.2.0
-	>=media-sound/jack-audio-connection-kit-0.98.1
+	>=media-sound/jack-audio-connection-kit-0.100.0
 	=dev-libs/glib-1.2*
 	=x11-libs/gtk+-1.2*
 	>=media-libs/libsndfile-1.0.4
@@ -71,9 +58,8 @@ src_compile() {
 		NLS=${NLS} \
 		PREFIX=/usr \
 		USE_SSE_EVERYWHERE=${SSE} \
-		BUILD_SSE_OPTIMIZATIONS=${SSE} \
 		KSI=0 \
-		-j2
+		-j2 || die "scons make failed"
 }
 
 src_install() {
@@ -81,3 +67,15 @@ src_install() {
 
 	dodoc DOCUMENTATION/*
 }
+
+pkg_postinst() {
+	if useq sse
+	then
+		einfo ""
+		einfo "Start ardour with the -o argument to use the optimized SSE functions:"
+		einfo ""
+		einfo "	  ardour -o"
+		einfo ""
+	fi
+}
+

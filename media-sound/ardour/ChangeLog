@@ -1,6 +1,34 @@
 # ChangeLog for media-sound/ardour
-# Copyright 2000-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/ardour/ChangeLog,v 1.50 2005/12/02 22:03:28 chriswhite Exp $
+# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-sound/ardour/ChangeLog,v 1.56 2006/05/13 17:11:21 eldad Exp $
+
+*ardour-0.99.3 (13 May 2006)
+
+  13 May 2006; Eldad Zack <eldad@gentoo.org> ardour-0.99.2.ebuild,
+  +ardour-0.99.3.ebuild:
+  Version bump, added die clause to scons make.
+
+  13 May 2006; Eldad Zack <eldad@gentoo.org> -files/ardour.aclocal.patch,
+  -files/ardour-gcc34.patch, -ardour-0.9_beta30.ebuild:
+  Purge old version and unneeded aux files.
+
+  28 Apr 2006; Marien Zwart <marienz@gentoo.org> Manifest:
+  Fixing SHA256 digest, pass four
+
+  03 Apr 2006; Mark Loeser <halcy0n@gentoo.org> ardour-0.9_beta30.ebuild,
+  ardour-0.99.2.ebuild:
+  Fix SRC_URI; bug #127911
+
+*ardour-0.99.2 (21 Feb 2006)
+
+  21 Feb 2006; Eldad Zack <eldad@gentoo.org> +ardour-0.99.2.ebuild:
+  Version bump
+
+*ardour-0.99.1 (08 Feb 2006)
+
+  08 Feb 2006; Eldad Zack <eldad@gentoo.org> -ardour-0.9_beta28.ebuild,
+  -ardour-0.9_beta29.ebuild, +ardour-0.99.1.ebuild:
+  Version bump. Bug #121907. Purged old beta28 and beta29.
 
   02 Dec 2005; Chris White <chriswhite@gentoo.org>
   -files/ardour-0.99-scons.patch:

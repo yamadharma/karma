@@ -1,11 +1,11 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/amarok/amarok-1.4.1-r3.ebuild,v 1.1 2006/07/27 00:42:27 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/amarok/amarok-1.4.3.ebuild,v 1.3 2006/09/05 22:19:43 flameeyes Exp $
 
 LANGS="az bg br ca cs cy da de el en_GB es et fi fr ga gl he hi hu is it ja ka
 km ko lt ms nb nl nn pa pl pt pt_BR ro ru rw sl sr sr@Latn sv ta tg th tr uk uz
 zh_CN zh_TW"
-LANGS_DOC="da de es et fr it nl pt pt_BR ru sv"
+LANGS_DOC="da de es et fr it nl pl pt pt_BR ru sv"
 
 USE_KEG_PACKAGING=1
 
@@ -13,20 +13,17 @@ inherit kde eutils flag-o-matic
 
 PKG_SUFFIX=""
 
-MY_PV="${PV/_rc/_RC}"
-MY_PV="${MY_PV/_beta/-beta}${PKG_SUFFIX}"
-MY_BASE_PV="${MY_PV/_RC*/}"
-MY_BASE_PV="${MY_BASE_PV/-beta*/}"
-S="${WORKDIR}/${PN}-${MY_PV}"
+MY_P="${P/_/-}"
+S="${WORKDIR}/${P/_/-}"
 
 DESCRIPTION="Advanced audio player based on KDE framework."
 HOMEPAGE="http://amarok.kde.org/"
 
-SRC_URI="mirror://sourceforge/amarok/${PN}-${MY_PV}.tar.bz2"
+SRC_URI="mirror://kde/stable/amarok/${PV}/src/${MY_P}.tar.bz2"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="amd64 ~ppc ~ppc64 x86 ~x86-fbsd"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 IUSE="aac kde mysql noamazon opengl postgres
 xmms visualization ipod ifp real njb"
 # kde: enables compilation of the konqueror sidebar plugin
@@ -52,8 +49,6 @@ RDEPEND="${DEPEND}
 DEPEND="${DEPEND}
 	>=dev-util/pkgconfig-0.9.0"
 
-PATCHES="${FILESDIR}/${P}-libvisual.patch"
-
 need-kde 3.3
 
 src_compile() {
@@ -70,16 +65,10 @@ src_compile() {
 				  $(use_with real helix)
 				  $(use_with njb libnjb)
 				  --without-musicbrainz
+				  --without-libmtp
 				  --with-xine
 				  --without-mas
 				  --without-nmm"
 
 	kde_src_compile
-}
-
-src_install() {
-	kde_src_install
-
-	mv "${D}/usr/share/services/lastfm.protocol" \
-		"${D}/usr/share/services/amaroklastfm.protocol"
 }
