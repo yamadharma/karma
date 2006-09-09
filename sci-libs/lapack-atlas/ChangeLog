@@ -1,0 +1,182 @@
+# ChangeLog for sci-libs/lapack-atlas
+# Copyright 2004-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sci-libs/lapack-atlas/ChangeLog,v 1.27 2006/09/08 04:10:23 tsunam Exp $
+
+  08 Sep 2006; Joshua Jackson <tsunam@gentoo.org>
+  lapack-atlas-3.7.11.ebuild:
+  Stable x86; bug #141438
+
+  07 Sep 2006; Markus Dittrich <markusle@gentoo.org>
+  lapack-atlas-3.7.15.ebuild:
+  Use autotooled libtool from lapack rather than the one from 
+  /usr/bin to pick up the proper fortran compiler. This fixes
+  bug #146512.
+
+  04 Sep 2006; Stephanie Lockwood-Childs <wormo@gentoo.org>
+  lapack-atlas-3.7.11.ebuild:
+  stable on ppc (Bug #141438)
+
+  03 Sep 2006; Markus Dittrich <markusle@gentoo.org>
+  lapack-atlas-3.7.15.ebuild:
+  Fixed improper install path for one of the docs. Thanks much to
+  Jochen Trumpf <Jochen.Trumpf@anu.edu.au> for pointing this out.
+  This fixes bug #146048.
+
+  02 Sep 2006; Markus Rothe <corsair@gentoo.org> lapack-atlas-3.7.11.ebuild:
+  Stable on ppc64; bug #141438
+
+  30 Aug 2006; Tim Yamin <plasmaroo@gentoo.org> lapack-atlas-3.7.11-r1.ebuild,
+  lapack-atlas-3.7.11.ebuild, lapack-atlas-3.7.15.ebuild:
+  Unkeyword ~ia64; requires blas-atlas.
+
+*lapack-atlas-3.7.15 (29 Aug 2006)
+
+  29 Aug 2006; Markus Dittrich <markusle@gentoo.org>
+  +files/lapack-reference-3.0-autotool.patch, +lapack-atlas-3.7.15.ebuild: 
+  Version bump. Many thanks go to Adam Piatyszek 
+  <ediap@et.put.poznan.pl> for his ebuild and patches. 
+  See bug #144314.
+
+  25 Aug 2006; Donnie Berkholz <dberkholz@gentoo.org>; Manifest:
+  Add eselect symlink maps, reported by Markus Dittrich.
+
+  17 Aug 2006; Donnie Berkholz <dberkholz@gentoo.org>;
+  lapack-atlas-3.6.0-r2.ebuild, lapack-atlas-3.7.11-r1.ebuild:
+  Note that configuration now uses eselect rather than lapack-config.
+
+  17 Aug 2006; Donnie Berkholz <dberkholz@gentoo.org>;
+  lapack-atlas-3.6.0-r2.ebuild, lapack-atlas-3.7.11-r1.ebuild:
+  Change einfo uses that should get read to elog.
+
+  16 Aug 2006; Markus Dittrich <markusle@gentoo.org>
+  lapack-atlas-3.6.0.ebuild, lapack-atlas-3.6.0-r1.ebuild, lapack-atlas-3.6.0-r2.ebuild:
+  Disable installation of header files atlas_misc.h and atlas_enum.h
+  since they are provided by blas-atlas and otherwise lead to file
+  collisions. This fixes bug #143947.
+
+  04 Aug 2006; Markus Dittrich <markusle@gentoo.org>
+  lapack-atlas-3.7.11.ebuild, lapack-atlas-3.7.11-r1.ebuild:
+  Removed unnecessary but harmless cruft from 
+  atlas3.6.0-shared-libs.2.patch and bumped patch to revision 3.
+
+  31 Jul 2006; Markus Dittrich <markusle@gentoo.org>
+  files/3.7.11-allow-any-gcc-version.patch:
+  Synced patch with fixed version from blas-atlas CVS tree to enable
+  compilation on ppc using gcc-4 (see blas-atlas Changelog entry 
+  from 05/07/2006). Thanks to Matti Bickel <kabel@cat0.de> for
+  pointing this out. This fixes bug #142294. 
+
+  26 Jul 2006; Markus Dittrich <markusle@gentoo.org>
+  lapack-atlas-3.7.11.ebuild, lapack-atlas-3.7.11-r1.ebuild:
+  Updated shared-libs patchset to resolve issues due to missing
+  pthread symbols on multiprocessor machines (see #137877).
+
+*lapack-atlas-3.7.11-r1 (03 Jul 2006)
+*lapack-atlas-3.6.0-r2 (03 Jul 2006)
+
+  03 Jul 2006; Donnie Berkholz <spyderous@gentoo.org>;
+  +lapack-atlas-3.6.0-r2.ebuild, +lapack-atlas-3.7.11-r1.ebuild:
+  Bumps to switch to new eselect modules.
+
+  01 Apr 2006; Aron Griffis <agriffis@gentoo.org>
+  lapack-atlas-3.7.11.ebuild:
+  Mark 3.7.11 ~ia64
+
+  21 Mar 2006; Donnie Berkholz <spyderous@gentoo.org>;
+  +files/3.7.11-allow-any-gcc-version.patch, lapack-atlas-3.7.11.ebuild:
+  (#121855) Allow compilation with gcc-4. Also at least partially fix
+  compilation with non-gcc compilers (e.g. ifc). You will now need to pass FC
+  to use a non-default Fortran compiler.
+
+  11 Jan 2006; Markus Dittrich <markusle@gentoo.org>
+  lapack-atlas-3.6.0.ebuild, lapack-atlas-3.6.0-r1.ebuild:
+  Changed DEPEND such that ebuilds can now depend on any 
+  blas-atlas-3.6.0-r* revision. This fixes the circular dependency 
+  issue in bug #118521.
+
+*lapack-atlas-3.7.11 (11 Jan 2006)
+
+  11 Jan 2006; Markus Dittrich <markusle@gentoo.org>
+  +lapack-atlas-3.7.11.ebuild:
+  New lapack-atlas ebuild that compiles against the most recent 
+  blas-atlas development release. 
+  This fixes the circular dependency issues reported in bug #118521.
+
+*lapack-atlas-3.6.0-r1 (13 Nov 2005)
+
+  13 Nov 2005; Olivier Fisette <ribosome@gentoo.org>
+  +lapack-atlas-3.6.0-r1.ebuild:
+  Migrated to fortran.eclass (bug #65950).
+
+  17 Sep 2005; Michael Hanselmann <hansmi@gentoo.org>
+  lapack-atlas-3.6.0.ebuild:
+  Stable on ppc.
+
+  11 Sep 2005; Steve Arnold <nerdboy@gentoo.org> lapack-atlas-3.6.0.ebuild:
+  stable bump (sparc and x86) required for other sc-libs (besides, that
+  configure bug doesn't really count, and the other one is *old*...)
+
+  10 Sep 2005; Peter Bienstman <pbienst@gentoo.org>
+  lapack-atlas-3.6.0.ebuild:
+  Add extra header files (#51323).
+
+  10 Sep 2005; Peter Bienstman <pbienst@gentoo.org> +files/unbuffered.patch,
+  lapack-atlas-3.6.0.ebuild:
+  Fix #102088.
+
+  17 Feb 2005; Bryan Østergaard <kloeri@gentoo.org>
+  lapack-atlas-3.6.0.ebuild:
+  ~alpha keyword.
+
+*lapack-atlas-3.6.0 (29 Dec 2004)
+
+  29 Dec 2004; Olivier Fisette <ribosome@gentoo.org> +metadata.xml,
+  +files/f77-ATLAS, +files/war, +lapack-atlas-3.6.0.ebuild:
+  Moved from app-sci/lapack-atlas to sci-libs/lapack-atlas.
+
+  17 Nov 2004; Markus Rothe <corsair@gentoo.org> lapack-atlas-3.6.0.ebuild:
+  stable on ppc64
+
+  31 Oct 2004; Olivier Fisette <ribosome@gentoo.org> lapack-atlas-3.6.0.ebuild:
+  Use tc-getCC from toolchain-funcs rather than $CC.
+
+  12 Sep 2004; Danny van Dyk <kugelfang@gentoo.org> lapack-atlas-3.6.0.ebuild:
+  Marked stable on amd64.
+
+  09 Sep 2004; Philippe Trottier <tchiwam@gentoo.org> lapack-atlas-3.6.0.ebuild:
+  marked ~ppc64
+
+  12 Jul 2004; George Shapovalov <george@gentoo.org> lapack-atlas-3.6.0.ebuild :
+  added filtering of CFLAGS for g77 (#56265), 
+  thanks to Sourav Mandal <sourav@sourav.net> for suggestion.
+
+  04 Jul 2004; Ferris McCormick <fmccor@gentoo.org> lapack-atlas-3.6.0.ebuild:
+  Add (missed) ~sparc keyword.
+
+  05 Jul 2004; Danny van Dyk <kugelfang@gentoo.org> lapack-atlas-3.6.0.ebuild:
+  Marked ~ppc (tested myself) and ~sparc (tested by fmccor).
+
+  01 Jul 2004; Jeremy Huddleston <eradicator@gentoo.org>
+  lapack-atlas-3.6.0.ebuild:
+  virtual/glibc -> virtual/libc
+
+  10 Jun 2004; George Shapovalov <george@gentoo.org> lapack-atlas-3.6.0.ebuild, files/{atlas3.6.0-shared-libs.patch.bz2,} pack-20020531-20021004.patch.bz2,lapack-gentoo.patch,digest-lapack-atlas-3.6.0 :
+  moved files shared with lapack-reference to mirrors (one of them was a large patch as well)
+  unmasked in package.mask
+
+  05 Jun 2004; George Shapovalov <george@gentoo.org> lapack-atlas-3.6.0.ebuild :
+  fixed check for g77 - it is always necessary, even if ifc is installed (#30459)
+
+  02 Jun 2004; Aron Griffis <agriffis@gentoo.org> lapack-atlas-3.6.0.ebuild:
+  Fix use invocation
+
+  12 May 2004; Michael Sterrett <mr_bones_@gentoo.org>
+  lapack-atlas-3.6.0.ebuild:
+  don't use deprecated ? : syntax
+
+*lapack-atlas-3.6.0 (11 May 2004)
+
+  11 May 2004; George Shapovalov <george@gentoo.org> lapack-atlas-3.6.0.ebuild, Manifest, files/{atlas3.6.0-shared-libs.patch.bz2,digest-lapack-atlas-3.6.0,f77-ATLAS,lapack-20020531-20021004.patch.bz2,lapack-gentoo.patch,war} :
+  initial release (#30459)
+  Full LAPACK implementation using available ATLAS routines
+  ebuild submitted by Derek Dolney <dolney@astro.upenn.edu>
