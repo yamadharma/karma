@@ -1,6 +1,51 @@
 # ChangeLog for sci-mathematics/octave
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/octave/ChangeLog,v 1.25 2006/01/31 03:47:04 markusle Exp $
+# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/octave/ChangeLog,v 1.36 2006/08/11 21:30:44 corsair Exp $
+
+  11 Aug 2006; Markus Rothe <corsair@gentoo.org> octave-2.1.72.ebuild:
+  Stable on ppc64; bug #141446
+
+  05 Aug 2006; Michael Hanselmann <hansmi@gentoo.org> octave-2.1.72.ebuild:
+  Stable on ppc.
+
+  03 Aug 2006; Ferris McCormick <fmccor@gentoo.org> octave-2.1.72.ebuild:
+  Sparc stable --- Bug #141446 --- builds and passes all tests (but note running
+  tests requires dejagnu).
+
+  27 Jul 2006; Joshua Jackson <tsunam@gentoo.org> octave-2.1.72.ebuild:
+  Stable x86; bug #141446
+
+*octave-2.1.73 (09 Jun 2006)
+
+  09 Jun 2006; Markus Dittrich <markusle@gentoo.org>
+  +files/octave-2.1.73-gcc4.1-gentoo.patch, +octave-2.1.73.ebuild:
+  Version bump. This includes patches to fix the compile problems
+  with octave-forge (see bug #133246). Thanks much to Colin Macdonald
+  <cbm@sfu.ca> for his patch.
+
+  11 May 2006; Robin H. Johnson <robbat2@gentoo.org> octave-2.1.72.ebuild:
+  Clean up ebuild a bit more for CC/CXX/LDFLAGS definitions. octave-2.1.72.ebuild
+
+  11 May 2006; Robin H. Johnson <robbat2@gentoo.org> octave-2.1.72.ebuild:
+  Compile fix - clean up usage of LDFLAGS/CC/CXX to allow them to work with
+  multiple arguments.
+
+  27 Apr 2006; Alec Warner <antarus@gentoo.org>
+  files/digest-octave-2.1.57-r1, files/digest-octave-2.1.69, Manifest:
+  Fixing SHA256 digest, pass four
+
+  24 Apr 2006; Markus Dittrich <markusle@gentoo.org> octave-2.1.72.ebuild:
+  Replaced 'tetex' useflag by 'doc' since it only triggers the 
+  install of dvi files. This fixes bug #130984.
+
+  17 Mar 2006; Markus Rothe <corsair@gentoo.org> octave-2.1.72.ebuild:
+  Added ~ppc64; bug #126527
+
+  14 Mar 2006; Markus Dittrich <markusle@gentoo.org>
+  +files/octave-2.1.72-gcc4.1-gentoo.patch, octave-2.1.72.ebuild:
+  Added patch to fix compile failure using gcc-4.1. Thanks to
+  Patrizio Bassi <hetfield666@gmail.com> for providing a patch.
+  This fixes bug #126157.
 
 *octave-2.1.72 (31 Jan 2006)
 

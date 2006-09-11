@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/octave/octave-2.1.72.ebuild,v 1.1 2006/01/31 03:47:04 markusle Exp $
+# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/octave/octave-2.1.73.ebuild,v 1.1 2006/06/10 01:21:00 markusle Exp $
 
 inherit flag-o-matic fortran
 
@@ -11,8 +11,8 @@ SRC_URI="ftp://ftp.octave.org/pub/octave/bleeding-edge/${P}.tar.bz2
 		ftp://ftp.math.uni-hamburg.de/pub/soft/math/octave/${P}.tar.bz2"
 
 SLOT="0"
-IUSE="emacs static readline zlib tetex hdf5 mpi blas"
-KEYWORDS="~alpha amd64 ~ppc ~sparc x86"
+IUSE="emacs static readline zlib doc hdf5 mpi blas"
+KEYWORDS="~alpha amd64 ~ppc ~ppc64 ~sparc x86"
 
 DEPEND="virtual/libc
 	>=sys-libs/ncurses-5.2-r3
@@ -21,7 +21,7 @@ DEPEND="virtual/libc
 	>=dev-util/gperf-2.7.2
 	zlib? ( sys-libs/zlib )
 	hdf5? ( sci-libs/hdf5 )
-	tetex? ( virtual/tetex )
+	doc? ( virtual/tetex )
 	blas? ( virtual/blas )
 	mpi? ( virtual/mpi )
 	!=app-text/texi2html-1.70"
@@ -30,6 +30,14 @@ DEPEND="virtual/libc
 # source nor is it free (as in beer OR speech) Check out...
 # http://developer.intel.com/software/products/mkl/mkl52/index.htm for
 # more information
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+
+	epatch "${FILESDIR}"/${P}-gcc4.1-gentoo.patch
+}
+
 
 src_compile() {
 	filter-flags -ffast-math
@@ -40,7 +48,7 @@ src_compile() {
 	# Only add -lz to LDFLAGS if we have zlib in USE !
 	# BUG #52604
 	# Danny van Dyk 2004/08/26
-	use zlib && LDFLAGS="${LDFLAGS} -lz"
+	use zlib && append-ldflags -lz
 
 	# MPI requires the use of gcc/g++ wrappers
 	# mpicc/mpic++
@@ -54,23 +62,24 @@ src_compile() {
 			myconf="${myconf} --with-mpi=mpi"
 		fi
 	else
+		CC="$(tc-getCC)"
+		CXX="$(tc-getCXX)"
 		myconf="${myconf} --without-mpi"
 	fi
 
-
+	CC="${CC}" CXX="${CXX}" \
 	econf \
 		$(use_with hdf5) \
 		$(use_enable readline) \
 		${myconf} \
-		LDFLAGS="${LDFLAGS}" \
-		CC="${CC}" CXX="${CXX}" || die "econf failed"
+		|| die "econf failed"
 
 	emake || die "emake failed"
 }
 
 src_install() {
 	make install DESTDIR="${D}" || die "make install failed"
-	if use tetex; then
+	if use doc; then
 		octave-install-doc || die "Octave doc install failed"
 	fi
 	if use emacs; then

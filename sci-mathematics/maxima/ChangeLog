@@ -1,6 +1,35 @@
 # ChangeLog for sci-mathematics/maxima
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/maxima/ChangeLog,v 1.15 2006/01/30 10:05:42 robbat2 Exp $
+# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/maxima/ChangeLog,v 1.21 2006/07/12 15:34:43 kugelfang Exp $
+
+  12 Jul 2006; Danny van Dyk <kugelfang@gentoo.org> maxima-5.9.3.ebuild:
+  QA: Corrected typo: tcktk vs tcltk.
+
+  17 Apr 2006; Marcus D. Hanwell <cryos@gentoo.org>
+  files/50maxima-gentoo.el:
+  Updated emacs file, closes bug 130245.
+
+*maxima-5.9.3 (15 Apr 2006)
+
+  15 Apr 2006; Marcus D. Hanwell <cryos@gentoo.org>
+  +files/maxima-5.9.3-default-browser.patch,
+  +files/maxima-5.9.3-emaxima.patch, +maxima-5.9.3.ebuild:
+  Version bump with lots of fixes, see bugs for more details. Many thanks to
+  Sebastien Fabbro <seb@ist.utl.pt>, Robert Dodier <robert.dodier@gmail.com>,
+  Thomas Weidner <3.14159@gmx.net> and others for their work. Closes bugs
+  112717 and 112754.
+
+  11 Apr 2006; Stephanie Lockwood-Childs <wormo@gentoo.org>
+  maxima-5.9.1-r5.ebuild:
+  stop xmaxima with clisp from executing 'kill -TERM -1' on exit (Bug #111062)
+  and keywording ~ppc (Bug #126254)
+
+  15 Mar 2006; Olivier Fisette <ribosome@gentoo.org>
+  -maxima-5.9.1-r4.ebuild:
+  Removing obsolete version.
+
+  15 Mar 2006; Olivier Fisette <ribosome@gentoo.org> maxima-5.9.1.ebuild:
+  Added missing gnuplot dependency (fixes bug #112431).
 
   30 Jan 2006; Robin H. Johnson <robbat2@gentoo.org> Manifest:
   Fix manifest.

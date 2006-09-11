@@ -1,6 +1,8 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-mobilephone/moto4lin/moto4lin-0.3_p20051125.ebuild,v 1.2 2005/11/28 11:33:26 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-mobilephone/moto4lin/moto4lin-0.3_p20051125.ebuild,v 1.4 2006/01/10 14:55:58 r3pek Exp $
+
+inherit toolchain-funcs
 
 DESCRIPTION="Moto4lin is file manager and seem editor for Motorola P2K phones"
 HOMEPAGE="http://moto4lin.sourceforge.net/"
@@ -12,15 +14,19 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 DEPEND="dev-libs/libusb
-		x11-libs/qt"
+	=x11-libs/qt-3*"
 
 src_compile() {
 	# We need this addwrite since the uic program tries to create
 	# locks in there :/
 	addwrite "${ROOT}/usr/qt/3/etc/settings"
 
-	qmake
-	make || die "make failed"
+	${QTDIR}/bin/qmake QMAKE=${QTDIR}/bin/qmake
+	emake \
+		CC="$(tc-getCC) ${CFLAGS}" \
+		CXX="$(tc-getCXX) ${CXXFLAGS}" \
+		LINK="$(tc-getCXX)" \
+		LFLAGS="${LDFLAGS}" || die "emake failed"
 }
 
 src_install() {
