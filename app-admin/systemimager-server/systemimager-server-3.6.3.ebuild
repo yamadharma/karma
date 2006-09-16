@@ -26,6 +26,7 @@ RDEPEND="${DEPEND}
 	dev-lang/perl
 	dev-perl/Config-Simple
 	dev-perl/LockFile-Simple
+	dev-perl/XML-Simple
 	net-misc/flamethrower"
 
 src_compile () 
