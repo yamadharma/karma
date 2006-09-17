@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/scilab/scilab-4.0.ebuild,v 1.5 2006/07/04 15:17:32 markusle Exp $
+# $Header: /var/www/viewcvs.gentoo.org/raw_cvs/gentoo-x86/sci-mathematics/scilab/scilab-4.0.ebuild,v 1.6 2006/09/17 01:50:25 markusle Exp $
 
 inherit eutils fortran toolchain-funcs multilib autotools
 
@@ -11,7 +11,7 @@ HOMEPAGE="http://www.scilab.org/"
 
 SLOT="0"
 IUSE="ocaml tcltk gtk Xaw3d java"
-KEYWORDS="x86 amd64 ~ppc"
+KEYWORDS="~x86 ~ppc"
 
 RDEPEND="virtual/blas
 	virtual/lapack
@@ -49,6 +49,7 @@ src_unpack() {
 
 	epatch "${FILESDIR}"/${P}-makefile.patch
 	epatch "${FILESDIR}"/${P}-gtk-fix.patch
+	epatch "${FILESDIR}"/${P}-configure-gfortran.patch
 
 	# fix gfortran problems on ppc
 	if [[ "${ARCH}" == "ppc" ]];then
@@ -61,6 +62,7 @@ src_unpack() {
 		-i Makefile.OBJ.in || die "Failed to fix Makefile.OBJ.in"
 
 	sed -e "s:\$(PREFIX):\${D}/\$(PREFIX):g" \
+		-e "s:\$(PREFIX)/lib:\$(PREFIX)/$(get_libdir):g" \
 		-i Makefile.in || die "Failed to fix Makefile.in"
 
 	sed -e "s:@CC_OPTIONS@:${CFLAGS}:" \

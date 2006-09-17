@@ -1,8 +1,8 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-analyzer/ns/ns-2.28.ebuild,v 1.3 2005/09/12 11:22:10 humpback Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-analyzer/ns/ns-2.29.ebuild,v 1.2 2006/06/19 15:12:54 chutzpah Exp $
 
-inherit eutils toolchain-funcs
+inherit eutils toolchain-funcs flag-o-matic
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.isi.edu/nsnam/ns/"
@@ -13,13 +13,13 @@ SLOT="0"
 KEYWORDS="~ppc ~sparc x86 amd64"
 IUSE="doc debug"
 
-RDEPEND=">=dev-lang/tcl-8.4.4
-		>=dev-lang/tk-8.4.4
-		>=dev-tcltk/otcl-1.0.8a
-		>=dev-tcltk/tclcl-1.0.13b
+RDEPEND=">=dev-lang/tcl-8.4.5
+		>=dev-lang/tk-8.4.5
+		>=dev-tcltk/otcl-1.11
+		>=dev-tcltk/tclcl-1.17
 		virtual/libpcap
 		debug? ( 	=dev-lang/perl-5*
-					>=media-gfx/xgraph-12.1
+					>=sci-visualization/xgraph-12.1
 					>=dev-libs/dmalloc-4.8.2
 					>=dev-tcltk/tcl-debug-2.0 )"
 DEPEND="${RDEPEND}
@@ -30,7 +30,9 @@ DEPEND="${RDEPEND}
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-	epatch ${FILESDIR}/${P}-gentoo.diff
+#	epatch ${FILESDIR}/${P}-gentoo.diff
+	epatch "${FILESDIR}/${P}-gcc41.patch"
+	sed '/$(CC)/s!-g!$(CFLAGS)!g' ${S}/indep-utils/model-gen/Makefile
 }
 
 src_compile() {
@@ -40,12 +42,16 @@ src_compile() {
 
 	tc-export CC CXX
 
+	# correctness is more important than speed
+	replace-flags -Os -O2
+	replace-flags -O3 -O2
+
 	use debug \
 		&& myconf="${myconf} --with-tcldebug=/usr/lib/tcldbg2.0" \
 		|| myconf="${myconf} --with-tcldebug=no"
 	myconf="${myconf} $(use_with debug dmalloc)"
 
-	for i in 8.4 8.3; do
+	for i in 8.4 ; do
 		einfo "Testing TCL ${i}"
 		has_version "=dev-lang/tcl-${i}*" && mytclver=${i}
 		[ "${#mytclver}" -gt 2 ] && break
@@ -66,11 +72,13 @@ src_compile() {
 	${CC} ${CFLAGS} dosreduce.c -o dosreduce
 	cd ${S}/indep-utils/propagation
 	${CXX} ${CXXFLAGS} threshold.cc -o threshold
+	cd ${S}/indep-utils/model-gen
+	emake CFLAGS="${CFLAGS}" || die
 
 	if useq doc; then
 		einfo "Generating extra docs"
 		cd ${S}/doc
-		emake all
+		yes '' | emake all
 	fi
 }
 
@@ -100,10 +108,25 @@ src_install() {
 	newdoc README README.cbrgen
 	cd "${S}/indep-utils/propagation"
 	dobin threshold
+	cd "${S}/indep-utils/model-gen"
+	dobin http_connect http_active
 
 	if use doc; then
 		cd ${S}/doc
 		docinto doc
 		dodoc everything.dvi everything.ps.gz everything.html everything.pdf
+		docinto model-gen
+		cd ${S}/indep-utils/model-gen
+		dodoc *
 	fi
+}
+
+src_test() {
+	einfo "Warning, these tests will take upwards of 45 minutes."
+	einfo "Additionally, as shipped, a number of tests may fail."
+	einfo "We log to 'validate.run', which you should compare against"
+	einfo "the shipped 'validate.out' to evaluate success."
+	einfo "At the time of assembling this ebuild, these test suites failed:"
+	einfo "all-smac-multihop all-red all-plm all-wireless-tdma"
+	./validate 2>&1 | tee ${S}/validate.run
 }

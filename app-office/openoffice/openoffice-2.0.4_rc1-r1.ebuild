@@ -1,10 +1,10 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4_rc1-r1.ebuild,v 1.1 2006/09/01 07:10:50 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4_rc1-r1.ebuild,v 1.9 2006/09/15 11:21:47 suka Exp $
 
 inherit check-reqs debug eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions mono multilib toolchain-funcs
 
-IUSE="binfilter branding cairo eds firefox gnome gstreamer gtk java kde ldap mono odk pam xml"
+IUSE="binfilter branding cairo cups dbus eds firefox gnome gstreamer gtk kde ldap mono odk pam webdav"
 
 MY_PV="${PV}"
 PATCHLEVEL="OOD680"
@@ -38,16 +38,14 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc ~sparc x86"
+KEYWORDS="amd64 ~ppc ~sparc ~x86"
 
 RDEPEND="!app-office/openoffice-bin
-	|| ( (
-			x11-libs/libXaw
-			x11-libs/libXinerama
-		)
-		virtual/x11 )
+	x11-libs/libXaw
+	x11-libs/libXinerama
 	virtual/libc
 	>=dev-lang/perl-5.0
+	dbus? ( >=sys-apps/dbus-0.60 )
 	gnome? ( >=x11-libs/gtk+-2.4
 		>=gnome-base/gnome-vfs-2.6
 		>=gnome-base/gconf-2.0 )
@@ -61,9 +59,11 @@ RDEPEND="!app-office/openoffice-bin
 	firefox? ( >=www-client/mozilla-firefox-1.5-r9
 		>=dev-libs/nspr-4.6.2
 		>=dev-libs/nss-3.11-r1 )
+	webdav? ( >=net-misc/neon-0.24.7 )
 	>=x11-libs/startup-notification-0.5
 	>=media-libs/freetype-2.1.10-r2
 	>=media-libs/fontconfig-2.2.0
+	cups? ( net-print/cups )
 	media-libs/libpng
 	sys-devel/flex
 	sys-devel/bison
@@ -71,24 +71,21 @@ RDEPEND="!app-office/openoffice-bin
 	app-arch/unzip
 	>=app-text/hunspell-1.1.4-r1
 	dev-libs/expat
-	java? ( >=virtual/jre-1.4 )
-	>=sys-devel/gcc-3.2.1
-	amd64? ( >=dev-libs/boost-1.31.0 )
+	java? ( || ( =virtual/jdk-1.4* =virtual/jdk-1.5* )  )
+	>=dev-libs/boost-1.33.1
+	>=dev-libs/icu-3.4
 	linguas_ja? ( >=media-fonts/kochi-substitute-20030809-r3 )
 	linguas_zh_CN? ( >=media-fonts/arphicfonts-0.1-r2 )
 	linguas_zh_TW? ( >=media-fonts/arphicfonts-0.1-r2 )"
 
 DEPEND="${RDEPEND}
-	|| ( (
-			x11-libs/libXrender
-			x11-proto/printproto
-			x11-proto/xextproto
-			x11-proto/xproto
-			x11-proto/xineramaproto
-		)
-		virtual/x11 )
-	net-print/cups
+	x11-libs/libXrender
+	x11-proto/printproto
+	x11-proto/xextproto
+	x11-proto/xproto
+	x11-proto/xineramaproto
 	>=sys-apps/findutils-4.1.20-r1
+	>=sys-devel/gcc-3.2.1
 	dev-perl/Archive-Zip
 	dev-perl/Compress-Zlib
 	dev-util/pkgconfig
@@ -100,16 +97,17 @@ DEPEND="${RDEPEND}
 	!dev-util/dmake
 	>=dev-lang/python-2.3.4
 	>=app-admin/eselect-oodict-20060706
-	java? ( >=virtual/jdk-1.4
-		dev-java/ant-core
-		${JAVA_PKG_E_DEPEND} )
-	!java? ( dev-libs/libxslt
-		>=dev-libs/libxml2-2.0 )
+	java? ( || ( =virtual/jre-1.4* =virtual/jre-1.5* )
+		dev-java/ant-core )
+	dev-libs/libxslt
 	ldap? ( net-nds/openldap )
 	mono? ( >=dev-lang/mono-1.1.6 )
-	xml? ( >=dev-libs/libxml2-2.0 )"
+	>=dev-libs/libxml2-2.0"
 
 PROVIDE="virtual/ooo"
+
+# FIXME executable stacks should be addressed upstream!
+QA_EXECSTACK_x86="usr/lib/openoffice/program/libgcc3_uno.so"
 
 pkg_setup() {
 
@@ -145,14 +143,17 @@ pkg_setup() {
 		ewarn " You are building with java-support disabled, this results in some "
 		ewarn " of the OpenOffice.org functionality (i.e. help) being disabled. "
 		ewarn " If something you need does not work for you, rebuild with "
-		ewarn " java in your USE-flags. Also the xml use-flag is disabled with "
-		ewarn " -java to prevent build breakage. "
+		ewarn " java in your USE-flags. "
 		ewarn
-	elif use sparc; then
-		ewarn " Java support on sparc is very flaky, we don't recommend "
-		ewarn " building openoffice this way."
-		ebeep 5
-		epause 10
+	fi
+
+	if is-flagq -ffast-math ; then
+		eerror " You are using -ffast-math, which is known to cause problems. "
+		eerror " Please remove it from your CFLAGS, using this globally causes "
+		eerror " all sorts of problems. "
+		eerror " After that you will also have to - at least - rebuild python otherwise "
+		eerror " the openoffice build will break. "
+		die
 	fi
 
 }
@@ -167,6 +168,7 @@ src_unpack() {
 	#Some fixes for our patchset
 	cd ${S}
 	epatch ${FILESDIR}/${PV}/gentoo-${PV}.diff
+	cp -a ${FILESDIR}/${PV}/sfx2-docfile-newfilesave.diff ${S}/patches/src680 || die
 
 	#Use flag checks
 	use java && echo "--with-jdk-home=${JAVA_HOME} --with-ant-home=${ANT_HOME}" >> ${CONFFILE} || echo "--without-java" >> ${CONFFILE}
@@ -174,7 +176,6 @@ src_unpack() {
 	use amd64 && echo "--with-system-boost" >> ${CONFFILE}
 
 	echo "`use_enable binfilter`" >> ${CONFFILE}
-	echo "`use_with xml system-libxml`" >> ${CONFFILE}
 
 	echo "`use_enable firefox mozilla`" >> ${CONFFILE}
 	echo "`use_with firefox system-mozilla`" >> ${CONFFILE}
@@ -187,9 +188,18 @@ src_unpack() {
 	echo "`use_enable gnome lockdown`" >> ${CONFFILE}
 	echo "`use_enable gnome atkbridge`" >> ${CONFFILE}
 	echo "`use_enable gstreamer`" >> ${CONFFILE}
+	echo "`use_enable dbus`" >> ${CONFFILE}
+	echo "`use_enable webdav neon`" >> ${CONFFILE}
+	echo "`use_with webdav system-neon`" >> ${CONFFILE}
 
 	echo "`use_enable odk`" >> ${CONFFILE}
 	echo "`use_enable debug crashdump`" >> ${CONFFILE}
+
+	echo "--with-system-boost" >> ${CONFFILE}
+	echo "--with-system-icu" >> ${CONFFILE}
+	echo "--with-system-libxml" >> ${CONFFILE}
+	echo "--with-system-libxslt" >> ${CONFFILE}
+	echo "--enable-xsltproc" >> ${CONFFILE}
 
 }
 
@@ -202,7 +212,7 @@ src_compile() {
 
 	# Should the build use multiprocessing? Not enabled by default, as it tends to break
 	export JOBS="1"
-	if [ "${WANT_DISTCC}" == "true" ]; then
+	if [ "${WANT_MP}" == "true" ]; then
 		export JOBS=`echo "${MAKEOPTS}" | sed -e "s/.*-j\([0-9]\+\).*/\1/"`
 	fi
 
@@ -211,13 +221,10 @@ src_compile() {
 	filter-flags "-fprefetch-loop-arrays"
 	filter-flags "-fno-default-inline"
 	filter-flags "-fstack-protector"
+	filter-flags "-fstack-protector-all"
 	filter-flags "-ftracer"
-	filter-flags "-ffast-math"
 	filter-flags "-fforce-addr"
-	replace-flags "-O3" "-O2"
-	replace-flags "-Os" "-O2"
-	replace-flags "-O1" "-O2"
-	replace-flags "-O0" "-O2"
+	replace-flags "-O?" "-O2"
 
 	use ppc && append-flags "-D_STLP_STRICT_ANSI"
 

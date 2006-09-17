@@ -21,7 +21,7 @@ KEYWORDS="x86 amd64"
 DEPEND=""
 RDEPEND="${DEPEND}
 	dev-lang/perl
-	dev-perl/AppConfig
+	app-admin/systemconfigurator
 	net-misc/rsync
 	sys-fs/mtools"
 
