@@ -1,0 +1,118 @@
+# ChangeLog for net-www/gnash
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/net-www/gnash/ChangeLog,v 1.20 2006/09/01 12:29:01 genstef Exp $
+
+*gnash-0.7.1_p20099999 (01 Sep 2006)
+
+  01 Sep 2006; Stefan Schweizer <genstef@gentoo.org>
+  -gnash-0.7.1_p20090909.ebuild, +gnash-0.7.1_p20099999.ebuild:
+  rename as per bug 143320
+
+*gnash-0.7.1_p20060814 (14 Aug 2006)
+
+  14 Aug 2006; Stefan Schweizer <genstef@gentoo.org>
+  gnash-0.7.1_p20060704.ebuild, +gnash-0.7.1_p20060814.ebuild,
+  gnash-0.7.1_p20090909.ebuild:
+  new snapshot currently -* because clicking does not work for me, sed sound
+  support to on again
+
+  13 Aug 2006; Stefan Schweizer <genstef@gentoo.org> -files/do-sound.diff,
+  -files/kdedir.diff, -files/klash-makefile.diff,
+  gnash-0.7.1_p20090909.ebuild:
+  remove some patches that got applied upstream
+
+  12 Aug 2006; Stefan Schweizer <genstef@gentoo.org> +files/do-sound.diff,
+  -files/gnash-as-needed.diff, -files/klash-int-not-external.diff,
+  gnash-0.7.1_p20090909.ebuild:
+  remove some patches that got applied from the live ebuild, fold sound sed
+  into patch
+
+*gnash-0.7.1_p20090909 (08 Aug 2006)
+
+  08 Aug 2006; Stefan Schweizer <genstef@gentoo.org>
+  -files/gnash-0.7.1_p20060528-confcache-gtkglext.patch,
+  -files/gnash-0.7.1_p20060528-opengl.diff, files/gnash-as-needed.diff,
+  +files/kdedir.diff, +files/klash-int-not-external.diff,
+  +files/klash-makefile.diff, -gnash-0.7.1.ebuild,
+  -gnash-0.7.1_p20060528.ebuild, gnash-0.7.1_p20060704.ebuild,
+  +gnash-0.7.1_p20090909.ebuild:
+  remove old ebuilds, remove dmalloc use flag thanks to Attila Stehr
+  <as.gentoo@web.de> in bug 142939, add new live cvs ebuild thnaks to Markus
+  Gothe <nietzsche@lysator.liu.se> in bug 143131 that compiles klash even
+  without the nsplugin thanks to Simon Siemonsma <simon.gentoo@hccnet.nl> in
+  bug 142190
+
+  07 Jul 2006; Stefan Schweizer <genstef@gentoo.org>
+  +files/gnash-fix-cxxflags-rpath.patch, gnash-0.7.1_p20060704.ebuild:
+  Add patch for CXXFLAGS and RPATH thanks to vapier in bug 139457 and 139459
+
+*gnash-0.7.1_p20060704 (04 Jul 2006)
+
+  04 Jul 2006; Stefan Schweizer <genstef@gentoo.org>
+  +files/gnash-0.7.1_p20060704-opengl.diff, +gnash-0.7.1_p20060704.ebuild:
+  version bump: new cvs snapshot
+
+  29 Jun 2006; Jason Wever <weeve@gentoo.org> gnash-0.7.1_p20060528.ebuild:
+  Masking on SPARC as it makes the baby Xwindow crash.
+
+  01 Jun 2006; Stefan Schweizer <genstef@gentoo.org>
+  gnash-0.7.1_p20060528.ebuild:
+  Gtkglext is always needed, remove gtk use flag thanks to Bård Sørngård
+  <baard.sorngard@gmail.com> and Avuton Olrich <avuton@gmail.com> in bug
+  135010
+
+  29 May 2006; <stefan@gentoo.org> gnash-0.7.1_p20060528.ebuild:
+  gtkglext dep fix
+
+  29 May 2006; <stefan@gentoo.org>
+  +files/gnash-0.7.1_p20060528-confcache-gtkglext.patch,
+  gnash-0.7.1_p20060528.ebuild:
+  Add confcache fix
+
+*gnash-0.7.1_p20060528 (28 May 2006)
+
+  28 May 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +files/gnash-0.7.1_p20060528-opengl.diff, +gnash-0.7.1_p20060528.ebuild:
+  snapshot of cvs tree, many bug fixes including x86_64 fixes
+
+  11 May 2006; Stefan Schweizer <genstef@gentoo.org> gnash-0.7.1.ebuild:
+  Workaround install problem thanks to Roie Kerstein
+  <sf_kersteinroie@bezeqint.net> in bug 132964, mp3->mad to support alt-arches
+  with mad use.mask, enable sound, cleanup depends
+
+*gnash-0.7.1 (09 May 2006)
+
+  09 May 2006; Stefan Schweizer <genstef@gentoo.org>
+  +files/gnash-as-needed.diff, -gnash-0.7_alpha20060331.ebuild,
+  -gnash-0.7_alpha20060331-r1.ebuild, +gnash-0.7.1.ebuild:
+  version bump
+
+*gnash-0.7_alpha20060331-r1 (03 Apr 2006)
+
+  03 Apr 2006; Stefan Schweizer <genstef@gentoo.org>
+  +gnash-0.7_alpha20060331-r1.ebuild:
+  revision bump, gtk use flag, fix plugin, add docs, fix .qt-error, bug 128680
+
+*gnash-0.7_alpha20060331 (02 Apr 2006)
+
+  02 Apr 2006; Stefan Schweizer <genstef@gentoo.org>
+  -gnash-0.7_alpha20060110.ebuild, -gnash-0.7_alpha20060129.ebuild,
+  +gnash-0.7_alpha20060331.ebuild:
+  New ebuild including firefox plugin support, bug 122659, remove old
+
+*gnash-0.7_alpha20060129 (29 Jan 2006)
+
+  29 Jan 2006; Stefan Schweizer <genstef@gentoo.org>
+  +gnash-0.7_alpha20060129.ebuild:
+  version bump and DEPEND fix thanks to David Watzke <david@klenot.cz> in bug
+  120314
+
+  11 Jan 2006; David Holm <dholm@gentoo.org> gnash-0.7_alpha20060110.ebuild:
+  Added to ~ppc.
+
+*gnash-0.7_alpha20060110 (10 Jan 2006)
+
+  10 Jan 2006; Stefan Schweizer <genstef@gentoo.org> +metadata.xml,
+  +gnash-0.7_alpha20060110.ebuild:
+  Alpha ebuild for gnash, closes bug 118527
+

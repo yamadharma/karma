@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-www/mplayerplug-in/mplayerplug-in-3.25.ebuild,v 1.2 2006/05/04 09:43:47 josejx Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-www/mplayerplug-in/mplayerplug-in-3.31-r1.ebuild,v 1.2 2006/09/07 15:55:51 josejx Exp $
 
 inherit eutils multilib nsplugins
 
@@ -11,13 +11,12 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha amd64 -hppa ~ia64 ~ppc ~sparc x86"
-IUSE="gecko-sdk gtk"
+IUSE="gtk divx gmedia real quicktime wmp"
 
 DEPEND=">=media-video/mplayer-1.0_pre5
-		gecko-sdk? ( net-libs/gecko-sdk )
-		!gecko-sdk? ( || ( >=www-client/mozilla-1.6
-							www-client/mozilla-firefox
-							www-client/seamonkey ) )
+		|| ( www-client/mozilla-firefox
+				www-client/seamonkey
+		)
 		|| ( ( x11-libs/libXpm
 				x11-proto/xextproto
 			)
@@ -35,15 +34,12 @@ S=${WORKDIR}/${PN}
 src_unpack() {
 	unpack ${A}
 	cd ${S}
+	epatch ${FILESDIR}/3.30-fix-cflags.patch
 	epatch ${FILESDIR}/${PN}-gcc4.patch
 }
 
 src_compile() {
 	local myconf
-
-	if use gecko-sdk; then
-		myconf="${myconf} --with-gecko-sdk=/usr/$(get_libdir)/gecko-sdk"
-	fi
 
 	# We force gtk2 now because moz only compiles against gtk2
 	if use gtk; then
@@ -53,7 +49,16 @@ src_compile() {
 		myconf="${myconf} --enable-x"
 	fi
 
-	econf ${myconf} || die "econf failed"
+	# Media Playback Support (bug #145517)
+	econf \
+		${myconf} \
+		$(use_enable divx dvx) \
+		$(use_enable gmedia gmp) \
+		$(use_enable real rm) \
+		$(use_enable quicktime qt) \
+		$(use_enable wmp) \
+		|| die "econf failed"
+
 	emake || die "emake failed"
 }
 
@@ -66,17 +71,19 @@ src_install() {
 	doins mplayerplug-in.xpt || die "xpt failed"
 	inst_plugin /opt/netscape/plugins/mplayerplug-in.xpt
 
-	PLUGINS="gmp rm qt wmp"
+	PLUGINS="gmp rm qt wmp dvx"
 
 	for plugin in ${PLUGINS}; do
-		### Install the plugin
-		exeinto /opt/netscape/plugins
-		doexe "mplayerplug-in-${plugin}.so" || die "plugin ${plugin} failed"
-		inst_plugin "/opt/netscape/plugins/mplayerplug-in-${plugin}.so"
-		### Install the xpt
-		insinto /opt/netscape/plugins
-	    doins "mplayerplug-in-${plugin}.xpt" || die "plugin ${plugin} xpt failed"
-		inst_plugin "/opt/netscape/plugins/mplayerplug-in-${plugin}.xpt"
+		if [ -e "mplayerplug-in-${plugin}.so" ]; then
+			### Install the plugin
+			exeinto /opt/netscape/plugins
+			doexe "mplayerplug-in-${plugin}.so" || die "plugin ${plugin} failed"
+			inst_plugin "/opt/netscape/plugins/mplayerplug-in-${plugin}.so"
+			### Install the xpt
+			insinto /opt/netscape/plugins
+		    doins "mplayerplug-in-${plugin}.xpt" || die "plugin ${plugin} xpt failed"
+			inst_plugin "/opt/netscape/plugins/mplayerplug-in-${plugin}.xpt"
+		fi
 	done
 
 	insinto /etc
