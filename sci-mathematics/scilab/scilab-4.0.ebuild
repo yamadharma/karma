@@ -11,7 +11,7 @@ HOMEPAGE="http://www.scilab.org/"
 
 SLOT="0"
 IUSE="ocaml tcltk gtk Xaw3d java"
-KEYWORDS="~x86 ~ppc"
+KEYWORDS="x86 amd64 ~ppc"
 
 RDEPEND="virtual/blas
 	virtual/lapack
