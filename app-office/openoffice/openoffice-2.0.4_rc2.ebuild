@@ -1,14 +1,14 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4_rc1-r1.ebuild,v 1.9 2006/09/15 11:21:47 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4_rc2.ebuild,v 1.1 2006/09/22 16:39:32 suka Exp $
 
 inherit check-reqs debug eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions mono multilib toolchain-funcs
 
-IUSE="binfilter branding cairo cups dbus eds firefox gnome gstreamer gtk kde ldap mono odk pam webdav"
+IUSE="binfilter branding cairo cups dbus eds firefox gnome gstreamer gtk kde ldap mono sound odk pam webdav"
 
 MY_PV="${PV}"
 PATCHLEVEL="OOD680"
-SRC="ood680-m2"
+SRC="ood680-m4"
 S="${WORKDIR}/ooo"
 S_OLD="${WORKDIR}/ooo-build-${SRC}"
 CONFFILE="${S}/distro-configs/Gentoo.conf.in"
@@ -59,6 +59,8 @@ RDEPEND="!app-office/openoffice-bin
 	firefox? ( >=www-client/mozilla-firefox-1.5-r9
 		>=dev-libs/nspr-4.6.2
 		>=dev-libs/nss-3.11-r1 )
+	sound? ( =media-libs/portaudio-18*
+			>=media-libs/libsndfile-1.0.9 )
 	webdav? ( >=net-misc/neon-0.24.7 )
 	>=x11-libs/startup-notification-0.5
 	>=media-libs/freetype-2.1.10-r2
@@ -156,6 +158,8 @@ pkg_setup() {
 		die
 	fi
 
+	java-pkg-opt-2_pkg_setup
+
 }
 
 src_unpack() {
@@ -168,7 +172,6 @@ src_unpack() {
 	#Some fixes for our patchset
 	cd ${S}
 	epatch ${FILESDIR}/${PV}/gentoo-${PV}.diff
-	cp -a ${FILESDIR}/${PV}/sfx2-docfile-newfilesave.diff ${S}/patches/src680 || die
 
 	#Use flag checks
 	use java && echo "--with-jdk-home=${JAVA_HOME} --with-ant-home=${ANT_HOME}" >> ${CONFFILE} || echo "--without-java" >> ${CONFFILE}
@@ -192,14 +195,14 @@ src_unpack() {
 	echo "`use_enable webdav neon`" >> ${CONFFILE}
 	echo "`use_with webdav system-neon`" >> ${CONFFILE}
 
+	echo "`use_enable sound pasf`" >> ${CONFFILE}
+	echo "`use_with sound system-portaudio`" >> ${CONFFILE}
+	echo "`use_with sound system-sndfile`" >> ${CONFFILE}
+
 	echo "`use_enable odk`" >> ${CONFFILE}
 	echo "`use_enable debug crashdump`" >> ${CONFFILE}
 
-	echo "--with-system-boost" >> ${CONFFILE}
 	echo "--with-system-icu" >> ${CONFFILE}
-	echo "--with-system-libxml" >> ${CONFFILE}
-	echo "--with-system-libxslt" >> ${CONFFILE}
-	echo "--enable-xsltproc" >> ${CONFFILE}
 
 }
 
@@ -230,6 +233,7 @@ src_compile() {
 
 	# Now for our optimization flags ...
 	export ARCH_FLAGS="${CXXFLAGS}"
+	use debug || export LINKFLAGSOPTIMIZE="${LDFLAGS}"
 
 	# Make sure gnome-users get gtk-support
 	export GTKFLAG="`use_enable gtk`" && use gnome && GTKFLAG="--enable-gtk"
