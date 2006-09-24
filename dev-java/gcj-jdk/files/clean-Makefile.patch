@@ -1,0 +1,30 @@
+--- Makefile.in.orig	2006-03-11 20:56:27.000000000 +0100
++++ Makefile.in	2006-03-11 21:02:30.000000000 +0100
+@@ -530,13 +530,13 @@
+ libjawt.so:
+ 	echo | $(GCJ_BIN_DIR)/gcc$(gcc_suffix) -shared -O2 -fPIC -o libjawt.so -Wl,-soname,libjawt.so -xc - -lgcjawt
+ 
+-tools.jar: $(tools_jar_class_files) $(javadoc_class_files)
+-	$(JAR) cMf $@ $(tools_jar_class_files) com/sun/javadoc com/sun/tools/doclets
++tools.jar: $(tools_jar_class_files)
++	$(JAR) cMf $@ $(tools_jar_class_files)
+ 
+ java: java.c
+ 	$(GCJ_BIN_DIR)/gcc$(gcc_suffix) -DJAVA_HOME="\"$(JAVA_HOME_DIR)\"" -DARCH="\"$(CPU)\"" -DGCJ_BIN_DIR="\"$(GCJ_BIN_DIR)\"" -o $@ $<
+ 
+-all-local: java libjawt.so
++all-local:
+ 
+ install-exec-local:
+ 	$(mkinstalldirs) $(DESTDIR)$(JRE_LIB_DIR)/$(CPU)
+--- com/sun/tools/javac/Main.java.orig	2006-06-13 19:15:55.000000000 +0200
++++ com/sun/tools/javac/Main.java	2006-06-13 19:16:08.000000000 +0200
+@@ -56,7 +56,7 @@
+       }
+     catch (ClassNotFoundException e)
+       {
+-	File jar = new File (Config.JAR_INST_DIR + "/eclipse-ecj.jar");
++	File jar = new File (Config.JAR_INST_DIR);
+ 	if (!jar.exists () || !jar.canRead ())
+ 	  throw e;
+ 

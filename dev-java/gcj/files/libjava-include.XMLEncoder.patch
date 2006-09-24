@@ -1,0 +1,54 @@
+--- gcc-4.1.0/libjava/sources.am.orig	2006-03-06 01:07:56.000000000 +0100
++++ gcc-4.1.0/libjava/sources.am	2006-03-06 01:13:43.000000000 +0100
+@@ -876,7 +876,37 @@
+ classpath/gnu/java/beans/editors/NativeIntEditor.java \
+ classpath/gnu/java/beans/editors/NativeLongEditor.java \
+ classpath/gnu/java/beans/editors/NativeShortEditor.java \
+-classpath/gnu/java/beans/editors/StringEditor.java
++classpath/gnu/java/beans/editors/StringEditor.java \
++classpath/gnu/java/beans/encoder/ArrayPersistenceDelegate.java \
++classpath/gnu/java/beans/encoder/ClassPersistenceDelegate.java \
++classpath/gnu/java/beans/encoder/CollectionPersistenceDelegate.java \
++classpath/gnu/java/beans/encoder/Context.java \
++classpath/gnu/java/beans/encoder/GenericScannerState.java \
++classpath/gnu/java/beans/encoder/IgnoringScannerState.java \
++classpath/gnu/java/beans/encoder/MapPersistenceDelegate.java \
++classpath/gnu/java/beans/encoder/ObjectId.java \
++classpath/gnu/java/beans/encoder/PrimitivePersistenceDelegate.java \
++classpath/gnu/java/beans/encoder/ReportingScannerState.java \
++classpath/gnu/java/beans/encoder/Root.java \
++classpath/gnu/java/beans/encoder/ScanEngine.java \
++classpath/gnu/java/beans/encoder/ScannerState.java \
++classpath/gnu/java/beans/encoder/StAXWriter.java \
++classpath/gnu/java/beans/encoder/Writer.java \
++classpath/gnu/java/beans/encoder/elements/Array_Get.java \
++classpath/gnu/java/beans/encoder/elements/ArrayInstantiation.java \
++classpath/gnu/java/beans/encoder/elements/Array_Set.java \
++classpath/gnu/java/beans/encoder/elements/ClassResolution.java \
++classpath/gnu/java/beans/encoder/elements/Element.java \
++classpath/gnu/java/beans/encoder/elements/List_Get.java \
++classpath/gnu/java/beans/encoder/elements/List_Set.java \
++classpath/gnu/java/beans/encoder/elements/MethodInvocation.java \
++classpath/gnu/java/beans/encoder/elements/NullObject.java \
++classpath/gnu/java/beans/encoder/elements/ObjectInstantiation.java \
++classpath/gnu/java/beans/encoder/elements/ObjectReference.java \
++classpath/gnu/java/beans/encoder/elements/PrimitiveInstantiation.java \
++classpath/gnu/java/beans/encoder/elements/StaticFieldAccess.java \
++classpath/gnu/java/beans/encoder/elements/StaticMethodInvocation.java \
++classpath/gnu/java/beans/encoder/elements/StringReference.java
+ 
+ gnu-java-beans.lo: $(gnu_java_beans_source_files)
+ 	@find classpath/lib/gnu/java/beans -name '*.class' > gnu-java-beans.list
+@@ -2840,7 +2870,11 @@
+ classpath/java/beans/VetoableChangeListenerProxy.java \
+ classpath/java/beans/VetoableChangeSupport.java \
+ classpath/java/beans/Visibility.java \
+-classpath/java/beans/XMLDecoder.java
++classpath/java/beans/XMLDecoder.java \
++classpath/java/beans/XMLEncoder.java \
++classpath/java/beans/DefaultPersistenceDelegate.java \
++classpath/java/beans/PersistenceDelegate.java \
++classpath/java/beans/Encoder.java
+ 
+ java_beans_header_files = $(patsubst classpath/%,%,$(patsubst %.java,%.h,$(java_beans_source_files)))
+ 

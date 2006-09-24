@@ -1,0 +1,8 @@
+DIST classpath-0.92-generics.tar.gz 9441922 RMD160 6350682b4f6e9c1ae0089e6e23fee222520747cc SHA1 7db4d90e36e40ec676ac813f300265849e36e223 SHA256 613773eb3d4ef023afaa4d78637a2c52c9bfdf8a19bb966e853f695c8583bcd2
+EBUILD gnu-classpath-generics-0.92.ebuild 2503 RMD160 bb5e6398176be6e3740979a7c08dc59d479dfddf SHA1 bbd97af8971d8d1f455d741d87e9cf43ae947d4c SHA256 62d26eb1f17ed5d277c8cb916684e4493bc707d75796b200353c3497caec3ebc
+MD5 4ed1068eade1befc67bacc9ee4c856a4 gnu-classpath-generics-0.92.ebuild 2503
+RMD160 bb5e6398176be6e3740979a7c08dc59d479dfddf gnu-classpath-generics-0.92.ebuild 2503
+SHA256 62d26eb1f17ed5d277c8cb916684e4493bc707d75796b200353c3497caec3ebc gnu-classpath-generics-0.92.ebuild 2503
+MD5 99042b9da19fe6daa4bf10e8017d6c5f files/digest-gnu-classpath-generics-0.92 274
+RMD160 2a1fb471dc38981380ec2b0e9851d13bff62c796 files/digest-gnu-classpath-generics-0.92 274
+SHA256 af41fcfbc88fce6e79f1443bda5b9117246bb3a7b186f41e27ce54b2a7d1a9e4 files/digest-gnu-classpath-generics-0.92 274

@@ -1,0 +1,8 @@
+DIST ecjsrc.zip 1049034 RMD160 972ed60b5f66552edc8dd2d059aa466aaea4e881 SHA1 596d3bb9bc855a58b51e417470d0b2beeea6e2cd SHA256 07d9eb357961f4752eca4e487e2ea9a9931e2c642c78b78abd33b900e115866b
+EBUILD ant-eclipse-ecj-3.2.ebuild 1150 RMD160 d4aacd23738623cb83bfd34108e9df11ab70e227 SHA1 83e8427d408f1aafac1765dfbaa79dad838a39fa SHA256 6d0f5bfc975a991c99a3a1cdb7cfecfb1445a3ca48ea147ae3d6250f10dbbbca
+MD5 f9230e8c87e68bff5ca7d8bcf8c8c0d8 ant-eclipse-ecj-3.2.ebuild 1150
+RMD160 d4aacd23738623cb83bfd34108e9df11ab70e227 ant-eclipse-ecj-3.2.ebuild 1150
+SHA256 6d0f5bfc975a991c99a3a1cdb7cfecfb1445a3ca48ea147ae3d6250f10dbbbca ant-eclipse-ecj-3.2.ebuild 1150
+MD5 3b75546c6164808235b4af1da3e17c82 files/digest-ant-eclipse-ecj-3.2 214
+RMD160 b7e6f92e4de5e4e01c090addcdc04ee8f91f6236 files/digest-ant-eclipse-ecj-3.2 214
+SHA256 370c04ffb6423ca0bfbac23c76cfcf5f535ca13ff6577dd8d94650e4d4a3c927 files/digest-ant-eclipse-ecj-3.2 214

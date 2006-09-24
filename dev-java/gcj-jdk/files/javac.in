@@ -1,0 +1,8 @@
+#!/bin/sh
+# wrapper script for ecj as javac
+
+JAVA_PKG_CLASSMAP=${JAVA_PKG_CLASSMAP:="/usr/share/java/classmap.gcjdb"}
+
+CLASSPATH="/usr/share/eclipse-ecj-@ECJ_VER@/lib/ecj.jar:${CLASSPATH}" \
+@HOME@/bin/gij -Dgnu.gcj.precompiled.db.path=${JAVA_PKG_CLASSMAP} \
+	org.eclipse.jdt.internal.compiler.batch.Main -nowarn "${@}"

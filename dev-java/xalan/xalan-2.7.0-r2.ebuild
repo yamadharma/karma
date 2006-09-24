@@ -13,11 +13,11 @@ SRC_URI="mirror://apache/xml/${MY_PN}/source/${MY_P}-src.tar.gz"
 LICENSE="Apache-1.1"
 SLOT="0"
 KEYWORDS="amd64 ~ppc x86"
-IUSE="doc source"
+IUSE="doc gcj source"
 COMMON_DEP="
 	dev-java/javacup
 	dev-java/bcel
-	>=dev-java/jakarta-regexp-1.3-r2
+	=dev-java/jakarta-regexp-1.4*
 	=dev-java/bsf-2.3*
 	>=dev-java/xerces-2.6.2-r1
 	=dev-java/xml-commons-external-1.3*"
@@ -39,7 +39,7 @@ src_unpack() {
 	java-pkg_jar-from javacup javacup.jar java_cup.jar
 	java-pkg_jar-from javacup javacup.jar runtime.jar
 	java-pkg_jar-from bcel bcel.jar BCEL.jar
-	java-pkg_jar-from jakarta-regexp-1.3 jakarta-regexp.jar regexp.jar
+	java-pkg_jar-from jakarta-regexp-1.4 jakarta-regexp.jar regexp.jar
 }
 
 src_compile() {
@@ -47,6 +47,7 @@ src_compile() {
 }
 
 src_install() {
+	use gcj && java-pkg_skip-cachejar 900 xalan.jar
 	java-pkg_dojar build/*.jar
 	java-pkg_dolauncher ${PN} --main org.apache.xalan.xslt.Process
 	use doc && java-pkg_dohtml -r build/docs/*

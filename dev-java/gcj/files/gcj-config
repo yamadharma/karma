@@ -1,0 +1,63 @@
+#!/bin/sh
+
+# libdir
+LIBDIR="lib"
+[ -d /usr/lib64 ] && LIBDIR="lib64"
+
+# Configuration file
+CONFFILE="/etc/env.d/99gcj"
+INSTPATH="/usr/${LIBDIR}/"
+
+if [ ! -f "${CONFFILE}" ] ; then
+	echo "Configuration file missing!"
+	echo "Generating dummy configuration file."
+	echo
+	echo "You have to set your prefered GCJ now!"
+	echo
+	echo "Run:"
+	echo "# gcj-config -l"
+	echo "# gcj-config gcj-VERSION"
+
+	cat <<- EOF > /etc/env.d/99gcj
+	PATH="${INSTPATH}gcj-4.1.0/bin"
+	ROOTPATH="${INSTPATH}gcj-4.1.0/bin"
+	LDPATH="${INSTPATH}gcj-4.1.0/lib"
+	EOF
+
+	exit 1
+fi
+
+# Variables
+GCJ="$(grep ^PATH= ${CONFFILE} | sed -e "s:.*\(gcj-.*\)/.*:\1:")"
+
+if [ "${#}" -eq 0 ] ; then
+	echo "Version set: ${GCJ}"
+	echo
+	echo "	List of GCJ installations:	gcj-config -l"
+	echo "	Set GCJ version:		gcj-config gcj-VERSION"
+elif [ "${1}" == "-l" ] ; then
+	for v in $(ls -1 ${INSTPATH} | grep gcj)
+	do
+		[ "${v}" == "${GCJ}" ] && v="${v} *"
+		echo "${v}"
+	done
+elif [[ "${1}" =~ "^gcj-" ]] ; then
+	if [ "${1}" == "${GCJ}" ] ; then
+		echo "Already set!"
+	else
+		found="no"
+		for v in $(ls -1 ${INSTPATH} | grep gcj)
+		do
+			[ "${v}" == "${1}" ] && found="yes"
+		done
+
+		if [ "${found}" == "no" ] ; then
+			echo "${1} not found!"
+		else
+			sed -e "s:${GCJ}:${1}:g" -i ${CONFFILE}
+			/usr/sbin/env-update || echo "ERROR: env-update failed?!"
+		fi
+	fi
+else
+	echo "Something wrong you do!!"
+fi

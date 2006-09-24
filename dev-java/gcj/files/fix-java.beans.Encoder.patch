@@ -1,0 +1,33 @@
+--- classpath/classpath/java/beans/Encoder.java	2006/01/24 16:57:57	1.2
++++ classpath/classpath/java/beans/Encoder.java	2006/01/29 19:11:29	1.3
+@@ -1,5 +1,5 @@
+ /* Encoder.java
+- Copyright (C) 2005, 2006 Free Software Foundation, Inc.
++ Copyright (C) 2005 Free Software Foundation, Inc.
+ 
+  This file is part of GNU Classpath.
+ 
+@@ -38,7 +38,6 @@
+ 
+ package java.beans;
+ 
+-import gnu.java.beans.DefaultExceptionListener;
+ import gnu.java.beans.encoder.ArrayPersistenceDelegate;
+ import gnu.java.beans.encoder.ClassPersistenceDelegate;
+ import gnu.java.beans.encoder.CollectionPersistenceDelegate;
+@@ -169,8 +168,13 @@
+    */
+   public void setExceptionListener(ExceptionListener listener)
+   {
+-    exceptionListener = (listener != null) 
+-	? listener : DefaultExceptionListener.INSTANCE;
++    exceptionListener = (listener != null) ? listener : new ExceptionListener()
++    {
++      public void exceptionThrown(Exception e)
++      {
++        System.err.println("exception thrown: " + e);
++      }
++    };
+   }
+ 
+   /**
