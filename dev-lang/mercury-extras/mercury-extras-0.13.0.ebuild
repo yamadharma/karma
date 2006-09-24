@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/mercury-extras/mercury-extras-0.12.2.ebuild,v 1.2 2006/03/27 19:08:41 keri Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/mercury-extras/mercury-extras-0.13.0.ebuild,v 1.2 2006/09/17 02:35:24 keri Exp $
 
 inherit eutils
 
@@ -12,35 +12,59 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~ppc x86 amd64"
 
-IUSE="doc glut iodbc opengl tcltk"
+IUSE="doc glut iodbc ncurses odbc opengl tcltk xml"
 
-DEPEND="~dev-lang/mercury-0.12.2
-	sys-libs/ncurses
+DEPEND="~dev-lang/mercury-${PV}
 	glut? ( virtual/glut )
-	iodbc? ( dev-db/libiodbc )
+	odbc? ( dev-db/unixODBC )
+	iodbc? ( !odbc? ( dev-db/libiodbc ) )
+	ncurses? ( sys-libs/ncurses )
 	opengl? ( virtual/opengl )
-	tcktk? ( =dev-lang/tk-8.4*
-		x11-libs/libX11
-		x11-libs/libXmu )"
+	tcltk? ( =dev-lang/tk-8.4*
+		|| ( (
+			x11-libs/libX11
+			x11-libs/libXmu )
+		virtual/x11 ) )"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	epatch "${FILESDIR}"/${P}-concurrency.patch
+	epatch "${FILESDIR}"/${P}-dynamic_linking.patch
+	epatch "${FILESDIR}"/${P}-lex.patch
 	epatch "${FILESDIR}"/${P}-mercury_glut.patch
 	epatch "${FILESDIR}"/${P}-mercury_tcltk.patch
 	epatch "${FILESDIR}"/${P}-mercury_opengl.patch
 	epatch "${FILESDIR}"/${P}-odbc.patch
+	epatch "${FILESDIR}"/${P}-posix.patch
+	epatch "${FILESDIR}"/${P}-references.patch
 	epatch "${FILESDIR}"/${P}-trailed_update.patch
 
 	sed -i	-e "s:curs:concurrency curs:" \
 		-e "s:posix:posix quickcheck:" \
-		-e "s:xml:trailed_update xml:" Mmakefile
+		-e "s:windows_installer_generator ::" Mmakefile
+	sed -i  -e "s:lib/mercury:lib/mercury-${PV}:" posix/Mmakefile
 
-	use iodbc && sed -i -e "s:moose:moose odbc:" Mmakefile
+	if built_with_use dev-lang/mercury minimal; then
+		sed -i -e "s:references::" Mmakefile
+	else
+		sed -i	-e "s:cgi:cgi clpr:" \
+			-e "s:xml:trailed_update xml:" Mmakefile
+	fi
+
 	use glut && sed -i -e "s: lex : graphics/mercury_glut lex :" Mmakefile
 	use tcltk && sed -i -e "s: lex : graphics/mercury_tcltk lex :" Mmakefile
 	use opengl && sed -i -e "s: lex : graphics/mercury_opengl lex :" Mmakefile
+
+	if use odbc ; then
+		sed -i -e "s:moose:moose odbc:" Mmakefile
+	elif use iodbc ; then
+		sed -i -e "s:moose:moose odbc:" Mmakefile
+		sed -i -e "s:MODBC_DRIVER=MODBC_UNIX:MODBC_DRIVER=MODBC_IODBC:" odbc/Mmakefile
+	fi
+
+	! use ncurses && sed -i -e "s:curs curses::" Mmakefile
+	! use xml && sed -i -e "s:xml::" Mmakefile
 }
 
 src_compile() {
@@ -72,11 +96,13 @@ src_install() {
 		docinto samples/complex_numbers
 		dodoc complex_numbers/samples/*.m
 
-		docinto samples/curs
-		dodoc curs/samples/*.m
+		if use ncurses ; then
+			docinto samples/curs
+			dodoc curs/samples/*.m
 
-		docinto samples/curses
-		dodoc curses/sample/*.m
+			docinto samples/curses
+			dodoc curses/sample/*.m
+		fi
 
 		docinto samples/dynamic_linking
 		dodoc dynamic_linking/hello.m
