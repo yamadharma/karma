@@ -18,7 +18,7 @@ S=${WORKDIR}/${ECVS_MODULE}
 DESCRIPTION="A fully featured mail application for GNUstep"
 HOMEPAGE="http://www.collaboration-world.com/gnumail/"
 
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="~x86 ~ppc ~amd64"
 LICENSE="GPL-2"
 SLOT="0"
 

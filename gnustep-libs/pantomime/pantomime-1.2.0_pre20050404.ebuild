@@ -19,7 +19,7 @@ DESCRIPTION="A set of Objective-C classes that model a mail system."
 HOMEPAGE="http://www.collaboration-world.com/pantomime/"
 
 LICENSE="LGPL-2.1 Elm"
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="~x86 ~ppc ~amd64"
 SLOT="0"
 
 IUSE="${IUSE}"
