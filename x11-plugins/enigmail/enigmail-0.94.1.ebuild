@@ -1,12 +1,16 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-plugins/enigmail/enigmail-0.94.0-r5.ebuild,v 1.2 2006/08/12 03:06:12 kumba Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-plugins/enigmail/enigmail-0.94.1.ebuild,v 1.1 2006/09/26 05:23:35 cardoe Exp $
 
 unset ALLOWED_FLAGS  # stupid extra-functions.sh ... bug 49179
-inherit flag-o-matic toolchain-funcs eutils nsplugins mozcoreconf makeedit multilib autotools
+WANT_AUTOCONF=2.1
+inherit flag-o-matic toolchain-funcs eutils nsplugins mozcoreconf mozextension makeedit multilib autotools
+
+LANGS="de el es-AR es-ES nb-NO sv-SE zh-CN"
+SHORTLANGS="es-ES nb-NO sv-SE"
 
 EMVER=${PV}
-TBVER="1.5.0.5"
+TBVER="1.5.0.7"
 TBPVER="0.1"
 
 DESCRIPTION="Gnupg encryption plugin for thunderbird."
@@ -15,14 +19,26 @@ SRC_URI="http://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/${TBVER}/so
 	mirror://gentoo/mozilla-thunderbird-${TBVER}-patches-${TBPVER}.tar.bz2
 	http://www.mozilla-enigmail.org/downloads/src/enigmail-${EMVER}.tar.gz"
 
-KEYWORDS="amd64 ~ia64 mips ~ppc ~sparc x86"
+KEYWORDS="amd64 ~ia64 ~mips ~ppc ~sparc x86"
 SLOT="0"
 LICENSE="MPL-1.1 NPL-1.1"
 IUSE=""
 
+for X in ${LANGS} ; do
+	SRC_URI="${SRC_URI} linguas_${X/-/_}? ( http://www.mozilla-enigmail.org/downloads/lang/0.9x/${PN}-${X}-0.9x.xpi )"
+	IUSE="${IUSE} linguas_${X/-/_}"
+done
+# ( mirror://gentoo/${PN}-${X}-0.9x.xpi )"
+
+for X in ${SHORTLANGS} ; do
+	SRC_URI="${SRC_URI} linguas_${X%%-*}? ( http://www.mozilla-enigmail.org/downloads/lang/0.9x/${PN}-${X}-0.9x.xpi )"
+	IUSE="${IUSE} linguas_${X%%-*}"
+done
+#( mirror://gentoo/${PN}-${X}-0.9x.xpi )"
+
 DEPEND=">=mail-client/mozilla-thunderbird-${TBVER}"
 RDEPEND="${DEPEND}
-	>=app-crypt/gnupg-1.4
+	>=app-crypt/gnupg-1.4.5
 	>=www-client/mozilla-launcher-1.37"
 
 S=${WORKDIR}/mozilla
@@ -34,8 +50,40 @@ export BUILD_OFFICIAL=1
 export MOZILLA_OFFICIAL=1
 export MOZ_CO_PROJECT=mail
 
+linguas() {
+	linguas=
+	local LANG
+	for LANG in ${LINGUAS}; do
+		if hasq ${LANG} en en_US; then
+			hasq en ${linguas} || \
+				linguas="${linguas:+"${linguas} "}en"
+			continue
+		elif hasq ${LANG} ${LANGS//-/_}; then
+			hasq ${LANG//_/-} ${linguas} || \
+				linguas="${linguas:+"${linguas} "}${LANG//_/-}"
+			continue
+		else
+			local SLANG
+			for SLANG in ${SHORTLANGS}; do
+				if [[ ${LANG} == ${SLANG%%-*} ]]; then
+					hasq ${SLANG} ${linguas} || \
+						linguas="${linguas:+"${linguas} "}${SLANG}"
+					continue 2
+				fi
+			done
+		fi
+		ewarn "Sorry, but ${PN} does not support the ${LANG} LINGUA"
+	done
+}
+
 src_unpack() {
 	unpack thunderbird-${TBVER}-source.tar.bz2 mozilla-thunderbird-${TBVER}-patches-${TBPVER}.tar.bz2 || die "unpack failed"
+
+	linguas
+	for X in ${linguas}; do
+		[[ ${X} != en ]] && xpi_unpack ${PN}-${X}-0.9x.xpi
+	done
+
 	cd ${S} || die "cd failed"
 
 	# Apply our patches
@@ -60,7 +108,8 @@ src_unpack() {
 	# Fix installation of enigmail.js
 	epatch ${FILESDIR}/70_enigmail-fix.patch
 
-	eautoreconf || die "failed running autoreconf"
+	WANT_AUTOCONF="2.1" \
+		eautoreconf || die "failed running autoreconf"
 }
 
 src_compile() {
@@ -134,4 +183,9 @@ src_install() {
 	insinto ${MOZILLA_FIVE_HOME}/chrome.d
 	newins ${S}/dist/bin/chrome/installed-chrome.txt ${PN}
 	echo "extension,${emid}" > ${D}${MOZILLA_FIVE_HOME}/extensions.d/${PN}
+
+	linguas
+	for X in ${linguas}; do
+		[[ ${X} != en ]] && xpi_install ${WORKDIR}/${PN}-${X}-0.9x
+	done
 }
