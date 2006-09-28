@@ -1,6 +1,21 @@
 # ChangeLog for app-shells/zsh-completion
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-shells/zsh-completion/ChangeLog,v 1.12 2005/05/03 07:39:17 usata Exp $
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-shells/zsh-completion/ChangeLog,v 1.15 2006/09/20 05:45:18 flameeyes Exp $
+
+  20 Sep 2006; Diego Pettenò <flameeyes@gentoo.org>
+  zsh-completion-20060618.ebuild:
+  Add ~x86-fbsd keyword.
+
+  22 Jun 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  zsh-completion-20050120.ebuild:
+  Stable on sparc
+
+*zsh-completion-20060618 (17 Jun 2006)
+
+  17 Jun 2006; Mamoru KOMACHI <usata@gentoo.org>
+  +zsh-completion-20060618.ebuild:
+  Added eclean completion and most of the programs of portage_utils.
+  Thanks to baptux <baptiste.daroussin@gmail.com>. This closes bug #133855.
 
 *zsh-completion-20050503 (03 May 2005)
 

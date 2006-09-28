@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/amarok/amarok-1.4.3.ebuild,v 1.3 2006/09/05 22:19:43 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/amarok/amarok-1.4.3-r1.ebuild,v 1.1 2006/09/15 09:48:01 flameeyes Exp $
 
 LANGS="az bg br ca cs cy da de el en_GB es et fi fr ga gl he hi hu is it ja ka
 km ko lt ms nb nl nn pa pl pt pt_BR ro ru rw sl sr sr@Latn sv ta tg th tr uk uz
@@ -48,6 +48,8 @@ RDEPEND="${DEPEND}
 
 DEPEND="${DEPEND}
 	>=dev-util/pkgconfig-0.9.0"
+
+PATCHES="${FILESDIR}/${P}-playlist-encoding.patch"
 
 need-kde 3.3
 

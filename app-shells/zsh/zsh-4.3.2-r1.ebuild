@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-shells/zsh/zsh-4.3.2.ebuild,v 1.1 2006/03/05 22:12:53 usata Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-shells/zsh/zsh-4.3.2-r1.ebuild,v 1.5 2006/09/18 17:43:08 steev Exp $
 
 inherit eutils multilib
 
@@ -11,11 +11,11 @@ SRC_URI="ftp://ftp.zsh.org/pub/${P}.tar.bz2
 
 LICENSE="ZSH"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~ppc ~ppc-macos ~sparc x86"
-IUSE="maildir ncurses static doc pcre cap"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~ppc ~ppc-macos ~s390 ~sh ~sparc x86 ~x86-fbsd"
+IUSE="maildir ncurses static doc pcre caps unicode"
 
 RDEPEND="pcre? ( >=dev-libs/libpcre-3.9 )
-	cap? ( sys-libs/libcap )
+	caps? ( sys-libs/libcap )
 	ncurses? ( >=sys-libs/ncurses-5.1 )"
 DEPEND="sys-apps/groff
 	>=sys-apps/sed-4
@@ -61,7 +61,7 @@ src_compile() {
 		$(use_with ncurses curses-terminfo) \
 		$(use_enable maildir maildir-support) \
 		$(use_enable pcre) \
-		$(use_enable cap) \
+		$(use_enable caps) \
 		$(use_enable unicode multibyte) \
 		${myconf} || die "configure failed"
 
@@ -72,7 +72,7 @@ src_compile() {
 			config.modules || die
 	else
 		# avoid linking to libs in /usr/lib, see Bug #27064
-		sed -i -e "/LIBS/s%-lpcre%/usr/lib/libpcre.a%" \
+		sed -i -e "/LIBS/s%-lpcre%/usr/$(get_libdir)/libpcre.a%" \
 			Makefile || die
 	fi
 

@@ -1,4 +1,4 @@
-# /etc/skel/.bashrc:
+# /etc/skel/.bashrc
 #
 # This file is sourced by all *interactive* bash shells on startup,
 # including some apparently interactive shells such as scp and rcp
@@ -15,11 +15,15 @@ if [[ $- != *i* ]] ; then
 fi
 
 # Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
-if [[ -f ~/.dir_colors ]]; then
-	eval `dircolors -b ~/.dir_colors`
-else
-	eval `dircolors -b /etc/DIR_COLORS`
+if [[ -f ~/.dir_colors ]] ; then
+	eval $(dircolors -b ~/.dir_colors)
+elif [[ -f /etc/DIR_COLORS ]] ; then
+	eval $(dircolors -b /etc/DIR_COLORS)
 fi
+
+#BSD#@export CLICOLOR=1
+#GNU#@alias ls='ls --color=auto'
+alias grep='grep --colour=auto'
 
 # Change the window title of X terminals 
 case ${TERM} in

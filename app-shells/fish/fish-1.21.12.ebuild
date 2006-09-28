@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-shells/fish/fish-1.21.4.ebuild,v 1.1 2006/04/08 19:14:27 spyderous Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-shells/fish/fish-1.21.12.ebuild,v 1.1 2006/09/24 06:00:27 dberkholz Exp $
 
 DESCRIPTION="fish is the Friendly Interactive SHell"
 HOMEPAGE="http://roo.no-ip.org/fish/"
@@ -8,22 +8,23 @@ SRC_URI="http://roo.no-ip.org/fish/files/${PV}/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 ~ppc x86"
-IUSE=""
+IUSE="doc X"
 RDEPEND="sys-libs/ncurses
 	sys-devel/bc
 	www-client/htmlview
-	|| ( (
-			x11-libs/libSM
-			x11-libs/libXext
-		)
-		virtual/x11
-	)"
+	X? ( x11-misc/xsel )"
 DEPEND="${RDEPEND}
-	app-doc/doxygen"
+	doc? ( app-doc/doxygen )"
 
 src_compile() {
-	econf docdir=/usr/share/doc/${PF} || die "econf failed"
+	econf \
+		docdir=/usr/share/doc/${PF} \
+		--without-xsel \
+		|| die "econf failed"
 	emake || die "emake failed"
+	if use doc; then
+		emake doc || die "emake doc failed"
+	fi
 }
 
 src_install() {

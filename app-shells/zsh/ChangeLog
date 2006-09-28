@@ -1,6 +1,26 @@
 # ChangeLog for app-shells/zsh
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-shells/zsh/ChangeLog,v 1.93 2006/03/05 22:12:53 usata Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-shells/zsh/ChangeLog,v 1.98 2006/09/18 17:43:08 steev Exp $
+
+  18 Sep 2006; Steev Klimaszewski <steev@gentoo.org> zsh-4.3.2-r1.ebuild:
+  Add ~x86-fbsd keyword
+
+  09 Sep 2006; Christel Dahlskjaer <christel@gentoo.org>
+  zsh-4.3.2-r1.ebuild:
+  cap -> caps; bug #128585
+
+*zsh-4.2.6-r1 (30 May 2006)
+
+  30 May 2006; Cory Visi <visi@gentoo.org> zsh-4.2.6-r1.ebuild,
+  zsh-4.3.2-r1.ebuild:
+  Fixed confusion that improper patching created
+
+  25 May 2006; Cory Visi <visi@gentoo.org> zsh-4.2.6.ebuild, zsh-4.3.2.ebuild:
+  Updated header and correct multilib build problems discussed in Bug 133539
+  (introduced by changes from Bug 27064)
+
+  15 Mar 2006; Emanuele Giaquinta <exg@gentoo.org> zsh-4.3.2.ebuild:
+  Added missing unicode IUSE flag.
 
 *zsh-4.3.2 (05 Mar 2006)
 
