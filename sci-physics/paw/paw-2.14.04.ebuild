@@ -5,7 +5,7 @@
 inherit eutils multilib fortran
 
 DEB_PV="${PV}"
-DEB_PR="3"
+DEB_PR="6"
 
 DESCRIPTION="CERN's Physics Analysis Workstation data analysis program"
 HOMEPAGE="http://wwwasd.web.cern.ch/wwwasd/paw/index.html"
@@ -19,7 +19,7 @@ DEPEND="sci-physics/cernlib"
 
 S=${WORKDIR}/${PN}-${DEB_PV}.orig
 
-FORTRAN="g77 ifc"
+FORTRAN="gfortran g77 ifc"
 
 src_unpack() {
 	unpack ${A}

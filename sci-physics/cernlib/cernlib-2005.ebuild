@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils multilib fortran
+inherit eutils multilib fortran flag-o-matic
 
 DEB_PV="${PV}.dfsg"
 DEB_PR="3"
@@ -23,7 +23,7 @@ DEPEND="virtual/motif
 
 S=${WORKDIR}/${PN}-${DEB_PV}.orig
 
-FORTRAN="g77 ifc"
+FORTRAN="gfortran g77 ifc"
 
 src_unpack() {
 	unpack ${A}
@@ -65,10 +65,34 @@ src_unpack() {
 	# (adapted from $S/debian/rules)
 	mv -f src/include/cfortran/cfortran.h \
 		src/include/cfortran/cfortran.h.disabled
+	
+	# gfortran fix	
+	if [[ "${FORTRANC}" == "gfortran" ]] 
+	    then
+	    echo "#define HasGFortran YES" >> ${S}/src/config/host.def
+	    # Dirty hack 1	    
+	    sed -i -e "s:-lg2c:-lgfortran:g" ${S}/debian/add-ons/bin/cernlib.in
+	    # Dirty hack 2
+	    sed -i -e "s:-fugly-complex::g" ${S}/src/config/linux.cf
+	    if ( use amd64 )
+		then
+		sed -i -e "s:-fugly-complex::g" ${S}/src/config/linux-lp64.cf
+	    fi
+	fi
 }
 
 
 src_compile() {
+
+        if ( use amd64 )
+    	    then
+	    append-flags -fPIC
+	    if [[ "${FORTRANC}" == "g77" ]] 
+		then
+		append-flags -fno-f2c
+	    fi
+        fi
+
 	make || die "make failed"
 }
 
