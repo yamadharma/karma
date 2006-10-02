@@ -1,8 +1,8 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bzrtools/bzrtools-0.10.0.ebuild,v 1.1 2006/09/04 15:45:56 marienz Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bzrtools/bzrtools-0.11.0.ebuild,v 1.1 2006/09/25 16:03:23 marienz Exp $
 
-inherit distutils eutils
+inherit distutils versionator
 
 DESCRIPTION="bzrtools is a useful collection of utilities for bzr."
 HOMEPAGE="http://bazaar.canonical.com/BzrTools"
@@ -14,7 +14,7 @@ KEYWORDS="amd64 ~ppc x86"
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.4
-	=dev-util/bzr-0.10*
+	=dev-util/bzr-$(get_version_component_range 1-2)*
 	dev-python/pybaz"
 
 DOCS="CREDITS NEWS NEWS.Shelf README README.Shelf TODO TODO.Shelf"
