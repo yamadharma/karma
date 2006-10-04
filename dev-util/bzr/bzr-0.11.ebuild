@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.11_rc2.ebuild,v 1.1 2006/09/27 14:19:00 marienz Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.11.ebuild,v 1.1 2006/10/02 01:08:55 marienz Exp $
 
 inherit distutils bash-completion elisp-common eutils
 
