@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-im/skype/skype-1.3.0.37.ebuild,v 1.1 2006/08/23 00:14:31 humpback Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-im/skype/skype-1.3.0.53.ebuild,v 1.1 2006/10/04 22:26:18 humpback Exp $
 
 inherit eutils qt3
 
@@ -9,11 +9,12 @@ inherit eutils qt3
 RESTRICT="nomirror nostrip"
 AVATARV="1.0"
 DESCRIPTION="${PN} is a P2P-VoiceIP client."
-MY_PN=${PN}-beta
+MY_PN=${PN}
 HOMEPAGE="http://www.skype.com/"
 SRC_URI="http://dev.gentoo.org/~humpback/skype-avatars-${AVATARV}.tgz
-		!static? ( http://download.skype.com/linux/${MY_PN}-${PV}.tar.bz2 )
-		static? ( http://download.skype.com/linux/${MY_PN}_staticQT-${PV}.tar.bz2 )"
+		!static? ( http://download.skype.com/linux/${MY_PN}-${PV}-generic.tar.bz2 )
+		static? (
+		http://download.skype.com/linux/${MY_PN}_staticQT-${PV}-generic.tar.bz2 )"
 
 LICENSE="skype-eula"
 SLOT="0"
@@ -22,9 +23,11 @@ IUSE="static"
 DEPEND="
 	amd64? ( >=app-emulation/emul-linux-x86-xlibs-1.2
 		>=app-emulation/emul-linux-x86-baselibs-2.1.1
-		>=app-emulation/emul-linux-x86-soundlibs-2.3
+		>=app-emulation/emul-linux-x86-soundlibs-2.4
 		!static? ( >=app-emulation/emul-linux-x86-qtlibs-1.1 ) )
 	x86? ( >=sys-libs/glibc-2.3.2
+		>=media-libs/alsa-lib-1.0.11
+		virtual/libstdc++
 		!static? ( $(qt_min_version 3.2) ) )"
 RDEPEND="${DEPEND}
 	>=sys-apps/dbus-0.23.4"
@@ -35,9 +38,9 @@ QA_EXECSTACK_amd64="opt/skype/skype"
 src_unpack() {
 	if use static;
 	then
-		unpack ${MY_PN}_staticQT-${PV}.tar.bz2
+		unpack ${MY_PN}_staticQT-${PV}-generic.tar.bz2
 	else
-		unpack ${MY_PN}-${PV}.tar.bz2
+		unpack ${MY_PN}-${PV}-generic.tar.bz2
 	fi
 	cd ${P}
 	unpack skype-avatars-${AVATARV}.tgz

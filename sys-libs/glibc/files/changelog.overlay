@@ -1,5 +1,25 @@
 Glibc overlay changelog:
 
+2006-10-05
+*Removed the hash-style USE from 2.4-r4, the patches are now always applied.
+*Added the latest -Bdirect patch to all ebuilds, also always applied.
+*Hashvals is no longer supported, use either --hash-style or -Bdirect (but using both will probably break).
+*New snapshot.
+
+2006-10-02
+*Synced with portage, now using the 2.5 release!
+*2.5 now uses the 2.6.17 headers.
+*Removed some old files.
+
+2006-09-20
+*Fixed -Bdirect support in the 2.4-r4 ebuild.
+
+2006-09-15
+*Synced with portage.
+*All ebuild now uses the 2.6.16 headers.
+*New snapshot (for once nothing needs to be reverted to make it build. Yay!)
+*The latest hash-style code from glibc cvs.
+
 2006-08-11
 *fixed the build.
 
