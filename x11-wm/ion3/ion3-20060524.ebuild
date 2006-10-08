@@ -33,7 +33,7 @@ DEPEND="
 
 S=${WORKDIR}/${MY_PN}
 
-SCRIPTS_DIRS="keybindings scripts statusd styles"
+SCRIPTS_DIRS="keybindings misc scripts statusbar statusd styles"
 
 src_unpack() {
 	unpack ${MY_PN}.tar.gz
@@ -151,12 +151,20 @@ src_install() {
 			install || die
 	fi
 	
-	if use ionscripts; then
-		cd ${WORKDIR}/ion-scripts-3
-		insinto /usr/share/ion3
-		find $SCRIPTS_DIRS -type f |\
-        while read FILE ; do
-			doins $PWD/$FILE
-        done
+#	if use ionscripts; then
+#		cd ${WORKDIR}/ion-scripts-3
+#		insinto /usr/share/ion3
+#		find $SCRIPTS_DIRS -type f |\
+#        while read FILE ; do
+#			doins $PWD/$FILE
+#        done
+#	fi
+
+	if use ionscripts 
+	    then
+	    cd ${WORKDIR}/ion-scripts-3
+	    dodir /usr/share/ion3
+	    cp -R * ${D}/usr/share/ion3
 	fi
+	
 }
