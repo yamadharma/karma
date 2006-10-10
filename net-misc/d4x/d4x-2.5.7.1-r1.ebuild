@@ -1,34 +1,42 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-misc/d4x/d4x-2.5.0-r1.ebuild,v 1.2 2005/08/20 18:42:56 smithj Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-misc/d4x/d4x-2.5.7.1-r1.ebuild,v 1.1 2006/05/13 18:26:07 nelchael Exp $
 
 IUSE="nls esd gnome oss kde"
 
 inherit eutils flag-o-matic
 
-S="${WORKDIR}/${P}final"
 DESCRIPTION="GTK based download manager for X."
-SRC_URI="http://www.krasu.ru/soft/chuchelo/files/${P}final.tar.gz"
+SRC_URI="http://d4x.krasu.ru/files/${P}.tar.bz2"
 HOMEPAGE="http://www.krasu.ru/soft/chuchelo/"
 
-KEYWORDS="x86 amd64"
+KEYWORDS="amd64 x86"
 SLOT="0"
 LICENSE="Artistic"
 
-DEPEND=">=x11-libs/gtk+-2.6.0
-	>=dev-libs/glib-2.6.0
+DEPEND=">=x11-libs/gtk+-2.0.6
+	>=dev-libs/glib-2.0.6
 	>=sys-devel/gettext-0.11.2
+	>=dev-libs/openssl-0.9.7e
+	dev-libs/boost
 	esd? ( >=media-sound/esound-0.2.7 )"
 
 src_unpack() {
+
 	unpack ${A}
 
-	# Use our own $CXXFLAGS
+	epatch "${FILESDIR}/${P}-libintl_fix.patch"
+	epatch "${FILESDIR}/${P}-speed.patch"
+
 	cd ${S}
-	epatch ${FILESDIR}/${P}-fix-compile-gtk26.patch
-	cp configure configure.orig
-	sed -e "s:CXXFLAGS=\"-O2\":CXXFLAGS=\"${CXXFLAGS}\":g;s:OPTFLAGS=\"-O2\":OPTFLAGS=\"\":g" \
-		configure.orig >configure
+	# Fix "implausibly old time stamp 1970-01-01 01:00:00":
+	touch share/themes/gnome/popup/remove.png
+
+	# Use our own $CXXFLAGS
+	sed -i -e \
+		"s:CXXFLAGS=\"-O2\":CXXFLAGS=\"${CXXFLAGS}\":g;s:OPTFLAGS=\"-O2\":OPTFLAGS=\"\":g" \
+		configure
+
 }
 
 src_compile() {
@@ -52,6 +60,7 @@ src_compile() {
 		${myconf} || die
 
 	emake || die
+
 }
 
 src_install () {
@@ -77,7 +86,8 @@ src_install () {
 		newins share/nt.desktop d4x.desktop
 	fi
 
-	rm -rf ${D}/usr/share/d4x/{FAQ*,INSTALL*,README*,LICENSE,NAMES,TROUBLES}
+	rm -rf ${D}/usr/share/d4x/{FAQ*,INSTALL*,README*,LICENSE,AUTHORS,TROUBLES}
 	dodoc AUTHORS COPYING ChangeLog* NEWS PLANS TODO \
-		DOC/{FAQ*,LICENSE,NAMES,README*,TROUBLES,THANKS}
+		DOC/{FAQ*,LICENSE,README*,TROUBLES,THANKS}
+
 }

@@ -6,8 +6,9 @@ MY_P=${P/_/-}
 S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="A Linux filesystem that allow you to use samba/microsoft network in the same manner as the network neighborhood in Microsoft Windows."
-HOMEPAGE="http://smbnetfs.airm.net/"
-SRC_URI="http://smbnetfs.airm.net/sources/${MY_P}.tar.bz2"
+HOMEPAGE="http://sourceforge.net/projects/smbnetfs"
+SRC_URI="mirror://sourceforge/smbnetfs/${P}.tar.bz2"
+
 
 LICENSE="GPL-2"
 SLOT="0"
