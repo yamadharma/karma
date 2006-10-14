@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/jack-audio-connection-kit/jack-audio-connection-kit-0.101.1-r1.ebuild,v 1.3 2006/08/12 15:00:43 corsair Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/jack-audio-connection-kit/jack-audio-connection-kit-0.102.20.ebuild,v 1.1 2006/10/08 03:01:56 eldad Exp $
 
 inherit flag-o-matic eutils multilib
 
@@ -13,7 +13,7 @@ SRC_URI="mirror://sourceforge/jackit/${P}.tar.gz http://netjack.sourceforge.net/
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="amd64 ~arm ~ppc ~ppc-macos ~ppc64 ~sh ~sparc x86"
-IUSE="altivec alsa caps coreaudio doc debug jack-tmpfs mmx oss portaudio sndfile sse netjack"
+IUSE="altivec alsa caps coreaudio doc debug jack-tmpfs mmx oss portaudio sndfile sse netjack cpudetection"
 
 RDEPEND="dev-util/pkgconfig
 	sndfile? ( >=media-libs/libsndfile-1.0.0 )
@@ -26,7 +26,6 @@ RDEPEND="dev-util/pkgconfig
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )
 	netjack? ( dev-util/scons )"
-
 
 pkg_setup() {
 	if ! use sndfile ; then
@@ -51,19 +50,7 @@ src_unpack() {
 	use netjack && unpack ${NETJACK}.tar.bz2
 	cd ${S}
 
-	# the docs option is in upstream, I'll leave the pentium2 foobage
-	# for the x86 folks...... kito@gentoo.org
-
-	# Add doc option and fix --march=pentium2 in caps test
-	#epatch ${FILESDIR}/${PN}-doc-option.patch
-
-	# compile and install jackstart, see #92895, #94887
-	#if use caps ; then
-	#	epatch ${FILESDIR}/${PN}-0.99.0-jackstart.patch
-	#fi
-
 	epatch ${FILESDIR}/${PN}-transport.patch
-	epatch ${FILESDIR}/${PN}-mmap_complex.patch
 }
 
 src_compile() {
@@ -85,6 +72,17 @@ src_compile() {
 			-maltivec -mabi=altivec -mhard-float -mpowerpc-gfxopt
 	fi
 
+	# CPU Detection (dynsimd) uses asm routines which requires 3dnow.
+	# we test if it is present before enabling the configure flag.
+	if use cpudetection ; then
+		if (! grep 3dnow /proc/cpuinfo >/dev/null) ; then
+			ewarn "Can't build cpudetection (dynsimd) without cpu 3dnow support. see bug #136565."
+		else
+			einfo "Enabling cpudetection (dynsimd)"
+			myconf="${myconf} --enable-dynsimd"
+		fi
+	fi
+
 	use sndfile && \
 		export SNDFILE_CFLAGS="-I/usr/include" \
 		export SNDFILE_LIBS="-L/usr/$(get_libdir) -lsndfile"
@@ -99,7 +97,7 @@ src_compile() {
 		$(use_enable mmx) \
 		$(use_enable oss) \
 		$(use_enable portaudio) \
-		$(use_enable sse) $(use_enable sse dynsimd) \
+		$(use_enable sse) \
 		--with-pic \
 		${myconf} || die "configure failed"
 	emake || die "compilation failed"
