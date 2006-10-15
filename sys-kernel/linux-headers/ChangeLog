@@ -1,6 +1,60 @@
 # ChangeLog for sys-kernel/linux-headers
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-kernel/linux-headers/ChangeLog,v 1.192 2006/08/22 08:51:52 corsair Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-kernel/linux-headers/ChangeLog,v 1.203 2006/10/11 08:43:55 corsair Exp $
+
+  11 Oct 2006; Markus Rothe <corsair@gentoo.org>
+  linux-headers-2.6.17-r1.ebuild:
+  Stable on ppc64
+
+*linux-headers-2.6.18 (08 Oct 2006)
+
+  08 Oct 2006; Mike Frysinger <vapier@gentoo.org>
+  +linux-headers-2.6.18.ebuild:
+  Version bump #149012 by Arfrever Frehtes Taifersar Arahesis.
+
+  24 Sep 2006; Michael Hanselmann <hansmi@gentoo.org>
+  linux-headers-2.6.17-r1.ebuild:
+  Added to ~ppc.
+
+  20 Sep 2006; Markus Rothe <corsair@gentoo.org>
+  linux-headers-2.6.17-r1.ebuild:
+  Added ~ppc64
+
+  19 Sep 2006; Jason Wever <weeve@gentoo.org>
+  linux-headers-2.6.17-r1.ebuild:
+  Added ~sparc keyword.
+
+*linux-headers-2.6.17-r1 (16 Sep 2006)
+
+  16 Sep 2006; Tim Yamin <plasmaroo@gentoo.org>
+  +linux-headers-2.6.17-r1.ebuild:
+  Fix #144082, #145512, #146407. Stable on x86.
+
+  13 Sep 2006; Luca Barbato <lu_zero@gentoo.org>
+  linux-headers-2.6.16.ebuild:
+  Marked ppc
+
+  04 Sep 2006; Tim Yamin <plasmaroo@gentoo.org>
+  linux-headers-2.6.11-r5.ebuild:
+  Stable on x86; bug #146234.
+
+  04 Sep 2006; Luca Barbato <lu_zero@gentoo.org>
+  linux-headers-2.6.16.ebuild, linux-headers-2.6.17.ebuild:
+  Remove ppc workarounds
+
+*linux-headers-2.2.26-r1 (03 Sep 2006)
+*linux-headers-2.0.40-r1 (03 Sep 2006)
+
+  03 Sep 2006; Mike Frysinger <vapier@gentoo.org>
+  -linux-headers-2.0.40.ebuild, +linux-headers-2.0.40-r1.ebuild,
+  -linux-headers-2.2.26.ebuild, +linux-headers-2.2.26-r1.ebuild:
+  Update to kernel-2 eclass.
+
+*linux-headers-2.4.33.3 (03 Sep 2006)
+
+  03 Sep 2006; Mike Frysinger <vapier@gentoo.org>
+  +linux-headers-2.4.33.3.ebuild:
+  Version bump.
 
   22 Aug 2006; Markus Rothe <corsair@gentoo.org>
   linux-headers-2.6.16.ebuild, linux-headers-2.6.17.ebuild:

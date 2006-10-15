@@ -1,13 +1,14 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/erlang/erlang-10.2.7.ebuild,v 1.3 2006/03/07 23:14:21 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/erlang/erlang-10.2.10.ebuild,v 1.1 2006/04/10 20:42:54 mkennedy Exp $
 
-inherit eutils multilib flag-o-matic elisp-common
+inherit eutils multilib flag-o-matic elisp-common versionator
 
 #erlang uses a really weird versioning scheme which caused quite a few problems already
 #Thus we do a slight modification converting all letters to digits to make it more sane (see e.g. #26420)
 #the next line selects the right source.
-MY_PV=R10B-10
+MY_PV="R$(get_major_version)B-$(get_version_component_range 3)"
+# ATTN!! Take care when processing the C, etc version!
 MY_P=otp_src_${MY_PV}
 DESCRIPTION="Erlang programming language, runtime environment, and large collection of libraries"
 HOMEPAGE="http://www.erlang.org/"
@@ -36,10 +37,15 @@ SITEFILE=50erlang-gentoo.el
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/${P}-export-TARGET.patch
-	epatch "${FILESDIR}"/${PV}-manpage-emacs-gentoo.patch
+	epatch "${FILESDIR}/${PN}-10.2.7-export-TARGET.patch"
+	epatch "${FILESDIR}/10.2.7-manpage-emacs-gentoo.patch"
 	use odbc || sed -i 's: odbc : :' lib/Makefile
 	epatch "${DISTDIR}"/otp_src_${MY_PV}_epoll.patch
+
+	# Patch for glibc-2.4 first noted in Bug #128254 -- NOTE this is a
+	# compile time fix, runtime still requires testing, see
+	# http://www.erlang.org/ml-archive/erlang-questions/200601/msg00500.html
+	epatch "${FILESDIR}/glibc-2.4-fix.patch"
 }
 
 src_compile() {

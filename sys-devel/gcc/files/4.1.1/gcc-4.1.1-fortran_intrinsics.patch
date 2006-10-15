@@ -1,0 +1,1119 @@
+Index: gcc/fortran/intrinsic.c
+===================================================================
+--- gcc/fortran/intrinsic.c	(revision 115754)
++++ gcc/fortran/intrinsic.c	(working copy)
+@@ -880,7 +880,7 @@
+     *x = "x", *sh = "shift", *stg = "string", *ssg = "substring",
+     *y = "y", *sz = "size", *sta = "string_a", *stb = "string_b",
+     *z = "z", *ln = "len", *ut = "unit", *han = "handler",
+-    *num = "number", *tm = "time";
++    *num = "number", *tm = "time", *nm = "name", *md = "mode";
+ 
+   int di, dr, dd, dl, dc, dz, ii;
+ 
+@@ -916,6 +916,12 @@
+ 
+   make_generic ("abs", GFC_ISYM_ABS, GFC_STD_F77);
+ 
++  add_sym_2 ("access", 0, 1, BT_INTEGER, di, GFC_STD_GNU,
++	     gfc_check_access_func, NULL, gfc_resolve_access,
++	     nm, BT_CHARACTER, dc, REQUIRED, md, BT_CHARACTER, dc, REQUIRED);
++
++  make_generic ("access", GFC_ISYM_ACCESS, GFC_STD_GNU);
++
+   add_sym_1 ("achar", 1, 1, BT_CHARACTER, dc, GFC_STD_F95,
+ 	     gfc_check_achar, gfc_simplify_achar, NULL,
+ 	     i, BT_INTEGER, di, REQUIRED);
+@@ -1152,7 +1158,13 @@
+ 	     a, BT_CHARACTER, dc, REQUIRED);
+ 
+   make_generic ("chdir", GFC_ISYM_CHDIR, GFC_STD_GNU);
+-  
++
++  add_sym_2 ("chmod", 0, 1, BT_INTEGER, di, GFC_STD_GNU,
++	     gfc_check_chmod, NULL, gfc_resolve_chmod,
++	     nm, BT_CHARACTER, dc, REQUIRED, md, BT_CHARACTER, dc, REQUIRED);
++
++  make_generic ("chmod", GFC_ISYM_CHMOD, GFC_STD_GNU);
++
+   add_sym_3 ("cmplx", 1, 1, BT_COMPLEX, dz, GFC_STD_F77,
+ 	     gfc_check_cmplx, gfc_simplify_cmplx, gfc_resolve_cmplx,
+ 	     x, BT_UNKNOWN, dr, REQUIRED, y, BT_UNKNOWN, dr, OPTIONAL,
+@@ -1580,6 +1592,18 @@
+ 
+   make_generic ("isatty", GFC_ISYM_ISATTY, GFC_STD_GNU);
+ 
++  add_sym_2 ("rshift", 1, 1, BT_INTEGER, di, GFC_STD_GNU,
++	     gfc_check_ishft, NULL /*gfc_simplify_rshift*/, gfc_resolve_rshift,
++	     i, BT_INTEGER, di, REQUIRED, sh, BT_INTEGER, di, REQUIRED);
++
++  make_generic ("rshift", GFC_ISYM_RSHIFT, GFC_STD_GNU);
++
++  add_sym_2 ("lshift", 1, 1, BT_INTEGER, di, GFC_STD_GNU,
++	     gfc_check_ishft, NULL /*gfc_simplify_lshift*/, gfc_resolve_lshift,
++	     i, BT_INTEGER, di, REQUIRED, sh, BT_INTEGER, di, REQUIRED);
++
++  make_generic ("lshift", GFC_ISYM_LSHIFT, GFC_STD_GNU);
++
+   add_sym_2 ("ishft", 1, 1, BT_INTEGER, di, GFC_STD_F95,
+ 	     gfc_check_ishft, gfc_simplify_ishft, gfc_resolve_ishft,
+ 	     i, BT_INTEGER, di, REQUIRED, sh, BT_INTEGER, di, REQUIRED);
+@@ -2256,7 +2280,7 @@
+     *com = "command", *length = "length", *st = "status",
+     *val = "value", *num = "number", *name = "name",
+     *trim_name = "trim_name", *ut = "unit", *han = "handler",
+-    *sec = "seconds", *res = "result", *of = "offset";
++    *sec = "seconds", *res = "result", *of = "offset", *md = "mode";
+ 
+   int di, dr, dc, dl, ii;
+ 
+@@ -2288,6 +2312,14 @@
+ 	      gfc_check_itime_idate, NULL, gfc_resolve_itime,
+ 	      vl, BT_INTEGER, 4, REQUIRED);
+ 
++  add_sym_2s ("ltime", 0, 1, BT_UNKNOWN, 0, GFC_STD_GNU,
++	      gfc_check_ltime_gmtime, NULL, gfc_resolve_ltime,
++	      tm, BT_INTEGER, di, REQUIRED, vl, BT_INTEGER, di, REQUIRED);
++
++  add_sym_2s ("gmtime", 0, 1, BT_UNKNOWN, 0, GFC_STD_GNU,
++	      gfc_check_ltime_gmtime, NULL, gfc_resolve_gmtime,
++	      tm, BT_INTEGER, di, REQUIRED, vl, BT_INTEGER, di, REQUIRED);
++
+   add_sym_1s ("second", 0, 1, BT_UNKNOWN, 0, GFC_STD_GNU,
+ 	      gfc_check_second_sub, NULL, gfc_resolve_second_sub,
+ 	      tm, BT_REAL, dr, REQUIRED);
+@@ -2296,6 +2328,11 @@
+               gfc_check_chdir_sub, NULL, gfc_resolve_chdir_sub,
+ 	      name, BT_CHARACTER, dc, REQUIRED, st, BT_INTEGER, di, OPTIONAL);
+ 
++  add_sym_3s ("chmod", 0, 1, BT_UNKNOWN, 0, GFC_STD_GNU,
++              gfc_check_chmod_sub, NULL, gfc_resolve_chmod_sub,
++	      name, BT_CHARACTER, dc, REQUIRED, md, BT_CHARACTER, dc, REQUIRED,
++	      st, BT_INTEGER, di, OPTIONAL);
++
+   add_sym_4s ("date_and_time", 0, 1, BT_UNKNOWN, 0, GFC_STD_F95,
+ 	      gfc_check_date_and_time, NULL, NULL,
+ 	      dt, BT_CHARACTER, dc, OPTIONAL, tm, BT_CHARACTER, dc, OPTIONAL,
+Index: gcc/fortran/intrinsic.h
+===================================================================
+--- gcc/fortran/intrinsic.h	(revision 115754)
++++ gcc/fortran/intrinsic.h	(working copy)
+@@ -32,6 +32,7 @@
+ try gfc_check_a_p (gfc_expr *, gfc_expr *);
+ 
+ try gfc_check_abs (gfc_expr *);
++try gfc_check_access_func (gfc_expr *, gfc_expr *);
+ try gfc_check_achar (gfc_expr *);
+ try gfc_check_all_any (gfc_expr *, gfc_expr *);
+ try gfc_check_allocated (gfc_expr *);
+@@ -41,6 +42,7 @@
+ try gfc_check_btest (gfc_expr *, gfc_expr *);
+ try gfc_check_char (gfc_expr *, gfc_expr *);
+ try gfc_check_chdir (gfc_expr *);
++try gfc_check_chmod (gfc_expr *, gfc_expr *);
+ try gfc_check_cmplx (gfc_expr *, gfc_expr *, gfc_expr *);
+ try gfc_check_complex (gfc_expr *, gfc_expr *);
+ try gfc_check_count (gfc_expr *, gfc_expr *);
+@@ -139,6 +141,7 @@
+ /* Intrinsic subroutines.  */
+ try gfc_check_alarm_sub (gfc_expr *, gfc_expr *, gfc_expr *);
+ try gfc_check_chdir_sub (gfc_expr *, gfc_expr *);
++try gfc_check_chmod_sub (gfc_expr *, gfc_expr *, gfc_expr *);
+ try gfc_check_cpu_time (gfc_expr *);
+ try gfc_check_ctime_sub (gfc_expr *, gfc_expr *);
+ try gfc_check_system_clock (gfc_expr *, gfc_expr *, gfc_expr *);
+@@ -162,6 +165,7 @@
+ try gfc_check_hostnm_sub (gfc_expr *, gfc_expr *);
+ try gfc_check_itime_idate (gfc_expr *);
+ try gfc_check_kill_sub (gfc_expr *, gfc_expr *, gfc_expr *);
++try gfc_check_ltime_gmtime (gfc_expr *, gfc_expr *);
+ try gfc_check_perror (gfc_expr *);
+ try gfc_check_rename_sub (gfc_expr *, gfc_expr *, gfc_expr *);
+ try gfc_check_link_sub (gfc_expr *, gfc_expr *, gfc_expr *);
+@@ -229,6 +233,8 @@
+ gfc_expr *gfc_simplify_ifix (gfc_expr *);
+ gfc_expr *gfc_simplify_idint (gfc_expr *);
+ gfc_expr *gfc_simplify_ior (gfc_expr *, gfc_expr *);
++gfc_expr *gfc_simplify_rshift (gfc_expr *, gfc_expr *);
++gfc_expr *gfc_simplify_lshift (gfc_expr *, gfc_expr *);
+ gfc_expr *gfc_simplify_ishft (gfc_expr *, gfc_expr *);
+ gfc_expr *gfc_simplify_ishftc (gfc_expr *, gfc_expr *, gfc_expr *);
+ gfc_expr *gfc_simplify_kind (gfc_expr *);
+@@ -293,6 +299,7 @@
+ 
+ /* Resolution functions.  */
+ void gfc_resolve_abs (gfc_expr *, gfc_expr *);
++void gfc_resolve_access (gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_acos (gfc_expr *, gfc_expr *);
+ void gfc_resolve_acosh (gfc_expr *, gfc_expr *);
+ void gfc_resolve_aimag (gfc_expr *, gfc_expr *);
+@@ -313,6 +320,7 @@
+ void gfc_resolve_ceiling (gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_char (gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_chdir (gfc_expr *, gfc_expr *);
++void gfc_resolve_chmod (gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_cmplx (gfc_expr *, gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_dcmplx (gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_complex (gfc_expr *, gfc_expr *, gfc_expr *);
+@@ -361,6 +369,8 @@
+ void gfc_resolve_long (gfc_expr *, gfc_expr *);
+ void gfc_resolve_ior (gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_isatty (gfc_expr *, gfc_expr *);
++void gfc_resolve_rshift (gfc_expr *, gfc_expr *, gfc_expr *);
++void gfc_resolve_lshift (gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_ishft (gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_ishftc (gfc_expr *, gfc_expr *, gfc_expr *, gfc_expr *);
+ void gfc_resolve_kill (gfc_expr *, gfc_expr *, gfc_expr *);
+@@ -436,6 +446,7 @@
+ /* Intrinsic subroutine resolution.  */
+ void gfc_resolve_alarm_sub (gfc_code *);
+ void gfc_resolve_chdir_sub (gfc_code *);
++void gfc_resolve_chmod_sub (gfc_code *);
+ void gfc_resolve_cpu_time (gfc_code *);
+ void gfc_resolve_ctime_sub (gfc_code *);
+ void gfc_resolve_exit (gfc_code *);
+@@ -454,6 +454,8 @@
+ void gfc_resolve_get_command (gfc_code *);
+ void gfc_resolve_get_command_argument (gfc_code *);
+ void gfc_resolve_get_environment_variable (gfc_code *);
++void gfc_resolve_gmtime (gfc_code *);
++void gfc_resolve_ltime (gfc_code *);
+ void gfc_resolve_hostnm_sub (gfc_code *);
+ void gfc_resolve_kill_sub (gfc_code *);
+ void gfc_resolve_mvbits (gfc_code *);
+Index: gcc/fortran/gfortran.h
+===================================================================
+--- gcc/fortran/gfortran.h	(revision 115754)
++++ gcc/fortran/gfortran.h	(working copy)
+@@ -304,6 +304,7 @@
+      the backend (eg. KIND).  */
+   GFC_ISYM_NONE = 0,
+   GFC_ISYM_ABS,
++  GFC_ISYM_ACCESS,
+   GFC_ISYM_ACHAR,
+   GFC_ISYM_ACOS,
+   GFC_ISYM_ACOSH,
+@@ -332,6 +333,7 @@
+   GFC_ISYM_CEILING,
+   GFC_ISYM_CHAR,
+   GFC_ISYM_CHDIR,
++  GFC_ISYM_CHMOD,
+   GFC_ISYM_CMPLX,
+   GFC_ISYM_COMMAND_ARGUMENT_COUNT,
+   GFC_ISYM_COMPLEX,
+@@ -386,6 +386,7 @@
+   GFC_ISYM_LOC,
+   GFC_ISYM_LOG10,
+   GFC_ISYM_LOGICAL,
++  GFC_ISYM_LSHIFT,
+   GFC_ISYM_MALLOC,
+   GFC_ISYM_MATMUL,
+   GFC_ISYM_MAX,
+@@ -424,6 +427,7 @@
+   GFC_ISYM_RENAME,
+   GFC_ISYM_REPEAT,
+   GFC_ISYM_RESHAPE,
++  GFC_ISYM_RSHIFT,
+   GFC_ISYM_RRSPACING,
+   GFC_ISYM_SCALE,
+   GFC_ISYM_SCAN,
+Index: gcc/fortran/iresolve.c
+===================================================================
+--- gcc/fortran/iresolve.c	(revision 115754)
++++ gcc/fortran/iresolve.c	(working copy)
+@@ -90,6 +90,16 @@
+ 
+ 
+ void
++gfc_resolve_access (gfc_expr * f, gfc_expr * name ATTRIBUTE_UNUSED,
++	            gfc_expr * mode ATTRIBUTE_UNUSED)
++{
++  f->ts.type = BT_INTEGER;
++  f->ts.kind = gfc_c_int_kind;
++  f->value.function.name = PREFIX("access_func");
++}
++
++
++void
+ gfc_resolve_acos (gfc_expr * f, gfc_expr * x)
+ {
+   f->ts = x->ts;
+@@ -353,6 +363,32 @@
+ 
+ 
+ void
++gfc_resolve_chmod (gfc_expr * f, gfc_expr * name ATTRIBUTE_UNUSED,
++		   gfc_expr * mode ATTRIBUTE_UNUSED)
++{
++  f->ts.type = BT_INTEGER;
++  f->ts.kind = gfc_c_int_kind;
++  f->value.function.name = PREFIX("chmod_func");
++}
++
++
++void
++gfc_resolve_chmod_sub (gfc_code * c)
++{
++  const char *name;
++  int kind;
++
++  if (c->ext.actual->next->next->expr != NULL)
++    kind = c->ext.actual->next->next->expr->ts.kind;
++  else
++    kind = gfc_default_integer_kind;
++
++  name = gfc_get_string (PREFIX("chmod_i%d_sub"), kind);
++  c->resolved_sym = gfc_get_intrinsic_sub_symbol (name);
++}
++
++
++void
+ gfc_resolve_cmplx (gfc_expr * f, gfc_expr * x, gfc_expr * y, gfc_expr * kind)
+ {
+   f->ts.type = BT_COMPLEX;
+@@ -919,6 +955,24 @@
+ 
+ 
+ void
++gfc_resolve_rshift (gfc_expr * f, gfc_expr * i, gfc_expr * shift)
++{
++  f->ts = i->ts;
++  f->value.function.name =
++    gfc_get_string ("__rshift_%d_%d", i->ts.kind, shift->ts.kind);
++}
++
++
++void
++gfc_resolve_lshift (gfc_expr * f, gfc_expr * i, gfc_expr * shift)
++{
++  f->ts = i->ts;
++  f->value.function.name =
++    gfc_get_string ("__lshift_%d_%d", i->ts.kind, shift->ts.kind);
++}
++
++
++void
+ gfc_resolve_ishftc (gfc_expr * f, gfc_expr * i, gfc_expr * shift,
+ 		    gfc_expr * size)
+ {
+@@ -2293,6 +2293,21 @@
+   c->resolved_sym = gfc_get_intrinsic_sub_symbol (name);
+ }
+ 
++void
++gfc_resolve_ltime (gfc_code * c)
++{
++  c->resolved_sym = gfc_get_intrinsic_sub_symbol
++		      (gfc_get_string (PREFIX("ltime_i%d"),
++				       gfc_default_integer_kind));
++}
++
++void
++gfc_resolve_gmtime (gfc_code * c)
++{
++  c->resolved_sym = gfc_get_intrinsic_sub_symbol
++		      (gfc_get_string (PREFIX("gmtime_i%d"),
++				       gfc_default_integer_kind));
++}
+ 
+ /* G77 compatibility subroutine second().  */
+ 
+Index: gcc/fortran/check.c
+===================================================================
+--- gcc/fortran/check.c	(revision 115754)
++++ gcc/fortran/check.c	(working copy)
+@@ -443,6 +443,22 @@
+ 
+ 
+ try
++gfc_check_access_func (gfc_expr * name, gfc_expr * mode)
++{
++  if (type_check (name, 0, BT_CHARACTER) == FAILURE
++      || scalar_check (name, 0) == FAILURE)
++    return FAILURE;
++
++
++  if (type_check (mode, 1, BT_CHARACTER) == FAILURE
++      || scalar_check (mode, 1) == FAILURE)
++    return FAILURE;
++
++  return SUCCESS;
++}
++
++
++try
+ gfc_check_all_any (gfc_expr * mask, gfc_expr * dim)
+ {
+   if (logical_array_check (mask, 0) == FAILURE)
+@@ -678,6 +694,41 @@
+ 
+ 
+ try
++gfc_check_chmod (gfc_expr * name, gfc_expr * mode)
++{
++  if (type_check (name, 0, BT_CHARACTER) == FAILURE)
++    return FAILURE;
++
++  if (type_check (mode, 1, BT_CHARACTER) == FAILURE)
++    return FAILURE;
++
++  return SUCCESS;
++}
++
++
++try
++gfc_check_chmod_sub (gfc_expr * name, gfc_expr * mode, gfc_expr * status)
++{
++  if (type_check (name, 0, BT_CHARACTER) == FAILURE)
++    return FAILURE;
++
++  if (type_check (mode, 1, BT_CHARACTER) == FAILURE)
++    return FAILURE;
++
++  if (status == NULL)
++    return SUCCESS;
++
++  if (type_check (status, 2, BT_INTEGER) == FAILURE)
++    return FAILURE;
++
++  if (scalar_check (status, 2) == FAILURE)
++    return FAILURE;
++
++  return SUCCESS;
++}
++
++
++try
+ gfc_check_cmplx (gfc_expr * x, gfc_expr * y, gfc_expr * kind)
+ {
+   if (numeric_check (x, 0) == FAILURE)
+@@ -3085,6 +3136,37 @@
+ 
+ 
+ try
++gfc_check_ltime_gmtime (gfc_expr * time, gfc_expr * values)
++{
++  if (type_check (time, 0, BT_INTEGER) == FAILURE)
++    return FAILURE;
++
++  if (kind_value_check(time, 0, gfc_default_integer_kind) == FAILURE)
++    return FAILURE;
++
++  if (scalar_check (time, 0) == FAILURE)
++    return FAILURE;
++
++  if (array_check (values, 1) == FAILURE)
++    return FAILURE;
++
++  if (rank_check (values, 1, 1) == FAILURE)
++    return FAILURE;
++
++  if (variable_check (values, 1) == FAILURE)
++    return FAILURE;
++
++  if (type_check (values, 1, BT_INTEGER) == FAILURE)
++    return FAILURE;
++
++  if (kind_value_check(values, 1, gfc_default_integer_kind) == FAILURE)
++    return FAILURE;
++
++  return SUCCESS;
++}
++
++
++try
+ gfc_check_ttynam_sub (gfc_expr * unit, gfc_expr * name)
+ {
+   if (scalar_check (unit, 0) == FAILURE)
+Index: gcc/fortran/trans-intrinsic.c
+===================================================================
+--- gcc/fortran/trans-intrinsic.c	(revision 115754)
++++ gcc/fortran/trans-intrinsic.c	(working copy)
+@@ -2110,6 +2110,22 @@
+   se->expr = fold_build2 (BIT_AND_EXPR, type, tmp, mask);
+ }
+ 
++/* RSHIFT (I, SHIFT) = I >> SHIFT
++   LSHIFT (I, SHIFT) = I << SHIFT  */
++static void
++gfc_conv_intrinsic_rlshift (gfc_se * se, gfc_expr * expr, int right_shift)
++{
++  tree arg;
++  tree arg2;
++
++  arg = gfc_conv_intrinsic_function_args (se, expr);
++  arg2 = TREE_VALUE (TREE_CHAIN (arg));
++  arg = TREE_VALUE (arg);
++
++  se->expr = fold_build2 (right_shift ? RSHIFT_EXPR : LSHIFT_EXPR,
++			  TREE_TYPE (arg), arg, arg2);
++}
++
+ /* ISHFT (I, SHIFT) = (abs (shift) >= BIT_SIZE (i))
+                         ? 0
+ 	 	        : ((shift >= 0) ? i << shift : i >> -shift)
+@@ -3581,6 +3597,14 @@
+       gfc_conv_intrinsic_bitop (se, expr, BIT_IOR_EXPR);
+       break;
+ 
++    case GFC_ISYM_LSHIFT:
++      gfc_conv_intrinsic_rlshift (se, expr, 0);
++      break;
++
++    case GFC_ISYM_RSHIFT:
++      gfc_conv_intrinsic_rlshift (se, expr, 1);
++      break;
++
+     case GFC_ISYM_ISHFT:
+       gfc_conv_intrinsic_ishft (se, expr);
+       break;
+@@ -3716,7 +3740,9 @@
+       gfc_conv_intrinsic_loc (se, expr);
+       break;
+ 
++    case GFC_ISYM_ACCESS:
+     case GFC_ISYM_CHDIR:
++    case GFC_ISYM_CHMOD:
+     case GFC_ISYM_ETIME:
+     case GFC_ISYM_FGET:
+     case GFC_ISYM_FGETC:
+Index: libgfortran/intrinsics/date_and_time.c
+===================================================================
+--- libgfortran/intrinsics/date_and_time.c	(revision 115752)
++++ libgfortran/intrinsics/date_and_time.c	(working copy)
+@@ -521,3 +521,188 @@
+   for (i = 0; i < 3; i++, vptr += delta)
+     *vptr = x[i];
+ }
++
++
++
++/* GMTIME(STIME, TARRAY) - Non-standard
++
++   Description: Given a system time value STime, fills TArray with values
++   extracted from it appropriate to the GMT time zone using gmtime(3).
++
++   The array elements are as follows:
++
++      1. Seconds after the minute, range 0–59 or 0–61 to allow for leap seconds
++      2. Minutes after the hour, range 0–59
++      3. Hours past midnight, range 0–23
++      4. Day of month, range 0–31
++      5. Number of months since January, range 0–11
++      6. Years since 1900
++      7. Number of days since Sunday, range 0–6
++      8. Days since January 1
++      9. Daylight savings indicator: positive if daylight savings is in effect,
++         zero if not, and negative if the information isn't available.  */
++
++static void
++gmtime_0 (const time_t * t, int x[9])
++{
++  struct tm lt;
++
++  lt = *gmtime (t);
++  x[0] = lt.tm_sec;
++  x[1] = lt.tm_min;
++  x[2] = lt.tm_hour;
++  x[3] = lt.tm_mday;
++  x[4] = lt.tm_mon;
++  x[5] = lt.tm_year;
++  x[6] = lt.tm_wday;
++  x[7] = lt.tm_yday;
++  x[8] = lt.tm_isdst;
++}
++
++extern void gmtime_i4 (GFC_INTEGER_4 *, gfc_array_i4 *);
++export_proto(gmtime_i4);
++
++void
++gmtime_i4 (GFC_INTEGER_4 * t, gfc_array_i4 * tarray)
++{
++  int x[9], i;
++  size_t len, delta;
++  GFC_INTEGER_4 *vptr;
++  time_t tt;
++  
++  /* Call helper function.  */
++  tt = (time_t) *t;
++  gmtime_0(&tt, x);
++
++  /* Copy the values into the array.  */
++  len = tarray->dim[0].ubound + 1 - tarray->dim[0].lbound;
++  assert (len >= 9);
++  delta = tarray->dim[0].stride;
++  if (delta == 0)
++    delta = 1;
++
++  vptr = tarray->data;
++  for (i = 0; i < 9; i++, vptr += delta)
++    *vptr = x[i];
++}
++
++extern void gmtime_i8 (GFC_INTEGER_8 *, gfc_array_i8 *);
++export_proto(gmtime_i8);
++
++void
++gmtime_i8 (GFC_INTEGER_8 * t, gfc_array_i8 * tarray)
++{
++  int x[9], i;
++  size_t len, delta;
++  GFC_INTEGER_8 *vptr;
++  time_t tt;
++  
++  /* Call helper function.  */
++  tt = (time_t) *t;
++  gmtime_0(&tt, x);
++
++  /* Copy the values into the array.  */
++  len = tarray->dim[0].ubound + 1 - tarray->dim[0].lbound;
++  assert (len >= 9);
++  delta = tarray->dim[0].stride;
++  if (delta == 0)
++    delta = 1;
++
++  vptr = tarray->data;
++  for (i = 0; i < 9; i++, vptr += delta)
++    *vptr = x[i];
++}
++
++
++
++
++/* LTIME(STIME, TARRAY) - Non-standard
++
++   Description: Given a system time value STime, fills TArray with values
++   extracted from it appropriate to the local time zone using localtime(3).
++
++   The array elements are as follows:
++
++      1. Seconds after the minute, range 0–59 or 0–61 to allow for leap seconds
++      2. Minutes after the hour, range 0–59
++      3. Hours past midnight, range 0–23
++      4. Day of month, range 0–31
++      5. Number of months since January, range 0–11
++      6. Years since 1900
++      7. Number of days since Sunday, range 0–6
++      8. Days since January 1
++      9. Daylight savings indicator: positive if daylight savings is in effect,
++         zero if not, and negative if the information isn't available.  */
++
++static void
++ltime_0 (const time_t * t, int x[9])
++{
++  struct tm lt;
++
++  lt = *localtime (t);
++  x[0] = lt.tm_sec;
++  x[1] = lt.tm_min;
++  x[2] = lt.tm_hour;
++  x[3] = lt.tm_mday;
++  x[4] = lt.tm_mon;
++  x[5] = lt.tm_year;
++  x[6] = lt.tm_wday;
++  x[7] = lt.tm_yday;
++  x[8] = lt.tm_isdst;
++}
++
++extern void ltime_i4 (GFC_INTEGER_4 *, gfc_array_i4 *);
++export_proto(ltime_i4);
++
++void
++ltime_i4 (GFC_INTEGER_4 * t, gfc_array_i4 * tarray)
++{
++  int x[9], i;
++  size_t len, delta;
++  GFC_INTEGER_4 *vptr;
++  time_t tt;
++  
++  /* Call helper function.  */
++  tt = (time_t) *t;
++  ltime_0(&tt, x);
++
++  /* Copy the values into the array.  */
++  len = tarray->dim[0].ubound + 1 - tarray->dim[0].lbound;
++  assert (len >= 9);
++  delta = tarray->dim[0].stride;
++  if (delta == 0)
++    delta = 1;
++
++  vptr = tarray->data;
++  for (i = 0; i < 9; i++, vptr += delta)
++    *vptr = x[i];
++}
++
++extern void ltime_i8 (GFC_INTEGER_8 *, gfc_array_i8 *);
++export_proto(ltime_i8);
++
++void
++ltime_i8 (GFC_INTEGER_8 * t, gfc_array_i8 * tarray)
++{
++  int x[9], i;
++  size_t len, delta;
++  GFC_INTEGER_8 *vptr;
++  time_t tt;
++  
++  /* Call helper function.  */
++  tt = (time_t) * t;
++  ltime_0(&tt, x);
++
++  /* Copy the values into the array.  */
++  len = tarray->dim[0].ubound + 1 - tarray->dim[0].lbound;
++  assert (len >= 9);
++  delta = tarray->dim[0].stride;
++  if (delta == 0)
++    delta = 1;
++
++  vptr = tarray->data;
++  for (i = 0; i < 9; i++, vptr += delta)
++    *vptr = x[i];
++}
++
++
+Index: libgfortran/intrinsics/access.c
+===================================================================
+--- libgfortran/intrinsics/access.c	(revision 0)
++++ libgfortran/intrinsics/access.c	(revision 0)
+@@ -0,0 +1,99 @@
++/* Implementation of the ACCESS intrinsic.
++   Copyright (C) 2006 Free Software Foundation, Inc.
++   Contributed by François-Xavier Coudert <coudert@clipper.ens.fr>
++
++This file is part of the GNU Fortran 95 runtime library (libgfortran).
++
++Libgfortran is free software; you can redistribute it and/or
++modify it under the terms of the GNU General Public
++License as published by the Free Software Foundation; either
++version 2 of the License, or (at your option) any later version.
++
++In addition to the permissions in the GNU General Public License, the
++Free Software Foundation gives you unlimited permission to link the
++compiled version of this file into combinations with other programs,
++and to distribute those combinations without any restriction coming
++from the use of this file.  (The General Public License restrictions
++do apply in other respects; for example, they cover modification of
++the file, and distribution when not linked into a combine
++executable.)
++
++Libgfortran is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public
++License along with libgfortran; see the file COPYING.  If not,
++write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
++Boston, MA 02110-1301, USA.  */
++
++#include "config.h"
++#include "libgfortran.h"
++
++#include <errno.h>
++
++#ifdef HAVE_STRING_H
++#include <string.h>
++#endif
++#ifdef HAVE_UNISTD_H
++#include <unistd.h>
++#endif
++
++/* INTEGER FUNCTION ACCESS(NAME, MODE)
++   CHARACTER(len=*), INTENT(IN) :: NAME, MODE  */
++
++#ifdef HAVE_ACCESS
++extern int access_func (char *, char *, gfc_charlen_type, gfc_charlen_type);
++export_proto(access_func);
++
++int
++access_func (char *name, char *mode, gfc_charlen_type name_len,
++	     gfc_charlen_type mode_len)
++{
++  char * file;
++  gfc_charlen_type i;
++  int m;
++
++  /* Parse the MODE string.  */
++  m = F_OK;
++  for (i = 0; i < mode_len && mode[i]; i++)
++    switch (mode[i])
++      {
++	case ' ':
++	  break;
++
++	case 'r':
++	case 'R':
++	  m |= R_OK;
++	  break;
++
++	case 'w':
++	case 'W':
++	  m |= W_OK;
++	  break;
++
++	case 'x':
++	case 'X':
++	  m |= X_OK;
++	  break;
++
++	default:
++	  return -1;
++	  break;
++      }
++
++  /* Trim trailing spaces from NAME argument.  */
++  while (name_len > 0 && name[name_len - 1] == ' ')
++    name_len--;
++
++  /* Make a null terminated copy of the string.  */
++  file = gfc_alloca (name_len + 1);
++  memcpy (file, name, name_len);
++  file[name_len] = '\0';
++
++  /* And make the call to access().  */
++  return (access (file, m) == 0 ? 0 : errno);
++}
++export(access_func);
++#endif
+Index: libgfortran/intrinsics/chmod.c
+===================================================================
+--- libgfortran/intrinsics/chmod.c	(revision 0)
++++ libgfortran/intrinsics/chmod.c	(revision 0)
+@@ -0,0 +1,131 @@
++/* Implementation of the CHMOD intrinsic.
++   Copyright (C) 2006 Free Software Foundation, Inc.
++   Contributed by François-Xavier Coudert <coudert@clipper.ens.fr>
++
++This file is part of the GNU Fortran 95 runtime library (libgfortran).
++
++Libgfortran is free software; you can redistribute it and/or
++modify it under the terms of the GNU General Public
++License as published by the Free Software Foundation; either
++version 2 of the License, or (at your option) any later version.
++
++In addition to the permissions in the GNU General Public License, the
++Free Software Foundation gives you unlimited permission to link the
++compiled version of this file into combinations with other programs,
++and to distribute those combinations without any restriction coming
++from the use of this file.  (The General Public License restrictions
++do apply in other respects; for example, they cover modification of
++the file, and distribution when not linked into a combine
++executable.)
++
++Libgfortran is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public
++License along with libgfortran; see the file COPYING.  If not,
++write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
++Boston, MA 02110-1301, USA.  */
++
++#include "config.h"
++#include "libgfortran.h"
++
++#include <errno.h>
++
++#ifdef HAVE_STRING_H
++#include <string.h>
++#endif
++#ifdef HAVE_UNISTD_H
++#include <unistd.h>
++#endif
++#ifdef HAVE_SYS_TYPES_H
++#include <sys/types.h>
++#endif
++#ifdef  HAVE_SYS_WAIT_H
++#include <sys/wait.h>
++#endif
++
++/* INTEGER FUNCTION ACCESS(NAME, MODE)
++   CHARACTER(len=*), INTENT(IN) :: NAME, MODE  */
++
++#if defined(HAVE_FORK) && defined(HAVE_EXECL) && defined(HAVE_WAIT)
++
++extern int chmod_func (char *, char *, gfc_charlen_type, gfc_charlen_type);
++export_proto(chmod_func);
++
++int
++chmod_func (char *name, char *mode, gfc_charlen_type name_len,
++	    gfc_charlen_type mode_len)
++{
++  char * file, * m;
++  pid_t pid;
++  int status;
++
++  /* Trim trailing spaces.  */
++  while (name_len > 0 && name[name_len - 1] == ' ')
++    name_len--;
++  while (mode_len > 0 && mode[mode_len - 1] == ' ')
++    mode_len--;
++
++  /* Make a null terminated copy of the strings.  */
++  file = gfc_alloca (name_len + 1);
++  memcpy (file, name, name_len);
++  file[name_len] = '\0';
++
++  m = gfc_alloca (mode_len + 1);
++  memcpy (m, mode, mode_len);
++  m[mode_len]= '\0';
++
++  /* Execute /bin/chmod.  */
++  if ((pid = fork()) < 0)
++    return errno;
++  if (pid == 0)
++    {
++      /* Child process.  */
++      execl ("/bin/chmod", "chmod", m, file, (char *) NULL);
++      return errno;
++    }
++  else
++    wait (&status);
++
++  if (WIFEXITED(status))
++    return WEXITSTATUS(status);
++  else
++    return -1;
++}
++
++
++
++extern void chmod_i4_sub (char *, char *, GFC_INTEGER_4 *,
++			  gfc_charlen_type, gfc_charlen_type);
++export_proto(chmod_i4_sub);
++
++void
++chmod_i4_sub (char *name, char *mode, GFC_INTEGER_4 * status,
++	      gfc_charlen_type name_len, gfc_charlen_type mode_len)
++{
++  int val;
++
++  val = chmod_func (name, mode, name_len, mode_len);
++  if (status)
++    *status = val;
++}
++
++
++extern void chmod_i8_sub (char *, char *, GFC_INTEGER_8 *,
++			  gfc_charlen_type, gfc_charlen_type);
++export_proto(chmod_i8_sub);
++
++void
++chmod_i8_sub (char *name, char *mode, GFC_INTEGER_8 * status,
++	      gfc_charlen_type name_len, gfc_charlen_type mode_len)
++{
++  int val;
++
++  val = chmod_func (name, mode, name_len, mode_len);
++  if (status)
++    *status = val;
++}
++
++#endif
+Index: libgfortran/configure.ac
+===================================================================
+--- libgfortran/configure.ac	(revision 115754)
++++ libgfortran/configure.ac	(working copy)
+@@ -159,7 +159,7 @@
+ AC_STDC_HEADERS
+ AC_HAVE_HEADERS(stdlib.h stdio.h string.h stddef.h math.h unistd.h signal.h)
+ AC_CHECK_HEADERS(time.h sys/params.h sys/time.h sys/times.h sys/resource.h)
+-AC_CHECK_HEADERS(sys/types.h sys/stat.h floatingpoint.h ieeefp.h)
++AC_CHECK_HEADERS(sys/types.h sys/stat.h sys/wait.h floatingpoint.h ieeefp.h)
+ AC_CHECK_HEADERS(fenv.h fptrap.h float.h)
+ AC_CHECK_HEADER([complex.h],[AC_DEFINE([HAVE_COMPLEX_H], [1], [complex.h exists])])
+ GCC_HEADER_STDINT(gstdint.h)
+@@ -173,6 +173,8 @@
+ AC_CHECK_FUNCS(getrusage times mkstemp strtof strtold snprintf ftruncate chsize)
+ AC_CHECK_FUNCS(chdir strerror getlogin gethostname kill link symlink perror)
+ AC_CHECK_FUNCS(sleep time ttyname signal alarm ctime)
++AC_CHECK_FUNCS(sleep time ttyname signal alarm ctime clock access fork execl)
++AC_CHECK_FUNCS(wait)
+ 
+ # Check libc for getgid, getpid, getuid
+ AC_CHECK_LIB([c],[getgid],[AC_DEFINE([HAVE_GETGID],[1],[libc includes getgid])])
+Index: libgfortran/Makefile.am
+===================================================================
+--- libgfortran/Makefile.am	(revision 115754)
++++ libgfortran/Makefile.am	(working copy)
+@@ -41,10 +41,12 @@
+ gfor_helper_src= \
+ intrinsics/associated.c \
+ intrinsics/abort.c \
++intrinsics/access.c \
+ intrinsics/args.c \
+ intrinsics/bessel.c \
+ intrinsics/c99_functions.c \
+ intrinsics/chdir.c \
++intrinsics/chmod.c \
+ intrinsics/cpu_time.c \
+ intrinsics/cshift0.c \
+ intrinsics/ctime.c \
+Index: gcc/testsuite/gfortran.dg/chmod_3.f90
+===================================================================
+--- gcc/testsuite/gfortran.dg/chmod_3.f90	(revision 0)
++++ gcc/testsuite/gfortran.dg/chmod_3.f90	(revision 0)
+@@ -0,0 +1,34 @@
++! { dg-do run }
++! { dg-options "-std=gnu -fdefault-integer-8" }
++  implicit none
++  character(len=*), parameter :: n = "foobar_file"
++  integer :: i
++
++  open (10,file=n)
++  close (10,status="delete")
++
++  open (10,file=n)
++  close (10,status="keep")
++
++  if (access(n,"") /= 0 .or. access(n," ") /= 0 .or. access(n,"r") /= 0 .or. &
++      access(n,"R") /= 0 .or. access(n,"w") /= 0 .or. access(n,"W") /= 0) &
++    call abort
++
++  i = chmod (n, "a+x")
++  if (i == 0) then
++    if (access(n,"x") /= 0 .or. access(n,"X") /= 0) call abort
++  end if
++
++  i = chmod (n, "a-w")
++  if (i == 0) then
++    if (access(n,"w") == 0 .or. access(n,"W") == 0) call abort
++  end if
++
++  open (10,file=n)
++  close (10,status="delete")
++
++  if (access(n,"") == 0 .or. access(n," ") == 0 .or. access(n,"r") == 0 .or. &
++      access(n,"R") == 0 .or. access(n,"w") == 0 .or. access(n,"W") == 0) &
++    call abort
++
++  end
+Index: gcc/testsuite/gfortran.dg/ltime_gmtime_1.f90
+===================================================================
+--- gcc/testsuite/gfortran.dg/ltime_gmtime_1.f90	(revision 0)
++++ gcc/testsuite/gfortran.dg/ltime_gmtime_1.f90	(revision 0)
+@@ -0,0 +1,9 @@
++! { dg-do run }
++! { dg-options "-std=gnu" }
++  integer :: x(9), y(9), t
++
++  t = time()
++  call ltime(t,x)
++  call gmtime(t,y)
++  if (x(1) /= y(1) .or. x(2) /= y(2)) call abort
++  end
+Index: gcc/testsuite/gfortran.dg/ltime_gmtime_2.f90
+===================================================================
+--- gcc/testsuite/gfortran.dg/ltime_gmtime_2.f90	(revision 0)
++++ gcc/testsuite/gfortran.dg/ltime_gmtime_2.f90	(revision 0)
+@@ -0,0 +1,9 @@
++! { dg-do run }
++! { dg-options "-fdefault-integer-8 -std=gnu" }
++  integer :: x(9), y(9), t
++
++  t = time()
++  call ltime(t,x)
++  call gmtime(t,y)
++  if (x(1) /= y(1) .or. x(2) /= y(2)) call abort
++  end
+Index: gcc/testsuite/gfortran.dg/lrshift_1.f90
+===================================================================
+--- gcc/testsuite/gfortran.dg/lrshift_1.f90	(revision 0)
++++ gcc/testsuite/gfortran.dg/lrshift_1.f90	(revision 0)
+@@ -0,0 +1,18 @@
++! { dg-do run }
++! { dg-options "-std=gnu -w" }
++! { dg-additional-sources lrshift_1.c }
++program test_rshift_lshift
++  implicit none
++  integer :: i(15), j, n
++  integer, external :: c_lshift, c_rshift
++
++  i = (/ -huge(i), -huge(i)/2, -129, -128, -127, -2, -1, 0, &
++         1, 2, 127, 128, 129, huge(i)/2, huge(i) /)
++
++  do n = 1, size(i)
++    do j = -30, 30
++      if (lshift(i(n),j) /= c_lshift(i(n),j)) call abort
++      if (rshift(i(n),j) /= c_rshift(i(n),j)) call abort
++    end do
++  end do
++end program test_rshift_lshift
+Index: gcc/testsuite/gfortran.dg/chmod_1.f90
+===================================================================
+--- gcc/testsuite/gfortran.dg/chmod_1.f90	(revision 0)
++++ gcc/testsuite/gfortran.dg/chmod_1.f90	(revision 0)
+@@ -0,0 +1,34 @@
++! { dg-do run }
++! { dg-options "-std=gnu" }
++  implicit none
++  character(len=*), parameter :: n = "foobar_file"
++  integer :: i
++
++  open (10,file=n)
++  close (10,status="delete")
++
++  open (10,file=n)
++  close (10,status="keep")
++
++  if (access(n,"") /= 0 .or. access(n," ") /= 0 .or. access(n,"r") /= 0 .or. &
++      access(n,"R") /= 0 .or. access(n,"w") /= 0 .or. access(n,"W") /= 0) &
++    call abort
++
++  call chmod (n, "a+x", i)
++  if (i == 0) then
++    if (access(n,"x") /= 0 .or. access(n,"X") /= 0) call abort
++  end if
++
++  call chmod (n, "a-w", i)
++  if (i == 0) then
++    if (access(n,"w") == 0 .or. access(n,"W") == 0) call abort
++  end if
++
++  open (10,file=n)
++  close (10,status="delete")
++
++  if (access(n,"") == 0 .or. access(n," ") == 0 .or. access(n,"r") == 0 .or. &
++      access(n,"R") == 0 .or. access(n,"w") == 0 .or. access(n,"W") == 0) &
++    call abort
++
++  end
+Index: gcc/testsuite/gfortran.dg/chmod_2.f90
+===================================================================
+--- gcc/testsuite/gfortran.dg/chmod_2.f90	(revision 0)
++++ gcc/testsuite/gfortran.dg/chmod_2.f90	(revision 0)
+@@ -0,0 +1,34 @@
++! { dg-do run }
++! { dg-options "-std=gnu" }
++  implicit none
++  character(len=*), parameter :: n = "foobar_file"
++  integer :: i
++
++  open (10,file=n)
++  close (10,status="delete")
++
++  open (10,file=n)
++  close (10,status="keep")
++
++  if (access(n,"") /= 0 .or. access(n," ") /= 0 .or. access(n,"r") /= 0 .or. &
++      access(n,"R") /= 0 .or. access(n,"w") /= 0 .or. access(n,"W") /= 0) &
++    call abort
++
++  i = chmod (n, "a+x")
++  if (i == 0) then
++    if (access(n,"x") /= 0 .or. access(n,"X") /= 0) call abort
++  end if
++
++  i = chmod (n, "a-w")
++  if (i == 0) then
++    if (access(n,"w") == 0 .or. access(n,"W") == 0) call abort
++  end if
++
++  open (10,file=n)
++  close (10,status="delete")
++
++  if (access(n,"") == 0 .or. access(n," ") == 0 .or. access(n,"r") == 0 .or. &
++      access(n,"R") == 0 .or. access(n,"w") == 0 .or. access(n,"W") == 0) &
++    call abort
++
++  end
