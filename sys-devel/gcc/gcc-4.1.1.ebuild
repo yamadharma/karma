@@ -67,7 +67,9 @@ src_unpack() {
 	
 	cd ${S}/libgfortran
 #	libtoolize --copy --force
-	aclocal -I ${S}/config
-	autoconf
+#	aclocal -I ${S}/config
+#	aclocal -I ../config	
+#	autoconf
+	autoreconf
 	automake
 }
