@@ -11,7 +11,7 @@ SRC_URI="http://www.lua.org/ftp/${P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~arm -hppa ~ia64 mips ~ppc ~ppc-macos ~s390 ~sparc x86"
-IUSE=""
+IUSE="readline"
 
 DEPEND=""
 
@@ -19,6 +19,8 @@ src_unpack() {
 	unpack ${A}
 
 	cd ${S}
+	epatch "${FILESDIR}/${P}-luaconf-paths.patch"
+	use readline || epatch "${FILESDIR}/${P}-no-readline.patch"
 	sed -i doc/readme.html -e 's:\(/README\)\("\):\1.gz\2:g'
 }
 
