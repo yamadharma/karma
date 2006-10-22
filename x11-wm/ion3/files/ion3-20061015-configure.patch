@@ -1,0 +1,11 @@
+--- build/ac/configure	2006-10-17 20:14:45.521737093 +0200
++++ build/ac/configure	2006-10-18 12:38:04.370765599 +0200
+@@ -547,7 +547,7 @@
+ #
+ # Initializations.
+ #
+-ac_default_prefix=/usr/local
++ac_default_prefix=/usr
+ ac_clean_files=
+ ac_config_libobj_dir=.
+ LIBOBJS=

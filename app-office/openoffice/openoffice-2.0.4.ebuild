@@ -1,12 +1,12 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4.ebuild,v 1.4 2006/10/13 22:38:32 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4.ebuild,v 1.6 2006/10/20 07:18:52 suka Exp $
 
 inherit check-reqs debug eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions multilib toolchain-funcs
 
 IUSE="binfilter branding cairo cups dbus eds firefox gnome gstreamer gtk kde ldap sound odk pam webdav"
 
-MY_PV="${PV}"
+MY_PV="${PV}.1"
 PATCHLEVEL="OOD680"
 SRC="OOO_2_0_4"
 S="${WORKDIR}/ooo"
@@ -36,7 +36,7 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~sparc x86"
+KEYWORDS="~amd64 ~sparc x86"
 
 COMMON_DEPEND="!app-office/openoffice-bin
 	x11-libs/libXaw
@@ -172,9 +172,6 @@ src_unpack() {
 	cd ${S}
 	epatch ${FILESDIR}/${PV}/gentoo-${PV}.diff
 
-	#Replace broken patch with older version
-	cp -f ${FILESDIR}/${PV}/system-icu.diff ${S}/patches/src680 || die
-
 	#Use flag checks
 	use java && echo "--with-jdk-home=${JAVA_HOME} --with-ant-home=${ANT_HOME}" >> ${CONFFILE}
 	use branding && echo "--with-intro-bitmaps=\\\"${S}/src/openintro_gentoo.bmp\\\"" >> ${CONFFILE}
@@ -185,6 +182,7 @@ src_unpack() {
 	echo "`use_with firefox system-mozilla`" >> ${CONFFILE}
 	echo "`use_with firefox`" >> ${CONFFILE}
 
+	echo "`use_enable cups`" >> ${CONFFILE}
 	echo "`use_enable ldap`" >> ${CONFFILE}
 	echo "`use_with ldap openldap`" >> ${CONFFILE}
 	echo "`use_enable eds evolution2`" >> ${CONFFILE}

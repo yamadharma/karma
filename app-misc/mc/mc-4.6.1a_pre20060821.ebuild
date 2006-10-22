@@ -142,8 +142,9 @@ src_compile() {
 	elif use ncurses && ! use slang ; then
 		myconf="${myconf} --with-screen=ncurses"
 	else
-		use slang && myconf="${myconf} --with-screen=slang"
-		! use slang && myconf="${myconf} --with-screen=mcslang"		
+#		use slang && myconf="${myconf} --with-screen=slang"
+#		! use slang && myconf="${myconf} --with-screen=mcslang"		
+		myconf="${myconf} --with-screen=mcslang"		
 	fi
 
 	myconf="${myconf} `use_with gpm gpm-mouse`"

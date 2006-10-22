@@ -1,6 +1,40 @@
 # ChangeLog for media-video/dvdrip
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/dvdrip/ChangeLog,v 1.78 2006/06/29 01:38:51 mcummings Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/dvdrip/ChangeLog,v 1.85 2006/10/06 03:35:34 josejx Exp $
+
+  06 Oct 2006; Joseph Jezak <josejx@gentoo.org> dvdrip-0.98.1.ebuild:
+  Marked ppc stable for bug #149344.
+
+  05 Oct 2006; Daniel Gryniewicz <dang@gentoo.org> dvdrip-0.98.1.ebuild:
+  Marked stable on amd64 for bug #149344
+
+  05 Oct 2006; Gustavo Zacarias <gustavoz@gentoo.org> dvdrip-0.98.1.ebuild:
+  Stable on sparc wrt #149344
+
+  27 Sep 2006; Steve Dibb <beandog@gentoo.org> metadata.xml:
+  Update metadata
+
+*dvdrip-0.98.1 (26 Aug 2006)
+
+  26 Aug 2006; Steve Dibb <beandog@gentoo.org> -dvdrip-0.98.0-r1.ebuild,
+  +dvdrip-0.98.0-r2.ebuild, +dvdrip-0.98.1.ebuild:
+  Version bump
+
+*dvdrip-0.98.0-r2 (26 Aug 2006)
+
+  26 Aug 2006; Steve Dibb <beandog@gentoo.org> -dvdrip-0.98.0-r1.ebuild,
+  +dvdrip-0.98.0-r2.ebuild:
+  vcd use flag fix, add vorbis use flag
+
+*dvdrip-0.98.0-r1 (21 Aug 2006)
+
+  21 Aug 2006; Steve Dibb <beandog@gentoo.org> +dvdrip-0.98.0-r1.ebuild:
+  Fix perl deps
+
+*dvdrip-0.98.0 (21 Aug 2006)
+
+  21 Aug 2006; beandog +dvdrip-0.98.0.ebuild:
+  Version bump
 
   29 Jun 2006; Michael Cummings <mcummings@gentoo.org>
   +files/nptl-amd64.patch, dvdrip-0.97.10.ebuild:
