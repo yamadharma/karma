@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/vzquota/vzquota-3.0.8.ebuild,v 1.1 2006/06/14 11:42:46 phreak Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/vzquota/vzquota-3.0.9.ebuild,v 1.1 2006/10/12 11:19:50 phreak Exp $
 
 DESCRIPTION="OpenVZ VPS disk quota utility"
 HOMEPAGE="http://openvz.org/download/utils/vzquota/"
