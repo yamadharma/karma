@@ -1,6 +1,126 @@
 # ChangeLog for dev-libs/cyrus-sasl
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/cyrus-sasl/ChangeLog,v 1.138 2006/04/10 21:53:49 ferdy Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-libs/cyrus-sasl/ChangeLog,v 1.162 2006/10/23 10:00:31 flameeyes Exp $
+
+  23 Oct 2006; Diego Pettenò <flameeyes@gentoo.org>
+  cyrus-sasl-2.1.22.ebuild:
+  Fix autotools rebuilding, force automake 1.9 because it does not work with
+  1.10. Closes bug #148207.
+
+  15 Oct 2006; Bryan Østergaard <kloeri@gentoo.org>
+  cyrus-sasl-2.1.22.ebuild:
+  Stable on ia64.
+
+  12 Oct 2006; Simon Stelling <blubb@gentoo.org> cyrus-sasl-2.1.22.ebuild:
+  specify pgsql libdir for bug 133551
+
+  28 Sep 2006; Fernando J. Pereda <ferdy@gentoo.org>
+  cyrus-sasl-2.1.22.ebuild:
+  Stable on alpha as per bug #142650
+
+  26 Sep 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  cyrus-sasl-2.1.22.ebuild:
+  Stable on hppa wrt #142650
+
+  16 Sep 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  cyrus-sasl-2.1.22.ebuild:
+  ppc stable
+
+  11 Sep 2006; Tuấn Văn <langthang@gentoo.org> -cyrus-sasl-2.1.20.ebuild:
+  security cleanup, bug #140514.
+
+  06 Sep 2006; Joshua Jackson <tsunam@gentoo.org> cyrus-sasl-2.1.22.ebuild:
+  Stable x86; bug #142650
+
+  05 Sep 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  cyrus-sasl-2.1.22.ebuild:
+  Stable on sparc wrt #142650
+
+  04 Sep 2006; Markus Rothe <corsair@gentoo.org> cyrus-sasl-2.1.22.ebuild:
+  Stable on ppc64; bug #142650
+
+  03 Sep 2006; Joshua Kinard <kumba@gentoo.org> cyrus-sasl-2.1.22.ebuild:
+  Marked stable on mips.
+
+  03 Sep 2006; <blubb@gentoo.org> cyrus-sasl-2.1.22.ebuild:
+  stable on amd64
+
+*cyrus-sasl-2.1.21-r3 (04 Aug 2006)
+
+  04 Aug 2006; Tuấn Văn <langthang@gentoo.org>
+  +cyrus-sasl-2.1.21-r3.ebuild, cyrus-sasl-2.1.22.ebuild:
+  comply to the new java thingy. Bug #142650, #142708.
+
+  15 Jul 2006; Tuấn Văn <langthang@gentoo.org> -files/2.1.14-db4.patch,
+  -files/saslauthd-2.1.19.conf, -files/2.1.14-kerberos.patch,
+  -files/2.1.14-mysql.patch, -files/cyrus-sasl-1.5.21-des.patch,
+  -files/cyrus-sasl-1.5.24-rpath.patch,
+  -files/cyrus-sasl-1.5.27-scram.patch,
+  -files/cyrus-sasl-2.1.17-configdir.patch,
+  -files/cyrus-sasl-2.1.17-db4.patch,
+  -files/cyrus-sasl-2.1.18-cvs-1.172.patch,
+  -files/cyrus-sasl-2.1.18-db4.patch,
+  -files/cyrus-sasl-2.1.18-pam_mysql.patch,
+  -files/cyrus-sasl-2.1.18-sasl-path-fix.patch,
+  -files/cyrus-sasl-2.1.19-configdir.patch,
+  -files/cyrus-sasl-2.1.19-sasl-path-fix.patch,
+  -files/cyrus-sasl-configdir.patch, -files/cyrus-sasl-gcc32.patch,
+  -files/cyrus-sasl-heimdal-deps.patch, -files/cyrus-sasl-saslauthd.patch,
+  -files/saslauthd.conf, -files/saslauthd.rc6, -files/saslauthd2.conf:
+  remove unused files.
+
+  15 Jul 2006; Tuấn Văn <langthang@gentoo.org>
+  -cyrus-sasl-2.1.18-r2.ebuild, -cyrus-sasl-2.1.19-r1.ebuild,
+  -cyrus-sasl-2.1.20-r1.ebuild, -cyrus-sasl-2.1.20-r2.ebuild,
+  -cyrus-sasl-2.1.20-r3.ebuild, -cyrus-sasl-2.1.21.ebuild,
+  -cyrus-sasl-2.1.21-r1.ebuild:
+  Security cleanup. Bug #140514
+
+  25 May 2006; Tuấn Văn <langthang@gentoo.org> cyrus-sasl-2.1.22.ebuild:
+  move the block generates sasldb2 to pkg_postinst.
+
+*cyrus-sasl-2.1.22 (25 May 2006)
+
+  25 May 2006; Tuấn Văn <langthang@gentoo.org>
+  +files/cyrus-sasl-2.1.22-as-needed.patch, +cyrus-sasl-2.1.22.ebuild:
+  Add --enable-auth-sasldb to myconf.
+      Requested by Gary Richards <gary_gentoo@dsnine.co.uk>, bug #129170.
+  Add patch to support as-needed.
+      Report by Prakash Punnoor <prakashp@arcor.de>, bug #116458.
+  Do not generate /etc/sasl2/sasldb2 if found. Tidy.
+  NOTE: imtest from cyrus-imapd <2.3.6 is not compatible with this release.
+
+  27 Apr 2006; Marien Zwart <marienz@gentoo.org>
+  files/digest-cyrus-sasl-2.1.18-r2, files/digest-cyrus-sasl-2.1.19-r1,
+  files/digest-cyrus-sasl-2.1.20, files/digest-cyrus-sasl-2.1.20-r1,
+  files/digest-cyrus-sasl-2.1.20-r2, files/digest-cyrus-sasl-2.1.21,
+  files/digest-cyrus-sasl-2.1.21-r1, files/digest-cyrus-sasl-2.1.21-r2,
+  Manifest:
+  Fixing SHA256 digest, pass four
+
+  15 Apr 2006; Simon Stelling <blubb@gentoo.org>
+  cyrus-sasl-2.1.21-r2.ebuild:
+  stable on amd64 wrt bug 129523
+
+  15 Apr 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  cyrus-sasl-2.1.21-r2.ebuild:
+  ppc stable, bug #129523
+
+  14 Apr 2006; Rene Nussbaumer <killerfox@gentoo.org>
+  cyrus-sasl-2.1.21-r2.ebuild:
+  Stable on hppa. See bug #129523.
+
+  11 Apr 2006; Markus Rothe <corsair@gentoo.org>
+  cyrus-sasl-2.1.21-r2.ebuild:
+  Stable on ppc64; bug #129523
+
+  11 Apr 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  cyrus-sasl-2.1.21-r2.ebuild:
+  Stable on sparc wrt security #129523
+
+  11 Apr 2006; Chris Gianelloni <wolf31o2@gentoo.org>
+  cyrus-sasl-2.1.21-r2.ebuild:
+  Stable on x86 wrt bug #129523.
 
   10 Apr 2006; Fernando J. Pereda <ferdy@gentoo.org>
   cyrus-sasl-2.1.21-r2.ebuild:

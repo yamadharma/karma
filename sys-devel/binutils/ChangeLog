@@ -1,6 +1,36 @@
 # ChangeLog for sys-devel/binutils
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-devel/binutils/ChangeLog,v 1.264 2006/07/28 14:54:29 plasmaroo Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-devel/binutils/ChangeLog,v 1.271 2006/10/21 05:56:14 vapier Exp $
+
+*binutils-2.17.50.0.6 (21 Oct 2006)
+
+  21 Oct 2006; Mike Frysinger <vapier@gentoo.org>
+  +binutils-2.17.50.0.6.ebuild:
+  Version bump.
+
+  19 Oct 2006; Gustavo Zacarias <gustavoz@gentoo.org> binutils-2.17.ebuild:
+  Stable on sparc
+
+  19 Oct 2006; Luca Barbato <lu_zero@gentoo.org> binutils-2.17.ebuild:
+  Marked ppc
+
+  17 Oct 2006; Roy Marples <uberlord@gentoo.org> binutils-2.17.ebuild:
+  Added ~sparc-fbsd keyword.
+
+  10 Oct 2006; Joel Martin <kanaka@gentoo.org> binutils-2.17.ebuild:
+  Add ~mips to binutils-2.17
+
+*binutils-2.17.50.0.5 (27 Sep 2006)
+
+  27 Sep 2006; Mike Frysinger <vapier@gentoo.org>
+  +binutils-2.17.50.0.5.ebuild:
+  Version bump.
+
+*binutils-2.17.50.0.4 (24 Sep 2006)
+
+  24 Sep 2006; Mike Frysinger <vapier@gentoo.org>
+  +binutils-2.17.50.0.4.ebuild:
+  Version bump.
 
   28 Jul 2006; <plasmaroo@gentoo.org> binutils-2.16.1-r3.ebuild:
   Stable on IA64; fix bug #141681.
