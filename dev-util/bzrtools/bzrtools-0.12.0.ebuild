@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bzrtools/bzrtools-0.11.0.ebuild,v 1.1 2006/09/25 16:03:23 marienz Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bzrtools/bzrtools-0.12.0.ebuild,v 1.1 2006/10/30 23:30:12 marienz Exp $
 
 inherit distutils versionator
 
@@ -18,3 +18,5 @@ DEPEND=">=dev-lang/python-2.4
 	dev-python/pybaz"
 
 DOCS="CREDITS NEWS NEWS.Shelf README README.Shelf TODO TODO.Shelf"
+
+S="${WORKDIR}/${PN}"

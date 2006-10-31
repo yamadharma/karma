@@ -19,6 +19,10 @@ FONT_SUFFIX=""	# Space delimited list of font suffixes to install
 
 FONT_S="${S}" # Dir containing the fonts
 
+FONT_PN="${PN}" # Last part of $FONTDIR
+
+FONTDIR="/usr/share/fonts/${FONT_PN}" # this is where the fonts are installed
+
 DOCS="" # Docs to install
 
 IUSE="X"
@@ -26,7 +30,7 @@ IUSE="X"
 DEPEND="X? ( || ( x11-apps/mkfontdir virtual/x11 ) )
 	media-libs/fontconfig"
 
-FONTSDIR_ROOT=/usr/share/fonts
+FONTDIR_ROOT=/usr/share/fonts
 
 if [ -z "${FONT_SUPPLIER}" ]
     then
@@ -50,22 +54,22 @@ fi
 
 
 # arg1: font format
-set_fontsdir ()
+set_FONTDIR ()
 {
         local format=$1
 
 	case ${format} in 
     	    ttf) 
-		FONTSDIR=${FONTSDIR_ROOT}/truetype/${FONTS_NAME_DIR}
+		FONTDIR=${FONTDIR_ROOT}/truetype/${FONTS_NAME_DIR}
 		;;
     	    afm|pfm|pfa|pfb) 
-		FONTSDIR=${FONTSDIR_ROOT}/type1/${FONTS_NAME_DIR}
+		FONTDIR=${FONTDIR_ROOT}/type1/${FONTS_NAME_DIR}
 		;;
     	    pcf) 
-		FONTSDIR=${FONTSDIR_ROOT}/pcf/${FONTS_NAME_DIR}
+		FONTDIR=${FONTDIR_ROOT}/pcf/${FONTS_NAME_DIR}
 		;;
     	    bdf) 
-		FONTSDIR=${FONTSDIR_ROOT}/bdf/${FONTS_NAME_DIR}
+		FONTDIR=${FONTDIR_ROOT}/bdf/${FONTS_NAME_DIR}
 		;;
     	    *) 
 		einfo "Fonts format ${format} does not known"
@@ -82,11 +86,11 @@ font_xfont_config() {
 	# create Xfont files
 	if use X ; then
 		einfo "Creating fonts.scale & fonts.dir ..."
-		mkfontscale "${D}${FONTSDIR}"
+		mkfontscale "${D}${FONTDIR}"
 		mkfontdir \
 			-e /usr/share/fonts/encodings \
 			-e /usr/share/fonts/encodings/large \
-			"${D}${FONTSDIR}"
+			"${D}${FONTDIR}"
 		if [ -e "${FONT_S}/fonts.alias" ] ; then
 			doins "${FONT_S}/fonts.alias"
 		fi
@@ -99,7 +103,7 @@ font_xft_config() {
 	# create fontconfig cache
 	einfo "Creating fontconfig cache ..."
 	# Mac OS X has fc-cache at /usr/X11R6/bin
-	HOME="/root" fc-cache -f "${D}${FONTSDIR}"
+	HOME="/root" fc-cache -f "${D}${FONTDIR}"
 
 }
 
@@ -108,14 +112,14 @@ font_xft_config() {
 #
 
 font_src_install() {
-
+	set_FONTDIR
 	local suffix
 
 	cd "${FONT_S}"
 
 	for suffix in ${FONT_SUFFIX}; do
-		set_fontsdir ${suffix}
-		insinto "${FONTSDIR}"
+		set_FONTDIR ${suffix}
+		insinto "${FONTDIR}"
 		doins *.${suffix}
 	done
 
@@ -132,37 +136,50 @@ font_src_install() {
 }
 
 font_pkg_setup() {
-
+	set_FONTDIR
 	# make sure we get no colissions
 	# setup is not the nicest place, but preinst doesn't cut it
 	for suffix in ${FONT_SUFFIX}; do
-		set_fontsdir ${suffix}
-		rm "${FONTSDIR}/fonts.cache-1"
+		set_FONTDIR ${suffix}
+		rm "${FONTDIR}/fonts.cache-1"
 	done
 
 }
 
 font_pkg_postinst ()
 {
+	set_FONTDIR
 	for suffix in ${FONT_SUFFIX}; do
-		set_fontsdir ${suffix}
-		rm "${FONTSDIR}/fonts.cache-1"
+		set_FONTDIR ${suffix}
+		rm "${FONTDIR}/fonts.cache-1"
 	done
 
-	chkfontpath -q -a ${FONTSDIR}
+	chkfontpath -q -a ${FONTDIR}
 	/etc/init.d/xfs restart
 }
 
 font_pkg_prerm () 
 {
+	set_FONTDIR
 	for suffix in ${FONT_SUFFIX}; do
-		set_fontsdir ${suffix}
-		rm "${FONTSDIR}/fonts.cache-1"
+		set_FONTDIR ${suffix}
+		rm "${FONTDIR}/fonts.cache-1"
 	done
 
-	chkfontpath -r ${FONTSDIR}
+	chkfontpath -r ${FONTDIR}
 	/etc/init.d/xfs restart
 }
 
+font_pkg_postrm() {
+	set_FONTDIR
+	if has_version '>=media-libs/fontconfig-2.4'; then
+		if [ ${ROOT} == "/" ]; then
+			ebegin "Updating global fontcache"
+			fc-cache -s
+			eend $?
+		fi
+	fi
 
-EXPORT_FUNCTIONS src_install pkg_setup pkg_postinst
+}
+
+EXPORT_FUNCTIONS src_install pkg_setup pkg_postinst pkg_postrm
