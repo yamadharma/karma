@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-cdr/k3b/k3b-0.12.17.ebuild,v 1.3 2006/10/06 10:56:07 deathwing00 Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-cdr/k3b/k3b-0.12.17.ebuild,v 1.5 2006/10/21 21:05:57 flameeyes Exp $
 
 inherit kde eutils
 
@@ -76,11 +76,15 @@ src_unpack() {
 		done
 		rm -f configure
 	fi
+
+	cd "${S}"
+	epatch "${FILESDIR}/${P}+flac-1.1.3.patch"
+	epatch "${FILESDIR}/${P}-flac-beta.patch"
+	rm -f "${S}/configure"
 }
 
 src_compile() {
-	local myconf="--enable-libsuffix= \
-			--with-external-libsamplerate	\
+	local myconf="--with-external-libsamplerate	\
 			--without-resmgr		\
 			$(use_with kde k3bsetup)	\
 			$(use_with hal)			\

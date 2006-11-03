@@ -1,8 +1,8 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-cdr/dvd+rw-tools/dvd+rw-tools-6.1.ebuild,v 1.1 2006/01/29 23:47:12 metalgod Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-cdr/dvd+rw-tools/dvd+rw-tools-7.0.ebuild,v 1.2 2006/10/14 21:04:27 vapier Exp $
 
-inherit eutils
+inherit eutils toolchain-funcs
 
 DESCRIPTION="A set of tools for DVD+RW/-RW drives"
 HOMEPAGE="http://fy.chalmers.se/~appro/linux/DVD+RW/"
@@ -10,24 +10,22 @@ SRC_URI="http://fy.chalmers.se/~appro/linux/DVD+RW/tools/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sh ~sparc x86"
 IUSE=""
 
-DEPEND="virtual/libc
-	virtual/cdrtools"
+DEPEND="virtual/cdrtools"
 
 src_compile() {
 	sed -i \
 		-e "s:^CFLAGS=\$(WARN).*:CFLAGS=${CFLAGS}:" \
 		-e "s:^CXXFLAGS=\$(WARN).*:CXXFLAGS=${CXXFLAGS} -fno-exceptions:" \
 		Makefile.m4 || die
-	emake || die
+	emake CC=$(tc-getCC) CXX=$(tc-getCXX) || die
 }
 
 src_install() {
-	dobin dvd+rw-booktype dvd+rw-format dvd+rw-mediainfo growisofs || die
+	einstall
 	dohtml index.html
-	doman growisofs.1
 }
 
 pkg_postinst() {
