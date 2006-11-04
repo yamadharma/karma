@@ -1,0 +1,51 @@
+# ChangeLog for media-libs/libmtp
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-libs/libmtp/ChangeLog,v 1.11 2006/10/21 19:54:56 tcort Exp $
+
+*libmtp-0.0.21 (21 Oct 2006)
+
+  21 Oct 2006; Thomas Cort <tcort@gentoo.org> +libmtp-0.0.21.ebuild:
+  Version bump to 0.0.21.
+
+  07 Oct 2006; Thomas Cort <tcort@gentoo.org> -libmtp-0.0.17.ebuild,
+  -libmtp-0.0.18.ebuild, -libmtp-0.0.19.ebuild:
+  Fix manifest wrt Bug #150400.
+
+  05 Oct 2006; Thomas Cort <tcort@gentoo.org> -libmtp-0.0.17.ebuild,
+  -libmtp-0.0.18.ebuild, -libmtp-0.0.19.ebuild:
+  Remove old ebuilds.
+
+*libmtp-0.0.20 (26 Sep 2006)
+
+  26 Sep 2006; Thomas Cort <tcort@gentoo.org> +libmtp-0.0.20.ebuild:
+  Version bump to 0.0.20.
+
+*libmtp-0.0.19 (16 Sep 2006)
+
+  16 Sep 2006; Thomas Cort <tcort@gentoo.org> +libmtp-0.0.19.ebuild:
+  Version bump to 0.0.19.
+
+*libmtp-0.0.18 (12 Sep 2006)
+
+  12 Sep 2006; Thomas Cort <tcort@gentoo.org> -libmtp-0.0.16-r1.ebuild,
+  +libmtp-0.0.18.ebuild:
+  Version bump.
+
+*libmtp-0.0.17 (09 Sep 2006)
+
+  09 Sep 2006; Thomas Cort <tcort@gentoo.org> -libmtp-0.0.16.ebuild,
+  +libmtp-0.0.17.ebuild:
+  Version Bump.
+
+*libmtp-0.0.16-r1 (02 Sep 2006)
+
+  02 Sep 2006; Thomas Cort <tcort@gentoo.org>
+  +files/libmtp-0.0.16-udev_perm.patch, +libmtp-0.0.16-r1.ebuild:
+  Add udev permissions patch wrt Bug #144010.
+
+*libmtp-0.0.16 (31 Aug 2006)
+
+  31 Aug 2006; Thomas Cort <tcort@gentoo.org> +metadata.xml,
+  +libmtp-0.0.16.ebuild:
+  Initial import of libmtp.
+

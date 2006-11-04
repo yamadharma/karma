@@ -1,6 +1,47 @@
 # ChangeLog for sys-devel/autoconf
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-devel/autoconf/ChangeLog,v 1.73 2006/03/10 21:02:52 ferdy Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-devel/autoconf/ChangeLog,v 1.83 2006/11/03 18:40:55 grobian Exp $
+
+  03 Nov 2006; Fabian Groffen <grobian@gentoo.org> autoconf-2.13.ebuild,
+  autoconf-2.59-r7.ebuild, autoconf-2.60.ebuild:
+  Dropped ppc-macos, see you in prefix.
+
+  01 Nov 2006; Chris Gianelloni <wolf31o2@gentoo.org> autoconf-2.60.ebuild:
+  Stable on amd64/x86 wrt bug #144467.
+
+  01 Nov 2006; Chris Gianelloni <wolf31o2@gentoo.org> autoconf-2.60.ebuild:
+  Stable on amd64/x86 wrt bug #144467.
+
+  18 Oct 2006; Roy Marples <uberlord@gentoo.org> autoconf-2.13.ebuild,
+  autoconf-2.59-r7.ebuild:
+  Added ~sparc-fbsd keyword.
+
+  17 Oct 2006; Roy Marples <uberlord@gentoo.org> autoconf-2.60.ebuild:
+  Added ~sparc-fbsd keyword.
+
+  08 Sep 2006; Mike Frysinger <vapier@gentoo.org> autoconf-2.60.ebuild:
+  Dont require help2man #146621 by Emanuel.
+
+  28 Aug 2006; Mike Frysinger <vapier@gentoo.org>
+  +files/autoconf-2.60-tests.patch, autoconf-2.60.ebuild:
+  Grab fix from upstream for tests with newer m4 #145279 by Josef Reidinger.
+
+*autoconf-2.60 (27 Jun 2006)
+
+  27 Jun 2006; Mike Frysinger <vapier@gentoo.org> +autoconf-2.60.ebuild:
+  Version bump.
+
+*autoconf-2.59d (25 Jun 2006)
+
+  25 Jun 2006; Mike Frysinger <vapier@gentoo.org> +autoconf-2.59d.ebuild:
+  Version bump for coreutils-5.97d.
+
+  29 Apr 2006; Joshua Kinard <kumba@gentoo.org> ChangeLog:
+  Marked stable on mips.
+
+  30 Mar 2006; Diego Pettenò <flameeyes@gentoo.org> autoconf-2.13.ebuild,
+  autoconf-2.59-r7.ebuild:
+  Add ~x86-fbsd keywords.
 
   10 Mar 2006; Fernando J. Pereda <ferdy@gentoo.org>
   autoconf-2.59-r7.ebuild:

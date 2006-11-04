@@ -35,4 +35,23 @@ src_install() {
 		docinto ${i#.}
 		dodoc ${i}/README
 	done
+	insinto /usr/share/pixmaps
+	doins etc/lua.xpm
+	insinto /usr/$(get_libdir)/pkgconfig
+	sed -i -e "s:^prefix=.*:prefix = /usr:" etc/lua.pc
+	doins etc/lua.pc
+}
+
+src_test() {
+	local positive="bisect cf echo env factorial fib fibfor hello printf sieve sort trace-calls"
+	local negative="readonly undefined"
+	local test
+
+	for test in ${positive}; do
+		test/lua.static test/${test}.lua || die "test $test failed"
+	done
+
+	for test in ${negative}; do
+		test/lua.static test/${test}.lua && die "test $test failed"
+	done
 }

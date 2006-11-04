@@ -15,7 +15,7 @@ S=${WORKDIR}/${PN}
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="-* x86 amd64"
+KEYWORDS="-*"
 IUSE="gstreamer mad nsplugin nptl xml kde video_cards_i810"
 #dmalloc, broken see bug 142939
 #dmalloc? ( dev-libs/dmalloc )

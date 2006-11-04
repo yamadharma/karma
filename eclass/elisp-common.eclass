@@ -13,26 +13,33 @@
 ECLASS=elisp-common
 INHERITED="$INHERITED $ECLASS"
 
-DEPEND="virtual/emacs"
-
-IUSE="${IUSE} ecf"
-
 SITELISPEMACS=/usr/share/emacs/site-lisp
 
-if (use ecf)  
-    then
-    SITELISP=/usr/share/site-lisp/common/packages
-    SITELISPROOT=/usr/share/site-lisp
-    SITELISPDOC=/usr/share/site-lisp/doc
+# Sandbox issues
+for i in ${INFOPATH}
+do
+    addpredict ${i}
+done
 
-    # Sandbox issues
-    for i in ${INFOPATH}
-    do
-	addpredict ${i}
-    done
-else
-    SITELISP=/usr/share/emacs/site-lisp
-fi
+
+elisp-common_pkg_setup () {
+	if ( has_version 'app-emacs/ecf' )  
+	    then
+            SITELISP=/usr/share/site-lisp/common/packages
+    	    SITELISPROOT=/usr/share/site-lisp
+    	    SITELISPDOC=/usr/share/site-lisp/doc
+    	    
+    	    HAS_ECF=1
+	    # Sandbox issues
+    	    for i in ${INFOPATH}
+	    do
+		addpredict ${i}
+    	    done
+	else    
+            SITELISP=/usr/share/emacs/site-lisp
+	    HAS_ECF=0
+	fi
+}
 
 elisp-compile() {
 	/usr/bin/emacs --batch -f batch-byte-compile --no-site-file --no-init-file $*
@@ -47,7 +54,7 @@ elisp-install() {
 }
 
 elisp-site-file-install() {
-	if ( ! use ecf )
+	if ( ${HAS_ECF} )
 	    then
 	    local sitefile=$1 my_pn=${2:-${PN}}
 	    pushd ${S}
@@ -170,6 +177,7 @@ elisp-disable-elc() {
 	fi
 }
 
+EXPORT_FUNCTIONS pkg_setup
 
 # Local Variables: ***
 # mode: shell-script ***
