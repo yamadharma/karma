@@ -2,9 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-USE="ecf"    
-
-inherit elisp
+inherit elisp-common
 
 DESCRIPTION="Emacs Configuration Framework"
 HOMEPAGE="http://ecf.sourceforge.net"
@@ -13,7 +11,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 amd64"
 
-IUSE="ecf"
+IUSE="${IUSE}"
 
 DEPEND="virtual/emacs
 	( app-emacs/tiny-tools )"
