@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/gtk+/gtk+-2.8.20-r1.ebuild,v 1.3 2006/09/23 15:40:54 corsair Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/gtk+/gtk+-2.10.6.ebuild,v 1.1 2006/10/07 23:14:39 leio Exp $
 
 inherit gnome.org flag-o-matic eutils debug autotools virtualx
 
@@ -12,21 +12,19 @@ SLOT="2"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc x86 ~x86-fbsd"
 IUSE="debug doc jpeg tiff xinerama"
 
-RDEPEND="|| ( (
-			x11-libs/libXrender
-			x11-libs/libX11
-			x11-libs/libXi
-			x11-libs/libXt
-			x11-libs/libXext
-			x11-libs/libXcursor
-			x11-libs/libXrandr
-			x11-libs/libXfixes
-			xinerama? ( x11-libs/libXinerama ) )
-		virtual/x11 )
-	>=dev-libs/glib-2.10.1
-	>=x11-libs/pango-1.9
+RDEPEND="x11-libs/libXrender
+	x11-libs/libX11
+	x11-libs/libXi
+	x11-libs/libXt
+	x11-libs/libXext
+	x11-libs/libXcursor
+	x11-libs/libXrandr
+	x11-libs/libXfixes
+	xinerama? ( x11-libs/libXinerama )
+	>=dev-libs/glib-2.12.1
+	>=x11-libs/pango-1.12.0
 	>=dev-libs/atk-1.10.1
-	>=x11-libs/cairo-0.9.2
+	>=x11-libs/cairo-1.2.0
 	media-libs/fontconfig
 	x11-misc/shared-mime-info
 	>=media-libs/libpng-1.2.1
@@ -37,25 +35,23 @@ DEPEND="${RDEPEND}
 	sys-devel/autoconf
 	>=dev-util/pkgconfig-0.9
 	=sys-devel/automake-1.7*
-	|| ( (
-			x11-proto/xextproto
-			x11-proto/xproto
-			x11-proto/inputproto
-			xinerama? ( x11-proto/xineramaproto ) )
-		virtual/x11 )
+	x11-proto/xextproto
+	x11-proto/xproto
+	x11-proto/inputproto
+	x11-proto/xineramaproto
 	doc? (
-		>=dev-util/gtk-doc-1.4
-		~app-text/docbook-xml-dtd-4.1.2 )"
+			>=dev-util/gtk-doc-1.4
+			~app-text/docbook-xml-dtd-4.1.2
+		 )"
 
 RESTRICT="confcache"
 
+
 pkg_setup() {
-
-	if ! built_with_use x11-libs/cairo X; then
-		einfo "Please re-emerge x11-libs/cairo with the X USE flag set"
-		die "cairo needs the X flag set"
+	if ! built_with_use x11-libs/cairo X pdf ; then
+		einfo "Please re-emerge x11-libs/cairo with the X and pdf USE flag set"
+		die "cairo needs the X and pdf flag set"
 	fi
-
 }
 
 set_gtk2_confdir() {
@@ -66,7 +62,6 @@ set_gtk2_confdir() {
 }
 
 src_unpack() {
-
 	unpack ${A}
 	cd "${S}"
 
@@ -97,11 +92,9 @@ src_unpack() {
 	eautoreconf
 
 	epunt_cxx
-
 }
 
 src_compile() {
-
 	# png always on to display icons (foser)
 	local myconf="$(use_enable doc gtk-doc) \
 		$(use_with jpeg libjpeg) \
@@ -114,26 +107,23 @@ src_compile() {
 	# Passing --disable-debug is not recommended for production use
 	use debug && myconf="${myconf} --enable-debug=yes"
 
-	econf ${myconf} || die "./configure failed to run"
+	econf ${myconf} || die "configure failed"
 
-	emake || die "gtk+ failed to compile"
+	emake || die "compile failed"
 }
 
 src_test() {
-
 	Xmake check || die
-
 }
 
 src_install() {
-
 	make DESTDIR="${D}" install || die "Installation failed"
 
 	set_gtk2_confdir
 	dodir ${GTK2_CONFDIR}
 	keepdir ${GTK2_CONFDIR}
 
-	# # see bug #133241
+	# see bug #133241
 	echo 'gtk-fallback-icon-theme = "gnome"' > ${D}/${GTK2_CONFDIR}/gtkrc
 
 	# Enable xft in environment as suggested by <utx@gentoo.org>
@@ -141,11 +131,9 @@ src_install() {
 	echo "GDK_USE_XFT=1" > ${D}/etc/env.d/50gtk2
 
 	dodoc AUTHORS ChangeLog* HACKING NEWS* README*
-
 }
 
 pkg_postinst() {
-
 	set_gtk2_confdir
 
 	if [ -d "${ROOT}${GTK2_CONFDIR}" ]; then
@@ -164,4 +152,9 @@ pkg_postinst() {
 	einfo "in your xorg.conf.  NVIDIA is working on this issue. "
 	einfo "See http://bugs.gentoo.org/113123 for more information."
 
+	if [ -e /usr/lib/gtk-2.0/2.[^1]* ]; then
+		elog "You need to rebuild ebuilds that installed into" /usr/lib/gtk-2.0/2.[^1]*
+		elog "to do that you can use qfile from portage-utils:"
+		elog "emerge -va1 \$(qfile -qC" /usr/lib/gtk-2.0/2.[^1]* ")"
+	fi
 }
