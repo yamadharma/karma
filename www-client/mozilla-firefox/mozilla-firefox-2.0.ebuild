@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/www-client/mozilla-firefox/mozilla-firefox-2.0.ebuild,v 1.5 2006/10/25 22:55:17 zmedico Exp $
+# $Header: /var/cvsroot/gentoo-x86/www-client/mozilla-firefox/mozilla-firefox-2.0.ebuild,v 1.8 2006/11/09 00:36:01 kloeri Exp $
 
 inherit flag-o-matic toolchain-funcs eutils mozconfig-2 mozilla-launcher makeedit multilib fdo-mime mozextension autotools
 
@@ -89,7 +89,7 @@ pkg_setup(){
 
 	[[ `uname -m` = "ppc64" ]] && die "Building on a ppc64 host requires linux32."
 
-
+	use moznopango && warn_mozilla_launcher_stub
 }
 
 src_unpack() {
@@ -192,7 +192,10 @@ src_compile() {
 pkg_preinst() {
 	declare MOZILLA_FIVE_HOME="/usr/$(get_libdir)/${PN}"
 
-	einfo "Removing old install to eliminate any problems during install."
+	einfo "Removing old installs though some really ugly code.  It potentially"
+	einfo "eliminates any problems during the install, however suggestions to"
+	einfo "replace this are highly welcome.  Send comments and suggestions to"
+	einfo "mozilla@gentoo.org."
 	rm -rf "${ROOT}"/"${MOZILLA_FIVE_HOME}"
 }
 
@@ -221,9 +224,15 @@ src_install() {
 	install_mozilla_launcher_stub firefox "${MOZILLA_FIVE_HOME}"
 
 	# Install icon and .desktop for menu entry
-	doicon "${FILESDIR}"/icon/firefox-icon.png
-	newmenu "${FILESDIR}"/icon/mozillafirefox-1.5.desktop \
-		mozillafirefox-2.0.desktop
+	if use mozbranding; then
+		doicon "${FILESDIR}"/icon/firefox-icon.png
+		newmenu "${FILESDIR}"/icon/mozillafirefox-1.5.desktop \
+			mozillafirefox-2.0.desktop
+	else
+		doicon "${FILESDIR}"/icon/firefox-icon-unbranded.png
+		newmenu "${FILESDIR}"/icon/mozillafirefox-1.5-unbranded.desktop \
+			mozillafirefox-2.0.desktop
+	fi
 
 	# Fix icons to look the same everywhere
 	insinto "${MOZILLA_FIVE_HOME}"/icons

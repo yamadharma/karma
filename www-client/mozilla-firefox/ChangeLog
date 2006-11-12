@@ -1,6 +1,48 @@
 # ChangeLog for www-client/mozilla-firefox
 # Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/www-client/mozilla-firefox/ChangeLog,v 1.205 2006/10/25 22:55:17 zmedico Exp $
+# $Header: /var/cvsroot/gentoo-x86/www-client/mozilla-firefox/ChangeLog,v 1.215 2006/11/10 13:03:47 gustavoz Exp $
+
+  10 Nov 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  mozilla-firefox-1.5.0.8.ebuild:
+  Stable on sparc wrt security #154434
+
+  10 Nov 2006; <blubb@gentoo.org> mozilla-firefox-1.5.0.8.ebuild:
+  stable on amd64
+
+  09 Nov 2006; Christian Faulhammer <opfer@gentoo.org>
+  mozilla-firefox-1.5.0.8.ebuild:
+  stable x86, security bug #154434
+
+  09 Nov 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  mozilla-firefox-1.5.0.8.ebuild:
+  ppc stable, bug #154434
+
+  09 Nov 2006; Bryan Østergaard <kloeri@gentoo.org>
+  mozilla-firefox-1.5.0.8.ebuild:
+  Fix LINGUAS support, bug 154547.
+
+  09 Nov 2006; Bryan Østergaard <kloeri@gentoo.org>
+  mozilla-firefox-2.0.ebuild:
+  Add warning on moznopango.
+
+*mozilla-firefox-1.5.0.8 (08 Nov 2006)
+
+  08 Nov 2006; Bryan Østergaard <kloeri@gentoo.org>
+  +mozilla-firefox-1.5.0.8.ebuild:
+  Version bump, bug 154434.
+
+  01 Nov 2006; Bryan Østergaard <kloeri@gentoo.org>
+  -mozilla-firefox-1.5.0.5.ebuild, mozilla-firefox-1.5.0.7.ebuild:
+  Stable on ia64 and clean out 1.5.0.5.
+
+  31 Oct 2006; Bryan Østergaard <kloeri@gentoo.org>
+  mozilla-firefox-2.0.ebuild:
+  Update warning about removing old installs.
+
+  31 Oct 2006; Doug Goldstein <cardoe@gentoo.org>
+  +files/icon/mozillafirefox-1.5-unbranded.desktop,
+  +files/icon/firefox-icon-unbranded.png, mozilla-firefox-2.0.ebuild:
+  Mozilla Branding fixes committed on behalf of Anarchy. Fixes bug #153291
 
   25 Oct 2006; Zac Medico <zmedico@gentoo.org> mozilla-firefox-2.0.ebuild:
   Fix "cp: Argument list too long" error for bug #150687. Thanks to Anarchy

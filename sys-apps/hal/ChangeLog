@@ -1,6 +1,83 @@
 # ChangeLog for sys-apps/hal
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/hal/ChangeLog,v 1.89 2006/06/06 04:58:26 compnerd Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/hal/ChangeLog,v 1.107 2006/10/31 03:05:21 christel Exp $
+
+  31 Oct 2006; <christel@gentoo.org> hal-0.5.7-r3.ebuild:
+  Alpha stable
+
+  16 Oct 2006; Stefan Schweizer <genstef@gentoo.org> hal-0.5.7-r3.ebuild,
+  -hal-0.5.7.1.ebuild, hal-0.5.7.1-r1.ebuild:
+  Handle no kernel sources with eerror instead of die, thanks to Chris
+  Gianelloni <wolf31o2@gentoo.org> in bug 129811
+
+  22 Sep 2006; Doug Goldstein <cardoe@gentoo.org>
+  -files/hal-0.4.1-old_storage_policy.patch,
+  -files/hal-0.4.5-gentoo_gphoto2_usermap.patch,
+  -files/hal-0.4.7-sys_floppy_detection.patch,
+  -files/hal-0.4.7-vfat_mount_utf8.patch, -files/hal-0.4.8-fix_dvdram.patch,
+  -files/hal-unmount.dev, -hal-0.4.8.ebuild:
+  Remove old hal-0.4x series\!
+
+  17 Sep 2006; Steev Klimaszewski <steev@gentoo.org> hal-0.5.7.1-r1.ebuild:
+  Added split dependency on either dbus-glib *or* dbus, that way, those people
+  who have unmasked dbus-glib it will depend on that first, and if not, fall
+  back on dbus monolithic.
+
+*hal-0.5.7.1-r1 (16 Sep 2006)
+
+  16 Sep 2006; Doug Goldstein <cardoe@gentoo.org>
+  +files/hal-0.5.7.1-sr-driver.patch, +hal-0.5.7.1-r1.ebuild:
+  patch to fix sr driver based drives. bug #147598
+
+  04 Sep 2006; Doug Goldstein <cardoe@gentoo.org>
+  -files/hal-0.4.7-dont_add_device_twice-r1.patch, files/0.5-hald.rc,
+  -files/hal-0.4.7-device_info_leak.patch, -files/hal-0.5.5.1-RBC.patch,
+  -files/hal-0.5.7-drop-privs.patch, -files/hal-0.5.7-unclean-unmount.patch,
+  -hal-0.4.7-r2.ebuild, -hal-0.5.7.ebuild, -hal-0.5.7-r1.ebuild,
+  -hal-0.5.7-r2.ebuild:
+  Fixing HAL initscript. Removing oldness and some cleaning.
+
+  04 Sep 2006; Roy Marples <uberlord@gentoo.org> files/0.5-hald.rc,
+  files/hald:
+  hald init script dependencies updated, #125938.
+
+  29 Aug 2006; Joshua Jackson <tsunam@gentoo.org> hal-0.5.7-r3.ebuild:
+  stable x86; bug #144344
+
+  19 Aug 2006; Bryan Østergaard <kloeri@gentoo.org> hal-0.5.7-r3.ebuild:
+  Stable on ia64.
+
+  18 Aug 2006; Markus Rothe <corsair@gentoo.org> hal-0.5.7-r3.ebuild:
+  Stable on ppc64
+
+  16 Aug 2006; Markus Rothe <corsair@gentoo.org> hal-0.5.7-r1.ebuild:
+  Stable on ppc64
+
+  16 Aug 2006; Steev Klimaszewski <steev@gentoo.org>
+  +files/hal-0.5.7.1-dbus-close.patch:
+  And add the missing patch, closes bug #144075, thanks to Courtney Oliver for
+  reporting.
+
+*hal-0.5.7.1 (16 Aug 2006)
+
+  16 Aug 2006; Steev Klimaszewski <steev@gentoo.org> +hal-0.5.7.1.ebuild:
+  New upstream release, with fixes for sysfs changes with kernels > 2.6.17.
+  Closes bug #141950.  Thanks to David Watzke for reporting.
+
+  17 Jul 2006; Daniel Gryniewicz <dang@gentoo.org> hal-0.5.7-r3.ebuild:
+  Marked stable on amd64 for bug #139612
+
+  16 Jul 2006; Tobias Scherbaum <dertobi123@gentoo.org> hal-0.5.7-r3.ebuild:
+  hppa stable, bug #139612
+
+  14 Jul 2006; Tobias Scherbaum <dertobi123@gentoo.org> hal-0.5.7-r3.ebuild:
+  ppc stable, bug #139612
+
+  12 Jul 2006; Chris Gianelloni <wolf31o2@gentoo.org> hal-0.5.7-r1.ebuild:
+  Stable on x86 wrt bug #139612.
+
+  10 Jul 2006; Gustavo Zacarias <gustavoz@gentoo.org> hal-0.5.7-r3.ebuild:
+  Stable on sparc wrt #139612
 
 *hal-0.5.7-r3 (06 Jun 2006)
 

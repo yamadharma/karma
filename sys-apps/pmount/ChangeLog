@@ -1,6 +1,41 @@
 # ChangeLog for sys-apps/pmount
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/pmount/ChangeLog,v 1.25 2006/06/16 19:43:14 steev Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/pmount/ChangeLog,v 1.35 2006/10/31 01:11:26 cardoe Exp $
+
+  31 Oct 2006; Doug Goldstein <cardoe@gentoo.org> pmount-0.9.9.ebuild,
+  pmount-0.9.11.ebuild, pmount-0.9.13.ebuild:
+  Fixing bug #150513 and bug #145135
+
+  29 Oct 2006; Doug Goldstein <cardoe@gentoo.org> pmount-0.9.9.ebuild,
+  pmount-0.9.11.ebuild, pmount-0.9.13.ebuild:
+  Updated dbus depend to also be on the specific dbus bindings
+
+  19 Aug 2006; Bryan Østergaard <kloeri@gentoo.org> pmount-0.9.9.ebuild:
+  Stable on ia64.
+
+*pmount-0.9.13 (17 Aug 2006)
+
+  17 Aug 2006; Steev Klimaszewski <steev@gentoo.org> -pmount-0.9.6.ebuild,
+  +pmount-0.9.13.ebuild:
+  New upstream release 0.9.13, this should fix bug #137073.
+
+  12 Aug 2006; Markus Rothe <corsair@gentoo.org> pmount-0.9.9.ebuild:
+  Stable on ppc64; bug #136695
+
+  09 Aug 2006; Joshua Jackson <tsunam@gentoo.org> pmount-0.9.9.ebuild:
+  Stable x86;bug #136695
+
+  08 Aug 2006; Luis Medinas <metalgod@gentoo.org> pmount-0.9.9.ebuild:
+  Stable on amd64. Bug #136695.
+
+  07 Aug 2006; Jeroen Roovers <jer@gentoo.org> pmount-0.9.9.ebuild:
+  Stable for HPPA (bug #136695).
+
+  06 Aug 2006; Jason Wever <weeve@gentoo.org> pmount-0.9.9.ebuild:
+  Stable on SPARC wrt bug #136695.
+
+  06 Aug 2006; Tobias Scherbaum <dertobi123@gentoo.org> pmount-0.9.9.ebuild:
+  ppc stable, bug #136695
 
 *pmount-0.9.11 (16 Jun 2006)
 
