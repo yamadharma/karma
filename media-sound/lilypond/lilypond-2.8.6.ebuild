@@ -1,9 +1,10 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/lilypond/lilypond-2.8.0-r1.ebuild,v 1.9 2006/08/20 08:13:19 genstef Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/lilypond/lilypond-2.8.6.ebuild,v 1.9 2006/08/20 08:13:19 genstef Exp $
 
 inherit versionator
 
+RESTRICT="nomirror"
 IUSE="debug emacs profile doc vim"
 
 DESCRIPTION="GNU Music Typesetter"
@@ -15,10 +16,10 @@ SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="amd64 ~sparc x86"
 
-RDEPEND=">=dev-util/guile-1.6.5
+RDEPEND=">=dev-util/guile-1.6.7
 	virtual/ghostscript
 	virtual/tetex
-	>=dev-lang/python-2.2.3-r1
+	>=dev-lang/python-2.3
 	>=media-libs/freetype-2
 	>=media-libs/fontconfig-2.2
 	>=x11-libs/pango-1.6"
@@ -28,15 +29,15 @@ DEPEND="${RDEPEND}
 	>=dev-lang/perl-5.8.0-r12
 	>=sys-apps/texinfo-4.8
 	>=sys-devel/flex-2.5.4a-r5
-	>=sys-devel/gcc-3.3
+	>=sys-devel/gcc-4
 	>=sys-devel/make-3.80
 	>=app-text/mftrace-1.1.17
-	>=media-gfx/fontforge-20050624
+	>=media-gfx/fontforge-20060125
 	sys-devel/bison !=sys-devel/bison-1.75"
 
 src_unpack() {
 	unpack ${A}
-	# lilypond python scripts *prepend* /usr/share/lilypond/2.8.0/python to
+	# lilypond python scripts *prepend* /usr/share/lilypond/2.8.6/python to
 	# sys.path, causing python to attempt to rebuild the pyc, which generates
 	# sandbox errors (and is wrong anyway).  Change this policy to use
 	# sys.path.append so that PYTHONPATH, set by the Makefiles, takes

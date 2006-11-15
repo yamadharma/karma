@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-tv/mythtv/mythtv-0.20_p11444.ebuild,v 1.2 2006/10/06 14:55:04 beandog Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-tv/mythtv/mythtv-0.20_p11626.ebuild,v 1.2 2006/11/05 23:07:01 cardoe Exp $
 
 inherit mythtv flag-o-matic multilib eutils debug qt3
 
@@ -100,10 +100,6 @@ src_unpack() {
 	# As needed fix since they don't know how to write qmake let alone a real
 	# make system
 	epatch "${FILESDIR}"/${PN}-${MY_PV}-as-needed.patch
-
-	# Seriously... testing.. or maybe seeing if the OpenGL spec says these are
-	# public... or checking mesa before assuming they're there
-	epatch "${FILESDIR}"/${PN}-${MY_PV}-vsync.patch
 }
 
 src_compile() {
@@ -230,24 +226,29 @@ src_install() {
 
 	insinto /usr/share/mythtv/contrib
 	doins contrib/*
+
+	insinto /usr/share/mythtv/configfiles
+	doins configfiles/*
+
+	insinto /home/mythtv
+	newins "${FILESDIR}"/bash_profile .bash_profile
+	newins "${FILESDIR}"/xinitrc .xinitrc
 }
 
 pkg_preinst() {
-	enewuser mythtv -1 "-1" -1 ${MYTHTV_GROUPS} || die "Problem adding mythtv user"
+	enewuser mythtv -1 /bin/bash /home/mythtv ${MYTHTV_GROUPS} || die "Problem adding mythtv user"
 	usermod -a -G ${MYTHTV_GROUPS} mythtv
 }
 
 pkg_postinst() {
 	if ! use backendonly; then
 		echo
-		einfo "Want mythfrontend to start automatically? Run the following:"
-		einfo "crontab -e -u mythtv"
-		einfo "Add add the following:"
-		einfo "* * * * * /usr/bin/runmythfe &"
+		elog "Want mythfrontend to start automatically?"
+		elog "http://dev.gentoo.org/~cardoe/mythtv/autostart.html"
 	fi
 	echo
-	einfo "To always have MythBackend running and available run the following:"
-	einfo "rc-update add mythbackend default"
+	elog "To always have MythBackend running and available run the following:"
+	elog "rc-update add mythbackend default"
 	echo
 	ewarn "Your recordings folder must be owned by the user 'mythtv' now"
 	ewarn "chown -R mythtv /path/to/store"
