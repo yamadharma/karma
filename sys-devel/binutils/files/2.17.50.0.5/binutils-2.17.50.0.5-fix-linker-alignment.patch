@@ -1,0 +1,28 @@
+H.J.
+---
+2006-10-06  H.J. Lu  <hongjiu.lu@intel.com>
+
+	PR ld/3314
+	* elf.c (assign_file_positions_for_non_load_sections): Don't
+	page align empty SHF_ALLOC sections.  
+
+--- bfd/elf.c.empty     2006-09-29 09:00:21.000000000 -0700
++++ bfd/elf.c   2006-10-06 09:14:04.000000000 -0700
+@@ -4663,11 +4663,12 @@ assign_file_positions_for_non_load_secti
+	  if (hdr->sh_size != 0)
+	    ((*_bfd_error_handler)
+	     (_("%B: warning: allocated section `%s' not in segment"),
+-		abfd,
+-		(hdr->bfd_section == NULL
+-		 ? "*unknown*" 
+-		 : hdr->bfd_section->name)));
+-	  if ((abfd->flags & D_PAGED) != 0)
++	      abfd,
++	      (hdr->bfd_section == NULL
++		? "*unknown*"
++		: hdr->bfd_section->name)));
++	  /* We don't need to page align empty sections.  */
++	  if ((abfd->flags & D_PAGED) != 0 && hdr->sh_size != 0)
+	    off += vma_page_aligned_bias (hdr->sh_addr, off,
+					  bed->maxpagesize);
+	  else

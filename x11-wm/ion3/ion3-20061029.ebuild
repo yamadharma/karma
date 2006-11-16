@@ -20,7 +20,7 @@ SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 	mirror://debian/pool/main/i/${IONFLUX_PN}/${IONFLUX_PN}_${IONFLUX_PV}.orig.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="iontruetype xinerama"
 DEPEND="
 	|| (

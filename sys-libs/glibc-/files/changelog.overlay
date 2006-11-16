@@ -1,14 +1,5 @@
 Glibc overlay changelog:
 
-2006-10-22
-*Synced with portage.
-*New snapshot.
-*New version of the -Bdirect patch.
-
-2006-10-10
-*Synced with portage.
-*New snapshot (2.5.90).
-
 2006-10-05
 *Removed the hash-style USE from 2.4-r4, the patches are now always applied.
 *Added the latest -Bdirect patch to all ebuilds, also always applied.
