@@ -1,6 +1,59 @@
 # ChangeLog for dev-libs/icu
-# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/icu/ChangeLog,v 1.35 2005/11/10 03:18:25 weeve Exp $
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-libs/icu/ChangeLog,v 1.49 2006/11/12 16:52:14 chtekk Exp $
+
+  12 Nov 2006; Luca Longinotti <chtekk@gentoo.org> -icu-2.6.ebuild,
+  -icu-2.6.2.ebuild, icu-2.8.ebuild, icu-3.4.1.ebuild, icu-3.6.ebuild:
+  Cleanup of old ebuilds, sync new ones.
+
+*icu-3.6 (06 Nov 2006)
+
+  06 Nov 2006; Sebastian Bergmann <sebastian@gentoo.org> +icu-3.6.ebuild:
+  Version bump for bug #154203.
+
+  30 Oct 2006; Stuart Longland <redhatter@gentoo.org> icu-3.4.1.ebuild:
+  Tested successfully (using inbuilt testkit) -- ~mips keyword added on
+  request of bug #148659.
+
+  25 Oct 2006; Joshua Jackson <tsunam@gentoo.org> icu-3.4.1.ebuild:
+  Stable x86; bug #148658
+
+  01 Oct 2006; Tobias Scherbaum <dertobi123@gentoo.org> icu-3.4.1.ebuild:
+  Added ~hppa, bug #148659
+
+  26 Sep 2006; Jason Wever <weeve@gentoo.org> icu-3.4.1.ebuild:
+  Stable on SPARC wrt bug #148658.
+
+  23 Sep 2006; <nixnut@gentoo.org> icu-3.4.1.ebuild:
+  Stable on ppc wrt bug 148658
+
+  22 Sep 2006; Luca Longinotti <chtekk@gentoo.org> icu-3.2.ebuild,
+  icu-3.4.1.ebuild:
+  Fix again parallel build failure, seems it doesn't work with high values,
+  sorry!
+
+  22 Sep 2006; Markus Rothe <corsair@gentoo.org> icu-3.4.1.ebuild:
+  Added ~ppc64; bug #148659
+
+  22 Sep 2006; Luca Longinotti <chtekk@gentoo.org> -icu-2.0.ebuild,
+  -icu-2.2.ebuild, icu-2.6.ebuild, icu-2.6.2.ebuild, icu-2.8.ebuild,
+  icu-3.2.ebuild, -icu-3.4.ebuild, icu-3.4.1.ebuild:
+  Cleanup ebuilds, remove -j1 forcing since I couldn't reproduce any failure
+  with the compile, remove --enable-layout since it's already default.
+
+  15 Sep 2006; Daniel Gryniewicz <dang@gentoo.org> icu-3.4.1.ebuild:
+  Marked ~amd64 For bug #111545
+
+  13 Sep 2006; Luca Barbato <lu_zero@gentoo.org> icu-3.4.1.ebuild:
+  Marked ~ppc
+
+  15 Aug 2006; Sebastian Bergmann <sebastian@gentoo.org> metadata.xml:
+  This package is now maintained by php-bugs@gentoo.org.
+
+*icu-3.4.1 (15 Aug 2006)
+
+  15 Aug 2006; Sebastian Bergmann <sebastian@gentoo.org> +icu-3.4.1.ebuild:
+  Version bump.
 
   10 Nov 2005; Jason Wever <weeve@gentoo.org> icu-3.4.ebuild:
   Added ~sparc keyword as it went the way of the dodo in the version bump.
