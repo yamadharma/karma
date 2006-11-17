@@ -1,12 +1,12 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4.ebuild,v 1.13 2006/11/10 06:46:58 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4.ebuild,v 1.15 2006/11/16 18:02:53 suka Exp $
 
 inherit check-reqs debug eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions multilib toolchain-funcs
 
 IUSE="binfilter branding cairo cups dbus eds firefox gnome gstreamer gtk kde ldap sound odk pam webdav"
 
-MY_PV="${PV}.4"
+MY_PV="${PV}.6"
 PATCHLEVEL="OOD680"
 SRC="OOO_2_0_4"
 S="${WORKDIR}/ooo"
@@ -27,7 +27,7 @@ SRC_URI="http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-core.tar.bz2
 	http://go-oo.org/packages/xt/xt-20051206-src-only.zip
 	http://go-oo.org/packages/SRC680/lp_solve_5.5.tar.gz"
 
-LANGS="af ar be_BY bg bn bs ca cs cy da de el en en_GB en_US en_ZA es et fa fi fr gu_IN he hi_IN hr hu it ja km ko lt mk nb nl nn nr ns pa_IN pl pt pt_BR ru rw sh_YU sk sl sr_CS st sv sw_TZ th tn tr ts vi xh zh_CN zh_TW zu"
+LANGS="af ar be_BY bg bn bs ca cs cy da de el en en_GB en_US en_ZA es et fa fi fr gu_IN he hi_IN hr hu it ja km ko lt lv mk nb nl nn nr ns pa_IN pl pt pt_BR ru rw sh_YU sk sl sr_CS st sv sw_TZ th tn tr ts vi xh zh_CN zh_TW zu"
 
 for X in ${LANGS} ; do
 	IUSE="${IUSE} linguas_${X}"
@@ -284,7 +284,7 @@ src_install() {
 	doins fonts/*.ttf
 
 	# Fix the permissions for security reasons
-	chown -R root:root ${D} || die
+	chown -R root:root ${D}
 
 }
 
