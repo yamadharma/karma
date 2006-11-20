@@ -1,6 +1,54 @@
 # ChangeLog for dev-lang/erlang
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/erlang/ChangeLog,v 1.30 2006/05/27 04:27:43 mkennedy Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/erlang/ChangeLog,v 1.40 2006/11/17 12:39:38 opfer Exp $
+
+  17 Nov 2006; Christian Faulhammer <opfer@gentoo.org> +files/9c.patch:
+  that patch needs to stay
+
+  17 Nov 2006; Christian Faulhammer <opfer@gentoo.org> -files/9c.patch,
+  -erlang-8b.ebuild, -erlang-9c.ebuild, -erlang-9c-r1.ebuild,
+  -erlang-10.2.0.ebuild, -erlang-10.2.7.ebuild:
+  clean up old versions, including a stray patch
+
+  17 Nov 2006; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.1.ebuild:
+  added comments to warn anyone from maintaining it, added symlinks for
+  erl_call (bug #155229 by Pupeno <pupeno@pupeno.com>) and beam (requested by
+  Chainsaw <chainsaw@gentoo.org> on IRC. Prettyprinted some lines.
+
+  08 Nov 2006; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.1.ebuild:
+  disable High Performance Erlang (HiPE) because it breaks some systems,
+  especially hardened. Also fix an glibc error. Thanks to Alexander Gabert
+  <a.gabert@fh-trier.de>, Kenny Bentley <seriousmoose@yahoo.com>, Chris Carlin
+  <ccarlin@physics.tamu.edu>, Chainsaw and nattfodd. Bugs #119753, #154338 and
+  # 151612
+
+  08 Nov 2006; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.1.ebuild:
+  fix compilation on hardened systems by filtering SSP, see bug #154338.
+  Thanks to pappy-_ on IRC who provided advice and test hardware.
+
+  02 Nov 2006; Christian Faulhammer <opfer@gentoo.org>
+  -files/10.2.7-manpage-emacs-gentoo.patch, -files/erlang-9c.patch,
+  -files/erlang-10.2.7-export-TARGET.patch, erlang-10.2.7.ebuild,
+  erlang-10.2.10.ebuild, erlang-11.2.0.ebuild, erlang-11.2.1.ebuild:
+  remove unnecessary patches and adjust ebuilds to use the correct ones
+
+  02 Nov 2006; Christian Faulhammer <opfer@gentoo.org>
+  -erlang-10.2.6.ebuild:
+  remove it, because it is masked and newer versions are available
+
+  02 Nov 2006; Christian Faulhammer <opfer@gentoo.org> -erlang-9c-r3.ebuild:
+  remove that version, as it has no keywords
+
+*erlang-11.2.1 (02 Nov 2006)
+
+  02 Nov 2006; Christian Faulhammer <opfer@gentoo.org>
+  +erlang-11.2.1.ebuild:
+  version bump, reported by Conrad Kostecki <ConiKost@gmx.de> in
+  bug #145633
+
+  02 Nov 2006; Christian Faulhammer <opfer@gentoo.org> erlang-10.2.7.ebuild,
+  erlang-10.2.10.ebuild, erlang-11.2.0.ebuild:
+  changed USE flag tcltk -> tk, see bug #17808
 
 *erlang-11.2.0 (27 May 2006)
 
