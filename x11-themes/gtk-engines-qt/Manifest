@@ -1,28 +1,24 @@
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-MD5 af1f1a3d94cad803779d820ce9590a1f ChangeLog 2432
-RMD160 1ec7536665d5f7d3ff106b59c02acf042070871d ChangeLog 2432
-SHA256 267817fdfe36e1354df3f0a4a5f77e2cbfa12132659ba0ff977a0db74a464d4a ChangeLog 2432
-MD5 e7721dfa72ea5844880747469b30c988 files/digest-gtk-engines-qt-0.6-r2 256
-RMD160 cbc7296d50dc376b18624c2ef8cb9119d82a5491 files/digest-gtk-engines-qt-0.6-r2 256
-SHA256 3d0baba2e92d41deb70026339b67715e1b97c9f7b696fdaaae6856380b00c1b2 files/digest-gtk-engines-qt-0.6-r2 256
-MD5 8b8d9d95fe481699fe79e5d1617468ec files/gtk-2.8-fix.patch 374
-RMD160 e43292fb4814cb6c2bac7760705d9ec230556986 files/gtk-2.8-fix.patch 374
-SHA256 ac3e9180395cc6476b6f634406c372ede819990b9f0582c9cd0a320f17f969cb files/gtk-2.8-fix.patch 374
-MD5 8f580df2eb803899e2f8a45a5d133d08 files/gtk-qt-engine-0.6-kcm-fixinstallationdir.patch 657
-RMD160 65b6a59ecf37a8003329b0ea29b4371e993600b3 files/gtk-qt-engine-0.6-kcm-fixinstallationdir.patch 657
-SHA256 aa84dc2e174075c60941a8510d550b7338ccf0b3efa0ec313002f52d38814d86 files/gtk-qt-engine-0.6-kcm-fixinstallationdir.patch 657
-MD5 5849e93aa483d5fa897496601cc6f51d gtk-engines-qt-0.6-r2.ebuild 1176
-RMD160 5447992be3ace010ba34145e67336cc3c04603b9 gtk-engines-qt-0.6-r2.ebuild 1176
-SHA256 543c9fd9f2470aa9b9f4a363814e1146fbbf0e7ec769a1524f03c2c0b45fc71f gtk-engines-qt-0.6-r2.ebuild 1176
-MD5 cf0e58a86f2a1a7f183cd0ad2f0e5b99 metadata.xml 212
-RMD160 f278ca2a473dd949f7d0f359c432cfe4ed026e71 metadata.xml 212
-SHA256 70bbfd181623c884c763902ca127ef24c917b2e55cda0869e6ffaa6c4ebc5757 metadata.xml 212
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFD54Gv2G5bA0cA/ScRAiKEAKCZYBTC2TpS4xW/Ueyc9X54/cIyJQCgxS7K
-P0xJe9jEEUGtjK2J+N4VQJg=
-=EN+5
------END PGP SIGNATURE-----
+AUX gtk-engines-qt-0.7-implicit.patch 325 RMD160 f000122c61b329fbdc9db23f29f91c2b219c6284 SHA1 ce498f0db5e38a19984ff9180a2ec271d3ac215a SHA256 a47ad6e71b97c9160cc06af4a5e7ef219fd0753e3341e5c75a22d81ab0ab56d1
+MD5 f25a0d9a13e4db5a338ae90928ec40cf files/gtk-engines-qt-0.7-implicit.patch 325
+RMD160 f000122c61b329fbdc9db23f29f91c2b219c6284 files/gtk-engines-qt-0.7-implicit.patch 325
+SHA256 a47ad6e71b97c9160cc06af4a5e7ef219fd0753e3341e5c75a22d81ab0ab56d1 files/gtk-engines-qt-0.7-implicit.patch 325
+AUX kcmgtk-write-good-bashrc.diff 813 RMD160 4b9091390cd3b1d1059f9317dd4e4b218b1b70df SHA1 53013bf090d35a6b3672c3cdc10f20237a9f842e SHA256 27ef1031724098724cc76bd9727168c6316e90b2477ffbb5f0d961f90548b14f
+MD5 acc187b85188f96c88861a94875064ec files/kcmgtk-write-good-bashrc.diff 813
+RMD160 4b9091390cd3b1d1059f9317dd4e4b218b1b70df files/kcmgtk-write-good-bashrc.diff 813
+SHA256 27ef1031724098724cc76bd9727168c6316e90b2477ffbb5f0d961f90548b14f files/kcmgtk-write-good-bashrc.diff 813
+DIST gtk-qt-engine-0.7.tar.bz2 439794 RMD160 5030cd453b58e2f22976b383ebc1f6aec202910c SHA1 7e0df095171112e79b3bc8bee13287bb0e1cea2a SHA256 cfaac46c409984afbcf46979f728515535725e8c83bdf70277f23dde068daaee
+EBUILD gtk-engines-qt-0.7-r1.ebuild 1227 RMD160 50c4584c3bd5a5f45e227e8dd918a59bf8a43722 SHA1 bdfcc4205f6ef5bf9b24dd10aac6a8007aee01bd SHA256 a35b15e111fe709bb1b4be46f2287957d85791cffa89dbc12f1b7734ee6ef225
+MD5 8af325c58b466b6a7dd26d9b354cc9ad gtk-engines-qt-0.7-r1.ebuild 1227
+RMD160 50c4584c3bd5a5f45e227e8dd918a59bf8a43722 gtk-engines-qt-0.7-r1.ebuild 1227
+SHA256 a35b15e111fe709bb1b4be46f2287957d85791cffa89dbc12f1b7734ee6ef225 gtk-engines-qt-0.7-r1.ebuild 1227
+MISC ChangeLog 3878 RMD160 96970ca60cecb54a9e79df8c2bfd2af2d52c6c1f SHA1 de53c075037f431fdc937f4f9f902fc36a3101f1 SHA256 3ff019da3e281cbd7716c6722905d8d3043a7dc742bf5d86c511fff21ec593e6
+MD5 807a3ad85ae77b994c74ed408f41267b ChangeLog 3878
+RMD160 96970ca60cecb54a9e79df8c2bfd2af2d52c6c1f ChangeLog 3878
+SHA256 3ff019da3e281cbd7716c6722905d8d3043a7dc742bf5d86c511fff21ec593e6 ChangeLog 3878
+MISC metadata.xml 202 RMD160 75345465bb5794b30965e4674f0269f134e920ee SHA1 a174ba2f788b85cd991e2295c22b72feb185026b SHA256 9cb2f3c693eec8648c11c76441dd7840340753bd4e31c2e1d45b412b23150c84
+MD5 d102d93b9c48e7510b853ebca5891654 metadata.xml 202
+RMD160 75345465bb5794b30965e4674f0269f134e920ee metadata.xml 202
+SHA256 9cb2f3c693eec8648c11c76441dd7840340753bd4e31c2e1d45b412b23150c84 metadata.xml 202
+MD5 ea817b696943f4a74042c4c4ccf58f14 files/digest-gtk-engines-qt-0.7-r1 256
+RMD160 8c68d26a969b65e106c8b4722f0d30d766b80515 files/digest-gtk-engines-qt-0.7-r1 256
+SHA256 e978ee25d4ce3f4c4b3af5257a02645066777a435a9a2ab0dba879b78e884da4 files/digest-gtk-engines-qt-0.7-r1 256
