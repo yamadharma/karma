@@ -16,6 +16,8 @@ KEYWORDS="amd64 x86"
 IUSE="gnome kde stlport exif epeg qt gtk xapian curl gphoto2 jpeg
 png ldap imagemagick hevea gs bogofilter gpgme gtk xine obby beagle perl X emacs rpm"
 
+# 
+
 RDEPEND="dev-libs/xerces-c
 	dev-libs/xalan-c
 	dev-libs/redland
@@ -44,8 +46,8 @@ RDEPEND="dev-libs/xerces-c
 	gs? ( app-text/ghostscript-esp )
 	bogofilter? ( mail-filter/bogofilter )
 	dev-util/pccts
-	gnome? ( gnome-base/bonobo )
 	kde? ( >=kde-base/kdelibs-3 )
+	gnome? ( gnome-base/libbonobo )
 	gpgme? ( >=app-crypt/gpgme-0.4.3 )
 	>=dev-libs/glib-2.2.0
 	gtk? ( >=x11-libs/gtk+-2.2.0 )
@@ -56,6 +58,8 @@ RDEPEND="dev-libs/xerces-c
 	rpm? ( >=rpm-4.4.7 )
 	X? ( virtual/x11 )"
 DEPEND="${RDEPEND}"
+
+# 	gnome? ( gnome-base/bonobo )
 
 disable_component() {
 	sed -r -i "s@^$1/Makefile\$@@g" ${S}/configure.ac
