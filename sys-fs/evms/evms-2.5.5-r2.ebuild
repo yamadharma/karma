@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/evms/evms-2.5.5-r2.ebuild,v 1.2 2006/08/20 21:23:00 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/evms/evms-2.5.5-r3.ebuild,v 1.4 2006/11/09 21:17:00 ulmo Exp $
 
 inherit eutils flag-o-matic multilib toolchain-funcs
 
@@ -25,10 +25,17 @@ RDEPEND="virtual/libc
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/${PV}/raid5_degrade_fix.patch
 	epatch "${FILESDIR}"/${PV}/md_super_fix.patch
+	epatch "${FILESDIR}"/${PV}/ntfs_unmkfs.patch
+	epatch "${FILESDIR}"/${PV}/raid5_degrade_fix.patch
 	epatch "${FILESDIR}"/${PV}/raid5_remove_spare_fix.patch
 	epatch "${FILESDIR}"/${PV}/raid5_remove_spare_fix_2.patch
+	epatch "${FILESDIR}"/${PV}/raid5_algorithm.patch
+	epatch "${FILESDIR}"/${PV}/cli_reload_options.patch
+	epatch "${FILESDIR}"/${PV}/cli_query_segfault.patch
+	epatch "${FILESDIR}"/${PV}/get_geometry.patch
+	epatch "${FILESDIR}"/${PV}/BaseName.patch
+
 	epatch "${FILESDIR}"/evms-2.5.5-as-needed.patch
 }
 
