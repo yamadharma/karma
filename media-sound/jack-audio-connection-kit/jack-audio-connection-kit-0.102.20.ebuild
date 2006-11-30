@@ -1,31 +1,34 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/jack-audio-connection-kit/jack-audio-connection-kit-0.102.20.ebuild,v 1.2 2006/11/18 12:47:24 eldad Exp $
+# $Header: $
 
 inherit flag-o-matic eutils multilib
 
-NETJACK=netjack-0.12rc1
+RESTRICT="nomirror"
+NETJACK="netjack-0.12"
 
 DESCRIPTION="A low-latency audio server"
 HOMEPAGE="http://www.jackaudio.org"
-SRC_URI="mirror://sourceforge/jackit/${P}.tar.gz http://netjack.sourceforge.net/${NETJACK}.tar.bz2"
+SRC_URI="mirror://sourceforge/jackit/${P}.tar.gz
+	netjack? ( mirror://sourceforge/netjack/${NETJACK}.tar.bz2 )"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
-KEYWORDS="amd64 ~arm ~ppc ~ppc-macos ~ppc64 ~sh ~sparc x86"
-IUSE="altivec alsa caps coreaudio doc debug jack-tmpfs mmx oss portaudio sndfile sse netjack cpudetection"
+KEYWORDS="-alpha amd64 ~arm -hppa -ia64 -mips ~ppc ~ppc-macos -ppc64 ~sh -sparc x86"
+IUSE="altivec alsa caps coreaudio doc debug jack-tmpfs mmx oss portaudio sndfile sse netjack jackmidi"
 
 RDEPEND="dev-util/pkgconfig
+	jackmidi? ( media-libs/alsa-lib )
+	netjack? ( !media-sound/netjack )
 	sndfile? ( >=media-libs/libsndfile-1.0.0 )
 	sys-libs/ncurses
 	caps? ( sys-libs/libcap )
 	portaudio? ( =media-libs/portaudio-18* )
 	alsa? ( >=media-libs/alsa-lib-0.9.1 )
-	!media-sound/jack-cvs"
-
+	netjack? ( dev-util/scons )
+	!media-sound/jack-audio-connection-kit-svn"
 DEPEND="${RDEPEND}
-	doc? ( app-doc/doxygen )
-	netjack? ( dev-util/scons )"
+	doc? ( app-doc/doxygen )"
 
 pkg_setup() {
 	if ! use sndfile ; then
@@ -40,9 +43,6 @@ pkg_setup() {
 		fi
 	fi
 
-	if use netjack; then
-		einfo "including support for experimental netjack, see http://netjack.sourceforge.net/"
-	fi
 }
 
 src_unpack() {
@@ -50,7 +50,22 @@ src_unpack() {
 	use netjack && unpack ${NETJACK}.tar.bz2
 	cd ${S}
 
+	# the docs option is in upstream, I'll leave the pentium2 foobage
+	# for the x86 folks...... kito@gentoo.org
+
+	# Add doc option and fix --march=pentium2 in caps test
+	#epatch ${FILESDIR}/${PN}-doc-option.patch
+
+	# compile and install jackstart, see #92895, #94887
+	#if use caps ; then
+	#	epatch ${FILESDIR}/${PN}-0.99.0-jackstart.patch
+	#fi
+
 	epatch ${FILESDIR}/${PN}-transport.patch
+	#epatch ${FILESDIR}/${PN}-mmap_complex.patch
+	#if use jackmidi; then
+	#	epatch ${FILESDIR}/jackmidi_01dec05.patch || die
+	#fi
 }
 
 src_compile() {
@@ -72,24 +87,11 @@ src_compile() {
 			-maltivec -mabi=altivec -mhard-float -mpowerpc-gfxopt
 	fi
 
-	# CPU Detection (dynsimd) uses asm routines which requires 3dnow, mmx and sse.
-	# Also, without -O2 it will not compile as well.
-	# we test if it is present before enabling the configure flag.
-	if use cpudetection ; then
-		if (! grep 3dnow /proc/cpuinfo >/dev/null) ; then
-			ewarn "Can't build cpudetection (dynsimd) without cpu 3dnow support. see bug #136565."
-		elif (! grep sse /proc/cpuinfo >/dev/null) ; then
-			ewarn "Can't build cpudetection (dynsimd) without cpu sse support. see bug #136565."
-		elif (! grep mmx /proc/cpuinfo >/dev/null) ; then
-			ewarn "Can't build cpudetection (dynsimd) without cpu mmx support. see bug #136565."
-		else
-			einfo "Enabling cpudetection (dynsimd). Adding -mmmx, -msse, -m3dnow and -O2 to CFLAGS."
-			myconf="${myconf} --enable-dynsimd"
-
-			filter-flags -O*
-			append-flags -mmmx -msse -m3dnow -O2
-		fi
+	if use jackmidi; then
+		aclocal
+		automake
 	fi
+
 
 	use sndfile && \
 		export SNDFILE_CFLAGS="-I/usr/include" \
@@ -105,7 +107,8 @@ src_compile() {
 		$(use_enable mmx) \
 		$(use_enable oss) \
 		$(use_enable portaudio) \
-		$(use_enable sse) \
+		$(use_enable sse)  \
+		$(use_enable 3dnow dynsimd) \
 		--with-pic \
 		${myconf} || die "configure failed"
 	emake || die "compilation failed"

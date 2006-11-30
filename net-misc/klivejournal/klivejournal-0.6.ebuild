@@ -5,11 +5,13 @@
 inherit kde
 need-kde 3
 
-DESCRIPTION="KLuJe is a client for LiveJournal-based sites such as LiveJournal.com"
-SRC_URI="mirror://sourceforge/kluje/${P}.tar.gz"
-HOMEPAGE="http://kluje.sourceforge.net"
+DESCRIPTION="KLiveJournal is a KDE client for the LiveJournal.com."
+SRC_URI="mirror://sourceforge/${PN}/KLiveJournal-${PV}.tar.bz2"
+HOMEPAGE="http://${PN}.sourceforge.net"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 ppc amd64 ~sparc"
 IUSE=""
+
+S=${WORKDIR}/KLiveJournal
