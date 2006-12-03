@@ -1,0 +1,34 @@
+# ChangeLog for net-libs/libjingle
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/net-libs/libjingle/ChangeLog,v 1.7 2006/11/27 20:07:42 drizzt Exp $
+
+  27 Nov 2006; Timothy Redaelli <drizzt@gentoo.org> metadata.xml,
+  libjingle-0.3.9.ebuild:
+  Added herd=voip and fixed some minor problems.
+
+  07 Oct 2006; Simon Stelling <blubb@gentoo.org> libjingle-0.3.9.ebuild:
+  added ~amd64
+
+  25 Sep 2006; Stefan Schweizer <genstef@gentoo.org> libjingle-0.3.9.ebuild:
+  remove libjingle block, thanks to Daniel Lin in bug 135310
+
+  09 Jun 2006; Stefan Schweizer <genstef@gentoo.org>
+  +files/libjingle-build.diff:
+  version bump
+
+  02 Jun 2006; Stefan Schweizer <genstef@gentoo.org>
+  libjingle-0.3.0_p20060508.ebuild:
+  block kopete
+
+  22 May 2006; Stefan Schweizer <genstef@gentoo.org>
+  libjingle-0.3.0_p20060508.ebuild:
+  Make ortp depend really optional and do not always enable-libjingle thanks
+  to epix in irc.
+
+*libjingle-0.3.0_p20060508 (21 May 2006)
+
+  21 May 2006; Stefan Schweizer <genstef@gentoo.org> +metadata.xml,
+  +libjingle-0.3.0_p20060508.ebuild:
+  New ebuild libjingle, dependency of tapioca, bug 127383, ebuild modified
+  from the ycarus overlay
+

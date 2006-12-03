@@ -1,6 +1,35 @@
 # ChangeLog for www-client/mozilla-firefox
 # Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/www-client/mozilla-firefox/ChangeLog,v 1.215 2006/11/10 13:03:47 gustavoz Exp $
+# $Header: /var/cvsroot/gentoo-x86/www-client/mozilla-firefox/ChangeLog,v 1.221 2006/12/01 21:57:56 kloeri Exp $
+
+*mozilla-firefox-2.0-r2 (01 Dec 2006)
+
+  01 Dec 2006; Bryan Østergaard <kloeri@gentoo.org>
+  +mozilla-firefox-2.0-r2.ebuild:
+  New patchset, fixing bug 156023 and ppc64.
+
+  21 Nov 2006; Stefan Schweizer <genstef@gentoo.org>
+  -mozilla-firefox-2.0.ebuild, mozilla-firefox-2.0-r1.ebuild:
+  Fix autoconf usage ad remove old 2.0 thanks to anarchy
+
+*mozilla-firefox-2.0-r1 (19 Nov 2006)
+
+  19 Nov 2006; Stuart Longland <redhatter@gentoo.org>
+  +mozilla-firefox-2.0-r1.ebuild:
+  Added new Firefox ebuild (on Anarchy's behalf).  Resolves bug #154906.
+
+  15 Nov 2006; Jeroen Roovers <jer@gentoo.org>
+  mozilla-firefox-1.5.0.8.ebuild:
+  Stable for HPPA (bug #154434).
+
+  12 Nov 2006; Tim Yamin <plasmaroo@gentoo.org>
+  mozilla-firefox-1.5.0.8.ebuild:
+  Stable on IA64; bug #154434.
+
+  11 Nov 2006; Bryan Østergaard <kloeri@gentoo.org>
+  mozilla-firefox-1.5.0.7.ebuild, mozilla-firefox-1.5.0.8.ebuild,
+  mozilla-firefox-2.0.ebuild:
+  Restrict parallel builds until upstream can solve the problem properly.
 
   10 Nov 2006; Gustavo Zacarias <gustavoz@gentoo.org>
   mozilla-firefox-1.5.0.8.ebuild:

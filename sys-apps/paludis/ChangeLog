@@ -1,6 +1,114 @@
 # ChangeLog for sys-apps/paludis
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/ChangeLog,v 1.7 2006/05/31 16:53:20 dercorny Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/ChangeLog,v 1.30 2006/12/02 20:30:22 hansmi Exp $
+
+*paludis-0.12.0 (02 Dec 2006)
+
+  02 Dec 2006; Michael Hanselmann <hansmi@gentoo.org> -paludis-0.6.6.ebuild,
+  -paludis-0.6.7.ebuild, -paludis-0.8.0.ebuild, -paludis-0.8.1.ebuild,
+  -paludis-0.8.2.ebuild, -paludis-0.8.4.ebuild, -paludis-0.10.0.ebuild,
+  +paludis-0.12.0.ebuild:
+  Version bump, remove old ebuilds.
+
+*paludis-0.10.1 (29 Nov 2006)
+
+  29 Nov 2006; Michael Hanselmann <hansmi@gentoo.org>
+  +paludis-0.10.1.ebuild:
+  Version bump.
+
+  28 Nov 2006; Michael Hanselmann <hansmi@gentoo.org> paludis-0.10.0.ebuild:
+  Update libwrapiter dep.
+
+*paludis-0.10.0 (28 Nov 2006)
+
+  28 Nov 2006; Michael Hanselmann <hansmi@gentoo.org>
+  +paludis-0.10.0.ebuild:
+  Version bump.
+
+*paludis-0.8.4 (15 Nov 2006)
+
+  15 Nov 2006; Mike Kelly <pioto@gentoo.org> +paludis-0.8.4.ebuild:
+  Version bump.
+
+*paludis-0.8.2 (25 Oct 2006)
+
+  25 Oct 2006; Danny van Dyk <kugelfang@gentoo.org> +paludis-0.8.2.ebuild:
+  Version bump.
+
+*paludis-0.8.1 (21 Oct 2006)
+
+  21 Oct 2006; Stephen Bennett <spb@gentoo.org> +paludis-0.8.1.ebuild:
+  Version bump
+
+*paludis-0.8.0 (12 Oct 2006)
+
+  12 Oct 2006; Stephen Bennett <spb@gentoo.org> -paludis-0.6.0.ebuild,
+  -paludis-0.6.1.ebuild, -paludis-0.6.2.ebuild, -paludis-0.6.4.ebuild,
+  -paludis-0.6.5.ebuild, +paludis-0.8.0.ebuild:
+  Version bump, cleared old ebuilds
+
+*paludis-0.6.7 (02 Oct 2006)
+
+  02 Oct 2006; Danny van Dyk <kugelfang@gentoo.org> +paludis-0.6.7.ebuild:
+  Version bump.
+
+*paludis-0.6.6 (27 Sep 2006)
+
+  27 Sep 2006; Fernando J. Pereda <ferdy@gentoo.org> +paludis-0.6.6.ebuild:
+  New upstream version.
+
+*paludis-0.6.4 (14 Sep 2006)
+
+  14 Sep 2006; Fernando J. Pereda <ferdy@gentoo.org> +paludis-0.6.4.ebuild:
+  New upstream version.
+
+  14 Sep 2006; Joshua Nichols <nichoj@gentoo.org> paludis-0.6.2.ebuild:
+  Added ~ppc.
+
+  13 Sep 2006; Mike Kelly <pioto@gentoo.org> paludis-0.6.0.ebuild,
+  paludis-0.6.1.ebuild, paludis-0.6.2.ebuild:
+  Remove a --disable-qa argument to econf, since we're using $(use_enable qa)
+  now...
+
+*paludis-0.6.2 (12 Sep 2006)
+
+  12 Sep 2006; Fernando J. Pereda <ferdy@gentoo.org> +paludis-0.6.2.ebuild:
+  New upstream version.
+
+*paludis-0.6.1 (03 Sep 2006)
+
+  03 Sep 2006; Stephen Bennett <spb@gentoo.org> +paludis-0.6.1.ebuild:
+  Version bump
+
+  02 Sep 2006; Jeroen Roovers <jer@gentoo.org> paludis-0.6.0.ebuild:
+  Marked ~hppa.
+
+*paludis-0.6.0 (31 Aug 2006)
+
+  31 Aug 2006; Stephen Bennett <spb@gentoo.org> +paludis-0.6.0.ebuild:
+  Version bump
+
+*paludis-0.4.4 (22 Aug 2006)
+
+  22 Aug 2006; Fernando J. Pereda <ferdy@gentoo.org> +paludis-0.4.4.ebuild:
+  New upstream version.
+
+*paludis-0.4.3 (28 Jul 2006)
+
+  28 Jul 2006; Christel Dahlskjaer <christel@gentoo.org>
+  +paludis-0.4.3.ebuild:
+  Version Bump
+
+*paludis-0.4.2 (15 Jul 2006)
+
+  15 Jul 2006; Stephen Bennett <spb@gentoo.org> -paludis-0.2.4.ebuild,
+  -paludis-0.2.5.ebuild, +paludis-0.4.2.ebuild:
+  Version bump; cleared old versions
+
+*paludis-0.4.0 (07 Jul 2006)
+
+  07 Jul 2006; Stephen Bennett <spb@gentoo.org> +paludis-0.4.0.ebuild:
+  Version bump
 
 *paludis-0.2.5 (31 May 2006)
 
@@ -33,4 +141,5 @@
   03 May 2006; Stephen Bennett <spb@gentoo.org> +metadata.xml,
   +paludis-0.2.1.ebuild:
   Added new package.
+
 
