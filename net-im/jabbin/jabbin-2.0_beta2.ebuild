@@ -31,12 +31,14 @@ S="${WORKDIR}/${MY_P}"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch ${FILESDIR}/3party.patch
-	sed -i -e "s:3party::g" jabbin.pro 
+	
+	use amd64 && epatch ${FILESDIR}/${P}_amd64.patch
+
+#	epatch ${FILESDIR}/3party.patch
+#	sed -i -e "s:3party::g" jabbin.pro 
 }
 
 src_compile() {
-#	./configure
 	qmake jabbin.pro || die "qmake failed"
 	emake || die "emake failed"
 }

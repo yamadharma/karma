@@ -1,0 +1,23 @@
+# ChangeLog for media-gfx/f-spot
+# Copyright 2005-2006 BreakMyGentoo.net; Distributed under the GPL v2
+# $Header: $
+
+  14 Oct 2006; Hendrik Brandt <heb@gnome-de.org> ChangeLog:
+  bump
+
+  24 Feb 2006; Hendrik Brandt <heb@gnome-de.org> ChangeLog:
+  bump
+
+  13 Feb 2006; Hendrik Brandt <heb@gnome-de.org> ChangeLog:
+  - add a touch to set correct timestamp for config-files
+    as this release has a timestamp a day in the future (today: 2006-02-13)
+
+  13 Feb 2006; Hendrik Brandt <heb@gnome-de.org> ChangeLog:
+  bump
+
+  30 Jan 2006; Hendrik Brandt <heb@gnome-de.org> ChangeLog:
+  bump
+
+  27 Jan 2006; Hendrik Brandt <heb@gnome-de.org> ChangeLog:
+  version bump
+
