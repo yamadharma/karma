@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bzrtools/bzrtools-0.12.2.ebuild,v 1.1 2006/10/31 16:57:10 marienz Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bzrtools/bzrtools-0.13.0.ebuild,v 1.1 2006/11/28 17:19:24 marienz Exp $
 
 inherit distutils versionator
 

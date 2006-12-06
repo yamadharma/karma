@@ -14,6 +14,7 @@ ECLASS=elisp-common
 INHERITED="$INHERITED $ECLASS"
 
 SITELISPEMACS=/usr/share/emacs/site-lisp
+SITELISP=/usr/share/emacs/site-lisp
 
 # Sandbox issues
 for i in ${INFOPATH}
@@ -37,7 +38,7 @@ elisp-common_pkg_setup () {
     	    done
 	else    
             SITELISP=/usr/share/emacs/site-lisp
-	    HAS_ECF=0
+	    HAS_ECF=
 	fi
 }
 
@@ -54,7 +55,9 @@ elisp-install() {
 }
 
 elisp-site-file-install() {
-	if ( ${HAS_ECF} )
+	elisp-common_pkg_setup
+	
+	if [ -n "${HAS_ECF}" ]
 	    then
 	    local sitefile=$1 my_pn=${2:-${PN}}
 	    pushd ${S}
@@ -67,9 +70,11 @@ elisp-site-file-install() {
 }
 
 elisp-site-regen() {
+	elisp-common_pkg_setup
+	
 	einfo "Regenerating ${SITELISP}/site-gentoo.el ..."
 	einfo ""
-	if ( use ecf )
+	if [ -n "${HAS_ECF}" ]
 	then
 	    einfo "ecf used. Regeneration not needed ."
 	else
