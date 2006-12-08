@@ -7,7 +7,10 @@ inherit gnome2 eutils autotools
 DESCRIPTION="Graphical frontend and libraries for ripping DVDs and encoding to AVI/OGM/MKV/MP4"
 HOMEPAGE="http://ogmrip.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz
-	mirror://gentoo/${PN}-0.10.0-mplayer-rc.patch"
+	mirror://gentoo/${PN}-0.10.0-mplayer-rc.patch
+	http://ogmrip.sourceforge.net/patches/${P}-mp3-quality.patch
+	http://ogmrip.sourceforge.net/patches/${P}-x264-suboptions.patch"
+	
 LICENSE="LGPL-2.1"
 
 SLOT="0"
@@ -59,5 +62,7 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	epatch "${DISTDIR}/${P}-mplayer-rc.patch"
+	epatch "${DISTDIR}/${P}-mp3-quality.patch"
+	epatch "${DISTDIR}/${P}-x264-suboptions.patch"
 	eautoreconf
 }

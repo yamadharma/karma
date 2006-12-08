@@ -1,12 +1,12 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4.ebuild,v 1.16 2006/11/21 08:28:05 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4.ebuild,v 1.20 2006/12/04 17:34:05 hansmi Exp $
 
 inherit check-reqs debug eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions multilib toolchain-funcs
 
 IUSE="binfilter branding cairo cups dbus eds firefox gnome gstreamer gtk kde ldap sound odk pam webdav"
 
-MY_PV="${PV}.7"
+MY_PV="${PV}.9"
 PATCHLEVEL="OOD680"
 SRC="OOO_2_0_4"
 S="${WORKDIR}/ooo"
@@ -37,14 +37,17 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~sparc x86"
+KEYWORDS="amd64 ~ppc ~sparc x86"
 
 COMMON_DEPEND="!app-office/openoffice-bin
 	x11-libs/libXaw
 	x11-libs/libXinerama
 	virtual/libc
 	>=dev-lang/perl-5.0
-	dbus? ( >=sys-apps/dbus-0.60 )
+	dbus? ( || (
+				>=dev-libs/dbus-glib-0.71
+				( <sys-apps/dbus-0.90 >=sys-apps/dbus-0.61 )
+			) )
 	gnome? ( >=x11-libs/gtk+-2.4
 		>=gnome-base/gnome-vfs-2.6
 		>=gnome-base/gconf-2.0 )
