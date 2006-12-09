@@ -30,7 +30,7 @@ nfont_src_install ()
 	do
 	fullname=`find ${D}${FONTSDIR_ROOT} -name ${j} -print`
 	fullname=`echo ${fullname} | sed -e "s:${D}::"`
-	dosym "${fullname}" "${GNUSTEP_SYSTEM_ROOT}/Library/Fonts/`basename "${i}" .list`/${j}"
+	dosym "/${fullname}" "${GNUSTEP_SYSTEM_ROOT}/Library/Fonts/`basename "${i}" .list`/${j}"
       done  < "${i}"
       rm -f "${i}"
     done
