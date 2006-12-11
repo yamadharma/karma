@@ -1,0 +1,8 @@
+# ChangeLog for x11-plugins/beryl-xglsnow
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  09 Dec 2006; Alex Heck <nesl247@gmail.com> -beryl-xglsnow-0.1.3.ebuild,
+  +beryl-xglsnow-0.1.4.ebuild:
+  Version bump
+

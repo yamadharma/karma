@@ -3,6 +3,7 @@
 <pkgmetadata>
 <herd>x11-drivers</herd>
 <maintainer>
-  <email>lu_zero@gentoo.org</email>
+  <email>x11-drivers@gentoo.org</email>
 </maintainer>
+<longdescription>NVIDIA X11 driver and GLX libraries</longdescription>
 </pkgmetadata>

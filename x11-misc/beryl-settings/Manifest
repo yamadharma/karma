@@ -1,0 +1,8 @@
+DIST beryl-settings-0.1.3.tar.bz2 231207 RMD160 bff486b267c44dc32a36430d66bce5493e509f4f SHA1 2ba5e62907e6745dc638c94fa79853e72ef5244c SHA256 8fbc5ae8ac22812319fed1db5ed66db669a5f1cf320661b0611359dc80fbb8a8
+EBUILD beryl-settings-0.1.3.ebuild 663 RMD160 9f5acfdf6d027a60357d8bb741925d4ec117521c SHA1 aaef6e73d03fc197cfa50206d42d41d5dd4d00f3 SHA256 3aa6df5a633573d222e0695fea26c037b48696c3f3c4fdef1520ecefc171d068
+MD5 7619c38b0000ad65d0120083e0044c47 beryl-settings-0.1.3.ebuild 663
+RMD160 9f5acfdf6d027a60357d8bb741925d4ec117521c beryl-settings-0.1.3.ebuild 663
+SHA256 3aa6df5a633573d222e0695fea26c037b48696c3f3c4fdef1520ecefc171d068 beryl-settings-0.1.3.ebuild 663
+MD5 a7c4e3ce9012e379c73b58887ebfecc7 files/digest-beryl-settings-0.1.3 265
+RMD160 ee653aafe2dcd5537f21b148d6c6f128be68b22f files/digest-beryl-settings-0.1.3 265
+SHA256 57397e66ebded9f8f44ba9fc868d5b68e22c63f58ad3294bf47e722ca5a0c531 files/digest-beryl-settings-0.1.3 265
