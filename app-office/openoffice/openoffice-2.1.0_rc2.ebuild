@@ -26,8 +26,8 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc ~ppc64 ~sparc ~x86"
-RESTRICT="binchecks strip"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
+RESTRICT="binchecks strip mirror"
 
 SRC_URI="http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-core.tar.bz2
 	http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-lang.tar.bz2

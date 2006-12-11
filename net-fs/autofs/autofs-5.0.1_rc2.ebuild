@@ -65,7 +65,8 @@ src_install() {
 
 	dodoc COPYING COPYRIGHT README* CHANGELOG CREDITS
 	cd ${S}/samples
-	docinto samples ; dodoc auto.misc auto.net auto.smb auto.master
+	docinto samples ; dodoc *
+#	dodoc auto.misc auto.net auto.smb auto.master
 	cd ${S}/patches
 	docinto patches ; dodoc *.patch
 	cd ${S}/man
@@ -90,7 +91,10 @@ src_install() {
 		#insinto /etc/openldap/schema ; doins autofs.schema
 		#exeinto /usr/lib/autofs ; doexe autofs-ldap-auto-master
 	fi
-
+	
+	insinto /etc/openldap/schema
+	doins ${S}/samples/autofs.schema
+	
 	keepdir /var/run/autofs
 }
 
