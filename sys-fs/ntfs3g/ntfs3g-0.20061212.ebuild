@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/ntfs3g/ntfs3g-0.20061115-r1.ebuild,v 1.1 2006/11/20 16:43:02 chutzpah Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/ntfs3g/ntfs3g-0.20061212.ebuild,v 1.1 2006/12/13 15:22:32 chutzpah Exp $
 
 inherit linux-info
 
