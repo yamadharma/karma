@@ -1,0 +1,47 @@
+# ChangeLog for net-www/nspluginwrapper
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/net-www/nspluginwrapper/ChangeLog,v 1.7 2006/11/22 15:58:08 chutzpah Exp $
+
+  22 Nov 2006; Patrick McLean <chutzpah@gentoo.org>
+  files/nspluginwrapper-0.9.90.4-gentoo.patch:
+  Adjust the configure patch so it will print out a little more information
+  when bi-arch is broken.
+
+*nspluginwrapper-0.9.90.4 (20 Nov 2006)
+
+  20 Nov 2006; Patrick McLean <chutzpah@gentoo.org>
+  +files/nspluginwrapper-0.9.90.4-gentoo.patch,
+  +nspluginwrapper-0.9.90.4.ebuild:
+  Version bump, rework ebuild somewhat since the new version has a more
+  automated build system. Remove the "-v" from the calls to nspluginwrapper so
+  merging and unmerging doesn't print useless verbose info about the plugins
+  being installed.
+
+  13 Nov 2006; Patrick McLean <chutzpah@gentoo.org>
+  nspluginwrapper-0.9.90.3.ebuild:
+  Clean up error message on unmerge, remove block against eselect-compiler
+  since it's masked anyway.
+
+  23 Oct 2006; Patrick McLean <chutzpah@gentoo.org> ChangeLog:
+  Remove flash9 soundlibs einfo since net-www/netscape-flash-9* depends on it
+  now.
+
+  22 Oct 2006; Patrick McLean <chutzpah@gentoo.org>
+  nspluginwrapper-0.9.90.3.ebuild:
+  Add dep on app-emulation/emul-linux-x86-gtklibs, this should fix bug #152216.
+
+  20 Oct 2006; Patrick McLean <chutzpah@gentoo.org>
+  nspluginwrapper-0.9.90.3.ebuild:
+  Add an einfo to pkg_postinst about needing to install
+  app-emulation/emul-linux-x86-soundlibs for sound with flash 9.
+
+*nspluginwrapper-0.9.90.3 (20 Oct 2006)
+
+  20 Oct 2006; Patrick McLean <chutzpah@gentoo.org>
+  +files/nspluginwrapper-0.9.90.3-gentoo.patch, +metadata.xml,
+  +nspluginwrapper-0.9.90.3.ebuild:
+  Initial version. Ebuild originally written by Herbie Hopkins
+  <herbs@gentoo.org>, also had contributions from Ahmed Ammar
+  <b33fc0d3@gmail.com> and Matsuu Takuto matsuu@gentoo.org. Closes bug
+  #138454.
+

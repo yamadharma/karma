@@ -1,6 +1,146 @@
 # ChangeLog for media-video/xine-ui
-# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/xine-ui/ChangeLog,v 1.99 2005/09/17 19:52:52 flameeyes Exp $
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-video/xine-ui/ChangeLog,v 1.133 2006/10/01 18:01:20 flameeyes Exp $
+
+  01 Oct 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-ui-0.99.4-r5.ebuild, xine-ui-0.99.4-r6.ebuild,
+  xine-ui-0.99.5_pre20060716.ebuild:
+  Remove build-time dependency on xproto and/or xextproto.
+
+  24 Sep 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-ui-0.99.4-r5.ebuild, xine-ui-0.99.4-r6.ebuild,
+  xine-ui-0.99.5_pre20060716.ebuild:
+  Fix the autotools version dependencies.
+
+*xine-ui-0.99.5_pre20060716 (16 Jul 2006)
+
+  16 Jul 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-ui-0.99.5_pre20060701.ebuild, +xine-ui-0.99.5_pre20060716.ebuild:
+  Replace the snapshot with a new copy, that fixes a few crashes and should be
+  safer with respect to buffer overflows.
+
+  09 Jul 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-ui-0.99.4-r5.ebuild, xine-ui-0.99.4-r6.ebuild,
+  xine-ui-0.99.5_pre20060701.ebuild:
+  Remove xorg-server fake depend, was an artefact produced by the first dep
+  checking scripts.
+
+  09 Jul 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-ui-0.99.4-r5.ebuild, xine-ui-0.99.4-r6.ebuild,
+  xine-ui-0.99.5_pre20060701.ebuild:
+  Pinpoint virtual/x11 version to less than 7.
+
+  06 Jul 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-ui-0.99.5_pre20060701.ebuild:
+  Remove keyword from broken snapshot.
+
+*xine-ui-0.99.5_pre20060701 (01 Jul 2006)
+
+  01 Jul 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-ui-0.99.5_pre20060701.ebuild:
+  Add prerelease snapshot of xine-ui, with a few more fixes.
+
+  30 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-ui-0.99.4-r5.ebuild, xine-ui-0.99.4-r6.ebuild:
+  Don't make xinerama optional as the configure does not support
+  --disable-xinerama (yet).
+
+*xine-ui-0.99.4-r6 (07 Jun 2006)
+
+  07 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-ui-0.99.4-r6.ebuild:
+  New revision with a new patchset and italian translation update.
+
+  28 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-ui-0.99.4-r5.ebuild:
+  Add -fvisibility=hidden while using GCC 4.1.
+
+  25 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  xine-ui-0.99.4-r5.ebuild:
+  Add ~x86-fbsd keyword.
+
+  03 May 2006; Diego Pettenò <flameeyes@gentoo.org> metadata.xml:
+  Update metadata to list media-video@gentoo.org as maintainer.
+
+  27 Apr 2006; Marien Zwart <marienz@gentoo.org> Manifest:
+  Fixing SHA256 digest, pass four
+
+  25 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-ui-0.99.4-r3.ebuild:
+  Drop old version.
+
+  24 Apr 2006; Mark Loeser <halcy0n@gentoo.org> xine-ui-0.99.4-r5.ebuild:
+  Stable on x86; bug #130801
+
+  24 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-ui-0.99.4-r4.ebuild:
+  Remove old version.
+
+  23 Apr 2006; Jason Wever <weeve@gentoo.org> xine-ui-0.99.4-r5.ebuild:
+  Stable on SPARC wrt security bug #130801.
+
+  22 Apr 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  xine-ui-0.99.4-r5.ebuild:
+  ppc stable, bug #130801
+
+  22 Apr 2006; Thomas Cort <tcort@gentoo.org> xine-ui-0.99.4-r5.ebuild:
+  Stable on amd64 wrt security Bug #130801.
+
+  22 Apr 2006; Thomas Cort <tcort@gentoo.org> xine-ui-0.99.4-r5.ebuild:
+  Stable on alpha wrt security Bug #130801.
+
+  22 Apr 2006; Markus Rothe <corsair@gentoo.org> xine-ui-0.99.4-r5.ebuild:
+  Stable on ppc64; bug #130801
+
+*xine-ui-0.99.4-r5 (22 Apr 2006)
+
+  22 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-ui-0.99.4-r5.ebuild:
+  Bump patchset to fix another format string.
+
+*xine-ui-0.99.4-r4 (01 Mar 2006)
+
+  01 Mar 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +xine-ui-0.99.4-r4.ebuild:
+  Update patchset to disable scroll lock keypresses to avoid scrensaver,
+  closes bug #102884.
+
+  18 Feb 2006; Joerg Bornkessel <hd_brummy@gentoo.org> xine-ui-0.99.4-r3.ebuild:
+  enable vdr support by use-flag
+
+  08 Feb 2006; Aron Griffis <agriffis@gentoo.org> xine-ui-0.99.4-r3.ebuild:
+  Mark 0.99.4-r3 stable on alpha
+
+  29 Jan 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -xine-ui-0.99.3-r1.ebuild:
+  Drop old version.
+
+  28 Jan 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  xine-ui-0.99.4-r3.ebuild:
+  Stable on ppc, bug #120397
+
+  27 Jan 2006; Chris White <chriswhite@gentoo.org> xine-ui-0.99.4-r3.ebuild:
+  x86 stable for bug #120397.
+
+  27 Jan 2006; Simon Stelling <blubb@gentoo.org> xine-ui-0.99.4-r3.ebuild:
+  stable on amd64
+
+  26 Jan 2006; Markus Rothe <corsair@gentoo.org> xine-ui-0.99.4-r3.ebuild:
+  Stable on ppc64; bug #120397
+
+  26 Jan 2006; Diego Pettenò <flameeyes@gentoo.org> -xine-ui-0.99.3.ebuild:
+  Drop old version of xine-ui (drop mips keyword as per bug #111561).
+
+  20 Dec 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  xine-ui-0.99.4-r3.ebuild:
+  Stable on sparc
+
+  22 Nov 2005; Diego Pettenò <flameeyes@gentoo.org> xine-ui-0.99.3.ebuild,
+  xine-ui-0.99.3-r1.ebuild, xine-ui-0.99.4-r3.ebuild:
+  Use mirror://gentoo/ for patchsets.
+
+  05 Nov 2005; Mark Loeser <halcy0n@gentoo.org> xine-ui-0.99.3-r1.ebuild:
+  Stable on x86; bug #111563
 
 *xine-ui-0.99.4-r3 (14 Sep 2005)
 
