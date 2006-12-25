@@ -40,7 +40,8 @@ src_unpack() {
 	epatch "${FILESDIR}/${PV}/cli_query_segfault.patch"
 	epatch "${FILESDIR}/${PV}/get_geometry.patch"
 	epatch "${FILESDIR}/${PV}/BaseName.patch"
-
+	epatch "${FILESDIR}/${PV}/discover.c.patch"
+	
 	epatch "${FILESDIR}/evms-2.5.5-as-needed.patch"
 	epatch "${FILESDIR}/evms-2.5.5-glib_dep.patch"
 	epatch "${FILESDIR}/evms-2.5.5-ocfs2.patch"
