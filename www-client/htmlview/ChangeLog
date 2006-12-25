@@ -1,6 +1,25 @@
 # ChangeLog for www-client/htmlview
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/www-client/htmlview/ChangeLog,v 1.4 2006/04/08 19:06:00 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/www-client/htmlview/ChangeLog,v 1.9 2006/12/18 20:46:10 eroyf Exp $
+
+  18 Dec 2006; Alexander H. Færøy <eroyf@gentoo.org>
+  htmlview-3.0.0-r1.ebuild:
+  Marked ~mips too.
+
+  18 Dec 2006; Alexander H. Færøy <eroyf@gentoo.org>
+  htmlview-3.0.0-r1.ebuild:
+  Stable on IA64.
+
+  13 Sep 2006; Aron Griffis <agriffis@gentoo.org> htmlview-3.0.0-r1.ebuild:
+  Mark 3.0.0-r1 ~ia64
+
+  20 Aug 2006; Donnie Berkholz <dberkholz@gentoo.org>;
+  htmlview-3.0.0-r1.ebuild:
+  Stable on x86/ppc.
+
+  27 Apr 2006; Alec Warner <antarus@gentoo.org> files/digest-htmlview-3.0.0,
+  Manifest:
+  Fixing SHA256 digest, pass four
 
   08 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
   htmlview-3.0.0-r1.ebuild:
