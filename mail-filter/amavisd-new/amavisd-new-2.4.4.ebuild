@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/mail-filter/amavisd-new/amavisd-new-2.4.2.ebuild,v 1.1 2006/07/02 17:34:13 ticho Exp $
+# $Header: /var/cvsroot/gentoo-x86/mail-filter/amavisd-new/amavisd-new-2.4.4.ebuild,v 1.2 2006/12/24 21:16:34 ticho Exp $
 
 inherit eutils
 
@@ -97,6 +97,8 @@ src_compile() {
 src_install() {
 	dosbin amavisd amavisd-agent amavisd-nanny amavisd-release
 
+	dobin p0f-analyzer.pl
+
 	insinto /etc
 	insopts -m0640
 	newins amavisd.conf-sample amavisd.conf
@@ -107,12 +109,6 @@ src_install() {
 			/etc/amavisd.conf
 	else
 		dosed "s:^#\\?\\\$mydomain[^;]*;:\$mydomain = '$(dnsdomainname)';:" \
-			/etc/amavisd.conf
-	fi
-	if ! $(has_version mail-filter/spamassassin) ; then
-		einfo "Disabling anti-spam code in amavisd.conf..."
-
-		dosed "s:^#[\t ]*@bypass_spam_checks_maps[\t ]*=[\t ]*(1);:\@bypass_spam_checks_maps = (1);:" \
 			/etc/amavisd.conf
 	fi
 
@@ -149,16 +145,12 @@ src_install() {
 	done
 
 	if $(has_version mail-filter/razor) ; then
-		if [ ! -f ${AMAVIS_ROOT}/.razor/razor-agent.conf ] ; then
+		if [ ! -d ${AMAVIS_ROOT}/.razor ] ; then
 			einfo "Setting up initial razor config files..."
 
 			razor-admin -create -home=${D}/${AMAVIS_ROOT}/.razor
 			sed -i -e "s:debuglevel\([ ]*\)= .:debuglevel\1= 0:g" \
 				${D}/${AMAVIS_ROOT}/.razor/razor-agent.conf
-		else
-			einfo "Copying existing razor config files..."
-			insinto ${AMAVIS_ROOT}/.razor
-			doins ${AMAVIS_ROOT}/.razor/*.{conf,lst}
 		fi
 	fi
 
