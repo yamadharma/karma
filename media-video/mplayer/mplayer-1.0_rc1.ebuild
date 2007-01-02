@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/mplayer/mplayer-1.0_rc1.ebuild,v 1.15 2006/12/01 16:32:04 beandog Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/mplayer/mplayer-1.0_rc1.ebuild,v 1.21 2006/12/31 02:15:20 lu_zero Exp $
 
 inherit eutils flag-o-matic
 
@@ -63,6 +63,7 @@ RDEPEND="xvid? ( >=media-libs/xvid-0.9.0 )
 		media-sound/lame
 		dv? ( >=media-libs/libdv-0.9.5 )
 		x264? ( >=media-libs/x264-svn-20061014 )
+		aac? ( media-libs/faac )
 		)
 	esd? ( media-sound/esound )
 	enca? ( app-i18n/enca )
@@ -123,7 +124,7 @@ DEPEND="${RDEPEND}
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~hppa ~ia64 ppc ppc64 sparc x86 ~x86-fbsd"
 
 pkg_setup() {
 	if use real && use x86; then
@@ -235,8 +236,10 @@ src_compile() {
 		myconf="${myconf} --enable-mencoder"
 		use dv || myconf="${myconf} --disable-libdv"
 		use x264 || myconf="${myconf} --disable-x264"
+		use aac || myconf="${myconf} --disable-faac"
 	else
-		myconf="${myconf} --disable-mencoder --disable-libdv --disable-x264"
+		myconf="${myconf} --disable-mencoder --disable-libdv --disable-x264
+		--disable-faac"
 	fi
 
 	myconf="${myconf} $(use_enable gtk gui)"
@@ -273,11 +276,11 @@ src_compile() {
 	myconf="${myconf} $(use_enable ipv6 inet6)"
 	myconf="${myconf} $(use_enable joystick)"
 	myconf="${myconf} $(use_enable lirc)"
-	myconf="${myconf} $(use_enable live)"
 	myconf="${myconf} $(use_enable rtc)"
 	myconf="${myconf} $(use_enable samba smb)"
 	myconf="${myconf} $(use_enable truetype freetype)"
-	use v4l  || myconf="${myconf} --disable-tv-v4l1"
+	use live || myconf="${myconf} --disable-live"
+	use v4l	 || myconf="${myconf} --disable-tv-v4l1"
 	use v4l2 || myconf="${myconf} --disable-tv-v4l2"
 	use jack || myconf="${myconf} --disable-jack"
 
@@ -401,8 +404,6 @@ src_compile() {
 		myconf="${myconf} --enable-linux-devfs"
 	fi
 
-	use live && myconf="${myconf} --with-livelibdir=/usr/$(get_libdir)/live"
-
 	# support for blinkenlights
 	use bl && myconf="${myconf} --enable-bl"
 
@@ -427,6 +428,7 @@ src_compile() {
 	fi
 
 	CFLAGS="$CFLAGS" ./configure \
+		"--cc=$(tc-getCC)" "--host-cc=$(tc-getBUILD_CC)" \
 		--prefix=/usr \
 		--confdir=/usr/share/mplayer \
 		--datadir=/usr/share/mplayer \
@@ -554,13 +556,13 @@ pkg_postrm() {
 
 	# Cleanup stale symlinks
 	if [ -L ${ROOT}/usr/share/mplayer/font -a \
-	     ! -e ${ROOT}/usr/share/mplayer/font ]
+		 ! -e ${ROOT}/usr/share/mplayer/font ]
 	then
 		rm -f ${ROOT}/usr/share/mplayer/font
 	fi
 
 	if [ -L ${ROOT}/usr/share/mplayer/subfont.ttf -a \
-	     ! -e ${ROOT}/usr/share/mplayer/subfont.ttf ]
+		 ! -e ${ROOT}/usr/share/mplayer/subfont.ttf ]
 	then
 		rm -f ${ROOT}/usr/share/mplayer/subfont.ttf
 	fi

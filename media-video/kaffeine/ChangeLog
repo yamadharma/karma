@@ -1,6 +1,85 @@
 # ChangeLog for media-video/kaffeine
 # Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/kaffeine/ChangeLog,v 1.47 2006/03/26 17:15:59 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/kaffeine/ChangeLog,v 1.64 2006/11/30 10:27:07 flameeyes Exp $
+
+*kaffeine-0.8.3 (30 Nov 2006)
+
+  30 Nov 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +files/kaffeine-0.8.3-build.patch, +kaffeine-0.8.3.ebuild:
+  Version bump (with a patch to build).
+
+  20 Nov 2006; Stefan Schweizer <genstef@gentoo.org>
+  kaffeine-0.8.2-r1.ebuild:
+  replace-flags -O3 -O2 thanks to Andrew de Quincey <adq_dvb@lidskialf.net> in
+  bug 143168
+
+  07 Nov 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +files/kaffeine-0.8.2-fbsd.patch, kaffeine-0.8.2-r1.ebuild:
+  Add patch to build on Gentoo/FreeBSD and add ~x86-fbsd keyword.
+
+  01 Oct 2006; Diego Pettenò <flameeyes@gentoo.org>
+  kaffeine-0.8.2-r1.ebuild:
+  Remove build-time dependency on xproto and/or xextproto.
+
+*kaffeine-0.8.2-r1 (13 Sep 2006)
+
+  13 Sep 2006; Diego Pettenò <flameeyes@gentoo.org> -kaffeine-0.8.1.ebuild,
+  -kaffeine-0.8.1-r1.ebuild, -kaffeine-0.8.2.ebuild,
+  +kaffeine-0.8.2-r1.ebuild:
+  Fix PACKAGE value during re-autotooling, closes bug #127773 finally.
+
+*kaffeine-0.8.2 (11 Sep 2006)
+
+  11 Sep 2006; Diego Pettenò <flameeyes@gentoo.org> +kaffeine-0.8.2.ebuild:
+  Version bump.
+
+*kaffeine-0.8.1-r1 (02 Aug 2006)
+
+  02 Aug 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +kaffeine-0.8.1-r1.ebuild:
+  New version depending on KDE 3.5.4 that don't install x-mplayer mime type.
+
+  09 Jul 2006; Diego Pettenò <flameeyes@gentoo.org>
+  kaffeine-0.7.1-r2.ebuild, kaffeine-0.8.1.ebuild:
+  Pinpoint virtual/x11 version to less than 7.
+
+  28 Jun 2006; Diego Pettenò <flameeyes@gentoo.org> kaffeine-0.8.1.ebuild:
+  Remove configure to avoid double-configure.
+
+  27 Jun 2006; Hanno Boeck <hanno@gentoo.org> kaffeine-0.8.1.ebuild:
+  Add xvideo-dependency for gstreamer.
+
+  29 May 2006; Diego Pettenò <flameeyes@gentoo.org>
+  kaffeine-0.7.1-r2.ebuild, kaffeine-0.8.1.ebuild:
+  Depend on liinux-dvb-headers rather than linux-headers-2.6, to allow using
+  with 2.4 profile.
+
+  29 May 2006; Diego Pettenò <flameeyes@gentoo.org> kaffeine-0.8.1.ebuild:
+  Kaffeine can build with hidden visibility, declare so.
+
+  06 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -files/kaffeine-0.8-closedev.patch,
+  -files/kaffeine-0.8-respectflags.patch, -kaffeine-0.7.1.ebuild,
+  -kaffeine-0.7.1-r1.ebuild, -kaffeine-0.8-r1.ebuild:
+  Drop old versions.
+
+  05 Apr 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  kaffeine-0.7.1-r2.ebuild:
+  ppc stable, bug #127326
+
+*kaffeine-0.8.1 (05 Apr 2006)
+
+  05 Apr 2006; Diego Pettenò <flameeyes@gentoo.org> +kaffeine-0.8.1.ebuild:
+  Version bump.
+
+  04 Apr 2006; Markus Rothe <corsair@gentoo.org> kaffeine-0.7.1-r2.ebuild:
+  Stable on ppc64; bug #127326
+
+*kaffeine-0.7.1-r2 (04 Apr 2006)
+
+  04 Apr 2006; Diego Pettenò <flameeyes@gentoo.org>
+  +files/kaffeine-0.7.1-input-http.patch, +kaffeine-0.7.1-r2.ebuild:
+  Add kaffeine with a fix for HTTP input.
 
 *kaffeine-0.8-r1 (26 Mar 2006)
 

@@ -9,7 +9,7 @@ HOMEPAGE="http://www.linuks.mine.nu/aclock/"
 SRC_URI="http://www.linuks.mine.nu/aclock/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86"
+KEYWORDS="x86 amd64"
 
 IUSE="${IUSE}"
 DEPEND="${GS_DEPEND}"

@@ -1,0 +1,76 @@
+# ChangeLog for sys-apps/lm_sensors
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/lm_sensors/ChangeLog,v 1.58 2006/09/29 15:04:55 phreak Exp $
+
+*lm_sensors-2.10.1 (29 Sep 2006)
+
+  29 Sep 2006; Christian Heim <phreak@gentoo.org>
+  +files/lm_sensors-2.10.1-fancontrol-init.d,
+  +files/lm_sensors-2.10.1-lm_sensors-init.d,
+  +files/lm_sensors-2.10.1-sensord-conf.d,
+  +files/lm_sensors-2.10.1-sensord-init.d,
+  +files/lm_sensors-2.10.1-sensors-detect-gentoo.patch,
+  +lm_sensors-2.10.1.ebuild:
+  Version bump, fixing #145164 (Abit uGuru support), #149204 (thanks to Gary
+  Young for reporting).
+
+  03 Sep 2006; Michael Hanselmann <hansmi@gentoo.org>
+  lm_sensors-2.10.0.ebuild:
+  Stable on ppc.
+
+*lm_sensors-2.10.0-r2 (17 Jul 2006)
+*lm_sensors-2.9.2-r2 (17 Jul 2006)
+
+  17 Jul 2006; Christian Heim <phreak@gentoo.org>
+  files/lm_sensors-2.9.2-lm_sensors-init.d,
+  files/lm_sensors-2.10.0-lm_sensors-init.d, -lm_sensors-2.9.2-r1.ebuild,
+  +lm_sensors-2.9.2-r2.ebuild, -lm_sensors-2.10.0-r1.ebuild,
+  +lm_sensors-2.10.0-r2.ebuild:
+  Revision bump. Removing the rmmod i2c_core from the init-scripts again,
+  since some other modules depend on it, which would need to be removed first
+  (thanks Jakub).
+
+*lm_sensors-2.10.0-r1 (16 Jul 2006)
+*lm_sensors-2.9.2-r1 (16 Jul 2006)
+
+  16 Jul 2006; Christian Heim <phreak@gentoo.org>
+  files/lm_sensors-2.9.2-lm_sensors-init.d,
+  files/lm_sensors-2.10.0-lm_sensors-init.d, +lm_sensors-2.9.2-r1.ebuild,
+  +lm_sensors-2.10.0-r1.ebuild:
+  Fix the init-script to also rmmod i2c-core (#140051 thanks to <lefti at bk.ru>)
+
+  16 Jul 2006; Christian Heim <phreak@gentoo.org> lm_sensors-2.9.2.ebuild,
+  lm_sensors-2.10.0.ebuild:
+  Fix the remaining quoting issues
+
+  13 Jul 2006; Christian Heim <phreak@gentoo.org> metadata.xml,
+  lm_sensors-2.9.2.ebuild, lm_sensors-2.10.0.ebuild:
+  Fixing HOMEPAGE, Quoting; Taking temporary maintainership
+
+  28 Jun 2006; Simon Stelling <blubb@gentoo.org> lm_sensors-2.10.0.ebuild:
+  stable on amd64
+
+  28 May 2006; Henrik Brix Andersen <brix@gentoo.org>
+  lm_sensors-2.9.2.ebuild, lm_sensors-2.10.0.ebuild:
+  Fix DEPEND/RDEPEND issue, thanks to carlo in bug #134644.
+
+  15 Mar 2006; Henrik Brix Andersen <brix@gentoo.org>
+  lm_sensors-2.10.0.ebuild:
+  Stable on x86.
+
+  15 Feb 2006; Henrik Brix Andersen <brix@gentoo.org>
+  files/lm_sensors-2.10.0-fancontrol-init.d:
+  Fix typo, thanks to Micha Pytasz.
+
+*lm_sensors-2.10.0 (15 Feb 2006)
+
+  15 Feb 2006; Henrik Brix Andersen <brix@gentoo.org>
+  +files/lm_sensors-2.10.0-fancontrol-init.d,
+  +files/lm_sensors-2.10.0-lm_sensors-init.d,
+  +files/lm_sensors-2.10.0-sensord-conf.d,
+  +files/lm_sensors-2.10.0-sensord-init.d,
+  +files/lm_sensors-2.10.0-sensors-detect-gentoo.patch,
+  +lm_sensors-2.10.0.ebuild:
+  Version bump. Includes fancontrol init script based on the work of Micha
+  Pytasz, bug #98753.
+
