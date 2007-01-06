@@ -13,7 +13,7 @@ SRC_URI="ftp://ftp.gnu.org/pub/gnu/${PN}/${P}.tar.gz"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="~x86 ~ppc ~amd64"
 
 FONT_FORMAT="bdf2pcf"
 

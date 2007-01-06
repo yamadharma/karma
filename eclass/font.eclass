@@ -125,8 +125,11 @@ font_src_install() {
 
 	rm -f fonts.{dir,scale} encodings.dir
 
-	font_xfont_config
-	font_xft_config
+	for suffix in ${FONT_SUFFIX}; do
+		set_FONTDIR ${suffix}
+		font_xfont_config
+		font_xft_config
+	done
 
 	cd "${S}"
 	# try to install some common docs
@@ -152,9 +155,9 @@ font_pkg_postinst ()
 	for suffix in ${FONT_SUFFIX}; do
 		set_FONTDIR ${suffix}
 		rm "${FONTDIR}/fonts.cache-1"
+		chkfontpath -q -a ${FONTDIR}
 	done
 
-	chkfontpath -q -a ${FONTDIR}
 	/etc/init.d/xfs restart
 }
 
@@ -164,9 +167,9 @@ font_pkg_prerm ()
 	for suffix in ${FONT_SUFFIX}; do
 		set_FONTDIR ${suffix}
 		rm "${FONTDIR}/fonts.cache-1"
+		chkfontpath -r ${FONTDIR}
 	done
 
-	chkfontpath -r ${FONTDIR}
 	/etc/init.d/xfs restart
 }
 

@@ -1,0 +1,25 @@
+--- gcursor-0.061/src/gcursor.c	2005-03-07 17:54:03.000000000 +0200
++++ gcursor-0.061/src/gcursor.c	2005-03-07 17:51:04.000000000 +0200
+@@ -188,6 +188,22 @@
+ 
+ 	gconf_client_set_string(client,"/desktop/gnome/peripherals/mouse/cursor_theme", name, NULL);
+ 	gconf_client_set_int(client,"/desktop/gnome/peripherals/mouse/cursor_size", size, NULL);
++
++
++	FILE *fp;
++	char *home_dir, config_file[80];
++	home_dir = getenv ("HOME");
++	strcpy (config_file, home_dir);
++	strcat (config_file, "/.Xdefaults");
++                   
++	
++	if((fp = fopen(config_file, "w")) != NULL) 
++	{
++		fprintf (fp, "Xcursor.theme : %s\nXcursor.size : %d\n",name,size);
++		fclose (fp);
++	}
++
++    
+ }
+ 
+ 

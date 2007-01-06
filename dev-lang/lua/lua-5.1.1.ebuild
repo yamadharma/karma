@@ -30,6 +30,8 @@ src_compile() {
 
 src_install() {
 	make install INSTALL_TOP=${D}/usr
+	# FIX libdir
+	mv ${D}/usr/lib ${D}/usr/$(get_libdir)
 	dohtml doc/*.html doc/*.gif
 	for i in `find . -name README -printf "%h\n"`; do
 		docinto ${i#.}
