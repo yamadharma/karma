@@ -1,0 +1,23 @@
+# ChangeLog for kde-misc/krusader
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/kde-misc/krusader/ChangeLog,v 1.54 2007/01/05 17:03:03 flameeyes Exp $
+
+  05 Jan 2007; Diego Pettenò <flameeyes@gentoo.org> krusader-1.70.1.ebuild:
+  Convert to use elog.
+
+  16 Oct 2006; Ioannis Aslanidis <deathwing00@gentoo.org>
+  krusader-1.70.1.ebuild:
+  Removed quotation marks in the unpack line of src_unpack. Fixes bug #151416.
+  Thanks to the users for reporting it.
+
+  14 Oct 2006; Diego Pettenò <flameeyes@gentoo.org> krusader-1.70.1.ebuild:
+  Don't let it use kde.eclass admindir update as this package is crazy.
+
+  29 Sep 2006; Ioannis Aslanidis <deathwing00@gentoo.org>
+  krusader-1.70.1.ebuild:
+  Fixed DEPEND/RDEPEND.
+
+  18 Sep 2006; Carsten Lohrke <carlo@gentoo.org> -krusader-1.70.0.ebuild,
+  -krusader-1.70.0-r1.ebuild, krusader-1.70.1.ebuild:
+  No javascript for Sparc for now.
+

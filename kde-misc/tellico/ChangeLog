@@ -1,6 +1,58 @@
 # ChangeLog for kde-misc/tellico
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/kde-misc/tellico/ChangeLog,v 1.42 2006/05/31 15:16:23 carlo Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/kde-misc/tellico/ChangeLog,v 1.54 2007/01/04 13:48:40 beandog Exp $
+
+*tellico-1.2.7 (04 Jan 2007)
+
+  04 Jan 2007; Steve Dibb <beandog@gentoo.org> +tellico-1.2.7.ebuild:
+  Version bump
+
+  18 Nov 2006; Matteo Azzali <mattepiu@gentoo.org> -tellico-1.1.6.ebuild,
+  -tellico-1.2.ebuild, -tellico-1.2.2.ebuild, -tellico-1.2.3.ebuild:
+  removed old ebuilds.
+
+  17 Nov 2006; nixnut <nixnut@gentoo.org> tellico-1.2.4.ebuild:
+  Stable on ppc wrt bug 155108
+
+  15 Nov 2006; Gustavo Zacarias <gustavoz@gentoo.org> tellico-1.2.4.ebuild:
+  Stable on sparc wrt #155108
+
+  14 Nov 2006; Steve Dibb <beandog@gentoo.org> tellico-1.2.4.ebuild:
+  Stable on amd64, bug 155108
+
+  14 Nov 2006; Andrej Kacian <ticho@gentoo.org> tellico-1.2.4.ebuild:
+  Stable on x86, bug #155108.
+
+*tellico-1.2.6 (14 Nov 2006)
+
+  14 Nov 2006; Matteo Azzali <mattepiu@gentoo.org> +tellico-1.2.6.ebuild:
+  version bump, bug #155007
+
+*tellico-1.2.4 (14 Oct 2006)
+
+  14 Oct 2006; Matteo Azzali <mattepiu@gentoo.org> +tellico-1.2.4.ebuild:
+  version bump
+
+*tellico-1.2.3 (25 Sep 2006)
+
+  25 Sep 2006; Ioannis Aslanidis <deathwing00@gentoo.org>
+  +tellico-1.2.3.ebuild:
+  Version bump. Dependency of libxml2 increased by upstream to 2.6.
+
+  24 Sep 2006; Diego Pettenò <flameeyes@gentoo.org> tellico-1.1.6.ebuild,
+  tellico-1.2.ebuild, tellico-1.2.2.ebuild:
+  Fix DEPEND/RDEPEND.
+
+*tellico-1.2.2 (08 Sep 2006)
+
+  08 Sep 2006; Carsten Lohrke <carlo@gentoo.org> +tellico-1.2.2.ebuild:
+  Version bump.
+
+*tellico-1.2 (01 Sep 2006)
+
+  01 Sep 2006; Carsten Lohrke <carlo@gentoo.org> -tellico-1.1.ebuild,
+  +tellico-1.2.ebuild:
+  Version bump.
 
   31 May 2006; Carsten Lohrke <carlo@gentoo.org> -tellico-0.13.8.ebuild,
   -tellico-1.0.1.ebuild, -tellico-1.0.2.ebuild, -tellico-1.1.1.ebuild,

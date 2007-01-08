@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils darcs
+inherit eutils
 
 MY_PV=${PV/_p/-}
 MY_PN=ion-3ds-${MY_PV}
@@ -21,16 +21,18 @@ DESCRIPTION="A tiling tabbed window manager designed with keyboard users in mind
 HOMEPAGE="http://www.iki.fi/tuomov/ion/"
 SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 	mirror://debian/pool/main/i/${SCRIPTS_PN}/${SCRIPTS_PN}_${SCRIPTS_PV}.orig.tar.gz
-	mirror://debian/pool/main/i/${IONFLUX_PN}/${IONFLUX_PN}_${IONFLUX_PV}.orig.tar.gz"
+	mirror://debian/pool/main/i/${IONFLUX_PN}/${IONFLUX_PN}_${IONFLUX_PV}.orig.tar.gz
+	iontruetype?	http://clemens.endorphin.org/patches/xft-ion3-for-darcs-20061202.diff"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
-IUSE="xinerama ionunicode"
+IUSE="xinerama ionunicode iontruetype"
 DEPEND="
 	|| (
 		(
 			x11-libs/libICE
 			x11-libs/libXext
+			x11-libs/libSM
 			iontruetype? ( x11-libs/libXft )
 			xinerama? ( x11-libs/libXinerama )
 		)
@@ -49,20 +51,38 @@ src_unpack() {
 	
 	cd ${S}
 	epatch ${FILESDIR}/${PV}/*.patch
+#	use iontruetype && epatch ${DISTDIR}/xft-ion3-for-darcs-20061202.diff
+	use iontruetype && patch -p1 < ${DISTDIR}/xft-ion3-for-darcs-20061202.diff	
 
-#	autoreconf -i -v ${S}/build/ac/
+	# Rewrite install directories to be prefixed by DESTDIR for sake of portage's sandbox
+        sed -i 's!\($(INSTALL\w*)\|rm -f\|ln -s\)\(.*\)\($(\w\+DIR)\)!\1\2$(DESTDIR)\3!g' Makefile */Makefile */*/Makefile build/rules.mk
 
-        cd build/ac/ || exit 1
-        autoreconf -i --force
-
+	for i in "${IONFLUX_PN}-${IONFLUX_PV}" "${IONXRANDR_PN}-${IONXRANDR_PV}"
+	do
+	    cd ${WORKDIR}/${i}
+	    # Rewrite install directories to be prefixed by DESTDIR for sake of portage's sandbox
+    	    sed -i 's!\($(INSTALL\w*)\|rm -f\|ln -s\)\(.*\)\($(\w\+DIR)\)!\1\2$(DESTDIR)\3!g' Makefile */Makefile */*/Makefile
+	done
+	cd ${S}
+	
+	# Hey guys! Implicit rules apply to include statements also. Be more careful!
+        # Fix an implicit rule that will kill the installation by rewriting a .mk
+        # should configure be given just the right set of options.
+        sed -i 's!%: %.in!ion-completeman: %: %.in!g' utils/Makefile
+        
+        cd ${S}/build/ac/
         # for the first instance of DEFINES, add XINERAMA
         use xinerama && \
             (
             sed -i 's!\(DEFINES *+=\)!\1 -DCF_XINERAMA !' system-ac.mk.in
             sed -i 's!\(LIBS="$LIBS.*\)"!\1 $XINERAMA_LIBS"!' configure.ac
             )
+	#"
 
-	
+#	autoreconf -i -v ${S}/build/ac/
+        cd ${S}/build/ac/
+        autoreconf -i --force
+
 	# FIX for modules
 	cd ${WORKDIR}
 	ln -s ${MY_PN} ion-3
@@ -71,7 +91,7 @@ src_unpack() {
 src_compile() {
 	local myconf=""
 
-#	myconf="${myconf} `use_enable iontruetype xft`" 
+	myconf="${myconf} `use_enable iontruetype xft`" 
 
         # xfree 
 	if has_version '>=x11-base/xfree-4.3.0'; then
@@ -85,25 +105,16 @@ src_compile() {
         use ionunicode && myconf="${myconf} --enable-Xutf8"
 
         # configure bug, only specify xinerama to not have it
-        use xinerama || myconf="${myconf} --disable-xinerama"
+        myconf="${myconf}  `use_enable xinerama`"
 
-
-	${S}/build/ac/configure \
+        cd build/ac/
+#	${S}/build/ac/configure \
+	econf \
 		${myconf} \
-		`use_enable xinerama` \
 		--sysconfdir=/etc/X11 \
-		--prefix=/usr \
-		--datadir=/usr \
-		--bindir=/usr \
-		--sbindir=/usr \
-		--libexecdir=/usr \
-		--datarootdir=/usr \
-		--with-lua-prefix=/usr \
-		--with-lua-includes=/usr/include \
-		--with-lua-libraries=/usr/lib \
-		--libdir=/usr \
-		--includedir=/usr 
+		--with-lua-prefix=/usr
 
+	cd ${S}
 	make \
 		DOCDIR=/usr/share/doc/${PF} || die
 
@@ -128,17 +139,7 @@ src_compile() {
 src_install() {
 
 	emake \
-		PREFIX=${D}/usr \
-		prefix=${D}/usr \
-		ETCDIR=${D}/etc/X11/ion3 \
-		SHAREDIR=${D}/usr/share/ion3 \
-		MANDIR=${D}/usr/share/man \
-		DOCDIR=${D}/usr/share/doc/${PF} \
-		LOCALEDIR=${D}/usr/share/locale \
-		LIBDIR=${D}/usr/lib \
-		MODULEDIR=${D}/usr/lib/ion3/mod \
-		LCDIR=${D}/usr/lib/ion3/lc \
-		VARDIR=${D}/var/cache/ion3 \
+		DESTDIR=${D} \
 	install || die
 
 	prepalldocs
@@ -166,18 +167,8 @@ src_install() {
 	do
 	cd ${WORKDIR}/${i}
 
-	make \
-		PREFIX=${D}/usr \
-		prefix=${D}/usr \
-		ETCDIR=${D}/etc/X11/ion3 \
-		SHAREDIR=${D}/usr/share/ion3 \
-		MANDIR=${D}/usr/share/man \
-		DOCDIR=${D}/usr/share/doc/${PF} \
-		LOCALEDIR=${D}/usr/share/locale \
-		LIBDIR=${D}/usr/lib \
-		MODULEDIR=${D}/usr/lib/ion3/mod \
-		LCDIR=${D}/usr/lib/ion3/lc \
-		VARDIR=${D}/var/cache/ion3 \
+	emake \
+		DESTDIR=${D} \
 		install || die
 
 	done

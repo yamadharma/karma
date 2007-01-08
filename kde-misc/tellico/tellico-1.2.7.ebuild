@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-misc/tellico/tellico-1.1.6.ebuild,v 1.4 2006/05/31 04:50:37 tsunam Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-misc/tellico/tellico-1.2.7.ebuild,v 1.1 2007/01/04 13:48:40 beandog Exp $
 
 inherit kde sgml-catalog
 
@@ -13,17 +13,17 @@ SRC_URI="http://www.periapsis.org/tellico/download/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="amd64 ppc sparc x86"
+KEYWORDS="amd64 ~ppc ~sparc x86"
 IUSE="calendar cddb yaz"
 
-DEPEND=">=dev-libs/libxml2-2.4.23
+RDEPEND=">=dev-libs/libxml2-2.6
 	>=dev-libs/libxslt-1.0.19
 	cddb?  ( || ( kde-base/libkcddb kde-base/kdemultimedia ) )
 	calendar? ( || ( ( kde-base/ktnef kde-base/libkcal ) kde-base/kdepim ) )
 	media-libs/taglib
 	yaz? ( dev-libs/yaz )"
 
-need-kde 3.4
+need-kde 3.4 #Real lowest version is 3.3.1
 
 src_compile() {
 	local myconf="$(use_enable cddb libkcddb) $(use_enable calendar libkcal)"
