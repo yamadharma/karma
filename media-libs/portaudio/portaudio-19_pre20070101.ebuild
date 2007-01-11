@@ -65,9 +65,9 @@ src_compile() {
 	fi
 
 	# bindings
-	cd bindings/cpp
-	econf || die "econf failed"
-	emake || die "emake failed"
+#	cd bindings/cpp
+#	econf || die "econf failed"
+#	emake || die "emake failed"
 	
 }
 
@@ -118,8 +118,8 @@ src_install() {
 	dodoc LICENSE.txt README.txt V19-devel-readme.txt
 	
 	# bindings
-	cd bindings/cpp
-	emake DESTDIR="${D}" install || die "emake install failed"
+#	cd bindings/cpp
+#	emake DESTDIR="${D}" install || die "emake install failed"
 
 }
 
