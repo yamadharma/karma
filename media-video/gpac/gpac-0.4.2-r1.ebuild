@@ -1,21 +1,22 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/gpac/gpac-0.4.2.ebuild,v 1.2 2006/08/08 04:31:29 beandog Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/gpac/gpac-0.4.2-r1.ebuild,v 1.7 2007/01/09 08:46:41 opfer Exp $
 
-inherit eutils wxwidgets flag-o-matic multilib
+inherit eutils wxwidgets flag-o-matic multilib toolchain-funcs
 
 DESCRIPTION="GPAC is an implementation of the MPEG-4 Systems standard developed from scratch in ANSI C."
 HOMEPAGE="http://gpac.sourceforge.net/"
 NBV="610"
 WBV="600"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz
+	mirror://gentoo/${P}-patches.tar.bz2
 	amr? ( http://www.3gpp.org/ftp/Specs/archive/26_series/26.104/26104-${NBV}.zip
 		http://www.3gpp.org/ftp/Specs/archive/26_series/26.204/26204-${WBV}.zip )"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc ~ppc64 x86"
-IUSE="aac amr debug ffmpeg ft jpeg javascript mad ogg opengl oss png sdl ssl theora truetype vorbis wxwindows xml xvid"
+KEYWORDS="~alpha amd64 ~ppc ppc64 x86 ~x86-fbsd"
+IUSE="aac amr debug ffmpeg jpeg javascript mad ogg opengl oss png sdl ssl theora truetype vorbis wxwindows xml xvid"
 
 S="${WORKDIR}/${PN}"
 
@@ -55,11 +56,12 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	epatch "${FILESDIR}/${P}-configure-ogg.patch"
-	epatch "${FILESDIR}/${P}-DESTDIR.patch"
-	epatch "${FILESDIR}/${P}-static-defs.patch"
-	epatch "${FILESDIR}/${P}-nostrip.patch"
-	epatch "${FILESDIR}/${P}-soname.patch"
+	epatch "${WORKDIR}/${P}-configure-ogg.patch"
+	epatch "${WORKDIR}/${P}-DESTDIR.patch"
+	epatch "${WORKDIR}/${P}-static-defs.patch"
+	epatch "${WORKDIR}/${P}-nostrip.patch"
+	epatch "${WORKDIR}/${P}-soname.patch"
+	epatch "${WORKDIR}/${P}-ffmpeg-snapshots-compat.patch"
 	sed -ie '/ldconfig / d' "${S}/Makefile"
 
 	if use amr; then
@@ -71,9 +73,6 @@ src_unpack() {
 	cd "${S}"
 
 	chmod +x configure
-}
-
-src_compile() {
 	# make sure configure looks for wx-2.6
 	if use wxwindows; then
 		sed -i -e 's/wx-config/wx-config-2.6/' configure
@@ -96,13 +95,15 @@ src_compile() {
 	# use this to cute down on the warnings noise
 	append-flags -fno-strict-aliasing
 
-	# amd64 compile
-	[ "${ARCH}" = "amd64" ] && append-flags -fPIC
-
 	# multilib libdir fix
 	sed -i 's:$(prefix)/lib:$(prefix)/'$(get_libdir)':' Makefile src/Makefile
 	sed -i 's:/lib/gpac:/'$(get_libdir)'/gpac:' configure
 
+	epatch "${WORKDIR}/${P}-pic.patch"
+	epatch "${FILESDIR}/${P}-bsd.patch"
+}
+
+src_compile() {
 	if use ogg; then
 		myconf="${myconf} --use-ogg=system"
 		if use vorbis; then
@@ -128,16 +129,16 @@ src_compile() {
 		$(my_use mad) \
 		$(my_use javascript js) \
 		$(my_use png) \
-		$(my_use ft) \
+		$(my_use truetype ft) \
 		$(my_use xvid) \
 		${myconf} || die "configure died"
 
-	make OPTFLAGS="${CFLAGS}" || die "emake failed."
+	make CC=$(tc-getCC) OPTFLAGS="${CFLAGS}" || die "emake failed."
 }
 
 src_install() {
 	make OPTFLAGS="${CFLAGS}" DESTDIR="${D}" install || die
 	make OPTFLAGS="${CFLAGS}" DESTDIR="${D}" install-lib || die
 	dodoc AUTHORS BUGS Changelog README TODO
-	dodoc doc/*.html doc/*.txt doc/libisomedia_license doc/SGGen
+	dodoc doc/*.html doc/*.txt
 }

@@ -1,27 +1,26 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.0.4.ebuild,v 1.28 2007/01/13 10:54:31 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.1.0.ebuild,v 1.7 2007/01/13 10:54:31 suka Exp $
 
 WANT_AUTOCONF="2.5"
 WANT_AUTOMAKE="1.9"
 
-inherit check-reqs eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions multilib toolchain-funcs autotools
+inherit check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions multilib toolchain-funcs
 
-IUSE="binfilter branding cairo cups dbus eds firefox gnome gstreamer gtk kde ldap sound odk pam webdav debug"
+IUSE="binfilter branding cairo cups dbus debug eds firefox gnome gstreamer gtk kde ldap sound odk pam webdav"
 
-MY_PV="${PV}.11"
-PATCHLEVEL="OOD680"
-SRC="OOO_2_0_4"
+MY_PV="2.1"
+PATCHLEVEL="OOE680"
+SRC="OOo_${PV}_src"
 S="${WORKDIR}/ooo"
 S_OLD="${WORKDIR}/ooo-build-${MY_PV}"
 CONFFILE="${S}/distro-configs/Gentoo.conf.in"
 DESCRIPTION="OpenOffice.org, a full office productivity suite."
 
-SRC_URI="http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-core.tar.bz2
-	http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-lang.tar.bz2
-	binfilter? ( http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-binfilter.tar.bz2 )
+SRC_URI="mirror://openoffice/stable/${PV}/${SRC}_core.tar.bz2
+	binfilter? ( mirror://openoffice/stable/${PV}/${SRC}_binfilter.tar.bz2 )
 	http://go-oo.org/packages/${PATCHLEVEL}/ooo-build-${MY_PV}.tar.gz
-	odk? ( http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-sdk_oo.tar.bz2
+	odk? ( mirror://openoffice/stable/${PV}/${SRC}_sdk.tar.bz2
 		java? ( http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll ) )
 	http://go-oo.org/packages/SRC680/extras-2.tar.bz2
 	http://go-oo.org/packages/SRC680/biblio.tar.bz2
@@ -29,17 +28,22 @@ SRC_URI="http://go-oo.org/packages/${PATCHLEVEL}/${SRC}-core.tar.bz2
 	http://go-oo.org/packages/xt/xt-20051206-src-only.zip
 	http://go-oo.org/packages/SRC680/lp_solve_5.5.tar.gz"
 
-LANGS="af ar be_BY bg bn bs ca cs cy da de el en en_GB en_US en_ZA es et fa fi fr gu_IN he hi_IN hr hu it ja km ko lt lv mk nb nl nn nr ns pa_IN pl pt pt_BR ru rw sh_YU sk sl sr_CS st sv sw_TZ th tn tr ts vi xh zh_CN zh_TW zu"
+LANGS1="af ar as_IN be_BY bg bn bs ca cs cy da el en_GB en_ZA es et fa fi fr gu_IN he hi_IN hr hu it ja km ko lt lv mk nb nl nn nr ns or_IN pa_IN pl pt pt_BR ru rw sh_YU sk sl sr_CS st sv sw_TZ ta_IN te_IN tg th ti_ER tn tr ts ur_IN ve vi xh zh_CN zh_TW zu"
+LANGS="${LANGS1} de en en_US"
 
 for X in ${LANGS} ; do
 	IUSE="${IUSE} linguas_${X}"
+done
+
+for Y in ${LANGS1} ; do
+	SRC_URI="${SRC_URI} linguas_${Y}? ( mirror://openoffice/stable/${PV}/${SRC}_l10n.tar.bz2 )"
 done
 
 HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="amd64 ppc sparc x86"
+KEYWORDS="amd64 ~ppc -sparc x86"
 
 COMMON_DEPEND="!app-office/openoffice-bin
 	x11-libs/libXaw
@@ -60,10 +64,14 @@ COMMON_DEPEND="!app-office/openoffice-bin
 	gstreamer? ( >=media-libs/gstreamer-0.10
 			>=media-libs/gst-plugins-base-0.10 )
 	kde? ( >=kde-base/kdelibs-3.2 )
+	java? ( >=dev-java/bsh-2.0_beta4
+		>=dev-java/xalan-2.7
+		>=dev-java/xerces-2.7
+		=dev-java/xml-commons-external-1.3* )
 	firefox? ( >=www-client/mozilla-firefox-1.5-r9
 		>=dev-libs/nspr-4.6.2
 		>=dev-libs/nss-3.11-r1 )
-	sound? ( =media-libs/portaudio-18*
+	sound? ( >=media-libs/portaudio-18.1-r5
 			>=media-libs/libsndfile-1.0.9 )
 	webdav? ( >=net-misc/neon-0.24.7 )
 	>=x11-libs/startup-notification-0.5
@@ -80,6 +88,7 @@ COMMON_DEPEND="!app-office/openoffice-bin
 	>=app-admin/eselect-oodict-20060706
 	dev-libs/expat
 	>=dev-libs/icu-3.4
+	>=sys-libs/db-4.3
 	linguas_ja? ( >=media-fonts/kochi-substitute-20030809-r3 )
 	linguas_zh_CN? ( >=media-fonts/arphicfonts-0.1-r2 )
 	linguas_zh_TW? ( >=media-fonts/arphicfonts-0.1-r2 )"
@@ -94,12 +103,12 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/xproto
 	x11-proto/xineramaproto
 	>=sys-apps/findutils-4.1.20-r1
-	>=sys-devel/gcc-3.2.1
 	dev-perl/Archive-Zip
 	dev-perl/Compress-Zlib
 	dev-util/pkgconfig
 	dev-util/intltool
 	>=dev-libs/boost-1.33.1
+	>=dev-libs/STLport-5.1.0
 	>=net-misc/curl-7.9.8
 	sys-libs/zlib
 	sys-apps/coreutils
@@ -170,6 +179,9 @@ pkg_setup() {
 
 	java-pkg-opt-2_pkg_setup
 
+	# sys-libs/db version used
+	local db_ver="$(db_findver '>=sys-libs/db-4.3')"
+
 }
 
 src_unpack() {
@@ -182,15 +194,26 @@ src_unpack() {
 	#Some fixes for our patchset
 	cd ${S}
 	epatch ${FILESDIR}/${PV}/gentoo-${PV}.diff
-
-	if use ppc ; then
-		cp -f ${FILESDIR}/${PV}/disable-regcomp-java.diff ${S}/patches/src680 || die
-		cp -f ${FILESDIR}/${PV}/disable-regcomp-python.diff ${S}/patches/src680 || die
-		epatch ${FILESDIR}/${PV}/regcompapply.diff
-	fi
+	epatch ${FILESDIR}/${PV}/wrapper-readd.diff
+	use !java && epatch ${FILESDIR}/${PV}/disable_cxxhelplinker.diff
+	cp -f ${FILESDIR}/${PV}/ooo-wrapper.in ${S}/bin || die
 
 	#Use flag checks
-	use java && echo "--with-jdk-home=${JAVA_HOME} --with-ant-home=${ANT_HOME}" >> ${CONFFILE}
+	if use java ; then
+		echo "--with-ant-home=${ANT_HOME}" >> ${CONFFILE}
+		echo "--with-jdk-home=$(java-config --jdk-home 2>/dev/null)" >> ${CONFFILE}
+		echo "--with-db-jar=/usr/share/db-${db_ver}/lib/db.jar" >> ${CONFFILE}
+		echo "--with-system-beanshell" >> ${CONFFILE}
+		echo "--with-system-xalan" >> ${CONFFILE}
+		echo "--with-system-xerces" >> ${CONFFILE}
+		echo "--with-system-xml-apis" >> ${CONFFILE}
+		echo "--with-beanshell-jar=/usr/share/bsh/lib/bsh.jar" >> ${CONFFILE}
+		echo "--with-serializer-jar=/usr/share/xalan/lib/serializer.jar" >> ${CONFFILE}
+		echo "--with-xalan-jar=/usr/share/xalan/lib/xalan.jar" >> ${CONFFILE}
+		echo "--with-xerces-jar=/usr/share/xerces-2/lib/xercesImpl.jar" >> ${CONFFILE}
+		echo "--with-xml-apis-jar=/usr/share/xml-commons-external-1.3/lib/xml-apis.jar" >> ${CONFFILE}
+	fi
+
 	use branding && echo "--with-intro-bitmaps=\\\"${S}/src/openintro_gentoo.bmp\\\"" >> ${CONFFILE}
 
 	echo "`use_enable binfilter`" >> ${CONFFILE}
@@ -261,7 +284,6 @@ src_compile() {
 		--with-num-cpus="${JOBS}" \
 		--with-binsuffix="2" \
 		--with-installed-ooo-dirname="openoffice" \
-		--with-tag=${SRC} \
 		"${GTKFLAG}" \
 		`use_enable kde` \
 		`use_enable cairo` \
@@ -293,12 +315,11 @@ src_install() {
 	einfo "Preparing Installation"
 	make DESTDIR=${D} install || die "Installation failed!"
 
-	# Install corrected Symbol Font
-	insinto /usr/share/fonts/TTF/
-	doins fonts/*.ttf
-
 	# Fix the permissions for security reasons
 	chown -R root:root ${D}
+
+	# record java libraries
+	use java && java-pkg_regjar ${D}/usr/$(get_libdir)/openoffice/program/classes/*.jar
 
 }
 
@@ -310,6 +331,9 @@ pkg_postinst() {
 	eselect oodict update --libdir $(get_libdir)
 
 	[ -x /sbin/chpax ] && [ -e /usr/$(get_libdir)/openoffice/program/soffice.bin ] && chpax -zm /usr/$(get_libdir)/openoffice/program/soffice.bin
+
+	# Add available & useful jars to openoffice classpath
+	use java && /usr/lib/openoffice/program/java-set-classpath $(java-config --classpath=jdbc-mysql 2>/dev/null) >/dev/null
 
 	einfo " To start OpenOffice.org, run:"
 	einfo

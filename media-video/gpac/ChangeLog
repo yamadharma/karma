@@ -1,6 +1,45 @@
 # ChangeLog for media-video/gpac
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/gpac/ChangeLog,v 1.24 2006/08/08 04:31:29 beandog Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-video/gpac/ChangeLog,v 1.35 2007/01/09 08:46:41 opfer Exp $
+
+  09 Jan 2007; Christian Faulhammer <opfer@gentoo.org> gpac-0.4.2-r1.ebuild:
+  stable x86, bug #157894
+
+  08 Jan 2007; Alexis Ballier <aballier@gentoo.org> -gpac-0.2.1.ebuild:
+  Remove very old version
+
+  06 Jan 2007; Timothy Redaelli <drizzt@gentoo.org> gpac-0.4.2-r1.ebuild:
+  Add ~x86-fbsd keyword wrt bug 159240
+
+  06 Jan 2007; Alexis Ballier <aballier@gentoo.org> gpac-0.4.2-r1.ebuild:
+  Removing no more present docs from dodoc args
+
+  06 Jan 2007; Alexis Ballier <aballier@gentoo.org>
+  +files/gpac-0.4.2-bsd.patch, gpac-0.4.2-r1.ebuild:
+  BSD compile fix, thanks to Timothy Redaelli <drizzt@gentoo.org>, bug #159240
+
+  21 Dec 2006; Markus Rothe <corsair@gentoo.org> gpac-0.4.2-r1.ebuild:
+  Stable on ppc64; bug #157814
+
+  24 Nov 2006; Alexis Ballier <aballier@gentoo.org> gpac-0.4.2-r1.ebuild:
+  Use the correct gcc, thanks to Jakub, bug #156105
+
+*gpac-0.4.2-r1 (23 Nov 2006)
+
+  23 Nov 2006; Alexis Ballier <aballier@gentoo.org> +gpac-0.4.2-r1.ebuild:
+  Added a patch to build PIC libs wrt bug #156016, removed -fPIC append-cflag
+  for amd64, moved relevant stuff to src_unpack, made a patchset tarball
+
+  09 Oct 2006; Alexis Ballier <aballier@gentoo.org>
+  +files/gpac-0.4.2-ffmpeg-snapshots-compat.patch, gpac-0.4.2.ebuild:
+  Fix to compile against latest ffmpeg snapshots, bug #148939
+
+  22 Sep 2006; Steve Dibb <beandog@gentoo.org>
+  gpac-0.4.1_pre20060122-r1.ebuild, gpac-0.4.2.ebuild:
+  Remove ft USE flag, wrt bug 147885
+
+  08 Sep 2006; Thomas Cort <tcort@gentoo.org> gpac-0.4.2.ebuild:
+  Added ~alpha keyword.
 
   08 Aug 2006; Steve Dibb <steve@gentoo.org> gpac-0.4.1_pre20060122.ebuild,
   gpac-0.4.1_pre20060122-r1.ebuild, gpac-0.4.2.ebuild:
