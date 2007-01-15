@@ -1,13 +1,13 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.1.0.ebuild,v 1.7 2007/01/13 10:54:31 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.1.0.ebuild,v 1.10 2007/01/14 16:31:41 suka Exp $
 
 WANT_AUTOCONF="2.5"
 WANT_AUTOMAKE="1.9"
 
 inherit check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions multilib toolchain-funcs
 
-IUSE="binfilter branding cairo cups dbus debug eds firefox gnome gstreamer gtk kde ldap sound odk pam webdav"
+IUSE="binfilter branding cairo cups dbus debug eds firefox gnome gstreamer gtk kde ldap sound odk pam seamonkey webdav"
 
 MY_PV="2.1"
 PATCHLEVEL="OOE680"
@@ -71,6 +71,9 @@ COMMON_DEPEND="!app-office/openoffice-bin
 	firefox? ( >=www-client/mozilla-firefox-1.5-r9
 		>=dev-libs/nspr-4.6.2
 		>=dev-libs/nss-3.11-r1 )
+	!firefox? ( seamonkey? ( www-client/seamonkey
+		>=dev-libs/nspr-4.6.2
+		>=dev-libs/nss-3.11-r1 ) )
 	sound? ( >=media-libs/portaudio-18.1-r5
 			>=media-libs/libsndfile-1.0.9 )
 	webdav? ( >=net-misc/neon-0.24.7 )
@@ -89,6 +92,7 @@ COMMON_DEPEND="!app-office/openoffice-bin
 	dev-libs/expat
 	>=dev-libs/icu-3.4
 	>=sys-libs/db-4.3
+	>=dev-libs/STLport-5.1.0
 	linguas_ja? ( >=media-fonts/kochi-substitute-20030809-r3 )
 	linguas_zh_CN? ( >=media-fonts/arphicfonts-0.1-r2 )
 	linguas_zh_TW? ( >=media-fonts/arphicfonts-0.1-r2 )"
@@ -108,7 +112,6 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/pkgconfig
 	dev-util/intltool
 	>=dev-libs/boost-1.33.1
-	>=dev-libs/STLport-5.1.0
 	>=net-misc/curl-7.9.8
 	sys-libs/zlib
 	sys-apps/coreutils
@@ -123,11 +126,11 @@ DEPEND="${COMMON_DEPEND}
 
 PROVIDE="virtual/ooo"
 
-if use amd64; then
+#if use amd64; then
 	# All available Java 1.5 JDKs are broken, in one way or another, on amd64.
 	# Thus we force the use of a Java 1.4 JDK on amd64 (and amd64 only).
 	export JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
-fi
+#fi
 
 
 pkg_setup() {
@@ -197,6 +200,7 @@ src_unpack() {
 	epatch ${FILESDIR}/${PV}/wrapper-readd.diff
 	use !java && epatch ${FILESDIR}/${PV}/disable_cxxhelplinker.diff
 	cp -f ${FILESDIR}/${PV}/ooo-wrapper.in ${S}/bin || die
+	cp -f ${FILESDIR}/${PV}/config_with-seamonkey.diff ${S}/patches/src680 || die
 
 	#Use flag checks
 	if use java ; then
@@ -207,20 +211,26 @@ src_unpack() {
 		echo "--with-system-xalan" >> ${CONFFILE}
 		echo "--with-system-xerces" >> ${CONFFILE}
 		echo "--with-system-xml-apis" >> ${CONFFILE}
-		echo "--with-beanshell-jar=/usr/share/bsh/lib/bsh.jar" >> ${CONFFILE}
-		echo "--with-serializer-jar=/usr/share/xalan/lib/serializer.jar" >> ${CONFFILE}
-		echo "--with-xalan-jar=/usr/share/xalan/lib/xalan.jar" >> ${CONFFILE}
-		echo "--with-xerces-jar=/usr/share/xerces-2/lib/xercesImpl.jar" >> ${CONFFILE}
-		echo "--with-xml-apis-jar=/usr/share/xml-commons-external-1.3/lib/xml-apis.jar" >> ${CONFFILE}
+		echo "--with-beanshell-jar=$(java-pkg_getjar bsh bsh.jar)" >> ${CONFFILE}
+		echo "--with-serializer-jar=$(java-pkg_getjar xalan serializer.jar)" >> ${CONFFILE}
+		echo "--with-xalan-jar=$(java-pkg_getjar xalan xalan.jar)" >> ${CONFFILE}
+		echo "--with-xerces-jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)" >> ${CONFFILE}
+		echo "--with-xml-apis-jar=$(java-pkg_getjar xml-commons-external-1.3 xml-apis.jar)" >> ${CONFFILE}
 	fi
 
 	use branding && echo "--with-intro-bitmaps=\\\"${S}/src/openintro_gentoo.bmp\\\"" >> ${CONFFILE}
 
 	echo "`use_enable binfilter`" >> ${CONFFILE}
 
-	echo "`use_enable firefox mozilla`" >> ${CONFFILE}
-	echo "`use_with firefox system-mozilla`" >> ${CONFFILE}
-	echo "`use_with firefox`" >> ${CONFFILE}
+	if use firefox || use seamonkey ; then
+		echo "--enable-mozilla" >> ${CONFFILE}
+		echo "--with-system-mozilla" >> ${CONFFILE}
+		echo "`use_with firefox`" >> ${CONFFILE}
+		echo "`use_with seamonkey`" >> ${CONFFILE}
+	else
+		echo "--disable-mozilla" >> ${CONFFILE}
+		echo "--without-system-mozilla" >> ${CONFFILE}
+	fi
 
 	echo "`use_enable cups`" >> ${CONFFILE}
 	echo "`use_enable ldap`" >> ${CONFFILE}
