@@ -1,6 +1,33 @@
 # ChangeLog for sys-process/fcron
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-process/fcron/ChangeLog,v 1.13 2006/04/27 23:26:04 antarus Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-process/fcron/ChangeLog,v 1.19 2006/10/07 09:15:38 flameeyes Exp $
+
+  07 Oct 2006; Diego Pettenò <flameeyes@gentoo.org> fcron-3.0.1-r2.ebuild:
+  Change pam dependency on virtual/pam and add ~x86-fbsd keyword as per bug
+  #141116.
+
+  29 Sep 2006; Stephanie Lockwood-Childs <wormo@gentoo.org>
+  fcron-3.0.1-r2.ebuild:
+  stable on ppc (Bug #149376)
+
+  29 Sep 2006; Jason Wever <weeve@gentoo.org> fcron-3.0.1-r2.ebuild:
+  Stable on SPARC wrt bug #149376.
+
+*fcron-3.0.1-r2 (31 Jul 2006)
+
+  31 Jul 2006; Wolfram Schlich <wschlich@gentoo.org> +files/fcrontab,
+  +fcron-3.0.1-r2.ebuild:
+  Add /etc/fcrontab and install check_system_crontabs into /usr/sbin
+
+  20 Jun 2006; Wolfram Schlich <wschlich@gentoo.org> metadata.xml:
+  maintainership takeover (ka0ttic is MIA)
+
+*fcron-3.0.1-r1 (20 Jun 2006)
+
+  20 Jun 2006; Wolfram Schlich <wschlich@gentoo.org> +files/fcron.init,
+  +fcron-3.0.1-r1.ebuild:
+  fixing doc file installation, new init script supporting multiple instances
+  (like the openvpn one)
 
   27 Apr 2006; Alec Warner <antarus@gentoo.org> files/digest-fcron-2.0.2,
   files/digest-fcron-2.9.5.1, files/digest-fcron-2.9.7,
