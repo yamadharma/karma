@@ -1,0 +1,91 @@
+# ChangeLog for media-video/dvgrab
+# Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-video/dvgrab/ChangeLog,v 1.21 2007/01/06 00:18:55 aballier Exp $
+
+  06 Jan 2007; Alexis Ballier <aballier@gentoo.org> dvgrab-1.8.ebuild,
+  dvgrab-2.0.ebuild, dvgrab-2.1.ebuild:
+  Updating homepage
+
+  06 Jan 2007; Alexis Ballier <aballier@gentoo.org> -dvgrab-1.7.ebuild:
+  Removing unused version
+
+*dvgrab-2.1 (06 Jan 2007)
+
+  06 Jan 2007; Alexis Ballier <aballier@gentoo.org>
+  +files/dvgrab-2.1-automagic.patch, +dvgrab-2.1.ebuild:
+  Version bump
+
+*dvgrab-2.0 (07 Dec 2006)
+
+  07 Dec 2006; Alexis Ballier <aballier@gentoo.org>
+  +files/dvgrab-2.0-asneeded.patch, +files/dvgrab-2.0-automagic.patch,
+  +dvgrab-2.0.ebuild:
+  Version bump, bug #103252
+
+  21 Oct 2006; Alexis Ballier <aballier@gentoo.org>
+  +files/dvgrab-libquicktime-compat.patch, dvgrab-1.8.ebuild:
+  Fixing libquicktime compatibility issue, bug #142107
+
+  06 Sep 2006; Matthias Schwarzott <zzam@gentoo.org>
+  +files/dvgrab-1.8-configure.patch, dvgrab-1.8.ebuild:
+  Removing automagic dependency on quicktime and jpeg, see Bug #146243, Thanks
+  to Polarina <gabrielp@simnet.is> for providing first patch.
+
+  06 Jul 2006; Jon Hood <squinky86@gentoo.org> dvgrab-1.8.ebuild:
+  Stable on amd64, bug #103926.
+
+  04 Jul 2006; Joshua Jackson <tsunam@gentoo.org> dvgrab-1.8.ebuild:
+  stable x86; bug #103926
+
+  25 Jun 2006; Tobias Scherbaum <dertobi123@gentoo.org> dvgrab-1.8.ebuild:
+  ppc stable, bug #103926
+
+  19 Sep 2005; Diego Pettenò <flameeyes@gentoo.org> dvgrab-1.7.ebuild,
+  dvgrab-1.8.ebuild:
+  Remove probably outdated comment.
+
+  12 Sep 2005; Michael Hanselmann <hansmi@gentoo.org> dvgrab-1.8.ebuild:
+  Added to ~ppc (Tested by Victor Barba in bug 104239).
+
+  10 Sep 2005; Diego Pettenò <flameeyes@gentoo.org> dvgrab-1.7.ebuild,
+  dvgrab-1.8.ebuild:
+  Don't install INSTALL file.
+
+*dvgrab-1.8 (25 May 2005)
+
+  25 May 2005; Jan Brinkmann <luckyduck@gentoo.org> -files/dvgrab_gcc34_fix,
+  -dvgrab-1.5.ebuild, dvgrab-1.7.ebuild, +dvgrab-1.8.ebuild:
+  1.7 stable on amd64 and x86, fixes #93821. new stable upstream version
+  added, fixes #92904
+
+  22 Jan 2005; Jan Brinkmann <luckyduck@gentoo.org> dvgrab-1.7.ebuild:
+  updated dependency. fixes #79073
+
+  20 Jan 2005; Jan Brinkmann <luckyduck@gentoo.org> dvgrab-1.7.ebuild:
+  minor fixes.
+
+*dvgrab-1.7 (20 Jan 2005)
+
+  20 Jan 2005; Jan Brinkmann <luckyduck@gentoo.org> dvgrab-1.5.ebuild,
+  +dvgrab-1.7.ebuild:
+  version bump, fixes bug #59120. corrected dependency, fixes bug #78370.
+
+*dvgrab-1.6 (20 Jan 2005)
+
+  20 Jan 2005; Jan Brinkmann <luckyduck@gentoo.org> +dvgrab-1.6.ebuild:
+  version bump. fixes bug #59120.
+
+  31 Dec 2004; Sven Wegener <swegener@gentoo.org> dvgrab-1.5.ebuild:
+  Moved inherit to the top. Do patching in src_unpack() instead of src_compile().
+
+  31 Jul 2004; <malc@gentoo.org> dvgrab-1.5.ebuild:
+  Add gcc34 compilation fix (same as kino) closes bug #58067
+
+  31 Mar 2004; Daniel Ahlberg <aliz@gentoo.org> dvgrab-1.5.ebuild:
+  Adding amd64 keyword, closing 46276.
+
+*dvgrab-1.5 (20 Mar 2004)
+
+  20 Mar 2004; Joel Martin <kanaka@gentoo.org> dvgrab-1.5.ebuild:
+  New ebuild for media-video/dvgrab to close bug 20293
+
