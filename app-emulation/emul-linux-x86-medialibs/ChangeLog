@@ -1,0 +1,60 @@
+# ChangeLog for app-emulation/emul-linux-x86-medialibs
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/emul-linux-x86-medialibs/ChangeLog,v 1.10 2007/01/03 07:35:08 vapier Exp $
+
+*emul-linux-x86-medialibs-1.2-r1 (03 Jan 2007)
+
+  03 Jan 2007; Mike Frysinger <vapier@gentoo.org>
+  +emul-linux-x86-medialibs-1.2-r1.ebuild:
+  Move /emul to /lib32 #143390.
+
+  04 Oct 2006; Daniel Gryniewicz <dang@gentoo.org>
+  emul-linux-x86-medialibs-1.2.ebuild:
+  Marked stable on amd64 for bug #148926
+
+  11 Jun 2006; Simon Stelling <blubb@gentoo.org>
+  -emul-linux-x86-medialibs-1.0.ebuild,
+  -emul-linux-x86-medialibs-1.1.ebuild:
+  removing old versions
+
+  09 Mar 2006; Diego Pettenò <flameeyes@gentoo.org>
+  emul-linux-x86-medialibs-1.0.ebuild, emul-linux-x86-medialibs-1.1.ebuild,
+  emul-linux-x86-medialibs-1.1-r1.ebuild,
+  emul-linux-x86-medialibs-1.2.ebuild:
+  Use nostrip instead of strip restriction for compatibility with older portage.
+
+  09 Mar 2006; Diego Pettenò <flameeyes@gentoo.org>
+  emul-linux-x86-medialibs-1.0.ebuild, emul-linux-x86-medialibs-1.1.ebuild,
+  emul-linux-x86-medialibs-1.1-r1.ebuild,
+  emul-linux-x86-medialibs-1.2.ebuild:
+  Add strip restriction, as the binaries are already stripped.
+
+  01 Nov 2005; <dang@gentoo.org> +emul-linux-x86-medialibs-1.2.ebuild:
+  New rev of medialibs with lirc client lib
+
+*emul-linux-x86-medialibs-1.2 (01 Nov 2005)
+
+  01 Nov 2005; <dang@gentoo.org> +emul-linux-x86-medialibs-1.2.ebuild:
+  New rev of medialibs with lirc client lib
+
+  16 Oct 2005; <dang@gentoo.org> emul-linux-x86-medialibs-1.1-r1.ebuild:
+  Marked stable on amd64
+
+*emul-linux-x86-medialibs-1.1-r1 (06 Sep 2005)
+
+  06 Sep 2005; Herbie Hopkins <herbs@gentoo.org>
+  +emul-linux-x86-medialibs-1.1-r1.ebuild:
+  Don't install libesd so as not to confict with new soundlibs.
+
+*emul-linux-x86-medialibs-1.1 (31 Aug 2005)
+
+  31 Aug 2005; <dang@gentoo.org> +emul-linux-x86-medialibs-1.1.ebuild:
+  Bump to add new libs needed by mplayer-bin-1.0_pre7-r1
+
+*emul-linux-x86-medialibs-1.0 (29 Aug 2005)
+
+  29 Aug 2005; <dang@gentoo.org> +metadata.xml,
+  +emul-linux-x86-medialibs-1.0.ebuild:
+  Added for mplayer-bin to allow movies that require binary-only codecs to
+  be played on amd64
+

@@ -12,7 +12,7 @@ MY_P=${P/_beta/-b}
 
 SRC_URI="mirror://sourceforge/rt2400/${MY_P}.tar.gz"
 
-KEYWORDS="-* amd64 x86"
+KEYWORDS="-* ~amd64 ~x86"
 IUSE="debug"
 DEPEND=""
 RDEPEND="net-wireless/wireless-tools
@@ -20,15 +20,15 @@ RDEPEND="net-wireless/wireless-tools
 S="${WORKDIR}/${MY_P}"
 MODULE_NAMES="rt61(net:${S}/Module)"
 
-CONFIG_CHECK="NET_RADIO"
-ERROR_NET_RADIO="${P} requires support for Wireless LAN drivers (non-hamradio) & Wireless Extensions (CONFIG_NET_RADIO)."
+#CONFIG_CHECK="NET_RADIO"
+#ERROR_NET_RADIO="${P} requires support for Wireless LAN drivers (non-hamradio) & Wireless Extensions (CONFIG_NET_RADIO)."
 
 MODULESD_RT61_ALIASES=('ra? rt61')
 
-pkg_setup() {
-	linux-mod_pkg_setup
-	BUILD_PARAMS="KERNDIR=${KV_DIR} KERNOUT=${KV_OUT_DIR}"
-}
+#pkg_setup() {
+#	linux-mod_pkg_setup
+#	BUILD_PARAMS="KERNDIR=${KV_DIR} KERNOUT=${KV_OUT_DIR}"
+#}
 
 src_compile() {
 	use debug && BUILD_TARGETS="clean debug"

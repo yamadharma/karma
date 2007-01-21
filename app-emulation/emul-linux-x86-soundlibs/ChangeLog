@@ -1,6 +1,24 @@
 # ChangeLog for app-emulation/emul-linux-x86-soundlibs
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/emul-linux-x86-soundlibs/ChangeLog,v 1.18 2006/05/18 13:18:39 dang Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/emul-linux-x86-soundlibs/ChangeLog,v 1.21 2007/01/05 07:14:13 vapier Exp $
+
+*emul-linux-x86-soundlibs-2.5-r2 (05 Jan 2007)
+
+  05 Jan 2007; Mike Frysinger <vapier@gentoo.org>
+  +emul-linux-x86-soundlibs-2.5-r2.ebuild:
+  Fix encoded /emul to point to lib32 #143390.
+
+*emul-linux-x86-soundlibs-2.5-r1 (03 Jan 2007)
+
+  03 Jan 2007; Mike Frysinger <vapier@gentoo.org>
+  +emul-linux-x86-soundlibs-2.5-r1.ebuild:
+  Move /emul to /lib32 #143390.
+
+*emul-linux-x86-soundlibs-2.5 (23 Dec 2006)
+
+  23 Dec 2006; Piotr Jaroszyński <peper@gentoo.org>
+  +emul-linux-x86-soundlibs-2.5.ebuild:
+  Update alsa-lib to 1.0.14_rc1 and add alsa-lib/smixer wrt bug #153481.
 
 *emul-linux-x86-soundlibs-2.4 (18 May 2006)
 

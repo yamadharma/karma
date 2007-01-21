@@ -1,0 +1,54 @@
+# ChangeLog for app-emulation/emul-linux-x86-compat
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/emul-linux-x86-compat/ChangeLog,v 1.12 2007/01/03 07:34:45 vapier Exp $
+
+*emul-linux-x86-compat-1.0-r2 (03 Jan 2007)
+
+  03 Jan 2007; Mike Frysinger <vapier@gentoo.org>
+  +emul-linux-x86-compat-1.0-r2.ebuild:
+  Move /emul to /lib32 #143390.
+
+  11 Jun 2006; Simon Stelling <blubb@gentoo.org>
+  -emul-linux-x86-compat-1.0.ebuild:
+  removing old version
+
+  09 Mar 2006; Diego Pettenò <flameeyes@gentoo.org>
+  emul-linux-x86-compat-1.0.ebuild, emul-linux-x86-compat-1.0-r1.ebuild:
+  Use nostrip instead of strip restriction for compatibility with older portage.
+
+  09 Mar 2006; Diego Pettenò <flameeyes@gentoo.org>
+  emul-linux-x86-compat-1.0.ebuild, emul-linux-x86-compat-1.0-r1.ebuild:
+  Add strip restriction, as the binaries are already stripped.
+
+  03 Mar 2006; Simon Stelling <blubb@gentoo.org>
+  emul-linux-x86-compat-1.0.ebuild, emul-linux-x86-compat-1.0-r1.ebuild:
+  remove the dependency on app-emulation/emul-linux-x86-glibc since 2004.3 has
+  been deprecated a while ago
+
+  05 Jan 2006; Herbie Hopkins <herbs@gentoo.org>
+  emul-linux-x86-compat-1.0-r1.ebuild:
+  Stable on amd64.
+
+  19 Oct 2005; Herbie Hopkins <herbs@gentoo.org> metadata.xml:
+  Remove lv as maintainer since he's retiring, bug 45408.
+
+*emul-linux-x86-compat-1.0-r1 (14 Oct 2005)
+
+  14 Oct 2005; Simon Stelling <blubb@gentoo.org>
+  +files/75emul-linux-x86-compat, +emul-linux-x86-compat-1.0-r1.ebuild:
+  since it does only depend on emul-linux-x86-glibc which does nothing on
+  2005.0 or later, install the env.d-file ourself
+
+  26 May 2005; Herbie Hopkins <herbs@gentoo.org>
+  emul-linux-x86-compat-1.0.ebuild:
+  Remove libsmpeg as it collides with emul-sdl.
+
+  28 Aug 2004; Travis Tilley <lv@gentoo.org> emul-linux-x86-compat-1.0.ebuild:
+  stable on amd64
+
+*emul-linux-x86-compat-1.0 (16 Aug 2004)
+
+  16 Aug 2004; Travis Tilley <lv@gentoo.org>
+  +emul-linux-x86-compat-1.0.ebuild:
+  initial commit
+
