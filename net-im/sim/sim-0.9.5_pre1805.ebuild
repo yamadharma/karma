@@ -4,14 +4,19 @@
 
 inherit kde-functions eutils flag-o-matic subversion
 
+ESVN_OPTIONS="-r${PV/*_pre}"
+ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/berlios.de/sim-im"
+
+ESVN_REPO_URI="http://svn.berlios.de/svnroot/repos/sim-im/trunk"	    
+
 DESCRIPTION="Simple Instant Messenger (with KDE support). ICQ/AIM/Jabber/MSN/Yahoo."
 HOMEPAGE="http://sim-im.org/"
 #SRC_URI="http://download.berlios.de/sim-im/${P}.tar.bz2"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="~amd64 ppc ~x86"
-IUSE="debug kde spell ssl qt4"
+KEYWORDS="amd64 ppc x86"
+IUSE="debug kde spell ssl"
 
 # kdebase-data provides the icon "licq.png"
 RDEPEND="kde? ( kde-base/kdelibs
@@ -22,15 +27,13 @@ RDEPEND="kde? ( kde-base/kdelibs
 		 dev-libs/libxml2
 		 dev-libs/libxslt
 		 sys-libs/zlib
-		 || ( x11-libs/libXScrnSaver virtual/x11 )
-		 qt4? ( >=x11-libs/qt-4.0 )"
+		 || ( x11-libs/libXScrnSaver virtual/x11 )"
 
 DEPEND="${RDEPEND}
 	sys-devel/flex
 	app-arch/zip
 	|| ( x11-proto/scrnsaverproto virtual/x11 )
-	>=sys-devel/libtool-1.5.22
-	qt4? ( >=x11-libs/qt-4.0 )"
+	>=sys-devel/libtool-1.5.22"
 
 pkg_setup() {
 	if use kde ; then
@@ -55,31 +58,7 @@ pkg_setup() {
 			myconf="--without-arts"
 		fi
 	fi
-
-#	ESVN_OPTIONS="-r{${PV/*_pre}}"
-	ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/berlios.de/sim-im"
-
-	if use qt4 
-	    then
-	    ESVN_REPO_URI="http://svn.berlios.de/svnroot/repos/sim-im/branches/sim-qt4"	    
-#    	    ESVN_REPO_URI="svn://svn.berlios.de/sim-im/trunk/sim-qt4"
-    	    einfo "Qt4 version"
-        else
-	    ESVN_REPO_URI="http://svn.berlios.de/svnroot/repos/sim-im//branches/0.9.4"        
-#	    ESVN_REPO_URI="svn://svn.berlios.de/sim-im/trunk/sim"
-    	    einfo "Qt3 version"
-	fi
-	
 }
-
-#src_unpack() {
-#	unpack ${A}
-#	cd ${S}
-#
-#	if use kde ; then
-#	set-kdedir 3
-#	fi
-#}
 
 src_compile() {
 	filter-flags -fstack-protector -fstack-protector-all
