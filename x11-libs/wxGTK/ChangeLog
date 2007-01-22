@@ -1,6 +1,47 @@
 # ChangeLog for x11-libs/wxGTK
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/wxGTK/ChangeLog,v 1.128 2006/11/23 16:48:09 yvasilev Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/wxGTK/ChangeLog,v 1.140 2007/01/20 22:08:11 jer Exp $
+
+  20 Jan 2007; Jeroen Roovers <jer@gentoo.org> wxGTK-2.6.3.3.ebuild:
+  Stable for HPPA (bug #136924).
+
+  16 Jan 2007; Joseph Jezak <josejx@gentoo.org> wxGTK-2.6.3.3.ebuild:
+  Marked ppc stable for bug #136924.
+
+  15 Jan 2007; Raúl Porcel <armin76@gentoo.org> wxGTK-2.6.3.3.ebuild:
+  x86 stable, wrt bug 136924
+
+  15 Jan 2007; Gustavo Zacarias <gustavoz@gentoo.org> wxGTK-2.6.3.3.ebuild:
+  Stable on sparc wrt #136924
+
+  14 Jan 2007; Markus Rothe <corsair@gentoo.org> wxGTK-2.6.3.3.ebuild:
+  Stable on ppc64; bug #136924
+
+  12 Jan 2007; Mart Raudsepp <leio@gentoo.org>
+  +files/wxGTK-2.6.3.3-wxrc_link_fix.patch, wxGTK-2.6.3.3.ebuild:
+  Build fix for wxrc in presence of an already installed (incompatible) wxGTK,
+  bug 150435
+
+  06 Jan 2007; Ryan Hill <dirtyepic@gentoo.org> wxGTK-2.4.2-r4.ebuild,
+  wxGTK-2.6.2-r1.ebuild:
+  Fix bug #160197 by converting configure calls to econf. Also clean up a
+  little.
+
+  05 Jan 2007; Ryan Hill <dirtyepic@gentoo.org> wxGTK-2.4.2-r4.ebuild,
+  wxGTK-2.6.2-r1.ebuild, wxGTK-2.6.3.3.ebuild:
+  einfo -> elog
+
+  05 Jan 2007; Ryan Hill <dirtyepic@gentoo.org> ChangeLog:
+  On second thought unspecified but required eclasses are probably a bad thing.
+
+  04 Jan 2007; Ryan Hill <dirtyepic@gentoo.org> wxGTK-2.6.3.3.ebuild:
+  Remove debug.eclass usage (bug #160116), and clean up redundant inherits.
+
+  30 Dec 2006; <leio@gentoo.org> -wxGTK-2.6.1.ebuild:
+  Remove redundant version
+
+  28 Dec 2006; Ryan Hill <dirtyepic@gentoo.org> wxGTK-2.4.2-r4.ebuild:
+  gtk2 -> gtk
 
   23 Nov 2006; <yvasilev@gentoo.org> wxGTK-2.6.3.3.ebuild:
   Keyworded arm on request by leio.

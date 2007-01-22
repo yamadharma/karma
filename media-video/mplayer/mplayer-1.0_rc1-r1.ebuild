@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/mplayer/mplayer-1.0_rc1.ebuild,v 1.21 2006/12/31 02:15:20 lu_zero Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/mplayer/mplayer-1.0_rc1-r1.ebuild,v 1.1 2007/01/06 19:44:23 beandog Exp $
 
 inherit eutils flag-o-matic
 
@@ -48,6 +48,7 @@ RDEPEND="xvid? ( >=media-libs/xvid-0.9.0 )
 		!livecd? (
 			!bindist? ( >=media-libs/win32codecs-20040916 ) ) )
 	x86? ( real? ( >=media-video/realplayer-10.0.3 ) )
+	amd64? ( real? ( media-libs/amd64codecs ) )
 	aalib? ( media-libs/aalib )
 	alsa? ( media-libs/alsa-lib )
 	arts? ( kde-base/arts )
@@ -124,11 +125,13 @@ DEPEND="${RDEPEND}
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~alpha amd64 ~hppa ~ia64 ppc ppc64 sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 
 pkg_setup() {
 	if use real && use x86; then
 		REALLIBDIR="/opt/RealPlayer/codecs"
+	elif use real && use amd64; then
+		REALLIBDIR="/usr/lib64/codecs"
 	fi
 
 	if use truetype && ! use iconv ; then
@@ -199,7 +202,7 @@ src_compile() {
 	# have fun with LINGUAS variable
 	[[ -n $LINGUAS ]] && LINGUAS=${LINGUAS//da/dk}
 
-	local myconf=" --disable-tv-bsdbt848"
+	local myconf=" --disable-tv-bsdbt848 --disable-dvdnav"
 	myconf="${myconf} --disable-vidix-external"
 	################
 	#Optional features#

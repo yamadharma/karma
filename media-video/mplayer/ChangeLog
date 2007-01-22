@@ -1,6 +1,25 @@
 # ChangeLog for media-video/mplayer
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/mplayer/ChangeLog,v 1.443 2006/12/31 02:15:20 lu_zero Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-video/mplayer/ChangeLog,v 1.448 2007/01/17 17:27:22 opfer Exp $
+
+  17 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  mplayer-1.0_rc1.ebuild:
+  filter -fomit-frame-pointer when USE=debug is set
+
+  09 Jan 2007; Olivier Crête <tester@gentoo.org> mplayer-1.0_rc1.ebuild:
+  Stable on amd64 for bugs #157814 and #161053
+
+*mplayer-1.0_rc1-r1 (06 Jan 2007)
+
+  06 Jan 2007; Steve Dibb <beandog@gentoo.org> +mplayer-1.0_rc1-r1.ebuild:
+  Add amd64codecs support for real libs on amd64
+
+  04 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  mplayer-1.0_rc1.ebuild:
+  stable x86, bug #157814
+
+  03 Jan 2007; Luca Barbato <lu_zero@gentoo.org> mplayer-1.0_rc1.ebuild:
+  disable dvdnav for now
 
   31 Dec 2006; Luca Barbato <lu_zero@gentoo.org> mplayer-1.0_rc1.ebuild:
   fix mplayer to build against the latest live555.com
