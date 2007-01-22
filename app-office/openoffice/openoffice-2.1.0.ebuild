@@ -51,7 +51,7 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc -sparc ~x86"
+KEYWORDS="amd64 ~ppc -sparc x86"
 
 COMMON_DEPEND="!app-office/openoffice-bin
 	x11-libs/libXaw
@@ -106,7 +106,7 @@ COMMON_DEPEND="!app-office/openoffice-bin
 	linguas_zh_TW? ( >=media-fonts/arphicfonts-0.1-r2 )"
 
 COMMON_DEPEND="${COMMON_DEPEND}
-	access? ( >=app-office/mdbtools-0.6_pre20051109 )
+	access? ( app-office/mdbtools )
 	!xulrunner? (
 		!seamonkey? (
 			firefox? ( www-client/mozilla-firefox ${NSS_DEP} )

@@ -1,6 +1,127 @@
 # ChangeLog for dev-lang/mercury-extras
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/mercury-extras/ChangeLog,v 1.39 2006/09/17 02:35:24 keri Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/mercury-extras/ChangeLog,v 1.63 2007/01/13 22:35:53 keri Exp $
+
+  13 Jan 2007; keri <keri@gentoo.org>
+  files/mercury-extras-0.13.1-mercury_opengl.patch:
+  Mercury opengl fix: declare predicate mtogl.destroy/3 with impure purity.
+
+  13 Jan 2007; keri <keri@gentoo.org>
+  files/mercury-extras-0.12.2-posix.patch,
+  files/mercury-extras-0.13.1-posix.patch:
+  Multilib fix for additional posix headers.
+
+  13 Jan 2007; keri <keri@gentoo.org> mercury-extras-0.12.2-r2.ebuild,
+  mercury-extras-0.13.1.ebuild:
+  Do no parallelize generation of .dep and .dv files.
+
+  13 Jan 2007; keri <keri@gentoo.org>
+  -files/mercury-extras-0.13.0-concurrency.patch,
+  -files/mercury-extras-0.13.0-curs.patch,
+  -files/mercury-extras-0.13.0-dynamic_linking.patch,
+  -files/mercury-extras-0.13.0-lex.patch,
+  -files/mercury-extras-0.13.0-mercury_glut.patch,
+  -files/mercury-extras-0.13.0-mercury_opengl.patch,
+  -files/mercury-extras-0.13.0-mercury_tcltk.patch,
+  -files/mercury-extras-0.13.0-odbc.patch,
+  -files/mercury-extras-0.13.0-posix.patch,
+  -files/mercury-extras-0.13.0-references.patch,
+  -files/mercury-extras-0.13.0-trailed_update.patch,
+  -mercury-extras-0.13.0.ebuild:
+  Remove old -0.13.0 version.
+
+  09 Jan 2007; keri <keri@gentoo.org> mercury-extras-0.12.2-r2.ebuild,
+  mercury-extras-0.13.1.ebuild:
+  Add ~amd64 to KEYWORDS.
+
+*mercury-extras-0.13.1 (04 Dec 2006)
+
+  04 Dec 2006; keri <keri@gentoo.org>
+  +files/mercury-extras-0.13.1-concurrency.patch,
+  +files/mercury-extras-0.13.1-curs.patch,
+  +files/mercury-extras-0.13.1-dynamic_linking.patch,
+  +files/mercury-extras-0.13.1-lex.patch,
+  +files/mercury-extras-0.13.1-mercury_glut.patch,
+  +files/mercury-extras-0.13.1-mercury_opengl.patch,
+  +files/mercury-extras-0.13.1-mercury_tcltk.patch,
+  +files/mercury-extras-0.13.1-odbc.patch,
+  +files/mercury-extras-0.13.1-posix.patch,
+  +files/mercury-extras-0.13.1-references.patch,
+  +files/mercury-extras-0.13.1-trailed_update.patch,
+  +mercury-extras-0.13.1.ebuild:
+  Version bump.
+
+  10 Nov 2006; keri <keri@gentoo.org>
+  files/mercury-extras-0.13.0-mercury_opengl.patch:
+  Include tkInt.h in the mercury Tk OpenGL widget.
+
+  24 Oct 2006; keri <keri@gentoo.org> -mercury-extras-0.12.2.ebuild,
+  -mercury-extras-0.12.2-r1.ebuild:
+  Remove old revisions that don't support parallel builds.
+
+  23 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.12.2-r2.ebuild,
+  mercury-extras-0.13.0.ebuild:
+  Parallelize mmake depend and mmake install targets. This will significantly
+  speed up compilation on multi-way boxes.
+
+  23 Oct 2006; keri <keri@gentoo.org>
+  +files/mercury-extras-0.12.2-curs.patch,
+  -files/mercury-extras-0.12.2-parallel-mmake.patch,
+  +files/mercury-extras-0.13.0-curs.patch, mercury-extras-0.12.2-r2.ebuild,
+  mercury-extras-0.13.0.ebuild:
+  Split curs.m into two modules in order to handle parallel builds.
+
+  23 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.13.0.ebuild:
+  Add ~sparc to KEYWORDS.
+
+  22 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.13.0.ebuild:
+  Copy additional posix headers to correct inc directory.
+
+  22 Oct 2006; keri <keri@gentoo.org> files/mercury-extras-0.12.2-lex.patch,
+  files/mercury-extras-0.13.0-lex.patch:
+  Install lex libgrade targets sequentially.
+
+  19 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.12.2.ebuild,
+  mercury-extras-0.12.2-r1.ebuild, mercury-extras-0.12.2-r2.ebuild,
+  mercury-extras-0.13.0.ebuild:
+  Update SRC_URI.
+
+  18 Oct 2006; Joshua Jackson <tsunam@gentoo.org>
+  mercury-extras-0.12.2-r2.ebuild:
+  Stable x86; bug #149924
+
+  16 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.13.0.ebuild:
+  Remove deprecated clpr library.
+
+  15 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.13.0.ebuild:
+  Respect MAKEOPTS.
+
+  11 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.12.2-r2.ebuild:
+  Use default MMAKEFLAGS in src_install.
+
+  10 Oct 2006; keri <keri@gentoo.org>
+  +files/mercury-extras-0.12.2-parallel-mmake.patch,
+  mercury-extras-0.12.2-r2.ebuild:
+  Parallelize mmake
+
+  06 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.12.2-r2.ebuild:
+  Do not pre-strip binaries.
+
+  06 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.12.2-r2.ebuild:
+  Do not install mercury header softlinks. Reported by Christian Faulhammer
+  <gentoo@faulhammer.org> and Markus Meier <meier_markus@bluewin.ch> in
+  #149924.
+
+  06 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.12.2-r2.ebuild:
+  Add ~sparc to KEYWORDS
+
+  05 Oct 2006; <nixnut@gentoo.org> mercury-extras-0.12.2-r2.ebuild:
+  Stable on ppc wrt bug 149924
+
+  05 Oct 2006; keri <keri@gentoo.org> mercury-extras-0.12.2-r2.ebuild,
+  mercury-extras-0.13.0.ebuild:
+  Do not install interface softlinks. Reported by Christian Faulhammer
+  <gentoo@faulhammer.org> in #149924.
 
   17 Sep 2006; keri <keri@gentoo.org> mercury-extras-0.12.2.ebuild,
   mercury-extras-0.12.2-r1.ebuild, mercury-extras-0.12.2-r2.ebuild,

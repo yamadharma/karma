@@ -1,0 +1,11 @@
+--- syntax/Syntax.orig	2003-02-05 18:54:34 +0300
++++ syntax/Syntax	2003-11-03 16:03:45 +0300
+@@ -68,7 +68,7 @@
+ file ..\*\.(texi|texinfo|TEXI|TEXINFO)$ Texinfo\sDocument
+ include texinfo.syntax
+ 
+-file ..\*\\.([chC]|CC|cxx|cc|cpp|CPP|CXX|hxx|h\.in)$ C/C\+\+\sProgram
++file ..\*\\.([chC]|CC|cxx|cc|cpp|CPP|CXX|hxx|h\.in|hh|hpp)$ C/C\+\+\sProgram
+ include c.syntax
+ 
+ file ..\*\\.[fF]$ Fortran\sProgram

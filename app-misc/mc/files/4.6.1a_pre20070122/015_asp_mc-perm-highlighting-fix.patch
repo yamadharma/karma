@@ -1,0 +1,11 @@
+--- mc-4.6.1a/src/screen.c.perm	2006-01-06 13:09:18.000000000 +0100
++++ mc-4.6.1a/src/screen.c	2006-01-06 13:08:55.000000000 +0100
+@@ -161,7 +161,7 @@ add_permission_string (char *dest, int w
+     }
+ 
+     for(i = 0; i < width; i++){
+-	if (i >= l && i < r){
++	if (i > l && i <= r){
+             if (attr == SELECTED || attr == MARKED_SELECTED)
+                 attrset (MARKED_SELECTED_COLOR);
+             else

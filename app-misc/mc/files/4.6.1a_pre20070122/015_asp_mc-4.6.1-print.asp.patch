@@ -1,0 +1,644 @@
+--- mc-4.6.1a/src/cmd.c.print	2005-09-06 09:41:35.000000000 +0300
++++ mc-4.6.1a/src/cmd.c	2005-11-11 19:12:37.000000000 +0200
+@@ -341,6 +341,16 @@ void ren_cmd_local (void)
+     }
+ }
+ 
++#ifdef HAVE_PRINT
++void
++print_cmd (void)
++{
++    save_cwds_stat ();
++    print_sel_files (current_panel);
++    repaint_screen ();
++}
++#endif
++
+ void
+ mkdir_cmd (void)
+ {
+@@ -382,6 +392,7 @@ void delete_cmd (void)
+     }
+ }
+ 
++#ifndef HAVE_PRINT
+ /* Invoked by F18.  Remove selected file, regardless of marked files.  */
+ void delete_cmd_local (void)
+ {
+@@ -392,6 +403,7 @@ void delete_cmd_local (void)
+ 	repaint_screen ();
+     }
+ }
++#endif
+ 
+ void find_cmd (void)
+ {
+--- mc-4.6.1a/src/cmd.h.print	2005-09-06 09:41:35.000000000 +0300
++++ mc-4.6.1a/src/cmd.h	2005-11-11 19:12:37.000000000 +0200
+@@ -23,7 +23,11 @@ void copy_cmd (void);
+ void ren_cmd (void);
+ void copy_cmd_local (void);
+ void ren_cmd_local (void);
++#ifdef HAVE_PRINT
++void print_cmd (void);
++#else
+ void delete_cmd_local (void);
++#endif
+ void reselect_vfs (void);
+ void mkdir_cmd (void);
+ void delete_cmd (void);
+--- mc-4.6.1a/src/dlg_prn.c.print	2005-11-11 19:12:37.000000000 +0200
++++ mc-4.6.1a/src/dlg_prn.c	2005-11-11 19:12:37.000000000 +0200
+@@ -0,0 +1,279 @@
++/* Print dialog module for the Midnight Commander
++   Copyright (C) 2005 Likhota Vadim <vadim-lvv@yandex.ru>
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 2 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software
++   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
++ */
++
++#include <config.h>
++
++#ifdef HAVE_PRINT
++
++#include <stdio.h>
++#include <errno.h>
++
++#include "global.h"
++#include "tty.h"
++#include "execute.h"
++#include "color.h"
++#include "widget.h"
++#include "wtools.h"
++
++#ifdef HAVE_CHARSET
++#include "charsets.h"
++#endif
++
++#include "dlg_prn.h"
++
++#define TEMP_BUF_LEN 1024
++
++#define DLG_PRN_H 11
++#define DLG_PRN_W 72
++
++static char printer[32] = N_("default printer");
++static char codepgf[32] = N_("default charset");
++static char codepgt[32] = N_("default charset");
++static int nprinter = 0, ncodepgf = 0, ncodepgt = 0;
++static int sel_pln = 1, sel_prn = 0, sel_enc = 0;
++static WCheck *check_pln, *check_prn, *check_enc;
++static WButton *but_prn, *but_en1, *but_en2;
++
++static void
++prn_enter (Dlg_head * h, const int f_pos)
++{
++    Dlg_head *chl_dlg = 0;
++    WListbox *chl_list;
++    int prnbox = ( f_pos == 2 ? 1 : 0 ); 	// 1 - printers, 0 - charsets
++    int lxx = (COLS - DLG_PRN_W) / 2 + (f_pos == 7 ? 50 : 25);
++    int lyy = (LINES - DLG_PRN_H) / 2 + (prnbox ? 0 : 2 );
++    char *title = ( prnbox ? _("printers") : _("charsets") );
++
++    if ( !(chl_dlg = create_dlg (lyy, lxx, 9, 20, dialog_colors, NULL,
++		"[print option]", title, DLG_COMPACT))) {
++	message (1, MSG_ERROR, "Can't create child window.");
++	return;
++    }
++
++    if ( !(chl_list = listbox_new (1, 1, 18, 7, NULL))) {
++	message (1, MSG_ERROR, "Can't create child lisbox.");
++	destroy_dlg (chl_dlg);
++	return;
++    }
++
++    listbox_add_item (chl_list, 0, 0,
++	(prnbox ? N_("default printer") : N_("default charset")), NULL);
++
++    // read printcap file
++    if ( prnbox ) {
++	char *p = PRINTCAP;
++	char buf[TEMP_BUF_LEN], *bufi;
++	FILE *f;
++
++	f = (FILE *) fopen (p, "r");
++	if (f) {
++	    while ( fgets(buf, TEMP_BUF_LEN - 1, f) ) {
++		if (*buf != '#') {
++		    bufi = buf;
++		    while ( *bufi != '\0' ) {
++			if ( *bufi == '|' ) {
++			    *bufi = '\0';
++			    break;
++			}
++			else
++			    bufi++;
++		    }
++		    // FIXME: what about wrong line in the file?
++		    listbox_add_item (chl_list, 0, 0, buf, NULL);
++		}
++	    }
++	    if (fclose (f) > 0)
++		message (1, MSG_ERROR, "Error while close file: %s.", p);
++	} else {
++	    message (1, MSG_ERROR, "Can't open file for reading: %s.", p);
++	    destroy_dlg (chl_dlg);
++	    return;
++	}
++    }
++#ifdef HAVE_CHARSET
++    else {
++	int i = 0;
++	for ( ; i < n_codepages; i++)
++	    listbox_add_item (chl_list, 0, 0, codepages[i].name, NULL);
++    }
++#endif
++	
++    add_widget (chl_dlg, chl_list);
++
++    run_dlg (chl_dlg);
++
++    switch (f_pos) {
++    case 2:
++	strncpy(printer, chl_list->current->text, 32);
++	strncpy(but_prn->text, printer, 32);
++	nprinter = chl_list->pos;
++	break;
++    case 5:
++	strncpy(codepgf, chl_list->current->text, 32);
++	strncpy(but_en1->text, codepgf, 32);
++	ncodepgf = chl_list->pos;
++	break;
++    case 7:
++	strncpy(codepgt, chl_list->current->text, 32);
++	strncpy(but_en2->text, codepgt, 32);
++	ncodepgt = chl_list->pos;
++	break;
++    }
++    destroy_dlg (chl_dlg);
++}
++
++static cb_ret_t
++print_block_callback (struct Dlg_head *h, dlg_msg_t Msg, int Par)
++{
++    int f_pos = h->current->dlg_id;
++
++    if (Msg == DLG_KEY) {
++	switch (Par) {
++	case '\n':
++	    if ( f_pos < 8 ) {
++		switch (f_pos) {
++		case 2:
++		    if ( check_prn->state )
++			prn_enter (h, f_pos);
++		    break;
++		case 7:
++		    if ( !strcmp(but_en1->text, N_("default charset")) )
++			break;
++		case 5:
++		    if ( check_enc->state )
++			prn_enter (h, f_pos);
++		    break;
++		}
++		return MSG_HANDLED;
++	    }
++	    break;
++	}
++    } else
++	return default_dlg_callback (h, Msg, Par);
++
++    return MSG_NOT_HANDLED;
++}
++
++/* Return 0 on success */
++int
++show_print_dlg (void)
++{
++    Dlg_head *prn_dlg;
++
++    prn_dlg = create_dlg (0, 0, DLG_PRN_H, DLG_PRN_W, dialog_colors, print_block_callback,
++		"[print dlg]", _(" Print options "), DLG_CENTER);
++    // 0
++    add_widget (prn_dlg, check_pln = check_new (DLG_PRN_H - 9, 3, sel_pln,
++		N_("plain text")));
++    // 1
++    add_widget (prn_dlg, check_prn = check_new (DLG_PRN_H - 7, 3, sel_prn,
++		N_("select printer")));
++    // 2
++    add_widget (prn_dlg, but_prn = button_new(DLG_PRN_H - 7, 25, B_USER+1, NORMAL_BUTTON,
++		"default_printer_XXXXXXXXXXXXXXX", NULL));
++    // 3
++    add_widget (prn_dlg, check_enc = check_new (DLG_PRN_H - 5, 3, sel_enc,
++		N_("encoding")));
++    // 4
++    add_widget (prn_dlg, label_new (DLG_PRN_H - 5, 20, N_("from")));
++    // 5
++    add_widget (prn_dlg, but_en1 = button_new(DLG_PRN_H - 5, 25, B_USER+2, NORMAL_BUTTON,
++		"default_charset_XXXXXXXXXXXXXXX", NULL));
++    // 6
++    add_widget (prn_dlg, label_new (DLG_PRN_H - 5, 45, N_("to")));
++    // 7
++    add_widget (prn_dlg, but_en2 = button_new(DLG_PRN_H - 5, 48, B_USER+3, NORMAL_BUTTON,
++		"default_charset_XXXXXXXXXXXXXXX", NULL));
++    // 8
++    add_widget (prn_dlg, button_new(DLG_PRN_H - 3, 20, B_ENTER, NORMAL_BUTTON,
++		N_("Print"), NULL));
++    // 9
++    add_widget (prn_dlg, button_new(DLG_PRN_H - 3, 40, B_CANCEL, NORMAL_BUTTON,
++		N_("Cancel"), NULL));
++
++    strncpy(but_en1->text, codepgf, 32);
++    strncpy(but_en2->text, codepgt, 32);
++    strncpy(but_prn->text, printer, 32);
++
++    run_dlg (prn_dlg);
++
++    sel_enc = check_enc->state;
++    sel_prn = check_prn->state;
++    sel_pln = check_pln->state;
++
++    if (prn_dlg->ret_value == B_CANCEL) {
++	destroy_dlg (prn_dlg);
++	return 1;
++    }
++
++    destroy_dlg (prn_dlg);
++
++    return 0;
++}
++
++void
++print_file (const char *fname)
++{
++    char cmd[256];
++    char *lpr = "lpr -l";
++    
++#ifdef HAVE_CHARSET
++    if ( ncodepgf && ncodepgt)
++	if ( nprinter )
++	    snprintf(cmd, sizeof(cmd), "iconv -f %s -t %s %s | %s -p %s",
++	    		codepages[ncodepgf-1].id, codepages[ncodepgt-1].id, fname, lpr, printer);
++	else
++	    snprintf(cmd, sizeof(cmd), "iconv -f %s -t %s %s | %s",
++	    		codepages[ncodepgf-1].id, codepages[ncodepgt-1].id, fname,  lpr);
++    else
++#endif
++	if ( nprinter )
++	    snprintf(cmd, sizeof(cmd), "%s -p %s %s", lpr, printer, fname);
++	else
++	    snprintf(cmd, sizeof(cmd), "%s %s", lpr, fname);
++
++    execute_command(cmd);
++}
++
++void
++execute_command (const char *commands)
++{
++    FILE *cmd_file;
++    int  cmd_file_fd;
++    char *file_name;
++
++    cmd_file_fd = mc_mkstemps(&file_name, "mcusr", SCRIPT_SUFFIX);
++
++    if (cmd_file_fd == -1) {
++	message (1, MSG_ERROR, _("Can't create temporary command file\n%s"),
++		unix_error_string (errno));
++	return;
++    }
++    cmd_file = fdopen (cmd_file_fd, "w");
++
++    if ( fputs (commands, cmd_file) == EOF )
++	message (1, MSG_ERROR, _("Can't write to temporary command file"));
++
++    fclose (cmd_file);
++    chmod (file_name, S_IRWXU);
++    shell_execute (file_name, 0);
++    unlink (file_name);
++    g_free (file_name);
++}
++
++#endif /* HAVE_PRINT */
+--- mc-4.6.1a/src/dlg_prn.h.print	2005-11-11 19:12:37.000000000 +0200
++++ mc-4.6.1a/src/dlg_prn.h	2005-11-11 19:12:37.000000000 +0200
+@@ -0,0 +1,14 @@
++#ifndef __MC_DLG_PRN_H
++#define __MC_DLG_PRN_H
++
++#ifdef HAVE_PRINT
++
++#define PRINTCAP           "/etc/printcap"
++
++int	show_print_dlg	(void);
++void	print_file	(const char *fname);
++void	execute_command (const char *commands);
++
++#endif /* HAVE_PRINT */
++
++#endif	/* __MC_DLG_PRN_H */
+--- mc-4.6.1a/src/file.c.print	2005-11-11 19:12:36.000000000 +0200
++++ mc-4.6.1a/src/file.c	2005-11-11 19:12:37.000000000 +0200
+@@ -72,6 +72,10 @@
+ #include "key.h"
+ #include "../vfs/vfs-impl.h"
+ 
++#ifdef HAVE_PRINT
++#include "dlg_prn.h"
++#endif
++
+ /* }}} */
+ 
+ /* Hack: the vfs code should not rely on this */
+@@ -2069,6 +2073,56 @@ panel_operate (void *source_panel, FileO
+     return 1;
+ }
+ 
++#ifdef HAVE_PRINT
++
++#ifndef PATH_MAX
++#define PATH_MAX	1024
++#endif
++
++int
++print_sel_files (void *cur_panel)
++{
++    WPanel *panel = cur_panel;
++    int one_file = (get_current_type () == view_tree) || (panel->marked <= 1);
++    char full_fname[PATH_MAX];
++
++    if (get_current_type () == view_listing)
++	if (!panel->marked && !strcmp (selection (panel)->fname, "..")) {
++	    message (1, MSG_ERROR, _("Can't print \"..\"!"));
++	    return 1;
++	}
++
++    if (show_print_dlg ())
++	return 1;
++
++    if (one_file) {
++	if (S_ISDIR (panel->dir.list[panel->selected].st.st_mode)) {
++	    message (1, MSG_ERROR, _("Can't print directory!"));
++	    return 1;
++	}
++	
++	snprintf(full_fname, sizeof(full_fname), "%s/%s", panel->cwd, selection (panel)->fname);
++	print_file(full_fname);
++    } else {
++    	int i = 0;
++	for ( ; i < panel->count; i++) {
++	    if (!panel->dir.list[i].f.marked)
++		continue;
++		
++	    if (S_ISDIR (panel->dir.list[i].st.st_mode))
++		continue;	
++		
++	    snprintf(full_fname, sizeof(full_fname), "%s/%s", panel->cwd, panel->dir.list[i].fname);
++	    print_file(full_fname);
++	    do_file_mark (panel, i, 0);
++	}
++    }
++
++    return 0;
++}
++
++#endif /* HAVE_PRINT */
++
+ /* }}} */
+ 
+ /* {{{ Query/status report routines */
+--- mc-4.6.1a/src/file.h.print	2004-12-03 21:17:47.000000000 +0200
++++ mc-4.6.1a/src/file.h	2005-11-11 19:12:37.000000000 +0200
+@@ -20,6 +20,10 @@ int erase_dir (FileOpContext *ctx, const
+ 
+ int panel_operate (void *source_panel, FileOperation op, int force_single);
+ 
++#ifdef HAVE_PRINT
++int print_sel_files	(void *cur_panel);
++#endif
++
+ extern int file_op_compute_totals;
+ 
+ /* Error reporting routines */
+--- mc-4.6.1a/src/main.c.print	2005-11-11 19:12:37.000000000 +0200
++++ mc-4.6.1a/src/main.c	2005-11-11 19:12:37.000000000 +0200
+@@ -859,6 +859,9 @@ static menu_entry FileMenu[] = {
+     {' ', N_("&Filtered view     M-!"), 'F', filtered_view_cmd},
+     {' ', N_("&Edit               F4"), 'E', edit_cmd},
+     {' ', N_("&Copy               F5"), 'C', copy_cmd},
++#ifdef HAVE_PRINT
++    {' ', N_("&Print             F18"), 'P', print_cmd},
++#endif
+     {' ', N_("c&Hmod           C-x c"), 'H', chmod_cmd},
+     {' ', N_("&Link            C-x l"), 'L', link_cmd},
+     {' ', N_("&SymLink         C-x s"), 'S', symlink_cmd},
+--- mc-4.6.1a/src/Makefile.am.print	2005-11-11 19:12:37.000000000 +0200
++++ mc-4.6.1a/src/Makefile.am	2005-11-11 19:12:37.000000000 +0200
+@@ -46,6 +46,7 @@ SRCS =	achown.c achown.h background.c ba
+ 	chmod.c chmod.h chown.c chown.h cmd.c cmd.h color.c color.h	\
+ 	command.c command.h complete.c complete.h cons.handler.c	\
+ 	cons.saver.h dialog.c dialog.h dir.c dir.h			\
++	dlg_prn.c dlg_prn.h	\
+ 	eregex.h execute.c execute.h ext.c ext.h file.c filegui.c	\
+ 	filegui.h file.h filenot.c fileopctx.c fileopctx.h find.c	\
+ 	find.h findme.c	findme.h fs.h					\
+--- mc-4.6.1a/src/screen.c.print	2005-11-11 19:12:37.000000000 +0200
++++ mc-4.6.1a/src/screen.c	2005-11-11 19:12:37.000000000 +0200
+@@ -2271,7 +2271,9 @@ static void cmd_view_simple(WPanel *wp) 
+ static void cmd_edit_new(WPanel *wp) { edit_cmd_new(); }
+ static void cmd_copy_local(WPanel *wp) { copy_cmd_local(); }
+ static void cmd_rename_local(WPanel *wp) { ren_cmd_local(); }
++#ifndef HAVE_PRINT
+ static void cmd_delete_local(WPanel *wp) { delete_cmd_local(); }
++#endif
+ static void cmd_select(WPanel *wp) { select_cmd(); }
+ static void cmd_unselect(WPanel *wp) { unselect_cmd(); }
+ static void cmd_reverse_selection(WPanel *wp) { reverse_selection_cmd(); }
+@@ -2317,7 +2319,11 @@ static const panel_key_map panel_keymap 
+     { KEY_F(14),  cmd_edit_new },
+     { KEY_F(15),  cmd_copy_local },
+     { KEY_F(16),  cmd_rename_local },
++#ifdef HAVE_PRINT
++    { KEY_F(18),  print_cmd },
++#else
+     { KEY_F(18),  cmd_delete_local },
++#endif
+     { ALT('y'),   directory_history_prev },
+     { ALT('u'),   directory_history_next },
+     { ALT('+'),	  cmd_select },
+--- mc-4.6.1a/edit/edit.c.print	2005-11-11 19:12:37.000000000 +0200
++++ mc-4.6.1a/edit/edit.c	2005-11-11 19:12:37.000000000 +0200
+@@ -2476,6 +2476,11 @@ edit_execute_cmd (WEdit *edit, int comma
+ 	} else
+ 	    check_and_wrap_line (edit);
+ 	break;
++#ifdef HAVE_PRINT
++    case CK_Print_Block:
++	edit_print_block_cmd (edit);
++	break;
++#endif
+ 
+     case CK_Toggle_Insert:
+ 	edit->overwrite = (edit->overwrite == 0);
+--- mc-4.6.1a/edit/editcmd.c.print	2005-11-11 19:12:36.000000000 +0200
++++ mc-4.6.1a/edit/editcmd.c	2005-11-11 19:13:19.000000000 +0200
+@@ -56,6 +56,9 @@
+ #include "../src/wtools.h"	/* message() */
+ #include "../src/charsets.h"
+ #include "../src/selcodepage.h"
++#ifdef HAVE_PRINT
++#include "../src/dlg_prn.h"
++#endif
+ 
+ #define edit_get_load_file(f,h) input_expand_dialog (h, _(" Enter file name: "), f)
+ #define edit_get_save_file(f,h) input_expand_dialog (h, _(" Enter file name: "), f)
+@@ -1021,6 +1024,40 @@ edit_insert_column_of_text (WEdit * edit
+     edit_cursor_move (edit, cursor - edit->curs1);
+ }
+ 
++#ifdef HAVE_PRINT
++/* Return 1 on success */
++int
++edit_print_block_cmd (WEdit *edit)
++{
++    long start_mark, end_mark;
++    char *exp;
++
++    if (eval_marks (edit, &start_mark, &end_mark))
++	return 1;
++
++    if (show_print_dlg( ))
++	return 1;
++
++    exp = catstrs (home_dir, PRN_FILE, 0);
++    edit_push_action (edit, KEY_PRESS + edit->start_display);
++    if (exp) {
++	if (!*exp)
++	    return 0;
++	else {
++	    if (edit_save_block (edit, exp, start_mark, end_mark)) {
++		print_file(exp);
++		edit->force |= REDRAW_COMPLETELY;
++		return 1;
++	    } else {
++		edit_error_dialog (_("Print Block"),
++			   get_sys_error ( _("Can't save print file.") ));
++	    }
++	}
++    }
++    edit->force |= REDRAW_COMPLETELY;
++    return 0;
++}
++#endif /* HAVE_PRINT */
+ 
+ void
+ edit_block_copy_cmd (WEdit *edit)
+--- mc-4.6.1a/edit/editcmddef.h.print	2005-11-11 19:12:37.000000000 +0200
++++ mc-4.6.1a/edit/editcmddef.h	2005-11-11 19:12:37.000000000 +0200
+@@ -51,6 +51,7 @@
+ #define CK_Unmark		206
+ #define CK_Save_Block		207
+ #define CK_Column_Mark		208
++#define CK_Print_Block		209
+ 
+ /* search and replace */
+ #define CK_Find			301
+--- mc-4.6.1a/edit/edit.h.print	2005-11-11 19:12:36.000000000 +0200
++++ mc-4.6.1a/edit/edit.h	2005-11-11 19:12:37.000000000 +0200
+@@ -200,6 +200,9 @@ int edit_save_block (WEdit * edit, const
+ int edit_save_block_cmd (WEdit * edit);
+ int edit_insert_file_cmd (WEdit * edit);
+ int edit_insert_file (WEdit * edit, const char *filename);
++#ifdef HAVE_PRINT
++int edit_print_block_cmd (WEdit * edit);
++#endif
+ void edit_block_process_cmd (WEdit * edit, const char *shell_cmd, int block);
+ void freestrs (void);
+ void edit_refresh_cmd (WEdit * edit);
+@@ -330,5 +333,6 @@ extern int column_highlighting;
+ #define MACRO_FILE         EDIT_DIR PATH_SEP_STR "cooledit.macros"
+ #define BLOCK_FILE         EDIT_DIR PATH_SEP_STR "cooledit.block"
+ #define TEMP_FILE          EDIT_DIR PATH_SEP_STR "cooledit.temp"
++#define PRN_FILE           EDIT_DIR PATH_SEP_STR "cooledit.prn"
+ 
+ #endif
+--- mc-4.6.1a/edit/editkeys.c.print	2005-11-11 19:12:37.000000000 +0200
++++ mc-4.6.1a/edit/editkeys.c	2005-11-11 19:13:36.000000000 +0200
+@@ -134,6 +134,9 @@ static const edit_key_map_type common_ke
+     { KEY_F (14), CK_Replace_Again },
+     { KEY_F (15), CK_Insert_File },
+     { KEY_F (17), CK_Find_Again },
++#ifdef HAVE_PRINT
++    { KEY_F (18), CK_Print_Block },
++#endif
+     { KEY_F (19), CK_Pipe_Block (0) },	/* C formatter */
+ 
+     /* Shift */
+--- mc-4.6.1a/edit/editmenu.c.print	2005-09-07 11:49:30.000000000 +0300
++++ mc-4.6.1a/edit/editmenu.c	2005-11-11 19:12:37.000000000 +0200
+@@ -156,6 +156,14 @@ menu_cut_cmd (void)
+     menu_cmd (CK_Save_Block);
+ }
+ 
++#ifdef HAVE_PRINT
++static void
++menu_prn_cmd (void)
++{
++    menu_cmd (CK_Print_Block);
++}
++#endif
++
+ static void
+ menu_search_cmd (void)
+ {
+@@ -304,6 +312,9 @@ static menu_entry FileMenu[] =
+     {' ', "", ' ', 0},
+     {' ', N_("&Insert file...   F15"), 'I', menu_insert_file_cmd},
+     {' ', N_("Copy to &file...  C-f"), 'F', menu_cut_cmd},
++#ifdef HAVE_PRINT
++    {' ', N_("&Print block      F18"), 'P', menu_prn_cmd},
++#endif
+     {' ', "", ' ', 0},
+     {' ', N_("&User menu...     F11"), 'U', menu_user_menu_cmd},
+     {' ', "", ' ', 0},
+@@ -322,6 +333,9 @@ static menu_entry FileMenuEmacs[] =
+     {' ', "", ' ', 0},
+     {' ', N_("&Insert file...   F15"), 'I', menu_insert_file_cmd},
+     {' ', N_("Copy to &file...     "), 'F', menu_cut_cmd},
++#ifdef HAVE_PRINT
++    {' ', N_("&Print block      F18"), 'P', menu_prn_cmd},
++#endif
+     {' ', "", ' ', 0},
+     {' ', N_("&User menu...     F11"), 'U', menu_user_menu_cmd},
+     {' ', "", ' ', 0},
+--- mc-4.6.1a/configure.ac.print	2005-10-07 04:15:05.000000000 +0300
++++ mc-4.6.1a/configure.ac	2005-11-11 19:12:37.000000000 +0200
+@@ -524,6 +524,19 @@ fi
+ 
+ 
+ dnl
++dnl Printing support
++dnl
++AC_ARG_ENABLE([print],
++	      [  --enable-print           Support for file and block printing [[no]]])
++have_print=
++print_msg="no"
++if test "x$enable_print" = xyes; then
++    AC_DEFINE(HAVE_PRINT, 1, [Define to enable printing support])
++    have_print=yes
++    print_msg="yes"
++fi
++
++dnl
+ dnl User visible support for charset conversion.
+ dnl
+ AC_ARG_ENABLE([charset],
