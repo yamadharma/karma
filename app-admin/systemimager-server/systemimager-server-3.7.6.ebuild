@@ -32,7 +32,7 @@ RDEPEND="${DEPEND}
 	net-misc/flamethrower
 	bittorrent? ( >=net-p2p/bittorrent-${BITTORRENT_VERSION} )" 
 
-RESTRICT=userpriv
+RESTRICT="userpriv"
 
 src_unpack ()
 {

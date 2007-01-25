@@ -40,6 +40,9 @@ ZLIB_VERSION=1.2.3
 
 MODULE_INIT_TOOLS_VERSION="3.2.1"
 
+OLD_COREUTILS_VERSION=5.93
+COREUTILS_VERSION=6.4
+
 case $ARCH in
     x86) 
     LINUX_VERSION=2.6.18.1
@@ -68,6 +71,7 @@ SRC_URI="mirror://sourceforge/systemimager/${MY_P}.tar.bz2
 	http://download.systemimager.org/pub/parted/parted-${PARTED_VERSION}.tar.gz
 	http://download.systemimager.org/pub/pdisk/pdisk.${PDISK_VERSION}.src.tar
 
+	http://download.systemimager.org/pub/coreutils/coreutils-${COREUTILS_VERSION}.tar.bz2
 
 	http://download.systemimager.org/pub/raidtools/raidtools-${RAIDTOOLS_VERSION}.tar.gz
 	http://download.systemimager.org/pub/reiserfsprogs/reiserfsprogs-${REISERFSPROGS_VERSION}.tar.gz
@@ -94,7 +98,7 @@ RDEPEND="${RDEPEND}"
 
 #SANDBOX_DISABLED="1"
 FEATURES="${FEATURES} -ccache -distcc"
-
+RESTRICT="userpriv"
 
 MAKEOPTS="${MAKEOPTS} -j1"
 
@@ -134,15 +138,20 @@ src_unpack ()
 	cp ${DISTDIR}/linux-${LINUX_VERSION}.tar.bz2 ${S}/src
 	
 	cp ${DISTDIR}/module-init-tools-${MODULE_INIT_TOOLS_VERSION}.tar.bz2 ${S}/initrd_source/src
+
+	cp ${DISTDIR}/coreutils-${COREUTILS_VERSION}.tar.bz2 ${S}/initrd_source/src
 	
 	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:g" ${S}/initrd_source/initrd.rul 
 	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:g" ${S}/make.d/boel_binaries.inc
+
+	# Some dirty hacks
+	sed -i -e "s:${OLD_COREUTILS_VERSION}:${COREUTILS_VERSION}:g" ${S}/initrd_source/make.d/coreutils.rul
 	
 }
 
 src_compile () 
 {
-#	unset CFLAGS
+	unset CFLAGS
 	
 	filter-flags -fstack-protector
 	filter-flags -fPIC
