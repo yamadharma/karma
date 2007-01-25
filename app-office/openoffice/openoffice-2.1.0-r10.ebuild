@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.1.0.ebuild,v 1.12 2007/01/25 05:31:42 genone Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.1.0.ebuild,v 1.10 2007/01/14 16:31:41 suka Exp $
 
 WANT_AUTOCONF="2.5"
 WANT_AUTOMAKE="1.9"
@@ -8,8 +8,9 @@ WANT_AUTOMAKE="1.9"
 inherit check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions multilib toolchain-funcs
 
 IUSE="binfilter branding cairo cups dbus debug eds firefox gnome gstreamer gtk kde ldap sound odk pam seamonkey webdav"
+IUSE="${IUSE} access gcj mono nas odbc xulrunner"
 
-MY_PV="2.1.1"
+MY_PV="2.1"
 PATCHLEVEL="OOE680"
 SRC="OOo_${PV}_src"
 S="${WORKDIR}/ooo"
@@ -28,6 +29,13 @@ SRC_URI="mirror://openoffice/stable/${PV}/${SRC}_core.tar.bz2
 	http://go-oo.org/packages/xt/xt-20051206-src-only.zip
 	http://go-oo.org/packages/SRC680/lp_solve_5.5.tar.gz"
 
+SRC_URI="${SRC_URI}
+	mono? ( http://go-oo.org/packages/${PATCHLEVEL}/cli_types.dll
+		http://go-oo.org/packages/${PATCHLEVEL}/cli_types_bridgetest.dll )"
+
+NSS_DEP=">=dev-libs/nspr-4.6.2
+	>=dev-libs/nss-3.11-r1"
+
 LANGS1="af ar as_IN be_BY bg bn bs ca cs cy da el en_GB en_ZA es et fa fi fr gu_IN he hi_IN hr hu it ja km ko lt lv mk nb nl nn nr ns or_IN pa_IN pl pt pt_BR ru rw sh_YU sk sl sr_CS st sv sw_TZ ta_IN te_IN tg th ti_ER tn tr ts ur_IN ve vi xh zh_CN zh_TW zu"
 LANGS="${LANGS1} de en en_US"
 
@@ -43,7 +51,7 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc -sparc x86"
+KEYWORDS="~amd64 ~ppc -sparc ~x86"
 
 COMMON_DEPEND="!app-office/openoffice-bin
 	x11-libs/libXaw
@@ -96,6 +104,16 @@ COMMON_DEPEND="!app-office/openoffice-bin
 	linguas_ja? ( >=media-fonts/kochi-substitute-20030809-r3 )
 	linguas_zh_CN? ( >=media-fonts/arphicfonts-0.1-r2 )
 	linguas_zh_TW? ( >=media-fonts/arphicfonts-0.1-r2 )"
+
+COMMON_DEPEND="${COMMON_DEPEND}
+	access? ( app-office/mdbtools )
+	!xulrunner? (
+		!seamonkey? (
+			firefox? ( www-client/mozilla-firefox ${NSS_DEP} )
+		) seamonkey? ( www-client/seamonkey ${NSS_DEP} )
+	) xulrunner? ( net-libs/xulrunner ${NSS_DEP} )
+	mono? ( >=dev-lang/mono-1.1.6 )
+	nas? ( >=media-libs/nas-1.6 )"
 
 RDEPEND="java? ( || ( =virtual/jre-1.5* =virtual/jre-1.4* )  )
 	${COMMON_DEPEND}"
@@ -198,7 +216,13 @@ src_unpack() {
 	cd ${S}
 	epatch ${FILESDIR}/${PV}/gentoo-${PV}.diff
 	epatch ${FILESDIR}/${PV}/wrapper-readd.diff
+	use !java && epatch ${FILESDIR}/${PV}/disable_cxxhelplinker.diff
 	cp -f ${FILESDIR}/${PV}/ooo-wrapper.in ${S}/bin || die
+	cp -f ${FILESDIR}/${PV}/config_with-seamonkey.diff ${S}/patches/src680 || die
+
+	#
+	epatch ${FILESDIR}/config.diff
+	epatch ${FILESDIR}/build-java-target-update.diff
 
 	#Use flag checks
 	if use java ; then
@@ -220,15 +244,26 @@ src_unpack() {
 
 	echo "`use_enable binfilter`" >> ${CONFFILE}
 
-	if use firefox || use seamonkey ; then
+	# Browser
+	if use firefox || use seamonkey || use xulrunner ; then
 		echo "--enable-mozilla" >> ${CONFFILE}
 		echo "--with-system-mozilla" >> ${CONFFILE}
-		echo "`use_with firefox`" >> ${CONFFILE}
-		echo "`use_with seamonkey`" >> ${CONFFILE}
+		use firefox && echo "--with-firefox" >> ${CONFFILE}
+		use seamonkey && echo "--with-seamonkey" >> ${CONFFILE}
+		use xulrunner && echo "--with-xulrunner" >> ${CONFFILE}
 	else
 		echo "--disable-mozilla" >> ${CONFFILE}
-		echo "--without-system-mozilla" >> ${CONFFILE}
 	fi
+
+#	if use firefox || use seamonkey ; then
+#		echo "--enable-mozilla" >> ${CONFFILE}
+#		echo "--with-system-mozilla" >> ${CONFFILE}
+#		echo "`use_with firefox`" >> ${CONFFILE}
+#		echo "`use_with seamonkey`" >> ${CONFFILE}
+#	else
+#		echo "--disable-mozilla" >> ${CONFFILE}
+#		echo "--without-system-mozilla" >> ${CONFFILE}
+#	fi
 
 	echo "`use_enable cups`" >> ${CONFFILE}
 	echo "`use_enable ldap`" >> ${CONFFILE}
@@ -248,6 +283,25 @@ src_unpack() {
 
 	echo "`use_enable debug crashdump`" >> ${CONFFILE}
 
+	# GentooExperimental Defaults
+	echo "--with-stlport=/usr" >> ${CONFFILE}
+	echo "--with-system-db" >> ${CONFFILE}
+	echo "--with-system-libwpd" >> ${CONFFILE}
+	echo "--with-system-xmlsec" >> ${CONFFILE}
+	echo "--enable-vba" >> ${CONFFILE}
+
+	# Gnome
+	echo "`use_enable gnome gnome-vfs`" >> ${CONFFILE}
+	echo "`use_enable gnome lockdown`" >> ${CONFFILE}
+	echo "`use_enable gnome atkbridge`" >> ${CONFFILE}
+	echo "`use_enable gstreamer`" >> ${CONFFILE}
+
+	# Sound
+	echo "`use_enable sound pasf`" >> ${CONFFILE}
+	echo "`use_with sound system-portaudio`" >> ${CONFFILE}
+	echo "`use_with sound system-sndfile`" >> ${CONFFILE}
+	echo "`use_with nas`" >> ${CONFFILE}
+	echo "`use_with nas system-nas`" >> ${CONFFILE}
 }
 
 src_compile() {
@@ -308,6 +362,12 @@ src_compile() {
 		--with-system-hunspell \
 		--mandir=/usr/share/man \
 		--libdir=/usr/$(get_libdir) \
+		`use_enable gnome gtk` \
+		`use_enable gnome cairo` \
+		`use_with gnome system-cairo` \
+		`use_enable access` \
+		`use_with access system-mdbtools` \
+		`use_enable mono` \
 		|| die "Configuration failed!"
 
 	einfo "Building OpenOffice.org..."
@@ -343,17 +403,17 @@ pkg_postinst() {
 	# Add available & useful jars to openoffice classpath
 	use java && /usr/lib/openoffice/program/java-set-classpath $(java-config --classpath=jdbc-mysql 2>/dev/null) >/dev/null
 
-	elog " To start OpenOffice.org, run:"
-	elog
-	elog " $ ooffice2"
-	elog
-	elog " Also, for individual components, you can use any of:"
-	elog
-	elog " oobase2, oocalc2, oodraw2, oofromtemplate2, ooimpress2, oomath2,"
-	elog " ooweb2 or oowriter2"
-	elog
-	elog " Spell checking is now provided through our own myspell-ebuilds, "
-	elog " if you want to use it, please install the correct myspell package "
-	elog " according to your language needs. "
+	einfo " To start OpenOffice.org, run:"
+	einfo
+	einfo " $ ooffice2"
+	einfo
+	einfo " Also, for individual components, you can use any of:"
+	einfo
+	einfo " oobase2, oocalc2, oodraw2, oofromtemplate2, ooimpress2, oomath2,"
+	einfo " ooweb2 or oowriter2"
+	einfo
+	einfo " Spell checking is now provided through our own myspell-ebuilds, "
+	einfo " if you want to use it, please install the correct myspell package "
+	einfo " according to your language needs. "
 
 }
