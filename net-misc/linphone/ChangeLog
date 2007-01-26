@@ -1,277 +1,148 @@
-2006-06-15 20:20  stkn
+# ChangeLog for net-misc/linphone
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/net-misc/linphone/ChangeLog,v 1.20 2007/01/18 08:07:03 opfer Exp $
 
-	* [r290] Manifest, files/linphone-1.3.5-ltmain.sh.diff,
-	  linphone-1.3.5.ebuild:
-	  Fix conflict between net-libs/ortp and linphones bundled ortp
-	  lib.
+  18 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  linphone-1.3.5.ebuild:
+  stable x86, bug #147795
 
-2006-06-14 23:35  stkn
+  26 Nov 2006; Timothy Redaelli <drizzt@gentoo.org>
+  +files/linphone-1.3.5-docs.diff, linphone-1.3.5.ebuild:
+  Added patch to remove obsolete developer-docs directory wrt bug #132824.
 
-	* [r289] Manifest, linphone-1.2.0.ebuild, linphone-1.3.5.ebuild:
-	  depend on ilbc version in main tree
+  26 Nov 2006; Timothy Redaelli <drizzt@gentoo.org>
+  +files/linphone-1.5.1-pkgconfig.patch, linphone-1.5.1.ebuild:
+  Added an explicit call to PKG_PROG_PKG_CONFIG (thx to Flameeyes) in
+  configure.in.
 
-2006-06-14 23:32  stkn
+*linphone-1.5.1 (26 Nov 2006)
 
-	* [r288] Manifest, linphone-1.3.5.ebuild:
-	  Fix linphone-1.3.5 depends
+  26 Nov 2006; Timothy Redaelli <drizzt@gentoo.org> +linphone-1.5.1.ebuild:
+  Imported 1.5.1 version from voip overlay without USE portaudio.
 
-2006-06-14 23:15  stkn
+  07 Jul 2006; Michael Sterrett <mr_bones_@gentoo.org>
+  linphone-1.1.0.ebuild:
+  removed optional dep that isn't in portage anymore
 
-	* [r287] Manifest, files/digest-linphone-1.1.0,
-	  files/digest-linphone-1.2.0, files/digest-linphone-1.3.5,
-	  files/linphone-1.3.5-ortp-gcc4.diff, linphone-1.3.5.ebuild:
-	  Add linphone-1.3.5.
+  01 Jul 2006; Lars Weiler <pylon@gentoo.org> linphone-1.3.5.ebuild:
+  Added ~ppc; bug #132672.
 
-2006-01-15 22:25  stkn
+  09 May 2006; Stefan Schweizer <genstef@gentoo.org> linphone-1.3.5.ebuild:
+  Correctly used eautoreconf many thanks to Marcin Deranek <gringo@slonko.net>
+  in bug 132758
 
-	* [r90] Manifest, files/digest-linphone-1.2.0,
-	  files/ilbc-1.2.0-makefile.diff, linphone-1.2.0.ebuild:
-	  [VERBUMP] linphone-1.2.0, adding ilbc support.
+*linphone-1.3.5 (05 May 2006)
 
-2005-10-29 21:37  stkn
+  05 May 2006; Stefan Schweizer <genstef@gentoo.org>
+  +files/ilbc-1.2.0-makefile.diff, +linphone-1.3.5.ebuild:
+  Version bump, fixes bugs 108187,113199,116685 and 129194
 
-	* [r2] trunk/dev-libs, trunk/dev-libs/pwlib,
-	  trunk/dev-libs/pwlib/Manifest, trunk/dev-libs/pwlib/files,
-	  trunk/dev-libs/pwlib/files/digest-pwlib-1.8.4,
-	  trunk/dev-libs/pwlib/files/digest-pwlib-1.8.7,
-	  trunk/dev-libs/pwlib/files/digest-pwlib-1.9.1,
-	  trunk/dev-libs/pwlib/files/pwlib-1.6.3-dyn-esd.patch,
-	  trunk/dev-libs/pwlib/files/pwlib-1.8.7-instplugins.diff,
-	  trunk/dev-libs/pwlib/pwlib-1.8.4.ebuild,
-	  trunk/dev-libs/pwlib/pwlib-1.8.7.ebuild,
-	  trunk/dev-libs/pwlib/pwlib-1.9.1.ebuild, trunk/dev-python,
-	  trunk/dev-python/pyst, trunk/dev-python/pyst/Manifest,
-	  trunk/dev-python/pyst/files,
-	  trunk/dev-python/pyst/files/digest-pyst-0.0.4_rc12,
-	  trunk/dev-python/pyst/pyst-0.0.4_rc12.ebuild, trunk/media-libs,
-	  trunk/media-libs/libsupertone,
-	  trunk/media-libs/libsupertone/Manifest,
-	  trunk/media-libs/libsupertone/files,
-	  trunk/media-libs/libsupertone/files/digest-libsupertone-0.0.2,
-	  trunk/media-libs/libsupertone/libsupertone-0.0.2.ebuild,
-	  trunk/media-libs/spandsp, trunk/media-libs/spandsp/Manifest,
-	  trunk/media-libs/spandsp/files,
-	  trunk/media-libs/spandsp/files/digest-spandsp-0.0.2_pre20,
-	  trunk/media-libs/spandsp/files/spandsp-0.0.2_pre20-nommx.diff,
-	  trunk/media-libs/spandsp/spandsp-0.0.2_pre20.ebuild,
-	  trunk/media-sound, trunk/media-sound/mpg123,
-	  trunk/media-sound/mpg123/Manifest,
-	  trunk/media-sound/mpg123/files,
-	  trunk/media-sound/mpg123/files/digest-mpg123-0.59r,
-	  trunk/media-sound/mpg123/files/mpg123-0.59r-patches-1.0.tar.bz2,
-	  trunk/media-sound/mpg123/mpg123-0.59r.ebuild, trunk/net-im,
-	  trunk/net-im/gnomemeeting, trunk/net-im/gnomemeeting/Manifest,
-	  trunk/net-im/gnomemeeting/files,
-	  trunk/net-im/gnomemeeting/files/digest-gnomemeeting-1.2.2,
-	  trunk/net-im/gnomemeeting/files/gnomemeeting-1.2.1-configure.patch,
-	  trunk/net-im/gnomemeeting/files/gnomemeeting-1.2.2-dbus.diff,
-	  trunk/net-im/gnomemeeting/gnomemeeting-1.2.2.ebuild,
-	  trunk/net-im/ohphone, trunk/net-im/ohphone/Manifest,
-	  trunk/net-im/ohphone/files,
-	  trunk/net-im/ohphone/files/digest-ohphone-1.14.4,
-	  trunk/net-im/ohphone/files/ohphone-1.14.4-pwlibsdl.diff,
-	  trunk/net-im/ohphone/ohphone-1.14.4.ebuild, trunk/net-libs,
-	  trunk/net-libs/libmfcr2, trunk/net-libs/libmfcr2/Manifest,
-	  trunk/net-libs/libmfcr2/files,
-	  trunk/net-libs/libmfcr2/files/digest-libmfcr2-0.0.3,
-	  trunk/net-libs/libmfcr2/files/libmfcr2-0.0.3-gentoo.diff,
-	  trunk/net-libs/libmfcr2/libmfcr2-0.0.3.ebuild,
-	  trunk/net-libs/libpri, trunk/net-libs/libpri/ChangeLog,
-	  trunk/net-libs/libpri/Manifest, trunk/net-libs/libpri/files,
-	  trunk/net-libs/libpri/files/digest-libpri-1.2.0_beta1,
-	  trunk/net-libs/libpri/files/libpri-1.2.0_beta1-gentoo.diff,
-	  trunk/net-libs/libpri/libpri-1.2.0_beta1.ebuild,
-	  trunk/net-libs/libpri/metadata.xml, trunk/net-libs/libunicall,
-	  trunk/net-libs/libunicall/Manifest,
-	  trunk/net-libs/libunicall/files,
-	  trunk/net-libs/libunicall/files/digest-libunicall-0.0.3,
-	  trunk/net-libs/libunicall/libunicall-0.0.3.ebuild,
-	  trunk/net-libs/opal, trunk/net-libs/opal/Manifest,
-	  trunk/net-libs/opal/files,
-	  trunk/net-libs/opal/files/digest-opal-2.1.1,
-	  trunk/net-libs/opal/files/opal-2.1.1-notrace.diff,
-	  trunk/net-libs/opal/opal-2.1.1.ebuild, trunk/net-libs/openh323,
-	  trunk/net-libs/openh323/Manifest, trunk/net-libs/openh323/files,
-	  trunk/net-libs/openh323/files/digest-openh323-1.15.3,
-	  trunk/net-libs/openh323/files/digest-openh323-1.15.6,
-	  trunk/net-libs/openh323/files/digest-openh323-1.17.2,
-	  trunk/net-libs/openh323/files/openh323-1.15.2-notrace.diff,
-	  trunk/net-libs/openh323/openh323-1.15.3.ebuild,
-	  trunk/net-libs/openh323/openh323-1.15.6.ebuild,
-	  trunk/net-libs/openh323/openh323-1.17.2.ebuild,
-	  trunk/net-libs/osptoolkit, trunk/net-libs/osptoolkit/Manifest,
-	  trunk/net-libs/osptoolkit/files,
-	  trunk/net-libs/osptoolkit/files/digest-osptoolkit-3.3.1,
-	  trunk/net-libs/osptoolkit/osptoolkit-3.3.1.ebuild,
-	  trunk/net-misc, trunk/net-misc/asterisk,
-	  trunk/net-misc/asterisk-addons,
-	  trunk/net-misc/asterisk-addons/Manifest,
-	  trunk/net-misc/asterisk-addons/asterisk-addons-1.2.0_beta1.ebuild,
-	  trunk/net-misc/asterisk-addons/files,
-	  trunk/net-misc/asterisk-addons/files/asterisk-addons-1.2.0_beta1-gentoo-base.diff,
-	  
-	  trunk/net-misc/asterisk-addons/files/asterisk-addons-1.2.0_beta1-gentoo-ooh323c.diff,
-	  
-	  trunk/net-misc/asterisk-addons/files/asterisk-addons-1.2.0_beta1-gentoo-res_sqlite3.diff,
-	  
-	  trunk/net-misc/asterisk-addons/files/digest-asterisk-addons-1.2.0_beta1,
-	  
-	  trunk/net-misc/asterisk-addons/files/sqlite-3.2.1-data-corruption.patch,
-	  trunk/net-misc/asterisk-app_backticks,
-	  trunk/net-misc/asterisk-app_backticks/Manifest,
-	  trunk/net-misc/asterisk-app_backticks/asterisk-app_backticks-20050917.ebuild,
-	  trunk/net-misc/asterisk-app_backticks/files,
-	  trunk/net-misc/asterisk-app_backticks/files/app_backticks-20050917-astcfg.diff,
-	  
-	  trunk/net-misc/asterisk-app_backticks/files/digest-asterisk-app_backticks-20050917,
-	  trunk/net-misc/asterisk-app_cepstral,
-	  trunk/net-misc/asterisk-app_cepstral/Manifest,
-	  trunk/net-misc/asterisk-app_cepstral/asterisk-app_cepstral-20050917.ebuild,
-	  trunk/net-misc/asterisk-app_cepstral/files,
-	  trunk/net-misc/asterisk-app_cepstral/files/app_cepstral-20050917-astcfg.diff,
-	  
-	  trunk/net-misc/asterisk-app_cepstral/files/digest-asterisk-app_cepstral-20050917,
-	  trunk/net-misc/asterisk-app_changrab,
-	  trunk/net-misc/asterisk-app_changrab/Manifest,
-	  trunk/net-misc/asterisk-app_changrab/asterisk-app_changrab-20050917.ebuild,
-	  trunk/net-misc/asterisk-app_changrab/files,
-	  trunk/net-misc/asterisk-app_changrab/files/app_changrab-20050917-astcfg.diff,
-	  
-	  trunk/net-misc/asterisk-app_changrab/files/digest-asterisk-app_changrab-20050917,
-	  trunk/net-misc/asterisk-app_intercept,
-	  trunk/net-misc/asterisk-app_intercept/Manifest,
-	  trunk/net-misc/asterisk-app_intercept/asterisk-app_intercept-20050828.ebuild,
-	  
-	  trunk/net-misc/asterisk-app_intercept/asterisk-app_intercept-20050917.ebuild,
-	  trunk/net-misc/asterisk-app_intercept/files,
-	  trunk/net-misc/asterisk-app_intercept/files/app_intercept-20050623-astcfg.diff,
-	  
-	  trunk/net-misc/asterisk-app_intercept/files/digest-asterisk-app_intercept-20050828,
-	  
-	  trunk/net-misc/asterisk-app_intercept/files/digest-asterisk-app_intercept-20050917,
-	  trunk/net-misc/asterisk-app_rtxfax,
-	  trunk/net-misc/asterisk-app_rtxfax/Manifest,
-	  trunk/net-misc/asterisk-app_rtxfax/asterisk-app_rtxfax-0.0.2_pre20.ebuild,
-	  trunk/net-misc/asterisk-app_rtxfax/files,
-	  trunk/net-misc/asterisk-app_rtxfax/files/app_rtxfax-0.0.2_pre20-gentoo.diff,
-	  
-	  trunk/net-misc/asterisk-app_rtxfax/files/digest-asterisk-app_rtxfax-0.0.2_pre20,
-	  trunk/net-misc/asterisk-app_valetparking,
-	  trunk/net-misc/asterisk-app_valetparking/Manifest,
-	  trunk/net-misc/asterisk-app_valetparking/asterisk-app_valetparking-20050917.ebuild,
-	  trunk/net-misc/asterisk-app_valetparking/files,
-	  trunk/net-misc/asterisk-app_valetparking/files/app_valetparking-20050917-astcfg.diff,
-	  
-	  trunk/net-misc/asterisk-app_valetparking/files/digest-asterisk-app_valetparking-20050917,
-	  trunk/net-misc/asterisk-chan_sccp,
-	  trunk/net-misc/asterisk-chan_sccp/ChangeLog,
-	  trunk/net-misc/asterisk-chan_sccp/Manifest,
-	  trunk/net-misc/asterisk-chan_sccp/asterisk-chan_sccp-0.0.20050807.ebuild,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/asterisk-chan_sccp-0.0.20050826.ebuild,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/asterisk-chan_sccp-0.0.20050902.ebuild,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/asterisk-chan_sccp-0.0.20050906.ebuild,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/asterisk-chan_sccp-0.0.20050913.ebuild,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/asterisk-chan_sccp-0.0.20050922.ebuild,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/asterisk-chan_sccp-0.0.20051022.ebuild,
-	  trunk/net-misc/asterisk-chan_sccp/files,
-	  trunk/net-misc/asterisk-chan_sccp/files/chan_sccp-20050725-gentoo.diff,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/files/chan_sccp-20050902-gentoo.diff,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/files/digest-asterisk-chan_sccp-0.0.20050807,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/files/digest-asterisk-chan_sccp-0.0.20050826,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/files/digest-asterisk-chan_sccp-0.0.20050902,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/files/digest-asterisk-chan_sccp-0.0.20050906,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/files/digest-asterisk-chan_sccp-0.0.20050913,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/files/digest-asterisk-chan_sccp-0.0.20050922,
-	  
-	  trunk/net-misc/asterisk-chan_sccp/files/digest-asterisk-chan_sccp-0.0.20051022,
-	  trunk/net-misc/asterisk-chan_sccp/metadata.xml,
-	  trunk/net-misc/asterisk-chan_ss7,
-	  trunk/net-misc/asterisk-chan_ss7/Manifest,
-	  trunk/net-misc/asterisk-chan_ss7/asterisk-chan_ss7-0.1.ebuild,
-	  trunk/net-misc/asterisk-chan_ss7/files,
-	  trunk/net-misc/asterisk-chan_ss7/files/chan_ss7-0.1-gentoo.diff,
-	  trunk/net-misc/asterisk-chan_ss7/files/digest-asterisk-chan_ss7-0.1,
-	  trunk/net-misc/asterisk-chan_ss7/files/ss7.conf.sample,
-	  trunk/net-misc/asterisk-chan_unicall,
-	  trunk/net-misc/asterisk-chan_unicall/Manifest,
-	  trunk/net-misc/asterisk-chan_unicall/asterisk-chan_unicall-0.0.3_pre5.ebuild,
-	  trunk/net-misc/asterisk-chan_unicall/files,
-	  trunk/net-misc/asterisk-chan_unicall/files/digest-asterisk-chan_unicall-0.0.3_pre5,
-	  
-	  trunk/net-misc/asterisk-chan_unicall/files/unicall-0.0.3_pre5-gentoo.diff,
-	  trunk/net-misc/asterisk-chan_visdn,
-	  trunk/net-misc/asterisk-chan_visdn/Manifest,
-	  trunk/net-misc/asterisk-chan_visdn/asterisk-chan_visdn-0.14.0.ebuild,
-	  trunk/net-misc/asterisk-chan_visdn/files,
-	  trunk/net-misc/asterisk-chan_visdn/files/digest-asterisk-chan_visdn-0.14.0,
-	  
-	  trunk/net-misc/asterisk-chan_visdn/files/visdn-0.14.0-configure.diff,
-	  trunk/net-misc/asterisk-cvs,
-	  trunk/net-misc/asterisk-cvs/Manifest,
-	  trunk/net-misc/asterisk-cvs/asterisk-cvs-9999.ebuild,
-	  trunk/net-misc/asterisk-cvs/files,
-	  trunk/net-misc/asterisk-cvs/files/digest-asterisk-cvs-9999,
-	  trunk/net-misc/asterisk-format_base64,
-	  trunk/net-misc/asterisk-format_base64/Manifest,
-	  trunk/net-misc/asterisk-format_base64/asterisk-format_base64-20050917.ebuild,
-	  trunk/net-misc/asterisk-format_base64/files,
-	  trunk/net-misc/asterisk-format_base64/files/digest-asterisk-format_base64-20050917,
-	  
-	  trunk/net-misc/asterisk-format_base64/files/format_base64-20050917-astcfg.diff,
-	  trunk/net-misc/asterisk/ChangeLog,
-	  trunk/net-misc/asterisk/Manifest,
-	  trunk/net-misc/asterisk/asterisk-1.2.0_beta1.ebuild,
-	  trunk/net-misc/asterisk/files,
-	  trunk/net-misc/asterisk/files/1.0.0,
-	  trunk/net-misc/asterisk/files/1.0.0/asterisk-1.0.5-uclibc-dns.diff,
-	  trunk/net-misc/asterisk/files/1.0.0/asterisk.confd,
-	  trunk/net-misc/asterisk/files/1.0.0/asterisk.rc6,
-	  trunk/net-misc/asterisk/files/1.2.0,
-	  trunk/net-misc/asterisk/files/1.2.0/asterisk.confd,
-	  trunk/net-misc/asterisk/files/1.2.0/asterisk.rc6,
-	  trunk/net-misc/asterisk/files/digest-asterisk-1.2.0_beta1,
-	  trunk/net-misc/asterisk/metadata.xml, ., Manifest, files,
-	  files/digest-linphone-1.1.0,
-	  files/linphone-1.0.1-ipv6-include.diff, linphone-1.1.0.ebuild,
-	  trunk/net-misc/wanpipe, trunk/net-misc/wanpipe/Manifest,
-	  trunk/net-misc/wanpipe/files,
-	  trunk/net-misc/wanpipe/files/digest-wanpipe-2.3.2_p4,
-	  trunk/net-misc/wanpipe/files/wanpipe-2.3.2_p4-gcc34.diff,
-	  trunk/net-misc/wanpipe/files/wanpipe.confd,
-	  trunk/net-misc/wanpipe/wanpipe-2.3.2_p4.ebuild,
-	  trunk/net-misc/yate, trunk/net-misc/yate/Manifest,
-	  trunk/net-misc/yate/files,
-	  trunk/net-misc/yate/files/digest-yate-0.9.0_pre1,
-	  trunk/net-misc/yate/files/digest-yate-0.9.0_pre2,
-	  trunk/net-misc/yate/files/yate-0.9.0-gtk2.diff,
-	  trunk/net-misc/yate/files/yate.confd,
-	  trunk/net-misc/yate/files/yate.rc6,
-	  trunk/net-misc/yate/yate-0.9.0_pre1.ebuild,
-	  trunk/net-misc/yate/yate-0.9.0_pre2.ebuild,
-	  trunk/net-misc/zaptel, trunk/net-misc/zaptel/ChangeLog,
-	  trunk/net-misc/zaptel/Manifest, trunk/net-misc/zaptel/files,
-	  trunk/net-misc/zaptel/files/digest-zaptel-1.2.0_beta1,
-	  trunk/net-misc/zaptel/files/zaptel-1.0.4-experimental-devfs26.diff,
-	  trunk/net-misc/zaptel/files/zaptel-1.0.4-gcc34.patch,
-	  trunk/net-misc/zaptel/files/zaptel-1.2.0_beta1-gentoo.diff,
-	  trunk/net-misc/zaptel/files/zaptel.confd,
-	  trunk/net-misc/zaptel/files/zaptel.devfsd,
-	  trunk/net-misc/zaptel/files/zaptel.rc6,
-	  trunk/net-misc/zaptel/files/zaptel.udevd,
-	  trunk/net-misc/zaptel/metadata.xml,
-	  trunk/net-misc/zaptel/zaptel-1.2.0_beta1.ebuild:
-	  Initial import of private gentoo-voip repos
+  30 Sep 2005; Stefan Knoblich <stkn@gentoo.org> linphone-1.1.0.ebuild:
+  Dropping unnecessary gnome-panel dependency, thanks to
+  Thomas Fischer <fischer@unix-ag.uni-kl.de> in bug #107704.
 
+  30 Sep 2005; Stefan Knoblich <stkn@gentoo.org> -linphone-0.10.2.ebuild,
+  -linphone-1.0.1.ebuild:
+  Removed old ebuilds.
+
+  30 Sep 2005; Stefan Knoblich <stkn@gentoo.org> linphone-1.1.0.ebuild:
+  Stable on x86.
+
+  02 Sep 2005; <dang@gentoo.org> linphone-1.1.0.ebuild:
+  Marked ~amd64
+
+*linphone-1.1.0 (29 Aug 2005)
+
+  29 Aug 2005; Stefan Knoblich <stkn@gentoo.org> +linphone-1.1.0.ebuild:
+  Version bump, linphone libs are now put into /usr/lib/linphone and ortp
+  headers are removed to avoid conflicts with net-libs/ortp.
+
+  15 Jul 2005; Stefan Knoblich <stkn@gentoo.org> linphone-1.0.1.ebuild,
+  +linphone-1.0.1-ipv6-include.diff:
+  Always include <netdb.h> in coreapi/linphonecore.c even if USE flag is set
+  -ipv6, fixes #99083. Thanks to Anders Hellgen pointing out that patch from
+  0.12.x is still needed.
+
+  14 Jul 2005; Stefan Knoblich <stkn@gentoo.org> linphone-1.0.1.ebuild:
+  Indentation fixes, added missing dodoc, replaced einstall with make
+  (einstall completely broke file locations), added missing
+  dev-perl/XML-Parser and speex dependencies.
+
+*linphone-1.0.1 (14 Jul 2005)
+
+  14 Jul 2005; John Mylchreest <johnm@gentoo.org> +metadata.xml,
+  +linphone-0.10.2.ebuild, +linphone-1.0.1.ebuild:
+  moving from net-im, updating to the latest version and closing all bugs.
+
+  03 Aug 2004; David Holm <dholm@gentoo.org> linphone-0.12.2.ebuild:
+  Added to ~ppc.
+
+*linphone-0.12.2 (30 Jul 2004)
+
+  30 Jul 2004; <stkn@gentoo.org> +files/linphone-0.12.2-include-fix.diff,
+  +linphone-0.12.2.ebuild:
+  version bump
+
+  10 Jun 2004; Aron Griffis <agriffis@gentoo.org> linphone-0.12.1.ebuild:
+  Fix use invocation
+
+  27 Apr 2004; Aron Griffis <agriffis@gentoo.org> linphone-0.12.1.ebuild:
+  Add inherit eutils
+
+  12 Apr 2004; Danny van Dyk <kugelfang@gentoo.org> linphone-0.12.1.ebuild:
+  marked ~amd64
+
+  14 Mar 2004; Stefan Knoblich <stkn@gentoo.org> linphone-0.10.2.ebuild,
+  linphone-0.12.0.ebuild, linphone-0.12.1.ebuild:
+  updated depdendencies (linphone won't build with libosip-2.x)
+
+  07 Jan 2004; Sven Blumenstein <bazik@gentoo.org> linphone-0.12.1.ebuild:
+  Removed KEYWORD's of untested archs again. 
+  Please dont add new ebuilds with 
+  KEYWORDS="~x86 ~ppc ~sparc ~alpha ~mips ~hppa ~arm" 
+  if you didnt test on these archs! Fill a bug or talk
+  to the arch lead if you want it tested. Thanks!
+
+*linphone-0.12.1 (03 Jan 2004)
+
+  03 Jan 2004; Stefan Knoblich <stkn@gentoo.org> linphone-0.10.2.ebuild,
+  linphone-0.12.0.ebuild, linphone-0.12.1.ebuild, linphone-0.9.0-r1.ebuild,
+  linphone-0.12.1-include-fix.diff:
+  removed old linphone-0.9, copyright header updated for 2004, added
+  linphone-0.12.1
+
+  31 Dec 2003; Sven Blumenstein <bazik@gentoo.org> linphone-0.10.2.ebuild,
+  linphone-0.12.0.ebuild, linphone-0.9.0-r1.ebuild:
+  Fixed handling of the (optional) x86-only DEPEND
+  dev-lang/nasm and removed KEYWORD's of untested archs.
+
+  07 Dec 2003; Heinrich Wendel <lanius@gentoo.org> linphone-0.10.2.ebuild,
+  linphone-0.9.0-r1.ebuild:
+  fixed alsa dep
+
+*linphone-0.12.0 (04 Oct 2003)
+
+  04 Oct 2003; Stefan Knoblich <stkn@gentoo.org> linphone-0.12.0.ebuild:
+  Version bumped. Changed dependency from alsa-driver to alsa-lib.
+
+  26 Sep 2003; Martin Holzer <mholzer@gentoo.org> linphone-0.10.2.ebuild:
+  Added IUSE flags. Closes #29265.
+
+  12 Jun 2003; <msterret@gentoo.org> linphone-0.10.2.ebuild:
+  added header from skel.ebuild
+
+*linphone-0.10.2 (04 May 2003)
+
+  04 May 2003; Martin Holzer <mholzer@gentoo.org> linphone-0.10.2.ebuild:
+  Version bumped. Ebuild submitted by Jiri VERUNEK <verunek@vol.cz> in #20391.
+
+*linphone-0.9.0-r1 (20 Mar 2003)
+
+  20 Mar 2003; Seemant Kulleen <seemant@gentoo.org> linphone-0.9.0-r1.ebuild:
+  removed pic stuff
+
+*linphone-0.9.0 (05 Sep 2002)
+
+  05 Sep 2002; Daniel Robbins <drobbins@gentoo.org> This ebuild was created by
+  gaarde (Paul Belt) or someone else using his account. Looks ok, so moving to
+  its proper place in net-im (was in net-dialup before.)

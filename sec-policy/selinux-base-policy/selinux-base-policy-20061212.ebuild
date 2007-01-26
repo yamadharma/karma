@@ -1,45 +1,47 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sec-policy/selinux-base-policy/selinux-base-policy-99999999.ebuild,v 1.3 2006/02/24 03:12:31 pebenito Exp $
-
-POLICY_TYPES="strict targeted"
-OPTS="MONOLITHIC=n DISTRO=gentoo QUIET=y"
+# $Header: /var/cvsroot/gentoo-x86/sec-policy/selinux-base-policy/selinux-base-policy-20061114.ebuild,v 1.1 2006/11/15 01:04:52 pebenito Exp $
 
 IUSE=""
 
 inherit eutils
 
-DESCRIPTION="Gentoo base policy for SELinux (SELinux Reference Policy---modular)."
+DESCRIPTION="Gentoo base policy for SELinux"
 HOMEPAGE="http://www.gentoo.org/proj/en/hardened/selinux/"
 SRC_URI="http://oss.tresys.com/files/refpolicy/refpolicy-${PV}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 
-KEYWORDS="~x86 ~ppc ~sparc ~amd64 ~mips ~alpha"
-#KEYWORDS="x86 ppc sparc amd64 mips alpha"
+#KEYWORDS="~x86 ~ppc ~sparc ~amd64 ~mips ~alpha"
+KEYWORDS="alpha amd64 mips ppc sparc x86"
 
-RDEPEND=">=sys-apps/policycoreutils-1.28"
+RDEPEND=">=sys-apps/policycoreutils-1.30.30"
 DEPEND="${RDEPEND}
 	sys-devel/m4
-	>=sys-apps/checkpolicy-1.28"
+	>=sys-apps/checkpolicy-1.30.12"
 
 S=${WORKDIR}/
 
-#src_unpack() {
-#	unpack ${A}
-#
-#	for i in ${POLICY_TYPES}; do
-#		mkdir -p ${S}/${i}/policy
-#		cp ${FILESDIR}/modules.conf.${i} ${S}/${i}/policy/modules.conf
-#	done
-#}
+src_unpack() {
+	[ -z "${POLICY_TYPES}" ] && local POLICY_TYPES="strict targeted"
+
+	unpack ${A}
+
+	for i in ${POLICY_TYPES}; do
+		mkdir -p ${S}/${i}/policy
+		cp ${FILESDIR}/modules.conf.${i} ${S}/${i}/policy/modules.conf
+	done
+}
 
 src_compile() {
+	local OPTS="MONOLITHIC=n DISTRO=gentoo QUIET=y"
+	[ -z "${POLICY_TYPES}" ] && local POLICY_TYPES="strict targeted"
+
 	cd ${S}/refpolicy
 
 	make ${OPTS} generate || die "Failed to create generated module files"
 
-	make ${OPTS} xml || "XML generation failed."
+	make ${OPTS} xml || die "XML generation failed."
 
 	for i in ${POLICY_TYPES}; do
 #		make ${OPTS} TYPE=${i} NAME=${i} LOCAL_ROOT=${S}/${i} conf \
@@ -51,7 +53,8 @@ src_compile() {
 }
 
 src_install() {
-	OPTS="${OPTS} DESTDIR=${D}"
+	local OPTS="MONOLITHIC=n DISTRO=gentoo QUIET=y DESTDIR=${D}"
+	[ -z "${POLICY_TYPES}" ] && local POLICY_TYPES="strict targeted"
 
 	cd ${S}/refpolicy
 
@@ -64,6 +67,8 @@ src_install() {
 
 		echo "run_init_t" > ${D}/etc/selinux/${i}/contexts/run_init_type
 
+		echo "textrel_shlib_t" >> ${D}/etc/selinux/${i}/contexts/customizable_types
+
 		# libsemanage won't make this on its own
 		keepdir /etc/selinux/${i}/policy
 	done
@@ -71,11 +76,12 @@ src_install() {
 	dodoc doc/Makefile.example doc/example.{te,fc,if}
 
 	insinto /etc/selinux
-	doins ${FILESDIR}/semanage.conf
 	doins ${FILESDIR}/config
 }
 
 pkg_postinst() {
+	[ -z "${POLICY_TYPES}" ] && local POLICY_TYPES="strict targeted"
+
 	if has "loadpolicy" $FEATURES ; then
 		for i in ${POLICY_TYPES}; do
 			einfo "Inserting base module into ${i} module store."
