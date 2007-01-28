@@ -1,0 +1,14 @@
+diff -dPNur librcc--main--0.1--patch-34/src/rccconfig.h librcc--main--0.1--patch-34-debug/src/rccconfig.h
+--- librcc--main--0.1--patch-34/src/rccconfig.h	2006-01-08 19:43:06.000000000 +0400
++++ librcc--main--0.1--patch-34-debug/src/rccconfig.h	2006-07-18 20:15:12.000000000 +0500
+@@ -3,8 +3,8 @@
+ #include "librcc.h"
+ #include "opt.h"
+ 
+-#undef RCC_DEBUG
+-#undef RCC_DEBUG_LANGDETECT
++#define RCC_DEBUG
++#define RCC_DEBUG_LANGDETECT 2
+ #define RCC_LOCALE_VARIABLE "LC_CTYPE"
+ 
+ extern const char rcc_default_all[];

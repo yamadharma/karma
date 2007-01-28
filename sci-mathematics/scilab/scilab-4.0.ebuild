@@ -1,8 +1,8 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/www/viewcvs.gentoo.org/raw_cvs/gentoo-x86/sci-mathematics/scilab/scilab-4.0.ebuild,v 1.6 2006/09/17 01:50:25 markusle Exp $
+# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/scilab/scilab-4.0.ebuild,v 1.10 2006/12/02 21:12:51 beandog Exp $
 
-inherit eutils fortran toolchain-funcs multilib autotools
+inherit eutils fortran toolchain-funcs multilib autotools java-pkg-opt-2
 
 DESCRIPTION="Scientific software package for numerical computations (Matlab lookalike)"
 LICENSE="scilab"
@@ -10,8 +10,8 @@ SRC_URI="http://scilabsoft.inria.fr/download/stable/${P}-src.tar.gz"
 HOMEPAGE="http://www.scilab.org/"
 
 SLOT="0"
-IUSE="ocaml tcltk gtk Xaw3d java"
-KEYWORDS="x86 amd64 ~ppc"
+IUSE="ocaml tk gtk Xaw3d java"
+KEYWORDS="amd64 ~ppc x86"
 
 RDEPEND="virtual/blas
 	virtual/lapack
@@ -25,21 +25,22 @@ RDEPEND="virtual/blas
 		x11-libs/vte
 		=gnome-extra/gtkhtml-2*
 	)
-	tcltk? ( >=dev-lang/tk-8.4
+	tk? ( >=dev-lang/tk-8.4
 		>=dev-lang/tcl-8.4 )
 	Xaw3d? ( x11-libs/Xaw3d )
-	ocaml? ( dev-lang/ocaml )"
+	ocaml? ( dev-lang/ocaml )
+	java? ( >=virtual/jdk-1.4 )"
 
 DEPEND="${RDEPEND}
 	app-text/sablotron"
 
 pkg_setup() {
-	if ! use gtk && ! use tcltk; then
+	if ! use gtk && ! use tk; then
 		echo
-		eerror 'scilab must be built with either USE="gtk" or USE="tcltk"'
+		eerror 'scilab must be built with either USE="gtk" or USE="tk"'
 		die
 	fi
-
+	java-pkg-opt-2_pkg_setup
 	need_fortran gfortran g77
 }
 
@@ -50,6 +51,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/${P}-makefile.patch
 	epatch "${FILESDIR}"/${P}-gtk-fix.patch
 	epatch "${FILESDIR}"/${P}-configure-gfortran.patch
+	epatch "${FILESDIR}"/${P}-java-pic.patch
 
 	# fix gfortran problems on ppc
 	if [[ "${ARCH}" == "ppc" ]];then
@@ -79,7 +81,7 @@ src_compile() {
 		myopts="${myopts} --with-gfortran"
 	fi
 
-	econf $(use_with tcltk tk) \
+	econf $(use_with tk) \
 		$(use_with Xaw3d xaw3d) \
 		$(use_with gtk gtk2 ) \
 		$(use_with ocaml) \

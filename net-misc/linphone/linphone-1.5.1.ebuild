@@ -42,6 +42,15 @@ src_unpack() {
 	cd "${S}"
 
 	epatch "${FILESDIR}"/${P}-pkgconfig.patch
+
+	# Portaudio fixes
+	if ( use portaudio )
+	    then
+	    sed -i -e "s:-lportaudio:-lportaudio-2:g" ${S}/mediastreamer2/configure.ac
+	    sed -i -e "s:portaudio.h:portaudio-2/portaudio.h:g" ${S}/mediastreamer2/src/pasnd.c \
+		    ${S}/mediastreamer2/configure.ac
+	fi
+	
 	./autogen.sh
 }
 
@@ -58,8 +67,11 @@ src_compile() {
 		$(use_enable ipv6) \
 		$(use_enable alsa) \
 		$(use_enable !novideo video) \
-		$(use_enable portaudio) \
+		--disable-portaudio \
 		${myconf} || die "Unable to configure"
+
+#		$(use_enable portaudio) \
+#		--enable-rsvp \
 
 	emake || die "Unable to make"
 }
