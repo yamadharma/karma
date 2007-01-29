@@ -1,0 +1,26 @@
+# ChangeLog for net-libs/libeXosip
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/net-libs/libeXosip/ChangeLog,v 1.4 2006/06/08 07:12:57 dragonheart Exp $
+
+*libeXosip-2.2.3 (08 Jun 2006)
+
+  08 Jun 2006; Daniel Black <dragonheart@gentoo.org>
+  +libeXosip-2.2.3.ebuild:
+  version bump because genstef asked for it
+
+  14 Jan 2006; Stefan Schweizer <genstef@gentoo.org> libeXosip-2.2.2.ebuild:
+  Tell configure that we do not want josua with permission from dragonheart
+
+*libeXosip-2.2.2 (08 Jan 2006)
+
+  08 Jan 2006; Daniel Black <dragonheart@gentoo.org>
+  +libeXosip-2.2.2.ebuild:
+  version bump
+
+*libeXosip-1.9.1_pre16 (21 Aug 2005)
+*libeXosip-0.9.0 (21 Aug 2005)
+
+  21 Aug 2005; Daniel Black <dragonheart@gentoo.org> +metadata.xml,
+  +libeXosip-0.9.0.ebuild, +libeXosip-1.9.1_pre16.ebuild:
+  Initial import as per bug #94919. Thanks to Christoph Mockenhaupt
+

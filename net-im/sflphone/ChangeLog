@@ -1,0 +1,16 @@
+# ChangeLog for net-voip/sflphone
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/skel.ChangeLog,v 1.2 2006/02/22 02:08:04 hd_brummy Exp $
+
+  18 Dec 2006; Timothy Redaelli <drizzt@gentoo.org> ChangeLog:
+  Fixed 0.7.0 digest
+
+  18 Dec 2006; Timothy Redaelli <drizzt@gentoo.org> ChangeLog:
+  Version bump, add libsamplerate depend
+
+  14 Sep 2006; Stefan Schweizer <genstef@gentoo.org> sflphone-0.7.0.ebuild:
+  more use flags thanks to nick125
+
+  14 Sep 2006; Stefan Schweizer <genstef@gentoo.org> +sflphone-0.7.0.ebuild:
+  new ebuild for sflphone 0.7.0, bug 94916
+
