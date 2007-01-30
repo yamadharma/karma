@@ -31,6 +31,10 @@ src_unpack() {
 	cd "${S}"
 	# fix compile error on genstef's box..doesn't seem to break anything
 	sed -i -e "s/Qt::Key_Mode_switch/0x0100117e/" src/gui/qt/SFLPhoneWindow.cpp
+	
+	# Fix portaudio
+#	sed -i -e "s:libportaudio,:libportaudio-2,:g" "${S}"/configure.ac
+#	autoconf
 }
 src_compile () {
 	econf \
