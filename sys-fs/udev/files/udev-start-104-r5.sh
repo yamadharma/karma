@@ -37,9 +37,18 @@ seed_dev() {
 	# Seed /dev with some things that we know we need
 	ebegin "Seeding /dev with needed nodes"
 
+	# if /dev/console is missing on root-partition,
+	# kernel could not open it and we need to do that for
+	# udevd (Bug #151414)
+	mknod /dev/console c 5 1
+
+	# udevd will dup its stdin/stdout/stderr to /dev/null
+	# and we do not want a file which gets buffered in ram
+	mknod /dev/null c 1 3
+
 	# copy over any persistant things
 	if [[ -d /lib/udev/devices ]] ; then
-		cp --preserve=all --recursive --update /lib/udev/devices/* /dev
+		cp --preserve=all --recursive --update /lib/udev/devices/* /dev 2>/dev/null
 	fi
 
 	# Not provided by sysfs but needed
@@ -55,6 +64,9 @@ seed_dev() {
 }
 
 main() {
+	# check if /dev/console exists outside tmpfs
+	[[ -c /dev/console ]] ; local need_redirect=$?
+
 	# Setup temporary storage for /dev
 	ebegin "Mounting /dev for udev"
 	if [[ ${RC_USE_FSTAB} == "yes" ]] ; then
@@ -112,7 +124,12 @@ main() {
 	fi
 
 	ebegin "Starting udevd"
-	/sbin/udevd --daemon
+	if [[ ${need_redirect} == 1 ]]; then
+		# we need to open fds 0 1 2 to solve Bug #151414
+		/sbin/udevd --daemon </dev/console >/dev/console 2>/dev/console
+	else
+		/sbin/udevd --daemon
+	fi
 	eend $?
 
 	populate_udev

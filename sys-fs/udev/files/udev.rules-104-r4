@@ -22,12 +22,12 @@ KERNEL=="console",		NAME="%k", GROUP="tty", MODE="0600"
 KERNEL=="ptmx",			NAME="%k", GROUP="tty", MODE="0666"
 
 # tty devices
-KERNEL=="ttyS[0-9]*",	NAME="%k", SYMLINK="tts/%n", GROUP="tty"
-KERNEL=="ttyUSB[0-9]*",	NAME="%k", SYMLINK="tts/USB%n", GROUP="tty", MODE="0660"
-KERNEL=="ippp0",	NAME="%k", GROUP="tty"
-KERNEL=="isdn*"		NAME="%k", GROUP="tty"
-KERNEL=="dcbri*",	NAME="%k", GROUP="tty"
-KERNEL=="ircomm*",	NAME="%k", GROUP="tty"
+KERNEL=="ttyS[0-9]*",	NAME="%k", SYMLINK="tts/%n", GROUP="uucp", MODE="0660"
+KERNEL=="ttyUSB[0-9]*",	NAME="%k", SYMLINK="tts/USB%n", GROUP="uucp", MODE="0660"
+KERNEL=="ippp0",	NAME="%k", GROUP="uucp", MODE="0660"
+KERNEL=="isdn*"		NAME="%k", GROUP="uucp", MODE="0660"
+KERNEL=="dcbri*",	NAME="%k", GROUP="uucp", MODE="0660"
+KERNEL=="ircomm*",	NAME="%k", GROUP="uucp", MODE="0660"
 
 # all block devices
 SUBSYSTEM=="block", GROUP="disk"
@@ -65,8 +65,8 @@ KERNEL=="timer",		NAME="snd/%k"
 KERNEL=="seq",			NAME="snd/%k"
 
 # capi devices
-KERNEL=="capi",		NAME="capi20", SYMLINK+="isdn/capi20", GROUP="dialout"
-KERNEL=="capi*",	NAME="capi/%n", GROUP="dialout"
+KERNEL=="capi",		NAME="capi20", SYMLINK+="isdn/capi20", GROUP="uucp", MODE="0660"
+KERNEL=="capi*",	NAME="capi/%n", GROUP="uucp", MODE="0660"
 
 # cpu devices
 KERNEL=="cpu[0-9]*",	NAME="cpu/%n/cpuid"
@@ -240,13 +240,13 @@ KERNEL=="issm*",	NAME="infiniband/%k"
 
 
 # usbfs-like device nodes
-SUBSYSTEM=="usb_device", PROGRAM="/bin/sh -c 'K=%k; K=$${K#usbdev}; printf bus/usb/%%03i/%%03i $${K%%%%.*} $${K#*.}'", NAME="%c", MODE="0644"
+SUBSYSTEM=="usb_device", PROGRAM="/bin/sh -c 'K=%k; K=$${K#usbdev}; printf bus/usb/%%03i/%%03i $${K%%%%.*} $${K#*.}'", NAME="%c", GROUP="usb", MODE="0664"
 
 
 # Module autoloading
 
 # Autoload modules that lack aliases but have them defined inutoload modules
-SYSFS{modalias}=="?*", ACTION=="add", RUN+="/sbin/modprobe $env{MODALIAS}"
+ENV{MODALIAS}=="?*", ACTION=="add", RUN+="/sbin/modprobe $env{MODALIAS}"
 
 # /etc/modprobe.conf.
 SUBSYSTEM=="pnp", ENV{MODALIAS}!="?*", RUN+="/bin/sh -c 'while read id; do /sbin/modprobe pnp:d$$id; done < /sys$devpath/id'"
@@ -262,6 +262,29 @@ SUBSYSTEM=="pnp", ENV{MODALIAS}!="?*", RUN+="/bin/sh -c 'while read id; do /sbin
 # alias pnp:dPNP0f13 psmouse
 # alias pnp:dPNPb02f analog
 
+
+# Parts taken from redhat-rules
+# sd:           0 TYPE_DISK, 7 TYPE_MOD, 14 TYPE_RBC
+# sr:           4 TYPE_WORM, 5 TYPE_ROM
+# st/osst:      1 TYPE_TAPE
+
+# Setting timeout for tape-devices to 900 seconds
+# if you need timeouts for other devices add a similar rule
+# with correct type-value, or open a bug on bugs.gentoo.org.
+ACTION=="add", SUBSYSTEM=="scsi" , ATTRS{type}=="1", \
+	RUN+="/bin/sh -c 'echo 900 > /sys$$DEVPATH/timeout'"
+
+# Load driver scsi-device
+ACTION=="add", SUBSYSTEM=="scsi_device", RUN+="/sbin/modprobe sg"
+ACTION=="add", SUBSYSTEM=="scsi_device", ATTRS{type}=="0|7|14", \
+	RUN+="/sbin/modprobe sd_mod"
+ACTION=="add", SUBSYSTEM=="scsi_device", ATTRS{type}=="4|5", \
+	RUN+="/sbin/modprobe sr_mod"
+
+ACTION=="add", SUBSYSTEM=="scsi_device", ATTRS{type}=="1", ENV{ID_SCSI_TAPE_DRIVER}="st"
+ACTION=="add", SUBSYSTEM=="scsi_device", ATTRS{type}=="1", ATTRS{vendor}=="On[sS]tream", \
+	ATTRS{model}!="ADR*", ENV{ID_SCSI_TAPE_DRIVER}="osst"
+ENV{ID_SCSI_TAPE_DRIVER}=="?*", RUN+="/sbin/modprobe $env{ID_SCSI_TAPE_DRIVER}"
 
 
 # Load firmware

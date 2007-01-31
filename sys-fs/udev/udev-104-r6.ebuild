@@ -1,8 +1,8 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/udev-104-r1.ebuild,v 1.1 2007/01/20 14:58:55 zzam Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/udev-104-r6.ebuild,v 1.1 2007/01/30 16:14:14 zzam Exp $
 
-inherit eutils flag-o-matic multilib
+inherit eutils flag-o-matic multilib toolchain-funcs
 
 DESCRIPTION="Linux dynamic and persistent device naming support (aka userspace devfs)"
 HOMEPAGE="http://www.kernel.org/pub/linux/utils/kernel/hotplug/udev.html"
@@ -13,10 +13,7 @@ SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86"
 IUSE="selinux"
 
-# still rely on hotplug (need to fix that), but now we implement coldplug
-
-DEPEND="sys-apps/hotplug-base
-	selinux? ( sys-libs/libselinux )"
+DEPEND="selinux? ( sys-libs/libselinux )"
 RDEPEND="!sys-apps/coldplug"
 RDEPEND="${DEPEND} ${RDEPEND}
 	>=sys-apps/baselayout-1.11.14"
@@ -30,6 +27,8 @@ src_unpack() {
 
 	# patches go here...
 	#epatch ${FILESDIR}/${P}-udev_volume_id.patch
+	epatch ${FILESDIR}/${P}-netif-rename-busywait.patch
+	epatch ${FILESDIR}/${PN}-104-peristent-net-disable-xen.patch
 
 	# No need to clutter the logs ...
 	sed -ie '/^DEBUG/ c\DEBUG = false' Makefile
@@ -108,6 +107,7 @@ src_install() {
 	doexe extras/rule_generator/write_net_rules	|| die "Required helper not installed properly"
 	doexe extras/rule_generator/rule_generator.functions	|| die "Required helper not installed properly"
 	keepdir /lib/udev/state
+	keepdir /lib/udev/devices
 
 	# vol_id library (needed by mount and HAL)
 	dolib extras/volume_id/lib/*.a extras/volume_id/lib/*.so*
@@ -139,8 +139,8 @@ src_install() {
 	# Our rules files
 	insinto /etc/udev/rules.d/
 	newins etc/udev/gentoo/udev.rules 50-udev.rules
-	newins ${FILESDIR}/udev.rules-104 50-udev.rules
-	newins ${FILESDIR}/05-udev-early.rules-104 05-udev-early.rules
+	newins ${FILESDIR}/udev.rules-104-r4 50-udev.rules
+	newins ${FILESDIR}/05-udev-early.rules-104-r5 05-udev-early.rules
 	doins ${FILESDIR}/95-net.rules
 	# Use upstream's persistent rules for devices
 	doins etc/udev/rules.d/60-*.rules
@@ -151,10 +151,7 @@ src_install() {
 	doins extras/scsi_id/scsi_id.config
 
 	# set up the /etc/dev.d directory tree
-	dodir /etc/dev.d/default
-	dodir /etc/dev.d/net
-	exeinto /etc/dev.d/net
-	doexe extras/run_directory/dev.d/net/hotplug.dev
+	keepdir /etc/dev.d
 
 	# all of the man pages
 	doman *.7
@@ -166,17 +163,17 @@ src_install() {
 	doman extras/dasd_id/dasd_id.8
 	doman extras/cdrom_id/cdrom_id.8
 	# create a extra symlink for udevcontrol
-	ln -s "${D}"/usr/share/man/man8/udevd.8.gz \
-		"${D}"/usr/share/man/man8/udevcontrol.8.gz
+	dosym udevd.8 /usr/share/man/man8/udevcontrol.8
 
 	# our udev hooks into the rc system
 	insinto /lib/rcscripts/addons
-	newins "${FILESDIR}"/udev-start-104.sh udev-start.sh
-	doins "${FILESDIR}"/udev-stop.sh
+	newins "${FILESDIR}"/udev-start-104-r5.sh udev-start.sh
+	newins "${FILESDIR}"/udev-stop-104-r3.sh udev-stop.sh
 
 	# Insert udev-version number into udev-rcscript addon
 	sed -e "s/@@UDEV_VERSION@@/${PV}/" \
-		-i "${D}"/lib/rcscripts/addons/udev-start.sh
+		-i "${D}"/lib/rcscripts/addons/udev-start.sh \
+		-i "${D}"/lib/rcscripts/addons/udev-stop.sh
 
 	# needed to compile latest Hal
 	insinto /usr/include
@@ -226,87 +223,20 @@ pkg_preinst() {
 	then
 		coldplug_stale="1"
 	fi
-
-	# Create some nodes that we know we need.
-	# set the time/date so we can see in /dev which ones we copied over
-	# in the udev-start.sh script
-	mkdir -p ${ROOT}/lib/udev/devices
-
-	if [ ! -e ${ROOT}/lib/udev/devices/null ] ; then
-	    mknod ${ROOT}/lib/udev/devices/null c 1 3
-	fi
-	chmod 666 ${ROOT}/lib/udev/devices/null
-	touch -t 200010220101 ${ROOT}/lib/udev/devices/null
-
-	if [ ! -e ${ROOT}/lib/udev/devices/zero ] ; then
-	    mknod ${ROOT}/lib/udev/devices/zero c 1 5
-	fi
-	chmod 666 ${ROOT}/lib/udev/devices/zero
-	touch -t 200010220101 ${ROOT}/lib/udev/devices/zero
-
-	if [ ! -e ${ROOT}/lib/udev/devices/console ] ; then
-	    mknod ${ROOT}/lib/udev/devices/console c 5 1
-	fi
-	chmod 600 ${ROOT}/lib/udev/devices/console
-	chown root:tty ${ROOT}/lib/udev/devices/console
-	touch -t 200010220101 ${ROOT}/lib/udev/devices/console
-
-	if [ ! -e ${ROOT}/lib/udev/devices/urandom ] ; then
-	    mknod ${ROOT}/lib/udev/devices/urandom c 1 9
-	fi
-	chmod 666 ${ROOT}/lib/udev/devices/urandom
-	touch -t 200010220101 ${ROOT}/lib/udev/devices/urandom
 }
 
 pkg_postinst() {
-	if [ "${ROOT}" = "/" -a -n "`pidof udevd`" ]
-	then
-		killall -15 udevd &>/dev/null
-		sleep 1
-		killall -9 udevd &>/dev/null
+	if [[ ${ROOT} == "/" ]] ; then
+		if [[ -n $(pidof udevd) ]] ; then
+			killall -15 udevd &>/dev/null
+			sleep 1
+			killall -9 udevd &>/dev/null
+		fi
+		/sbin/udevd --daemon
 	fi
-	/sbin/udevd --daemon
 
 	# people want reminders, I'll give them reminders.  Odds are they will
 	# just ignore them anyway...
-	if has_version '<sys-fs/udev-046' ; then
-		ewarn "Note: If you rely on the output of udevinfo for anything, please"
-		ewarn "      either run 'udevstart' now, or reboot, in order to get a"
-		ewarn "      up-to-date udev database."
-		ewarn
-	fi
-	if has_version '<sys-fs/udev-050' ; then
-		ewarn "Note: If you had written some custom permissions rules, please"
-		ewarn "      realize that the permission rules are now part of the main"
-		ewarn "      udev rules files and are not stand-alone anymore.  This means"
-		ewarn "      you need to rewrite them."
-		ewarn
-	fi
-	if has_version '<sys-fs/udev-059' ; then
-		ewarn "Note: If you are upgrading from a version of udev prior to 059"
-		ewarn "      and you have written custom rules, and rely on the etc/dev.d/"
-		ewarn "      functionality, or the etc/hotplug.d functionality, or just"
-		ewarn "      want to write some very cool and power udev rules, please "
-		ewarn "      read the RELEASE-NOTES file for details on what has changed"
-		ewarn "      with this feature, and how to change your rules to work properly."
-		ewarn
-	elif has_version '<sys-fs/udev-057' ; then
-		ewarn "Note: If you have written custom rules, and rely on the etc/dev.d/"
-		ewarn "      functionality, please read the RELEASE-NOTES file for details"
-		ewarn "      on what has changed with this feature, and how to change your"
-		ewarn "      rules to work properly."
-		ewarn
-	fi
-	if has_version '<sys-fs/udev-063' ; then
-		ewarn "Note: If you use the devfs-style names for your block devices"
-		ewarn "      or use devfs-style names in /etc/inittab or /etc/securetty or"
-		ewarn "      your GRUB or LILO kernel boot command line, you need to"
-		ewarn "      change them back to LSB compliant names, as the devfs names are"
-		ewarn "      now gone.  If you wish to use some persistent names for your"
-		ewarn "      block devices, look at the symlinks in /dev/disk/ for the names"
-		ewarn "      you can use."
-		ewarn
-	fi
 
 	if [[ ${coldplug_stale} == "1" ]] ; then
 		ewarn "A stale coldplug init script found. You should run:"
@@ -325,6 +255,17 @@ pkg_postinst() {
 			ewarn "installed by sys-fs/udev-103-r3"
 			rm -f ${ROOT}/etc/udev/rules.d/40-scsi-hotplug.rules
 		fi
+	fi
+
+	# Removing some device-nodes we thought we need some time ago
+	if [[ -d "${ROOT}"/lib/udev/devices ]]; then
+		rm -f "${ROOT}"/lib/udev/devices/{null,zero,console,urandom}
+	fi
+
+	# Removing some old file
+	if has_version "<sys-fs/udev-104-r5"; then
+		rm -f "${ROOT}"/etc/dev.d/net/hotplug.dev
+		rmdir --ignore-fail-on-non-empty "${ROOT}"/etc/dev.d/net
 	fi
 
 	einfo

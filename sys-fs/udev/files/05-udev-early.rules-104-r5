@@ -6,4 +6,8 @@ SUBSYSTEM=="module",	OPTIONS="ignore_device"
 ACTION=="add", DEVPATH=="/devices/*", ENV{PHYSDEVBUS}=="?*", WAIT_FOR_SYSFS="bus"
 ACTION=="add", SUBSYSTEM=="scsi", WAIT_FOR_SYSFS="ioerr_cnt"
 ACTION=="add", SUBSYSTEM=="net", WAIT_FOR_SYSFS="address"
-ACTION=="add", SUBSYSTEM=="net", WAIT_FOR_SYSFS="device/driver"
+ACTION=="add", SUBSYSTEM=="net", ENV{PHYSDEVDRIVER}=="?*", WAIT_FOR_SYSFS="device/driver"
+
+# Set IN_HOTPLUG for compatibility with init-scripts called from udev
+ENV{IN_HOTPLUG}="1"
+
