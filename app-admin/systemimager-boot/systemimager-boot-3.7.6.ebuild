@@ -28,8 +28,10 @@ MDADM_VERSION=2.2
 OPENSSH_VERSION=3.9p1
 OPENSSL_VERSION=0.9.7e
 
-PARTED_VERSION=1.8.2
-OLD_PARTED_VERSION=1.6.25.1
+# PARTED_VERSION=1.8.2
+#PARTED_VERSION=1.6.8
+#OLD_PARTED_VERSION=1.6.25.1
+PARTED_VERSION=1.6.25.1
 
 PDISK_VERSION=20000516
 RPM_VERSION=4.2
@@ -45,6 +47,8 @@ MODULE_INIT_TOOLS_VERSION="3.2.1"
 
 OLD_COREUTILS_VERSION=5.93
 COREUTILS_VERSION=6.4
+
+BITTORRENT_VERSION=4.4.0
 
 case $ARCH in
     x86) 
@@ -87,6 +91,9 @@ SRC_URI="mirror://sourceforge/systemimager/${MY_P}.tar.bz2
 	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/xfsprogs-${XFSPROGS_VERSION}.src.tar.gz
 	http://download.systemimager.org/pub/zlib/zlib-${ZLIB_VERSION}.tar.gz
 	http://download.systemimager.org/pub/module-init-tools/module-init-tools-${MODULE_INIT_TOOLS_VERSION}.tar.bz2
+	
+	http://download.systemimager.org/pub/bittorrent/BitTorrent-${BITTORRENT_VERSION}.tar.gz
+	
 	http://download.systemimager.org/pub/linux/linux-${LINUX_VERSION}.tar.bz2"
 
 #	http://download.systemimager.org/pub/discover/discover_${DISCOVER_VERSION}-${DISCOVER_PATCH_VERSION}.tar.gz
@@ -143,6 +150,8 @@ src_unpack ()
 	cp ${DISTDIR}/zlib-${ZLIB_VERSION}.tar.gz ${S}/src
 	cp ${DISTDIR}/linux-${LINUX_VERSION}.tar.bz2 ${S}/src
 	
+	cp ${DISTDIR}/BitTorrent-${BITTORRENT_VERSION}.tar.gz ${S}/initrd_source/src
+	
 	cp ${DISTDIR}/module-init-tools-${MODULE_INIT_TOOLS_VERSION}.tar.bz2 ${S}/initrd_source/src
 
 	cp ${DISTDIR}/coreutils-${COREUTILS_VERSION}.tar.bz2 ${S}/initrd_source/src
@@ -152,7 +161,7 @@ src_unpack ()
 
 	# Some dirty hacks
 	sed -i -e "s:${OLD_COREUTILS_VERSION}:${COREUTILS_VERSION}:g" ${S}/initrd_source/make.d/coreutils.rul
-	sed -i -e "s:${OLD_PARTED_VERSION}:${PARTED_VERSION}:g" ${S}/make.d/parted.rul
+#	sed -i -e "s:${OLD_PARTED_VERSION}:${PARTED_VERSION}:g" ${S}/make.d/parted.rul
 	
 }
 
