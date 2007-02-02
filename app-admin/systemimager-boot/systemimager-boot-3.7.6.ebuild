@@ -27,7 +27,10 @@ MDADM_VERSION=2.2
 
 OPENSSH_VERSION=3.9p1
 OPENSSL_VERSION=0.9.7e
-PARTED_VERSION=1.6.25.1
+
+PARTED_VERSION=1.8.2
+OLD_PARTED_VERSION=1.6.25.1
+
 PDISK_VERSION=20000516
 RPM_VERSION=4.2
 RPM_SRPM_VERSION=${RPM_VERSION}-1
@@ -68,7 +71,10 @@ SRC_URI="mirror://sourceforge/systemimager/${MY_P}.tar.bz2
 	http://download.systemimager.org/pub/lvm/LVM${LVM_VERSION}.tgz
 	http://download.systemimager.org/pub/openssh/openssh-${OPENSSH_VERSION}.tar.gz
 	http://download.systemimager.org/pub/openssl/openssl-${OPENSSL_VERSION}.tar.gz
+
 	http://download.systemimager.org/pub/parted/parted-${PARTED_VERSION}.tar.gz
+	ftp://ftp.gnu.org/gnu/parted/parted-${PARTED_VERSION}.tar.gz
+
 	http://download.systemimager.org/pub/pdisk/pdisk.${PDISK_VERSION}.src.tar
 
 	http://download.systemimager.org/pub/coreutils/coreutils-${COREUTILS_VERSION}.tar.bz2
@@ -146,6 +152,7 @@ src_unpack ()
 
 	# Some dirty hacks
 	sed -i -e "s:${OLD_COREUTILS_VERSION}:${COREUTILS_VERSION}:g" ${S}/initrd_source/make.d/coreutils.rul
+	sed -i -e "s:${OLD_PARTED_VERSION}:${PARTED_VERSION}:g" ${S}/make.d/parted.rul
 	
 }
 
