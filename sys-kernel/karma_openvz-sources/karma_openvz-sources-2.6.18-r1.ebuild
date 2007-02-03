@@ -29,6 +29,11 @@ UNIPATCH_STRICTORDER="yes"
 	
 KEYWORDS="x86 amd64"
 
+pkg_postinst () 
+{
+	kernel-2_pkg_postinst
+}
+
 # Local Variables:
 # mode: sh
 # End:

@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/mplayer/mplayer-1.0_rc1-r1.ebuild,v 1.1 2007/01/06 19:44:23 beandog Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/mplayer/mplayer-1.0_rc1-r1.ebuild,v 1.3 2007/02/01 14:34:39 beandog Exp $
 
 inherit eutils flag-o-matic
 
@@ -19,7 +19,7 @@ for X in ${LANGS} ; do
 	IUSE="${IUSE} linguas_${X}"
 done
 
-BLUV=1.6
+BLUV=1.7
 SVGV=1.9.17
 
 # Handle PREversions as wel
@@ -274,7 +274,8 @@ src_compile() {
 	# disable PVR support
 	# The build will break if you have media-tv/ivtv installed and
 	# linux-headers != 2.6.18, which is currently not keyworded
-	myconf="${myconf} --disable-pvr"
+	# See also, bug 164748
+	myconf="${myconf} --disable-pvr --disable-ivtv"
 
 	myconf="${myconf} $(use_enable ipv6 inet6)"
 	myconf="${myconf} $(use_enable joystick)"

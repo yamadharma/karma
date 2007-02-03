@@ -32,7 +32,8 @@ KEYWORDS="x86 amd64"
 
 pkg_postinst () 
 {
-	postinst_sources
+	kernel-2_pkg_postinst
+#	postinst_sources
 }
 
 # Local Variables:

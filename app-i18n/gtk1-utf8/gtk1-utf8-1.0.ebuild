@@ -11,7 +11,9 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 amd64"
 
-RDEPEND=">=x11-libs/gtk+-1.2.10-r11 x11-base/xorg-x11 media-fonts/terminus-font"
+RDEPEND=">=x11-libs/gtk+-1.2.10-r11 
+	x11-base/xorg-x11 
+	media-fonts/terminus-font"
 DEPEND="${RDEPEND}"
 
 src_install() {

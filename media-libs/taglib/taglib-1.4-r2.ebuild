@@ -14,7 +14,7 @@ KEYWORDS="alpha amd64 hppa ia64 ppc ppc64 sparc x86 mips"
 IUSE="debug rcc"
 
 DEPEND="sys-libs/zlib 
-	rcc? (app-i18n/librcc)"
+	rcc? ( app-i18n/librcc )"
 
 src_unpack() {
 	unpack ${A}

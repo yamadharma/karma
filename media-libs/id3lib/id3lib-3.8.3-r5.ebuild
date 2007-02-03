@@ -17,7 +17,7 @@ KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sparc x86"
 IUSE="doc rcc"
 
 RDEPEND="sys-libs/zlib
-	 rcc? (app-i18n/librcc)"
+	 rcc? ( app-i18n/librcc )"
 
 DEPEND="${RDEPEND}
 	sys-devel/autoconf

@@ -1,3 +1,7 @@
+AUX corefonts.nfont.tar.bz2 1205 RMD160 2ac6313f3b0161883f3ad0b9aca314b527be91a0 SHA1 0fa4b4c98538edb37a6b65b22c679dff026e18f0 SHA256 66a8ec0f618923590beb5e65cdd3715ba499d862df580cb6d8dda0e763b847d4
+MD5 f13ee048d6087859572f0917a28c0268 files/corefonts.nfont.tar.bz2 1205
+RMD160 2ac6313f3b0161883f3ad0b9aca314b527be91a0 files/corefonts.nfont.tar.bz2 1205
+SHA256 66a8ec0f618923590beb5e65cdd3715ba499d862df580cb6d8dda0e763b847d4 files/corefonts.nfont.tar.bz2 1205
 AUX extra/fonts/gnustep/majorversion/1/nfont.tar.bz2 1236 RMD160 cce8c715aaca33eca7693f17fbfd8279f1649a82 SHA1 30b9c43339d7e15276c392148acacee6123584ea SHA256 196d1d8e5c1b4dd5189c49787d15605c0195de946ed043403d080017b4880f58
 MD5 b981825e317b4580382f43a008c6e53c files/extra/fonts/gnustep/majorversion/1/nfont.tar.bz2 1236
 RMD160 cce8c715aaca33eca7693f17fbfd8279f1649a82 files/extra/fonts/gnustep/majorversion/1/nfont.tar.bz2 1236
@@ -17,6 +21,13 @@ EBUILD corefonts-1.3-r1.ebuild 1086 RMD160 010cdc5130d6424785b54b70be5fa7beb8533
 MD5 b6f4d01eec62cf90884e7cf0d7c5fbaf corefonts-1.3-r1.ebuild 1086
 RMD160 010cdc5130d6424785b54b70be5fa7beb85334fc corefonts-1.3-r1.ebuild 1086
 SHA256 00ab182ddbcfe407ccfaca2973517dcae591bb623232eda15434c5977cefa68a corefonts-1.3-r1.ebuild 1086
+EBUILD corefonts-1.3-r2.ebuild 1222 RMD160 4e32b3ff7474bcec80fda641749303ffe640582a SHA1 d5996316c3273463c8e6a374f47be2e590457d94 SHA256 cbb6b7fef16eeec0c99ef580216ef9f4de3981ae3bdc3d7d5d6e5ebc9472db31
+MD5 b2e7ebbdf7721d541324798aa05df5b8 corefonts-1.3-r2.ebuild 1222
+RMD160 4e32b3ff7474bcec80fda641749303ffe640582a corefonts-1.3-r2.ebuild 1222
+SHA256 cbb6b7fef16eeec0c99ef580216ef9f4de3981ae3bdc3d7d5d6e5ebc9472db31 corefonts-1.3-r2.ebuild 1222
 MD5 47d36efdaed33566e77dd64b3abf6907 files/digest-corefonts-1.3-r1 2378
 RMD160 8691a9b31860d6e2eaa0e1f73e12b54850dfb40a files/digest-corefonts-1.3-r1 2378
 SHA256 ed9bc68db5c56ec22baf808e6c1724135f0d96401e952a7fd3a4e6c39d68aa4f files/digest-corefonts-1.3-r1 2378
+MD5 47d36efdaed33566e77dd64b3abf6907 files/digest-corefonts-1.3-r2 2378
+RMD160 8691a9b31860d6e2eaa0e1f73e12b54850dfb40a files/digest-corefonts-1.3-r2 2378
+SHA256 ed9bc68db5c56ec22baf808e6c1724135f0d96401e952a7fd3a4e6c39d68aa4f files/digest-corefonts-1.3-r2 2378

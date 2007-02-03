@@ -16,9 +16,9 @@ DEPEND="${RDEPEND}
 	virtual/x11
 	sys-devel/gettext
 	truetype? ( virtual/xft )
-	selinux? sys-libs/libselinux"
+	selinux? ( sys-libs/libselinux )"
 	
-RDEPEND=">=x11-wm/windowmaker-0.65.1"
+RDEPEND="( >=x11-wm/windowmaker-0.65.1 )"
 
 src_compile () 
 {

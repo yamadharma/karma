@@ -20,7 +20,6 @@ DEPEND=">=dev-libs/glib-2.4.0
 		app-text/talkfilters
 		dev-perl/XML-Parser"
 
-
 src_unpack() {
 	unpack ${A}
 	cd ${S}
@@ -36,4 +35,8 @@ src_install() {
 
 	cd ${S}
 	dodoc AUTHORS COPYING INSTALL NEWS README TODO
+}
+
+src_test() {
+	einfo "No tests"
 }

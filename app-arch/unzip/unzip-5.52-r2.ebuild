@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86"
 IUSE="rcc"
 
-DEPEND="rcc? (app-i18n/librcc)"
+DEPEND="rcc? ( app-i18n/librcc )"
 
 src_unpack() {
 	unpack ${A}

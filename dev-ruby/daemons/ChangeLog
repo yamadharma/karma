@@ -1,0 +1,44 @@
+# ChangeLog for dev-ruby/daemons
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-ruby/daemons/ChangeLog,v 1.10 2007/02/01 06:56:08 corsair Exp $
+
+  01 Feb 2007; Markus Rothe <corsair@gentoo.org> daemons-1.0.4.ebuild:
+  Added ~ppc64; bug #164242
+
+*daemons-1.0.4 (01 Feb 2007)
+
+  01 Feb 2007; Christian Marie <pingu@gentoo.org> +daemons-1.0.4.ebuild:
+  Version bump.
+
+  30 Jan 2007; Gustavo Zacarias <gustavoz@gentoo.org> daemons-0.4.4.ebuild:
+  Keyworded ~sparc wrt #164242
+
+  28 Jan 2007; Diego Pettenò <flameeyes@gentoo.org> daemons-0.4.4.ebuild:
+  Add ~amd64 and ~x86-fbsd keywords.
+
+  13 Jul 2006; Aron Griffis <agriffis@gentoo.org> daemons-0.4.3.ebuild:
+  Mark 0.4.3 stable on ia64
+
+*daemons-0.4.4 (17 Apr 2006)
+
+  17 Apr 2006; Caleb Tennis <caleb@gentoo.org> +daemons-0.4.4.ebuild:
+  version bump
+
+  17 Apr 2006; Caleb Tennis <caleb@gentoo.org> daemons-0.4.3.ebuild:
+  x86 stable
+
+  30 Mar 2006; Aron Griffis <agriffis@gentoo.org> daemons-0.4.2.ebuild,
+  daemons-0.4.3.ebuild:
+  Mark 0.4.3 0.4.2 ~ia64
+
+*daemons-0.4.3 (02 Jan 2006)
+
+  02 Jan 2006; Caleb Tennis <caleb@gentoo.org> +daemons-0.4.3.ebuild:
+  version bump
+
+*daemons-0.4.2 (17 Nov 2005)
+
+  17 Nov 2005; Michael Kohl <citizen428@gentoo.org> +metadata.xml,
+  +daemons-0.4.2.ebuild:
+  Initial import.
+

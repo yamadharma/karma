@@ -7,6 +7,8 @@ INHERITED="$INHERITED $ECLASS"
 
 inherit gnustep-funcs
 
+IUSE="gnustep"
+
 if [ -z "$NFONT" ]
     then
     NFONT=${PN}.nfont.tar.bz2

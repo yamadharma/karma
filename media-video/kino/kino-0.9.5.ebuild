@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/kino/kino-0.9.2.ebuild,v 1.3 2006/09/25 18:12:06 calchan Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/kino/kino-0.9.5.ebuild,v 1.3 2007/01/31 21:00:08 corsair Exp $
 
 DESCRIPTION="Kino is a non-linear DV editor for GNU/Linux"
 HOMEPAGE="http://www.kinodv.org/"
@@ -8,7 +8,7 @@ SRC_URI="mirror://sourceforge/kino/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc ~sparc x86"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
 IUSE="alsa dvdr ffmpeg quicktime sox vorbis"
 
 DEPEND=">=x11-libs/gtk+-2.6.0
@@ -28,7 +28,8 @@ DEPEND=">=x11-libs/gtk+-2.6.0
 RDEPEND="${DEPEND}
 	media-video/mjpegtools
 	media-sound/rawrec
-	dvdr? ( media-video/dvdauthor )
+	dvdr? ( media-video/dvdauthor
+		app-cdr/dvd+rw-tools )
 	sox? ( media-sound/sox )
 	vorbis? ( media-sound/vorbis-tools )"
 
@@ -38,7 +39,6 @@ src_unpack() {
 
 	# Fix to link with --as-needed
 	sed -i -e 's:LIBS="-lXext:LIBS="-lXext -lX11:' configure || die "sed failed!"
-
 	# Deactivating automagic alsa configuration, bug #134725
 	if ! use alsa ; then
 		sed -i -e "s:HAVE_ALSA 1:HAVE_ALSA 0:" configure || die "sed failed!"

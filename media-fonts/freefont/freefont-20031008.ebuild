@@ -11,7 +11,8 @@ SUBPV=-1
 
 DESCRIPTION="Free UCS Outline Fonts"
 SRC_URI="mirror://debian/pool/main/t/ttf-${PN}/ttf-${PN}_${PV}${SUBPV}.tar.gz"
-HOMEPAGE="http://www.nongnu.org/freefont/"
+HOMEPAGE="http://www.nongnu.org/freefont/
+	http://alioth.debian.org/projects/freefont"
 LICENSE="GPL-2"
 
 SLOT="0"
@@ -20,7 +21,7 @@ KEYWORDS="~x86 ~sparc ~ppc"
 
 S=${WORKDIR}
 
-newdepend	"media-gfx/pfaedit"
+DEPENDS="media-gfx/pfaedit"
 
 FONT_FORMAT="ttf"
 
