@@ -4,7 +4,7 @@
 
 inherit eutils
 
-IUSE="ldap"
+IUSE="ldap sasl"
 
 MY_P=${P/_/-}
 
@@ -21,7 +21,9 @@ done < ${FILESDIR}/patch_list-${PV}`
 SRC_URI="${SRC_URI_BASE}/${MY_P}.tar.bz2
 	    ${SRC_PATCHES_URI}"
 DEPEND="virtual/libc
-		ldap? ( >=net-nds/openldap-2.0 )"
+	ldap? ( >=net-nds/openldap-2.0 
+		dev-libs/libxml2 )
+	sasl? ( dev-libs/libxml2 )"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="x86 ~alpha ~ppc ~sparc amd64 ~ia64 ~ppc64"
@@ -40,17 +42,23 @@ src_unpack() {
 	cd ${S}
 	autoconf || die "Autoconf failed"
 
-	cd ${S}/daemon
+#	cd ${S}/daemon
 #	sed -i 's/LIBS \= \-ldl/LIBS \= \-ldl \-lnsl \$\{LIBLDAP\}/' Makefile || die "LIBLDAP change failed"
 }
 
 src_compile() {
 	local myconf
-	use ldap || myconf="--without-openldap"
+
+	myconf="${myconf} --without-hesiod"
+	myconf="${myconf} --without-sasl"	
+	myconf="${myconf} `use_with ldap openldap`"
+#	myconf="${myconf} `use_with sasl`"	
 
 	myconf="${myconf} --with-mapdir=/etc/autofs"
 	myconf="${myconf} --with-confdir=/etc/conf.d"
 
+	myconf="${myconf} --disable-mount-locking --enable-ignore-busy"
+	
 	econf ${myconf} || die
 	sed -i -e '/^\(CFLAGS\|CXXFLAGS\|LDFLAGS\)[[:space:]]*=/d' Makefile.rules || die "Failed to remove (C|CXX|LD)FLAGS"
 	emake || die "make failed"
@@ -90,7 +98,7 @@ src_install() {
 		cd ${S}/samples
 		docinto samples ; dodoc ldap* auto.master.ldap
 		insinto /etc/openldap/schema ; doins autofs.schema
-		exeinto /usr/$(get_libdir)/autofs ; doexe autofs-ldap-auto-master
+#		exeinto /usr/$(get_libdir)/autofs ; doexe autofs-ldap-auto-master
 	fi
 
 	insinto /etc/openldap/schema
