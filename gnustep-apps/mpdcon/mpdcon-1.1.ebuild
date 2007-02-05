@@ -20,7 +20,7 @@ IUSE="${IUSE}"
 
 DEPEND="${GS_DEPEND}"
 RDEPEND="${GS_RDEPEND}
-	||( media-sound/mpd media-sound/mpd-svn )"
+	|| ( media-sound/mpd media-sound/mpd-svn )"
 
 egnustep_install_domain "System"
 

@@ -17,7 +17,7 @@ MY_P=${MY_PN}-${MY_PV}
 DESCRIPTION="Cyrillized free URW fonts"
 SRC_URI="ftp://ftp.gnome.ru/fonts/urw/release/${MY_P}.tar.bz2"
 HOMEPAGE=""
-KEYWORDS="~x86 amd64"
+KEYWORDS="x86 amd64"
 LICENSE="GPL-2,LGPL"
 SLOT="0"
 

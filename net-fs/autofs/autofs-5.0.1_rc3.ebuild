@@ -26,7 +26,7 @@ DEPEND="virtual/libc
 	sasl? ( dev-libs/libxml2 )"
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="x86 ~alpha ~ppc ~sparc amd64 ~ia64 ~ppc64"
+KEYWORDS="~x86 ~alpha ~ppc ~sparc ~amd64 ~ia64 ~ppc64"
 
 S=${WORKDIR}/${P%%_*}
 
