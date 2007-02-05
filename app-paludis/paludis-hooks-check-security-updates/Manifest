@@ -1,0 +1,8 @@
+DIST paludis-hooks-check-security-updates-1.0.tar.bz2 252 RMD160 17ec7b0f097ea8d7449e089f7e790a12dbe00080 SHA1 18dd7dfbd37880889b69e33d82c3a5c02a65a408 SHA256 0f615edf8b8da70e03724311da087213daadb2c0489b4c96868edf2dc140299c
+EBUILD paludis-hooks-check-security-updates-1.0.ebuild 1595 RMD160 63003aaff8191c77f04d1a2321f1f263a2aeb08b SHA1 cdbc6c01b8aa4f1c26a113a4edb008fe91919aba SHA256 3d98f13e7c4ccb777dca1bdc9daa506ef41c92fdadae3cde5eaa9e916f234a70
+MD5 fb9e054c78d0c652252cc27b945d90dc paludis-hooks-check-security-updates-1.0.ebuild 1595
+RMD160 63003aaff8191c77f04d1a2321f1f263a2aeb08b paludis-hooks-check-security-updates-1.0.ebuild 1595
+SHA256 3d98f13e7c4ccb777dca1bdc9daa506ef41c92fdadae3cde5eaa9e916f234a70 paludis-hooks-check-security-updates-1.0.ebuild 1595
+MD5 bdf128eb1f5adef0b79a234278977a89 files/digest-paludis-hooks-check-security-updates-1.0 316
+RMD160 576c7ecc218788d42dafc2ebc8a42c95aca9560b files/digest-paludis-hooks-check-security-updates-1.0 316
+SHA256 c9959f577f98ccc6856b22a948eb6ea07650b4fe68e3a61eecf4e62ee31d9dcd files/digest-paludis-hooks-check-security-updates-1.0 316

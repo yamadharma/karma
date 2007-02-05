@@ -1,0 +1,8 @@
+DIST paludis-hooks-undo-prelink-1.1.tar.bz2 1174 RMD160 3266d1e52e876239e8293d3d97c52d01cb149cf2 SHA1 65c4f3ed420b815c31c1c44b0644a595135ecd9e SHA256 05cc8a7b7eb6514e267d929bb13044c77478edeea7fb9bc0887c4a99a9d28f19
+EBUILD paludis-hooks-undo-prelink-1.1.ebuild 1125 RMD160 747a1a3ee2d58eca0e4a745ee37a6f0b2d8c4142 SHA1 6a2397ed647ce552ff08c9db51bcaeb72a44c656 SHA256 67b60deb0bdbfec2868e5b00e132d9d0b4a25cf7787384bbe919fee434380d5e
+MD5 d8b42d1e47fb062ddbf697fcd7a0218d paludis-hooks-undo-prelink-1.1.ebuild 1125
+RMD160 747a1a3ee2d58eca0e4a745ee37a6f0b2d8c4142 paludis-hooks-undo-prelink-1.1.ebuild 1125
+SHA256 67b60deb0bdbfec2868e5b00e132d9d0b4a25cf7787384bbe919fee434380d5e paludis-hooks-undo-prelink-1.1.ebuild 1125
+MD5 608152fb96c080294861262c4811fa7c files/digest-paludis-hooks-undo-prelink-1.1 289
+RMD160 5ed09542768ebf292c3fd37835bea8829fc789d1 files/digest-paludis-hooks-undo-prelink-1.1 289
+SHA256 0e4bc90d7f38efac88cefc8b6a06e5cb1fe87c6d9ea8f764d73622826aff609b files/digest-paludis-hooks-undo-prelink-1.1 289

@@ -1,0 +1,24 @@
+DIST paludis-hooks-ask-1.1.tar.bz2 804 RMD160 926c5b15361458549cfe09d219dc9f65da84fc3e SHA1 a1ded251cbfd425c8977f119e15a358840c0d40d SHA256 ad866ddb17a1f5bf2e2aba3fd90cbd6f7634a5ae03c3f70157e3e940bcfa742a
+DIST paludis-hooks-ask-1.2.tar.bz2 806 RMD160 d2b6b9fd849b662475f0564e4d1446fa529299aa SHA1 dcc1874c25a34d32b067cfc05d33f8f5485a11ba SHA256 bf678d112fb1c2cca9d6ebe82bffd06d638101df85d7d0fcaa1151c0a926a637
+DIST paludis-hooks-ask-1.3.tar.bz2 807 RMD160 07a002dc6a9eca60d5fc24f42fb8f80371cb3457 SHA1 bdca9574ab661e5f0d8521f0537611b201bc61b0 SHA256 cde2577161e94b54272bd0d8bd663883ce3d0c11af697feba1527dabca415e10
+EBUILD paludis-hooks-ask-1.1.ebuild 2499 RMD160 83802aa23b55f8745dc97099de042d7a89c10e5d SHA1 a340f9aa4320ae83af9aacf8c6115db2a659f0fb SHA256 1a69aaebad06aa77a58496037a88faeb460a6491f2eaf8e08c23ef4c7cd2ef9b
+MD5 de85f47181513c9edaee21d6c86aba05 paludis-hooks-ask-1.1.ebuild 2499
+RMD160 83802aa23b55f8745dc97099de042d7a89c10e5d paludis-hooks-ask-1.1.ebuild 2499
+SHA256 1a69aaebad06aa77a58496037a88faeb460a6491f2eaf8e08c23ef4c7cd2ef9b paludis-hooks-ask-1.1.ebuild 2499
+EBUILD paludis-hooks-ask-1.2.ebuild 2022 RMD160 0ad950b49d5eecb39fac5bc252c1b11204c2446b SHA1 b5e772fa2d7e5fdc124275de5989ae1c1b9941b2 SHA256 2e49493062d481291d3075eb2041a74742ed74c6f72943236cfff9fab121da50
+MD5 0fc89a6a28f1ad17e5498675a669736f paludis-hooks-ask-1.2.ebuild 2022
+RMD160 0ad950b49d5eecb39fac5bc252c1b11204c2446b paludis-hooks-ask-1.2.ebuild 2022
+SHA256 2e49493062d481291d3075eb2041a74742ed74c6f72943236cfff9fab121da50 paludis-hooks-ask-1.2.ebuild 2022
+EBUILD paludis-hooks-ask-1.3.ebuild 2041 RMD160 02af8437af7af70cb4129095f6e7a9189de7d022 SHA1 9d6becabd2ed13ce87bdb0e586648f76a9c83ed2 SHA256 db4947a74debbf67673d39492e599ec8633d8e65321d3b42a9fac430363cc5a2
+MD5 e72a5707ad09d32b1552a8fe8c3ed83c paludis-hooks-ask-1.3.ebuild 2041
+RMD160 02af8437af7af70cb4129095f6e7a9189de7d022 paludis-hooks-ask-1.3.ebuild 2041
+SHA256 db4947a74debbf67673d39492e599ec8633d8e65321d3b42a9fac430363cc5a2 paludis-hooks-ask-1.3.ebuild 2041
+MD5 b48399a096520e2410766369a958a715 files/digest-paludis-hooks-ask-1.1 259
+RMD160 d90ab43b043bb58cf7a86989904b93a8abbb072e files/digest-paludis-hooks-ask-1.1 259
+SHA256 f5e7be168ae98fd295a94e530d3950e06440d5ee6afaf0155e2910634ec46482 files/digest-paludis-hooks-ask-1.1 259
+MD5 c096e5057133a9ed32ec780a7e6739ab files/digest-paludis-hooks-ask-1.2 259
+RMD160 5fcd32749209657091811b807537887d4ed10cf6 files/digest-paludis-hooks-ask-1.2 259
+SHA256 db1719295c707a198457c35f4e5d9fb3be2ea6dd884bfc5093f5245a62ec0bb4 files/digest-paludis-hooks-ask-1.2 259
+MD5 b7560de3d0a10585aed384e4d0ff6d40 files/digest-paludis-hooks-ask-1.3 259
+RMD160 a9711be27410eaec85ce00673ebb3729bb6bf782 files/digest-paludis-hooks-ask-1.3 259
+SHA256 6e21a90f006ae809100e2a2760a63032ce0f252db9a780f99ab1dbf876299a1e files/digest-paludis-hooks-ask-1.3 259

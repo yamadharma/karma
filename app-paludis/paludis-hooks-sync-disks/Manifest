@@ -1,0 +1,8 @@
+DIST paludis-hooks-sync-disks-1.0.tar.bz2 294 RMD160 dd61ebc1bb9294b1cde75b15feec34d228f75e57 SHA1 6b832f7181857204aa784acd32c46004d47be312 SHA256 d9e81014e513c09df9cfb74beb318b63d882da074ad1543c83529106b27b07eb
+EBUILD paludis-hooks-sync-disks-1.0.ebuild 890 RMD160 0d4673858fd1242571730fc4d7e154093b9c21af SHA1 a4023685f61ff977f11978e23d938a46773fb05e SHA256 f76ce8ec37c87f1e043af9196909a501d94524281b0ca7e21014b0d567f173b4
+MD5 891b0b35d59cfdb2c830d49e7bf59aef paludis-hooks-sync-disks-1.0.ebuild 890
+RMD160 0d4673858fd1242571730fc4d7e154093b9c21af paludis-hooks-sync-disks-1.0.ebuild 890
+SHA256 f76ce8ec37c87f1e043af9196909a501d94524281b0ca7e21014b0d567f173b4 paludis-hooks-sync-disks-1.0.ebuild 890
+MD5 35f2d58cf295a5b523f9904f093f4e4a files/digest-paludis-hooks-sync-disks-1.0 280
+RMD160 cbd771eba3c3393c1f4f2a005a459429a0a4a9b4 files/digest-paludis-hooks-sync-disks-1.0 280
+SHA256 aba50ae1c13ff61bf3bd31490116f177d311000abe643bd1fe4b7fbb38ff4d3d files/digest-paludis-hooks-sync-disks-1.0 280

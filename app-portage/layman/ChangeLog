@@ -1,6 +1,24 @@
 # ChangeLog for app-portage/layman
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-portage/layman/ChangeLog,v 1.29 2006/10/03 11:15:29 flameeyes Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-portage/layman/ChangeLog,v 1.33 2007/01/09 18:01:15 wrobel Exp $
+
+*layman-1.0.10 (09 Jan 2007)
+
+  09 Jan 2007; <wrobel@gentoo.org> -layman-1.0.9.ebuild,
+  +layman-1.0.10.ebuild:
+  Added layman-1.0.10 to the tree. Fixes bugs #159695 and #160143.
+
+*layman-1.0.9 (04 Jan 2007)
+
+  04 Jan 2007; <wrobel@gentoo.org> -layman-1.0.8.ebuild,
+  +layman-1.0.9.ebuild:
+  Added layman-1.0.9 to the tree. Fixes bugs #148698, #159051, #151965, #149867.
+
+  29 Dec 2006; <doug@gentoo.org> layman-1.0.8.ebuild:
+  Make layman check that nowebdav is not set on subversion since it needs webdav
+
+  15 Oct 2006; Bryan Østergaard <kloeri@gentoo.org> layman-1.0.6.ebuild:
+  Stable on ia64.
 
   03 Oct 2006; Diego Pettenò <flameeyes@gentoo.org> layman-1.0.8.ebuild:
   Add ~x86-fbsd keyword. Thanks to Timothy Redaelli in bug #149841.

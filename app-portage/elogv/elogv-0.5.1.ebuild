@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-portage/elogv/elogv-0.5.ebuild,v 1.2 2006/12/07 22:55:02 drizzt Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-portage/elogv/elogv-0.5.1.ebuild,v 1.1 2007/01/15 09:43:47 opfer Exp $
 
 inherit eutils
 
@@ -9,12 +9,11 @@ HOMEPAGE="http://gechi-overlay.sourceforge.net/?page=elogv"
 SRC_URI="mirror://sourceforge/gechi-overlay/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~ppc x86 ~x86-fbsd"
 IUSE=""
 
 DEPEND=""
-RDEPEND=">=dev-lang/python-2.4
-	>=sys-apps/portage-2.1"
+RDEPEND=">=sys-apps/portage-2.1"
 
 pkg_setup() {
 	if ! built_with_use dev-lang/python ncurses; then
@@ -43,7 +42,7 @@ pkg_postinst() {
 	elog "in /etc/make.conf.example"
 	elog
 	elog "To operate properly this software needs the directory"
-	elog "$PORT_LOGDIR/elog created, belonging to group portage."
+	elog "${PORT_LOGDIR:-/var/log/portage}/elog created, belonging to group portage."
 	elog "To start the software as a user, add yourself to the portage"
 	elog "group."
 	elog

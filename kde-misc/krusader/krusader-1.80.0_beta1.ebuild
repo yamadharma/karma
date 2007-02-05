@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-misc/krusader/krusader-1.70.1.ebuild,v 1.11 2007/01/05 17:03:03 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-misc/krusader/krusader-1.80.0_beta1.ebuild,v 1.1 2007/01/13 23:12:02 deathwing00 Exp $
 
 inherit kde
 
@@ -10,11 +10,11 @@ S="${WORKDIR}/${MY_P}"
 DESCRIPTION="An advanced twin-panel (commander-style) file-manager for KDE with many extras."
 HOMEPAGE="http://krusader.sourceforge.net/"
 SRC_URI="mirror://sourceforge/krusader/${MY_P}.tar.gz
-	mirror://gentoo/kde-admindir-3.5.5.tar.bz2"
+	mirror://gentoo/kde-admindir-3.5.3.tar.bz2"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="amd64 ppc ppc64 sparc x86"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
 IUSE="javascript kde"
 
 DEPEND="kde? ( || ( ( kde-base/libkonq kde-base/kdebase-kioslaves )
@@ -27,25 +27,35 @@ need-kde 3.4
 
 pkg_postinst() {
 	echo
-	elog "Krusader can use various external applications, including:"
-	elog "- KMail	 (kde-base/kdepim)"
-	elog "- Kompare (kde-base/kdesdk)"
-	elog "- KDiff3	 (kde-misc/kdiff3)"
-	elog "- XXdiff	 (dev-util/xxdiff)"
-	elog "- KRename (kde-misc/krename)"
-	elog "- Eject	 (virtual/eject)"
-	elog ""
-	elog "It supports also quite a few archive formats, including:"
-	elog "- app-arch/arj"
-	elog "- app-arch/unarj"
-	elog "- app-arch/rar"
-	elog "- app-arch/zip"
-	elog "- app-arch/unzip"
-	elog "- app-arch/unace"
-	echo
-	ewarn "IMPORTANT: Please remove your ~/.kde/share/apps/krusader/krusaderui.rc file"
-	ewarn "after installation!!! (Else you won't see new menu entries. But please note:"
-	ewarn "This will also reset all your changes on toolbars and shortcuts!)"
+	elog "Krusader can use some external applications, including:"
+	elog
+	elog "Tools"
+	elog "- eject   (sys-apps/eject)"
+	elog "- locate  (sys-apps/slocate)"
+	elog "- kdiff3  (kde-misc/kdiff3)"
+	elog "- kompare (kde-base/kompare)"
+	elog "- xxdiff  (dev-util/xxdiff)"
+	elog "- krename (kde-misc/krename)"
+	elog "- kmail   (kde-base/kmail)"
+	elog "- kget    (kde-base/kget)"
+	elog "- kdesu   (kde-base/kdesu)"
+	elog
+	elog "Packers"
+	elog "- arj     (app-arch/arj)"
+	elog "- unarj   (app-arch/unarj)"
+	elog "- rar     (app-arch/rar)"
+	elog "- unrar   (app-arch/unrar)"
+	elog "- zip     (app-arch/zip)"
+	elog "- unzip   (app-arch/unzip)"
+	elog "- unace   (app-arch/unace)"
+	elog "- lha     (app-arch/lha)"
+	elog "- rpm     (app-arch/rpm)"
+	elog "- dpkg    (app-arch/dpkg)"
+	elog "- 7zip    (app-arch/p7zip)"
+	elog
+	elog "Checksum Tools"
+	elog "- cfv     (app-arch/cfv)"
+	elog "- md5deep (app-crypt/md5deep)"
 	echo
 }
 
