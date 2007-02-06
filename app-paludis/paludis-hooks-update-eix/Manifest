@@ -1,16 +1,8 @@
-DIST paludis-hooks-update-eix-1.1.tar.bz2 643 RMD160 573f846e6ea57a2e33a0b940c9f594d9ab337679 SHA1 dfd73f0a197688b6b0c287fa693c309542cb3ea3 SHA256 edf4c912762bba9c2fb83ef2b320a85ac8e6227e58fd5c267fd2b132cfce8e21
 DIST paludis-hooks-update-eix-2.0.tar.bz2 1266 RMD160 6a3494a2eea2e0f630a70c705ed0b29e172d1dc8 SHA1 1afb335e389abc7df8ad13dee607247bb94ee09e SHA256 f97d3e2b9e1ce46d587a4cbdd133392a74d9c007c735cd1a56e00c562457e8dd
-EBUILD paludis-hooks-update-eix-1.1.ebuild 979 RMD160 74fa1c1dd6ae1630223caf9e630a11010df1bc98 SHA1 d38f92825ec789484c3af27434ec51ff1548332c SHA256 5921e798dc83f83d722d7b33603089f4c1298cfe9ce2bf33c487f01c86942bcc
-MD5 bffce92dd5dd6d2358c0b874b29a9c08 paludis-hooks-update-eix-1.1.ebuild 979
-RMD160 74fa1c1dd6ae1630223caf9e630a11010df1bc98 paludis-hooks-update-eix-1.1.ebuild 979
-SHA256 5921e798dc83f83d722d7b33603089f4c1298cfe9ce2bf33c487f01c86942bcc paludis-hooks-update-eix-1.1.ebuild 979
 EBUILD paludis-hooks-update-eix-2.0.ebuild 1054 RMD160 bccf0431ecefa1e7f7de4963a796e7cb41056386 SHA1 5a2717695175e29948f05e1fd07c028ba51685de SHA256 e2630517a0baceadf4e1317a6b78e1a8570144215b1a9516fc1a5d73e4f694e7
 MD5 838b1bb0989f95ba2f7c6427027d9fb4 paludis-hooks-update-eix-2.0.ebuild 1054
 RMD160 bccf0431ecefa1e7f7de4963a796e7cb41056386 paludis-hooks-update-eix-2.0.ebuild 1054
 SHA256 e2630517a0baceadf4e1317a6b78e1a8570144215b1a9516fc1a5d73e4f694e7 paludis-hooks-update-eix-2.0.ebuild 1054
-MD5 d4df25ff9f933b9860df0c1ac78a1ad8 files/digest-paludis-hooks-update-eix-1.1 280
-RMD160 13848016a68f030d65f6812ff77d0d4de9f9cc4e files/digest-paludis-hooks-update-eix-1.1 280
-SHA256 91e5fd035c8eeb9eea38238bf9a0e55ea52932d379beb0cb0f96b36c681460ec files/digest-paludis-hooks-update-eix-1.1 280
 MD5 29b9a8e1292efc423eac9761b9cc0441 files/digest-paludis-hooks-update-eix-2.0 283
 RMD160 8a94f675ae830b2c987b00e69718c304ad98e68b files/digest-paludis-hooks-update-eix-2.0 283
 SHA256 81cf4546a50235b2f90a408d96cd583de9ecefdb5a4db2bd31f0877a6e830e0f files/digest-paludis-hooks-update-eix-2.0 283

@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-misc/tellico/tellico-1.2.7.ebuild,v 1.1 2007/01/04 13:48:40 beandog Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-misc/tellico/tellico-1.2.8.ebuild,v 1.1 2007/02/04 19:33:47 beandog Exp $
 
 inherit kde sgml-catalog
 
