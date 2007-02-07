@@ -1,0 +1,22 @@
+#!/sbin/runscript
+# Copyright 1999-2007 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	use ypbind net
+	need portmap
+	after quota
+}
+
+start() {
+	ebegin "Starting unfsd"
+	start-stop-daemon --start --quiet --exec /usr/sbin/unfsd
+	eend $? "Failed to start unfsd"
+}
+
+stop() {
+	ebegin "Stopping unfsd"
+	start-stop-daemon --stop --quiet --exec /usr/sbin/unfsd
+	eend $? "Failed to stop unfsd"
+}
