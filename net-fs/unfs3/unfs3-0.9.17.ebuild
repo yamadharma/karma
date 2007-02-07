@@ -4,8 +4,8 @@
 
 inherit eutils
 
-DESCRIPTION="NFS client and server daemons"
-HOMEPAGE="http://nfs.sourceforge.net/"
+DESCRIPTION="Userspace NFSv3 server daemon"
+HOMEPAGE="http://unfs3.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="as-is"

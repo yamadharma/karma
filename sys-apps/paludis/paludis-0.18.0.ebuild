@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.16.2.ebuild,v 1.1 2007/01/27 23:05:14 eroyf Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.18.0.ebuild,v 1.1 2007/02/07 13:16:54 drizzt Exp $
 
 inherit bash-completion eutils flag-o-matic
 
@@ -10,15 +10,21 @@ SRC_URI="mirror://berlios/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~hppa ~mips ~ppc ~sparc x86"
-IUSE="contrarius cran doc glsa pink qa ruby selinux zsh-completion"
+KEYWORDS="amd64 ~hppa ~ppc ~sparc x86"
+IUSE="contrarius cran doc glsa inquisitio pink qa ruby selinux zsh-completion"
 
 COMMON_DEPEND="
 	>=app-shells/bash-3
 	selinux? ( sys-libs/libselinux )
 	qa? ( dev-libs/pcre++ >=dev-libs/libxml2-2.6 app-crypt/gnupg )
+	inquisitio? ( dev-libs/pcre++ )
 	glsa? ( >=dev-libs/libxml2-2.6 )
 	ruby? ( >=dev-lang/ruby-1.8 )"
+
+# Nasty hack for tr1 that will be changed whenever a proper solution is
+# available. See discussion on gentoo-dev list.
+COMMON_DEPEND="${COMMON_DEPEND}
+	|| ( >=sys-devel/gcc-4.1.1 >=dev-libs/boost-1.33.1 )"
 
 DEPEND="${COMMON_DEPEND}
 	dev-cpp/libebt
@@ -28,29 +34,17 @@ DEPEND="${COMMON_DEPEND}
 RDEPEND="${COMMON_DEPEND}
 	>=app-admin/eselect-1.0.2
 	net-misc/wget
-	net-misc/rsync
-	!mips? ( sys-apps/sandbox )"
+	net-misc/rsync"
 
 PROVIDE="virtual/portage"
 
 pkg_setup() {
-	# gcc generates bad code...
-	use amd64 && replace-flags -Os -O2
-
-	if is-ldflagq -Wl,--as-needed || is-ldflagq --as-needed ; then
-		echo
-		ewarn "Stripping as-needed from LDFLAGS."
-		ewarn "You should not set this variable globally. Please read:"
-		ewarn "    http://ciaranm.org/show_post.pl?post_id=13"
-		echo
-		epause 10
-	fi
-	filter-ldflags -Wl,--as-needed --as-needed
+	replace-flags -Os -O2
 }
 
 src_compile() {
 	local repositories=`echo default $(usev cran) | tr -s \  ,`
-	local clients=`echo default $(usev contrarius) | tr -s \  ,`
+	local clients=`echo default $(usev contrarius) $(usev inquisitio) | tr -s \  ,`
 	econf \
 		$(use_enable doc doxygen ) \
 		$(use_enable !mips sandbox ) \
@@ -70,7 +64,7 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "install failed"
+	make DESTDIR="${D}" install || die "install failed"
 	dodoc AUTHORS README ChangeLog NEWS
 
 	BASH_COMPLETION_NAME="adjutrix" dobashcompletion bash-completion/adjutrix
@@ -86,6 +80,7 @@ src_install() {
 		insinto /usr/share/zsh/site-functions
 		doins zsh-completion/_paludis
 		doins zsh-completion/_adjutrix
+		doins zsh-completion/_inquisitio
 		doins zsh-completion/_paludis_packages
 	fi
 }
