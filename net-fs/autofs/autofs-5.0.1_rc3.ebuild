@@ -26,7 +26,7 @@ DEPEND="virtual/libc
 	sasl? ( dev-libs/libxml2 )"
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~x86 ~alpha ~ppc ~sparc ~amd64 ~ia64 ~ppc64"
+KEYWORDS="x86 ~alpha ~ppc ~sparc amd64 ~ia64 ~ppc64"
 
 S=${WORKDIR}/${P%%_*}
 
@@ -92,8 +92,11 @@ src_install() {
 	exeinto /etc/autofs ; doexe ${FILESDIR}/auto.net # chmod 755 is important!
 
 
-	exeinto /etc/init.d ; newexe ${FILESDIR}/autofs.rc11 autofs
-	insinto /etc/conf.d ; newins ${FILESDIR}/autofs.confd9 autofs
+	newinitd ${FILESDIR}/autofs5.init autofs
+	newconfd ${FILESDIR}/autofs5.conf autofs
+#	exeinto /etc/init.d ; newexe ${FILESDIR}/autofs.rc11 autofs
+#	insinto /etc/conf.d ; newins ${FILESDIR}/autofs.confd9 autofs
+
 	if use ldap; then
 		cd ${S}/samples
 		docinto samples ; dodoc ldap* auto.master.ldap
