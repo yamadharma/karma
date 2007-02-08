@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-drivers/ati-drivers/ati-drivers-8.30.3-r1.ebuild,v 1.3 2006/12/03 20:09:58 lu_zero Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-drivers/ati-drivers/ati-drivers-8.33.6.ebuild,v 1.1 2007/02/05 10:01:57 marienz Exp $
 
 IUSE="acpi doc opengl"
 
@@ -9,33 +9,39 @@ inherit eutils rpm multilib linux-mod toolchain-funcs
 DESCRIPTION="Ati precompiled drivers for r350, r300, r250 and r200 chipsets"
 HOMEPAGE="http://www.ati.com"
 ATI_URL="https://a248.e.akamai.net/f/674/9206/0/www2.ati.com/drivers/linux/"
-SRC_URI="${ATI_URL}/ati-driver-installer-${PV}.run"
+SRC_URI="${ATI_URL}/ati-driver-installer-${PV}-x86.x86_64.run"
 
 LICENSE="ATI"
-KEYWORDS="-* amd64 x86"
+KEYWORDS="amd64 x86"
 
 RDEPEND="|| ( x11-base/xorg-server virtual/x11 )
-	 app-admin/eselect-opengl
-	 || ( sys-libs/libstdc++-v3 =sys-devel/gcc-3.3* )
-	 acpi? (
-	 	|| ( x11-apps/xauth virtual/x11 )
-	 	sys-power/acpid
-	 )"
+	app-admin/eselect-opengl
+	|| ( sys-libs/libstdc++-v3 =sys-devel/gcc-3.3* )
+	acpi? (
+		|| ( x11-apps/xauth virtual/x11 )
+		sys-power/acpid
+	)"
 
 DEPEND=">=virtual/linux-sources-2.4
 	${RDEPEND}"
 
-PROVIDE="virtual/opengl"
-
 S="${WORKDIR}/common/lib/modules/fglrx/build_mod"
 
 ATIBIN="${D}/opt/ati/bin"
-RESTRICT="nostrip multilib-pkg-force stricter"
+RESTRICT="nostrip test"
 
-QA_EXECSTACK_x86="usr/lib/xorg/modules/dri/fglrx_dri.so"
-QA_EXECSTACK_amd64="usr/lib64/xorg/modules/dri/fglrx_dri.so usr/lib32/xorg/modules/dri/fglrx_dri.so"
-QA_TEXTRELS_x86="usr/lib/xorg/modules/dri/fglrx_dri.so usr/lib/opengl/ati/lib/libGL.so.1.2"
-QA_TEXTRELS_amd64="usr/lib64/xorg/modules/dri/fglrx_dri.so usr/lib32/opengl/ati/lib/libGL.so.1.2 usr/lib32/xorg/modules/dri/fglrx_dri.so usr/lib32/xorg/modules/dri/atiogl_a_dri.so"
+QA_EXECSTACK_x86="usr/lib/xorg/modules/dri/fglrx_dri.so
+	usr/lib/opengl/ati/lib/libGL.so.1.2"
+QA_EXECSTACK_amd64="usr/lib64/xorg/modules/dri/fglrx_dri.so
+	usr/lib32/xorg/modules/dri/fglrx_dri.so"
+QA_TEXTRELS_x86="usr/lib/xorg/modules/dri/fglrx_dri.so
+	usr/lib/xorg/modules/dri/atiogl_a_dri.so
+	usr/lib/xorg/modules/drivers/fglrx_drv.so
+	usr/lib/opengl/ati/lib/libGL.so.1.2"
+QA_TEXTRELS_amd64="usr/lib64/xorg/modules/dri/fglrx_dri.so
+	usr/lib32/opengl/ati/lib/libGL.so.1.2
+	usr/lib32/xorg/modules/dri/fglrx_dri.so
+	usr/lib32/xorg/modules/dri/atiogl_a_dri.so"
 
 choose_driver_paths() {
 	ARCH_DIR="${WORKDIR}/arch"
@@ -44,9 +50,9 @@ choose_driver_paths() {
 	#new modular X paths, 0 is a workaround.
 	if has_version "x11-base/xorg-server"; then
 		if [ "$(get_version_component_range 1 ${X11_IMPLEM_V})" = 1 ] &&
-		   [ "$(get_version_component_range 2 ${X11_IMPLEM_V})" = 0 ] &&
-		   [ "$(get_version_component_range 3 ${X11_IMPLEM_V})" = 99 ] ||
-		   [ "$(get_version_component_range 2 ${X11_IMPLEM_V})" != 0 ]
+			[ "$(get_version_component_range 2 ${X11_IMPLEM_V})" = 0 ] &&
+			[ "$(get_version_component_range 3 ${X11_IMPLEM_V})" = 99 ] ||
+			[ "$(get_version_component_range 2 ${X11_IMPLEM_V})" != 0 ]
 		then
 			BASE_DIR="${WORKDIR}/x710"
 		else
@@ -59,8 +65,8 @@ choose_driver_paths() {
 
 		# Determine if we are facing X.org 6.8.99 aka 6.9
 		if [ "$(get_version_component_range 1 ${X11_IMPLEM_V})" = 6 ] &&
-		   [ "$(get_version_component_range 2 ${X11_IMPLEM_V})" = 8 ] &&
-		   [ "$(get_version_component_range 3 ${X11_IMPLEM_V})" = 99 ]
+			[ "$(get_version_component_range 2 ${X11_IMPLEM_V})" = 8 ] &&
+			[ "$(get_version_component_range 3 ${X11_IMPLEM_V})" = 99 ]
 		then
 			BASE_DIR="${BASE_DIR}90"
 		else
@@ -76,7 +82,7 @@ choose_driver_paths() {
 	fi
 }
 
-pkg_setup(){
+pkg_setup() {
 	#check kernel and sets up KV_OBJ
 	MODULE_NAMES="fglrx(video)"
 	BUILD_TARGETS="kmod_build"
@@ -126,7 +132,7 @@ src_unpack() {
 
 	rm -rf ${ARCH_DIR}/usr/X11R6/bin/{fgl_glxgears,fireglcontrolpanel}
 
-	epatch ${FILESDIR}/${PN}-2.6.19.patch
+	epatch ${FILESDIR}/${PN}-2.6.20.patch
 
 	if use acpi
 	then
@@ -336,7 +342,6 @@ src_install-libs() {
 		cp -pP ${COMMON_DIR}/etc/ati/authatieventsd.sh ${D}/etc/ati/
 	fi
 }
-
 
 pkg_postinst() {
 	/usr/bin/eselect opengl set --use-old ati
