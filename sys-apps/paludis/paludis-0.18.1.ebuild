@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.18.0.ebuild,v 1.2 2007/02/07 21:28:32 killerfox Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.18.1.ebuild,v 1.2 2007/02/08 19:22:32 ferdy Exp $
 
 inherit bash-completion eutils flag-o-matic
 
@@ -10,7 +10,7 @@ SRC_URI="mirror://berlios/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~hppa ~ppc ~sparc x86"
+KEYWORDS="~alpha amd64 ~hppa ~ppc ~sparc x86"
 IUSE="contrarius cran doc glsa inquisitio pink qa ruby selinux zsh-completion"
 
 COMMON_DEPEND="
@@ -45,9 +45,6 @@ pkg_setup() {
 src_compile() {
 	local repositories=`echo default $(usev cran) | tr -s \  ,`
 	local clients=`echo default $(usev contrarius) $(usev inquisitio) | tr -s \  ,`
-
-	# Fix bug #165824
-	epatch ${FILESDIR}/${P}-do_config.patch
 
 	econf \
 		$(use_enable doc doxygen ) \

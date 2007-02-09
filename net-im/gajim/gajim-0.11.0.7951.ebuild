@@ -1,16 +1,16 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-im/gajim/gajim-0.11-r3.ebuild,v 1.8 2007/01/10 00:06:01 welp Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-im/gajim/gajim-0.11.0.7951.ebuild,v 1.1 2007/02/07 21:48:25 welp Exp $
 
 inherit multilib python eutils
 
 DESCRIPTION="Jabber client written in PyGTK"
 HOMEPAGE="http://www.gajim.org/"
-SRC_URI="http://www.gajim.org/downloads/${P}.tar.bz2"
+SRC_URI="http://www.gajim.org/downloads/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86 amd64"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 IUSE="avahi dbus gnome idle libnotify nls spell srv trayicon X xhtml"
 
 DEPEND="|| (
