@@ -247,11 +247,11 @@ src_compile () {
 		--enable-ffmpeg \
 		--disable-faad \
 		--enable-jack \
-		--disable-dv \
+		--enable-dv \
 		--disable-libvc1 \
 		--disable-snapshot \
 		--disable-growl \
-		--disable-pth \
+		--enable-pth \
 		--enable-portaudio \
 		--enable-x264 \
 		--enable-utf8 \
