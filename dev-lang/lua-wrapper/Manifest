@@ -14,6 +14,6 @@ MISC metadata.xml 381 RMD160 19983035371fcbe536b915299b21b454368f4e16 SHA1 d86ee
 MD5 aed67f0fa8c4facfef1ad106021cac3e metadata.xml 381
 RMD160 19983035371fcbe536b915299b21b454368f4e16 metadata.xml 381
 SHA256 28762d1997d0cdf900d84242998d968febaa25b974db4b202d46eac3481858cc metadata.xml 381
-MD5 68b329da9893e34099c7d8ad5cb9c940 files/digest-lua-wrapper-1 1
-RMD160 c0da025038ed83c687ddc430da9846ecb97f3998 files/digest-lua-wrapper-1 1
-SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b files/digest-lua-wrapper-1 1
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-lua-wrapper-1 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-lua-wrapper-1 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-lua-wrapper-1 0
