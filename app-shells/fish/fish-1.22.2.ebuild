@@ -1,13 +1,13 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-shells/fish/fish-1.22.1.ebuild,v 1.2 2006/12/02 01:47:39 antarus Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-shells/fish/fish-1.22.2.ebuild,v 1.3 2007/01/24 03:52:45 genone Exp $
 
 DESCRIPTION="fish is the Friendly Interactive SHell"
 HOMEPAGE="http://fishshell.org/"
 SRC_URI="http://fishshell.org/files/${PV}/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc x86"
+KEYWORDS="amd64 ppc x86"
 IUSE="doc X"
 RDEPEND="sys-libs/ncurses
 	sys-devel/bc
@@ -17,9 +17,13 @@ DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
 
 src_compile() {
+	# Set things up for fish to be a default shell.
+	# It has to be in /bin in case /usr is unavailable.
+	# Also, all of its utilities have to be in /bin.
 	econf \
 		docdir=/usr/share/doc/${PF} \
 		--without-xsel \
+		--bindir=/bin \
 		|| die "econf failed"
 	emake || die "emake failed"
 	if use doc; then
@@ -28,18 +32,17 @@ src_compile() {
 }
 
 src_install() {
-	make DESTDIR="${D}" install
+	emake DESTDIR="${D}" install
 }
 
 pkg_postinst() {
-	einfo
-	einfo "If you want to use fish as your default shell, you need to add it"
-	einfo "to /etc/shells. This is not recommended because fish doesn't install"
-	einfo "to /bin."
-	einfo
+	elog
+	elog "To use ${PN} as your default shell, you need to add /bin/${PN}"
+	elog "to /etc/shells."
+	elog
 	ewarn "Many files moved to ${ROOT}usr/share/fish/completions from /etc/fish.d/."
 	ewarn "Delete everything in ${ROOT}etc/fish.d/ except fish_interactive.fish."
 	ewarn "Otherwise, fish won't notice updates to the installed files,"
 	ewarn "because the ones in /etc will override the new ones in /usr."
-	einfo
+	echo
 }
