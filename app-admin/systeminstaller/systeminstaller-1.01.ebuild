@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/systeminstaller/${P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="x86"
+KEYWORDS="x86 amd64"
 
 DEPEND=">=dev-perl/AppConfig-1.52"
 

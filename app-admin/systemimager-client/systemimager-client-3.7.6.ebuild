@@ -16,7 +16,7 @@ SRC_URI="mirror://sourceforge/systemimager/${MY_P}.tar.bz2"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="x86 amd64"
 
 DEPEND=""
 RDEPEND="${DEPEND}
