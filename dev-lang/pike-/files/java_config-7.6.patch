@@ -1,0 +1,57 @@
+diff -Naur ../work/pike-7.2.562/src/modules/Java/configure.in pike-7.2.562/src/modules/Java/configure.in
+--- ../work/pike-7.2.562/src/modules/Java/configure.in	2002-04-07 04:19:22.000000000 +0400
++++ pike-7.2.562/src/modules/Java/configure.in	2004-03-01 17:48:24.000000000 +0300
+@@ -24,8 +24,13 @@
+ 
+   AC_MSG_CHECKING(which operating system we're using)
+   AC_CACHE_VAL(pike_cv_java_sysos, [
++    rpath_opt=-R
+     pike_cv_java_sysos="`uname | tr 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'abcdefghijklmnopqrstuvwxyz'`"
+     case "$pike_cv_java_sysos" in
++      Linux|linux)
++        pike_cv_java_sysos="linux"
++        rpath_opt="-Wl,-rpath,"
++      ;;
+       sunos)
+         case "`uname -r`" in
+           5.*|6.*|7.*) pike_cv_java_sysos="solaris";
+@@ -167,8 +174,8 @@
+   if test "x$pike_cv_java_lib_dir" = xno; then :; else
+     echo Adding $pike_cv_java_lib_dir to the library search path.
+     for i in $pike_cv_java_lib_dir; do
+-      LDFLAGS="-L$i -R$i ${LDFLAGS}"
+-      LINKER_OPTIONS="-L$i -R$i ${LINKER_OPTIONS}"
++      LDFLAGS="-L$i $rpath_opt$i ${LDFLAGS}"
++      LINKER_OPTIONS="-L$i $rpath_opt$i ${LINKER_OPTIONS}"
+       JAVA_LIBPATH="${JAVA_LIBPATH}${JAVA_LIBPATH:+:}$i"
+ #     LIBPATH="${LIBPATH}${LIBPATH:+:}$i"
+     done
+@@ -269,7 +276,11 @@
+       AC_MSG_CHECKING([for JNI_CreateJavaVM in -ljvm])
+       AC_CACHE_VAL(ac_cv_lib_jvm_JNI_CreateJavaVM, [
+         ac_save_LIBS="$LIBS"
+-        LIBS="-ljvm $LIBS"
++        if test "$pike_cv_java_threads_type" = native_threads; then
++    	    LIBS="-ljvm -lpthread $LIBS"
++        else
++    	    LIBS="-ljvm $LIBS"
++        fi
+         AC_TRY_LINK([#include <jni.h>], dnl
+ 	  [JNI_CreateJavaVM((JavaVM**)0,(void**)0,(void*)0);], dnl
+ 	  [ac_cv_lib_jvm_JNI_CreateJavaVM=yes], dnl
+@@ -277,8 +288,13 @@
+         LIBS="$ac_save_LIBS"
+       ])
+       if test x"$ac_cv_lib_jvm_JNI_CreateJavaVM" = xyes; then
+-        LIBS="-ljvm $LIBS"
+-        JAVA_LIBS="-ljvm ${JAVA_LIBS}"
++        if test "$pike_cv_java_threads_type" = native_threads; then
++    	    LIBS="-ljvm -lpthread $LIBS"
++    	    JAVA_LIBS="-ljvm -lpthread ${JAVA_LIBS}"
++        else
++    	    LIBS="-ljvm $LIBS"
++    	    JAVA_LIBS="-ljvm ${JAVA_LIBS}"
++        fi
+         pike_cv_java=yes;
+         AC_MSG_RESULT(yes)
+       else

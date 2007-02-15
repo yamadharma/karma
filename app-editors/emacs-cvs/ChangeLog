@@ -1,6 +1,246 @@
 # ChangeLog for app-editors/emacs-cvs
-# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs-cvs/ChangeLog,v 1.37 2005/12/18 01:21:45 ranger Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs-cvs/ChangeLog,v 1.81 2007/02/08 14:03:45 opfer Exp $
+
+  08 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r2.ebuild, emacs-cvs-22.0.9999-r2.ebuild:
+  repair inclusion of motif; correct handling of USE flags; thanks to John R.
+  Graham <john_r_graham@mindspring.com> in bug 165663
+
+  06 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r2.ebuild, emacs-cvs-22.0.9999-r2.ebuild:
+  made the definition of suffix variable more elegant (thanks to Ulrich
+  Müller <ulm@kph.uni-mainz.de>
+
+  04 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  -emacs-cvs-22.0.93-r1.ebuild, emacs-cvs-22.0.93-r2.ebuild,
+  -emacs-cvs-22.0.9999-r1.ebuild, emacs-cvs-22.0.9999-r2.ebuild:
+  add a check for uncompressed man pages and clean up
+
+  03 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r2.ebuild, emacs-cvs-22.0.9999-r2.ebuild:
+  determine compression suffix correctly and finally
+
+  02 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r2.ebuild, emacs-cvs-22.0.9999-r2.ebuild:
+  hopefully fix man page symlinks again, part II
+
+  02 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r2.ebuild, emacs-cvs-22.0.9999-r2.ebuild:
+  hopefully fix man page symlinks again
+
+*emacs-cvs-22.0.9999-r2 (02 Feb 2007)
+*emacs-cvs-22.0.93-r2 (02 Feb 2007)
+
+  02 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.93-r2.ebuild, +emacs-cvs-22.0.9999-r2.ebuild:
+  create symlinks for man pages, as reported by Ulrich Mueller
+  <ulm@kph.uni-mainz.de>
+  remove some tabs in IUSE
+  correct (hopefully) .desktop entry
+
+  02 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r1.ebuild, emacs-cvs-22.0.9999-r1.ebuild:
+  supress error message of a file removal
+
+  01 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r1.ebuild, emacs-cvs-22.0.9999-r1.ebuild:
+  correct usage of USE=gtk flag; reported by Christoph Lange <langec@web.de>
+  in bug 164857
+
+  01 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  -emacs-cvs-22.0.92-r1.ebuild, -emacs-cvs-22.0.93.ebuild,
+  -emacs-cvs-22.0.9999.ebuild:
+  clean up
+
+  01 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r1.ebuild, emacs-cvs-22.0.9999-r1.ebuild:
+  finally fix the dir file compression
+
+  31 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.93-r1.ebuild, emacs-cvs-22.0.9999-r1.ebuild:
+  fix (hack, we wait for the proper solution) for the compression of dir file,
+  see bug #162675, reported by Tassilo Horn <tassilo@member.fsf.org>
+
+  30 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.9999-r1.ebuild:
+  remove all references to mudflap
+
+  30 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.9999-r1.ebuild:
+  corrected working directory
+
+*emacs-cvs-22.0.9999-r1 (30 Jan 2007)
+*emacs-cvs-22.0.93-r1 (30 Jan 2007)
+
+  30 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.93-r1.ebuild, +emacs-cvs-22.0.9999-r1.ebuild:
+  revision bump: more USE flags: alsa gnome better calling of configure
+  options slightly modified some output added a lot of quotes to prevent
+  directory names with spaces from breaking the emerge process .93-r1 does not
+  checkout a live CVS tag, but downloads a prepared snapshot based on the
+  ideas of ArYiX <aryixb@gmail.com> in bug #164164
+
+  29 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  -emacs-cvs-22.0.91.ebuild, -emacs-cvs-22.0.92.ebuild:
+  clean up
+
+  29 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-23.0.0-r1.ebuild:
+  also fix double compressed info files for this version
+
+*emacs-cvs-22.0.93 (26 Jan 2007)
+
+  26 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.93.ebuild, emacs-cvs-22.0.9999.ebuild:
+  added new tag ebuild, corrected slot for live ebuild
+
+*emacs-cvs-22.0.9999 (26 Jan 2007)
+*emacs-cvs-22.0.92-r1 (26 Jan 2007)
+
+  26 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.92-r1.ebuild, +emacs-cvs-22.0.9999.ebuild:
+  fixed double compression of info documentation, reported by Tassilo Horn
+  <tassilo@member.fsf.org> in bug #162675 added a live cvs ebuild, again
+
+  05 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.91.ebuild, emacs-cvs-22.0.92.ebuild,
+  emacs-cvs-23.0.0-r1.ebuild:
+  don't depend on portage
+
+  05 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  -files/xft-bgalpha.patch, -files/xft-invertcursor.patch,
+  -files/xft-xfaces-fixcrash.patch:
+  remove unecessary patches
+
+*emacs-cvs-22.0.92 (05 Jan 2007)
+
+  05 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.91.ebuild, +emacs-cvs-22.0.92.ebuild:
+  reflect branching from upstream CVS server correctly. Thanks to John R.
+  Graham <john_r_graham@mindspring.com>, who pointed out the correct solution
+  in bug #158730
+
+  05 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  -emacs-cvs-22.0.50-r1.ebuild, -emacs-cvs-22.0.50-r2.ebuild,
+  -emacs-cvs-22.0.50-r3.ebuild, -emacs-cvs-22.0.90.ebuild,
+  -emacs-cvs-23.0.0.ebuild:
+  punt old versions
+
+  02 Jan 2007; Diego Pettenò <flameeyes@gentoo.org>
+  +files/emacs-cvs-freebsd-sparc.patch, emacs-cvs-22.0.91.ebuild,
+  emacs-cvs-23.0.0-r1.ebuild:
+  Add patch to build on Gentoo/FreeBSD/SPARC64, see bug #159584. Add
+  ~sparc-fbsd keywords.
+
+  29 Dec 2006; <fauli@gentoo.org> emacs-cvs-22.0.91.ebuild:
+  changed SVN version to 22.0.92, as reported in bug #158730 by Graham Murray
+  <gmurray@webwayone.co.uk>
+
+  29 Nov 2006; Timothy Redaelli <drizzt@gentoo.org>
+  emacs-cvs-23.0.0-r1.ebuild:
+  Removed ~x86-fbsd keyword since it will not compile with the new
+  freebsd-contrib.
+
+  27 Nov 2006; Diego Pettenò <flameeyes@gentoo.org>
+  emacs-cvs-23.0.0-r1.ebuild:
+  Add ~x86-fbsd keyword.
+
+*emacs-cvs-22.0.91 (20 Nov 2006)
+
+  20 Nov 2006; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.91.ebuild:
+  bump, to reflect upstream's changes, reported by Martin Schoenmakers
+  <aiviru@diamond-age.net> and Christer Ekholm <che@chrekh.se> in bug 155690
+
+*emacs-cvs-23.0.0-r1 (30 Oct 2006)
+
+  30 Oct 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  +files/emacs.desktop.in, emacs-cvs-22.0.90.ebuild,
+  +emacs-cvs-23.0.0-r1.ebuild:
+  Merge emacs-22 ebuild to emacs-23 ebuild; Correct desktop file slotting;
+  Resolves Bug #153174.
+
+*emacs-cvs-22.0.90 (28 Oct 2006)
+
+  28 Oct 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  +emacs-cvs-22.0.90.ebuild:
+  New upstream (pre-release version numbers).
+
+  23 Aug 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  emacs-cvs-22.0.50-r3.ebuild, emacs-cvs-23.0.0.ebuild:
+  New USE flag toolkit-scroll-bar added; Resolves Bug #83472.
+
+  21 Aug 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  emacs-cvs-22.0.50-r3.ebuild:
+  Note that emacs requires fonts in pkg_postinst.
+
+  18 Aug 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  emacs-cvs-22.0.50-r3.ebuild:
+  Support gzip-el USE flag which will compress the bundled Emacs Lisp source
+  files during installation.
+
+*emacs-cvs-22.0.50-r3 (07 Aug 2006)
+
+  07 Aug 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  +emacs-cvs-22.0.50-r3.ebuild:
+  Remove the (commented out) XFT support in favour of the emacs-unicode-2
+  branch support in the emacs-cvs-23.0.0 ebuild; Support the source USE flag
+  which would install the Emacs C source.
+
+  26 Jun 2006; Diego Pettenò <flameeyes@gentoo.org>
+  emacs-cvs-22.0.50-r2.ebuild:
+  Add ~x86-fbsd keyword.
+
+  17 Jun 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  emacs-cvs-23.0.0.ebuild:
+  Support for XFT options; Resolves Bug #136922.
+
+  29 Apr 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  emacs-cvs-22.0.50-r2.ebuild:
+  Once more, disable the sandbox for src_compile; Resolves Bug #131505.
+
+  27 Apr 2006; Alec Warner <antarus@gentoo.org>
+  files/digest-emacs-cvs-22.0.50-r1, files/digest-emacs-cvs-22.0.50-r2,
+  files/digest-emacs-cvs-23.0.0, Manifest:
+  Fixing duff SHA256 digests: Bug # 131293
+
+  29 Mar 2006; Emanuele Giaquinta <exg@gentoo.org>
+  emacs-cvs-22.0.50-r2.ebuild:
+  Enable sandbox. Remove useless nls use flag.
+
+*emacs-cvs-22.0.50-r2 (17 Mar 2006)
+
+  17 Mar 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  +emacs-cvs-22.0.50-r2.ebuild:
+  Don't use --with-x-toolkit=athena in the Xaw3d case; Disable the sandbox for
+  src_compile() only.
+
+  06 Mar 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  files/emacs-subdirs-el-gentoo.diff:
+  Create new emacs-subdirs-el-gentoo.diff for latest CVS; Resolves Bug #124999.
+
+  26 Feb 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  -files/50emacs-22.0.50.envd, emacs-cvs-22.0.50-r1.ebuild,
+  emacs-cvs-23.0.0.ebuild:
+  Restore mistakenly removed ~arch keywords; Resolves Bug #124158; Generate
+  the /etc/env.d/50emacs-cvs-${SLOT} file from a here document rather than
+  maintaining one in ${FILESDIR}; Initial work toward supporting
+  find-function-C-source.
+
+  25 Feb 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  -emacs-cvs-22.0.50.ebuild:
+  Removing the last ebuild which contained stable keywords. This is usually
+  against policy, but since this is a live CVS ebuild and Bug #22225 has been
+  resolved this should be OK; Resolves Bug #83136.
+
+*emacs-cvs-22.0.50-r1 (09 Feb 2006)
+
+  09 Feb 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  +files/xft-bgalpha.patch, +files/xft-invertcursor.patch,
+  +files/xft-xfaces-fixcrash.patch, emacs-cvs-22.0.50.ebuild,
+  +emacs-cvs-22.0.50-r1.ebuild, emacs-cvs-23.0.0.ebuild:
+  Some unfinished experimental XFT support; Modular X dependencies.
 
   18 Dec 2005; Brent Baude <ranger@gentoo.org> emacs-cvs-23.0.0.ebuild:
   Marked ~ppc64 per bug 115361

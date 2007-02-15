@@ -6,6 +6,10 @@ AUX misc/2.6.18-r1/karma-openvz.tar.bz2 1049413 RMD160 123e3e51d7368f4a7bc91b7ab
 MD5 55bed9342e73fc7c94768af07898f924 files/misc/2.6.18-r1/karma-openvz.tar.bz2 1049413
 RMD160 123e3e51d7368f4a7bc91b7ab1c90e7c6c4aacf8 files/misc/2.6.18-r1/karma-openvz.tar.bz2 1049413
 SHA256 13cf6d5ffc6b648bcb2d9f6e54ded5e465695abd1999545b595a1c7a19e4b315 files/misc/2.6.18-r1/karma-openvz.tar.bz2 1049413
+AUX misc/2.6.18-r2/karma-openvz.tar.bz2 1164738 RMD160 fcc0a02039b9696ca6ace6fc91db0de4d7e62e49 SHA1 55cce3cfbdcb3dcae59c7578981bf726a98f6742 SHA256 dab8bc0c9b4bfcc494df809b204227b5055929751314db7c0d932a6d7938839a
+MD5 cdc3472a53a8b2cf269c6117dcfe0043 files/misc/2.6.18-r2/karma-openvz.tar.bz2 1164738
+RMD160 fcc0a02039b9696ca6ace6fc91db0de4d7e62e49 files/misc/2.6.18-r2/karma-openvz.tar.bz2 1164738
+SHA256 dab8bc0c9b4bfcc494df809b204227b5055929751314db7c0d932a6d7938839a files/misc/2.6.18-r2/karma-openvz.tar.bz2 1164738
 AUX misc/2.6.18/karma-openvz.tar.bz2 919974 RMD160 d3aeb11c41e969f7d80c58d79685f0782874a7e9 SHA1 21ac9ccec832b7366b7c4ca381b7e4ad0ed07886 SHA256 cb60a2bd7590295ed6d918e38f7391ff1c4fdca451ac2ed344055d17f324989e
 MD5 cf695684c7ac13c4eb81131bc2e142bb files/misc/2.6.18/karma-openvz.tar.bz2 919974
 RMD160 d3aeb11c41e969f7d80c58d79685f0782874a7e9 files/misc/2.6.18/karma-openvz.tar.bz2 919974
@@ -16,10 +20,14 @@ EBUILD karma_openvz-sources-2.6.16.ebuild 608 RMD160 26812a77e5a88fb7c1ea8108b93
 MD5 402cfdfed1a737c1bac5a031f5fcc2e7 karma_openvz-sources-2.6.16.ebuild 608
 RMD160 26812a77e5a88fb7c1ea8108b938ffa824ed15dc karma_openvz-sources-2.6.16.ebuild 608
 SHA256 476a5c450f902121a91cc0e08ff4571931601eb9f94e1803c5c6ee48fe63a906 karma_openvz-sources-2.6.16.ebuild 608
-EBUILD karma_openvz-sources-2.6.18-r1.ebuild 608 RMD160 26812a77e5a88fb7c1ea8108b938ffa824ed15dc SHA1 6087e27b56337d1d8b10af394f403b14b9a12325 SHA256 476a5c450f902121a91cc0e08ff4571931601eb9f94e1803c5c6ee48fe63a906
-MD5 402cfdfed1a737c1bac5a031f5fcc2e7 karma_openvz-sources-2.6.18-r1.ebuild 608
-RMD160 26812a77e5a88fb7c1ea8108b938ffa824ed15dc karma_openvz-sources-2.6.18-r1.ebuild 608
-SHA256 476a5c450f902121a91cc0e08ff4571931601eb9f94e1803c5c6ee48fe63a906 karma_openvz-sources-2.6.18-r1.ebuild 608
+EBUILD karma_openvz-sources-2.6.18-r1.ebuild 653 RMD160 4a4782bbb98d8bd27b1fb0e44a6601e351828fe1 SHA1 1ebf29874a8541e7d63c8e6dfc8258a4dc295107 SHA256 673a3419c4b851e6aa33113401e0f0518eaf847fc05accd8e036bd845d34c991
+MD5 53291f6d59101cfe8836494816227bd6 karma_openvz-sources-2.6.18-r1.ebuild 653
+RMD160 4a4782bbb98d8bd27b1fb0e44a6601e351828fe1 karma_openvz-sources-2.6.18-r1.ebuild 653
+SHA256 673a3419c4b851e6aa33113401e0f0518eaf847fc05accd8e036bd845d34c991 karma_openvz-sources-2.6.18-r1.ebuild 653
+EBUILD karma_openvz-sources-2.6.18-r2.ebuild 653 RMD160 4a4782bbb98d8bd27b1fb0e44a6601e351828fe1 SHA1 1ebf29874a8541e7d63c8e6dfc8258a4dc295107 SHA256 673a3419c4b851e6aa33113401e0f0518eaf847fc05accd8e036bd845d34c991
+MD5 53291f6d59101cfe8836494816227bd6 karma_openvz-sources-2.6.18-r2.ebuild 653
+RMD160 4a4782bbb98d8bd27b1fb0e44a6601e351828fe1 karma_openvz-sources-2.6.18-r2.ebuild 653
+SHA256 673a3419c4b851e6aa33113401e0f0518eaf847fc05accd8e036bd845d34c991 karma_openvz-sources-2.6.18-r2.ebuild 653
 EBUILD karma_openvz-sources-2.6.18.ebuild 608 RMD160 26812a77e5a88fb7c1ea8108b938ffa824ed15dc SHA1 6087e27b56337d1d8b10af394f403b14b9a12325 SHA256 476a5c450f902121a91cc0e08ff4571931601eb9f94e1803c5c6ee48fe63a906
 MD5 402cfdfed1a737c1bac5a031f5fcc2e7 karma_openvz-sources-2.6.18.ebuild 608
 RMD160 26812a77e5a88fb7c1ea8108b938ffa824ed15dc karma_openvz-sources-2.6.18.ebuild 608
@@ -33,3 +41,6 @@ SHA256 a61e2b2716c72a51c67f55ab2c324210b05b1ec88d45f0d63ff75c8eb5ab2b35 files/di
 MD5 9c768b9b7a24c1a32cf5a32ef5765289 files/digest-karma_openvz-sources-2.6.18-r1 247
 RMD160 f25e4a6d9407697411d8fcc471042d28b08fcf9e files/digest-karma_openvz-sources-2.6.18-r1 247
 SHA256 a61e2b2716c72a51c67f55ab2c324210b05b1ec88d45f0d63ff75c8eb5ab2b35 files/digest-karma_openvz-sources-2.6.18-r1 247
+MD5 9c768b9b7a24c1a32cf5a32ef5765289 files/digest-karma_openvz-sources-2.6.18-r2 247
+RMD160 f25e4a6d9407697411d8fcc471042d28b08fcf9e files/digest-karma_openvz-sources-2.6.18-r2 247
+SHA256 a61e2b2716c72a51c67f55ab2c324210b05b1ec88d45f0d63ff75c8eb5ab2b35 files/digest-karma_openvz-sources-2.6.18-r2 247

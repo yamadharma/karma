@@ -22,7 +22,7 @@ HOMEPAGE="http://www.iki.fi/tuomov/ion/"
 SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 	mirror://debian/pool/main/i/${SCRIPTS_PN}/${SCRIPTS_PN}_${SCRIPTS_PV}.orig.tar.gz
 	mirror://debian/pool/main/i/${IONFLUX_PN}/${IONFLUX_PN}_${IONFLUX_PV}.orig.tar.gz
-	iontruetype?	http://clemens.endorphin.org/patches/xft-ion3-for-darcs-20061202.diff"
+	iontruetype?	( http://clemens.endorphin.org/patches/xft-ion3-for-darcs-20061202.diff )"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
