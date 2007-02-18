@@ -1,6 +1,65 @@
 # ChangeLog for media-video/vlc
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/vlc/ChangeLog,v 1.210 2007/01/26 19:52:35 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/vlc/ChangeLog,v 1.226 2007/02/14 08:14:46 aballier Exp $
+
+  14 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild,
+  vlc-0.8.6_p18636.ebuild:
+  Really disable altivec if not wanted, bug #158126
+
+  12 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild:
+  Disable also autodetected cflags optimisations in stable vlc
+
+  11 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild,
+  vlc-0.8.6_p18636.ebuild:
+  Fix live detection, bug #160320
+
+  11 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild,
+  vlc-0.8.6_p18636.ebuild:
+  Fix libnotify use_enable
+
+  11 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6_p18636.ebuild:
+  Disable extra autodetected optimizations
+
+  11 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild,
+  vlc-0.8.6_p18636.ebuild:
+  Add a musepack useflag, was automagic, bug #160999
+
+  10 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild,
+  vlc-0.8.6_p18636.ebuild:
+  Die if skins are wanted but not wxwindows, dont install vlc.desktop if not
+  using wxwindows, bug #158095, remove inexistant docs from dodoc
+
+  10 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild,
+  vlc-0.8.6_p18636.ebuild:
+  Remove duplicate docs when use=-nsplugin, bug #158536, thanks to Chris Mayo
+  <mayo@clara.co.uk>
+
+  10 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6_p18636.ebuild:
+  Jack useflag, bug #157899
+
+  10 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild:
+  Fix also sdl-image automagic in stable vlc
+
+  10 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6_p18636.ebuild:
+  Remove sdl-image automagic, added as a useflag, bug #165177
+
+  10 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild,
+  vlc-0.8.6_p18636.ebuild:
+  Remove libtar automagic, bug #154194
+
+  08 Feb 2007; Alexis Ballier <aballier@gentoo.org> vlc-0.8.6-r1.ebuild,
+  vlc-0.8.6_p18636.ebuild:
+  update gnutls dep to >= 1.2.9, bug #165986
+
+  08 Feb 2007; Christian Faulhammer <opfer@gentoo.org> vlc-0.8.6-r1.ebuild:
+  replace flag O0 with O1, inherited flag-o-matic and ordered other eclasses
+  alphabetically
+
+  27 Jan 2007; Diego Pettenò <flameeyes@gentoo.org> -vlc-0.8.4a-r1.ebuild:
+  Remove old versions.
+
+  27 Jan 2007; Joseph Jezak <josejx@gentoo.org> vlc-0.8.6-r1.ebuild:
+  Marked ppc stable for bug #161462.
 
 *vlc-0.8.6_p18636 (26 Jan 2007)
 

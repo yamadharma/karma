@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/vlc/vlc-0.8.6_p18636.ebuild,v 1.1 2007/01/26 19:52:35 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/vlc/vlc-0.8.6_p18636.ebuild,v 1.12 2007/02/14 08:14:46 aballier Exp $
 
 WANT_AUTOMAKE=latest
 WANT_AUTOCONF=latest
@@ -13,7 +13,7 @@ MY_PV="${PV/_/-}"
 MY_PV="${MY_PV/-beta/-test}"
 MY_P="${PN}-${MY_PV}"
 
-PATCHLEVEL="33"
+PATCHLEVEL="37"
 DESCRIPTION="VLC media player - Video player and streamer"
 HOMEPAGE="http://www.videolan.org/vlc/"
 
@@ -36,9 +36,9 @@ KEYWORDS="~alpha amd64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 IUSE="a52 3dfx debug altivec httpd vlm gnutls live v4l cdda ogg matroska
 dvb dvd vcd dts flac mpeg vorbis theora X opengl truetype svg fbcon svga
 oss aalib ggi libcaca esd arts alsa wxwindows ncurses xosd lirc stream
-mp3 xv bidi sdl png xml samba daap corba mod speex shout rtsp
+mp3 xv bidi sdl sdl-image png xml samba daap corba mod speex shout rtsp
 win32codecs skins hal avahi xinerama cddb directfb upnp nsplugin seamonkey
-optimisememory libnotify"
+optimisememory libnotify jack musepack"
 
 RDEPEND="
 		>=media-video/ffmpeg-0.4.9_p20050226-r1
@@ -76,11 +76,12 @@ RDEPEND="
 		lirc? ( app-misc/lirc )
 		3dfx? ( media-libs/glide-v3 )
 		bidi? ( >=dev-libs/fribidi-0.10.4 )
-		gnutls? ( >=net-libs/gnutls-1.0.17 )
+		gnutls? ( >=net-libs/gnutls-1.2.9 )
 		sys-libs/zlib
 		png? ( media-libs/libpng )
 		media-libs/libdvbpsi
-		sdl? ( >=media-libs/libsdl-1.2.8 )
+		sdl? ( >=media-libs/libsdl-1.2.8
+			sdl-image? ( media-libs/sdl-image ) )
 		xml? ( dev-libs/libxml2 )
 		samba? ( net-fs/samba )
 		vcd? ( >=dev-libs/libcdio-0.72
@@ -111,7 +112,9 @@ RDEPEND="
 			!seamonkey? ( www-client/mozilla-firefox )
 			seamonkey? ( www-client/seamonkey )
 		)
-		libnotify? ( x11-libs/libnotify )"
+		libnotify? ( x11-libs/libnotify )
+		musepack? ( media-libs/libmpcdec )
+		jack? ( >=media-sound/jack-audio-connection-kit-0.99.0-r1 )"
 
 DEPEND="${RDEPEND}
 	X? ( xinerama? ( || ( x11-proto/xineramaproto <virtual/x11-7 ) ) )
@@ -129,6 +132,10 @@ pkg_setup() {
 		eerror "Trying to build with skins support but without truetype."
 		die "You have to use 'truetype' to use 'skins'"
 	fi
+	if use skins && ! use wxwindows; then
+		eerror "Trying to build with skins support but without wxwindows."
+		die "You have to use 'wxwindows' to use 'skins'"
+	fi
 }
 
 src_unpack() {
@@ -141,14 +148,6 @@ src_unpack() {
 	EPATCH_EXCLUDE="${EPATCH_EXCLUDE} 260_all_format-string-sa23592.patch"
 
 	EPATCH_SUFFIX="patch" epatch "${WORKDIR}/patches"
-
-	# Portaudio fixes
-#	if ( use portaudio )
-#	    then
-	    sed -i -e "s:-lportaudio:-lportaudio-2:g" ${S}/configure.ac
-	    sed -i -e "s:portaudio.h:portaudio-2/portaudio.h:g" ${S}/modules/audio_output/portaudio.c
-#	fi
-
 	AT_M4DIR="m4" eautoreconf
 
 	# Replace install-sh with libtool's copy
@@ -228,6 +227,7 @@ src_compile () {
 		$(use_enable ggi) \
 		$(use_enable 3dfx glide) \
 		$(use_enable sdl) \
+		$(use_enable sdl-image) \
 		$(use_enable png) \
 		$(use_enable xml libxml2) \
 		$(use_enable samba smb) \
@@ -243,17 +243,20 @@ src_compile () {
 		$(use_enable avahi bonjour) \
 		$(use_enable upnp) \
 		$(use_enable optimisememory optimize-memory) \
-		$(use_enable libnotify) \
+		$(use_enable libnotify notify) \
+		$(use_enable jack) \
+		$(use_enable musepack mpc) \
 		--enable-ffmpeg \
 		--disable-faad \
-		--enable-jack \
-		--enable-dv \
+		--disable-dv \
 		--disable-libvc1 \
 		--disable-snapshot \
 		--disable-growl \
-		--enable-pth \
-		--enable-portaudio \
-		--enable-x264 \
+		--disable-pth \
+		--disable-portaudio \
+		--disable-x264 \
+		--disable-libtar \
+		--disable-optimizations \
 		--enable-utf8 \
 		--enable-libtool \
 		$(use_enable nsplugin mozilla) \
@@ -272,17 +275,17 @@ src_install() {
 	# First install the library, to avoid screwups during relinking.select
 	emake -j1 DESTDIR="${D}" install || die "make install failed"
 
-	dodoc AUTHORS MAINTAINERS HACKING THANKS TODO NEWS README \
+	dodoc AUTHORS MAINTAINERS HACKING THANKS NEWS README \
 		doc/fortunes.txt doc/intf-cdda.txt doc/intf-vcd.txt
 
 	if use nsplugin; then
 		dodir "/usr/$(get_libdir)/${PLUGINS_DIR}"
 		mv "${D}"/usr/$(get_libdir)/mozilla/{components,plugins}/* \
 			"${D}/usr/$(get_libdir)/${PLUGINS_DIR}/"
-
-		rm -rf "${D}/usr/share/doc/vlc" \
-			"${D}"/usr/share/vlc/vlc{16x16,32x32,48x48,128x128}.{png,xpm,ico}
 	fi
+
+	rm -rf "${D}/usr/share/doc/vlc" \
+		"${D}"/usr/share/vlc/vlc{16x16,32x32,48x48,128x128}.{png,xpm,ico}
 
 	use skins || rm -rf "${D}/usr/share/vlc/skins2"
 
@@ -291,5 +294,5 @@ src_install() {
 		newins "${S}"/share/vlc${res}x${res}.png vlc.png
 	done
 
-	use wxwindows && domenu "${S}/debian/vlc.desktop"
+	use wxwindows || rm "${D}/usr/share/applications/vlc.desktop"
 }
