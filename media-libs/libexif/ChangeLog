@@ -1,6 +1,56 @@
 # ChangeLog for media-libs/libexif
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/libexif/ChangeLog,v 1.56 2006/06/09 06:41:41 eradicator Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-libs/libexif/ChangeLog,v 1.66 2007/02/19 01:46:44 marienz Exp $
+
+  19 Feb 2007; Marien Zwart <marienz@gentoo.org> libexif-0.6.13-r1.ebuild:
+  Move preserve_old_lib call from src_install to pkg_postinst because
+  preserve_old_lib now calls die if called from src_install. Changes a stable
+  ebuild because libexif-0.6.13-r2 probably has too many changes to go stable
+  everywhere right now. Thanks to Logix101 for reporting the problem on irc.
+
+  08 Feb 2007; Fabian Groffen <grobian@gentoo.org> libexif-0.5.12-r3.ebuild,
+  libexif-0.6.12-r4.ebuild, libexif-0.6.13-r1.ebuild:
+  Dropped ppc-macos keyword, see you in prefix
+
+  08 Feb 2007; Steve Arnold <nerdboy@gentoo.org> libexif-0.6.13-r1.ebuild,
+  libexif-0.6.13-r2.ebuild:
+  corrected erroneous use of static use flag (bug 165358)
+
+*libexif-0.6.13-r2 (04 Feb 2007)
+
+  04 Feb 2007; Maurice van der Pot <griffon26@gentoo.org>
+  files/libexif-0.6.13-doxy-stamp-make.patch,
+  +files/libexif-0.6.13-library-versioning.patch,
+  +files/libexif-0.6.13-optional-apidocs.patch, +libexif-0.6.13-r2.ebuild:
+  Fixed a parallel make issue in the doxy-stamp-make patch of bug #160973.
+  Also really fixed #150152 this time, as well as #165240. Also corrected 
+  the library versioning patching that used to be done with sed.
+  Dropped ppc-macos keyword altogether because of bad dependencies.
+  I didn't want to make all these changes to an ebuild marked stable on so 
+  many archs, hence the -r2.
+
+  03 Feb 2007; Steve Arnold <nerdboy@gentoo.org>
+  +files/libexif-0.6.13-doxy-stamp-make.patch, libexif-0.6.13-r1.ebuild:
+  Fixed annoying bugs #150152 and #160973 (thanks to Ed Catmur and Jozsef Daniel
+  for diagnosing and posting the patch, as well as the people on the other bug).
+  Tested with all USE flags disabled and no doxygen present.
+
+  05 Jan 2007; Robin H. Johnson <robbat2@gentoo.org>
+  +files/libexif-0.6.13-parallel-build.patch, libexif-0.6.13-r1.ebuild:
+  Compile fix for parallel make.
+
+  17 Oct 2006; Bryan Østergaard <kloeri@gentoo.org>
+  libexif-0.6.13-r1.ebuild:
+  Stable on Alpha.
+
+  05 Oct 2006; Joseph Jezak <josejx@gentoo.org> libexif-0.6.13-r1.ebuild:
+  Marked ppc stable for bug #146409.
+
+  05 Oct 2006; Joshua Jackson <tsunam@gentoo.org> libexif-0.6.13-r1.ebuild:
+  Stable x86; bug #146409
+
+  04 Sep 2006; Joshua Kinard <kumba@gentoo.org> libexif-0.6.12-r4.ebuild:
+  Marked stable on mips.
 
   09 Jun 2006; Jeremy Huddleston <eradicator@gentoo.org>
   libexif-0.6.13-r1.ebuild:
