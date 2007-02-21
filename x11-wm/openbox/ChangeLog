@@ -1,6 +1,71 @@
 # ChangeLog for x11-wm/openbox
-# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/x11-wm/openbox/ChangeLog,v 1.104 2005/11/26 18:58:48 gothgirl Exp $
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/x11-wm/openbox/ChangeLog,v 1.116 2006/12/07 04:09:18 omp Exp $
+
+  07 Dec 2006; David Shakaryan <omp@gentoo.org>
+  -files/openbox-3.3_rc2-64bit-property.patch,
+  -files/openbox-3.3_rc2-asneeded.patch, -openbox-3.3_rc2-r2.ebuild:
+  Remove older version.
+
+  07 Dec 2006; Diego Pettenò <flameeyes@gentoo.org> openbox-3.3.1.ebuild:
+  Add ~x86-fbsd keyword as per bug #156873. Thanks to Mark Kowarsky
+  (mark_alec) for reporting.
+
+  19 Oct 2006; David Shakaryan <omp@gentoo.org> metadata.xml:
+  Add myself as maintainer.
+
+  16 Oct 2006; David Shakaryan <omp@gentoo.org>
+  -files/openbox-20060509-asneeded.patch,
+  -files/openbox-20060509-gtkcolors.patch,
+  -files/openbox-20060509-hideMenuHeader.patch,
+  -files/openbox-20060509-pipedsplitgradient.patch:
+  Remove patches for removed ebuilds.
+
+*openbox-3.3.1 (09 Oct 2006)
+
+  09 Oct 2006; gothgirl <gothgirl@gentoo.org> +openbox-3.3.1.ebuild,
+  -openbox-20060509.ebuild, -openbox-20060509-r1.ebuild,
+  -openbox-20060509-r2.ebuild:
+  added revision 3.3.1 removed stale versions of snapshot
+
+  15 Jul 2006; Bryan Østergaard <kloeri@gentoo.org> metadata.xml:
+  Remove anarchy from metadata.xml as he's retired.
+
+  09 Jun 2006; Jory A. Pratt <anarchy@gentoo.org> openbox-3.2-r2.ebuild:
+  xinerama added to IUSE bug #135930
+
+*openbox-20060509-r2 (04 Jun 2006)
+
+  04 Jun 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +files/openbox-20060509-gtkcolors.patch, +openbox-20060509-r2.ebuild:
+  gtk use color support
+
+*openbox-20060509-r1 (01 Jun 2006)
+
+  01 Jun 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +files/openbox-20060509-hideMenuHeader.patch,
+  +files/openbox-20060509-pipedsplitgradient.patch,
+  +openbox-20060509-r1.ebuild:
+  revision for hiding menu header, and pipedslitgradient patch for more
+  advanced themeing possibilities
+
+*openbox-20060509 (10 May 2006)
+
+  10 May 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +files/openbox-20060509-asneeded.patch, +openbox-20060509.ebuild:
+  synced against cvs as 3.3 final is around the corner
+
+  29 Apr 2006; Jory A. Pratt <anarchy@gentoo.org>
+  +files/openbox-3.3_rc2-asneeded.patch, openbox-3.3_rc2-r2.ebuild:
+  as-needed patch applied
+
+  29 Apr 2006; Jory A. Pratt <anarchy@gentoo.org>
+  -files/openbox-2.3.1-epist.patch, -files/openbox-2.3.1-nls-codeset.patch,
+  -files/openbox-gcc.patch, metadata.xml, -openbox-3.2-r1.ebuild,
+  openbox-3.2-r2.ebuild, -openbox-3.3_rc1-r1.ebuild,
+  -openbox-3.3_rc1-r2.ebuild, -openbox-3.3_rc2.ebuild,
+  -openbox-3.3_rc2-r1.ebuild:
+  ported 3.2 to modular X, maintainership transfered to Anarchy from SuperLag
 
 *openbox-3.3_rc2-r1 (26 Nov 2005)
 

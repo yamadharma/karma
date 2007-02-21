@@ -27,7 +27,7 @@ SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="xinerama ionunicode iontruetype"
+IUSE="xinerama unicode iontruetype"
 DEPEND="
 	|| (
 		(
@@ -44,7 +44,8 @@ DEPEND="
 S=${WORKDIR}/${MY_PN}
 
 SCRIPTS_DIRS="keybindings scripts statusbar statusd styles"
-MODULES="${IONFLUX_PN}-${IONFLUX_PV} ${IONXRANDR_PN}-${IONXRANDR_PV}"
+#MODULES="${IONFLUX_PN}-${IONFLUX_PV} ${IONXRANDR_PN}-${IONXRANDR_PV}"
+MODULES="${IONXRANDR_PN}-${IONXRANDR_PV}"
 
 src_unpack() {
 	unpack ${A}
@@ -53,19 +54,19 @@ src_unpack() {
 	
 	cd ${S}
 	EPATCH_SOURCE="${FILESDIR}/${PV}" EPATCH_SUFFIX="patch" epatch	
-#	epatch ${FILESDIR}/${PV}/*.patch
-#	use iontruetype && epatch ${DISTDIR}/xft-ion3-for-darcs-20061202.diff
-	use iontruetype && patch -p1 < ${DISTDIR}/xft-ion3-for-darcs-20061202.diff	
+	use iontruetype && epatch ${FILESDIR}/xft-ion3-${PV}.patch
+
 
 	# Rewrite install directories to be prefixed by DESTDIR for sake of portage's sandbox
         sed -i 's!\($(INSTALL\w*)\|rm -f\|ln -s\)\(.*\)\($(\w\+DIR)\)!\1\2$(DESTDIR)\3!g' Makefile */Makefile */*/Makefile build/rules.mk
 
-#	for i in "${IONFLUX_PN}-${IONFLUX_PV}" "${IONXRANDR_PN}-${IONXRANDR_PV}"
 	for i in ${MODULES}
 	do
-	    cd ${WORKDIR}/${i}
-	    # Rewrite install directories to be prefixed by DESTDIR for sake of portage's sandbox
-    	    sed -i 's!\($(INSTALL\w*)\|rm -f\|ln -s\)\(.*\)\($(\w\+DIR)\)!\1\2$(DESTDIR)\3!g' Makefile */Makefile */*/Makefile
+		cd ${WORKDIR}/${i}
+		# Rewrite install directories to be prefixed by DESTDIR for sake of portage's sandbox
+		sed -i Makefile */Makefile \
+			-e 's!\($(INSTALL\w*)\|rm -f\|ln -s\)\(.*\)\($(\w\+DIR)\)!\1\2$(DESTDIR)\3!g'
+
 	done
 	cd ${S}
 	
@@ -83,7 +84,7 @@ src_unpack() {
             )
 	#"
 
-#	autoreconf -i -v ${S}/build/ac/
+
         cd ${S}/build/ac/
         autoreconf -i --force
 
@@ -105,24 +106,26 @@ src_compile() {
         # help out this arch as it can't handle certain shared library linkage
         use hppa && myconf="${myconf} --disable-shared"
 
-        # unicode support
-        use ionunicode && myconf="${myconf} --enable-Xutf8"
+	# unicode support
+	use unicode && myconf="${myconf} --enable-Xutf8"
 
         # configure bug, only specify xinerama to not have it
         myconf="${myconf}  `use_enable xinerama`"
+
+	# for lua-5.1
+	myconf="${myconf} --with-lua-suffix=-5.1 --with-lua-includes=/usr/include/lua-5.1" 
 
         cd build/ac/
 #	${S}/build/ac/configure \
 	econf \
 		${myconf} \
-		--sysconfdir=/etc/X11 \
-		--with-lua-prefix=/usr
+		--sysconfdir=/etc/X11
 
 	cd ${S}
 	make \
 		DOCDIR=/usr/share/doc/${PF} || die
 
-	for i in "${IONFLUX_PN}-${IONFLUX_PV}" "${IONXRANDR_PN}-${IONXRANDR_PV}"
+	for i in ${MODULES}
 	do
 	cd ${WORKDIR}/${i}
 
@@ -164,10 +167,7 @@ src_install() {
 		doins $PWD/$FILE
     	    done
 
-#	dodir /usr/share/ion3
-#	cp -R * ${D}/usr/share/ion3
-
-	for i in "${IONFLUX_PN}-${IONFLUX_PV}" "${IONXRANDR_PN}-${IONXRANDR_PV}"
+	for i in ${MODULES}
 	do
 	cd ${WORKDIR}/${i}
 
@@ -179,4 +179,8 @@ src_install() {
 
 	echo '--dopath("mod_ionflux")' >> ${D}/etc/X11/ion3/cfg_modules.lua	
 	echo 'dopath("mod_xrandr")' >> ${D}/etc/X11/ion3/cfg_modules.lua
+	
+	mv ${D}/usr/share/doc/ion3 ${D}/usr/share/doc/${PF}
+
+	cp ${FILESDIR}/*.lua ${D}/usr/share/ion3
 }

@@ -25,7 +25,7 @@ RDEPEND="${DEPEND}
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~alpha ~amd64 ~mips ~ppc ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~mips ~ppc ~sparc ~x86"
 
 if use gnustep 
     then
