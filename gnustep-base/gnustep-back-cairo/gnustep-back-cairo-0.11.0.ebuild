@@ -30,7 +30,6 @@ RDEPEND="${DEPEND}
 	${DOC_RDEPEND}
 	media-fonts/dejavu"
 
-
 egnustep_install_domain "System"
 
 src_unpack() {

@@ -1,3 +1,4 @@
+# Copyright
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,7 +13,7 @@
 # For help and usage instructions see:
 # ------------------------------------
 # * ebuild homepage:
-#	http://drzile.dyndns.org/index.php?page=paludis_scripts
+#	http://drzile.dyndns.org/index.php?page=paludis_scripts 
 
 # * Paludis Support Thread on Gentoo Forums:
 #	http://forums.gentoo.org/viewtopic-t-518298.html
@@ -24,6 +25,8 @@
 inherit eutils paludis-hooks
 
 DESCRIPTION="Hook check-security-updates shows GLSA info after syncing with Paludis."
+
+KEYWORDS="amd64 x86"
 
 src_install() {
 	dohook check-security-updates-${PV}/check-security-updates.bash sync_all_post

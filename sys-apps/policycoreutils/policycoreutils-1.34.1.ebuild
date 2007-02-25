@@ -1,15 +1,14 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/policycoreutils/policycoreutils-1.30.30.ebuild,v 1.4 2006/10/24 00:12:29 pebenito Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/policycoreutils/policycoreutils-1.34.1.ebuild,v 1.1 2007/02/15 05:29:57 pebenito Exp $
 
 IUSE="nls pam"
 
 inherit eutils python
 
-EXTRAS_VER="1.16"
-SEMNG_VER="1.10.0"
-#SELNX_VER="${PV}"
-SELNX_VER="1.34.0"
+EXTRAS_VER="1.17"
+SEMNG_VER="1.10"
+SELNX_VER="1.34"
 
 # BUGFIX_PATCH="${FILESDIR}/policycoreutils-1.30.6.diff"
 
@@ -19,9 +18,10 @@ SRC_URI="http://www.nsa.gov/selinux/archives/${P}.tgz
 	mirror://gentoo/policycoreutils-extra-${EXTRAS_VER}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="alpha amd64 mips ppc sparc x86"
+KEYWORDS="~alpha amd64 ~mips ~ppc ~sparc x86"
 
 RDEPEND=">=sys-libs/libselinux-${SELNX_VER}
+	>=sys-libs/glibc-2.4
 	pam? ( sys-libs/pam )
 	=sys-libs/libsemanage-${SEMNG_VER}*"
 
@@ -54,8 +54,6 @@ src_unpack() {
 
 	[ ! -z "${BUGFIX_PATCH}" ] && epatch "${BUGFIX_PATCH}"
 
-#	epatch ${FILESDIR}/policycoreutils-1.32-quietlp.diff
-
 	# This warning makes no sense, in this context
 	sed -i -e '/FILE/ s/;/=NULL;/' ${S}/audit2why/audit2why.c \
 		|| die "audit2why sed failed"
@@ -65,11 +63,6 @@ src_unpack() {
 		|| die "fixfiles sed 1 failed"
 	sed -i -e '/fixfiles/d' ${S}/scripts/Makefile \
 		|| die "fixfiles sed 2 failed"
-
-	if ! has_version '>=sys-libs/glibc-2.4'; then
-		ewarn "Glibc 2.4 or newer is not available.  Disabling restorecond."
-		sed -i -e '/^SUBDIRS/s/restorecond//' ${S}/Makefile
-	fi
 
 	if ! useq pam; then
 		# disable pam
@@ -96,8 +89,13 @@ src_unpack() {
 	# fix up to accept Gentoo CFLAGS
 	local SUBDIRS="`cd ${S} && find -type d | cut -d/ -f2`"
 	for i in ${SUBDIRS}; do
-		sed -i -e "s:-Wall:-Wall ${CFLAGS}:g" ${S}/${i}/Makefile \
+		sed -i -e "s:-Wall:-Wall ${CFLAGS}:g" \
+			-e '/^AUDITH/d' \
+			${S}/${i}/Makefile \
 			|| die "${i} Makefile CFLAGS fix failed."
+
+		# disable audit support because the required version
+		# in portage does not exist yet
 	done
 }
 
@@ -124,7 +122,15 @@ src_install() {
 	# compatibility symlink
 	dosym /sbin/setfiles /usr/sbin/setfiles
 
-	useq pam || rm -fR ${D}/etc/pam.d
+	if ! useq pam; then
+		rm -fR ${D}/etc/pam.d
+	else
+		if has_version '<sys-libs/pam-0.99'; then
+			# install compat pam.d entries
+			# for older pam
+			make DESTDIR="${D}" -C ${S2}/pam.d install || die
+		fi
+	fi			
 }
 
 pkg_postinst() {

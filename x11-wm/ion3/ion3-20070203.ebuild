@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -21,12 +21,14 @@ DESCRIPTION="A tiling tabbed window manager designed with keyboard users in mind
 HOMEPAGE="http://www.iki.fi/tuomov/ion/"
 SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 	mirror://debian/pool/main/i/${SCRIPTS_PN}/${SCRIPTS_PN}_${SCRIPTS_PV}.orig.tar.gz
-	mirror://debian/pool/main/i/${IONFLUX_PN}/${IONFLUX_PN}_${IONFLUX_PV}.orig.tar.gz
-	mirror://gentoo/${IONXRANDR_PN}-${IONXRANDR_PV}.tar.bz2
-	iontruetype?	( http://clemens.endorphin.org/patches/xft-ion3-for-darcs-20061202.diff )"
+	mirror://gentoo/${IONXRANDR_PN}-${IONXRANDR_PV}.tar.bz2"
+
+#	iontruetype?	( http://clemens.endorphin.org/patches/xft-ion3-for-darcs-20061202.diff )
+#	mirror://debian/pool/main/i/${IONFLUX_PN}/${IONFLUX_PN}_${IONFLUX_PV}.orig.tar.gz
+
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
 IUSE="xinerama unicode iontruetype"
 DEPEND="
 	|| (

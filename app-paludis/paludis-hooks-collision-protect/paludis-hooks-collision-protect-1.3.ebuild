@@ -1,3 +1,4 @@
+# Copyright
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -24,6 +25,10 @@
 inherit eutils paludis-hooks
 
 DESCRIPTION="Hook collision-protect provides collision protect functionality for Paludis."
+
+KEYWORDS="amd64 x86"
+
+RDEPEND="!>=sys-apps/paludis-0.20.0"
 
 src_install() {
 	dohook collision-protect-${PV}/collision-protect.bash ebuild_merge_pre
