@@ -16,7 +16,7 @@ virtual/bittorrent			net-p2p/bittorrent
 virtual/blackbox			x11-wm/blackbox
 virtual/blas				sci-libs/blas-atlas
 virtual/cblas				sci-libs/blas-atlas
-virtual/cdrtools			app-cdr/cdrkit
+virtual/cdrtools			app-cdr/cdrkit app-cdr/cdrtools
 virtual/commonlisp			dev-lisp/sbcl
 virtual/cron				sys-process/vixie-cron
 virtual/dev-manager			sys-fs/udev

@@ -1,6 +1,27 @@
 # ChangeLog for sys-fs/fuse
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/fuse/ChangeLog,v 1.72 2007/02/05 08:07:41 genstef Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/fuse/ChangeLog,v 1.78 2007/02/26 17:17:01 dang Exp $
+
+  26 Feb 2007; Daniel Gryniewicz <dang@gentoo.org> fuse-2.6.1.ebuild:
+  Marked stable on amd64 for bug #150978
+
+  23 Feb 2007; <genstef@gentoo.org> fuse-2.6.0_rc1.ebuild,
+  -fuse-2.6.0.ebuild, fuse-2.6.1.ebuild, fuse-2.6.3.ebuild:
+  move variables into the right place, bug 168051
+
+  21 Feb 2007; Joseph Jezak <josejx@gentoo.org> fuse-2.6.1.ebuild:
+  Marked ppc stable for bug #150978.
+
+  20 Feb 2007; Markus Rothe <corsair@gentoo.org> fuse-2.6.1.ebuild:
+  Stable on ppc64; bug #150978
+
+  20 Feb 2007; Raúl Porcel <armin76@gentoo.org> fuse-2.6.1.ebuild:
+  x86 stable wrt bug 150978
+
+*fuse-2.6.3 (07 Feb 2007)
+
+  07 Feb 2007; Patrick McLean <chutzpah@gentoo.org> +fuse-2.6.3.ebuild:
+  Version bump.
 
   05 Feb 2007; <genstef@gentoo.org> +files/fuse-2.6.20.patch,
   fuse-2.6.1.ebuild:
