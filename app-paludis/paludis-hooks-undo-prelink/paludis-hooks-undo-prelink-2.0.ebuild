@@ -31,14 +31,14 @@ KEYWORDS="amd64 x86"
 DEPEND="${DEPEND}
 	sys-devel/prelink"
 
-RDEPEND="${DEPEND} !>=sys-apps/paludis-0.20.0"
+RDEPEND="${DEPEND} >=sys-apps/paludis-0.20.0"
 
 
 src_install() {
-	dohook undo-prelink-${PV}/undo-prelink.bash ebuild_merge_pre ebuild_unmerge_pre
+	dohook undo-prelink-${PV}/undo-prelink.bash install_post install_fail merger_check_pre unmerger_unlink_pre
 }
 
-pkg_postinst() {	
+pkg_postinst() {
 	einfo
 	einfo "----------------------------------------"
 	einfo "The Paludis hook installed: undo-prelink"

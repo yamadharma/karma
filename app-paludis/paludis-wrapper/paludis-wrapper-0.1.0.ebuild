@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-# Authors of hook: ask
+# Authors of script:
 # --------------------
 # zxy, truc
 
 # Author of this ebuild:
 # ----------------------
-# zxy, truc, dleverton
+# zxy, truc
 
 
 # For help and usage instructions see:
@@ -25,32 +25,38 @@
 
 inherit eutils paludis-hooks
 
-DESCRIPTION="Hook ask provides -a, --ask functionality for Paludis."
+DESCRIPTION="Wrapper script for paludis, that adds new command line options."
 
 KEYWORDS="amd64 x86"
 
+IUSE="paludis_hooks_ask paludis_hooks_nice"
+
 src_install() {
-	dohook paludis-ask-${PV}/paludis-ask.bash uninstall_all_pre install_all_pre
+
+	if use paludis_hooks_ask ; then
+		sed 's:^PALUDIS_WRAPPER_ASK="no"$:PALUDIS_WRAPPER_ASK="yes":' -i ${WORKDIR}/paludis-wrapper-${PV}/_paludis_wrapper.bash 
+	fi
+
+	if use paludis_hooks_nice ; then
+		sed 's:^PALUDIS_WRAPPER_NICE="no"$:PALUDIS_WRAPPER_NICE="yes":' -i ${WORKDIR}/paludis-wrapper-${PV}/_paludis_wrapper.bash 
+		dodir /etc/paludis/hooks/config || die
+		insinto /etc/paludis/hooks/config || die
+		newins paludis-nice.conf paludis-nice.conf || die
+	fi
 
 	dodir /usr/local/bin/ || die
 	insinto /usr/local/bin/ || die
-	doins paludis-ask-${PV}/_paludis_wrapper.bash || die
-
-	dodir /etc/paludis/hooks/config || die
-	insinto /etc/paludis/hooks/config || die
-	newins paludis-ask-${PV}/paludis-ask.conf paludis-ask.conf || die
-
+	doins _paludis_wrapper.bash || die
 }
 
 pkg_postinst() {
 	einfo
-	einfo "-------------------------------"
-	einfo "The Paludis hook installed: ask"
-	einfo "-------------------------------"
+	einfo "--------------------------------------"
+	einfo "The Paludis wrapper has been installed"
+	einfo "--------------------------------------"
 	einfo
 	ewarn "-----------------------------------------------------------------"
-	ewarn "You have chosen to install a hook: ask"
-	ewarn "To start using this hook, create an alias in the shell"
+	ewarn "To start using the wrapper, create an alias in the shell"
 	ewarn
 	ewarn "Shell command: # alias paludis=\"sh /usr/local/bin/_paludis_wrapper.bash\""
 	ewarn
@@ -60,7 +66,7 @@ pkg_postinst() {
 
 pkg_postrm() {
 	ewarn "----------------------------------------------------------------------"
-	ewarn "Read below ONLY if you have chosen to uninstall a hook: ask"
+	ewarn "Read below ONLY if you have chosen to uninstall a wrapper"
 	ewarn "No need for this if you are reinstalling or installing a newer version"
 	ewarn
 	ewarn "If you have created an alias for paludis, you have to remove it."
