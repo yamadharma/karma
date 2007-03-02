@@ -179,7 +179,7 @@ src_install() {
 
 	done
 
-	echo '--dopath("mod_ionflux")' >> ${D}/etc/X11/ion3/cfg_modules.lua	
+#	echo '--dopath("mod_ionflux")' >> ${D}/etc/X11/ion3/cfg_modules.lua	
 	echo 'dopath("mod_xrandr")' >> ${D}/etc/X11/ion3/cfg_modules.lua
 	
 	mv ${D}/usr/share/doc/ion3 ${D}/usr/share/doc/${PF}
