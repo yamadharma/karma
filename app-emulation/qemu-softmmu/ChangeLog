@@ -1,6 +1,42 @@
 # ChangeLog for app-emulation/qemu-softmmu
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/qemu-softmmu/ChangeLog,v 1.26 2006/08/18 12:23:59 lu_zero Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/qemu-softmmu/ChangeLog,v 1.36 2007/02/21 21:44:42 peper Exp $
+
+  21 Feb 2007; Piotr Jaroszyński <peper@gentoo.org> ChangeLog:
+  Transition to Manifest2.
+
+  10 Feb 2007; Luca Barbato <lu_zero@gentoo.org> qemu-softmmu-0.9.0.ebuild:
+  Fix bug #164491
+
+  10 Feb 2007; Luca Barbato <lu_zero@gentoo.org> qemu-softmmu-0.9.0.ebuild:
+  Minor update
+
+*qemu-softmmu-0.9.0 (07 Feb 2007)
+
+  07 Feb 2007; Luca Barbato <lu_zero@gentoo.org> +qemu-softmmu-0.9.0.ebuild:
+  New version
+
+  06 Feb 2007; Simon Stelling <blubb@gentoo.org>
+  qemu-softmmu-0.8.2-r1.ebuild:
+  stable on amd64; bug 159522
+
+  02 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  qemu-softmmu-0.8.2-r1.ebuild:
+  stable x86, bug #159522
+
+  31 Dec 2006; Mike Frysinger <vapier@gentoo.org>
+  +files/qemu-0.8.2-linux-headers.patch, qemu-softmmu-0.8.2-r1.ebuild:
+  Fix building with sanitized headers.
+
+  31 Dec 2006; Luca Barbato <lu_zero@gentoo.org>
+  qemu-softmmu-0.8.2-r1.ebuild:
+  Marked ppc
+
+  22 Nov 2006; Kevin F. Quinn <kevquinn@gentoo.org>
+  qemu-softmmu-0.8.2-r1.ebuild:
+  Add QA variables indicating which files contain textrels, require
+  execstack, and contain WX PT_LOAD segments.  The TEXTRELs are a feature of how
+  qemu works.  The execstack/wx_load markings are for a foreign binary.
 
   18 Aug 2006; Luca Barbato <lu_zero@gentoo.org> qemu-softmmu-0.8.2.ebuild:
   remove stray dep

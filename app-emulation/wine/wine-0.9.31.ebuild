@@ -110,6 +110,8 @@ src_compile() {
 src_install() {
 	make DESTDIR="${D}" install || die
 	dodoc ANNOUNCE AUTHORS ChangeLog DEVELOPERS-HINTS README
+	
+	newinitd ${FILESDIR}/wine.init wine
 }
 
 pkg_postinst() {

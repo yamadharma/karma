@@ -1,0 +1,57 @@
+#!/sbin/runscript
+# Copyright 1999-2003 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: $
+
+
+PROCBIN=/proc/sys/fs/binfmt_misc
+
+depend () 
+{
+	need localmount
+}
+
+check ()
+{
+	[ -e ${PROCBIN}/windows -o -e ${PROCBIN}/windowsPE ]
+}
+
+start ()
+{
+	ebegin "Registering wine services"
+    
+	if [ ! -d /proc/sys/fs/binfmt_misc ]
+	then
+		/sbin/modprobe binfmt_misc &>/dev/null
+	fi
+	if [ $? -ne 0 ] 
+	then
+	        eerror "Misc bin format not supported"
+	else
+	    if [ ! -e ${PROCBIN}/register ]
+	    then
+		    mount -t binfmt_misc none ${PROCBIN}	
+	    fi
+	    echo ':windows:M::MZ::/usr/bin/wine:' > ${PROCBIN}/register
+	    echo ':windowsPE:M::PE::/usr/bin/wine:' > ${PROCBIN}/register 
+	fi
+	eend $?
+}
+
+stop ()
+{
+	ebegin "Deregistering wine services"
+	if ! check 
+	then
+		eerror "Service not registered"
+	else
+		echo '-1' > ${PROCBIN}/windows 
+		echo '-1' > ${PROCBIN}/windowsPE 
+	fi
+	eend $?
+}
+
+
+# Local Variables:
+# mode: sh
+# End:

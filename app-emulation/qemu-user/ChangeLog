@@ -1,6 +1,31 @@
 # ChangeLog for app-emulation/qemu-user
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/qemu-user/ChangeLog,v 1.18 2006/08/17 11:58:07 lu_zero Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/qemu-user/ChangeLog,v 1.26 2007/02/21 21:45:17 peper Exp $
+
+  21 Feb 2007; Piotr Jaroszyński <peper@gentoo.org> ChangeLog:
+  Transition to Manifest2.
+
+  10 Feb 2007; Luca Barbato <lu_zero@gentoo.org> qemu-user-0.9.0.ebuild:
+  Fix bug #164491
+
+*qemu-user-0.9.0 (10 Feb 2007)
+
+  10 Feb 2007; Luca Barbato <lu_zero@gentoo.org> +qemu-user-0.9.0.ebuild:
+  New version
+
+  06 Feb 2007; Simon Stelling <blubb@gentoo.org> qemu-user-0.8.2.ebuild:
+  stable on amd64; bug 159522
+
+  02 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  qemu-user-0.8.2.ebuild:
+  stable x86, bug #159522
+
+  31 Dec 2006; Luca Barbato <lu_zero@gentoo.org> qemu-user-0.8.2.ebuild:
+  Marked ppc
+
+  22 Nov 2006; Kevin F. Quinn <kevquinn@gentoo.org> qemu-user-0.8.2.ebuild:
+  Add QA variable indicating which files contain textrels; these are a feature
+  of how qemu works.
 
 *qemu-user-0.8.2 (16 Aug 2006)
 
