@@ -6,7 +6,7 @@ inherit gnustep subversion
 
 ESVN_PROJECT=etoile
 
-ESVN_OPTIONS="-r{${PV/*_pre}}"
+ESVN_OPTIONS="-r${PV/*_pre}"
 ESVN_REPO_URI="http://svn.gna.org/svn/etoile/trunk/Etoile"
 ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/svn.gna.org/etoile"
 
@@ -33,12 +33,12 @@ src_compile ()
 
 	cd ${S1}
 
-	if ( ! has_version =x11-libs/cairo-1.2.* )
-	    then
-	    # Dirty hack. Don't work with cairo-1.2.x
-	    ./config.sh
-	    sed -i -e "s:HAVE_CAIRO=.*:HAVE_CAIRO=NO:" config.make
-	fi
+#	if ( ! has_version =x11-libs/cairo-1.2.* )
+#	    then
+#	    # Dirty hack. Don't work with cairo-1.2.x
+#	    ./config.sh
+#	    sed -i -e "s:HAVE_CAIRO=.*:HAVE_CAIRO=NO:" config.make
+#	fi
 	
 	egnustep_make || die
 }

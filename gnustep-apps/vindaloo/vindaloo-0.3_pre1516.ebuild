@@ -4,15 +4,13 @@
 
 inherit gnustep subversion
 
-IUSE=""
+ESVN_PROJECT=etoile
 
-ESVN_PROJECT=Services/User
+ESVN_OPTIONS="-r${PV/*_pre}"
+ESVN_REPO_URI="http://svn.gna.org/svn/etoile/trunk/Etoile"
+ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/svn.gna.org/etoile"
 
-ESVN_OPTIONS="-r{${PV/*_pre}}"
-ESVN_REPO_URI="http://svn.gna.org/svn/etoile/trunk/Etoile/Services/User/Vindaloo"
-ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/svn.gna.org/etoile/Etoile"
-
-S=${WORKDIR}
+S1=${S}/Services/User/Vindaloo
 
 DESCRIPTION="An Application for displaying and navigating in PDF documents."
 
@@ -30,3 +28,14 @@ RDEPEND="${GS_RDEPEND}
 	gnustep-libs/popplerkit"
 
 egnustep_install_domain "System"
+
+src_compile() {
+	cd ${S1}
+	gnustep_src_compile
+}
+
+src_install() {
+	cd ${S1}
+	gnustep_src_install
+}
+
