@@ -45,6 +45,11 @@ src_unpack() {
 	epatch ${FILESDIR}/${PV}/${P}-gcc41.patch
 	epatch ${FILESDIR}/${PV}/${P}-fullscreen.patch
 	epatch ${FILESDIR}/${PV}/${P}-qtdialogsfix.patch
+
+	EPATCH_SUFFIX="patch" \
+	EPATCH_FORCE="yes" \
+	    epatch ${FILESDIR}/0.93.0
+	
 }
 
 src_compile() {
@@ -62,6 +67,7 @@ src_compile() {
 	if use gnustep ; then
 		# install WPrefs.app into GS Local Domain after setting up the GS env
 		egnustep_env
+		myconf="${myconf} --with-gnustepdir=$(egnustep_install_domain)"
 #		myconf="${myconf} --with-gnustepdir=$(egnustep_system_root)/Applications"
 	else
 		# no change from wm-0.80* ebuilds, as to not pollute things more
@@ -124,8 +130,8 @@ src_compile() {
 	for file in ${S}/WindowMaker/Defaults/W*; do
 		if [ -r $file ]; then
 			if use gnustep; then
-				sed -e "s/\$HOME\/GNUstep\//\$HOME`cat ${TMP}/sed.gs_user_root_suffix`/g;
-						s/XXX_SED_FSLASH/\//g;" < $file > $file.tmp
+				sed -e "s:\$HOME/GNUstep/:\$HOME`cat ${TMP}/sed.gs_user_root_suffix`:g;
+						s:XXX_SED_FSLASH/::g;" < $file > $file.tmp
 				mv $file.tmp $file;
 
 				sed -e "s/~\/GNUstep\//~`cat ${TMP}/sed.gs_user_root_suffix`/g;
@@ -162,6 +168,21 @@ src_install() {
 	insinto /etc/X11/dm/Sessions
 	doins ${FILESDIR}/wmaker.desktop
 	make_desktop_entry /usr/bin/wmaker
+
+# {{{ FIX: xpm not installed
+	
+	cd ${S}/WPrefs.app/xpm
+	if use gnustep  
+	    then
+	    egnustep_env
+    	    cp *.xpm ${D}$(egnustep_install_domain)/Applications/WPrefs.app/xpm
+	else	    
+	    cp *.xpm ${D}/usr/$(get_libdir)/GNUstep/Applications/WPrefs.app/xpm
+	fi	    
+	cd ${S}
+
+# }}}
+
 }
 
 pkg_postinst() {

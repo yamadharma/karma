@@ -6,13 +6,13 @@ inherit gnustep subversion
 
 ESVN_PROJECT=etoile
 
-ESVN_OPTIONS="-r{${PV/*_pre}}"
+ESVN_OPTIONS="-r${PV/*_pre}"
 ESVN_REPO_URI="http://svn.gna.org/svn/etoile/trunk/Etoile"
 ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/svn.gna.org/etoile"
 
 S1=${S}/Frameworks/XWindowServerKit
 
-DESCRIPTION="PreferencesKit is a framework which provides various features to build flexible Preferences-like window in any GNUstep or Cocoa applications."
+DESCRIPTION="XWindowServerKit provides access to x window system."
 HOMEPAGE="http://www.etoile-project.org"
 #SRC_URI=""
 LICENSE="GPL-2"

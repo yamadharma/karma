@@ -100,11 +100,12 @@ font_xfont_config() {
 
 font_xft_config() {
 
-	# create fontconfig cache
-	einfo "Creating fontconfig cache ..."
-	# Mac OS X has fc-cache at /usr/X11R6/bin
-	HOME="/root" fc-cache -f "${D}${FONTDIR}"
-
+	if ! has_version '>=media-libs/fontconfig-2.4'; then
+		# create fontconfig cache
+		einfo "Creating fontconfig cache ..."
+		# Mac OS X has fc-cache at /usr/X11R6/bin
+		HOME="/root" fc-cache -f "${D}${FONTDIR}"
+	fi
 }
 
 #
@@ -144,7 +145,7 @@ font_pkg_setup() {
 	# setup is not the nicest place, but preinst doesn't cut it
 	for suffix in ${FONT_SUFFIX}; do
 		set_FONTDIR ${suffix}
-		rm "${FONTDIR}/fonts.cache-1"
+		[[ -e "${FONTDIR}/fonts.cache-1" ]] && rm "${FONTDIR}/fonts.cache-1"
 	done
 
 }
