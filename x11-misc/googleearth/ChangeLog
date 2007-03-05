@@ -1,6 +1,80 @@
 # ChangeLog for x11-misc/googleearth
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/x11-misc/googleearth/ChangeLog,v 1.7 2006/07/08 16:08:16 genstef Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/x11-misc/googleearth/ChangeLog,v 1.25 2007/03/02 06:56:13 opfer Exp $
+
+  02 Mar 2007; Christian Faulhammer <opfer@gentoo.org> googleearth-4.ebuild:
+  stable x86; bug 168929
+
+  10 Feb 2007; <genstef@gentoo.org> googleearth-4.ebuild:
+  remove .desktop redundancy thanks to jakub in bug 162775
+
+  03 Feb 2007; Jason Wever <weeve@gentoo.org> files/digest-googleearth-4,
+  Manifest:
+  Another digest fix as the file appears to have changed upstream.
+
+  18 Jan 2007; Raúl Porcel <armin76@gentoo.org> googleearth-4.ebuild:
+  Revert the ati/nvidia changes, as SRC_URI doesn't work. Request by jakub,
+  blame him
+
+*googleearth-4 (12 Jan 2007)
+
+  12 Jan 2007; Charlie Shepherd <masterdriverz@gentoo.org>
+  -googleearth-4_beta.ebuild, +googleearth-4.ebuild:
+  Bump to googleearth-4; fixes bug 160849
+
+  08 Jan 2007; <genstef@gentoo.org> googleearth-4_beta.ebuild:
+  Fix troubles with newer ati drivers thanks to anarchy in bug 158701
+
+  27 Dec 2006; Daniel Black <dragonheart@gentoo.org>
+  files/digest-googleearth-4_beta, Manifest:
+  digest fix bug #158606 and SnowRaptor notification on #gentoo-dev-help
+
+  02 Nov 2006; Stefan Schweizer <genstef@gentoo.org>
+  files/digest-googleearth-4_beta, Manifest:
+  New digest 4.0.2091 -> 4.0.2413 - this is annoying, google should provide
+  versioned downloads
+
+  05 Oct 2006; Chris Gianelloni <wolf31o2@gentoo.org>
+  googleearth-4_beta.ebuild:
+  Removing references to media-video/nvidia-glx since it is no longer in the
+  tree.
+
+  15 Sep 2006; Stefan Schweizer <genstef@gentoo.org> ChangeLog:
+  digest fix
+
+  14 Sep 2006; Stefan Schweizer <genstef@gentoo.org>
+  googleearth-4_beta.ebuild:
+  depend on <x11-drivers/ati-drivers-8.28.8 for amd64 because it breaks on
+  runtime, thanks to Thomas Skyt <thomas@sofagang.dk> and Ulf
+  <fly-a-lot@web.de> in bug 147309
+
+  30 Aug 2006; Stefan Schweizer <genstef@gentoo.org>
+  googleearth-4_beta.ebuild:
+  Workaround xdg-utils problems thanks to Rick Harris
+  <rickfharris@yahoo.com.au>, Lukas Barth <tinloaf@goerresonline.de> and Olaf
+  Freyer <aaron@cs.tu-berlin.de> in bug 144670
+
+  08 Aug 2006; Stefan Schweizer <genstef@gentoo.org> ChangeLog:
+  redigest, bug 142920
+
+  24 Jul 2006; Stefan Schweizer <genstef@gentoo.org> files/mime-magic.patch:
+  improved patch to work with kml 2.1 thanks to Ed Catmur again
+
+  23 Jul 2006; Stefan Schweizer <genstef@gentoo.org>
+  +files/mime-magic.patch, googleearth-4_beta.ebuild:
+  Add some magic to the googleearth mime file to improve handling in gnome,
+  thanks to Ed Catmur <ed@catmur.co.uk> in bug 141371
+
+  19 Jul 2006; Stefan Schweizer <genstef@gentoo.org>
+  googleearth-4_beta.ebuild:
+  No more execstack, thanks to Sascha Geschwandtner <s.geschwandtner@gmx.de>
+  in bug 141003
+
+  18 Jul 2006; Stefan Schweizer <genstef@gentoo.org> ChangeLog:
+  redigest, bug 139544
+
+  16 Jul 2006; Stefan Schweizer <genstef@gentoo.org> ChangeLog:
+  redigest, bug 139544
 
   08 Jul 2006; Stefan Schweizer <genstef@gentoo.org> ChangeLog:
   redigest thanks to Marcel Campello Ferreira <marcel.o.bacharel@gmail.com>,
