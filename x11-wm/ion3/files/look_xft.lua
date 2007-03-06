@@ -1,8 +1,9 @@
 -- look_dusky.lua drawing engine configuration file for Ion.
 
-if not gr.select_engine("xftde") then return end
+--if not gr.select_engine("xftde") then return end
 
-xftde.reset()
+--xftde.reset()
+de.reset()
 
 mainfont = "xft: Sans-8"
 boldfont = "xft: Sans-8:weight=bold"
