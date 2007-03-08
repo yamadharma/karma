@@ -62,6 +62,9 @@ set_FONTDIR ()
     	    ttf) 
 		FONTDIR=${FONTDIR_ROOT}/truetype/${FONTS_NAME_DIR}
 		;;
+    	    otf) 
+		FONTDIR=${FONTDIR_ROOT}/opentype/${FONTS_NAME_DIR}
+		;;
     	    afm|pfm|pfa|pfb) 
 		FONTDIR=${FONTDIR_ROOT}/type1/${FONTS_NAME_DIR}
 		;;
@@ -75,8 +78,8 @@ set_FONTDIR ()
 		einfo "Fonts format ${format} does not known"
 		;;
 	esac
-
 }
+
 #
 # Public functions
 #
