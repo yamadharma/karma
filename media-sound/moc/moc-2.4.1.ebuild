@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/moc/moc-2.4.0.ebuild,v 1.5 2006/03/11 16:56:25 nixnut Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/moc/moc-2.4.1.ebuild,v 1.4 2007/01/22 15:23:33 corsair Exp $
 
 inherit eutils autotools
 
@@ -10,8 +10,8 @@ SRC_URI="ftp://ftp.daper.net/pub/soft/${PN}/stable/${P}.tar.bz2"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="amd64 ~ppc ~sparc x86"
-IUSE="flac ffmpeg mad oss vorbis debug alsa speex libsamplerate curl sndfile musepack"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
+IUSE="flac ffmpeg mad oss vorbis debug alsa speex libsamplerate curl sndfile musepack rcc"
 
 # libvorbis is pulled in so the USE flag is vorbis
 # since upstream apparently assumes ogg is an audio
@@ -27,17 +27,18 @@ DEPEND="media-libs/libao
 	vorbis? ( >=media-libs/libvorbis-1.0 )
 	speex? ( >=media-libs/speex-1.0.0 )
 	libsamplerate? ( >=media-libs/libsamplerate-0.1.0 )
-	curl? ( >=net-misc/curl-7.12.2 )"
+	curl? ( >=net-misc/curl-7.12.2 )
+	rcc? ( app-i18n/librcc )"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-
-	epatch "${FILESDIR}/${PV}-endianess.patch"
+	epatch "${FILESDIR}/${P}+flac-1.1.3.patch"
+	use rcc && epatch "${FILESDIR}/${P}-alt-librcc-filesystem.patch"
 }
 
 src_compile() {
-	econf --without-rcc \
+	econf $(use_with rcc) \
 		$(use_with flac) \
 		$(use_with mad mp3) \
 		$(use_with vorbis ogg) \
@@ -53,11 +54,11 @@ src_compile() {
 }
 
 src_install () {
-	make DESTDIR="${D}" install || die "make install failed"
+	emake DESTDIR="${D}" install || die "make install failed"
 	dodoc AUTHORS ChangeLog NEWS README TODO
 }
 
 pkg_postinst() {
-	einfo "The binary was renamed due to conflicts with moc"
-	einfo "from the QT project. Its new name is mocp."
+	elog "The binary was renamed due to conflicts with moc"
+	elog "from the QT project. Its new name is mocp."
 }

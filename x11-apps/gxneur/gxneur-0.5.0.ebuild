@@ -2,7 +2,7 @@
 
 DESCRIPTION="GUI for xneur based on GTK" 
 HOMEPAGE="http://www.xneur.ru/" 
-SRC_URI="http://dists.xneur.ru/release-0.4.0/tgz/${P}.tar.bz2" 
+SRC_URI="http://dists.xneur.ru/release-${PV}/tgz/${P}.tar.bz2" 
 
 IUSE=""
 SLOT="0"

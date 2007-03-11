@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/wine/wine-0.9.31.ebuild,v 1.1 2007/02/17 11:39:43 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/wine/wine-0.9.32.ebuild,v 1.3 2007/03/07 01:28:23 vapier Exp $
 
 inherit eutils flag-o-matic multilib
 
@@ -110,11 +110,11 @@ src_compile() {
 src_install() {
 	make DESTDIR="${D}" install || die
 	dodoc ANNOUNCE AUTHORS ChangeLog DEVELOPERS-HINTS README
-	
-	newinitd ${FILESDIR}/wine.init wine
+
+	newinitd ${FILESDIR}/wine.init wine	
 }
 
 pkg_postinst() {
-	einfo "~/.wine/config is now deprecated.  For configuration either use"
-	einfo "winecfg or regedit HKCU\\Software\\Wine"
+	elog "~/.wine/config is now deprecated.  For configuration either use"
+	elog "winecfg or regedit HKCU\\Software\\Wine"
 }

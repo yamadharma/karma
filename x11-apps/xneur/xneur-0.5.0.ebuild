@@ -1,14 +1,14 @@
 # Copyright 1999-2006 Gentoo Foundation 
 
-DESCRIPTION="GUI for xneur based on GTK" 
+DESCRIPTION="It's program like Punto Switcher" 
 HOMEPAGE="http://www.xneur.ru/" 
-SRC_URI="http://dists.xneur.ru/release-0.4.0/tgz/${P}.tar.bz2" 
+SRC_URI="http://dists.xneur.ru/release-${PV}/tgz/${P}.tar.bz2" 
 
 IUSE=""
 SLOT="0"
 
 KEYWORDS="x86 amd64" 
-RDEPEND="x11-apps/xneur"
+RDEPEND="x11-base/xorg-x11"
 DEPEND="${RDEPEND}"
 
 src_compile() { 
