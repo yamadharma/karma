@@ -1,0 +1,11 @@
+autofs-5.0.1-check-user-info-return.patch
+autofs-5.0.1-hosts-simple-fail.patch
+autofs-5.0.1-export-check-network-fix-2.patch
+autofs-5.0.1-check-mtab-updated.patch
+autofs-5.0.1-file-map-allow-white-space-only-line.patch
+autofs-5.0.1-remove-macro-automount-8.patch
+autofs-5.0.1-correct-hesiod-check.patch
+autofs-5.0.1-drop-default-prefix-from-config.patch
+autofs-5.0.1-remove-redundant-ident-macros.patch
+autofs-5.0.1-configure-cleanups.patch
+autofs-5.0.1-code-cleanups.patch

@@ -24,7 +24,6 @@ start() {
 	# ensure autofs support is loaded
 	grep -q autofs /proc/filesystems || modprobe -k autofs4 2>/dev/null
 	if [ $? -ne 0 ]
-		then
 		eend 1 "No autofs support available"
 		exit 1
 	fi

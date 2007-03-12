@@ -1,5 +1,6 @@
-#!/bin/sh
-# $Id: auto.net,v 1.4 2006/05/30 15:00:50 antarus Exp $
+#!/bin/bash
+
+# $Id: auto.net,v 1.4 2005/04/11 11:30:54 raven Exp $
 
 # This file must be executable to work! chmod 755!
 
@@ -10,7 +11,7 @@ key="$1"
 
 # add "nosymlink" here if you want to suppress symlinking local filesystems
 # add "nonstrict" to make it OK for some filesystems to not mount
-opts="-fstype=nfs,hard,intr,nodev,nosuid,nonstrict"
+opts="-fstype=nfs,hard,intr,nodev,nosuid"
 
 # Showmount comes in a number of names and varieties.  "showmount" is
 # typically an older version which accepts the '--no-headers' flag
@@ -19,12 +20,26 @@ opts="-fstype=nfs,hard,intr,nodev,nosuid,nonstrict"
 #SHOWMOUNT="kshowmount --no-headers -e $key"
 #SHOWMOUNT="showmount -e $key | tail -n +2"
 
+for P in /bin /sbin /usr/bin /usr/sbin
+do
+	for M in showmount kshowmount
+	do
+		if [ -x $P/$M ]
+		then
+			SMNT=$P/$M
+			break
+		fi
+	done
+done
+
+[ -x $SMNT ] || exit 1
+
 # Newer distributions get this right
-SHOWMOUNT="/usr/sbin/showmount --no-headers -e $key"
+SHOWMOUNT="$SMNT --no-headers -e $key"
 
 $SHOWMOUNT | LC_ALL=C sort -k 1 | \
 	awk -v key="$key" -v opts="$opts" -- '
-	BEGIN		{ ORS=""; first=1 }
-			{ if (first) { print opts; first=0 }; print " \\\n\t" $1, key ":" $1 }
-	END		{ if (!first) print "\n"; else exit 1 }
-	'
+	BEGIN	{ ORS=""; first=1 }
+		{ if (first) { print opts; first=0 }; print " \\\n\t" $1, key ":" $1 }
+	END	{ if (!first) print "\n"; else exit 1 }
+	' | sed 's/#/\\#/g'

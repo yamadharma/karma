@@ -1,6 +1,55 @@
 # ChangeLog for mail-client/mozilla-thunderbird
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/mail-client/mozilla-thunderbird/ChangeLog,v 1.169 2007/02/15 18:33:44 armin76 Exp $
+# $Header: /var/cvsroot/gentoo-x86/mail-client/mozilla-thunderbird/ChangeLog,v 1.179 2007/03/11 12:19:39 kloeri Exp $
+
+  11 Mar 2007; Bryan Østergaard <kloeri@gentoo.org>
+  mozilla-thunderbird-1.5.0.10.ebuild:
+  Stable on IA64.
+
+  08 Mar 2007; Raúl Porcel <armin76@gentoo.org>
+  mozilla-thunderbird-2.0_beta2.ebuild:
+  Bump patchset for g/fbsd wrt bug 169825
+
+  06 Mar 2007; Raúl Porcel <armin76@gentoo.org>
+  mozilla-thunderbird-2.0_beta2.ebuild:
+  Bump patchset to fix bug 165777 and bug 168893
+
+  06 Mar 2007; Gustavo Zacarias <gustavoz@gentoo.org>
+  mozilla-thunderbird-1.5.0.10.ebuild:
+  Stable on sparc wrt security #165555
+
+  05 Mar 2007; Jose Luis Rivero <yoswink@gentoo.org>
+  mozilla-thunderbird-1.5.0.10.ebuild:
+  alpha stable wrt security bug #165555
+
+  03 Mar 2007; Raúl Porcel <armin76@gentoo.org>
+  +files/icon/mozilla-thunderbird-unbranded.desktop,
+  +files/icon/thunderbird-icon-unbranded.png,
+  -mozilla-thunderbird-2.0_beta1.ebuild,
+  mozilla-thunderbird-2.0_beta2.ebuild:
+  replace mozbranding with bindist and enable by default, bug 168409, some
+  cleanup, and add linguas. Modify the patchset without bzipped patches and
+  add desktop and icon file for unbranded, drop old
+
+  03 Mar 2007; Steve Dibb <beandog@gentoo.org>
+  mozilla-thunderbird-1.5.0.10.ebuild:
+  amd64 stable, security bug 165555
+
+  02 Mar 2007; Raúl Porcel <armin76@gentoo.org>
+  mozilla-thunderbird-1.5.0.10.ebuild:
+  x86 stable wrt security bug 165555
+
+*mozilla-thunderbird-1.5.0.10 (02 Mar 2007)
+
+  02 Mar 2007; Raúl Porcel <armin76@gentoo.org>
+  +mozilla-thunderbird-1.5.0.10.ebuild:
+  Version bump, security bug 165555
+
+  21 Feb 2007; Raúl Porcel <armin76@gentoo.org>
+  mozilla-thunderbird-1.5.0.8.ebuild, mozilla-thunderbird-1.5.0.9.ebuild,
+  mozilla-thunderbird-2.0_beta1.ebuild,
+  mozilla-thunderbird-2.0_beta2.ebuild:
+  Some minorsyn fixes
 
   15 Feb 2007; Raúl Porcel <armin76@gentoo.org>
   mozilla-thunderbird-2.0_beta2.ebuild:

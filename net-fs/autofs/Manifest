@@ -1,95 +1,3 @@
-AUX 5.0.0_beta4/005_autofs-5.0.0_beta4-dontstrip-typo.patch 732 RMD160 cd2dfbcde7cc8e123021b824e9ad8911f0e32f57 SHA1 ce6f6a2884586403e6be604d9ca3af67ea42093d SHA256 0d469b52762c9a51e279fa12d983ea261de3d568f07b2085a2a7df297a5e8fee
-MD5 6bb11e663563d4c97914d783d233c5f3 files/5.0.0_beta4/005_autofs-5.0.0_beta4-dontstrip-typo.patch 732
-RMD160 cd2dfbcde7cc8e123021b824e9ad8911f0e32f57 files/5.0.0_beta4/005_autofs-5.0.0_beta4-dontstrip-typo.patch 732
-SHA256 0d469b52762c9a51e279fa12d983ea261de3d568f07b2085a2a7df297a5e8fee files/5.0.0_beta4/005_autofs-5.0.0_beta4-dontstrip-typo.patch 732
-AUX 5.0.0_beta4/010_autofs-5.0.0_beta4-v4-dir-cleanup.patch 1285 RMD160 18ad849620d497120d05531d2fc30465483a235a SHA1 5c8b2d6c6f22a2be90d5d2d9f994ff0467d494fe SHA256 b9cbb51937debd9f64a433a39581d870aa0da21b91654dadfb5cc7651dc788a9
-MD5 313c245455ea0ee8dd019ea0db7ffd60 files/5.0.0_beta4/010_autofs-5.0.0_beta4-v4-dir-cleanup.patch 1285
-RMD160 18ad849620d497120d05531d2fc30465483a235a files/5.0.0_beta4/010_autofs-5.0.0_beta4-v4-dir-cleanup.patch 1285
-SHA256 b9cbb51937debd9f64a433a39581d870aa0da21b91654dadfb5cc7651dc788a9 files/5.0.0_beta4/010_autofs-5.0.0_beta4-v4-dir-cleanup.patch 1285
-AUX 5.0.0_beta4/015_autofs-5.0.0_beta4-master-map-update.patch 6565 RMD160 86e32b8d6ccd2f02520ce98e59af3f691467f50f SHA1 a829c23369b108ed45a2636f282e0b5a35284694 SHA256 957d0c3da8dfdb14b682b636389d5f061c8360270dd363f79bba3e803fecc99b
-MD5 d132f722a9db3e50f9cac9412c234198 files/5.0.0_beta4/015_autofs-5.0.0_beta4-master-map-update.patch 6565
-RMD160 86e32b8d6ccd2f02520ce98e59af3f691467f50f files/5.0.0_beta4/015_autofs-5.0.0_beta4-master-map-update.patch 6565
-SHA256 957d0c3da8dfdb14b682b636389d5f061c8360270dd363f79bba3e803fecc99b files/5.0.0_beta4/015_autofs-5.0.0_beta4-master-map-update.patch 6565
-AUX 5.0.0_beta4/020_autofs-5.0.0_beta4-wrong-conf-names.patch 1220 RMD160 86c61f0bbd291f7045f5d58b0c254066584440b7 SHA1 a14203ddd441ec16c3e59f196ec71efe4d384e8d SHA256 f8c1adb17ae37d1e255a84ead7bbb6c1283fa176725e5aee491640b26b64451e
-MD5 101acf7c90eb11ce093a0c9571923285 files/5.0.0_beta4/020_autofs-5.0.0_beta4-wrong-conf-names.patch 1220
-RMD160 86c61f0bbd291f7045f5d58b0c254066584440b7 files/5.0.0_beta4/020_autofs-5.0.0_beta4-wrong-conf-names.patch 1220
-SHA256 f8c1adb17ae37d1e255a84ead7bbb6c1283fa176725e5aee491640b26b64451e files/5.0.0_beta4/020_autofs-5.0.0_beta4-wrong-conf-names.patch 1220
-AUX 5.0.0_beta5/003_autofs-5.0.0_beta5-lookup_init-cleanup.patch 10194 RMD160 2d86674bb6a1b1c688869ea0b715544fe0da9c29 SHA1 973f54fe73d3193018dde1e9f431f5492e11b7ae SHA256 40d4eb0c99cec1274478b4f37d34f0528bbf7641ed228e5d056a878e8f748b6c
-MD5 830e2753d26a92347d5cf17d452ce43d files/5.0.0_beta5/003_autofs-5.0.0_beta5-lookup_init-cleanup.patch 10194
-RMD160 2d86674bb6a1b1c688869ea0b715544fe0da9c29 files/5.0.0_beta5/003_autofs-5.0.0_beta5-lookup_init-cleanup.patch 10194
-SHA256 40d4eb0c99cec1274478b4f37d34f0528bbf7641ed228e5d056a878e8f748b6c files/5.0.0_beta5/003_autofs-5.0.0_beta5-lookup_init-cleanup.patch 10194
-AUX 5.0.0_beta5/006_autofs-5.0.0_beta5-use-yp-map-order.patch 3061 RMD160 396ddacf8ba1df05eb641fb98c8f11c944ad5fb6 SHA1 c71fe517118100623ad45c7959fdd8a2407e1822 SHA256 2e3de0970c61021f3cf9e12752e1181fb013f766e83b3dc0e5efb1d92cc4dae9
-MD5 b2be869bc86ddcb2f0905916e19e4fca files/5.0.0_beta5/006_autofs-5.0.0_beta5-use-yp-map-order.patch 3061
-RMD160 396ddacf8ba1df05eb641fb98c8f11c944ad5fb6 files/5.0.0_beta5/006_autofs-5.0.0_beta5-use-yp-map-order.patch 3061
-SHA256 2e3de0970c61021f3cf9e12752e1181fb013f766e83b3dc0e5efb1d92cc4dae9 files/5.0.0_beta5/006_autofs-5.0.0_beta5-use-yp-map-order.patch 3061
-AUX 5.0.0_beta5/009_autofs-5.0.0_beta5-lookup_yp-leaks.patch 1593 RMD160 e2e790c456c0de67d2a793cc9e1cc32b82ff467d SHA1 20318d7e080922ee10ce1390f56767f1a0eeeb98 SHA256 76821f898003c4ae8524c9a401b24248bf0cdbd4119fa609292e658aa8841e86
-MD5 5b8fa5a158783ff8305d779ac825239f files/5.0.0_beta5/009_autofs-5.0.0_beta5-lookup_yp-leaks.patch 1593
-RMD160 e2e790c456c0de67d2a793cc9e1cc32b82ff467d files/5.0.0_beta5/009_autofs-5.0.0_beta5-lookup_yp-leaks.patch 1593
-SHA256 76821f898003c4ae8524c9a401b24248bf0cdbd4119fa609292e658aa8841e86 files/5.0.0_beta5/009_autofs-5.0.0_beta5-lookup_yp-leaks.patch 1593
-AUX 5.0.0_beta5/012_autofs-5.0.0_beta5-replicated-parse-error.patch 797 RMD160 4351a61486ad4c1ef762220a9269a621444f6403 SHA1 c3c2cc1970a812aa1f98d10aa623646fdf61f425 SHA256 78f00caa2f8902416a904908935eb67c6362a9cbbe7ed36f811b7e076d4c500b
-MD5 dd5bf5b7aa4b79462f667281f164f6e7 files/5.0.0_beta5/012_autofs-5.0.0_beta5-replicated-parse-error.patch 797
-RMD160 4351a61486ad4c1ef762220a9269a621444f6403 files/5.0.0_beta5/012_autofs-5.0.0_beta5-replicated-parse-error.patch 797
-SHA256 78f00caa2f8902416a904908935eb67c6362a9cbbe7ed36f811b7e076d4c500b files/5.0.0_beta5/012_autofs-5.0.0_beta5-replicated-parse-error.patch 797
-AUX 5.0.0_beta5/015_autofs-5.0.0_beta5-mapclass.patch 1349 RMD160 79d3b1a9ea6e9457439067be183fbb6cc00a460d SHA1 0a7693e122937ac0344dc3605d45e3b9a33509e5 SHA256 4ce591cbf5b6afc4ac6b8f0341d6ab258d3dd3875818f2d857a9ee1be8624ea0
-MD5 c480923ef0cbb24ab1e368f59abab11a files/5.0.0_beta5/015_autofs-5.0.0_beta5-mapclass.patch 1349
-RMD160 79d3b1a9ea6e9457439067be183fbb6cc00a460d files/5.0.0_beta5/015_autofs-5.0.0_beta5-mapclass.patch 1349
-SHA256 4ce591cbf5b6afc4ac6b8f0341d6ab258d3dd3875818f2d857a9ee1be8624ea0 files/5.0.0_beta5/015_autofs-5.0.0_beta5-mapclass.patch 1349
-AUX 5.0.0_beta5/018_autofs-5.0.0_beta5-auth-config.patch 5864 RMD160 0624f45155d58d72cfa66a235cf436f0f7202e77 SHA1 83524f84c05cc4e164da1dbe0cd731ebf16f4262 SHA256 10b2736d116ecee89818c9aadd9ca56aedbe8469476c2e72583db6c2f2497b66
-MD5 842443a20263ecd5f29d631fba9ec155 files/5.0.0_beta5/018_autofs-5.0.0_beta5-auth-config.patch 5864
-RMD160 0624f45155d58d72cfa66a235cf436f0f7202e77 files/5.0.0_beta5/018_autofs-5.0.0_beta5-auth-config.patch 5864
-SHA256 10b2736d116ecee89818c9aadd9ca56aedbe8469476c2e72583db6c2f2497b66 files/5.0.0_beta5/018_autofs-5.0.0_beta5-auth-config.patch 5864
-AUX 5.0.0_beta5/021_autofs-5.0.0_beta5-get-dn.patch 10470 RMD160 917e98e99d6e1277f86075eaa9b1fdeefdb2dd5a SHA1 cd1dddc66d084dc276a7ff543aa15ed32a4665ec SHA256 c572a9c9ff1cf9e92c40920153635afe49a45c8bc6f4001bdc53737a47cbe563
-MD5 2ff30a8470494232024237a25017a357 files/5.0.0_beta5/021_autofs-5.0.0_beta5-get-dn.patch 10470
-RMD160 917e98e99d6e1277f86075eaa9b1fdeefdb2dd5a files/5.0.0_beta5/021_autofs-5.0.0_beta5-get-dn.patch 10470
-SHA256 c572a9c9ff1cf9e92c40920153635afe49a45c8bc6f4001bdc53737a47cbe563 files/5.0.0_beta5/021_autofs-5.0.0_beta5-get-dn.patch 10470
-AUX 5.0.0_beta5/024_autofs-5.0.0_beta5-ldap-default-auth.patch 4404 RMD160 44746bcbd91ff7b1bf498609195340bca610332b SHA1 31d8e546398363c15a2c7d1a4c597b70c35035b0 SHA256 a35681329913331c120f5229183e8425b16ded18c91451384869eac56ac2d2d2
-MD5 d4e7eb7fd0bb000ac5bcfe050f4451ca files/5.0.0_beta5/024_autofs-5.0.0_beta5-ldap-default-auth.patch 4404
-RMD160 44746bcbd91ff7b1bf498609195340bca610332b files/5.0.0_beta5/024_autofs-5.0.0_beta5-ldap-default-auth.patch 4404
-SHA256 a35681329913331c120f5229183e8425b16ded18c91451384869eac56ac2d2d2 files/5.0.0_beta5/024_autofs-5.0.0_beta5-ldap-default-auth.patch 4404
-AUX 5.0.0_beta5/027_autofs-5.0.0_beta5-parse-old-style-dn.patch 3457 RMD160 b6363afd73d1ffdb451deb48079fbf731f0f3023 SHA1 62017741b96011fa77c33d455c712cbae928189d SHA256 2cd42831d6f5d7eda366cc9eef8f17edcae49286a79a9bde077207b3578718ca
-MD5 9927b420213fb7115e3907b1c29b6e9d files/5.0.0_beta5/027_autofs-5.0.0_beta5-parse-old-style-dn.patch 3457
-RMD160 b6363afd73d1ffdb451deb48079fbf731f0f3023 files/5.0.0_beta5/027_autofs-5.0.0_beta5-parse-old-style-dn.patch 3457
-SHA256 2cd42831d6f5d7eda366cc9eef8f17edcae49286a79a9bde077207b3578718ca files/5.0.0_beta5/027_autofs-5.0.0_beta5-parse-old-style-dn.patch 3457
-AUX 5.0.0_beta5/030_autofs-5.0.0_beta5-get-dn-update.patch 3512 RMD160 22aaafa544d31419aef4582a58254ee876608ee5 SHA1 63625a854bec02bc30f8f3f4a361efe130995c8c SHA256 8658b11a48139128abe82b22d835c8e64aa33d4b3fdb02b5fa36f9aea7ecbd6a
-MD5 a5d544b369832df9eefb110669a1ea3d files/5.0.0_beta5/030_autofs-5.0.0_beta5-get-dn-update.patch 3512
-RMD160 22aaafa544d31419aef4582a58254ee876608ee5 files/5.0.0_beta5/030_autofs-5.0.0_beta5-get-dn-update.patch 3512
-SHA256 8658b11a48139128abe82b22d835c8e64aa33d4b3fdb02b5fa36f9aea7ecbd6a files/5.0.0_beta5/030_autofs-5.0.0_beta5-get-dn-update.patch 3512
-AUX 5.0.0_beta5/033_autofs-5.0.0_beta5-compile-warnings.patch 2106 RMD160 a90bfdd6f7be6ede4dff49345e85a1cd1c77c6cb SHA1 219d5770fdf9d8990f992e08116dfe02948cc0dd SHA256 bee1a714897d116bf621073d229bf7fdca0cfd9a2301c8304d8e3ab3f70849f1
-MD5 95c34319ea1a1e1efe32285ef2019c3a files/5.0.0_beta5/033_autofs-5.0.0_beta5-compile-warnings.patch 2106
-RMD160 a90bfdd6f7be6ede4dff49345e85a1cd1c77c6cb files/5.0.0_beta5/033_autofs-5.0.0_beta5-compile-warnings.patch 2106
-SHA256 bee1a714897d116bf621073d229bf7fdca0cfd9a2301c8304d8e3ab3f70849f1 files/5.0.0_beta5/033_autofs-5.0.0_beta5-compile-warnings.patch 2106
-AUX 5.0.0_beta5/036_autofs-5.0.0_beta5-spec-file-update.patch- 701 RMD160 50ba47d8b9ffebaf550b3be96f77d01e2a728bd7 SHA1 36a9185ae1a9d525cebe33a7958c6c090570f330 SHA256 c589e92ed37e85d96d85b3297303ac58a278191f86df4679dee0ed471ad6e7a6
-MD5 a45150135ad4dbff5a34b937d38d147e files/5.0.0_beta5/036_autofs-5.0.0_beta5-spec-file-update.patch- 701
-RMD160 50ba47d8b9ffebaf550b3be96f77d01e2a728bd7 files/5.0.0_beta5/036_autofs-5.0.0_beta5-spec-file-update.patch- 701
-SHA256 c589e92ed37e85d96d85b3297303ac58a278191f86df4679dee0ed471ad6e7a6 files/5.0.0_beta5/036_autofs-5.0.0_beta5-spec-file-update.patch- 701
-AUX 5.0.0_beta5/039_autofs-5.0.0_beta5-override-system-macros.patch 1314 RMD160 c1b331b5d11604c08e1dcf01aece50f0f3e454da SHA1 c24025b9e4ed2a3a572e3169c2854a29244b76d4 SHA256 6f31b955161ba04de978764150c13589e7dbdb07ac6ca5035806aea8dcf247b7
-MD5 17b0f78af7db5e8767fc8d8c60f264ed files/5.0.0_beta5/039_autofs-5.0.0_beta5-override-system-macros.patch 1314
-RMD160 c1b331b5d11604c08e1dcf01aece50f0f3e454da files/5.0.0_beta5/039_autofs-5.0.0_beta5-override-system-macros.patch 1314
-SHA256 6f31b955161ba04de978764150c13589e7dbdb07ac6ca5035806aea8dcf247b7 files/5.0.0_beta5/039_autofs-5.0.0_beta5-override-system-macros.patch 1314
-AUX 5.0.0_beta5/042_autofs-5.0.0_beta5-mapclass-update.patch 1986 RMD160 d6d23ad524b8772bc04197575364ddbf090d6d49 SHA1 7651718b2f5aa0f9810abf656b9f0a4939a4b8e9 SHA256 fd7da1abc69b309ef2eb7fa008b836e6951bfa3a43ed757ccdf0b12f9baf8a81
-MD5 e37d82f647e445ebf14b3df345bfd363 files/5.0.0_beta5/042_autofs-5.0.0_beta5-mapclass-update.patch 1986
-RMD160 d6d23ad524b8772bc04197575364ddbf090d6d49 files/5.0.0_beta5/042_autofs-5.0.0_beta5-mapclass-update.patch 1986
-SHA256 fd7da1abc69b309ef2eb7fa008b836e6951bfa3a43ed757ccdf0b12f9baf8a81 files/5.0.0_beta5/042_autofs-5.0.0_beta5-mapclass-update.patch 1986
-AUX 5.0.0_beta5/045_autofs-5.0.0_beta5-misc-fixes.patch 1489 RMD160 07a66741fbfc9e26a572672598062afc34c7fc67 SHA1 bdd5a7a9561990dc204e5484df306372e710e9d2 SHA256 9442d396f9426cf0436d5e50ab6dcc66f66f7761a857150d6b0c6a26900720d6
-MD5 448861c01f6c5969cd81dcafe71032ba files/5.0.0_beta5/045_autofs-5.0.0_beta5-misc-fixes.patch 1489
-RMD160 07a66741fbfc9e26a572672598062afc34c7fc67 files/5.0.0_beta5/045_autofs-5.0.0_beta5-misc-fixes.patch 1489
-SHA256 9442d396f9426cf0436d5e50ab6dcc66f66f7761a857150d6b0c6a26900720d6 files/5.0.0_beta5/045_autofs-5.0.0_beta5-misc-fixes.patch 1489
-AUX 5.0.0_beta5/048_autofs-5.0.0_beta5-defaults_read_config-cleanup.patch 904 RMD160 886ff1de079259d1dbf23d5ff28c73870b520f12 SHA1 98930d4e0e5fe0b9964b13ec15e5918e25b7191e SHA256 98a917f07b7c215b8c5c7db77fff5466226abfc6ed7c6b771aee28e1b2bf8683
-MD5 11e4b240268ff8f5d4d11192064d0d50 files/5.0.0_beta5/048_autofs-5.0.0_beta5-defaults_read_config-cleanup.patch 904
-RMD160 886ff1de079259d1dbf23d5ff28c73870b520f12 files/5.0.0_beta5/048_autofs-5.0.0_beta5-defaults_read_config-cleanup.patch 904
-SHA256 98a917f07b7c215b8c5c7db77fff5466226abfc6ed7c6b771aee28e1b2bf8683 files/5.0.0_beta5/048_autofs-5.0.0_beta5-defaults_read_config-cleanup.patch 904
-AUX 5.0.0_beta5/051_autofs-5.0.0_beta5-rfc2307-bis-examples.patch 4913 RMD160 d38577650146ea511b6c90fb80f79e5a20e14d29 SHA1 1631c27e594869ec89f980c8419fcba4ee39808b SHA256 82b27fe9fcd38ba0aa9c804f58b205ea74f5221a2b15a2ba7ab16b786f17bf87
-MD5 8ac6f57e6d6dc389a847775c8cadba63 files/5.0.0_beta5/051_autofs-5.0.0_beta5-rfc2307-bis-examples.patch 4913
-RMD160 d38577650146ea511b6c90fb80f79e5a20e14d29 files/5.0.0_beta5/051_autofs-5.0.0_beta5-rfc2307-bis-examples.patch 4913
-SHA256 82b27fe9fcd38ba0aa9c804f58b205ea74f5221a2b15a2ba7ab16b786f17bf87 files/5.0.0_beta5/051_autofs-5.0.0_beta5-rfc2307-bis-examples.patch 4913
-AUX 5.0.0_beta5/054_autofs-5.0.0_beta5-config-mode.patch 2072 RMD160 0288ca93e8df0387024bbbc1d3fa3a371515b8b5 SHA1 144436db963478214a51cb0a3b1a6b84126e18aa SHA256 19462f8918475b0504a3827af4871eede1443fe0caf4afc07b3a06efb21730e9
-MD5 9665db20acbd823e07494a070da3ffbf files/5.0.0_beta5/054_autofs-5.0.0_beta5-config-mode.patch 2072
-RMD160 0288ca93e8df0387024bbbc1d3fa3a371515b8b5 files/5.0.0_beta5/054_autofs-5.0.0_beta5-config-mode.patch 2072
-SHA256 19462f8918475b0504a3827af4871eede1443fe0caf4afc07b3a06efb21730e9 files/5.0.0_beta5/054_autofs-5.0.0_beta5-config-mode.patch 2072
-AUX 5.0.0_beta5/patch_order-5.0.0_beta5 751 RMD160 972dd20d12628d8f95f4c7ccfff1e3d4278206a7 SHA1 504234fb1c3093e93f0bdbafc6c3527682714ae5 SHA256 d10deee6d65492c79b5195af6d91fad09ae3b7c0fef15c99c56ec90442c0e833
-MD5 84d94510091667eef9834087af1962ca files/5.0.0_beta5/patch_order-5.0.0_beta5 751
-RMD160 972dd20d12628d8f95f4c7ccfff1e3d4278206a7 files/5.0.0_beta5/patch_order-5.0.0_beta5 751
-SHA256 d10deee6d65492c79b5195af6d91fad09ae3b7c0fef15c99c56ec90442c0e833 files/5.0.0_beta5/patch_order-5.0.0_beta5 751
 AUX auto.home 239 RMD160 edac7b0a5b087e9a59a499b6973cd86343b35510 SHA1 3023bed60ef3de57423a9037c6879af667f74a2c SHA256 a78df0576c198187e3c120ddcd64a2fd708d74db0f6d5272dbf616376841ec47
 MD5 bbe65513cb8ef866aba3edf78b306a4d files/auto.home 239
 RMD160 edac7b0a5b087e9a59a499b6973cd86343b35510 files/auto.home 239
@@ -158,6 +66,14 @@ AUX autofs1.confd 137 RMD160 35c5171eb57db792830e94f28058b1b50534c236 SHA1 d5e41
 MD5 7fa23f910baa8aa00609bd74a60c8e34 files/autofs1.confd 137
 RMD160 35c5171eb57db792830e94f28058b1b50534c236 files/autofs1.confd 137
 SHA256 d4be4500623e3ba986ad124b273c9119da78b12eb94c6d39e358ed9d623a1a8a files/autofs1.confd 137
+AUX autofs5.conf 1330 RMD160 559b679c5f0795b6132da75de98102be01143877 SHA1 e1ba4c9dbfb8faa41ddcfdbd684100959b1c5d35 SHA256 b757756d4dddb76db56b068e23c7af6c4b18e8da10c71aaf995f3ef9849c7834
+MD5 e579730793d2b252c7ca24525dc9fff6 files/autofs5.conf 1330
+RMD160 559b679c5f0795b6132da75de98102be01143877 files/autofs5.conf 1330
+SHA256 b757756d4dddb76db56b068e23c7af6c4b18e8da10c71aaf995f3ef9849c7834 files/autofs5.conf 1330
+AUX autofs5.init 2034 RMD160 2ac2a4213c7debd901dc323333063af512d04c93 SHA1 f0113f4a3d48df90413dcdcdf582469e3b5207f4 SHA256 461c112d26ab4bb0dcbd5e9bf3f4238b2417f020ccc16ff059bd66f30ccfcfc6
+MD5 ef7c2b293073283be5eb873039879a74 files/autofs5.init 2034
+RMD160 2ac2a4213c7debd901dc323333063af512d04c93 files/autofs5.init 2034
+SHA256 461c112d26ab4bb0dcbd5e9bf3f4238b2417f020ccc16ff059bd66f30ccfcfc6 files/autofs5.init 2034
 AUX autofs_ldap_auth.conf 149 RMD160 6e67d9a6e3c2b32e7136fab076b85205417942b9 SHA1 f7d60dbcf9cf4866a5b529490541bd5293201223 SHA256 cd1db23dfe55f58f94d0554ea7a15928327dcf57762fd3a07e44f303b60ff79f
 MD5 877caf85549834909848252b84d2c94b files/autofs_ldap_auth.conf 149
 RMD160 6e67d9a6e3c2b32e7136fab076b85205417942b9 files/autofs_ldap_auth.conf 149
@@ -174,6 +90,10 @@ AUX nisyp.patch 419 RMD160 338ad78c60e048aad661b98c008b8f7cafd7ba8b SHA1 079f558
 MD5 77884391a3fbf365a88f5d2230b548d9 files/nisyp.patch 419
 RMD160 338ad78c60e048aad661b98c008b8f7cafd7ba8b files/nisyp.patch 419
 SHA256 e85a998ed1f40d41c32b15e1184fcd0b96a9d86f42cf10ebd76c3e553eea19f0 files/nisyp.patch 419
+AUX patch_list-5.0.1 474 RMD160 83fa143df48ddd4e9a267c3918cd1d800d77382e SHA1 3f291f1a346d5bdf0b9ea24738f1988c9596b35d SHA256 80926ad0487846035559494526e2318f4862c2570e9fc8fb0658766df1502db5
+MD5 38f160777f4bf8ff8cd58c3bbb2ed929 files/patch_list-5.0.1 474
+RMD160 83fa143df48ddd4e9a267c3918cd1d800d77382e files/patch_list-5.0.1 474
+SHA256 80926ad0487846035559494526e2318f4862c2570e9fc8fb0658766df1502db5 files/patch_list-5.0.1 474
 AUX patch_list-5.0.1_rc2 1702 RMD160 ae231674e64237a6a4a3050c792857d0e8978c5a SHA1 aeb58f1c68671153be11080d1cb130f20c56e061 SHA256 c7a67934a5f06673df20111fa285f0d3d9ba989b72dd0a3a4721da1e568b4bf2
 MD5 b7ee90ff6d564ade1ebb4e3e392fd675 files/patch_list-5.0.1_rc2 1702
 RMD160 ae231674e64237a6a4a3050c792857d0e8978c5a files/patch_list-5.0.1_rc2 1702
@@ -182,8 +102,15 @@ AUX patch_list-5.0.1_rc3 371 RMD160 df922f959f8dab11fe53733163823954986b335f SHA
 MD5 7550ef33254d055a559f1f19b3acd32c files/patch_list-5.0.1_rc3 371
 RMD160 df922f959f8dab11fe53733163823954986b335f files/patch_list-5.0.1_rc3 371
 SHA256 ef57f132a93ef1cfac5fd98ea65a821f3b0b7f246156ebdb682c3445a4cbbe3d files/patch_list-5.0.1_rc3 371
-DIST autofs-5.0.0_beta4.tar.bz2 202668 RMD160 accc1a728a34b16a06148dc1942ba538affbe705 SHA1 aa95cb37dc82dd635377dc446e481dcd79ea5e8a SHA256 eed0af1ca6dfd5f65ab2351ed7c6062b26c708c403de9c11c040cc2dbff857a9
-DIST autofs-5.0.0_beta5.tar.bz2 204924 RMD160 c532d5a50059201d95ce578d3cd26d4afa82eeee SHA1 3054cf9a6edebbb999fad3eca3eafb7a568b1caa SHA256 91728c807499bcd7f1d5db77c73d299bee72b74ca3bc7b068c300c2716ed9cda
+DIST autofs-5.0.1-check-mtab-updated.patch 2578 RMD160 01c934e1d30497a946985a92614af1e4af1236e1 SHA1 b30d8efe894f0878883e82d29d7cc9582e91f567 SHA256 f8eb66b5fbd7550f504de507f70e035da166e2f7480e2c045fe3345ef2f5c012
+DIST autofs-5.0.1-check-user-info-return.patch 1651 RMD160 fe8e12d92c81ef8f939962838856b1e1444bce29 SHA1 ee420251c9712bb0a647f0bdb0df29fb08776bc9 SHA256 a1ca0ca70f45a64664539834c592ab3de5353f6f07defc2e69679dffd6e9bb71
+DIST autofs-5.0.1-code-cleanups.patch 8928 RMD160 8c9d6b334857e4c476028aa05f21987fe1123ece SHA1 3b2c68f8edf9b1e21efd5fb8e67e1c71382700d1 SHA256 fbf0449b300a3ea7f102b3e3a0812fbc26806e38083536a6fc7ce4f6edaee5c1
+DIST autofs-5.0.1-configure-cleanups.patch 1966 RMD160 ddb7f392a93c227767807397c4d9ca3fbeca4d2c SHA1 3b9b0c45656851086c494f28d0f461827774eb11 SHA256 ab930aa86095808757a9d666906006504febee2d7d2d313e8b9d303e77386180
+DIST autofs-5.0.1-correct-hesiod-check.patch 1129 RMD160 b62f76df7fd8b8e81d442308e894e7964b05ac7d SHA1 127fe769ff0a49dc327b800adfa93bca536508b1 SHA256 3e59653261dafca05005034985124e04cff564920c3b0dcecfa5a7a461a7864b
+DIST autofs-5.0.1-drop-default-prefix-from-config.patch 15100 RMD160 89c19c0666478f3762fd336288a4338734a13927 SHA1 70c8a03b5af27d5b3c22fa0e71a1126d1733d018 SHA256 3dea6b81c8e8e38284cd61e287f8dc49fd62bb4f4d962f5b221e49ace50cabc8
+DIST autofs-5.0.1-export-check-network-fix-2.patch 3203 RMD160 aa780273b19b7c002f539ebe19097a5bba57b0e3 SHA1 9b3b499fea6b2b2b9dadd723281ecc930729b21f SHA256 882d5162c795abb86bcd07e0e2006b2eefae4670e3b86c2eadde05caaa95f0ec
+DIST autofs-5.0.1-file-map-allow-white-space-only-line.patch 2015 RMD160 bcece0903f2338fac7daf4f21420511b9213ef26 SHA1 28ed238d0c83b8fcbae3dd8873085a6ae63cd377 SHA256 399ec6b036da009d2e4a905b420a7582393b714003a10f118f49fad0251ca861
+DIST autofs-5.0.1-hosts-simple-fail.patch 741 RMD160 316e4b67f3c6d7f1f1ba780e5c3e3d04ff8e12e7 SHA1 1d916025546a4632ccda62c7d95a75041d6d6fb7 SHA256 f397fa29e07ea6823ceaad56ec4b11d7d9ee24dd4383af136c46e107ea7ac5d9
 DIST autofs-5.0.1-rc2-cancelled-check.patch 1097 RMD160 ba329891aa002f173c4061808ea4fac918d51a5b SHA1 179f6d7412494dfb92efca60a586403a824ba23a SHA256 eb2f31efc71f061268cacc036c4be1c6e23c559d8f5c844e66019dcd20cc8d9e
 DIST autofs-5.0.1-rc2-check-fh-on-direct-mount-and-expire.patch 5506 RMD160 d44a397d93ce5b6384b07a12e8c6e0a49ca0dd11 SHA1 bda5673ab1310e09e8d158b9cd21587ef2dd67a4 SHA256 f3c3185c1ea0aa87d9dbdc825c95e232f690eed380008c87ebff348fc13de188
 DIST autofs-5.0.1-rc2-close-on-exec.patch 11056 RMD160 95fa8c89b80a1db3a006eb4d958b2cff646eefd3 SHA1 e77f7e39d33ea56b3d9e16a6f868271a26def132 SHA256 bfc10bd0057bc110b11f39fe49aa36344b3efcbb1fa0fb2024d8343e52725502
@@ -230,32 +157,28 @@ DIST autofs-5.0.1-rc3-nsswitch-ignore-winbind.patch 2302 RMD160 91d9b1c921b59cb4
 DIST autofs-5.0.1-rc3-remove-rpath-link-option.patch 653 RMD160 24ff4e8549941626bf069a223c54a9dc6c8f9491 SHA1 1781ea413555bca69773b603b400a5b6a626e93e SHA256 c204382f9a49da3c70db4857bb2e9ff8e7d10a8098dafc442cbfe6b0720db14b
 DIST autofs-5.0.1-rc3-trailing-whitespace.patch 1955 RMD160 407c50088f6a8ca4590d88700a96522056750a7b SHA1 e60d558e3ed5d8f62a63f0b1a97e2ddf507b9a2c SHA256 719676cad1f9b91ea41380c70d4f42dab16754999993a915352d61f8b72df280
 DIST autofs-5.0.1-rc3.tar.bz2 208222 RMD160 a5672f67c5520e769be4e0aae9779330b28e1101 SHA1 20304ebd22c5c5a32160b3b37602f4186dc7af43 SHA256 36e4b4ef484e94a856917db1f59d85bc4c9a80811ab2d4f83c65ad390336d70a
-EBUILD autofs-5.0.0_beta4.ebuild 2863 RMD160 23ce7d4d14e3db019c36fcbfb9c8b889a3fc18ee SHA1 39c18df1f590abf3ed0f649f54bb0a30d05fdbfc SHA256 1a7d0287e420625e5528488a7fa26e9326fae9a6e9e0f11722e8644d4d6b58c4
-MD5 61a8205e450c20da7656024d1d7d7c65 autofs-5.0.0_beta4.ebuild 2863
-RMD160 23ce7d4d14e3db019c36fcbfb9c8b889a3fc18ee autofs-5.0.0_beta4.ebuild 2863
-SHA256 1a7d0287e420625e5528488a7fa26e9326fae9a6e9e0f11722e8644d4d6b58c4 autofs-5.0.0_beta4.ebuild 2863
-EBUILD autofs-5.0.0_beta5.ebuild 2863 RMD160 23ce7d4d14e3db019c36fcbfb9c8b889a3fc18ee SHA1 39c18df1f590abf3ed0f649f54bb0a30d05fdbfc SHA256 1a7d0287e420625e5528488a7fa26e9326fae9a6e9e0f11722e8644d4d6b58c4
-MD5 61a8205e450c20da7656024d1d7d7c65 autofs-5.0.0_beta5.ebuild 2863
-RMD160 23ce7d4d14e3db019c36fcbfb9c8b889a3fc18ee autofs-5.0.0_beta5.ebuild 2863
-SHA256 1a7d0287e420625e5528488a7fa26e9326fae9a6e9e0f11722e8644d4d6b58c4 autofs-5.0.0_beta5.ebuild 2863
+DIST autofs-5.0.1-remove-macro-automount-8.patch 9371 RMD160 7755b988fcb2e26286d8db0874e711e1d4432416 SHA1 6c024231acee9ce7c71b5c8e6169104fc2b3ebc6 SHA256 bdaabdc27f8e944e0846fd5770da58dd69b225ad4bd437a5fcdf41adb6486e7b
+DIST autofs-5.0.1-remove-redundant-ident-macros.patch 13882 RMD160 a838f4a08080987c1181f5afb8ba7ad1b671ca68 SHA1 c4a605f56edcfde71417b9a648f04f17eef8c2c3 SHA256 c27f7446af684bafd74ada98df85067a624c69f91d7045d6f70f69805ee7b7d2
+DIST autofs-5.0.1.tar.bz2 211134 RMD160 c9a1368da82c9e4cec245885bbd41bce0181be79 SHA1 631633faae1e633f80252f6259fcfab7f2fe274a SHA256 275d628f345d72935b1d53618dcc2e8bf3b748a4e7f15e15504d0173251b3ef3
+EBUILD autofs-5.0.1.ebuild 3411 RMD160 5e4ca032480f10bcf2538531e2072d312c0914e5 SHA1 4d514d4cc7b082193fc1eae67db75674fab8440d SHA256 04e136f74f659a9cdd2e54c4931941db0e37082a577488f68dc4c6e9630e2ad0
+MD5 8bd875b7a8d7c37a3ad0b89f21898220 autofs-5.0.1.ebuild 3411
+RMD160 5e4ca032480f10bcf2538531e2072d312c0914e5 autofs-5.0.1.ebuild 3411
+SHA256 04e136f74f659a9cdd2e54c4931941db0e37082a577488f68dc4c6e9630e2ad0 autofs-5.0.1.ebuild 3411
 EBUILD autofs-5.0.1_rc2.ebuild 3087 RMD160 f6e72522cadf9f294962b5ee555511cd40fca79b SHA1 d24afd00905f0fbd39a939d694e2e6a1400402b5 SHA256 adb9fff78b8657a49e2469ca288efd35ec3c6e83af67e1d4ab7f8730a41b1802
 MD5 ad18a87d0626f8fba58c7b7d7591fc95 autofs-5.0.1_rc2.ebuild 3087
 RMD160 f6e72522cadf9f294962b5ee555511cd40fca79b autofs-5.0.1_rc2.ebuild 3087
 SHA256 adb9fff78b8657a49e2469ca288efd35ec3c6e83af67e1d4ab7f8730a41b1802 autofs-5.0.1_rc2.ebuild 3087
-EBUILD autofs-5.0.1_rc3.ebuild 3323 RMD160 ba9920ac0d0ede3a692177914245d52a96163423 SHA1 f1eaa807258c89a1871abbe86d8da45cc22ea37d SHA256 400392f574ad1271fa0ce03da23af8094a5301033ba98818e268ae802fa632fc
-MD5 d5d712f2ded36785f4ae2563e316889e autofs-5.0.1_rc3.ebuild 3323
-RMD160 ba9920ac0d0ede3a692177914245d52a96163423 autofs-5.0.1_rc3.ebuild 3323
-SHA256 400392f574ad1271fa0ce03da23af8094a5301033ba98818e268ae802fa632fc autofs-5.0.1_rc3.ebuild 3323
+EBUILD autofs-5.0.1_rc3.ebuild 3411 RMD160 5e4ca032480f10bcf2538531e2072d312c0914e5 SHA1 4d514d4cc7b082193fc1eae67db75674fab8440d SHA256 04e136f74f659a9cdd2e54c4931941db0e37082a577488f68dc4c6e9630e2ad0
+MD5 8bd875b7a8d7c37a3ad0b89f21898220 autofs-5.0.1_rc3.ebuild 3411
+RMD160 5e4ca032480f10bcf2538531e2072d312c0914e5 autofs-5.0.1_rc3.ebuild 3411
+SHA256 04e136f74f659a9cdd2e54c4931941db0e37082a577488f68dc4c6e9630e2ad0 autofs-5.0.1_rc3.ebuild 3411
 MISC metadata.xml 220 RMD160 e0784b3a2b88555492c691cfd57da8dbacbdae1f SHA1 3044d906677c3ec656e9e9e8dfc72ae5288da078 SHA256 c61c8c93c74e247ae076bfc0e6a6186a80dc381326a79dcbf4552134970f00b1
 MD5 42f2cbc1323721fe4b0b1b12d18a5a1a metadata.xml 220
 RMD160 e0784b3a2b88555492c691cfd57da8dbacbdae1f metadata.xml 220
 SHA256 c61c8c93c74e247ae076bfc0e6a6186a80dc381326a79dcbf4552134970f00b1 metadata.xml 220
-MD5 4f219784e5b6a478cab1c7139f1faeea files/digest-autofs-5.0.0_beta4 259
-RMD160 8b17a860b6dfebc86c29d9f03121a634d4940fa0 files/digest-autofs-5.0.0_beta4 259
-SHA256 71edacb1e26a609bde063222f1bc30e17c60f91b6a7d9e0ced748c14606f2716 files/digest-autofs-5.0.0_beta4 259
-MD5 7f8c12082aeebf49adb73ef8757e8b9a files/digest-autofs-5.0.0_beta5 259
-RMD160 0d876e283f4aa9a29869834a01c8f43eb714431f files/digest-autofs-5.0.0_beta5 259
-SHA256 dbddb99fe27f919c67d9d5dae216f0bfbbf032fefe4019edd13bc45d0c11ed9c files/digest-autofs-5.0.0_beta5 259
+MD5 22d53d705d55a9038a11eaae79da7e7c files/digest-autofs-5.0.1 3558
+RMD160 b9e1cc9b914ee705a7294b764ffcd60777c376db files/digest-autofs-5.0.1 3558
+SHA256 81fe554589256ecd82bff7e1db14de29c0747a022c621482325e6f8cd29c1813 files/digest-autofs-5.0.1 3558
 MD5 f4389af909948dd3cef2283147260c1b files/digest-autofs-5.0.1_rc2 11533
 RMD160 25f8b1740ba5fe423519cd0052ef3bf6ac553af3 files/digest-autofs-5.0.1_rc2 11533
 SHA256 f127ae6fa0c7ed3599d646013572b3c55a19c94578e08d9b8c49f8d25b890f85 files/digest-autofs-5.0.1_rc2 11533
