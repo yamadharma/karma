@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/ivman/ivman-0.6.13.ebuild,v 1.1 2006/12/04 23:32:04 genstef Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/ivman/ivman-0.6.14.ebuild,v 1.1 2007/03/06 15:02:24 genstef Exp $
 
 inherit eutils
 
@@ -21,6 +21,14 @@ RDEPEND=">=dev-libs/glib-2.6
 DEPEND="${RDEPEND}
 	>=sys-devel/libtool-1.5
 	dev-util/pkgconfig"
+
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+
+	# Add support for hotpluggable devices (not removable)
+	epatch "${FILESDIR}"/${PN}-0.6-hotpluggable.patch
+}
 
 src_compile() {
 	econf $(use_enable debug) || die "econf failed"
