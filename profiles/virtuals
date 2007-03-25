@@ -28,6 +28,7 @@ virtual/fam				app-admin/gamin
 virtual/flim				app-emacs/flim
 virtual/gsasl				net-libs/libgsasl
 virtual/ghc				dev-lang/ghc
+virtual/glibc				sys-libs/glibc
 virtual/gnustep-back			gnustep-base/gnustep-back-art gnustep-base/gnustep-back-cairo
 virtual/gzip				app-arch/gzip
 virtual/httpd-php			dev-lang/php
@@ -55,20 +56,20 @@ virtual/ooo				app-office/openoffice
 virtual/pager				sys-apps/less
 # Only have this for >=pam-0.78, as we want to make use of the 'include'
 # directive to phase out pam_stack.
-virtual/pam					>=sys-libs/pam-0.78
-virtual/pbs					sys-cluster/torque
-virtual/php					dev-lang/php
+virtual/pam				>=sys-libs/pam-0.78
+virtual/pbs				sys-cluster/torque
+virtual/php				dev-lang/php
 virtual/portage				sys-apps/portage
 virtual/python				dev-lang/python
 virtual/quicktime			media-libs/libquicktime
 virtual/ruby				dev-lang/ruby
 virtual/semi				app-emacs/semi
 virtual/skkserv				app-i18n/skkserv
-virtual/squeak-image		dev-lang/squeak-fullimage
-virtual/ssh					net-misc/openssh
+virtual/squeak-image			dev-lang/squeak-fullimage
+virtual/ssh				net-misc/openssh
 virtual/sylpheed			mail-client/sylpheed
 virtual/tetex				app-text/tetex
 virtual/tftp				net-ftp/tftp-hpa
 virtual/utempter			sys-libs/libutempter
-virtual/w3m					www-client/w3m
+virtual/w3m				www-client/w3m
 virtual/xemacs				app-editors/xemacs

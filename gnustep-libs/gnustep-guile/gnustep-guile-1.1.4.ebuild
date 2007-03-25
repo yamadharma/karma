@@ -11,7 +11,7 @@ LICENSE="LGPL-2.1,GPL-2"
 SLOT="0"
 KEYWORDS="x86 ~ppc ~sparc"
 
-DEPEND=">=dev-util/guile-1.6"
+DEPEND=">=dev-scheme/guile-1.6"
 	
 RDEPEND="virtual/glibc"
 

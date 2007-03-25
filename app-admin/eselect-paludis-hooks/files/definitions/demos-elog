@@ -1,0 +1,6 @@
+# file: eselect/demos-elog
+# eselect definition file for demos/elog.bash hook
+demos/elog.bash elog
+demos/elog.bash install_all_pre install_all_post install_fail
+demos/elog.bash uninstall_all_pre uninstall_all_post uninstall_fail
+demos/elog.bash clean_fail

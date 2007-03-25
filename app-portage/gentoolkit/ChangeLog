@@ -1,0 +1,7 @@
+# ChangeLog for app-portage/gentoolkit
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+2007-02-23 Initial entry - starting with version 20061127
+2007-03-07 New verssion based on gentoolkit-0.2.3 
+           revdep-rebuild has a new option: --dont-move-package-mask-conf

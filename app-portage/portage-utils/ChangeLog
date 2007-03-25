@@ -2,6 +2,18 @@
 == portage-utils, patch for overlays and paludis compatibility ==
 =================================================================
 
+== version 20070307 ==
+# added and adapted (for overlays) patches for the new qgrep options: --eclass and --skip-comments
+(from bugs: #170797 and #170795)
+
+== version 20070307 ==
+# add the average build time to the output of qlop --current
+
+== version 20070214 ==
+# add support for the q-initialize.conf file, in which you can disable the 
+cache regeneration (it's in /etc/paludis/hooks/config)
+# small fixes
+
 == version 20070210 ==
 # new level of verbosity for qlop, to print the total time
   qlop -vtH x11-proto/scrnsaverproto-1.1.0::gentoo x11-terms/rxvt-unicode-8.1::gentoo

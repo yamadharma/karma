@@ -10,7 +10,7 @@ SLOT="0"
 KEYWORDS="x86 -ppc -sparc "
 IUSE=""
 DEPEND=">=gnustep-base/gnustep-base-1.3.4
-	>=dev-util/guile-1.4-r3"
+	>=dev-scheme/guile-1.4-r3"
 RDEPEND="virtual/libc"
 
 src_compile() {

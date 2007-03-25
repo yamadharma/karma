@@ -1,0 +1,21 @@
+# ChangeLog for media-libs/libkexiv2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-libs/libkexiv2/ChangeLog,v 1.4 2007/03/17 16:00:53 cryos Exp $
+
+  17 Mar 2007; Marcus D. Hanwell <cryos@gentoo.org> libkexiv2-0.1.1.ebuild:
+  Marked ~amd64, bug 169160.
+
+  09 Mar 2007; Gustavo Zacarias <gustavoz@gentoo.org>
+  libkexiv2-0.1.1.ebuild:
+  Keyworded ~sparc wrt #169160
+
+  04 Mar 2007; Ioannis Aslanidis <deathwing00@gentoo.org>
+  libkexiv2-0.1.1.ebuild:
+  Fixed SRC_URI.
+
+*libkexiv2-0.1.1 (03 Mar 2007)
+
+  03 Mar 2007; Ioannis Aslanidis <deathwing00@gentoo.org> +metadata.xml,
+  +libkexiv2-0.1.1.ebuild:
+  Initial version. Required by kipi-plugins and digikam.
+

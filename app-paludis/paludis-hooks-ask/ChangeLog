@@ -4,3 +4,5 @@
 
 2007-02-23 Initial entry - starting with version 1.5.2
 2007-02-28 ver 2.0 : paludis_wrapper has been taken out. It has its own ebuild now.
+2007-03-07 ver 2.1 : repaired a bug that was leaving 0 files in the current folder   
+                     and made the question more sensible.

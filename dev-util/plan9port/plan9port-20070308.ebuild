@@ -20,11 +20,12 @@ SLOT="0"
 LICENSE="LucentPL-1.02"
 KEYWORDS="x86 sparc alpha ia64 s390 ppc amd64"
 
-DEPEND="virtual/libc"
-RDEPEND="virtual/libc
+DEPEND="virtual/libc
 	sys-fs/fuse"
+RDEPEND="${DEPEND}
+	media-gfx/qiv"
 
-PORTAGE_COMPRESS="gzip"
+PORTAGE_COMPRESS=""
 
 PLAN9_DEST=/usr/plan9
 

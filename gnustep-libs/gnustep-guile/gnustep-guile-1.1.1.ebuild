@@ -12,5 +12,5 @@ SLOT="0"
 KEYWORDS="x86 -ppc -sparc "
 IUSE=""
 DEPEND=">=gnustep-base/gnustep-base-1.6.0
-	>=dev-util/guile-1.6"
+	>=dev-scheme/guile-1.6"
 RDEPEND="virtual/libc"

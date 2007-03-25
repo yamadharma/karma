@@ -29,7 +29,8 @@ SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
-IUSE="xinerama unicode iontruetype"
+IUSE="unicode iontruetype"
+# IUSE="xinerama"
 DEPEND="
 	|| (
 		(
@@ -77,13 +78,13 @@ src_unpack() {
         # should configure be given just the right set of options.
         sed -i 's!%: %.in!ion-completeman: %: %.in!g' utils/Makefile
         
-        cd ${S}/build/ac/
-        # for the first instance of DEFINES, add XINERAMA
-        use xinerama && \
-            (
-            sed -i 's!\(DEFINES *+=\)!\1 -DCF_XINERAMA !' system-ac.mk.in
-            sed -i 's!\(LIBS="$LIBS.*\)"!\1 $XINERAMA_LIBS"!' configure.ac
-            )
+#        cd ${S}/build/ac/
+#        # for the first instance of DEFINES, add XINERAMA
+#        use xinerama && \
+#            (
+#            sed -i 's!\(DEFINES *+=\)!\1 -DCF_XINERAMA !' system-ac.mk.in
+#            sed -i 's!\(LIBS="$LIBS.*\)"!\1 $XINERAMA_LIBS"!' configure.ac
+#            )
 	#"
 
 
@@ -115,7 +116,7 @@ src_compile() {
         myconf="${myconf}  `use_enable xinerama`"
 
 	# for lua-5.1
-	myconf="${myconf} --with-lua-suffix=-5.1 --with-lua-includes=/usr/include/lua-5.1" 
+#	myconf="${myconf} --with-lua-suffix=-5.1 --with-lua-includes=/usr/include/lua-5.1" 
 
         cd build/ac/
 #	${S}/build/ac/configure \

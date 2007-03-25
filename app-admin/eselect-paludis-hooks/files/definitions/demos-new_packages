@@ -1,0 +1,4 @@
+# file: eselect/demos-new_packages
+# eselect definition file for demos/new_packages.bash hook
+demos/new_packages.bash sync_all_pre sync_all_post
+

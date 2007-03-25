@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer>
-    <email>not provided</email>
-    <name>known as jordan83</name>
-  </maintainer>
+	<maintainer>
+		<email>not provided</email>
+		<name>known as jordan83</name>
+	</maintainer>
 </pkgmetadata>

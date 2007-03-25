@@ -22,31 +22,54 @@
 HOMEPAGE="http://drzile.dyndns.org/index.php?page=paludis_scripts"
 
 SRC_URI="mirror://zxy/${P}.tar.bz2"
+
 LICENSE="GPL-2"
 
 SLOT="0"
 
+IUSE="${IUSE} paludis_hooks_eselect"
+
 DEPEND="app-shells/bash
-	>=sys-apps/paludis-0.14.2"
+	>=sys-apps/paludis-0.14.2
+	paludis_hooks_eselect? ( app-admin/eselect-paludis-hooks )"
 
 RDEPEND="${DEPEND}"
 
-dohook() { 
+S="${WORKDIR}"
+
+dohook() {
 	local hookfile="${1}" 
 	local hookname="${hookfile##*/}" 
 	local hooksdir="/usr/share/paludis/hooks" 
+	local es="common/${hookname} "
+	local esf="${WORKDIR}/${PN##*paludis-hooks-}"
+	local esdbf="${PN##*paludis-hooks-}"
 	shift 
 
-	if [[ $# -gt 1 ]]; then 
-	   insinto "${hooksdir}/common" || die "insinto failed" 
-	   doins "${hookfile}" || die "doins failed" 
-	   for hooktype in "$@"; do 
-		  dodir "${hooksdir}/${hooktype}" || die "dodir failed" 
-		  dosym "${hooksdir}/common/${hookname}" "${hooksdir}/${hooktype}" || die "dosym failed" 
-	   done 
+	insinto "${hooksdir}/common" || die "insinto failed" 
+	doins "${hookfile}" || die "doins failed" 
 
-	else 
-	   insinto "${hooksdir}/${1}" || die "insinto failed" 
-	   doins "${hookfile}" || die "doins failed" 
-	fi 
+	for hooktype in "$@"; do 
+		dodir "${hooksdir}/${hooktype}" || die "dodir failed" 
+		dosym "${hooksdir}/common/${hookname}" "${hooksdir}/${hooktype}" || die "dosym failed" 
+		es="${es} ${hooktype}"
+	done 
+
+	if use paludis_hooks_eselect ; then
+		echo "# eselect definition file for ${P}" >> ${esf}
+		echo "${es}" >> ${esf}
+
+		insinto "${hooksdir}/eselect" || die "insinto failed"
+		doins "${esf}" || die "doins failed"
+
+		touch ${WORKDIR}/.dbf
+		dodir /usr/share/paludis/hooks/eselect/.db/ || die
+		insinto /usr/share/paludis/hooks/eselect/.db/ || die
+		newins ${WORKDIR}/.dbf ${esdbf} || die
+	fi
+}
+
+puthookconfig() {
+	insinto "/etc/paludis/hooks/config" || die "insinto failed"
+	doins ${1} || die "doins failed"
 }

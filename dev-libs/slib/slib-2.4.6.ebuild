@@ -13,10 +13,10 @@ LICENSE="public-domain BSD"
 KEYWORDS="alpha amd64 ia64 ppc ~sparc x86"
 IUSE=""
 
-RDEPEND=">=dev-util/guile-1.4"
+RDEPEND=">=dev-scheme/guile-1.4"
 DEPEND="${RDEPEND}
 	>=app-arch/unzip-5.21
-	>=dev-util/guile-1.4"
+	>=dev-scheme/guile-1.4"
 
 RESTRICT="test"
 

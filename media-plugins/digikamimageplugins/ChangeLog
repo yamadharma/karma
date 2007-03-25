@@ -1,6 +1,52 @@
 # ChangeLog for media-plugins/digikamimageplugins
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-plugins/digikamimageplugins/ChangeLog,v 1.35 2006/12/27 14:29:46 gustavoz Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-plugins/digikamimageplugins/ChangeLog,v 1.41 2007/03/19 14:49:23 genone Exp $
+
+  19 Mar 2007; Marius Mauch <genone@gentoo.org>
+  digikamimageplugins-0.8.2.ebuild, digikamimageplugins-0.9.0.ebuild,
+  digikamimageplugins-0.9.1.ebuild:
+  Replacing einfo with elog
+
+*digikamimageplugins-0.9.1 (17 Mar 2007)
+
+  17 Mar 2007; Marcus D. Hanwell <cryos@gentoo.org>
+  -digikamimageplugins-0.9.1_rc1.ebuild, +digikamimageplugins-0.9.1.ebuild:
+  Version bump, closes bug 171054. Marked ~amd64, bug 169160.
+
+  09 Mar 2007; Gustavo Zacarias <gustavoz@gentoo.org>
+  digikamimageplugins-0.9.1_rc1.ebuild:
+  Keyworded ~sparc wrt #169160
+
+  03 Mar 2007; Ioannis Aslanidis <deathwing00@gentoo.org>
+  -digikamimageplugins-0.9.0_rc1.ebuild,
+  -digikamimageplugins-0.9.0_rc2.ebuild:
+  Removed old rc versions.
+
+  03 Mar 2007; Ioannis Aslanidis <deathwing00@gentoo.org>
+  -digikamimageplugins-0.9.0_beta1.ebuild,
+  -digikamimageplugins-0.9.0_beta2.ebuild,
+  -digikamimageplugins-0.9.0_beta3.ebuild:
+  Dropped old beta versions.
+
+  03 Mar 2007; Ioannis Aslanidis <deathwing00@gentoo.org>
+  -digikamimageplugins-0.7.4-r1.ebuild,
+  -digikamimageplugins-0.7.4-r2.ebuild, -digikamimageplugins-0.8.1.ebuild:
+  Clean up versions older than the current stable one.
+
+*digikamimageplugins-0.9.1_rc1 (03 Mar 2007)
+
+  03 Mar 2007; Ioannis Aslanidis <deathwing00@gentoo.org>
+  +digikamimageplugins-0.9.1_rc1.ebuild:
+  Version bump. Added additional languages. Dropped keywords for amd64, ppc
+  and sparc, see bug #169160 for details.
+
+  04 Feb 2007; Simon Stelling <blubb@gentoo.org>
+  digikamimageplugins-0.8.2.ebuild:
+  stable on amd64; bug 157541
+
+  01 Feb 2007; Gustavo Zacarias <gustavoz@gentoo.org>
+  digikamimageplugins-0.9.0.ebuild:
+  Stable on sparc
 
   27 Dec 2006; Gustavo Zacarias <gustavoz@gentoo.org>
   digikamimageplugins-0.9.0.ebuild:
