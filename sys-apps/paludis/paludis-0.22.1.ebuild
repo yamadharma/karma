@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.20.1.ebuild,v 1.1 2007/03/02 11:44:37 rbrown Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.22.1.ebuild,v 1.1 2007/03/26 07:37:04 killerfox Exp $
 
 inherit bash-completion eutils flag-o-matic
 
@@ -12,6 +12,9 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ppc ~s390 ~sparc x86"
 IUSE="contrarius cran doc glsa inquisitio pink qa ruby zsh-completion"
+
+WANT_AUTOCONF="2.5"
+WANT_AUTOMAKE="1.9"
 
 COMMON_DEPEND="
 	>=app-shells/bash-3.1
@@ -28,7 +31,8 @@ COMMON_DEPEND="${COMMON_DEPEND}
 DEPEND="${COMMON_DEPEND}
 	dev-cpp/libebt
 	>=dev-cpp/libwrapiter-1.0.0
-	doc? ( app-doc/doxygen media-gfx/imagemagick )"
+	doc? ( app-doc/doxygen media-gfx/imagemagick )
+	dev-util/pkgconfig"
 
 RDEPEND="${COMMON_DEPEND}
 	>=app-admin/eselect-1.0.2
@@ -38,14 +42,14 @@ RDEPEND="${COMMON_DEPEND}
 
 PROVIDE="virtual/portage"
 
-pkg_setup() {
-	replace-flags -Os -O2
+create-paludis-user() {
+	enewgroup "paludisbuild"
+	enewuser "paludisbuild" -1 -1 -1 "paludisbuild"
 }
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	epatch "${FILESDIR}/paludis-0.20.0-dotfiles.patch"
+pkg_setup() {
+	replace-flags -Os -O2
+	create-paludis-user
 }
 
 src_compile() {
@@ -96,6 +100,10 @@ src_test() {
 	export BASH_ENV=/dev/null
 
 	emake check || die "Make check failed"
+}
+
+pkg_preinst() {
+	create-paludis-user
 }
 
 pkg_postinst() {
