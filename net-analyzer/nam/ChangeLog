@@ -1,6 +1,18 @@
 # ChangeLog for net-analyzer/nam
-# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/net-analyzer/nam/ChangeLog,v 1.10 2006/08/01 23:24:39 vanquirius Exp $
+# Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/net-analyzer/nam/ChangeLog,v 1.13 2007/03/18 16:57:03 cedk Exp $
+
+*nam-1.11-r1 (18 Mar 2007)
+
+  18 Mar 2007; Cedric Krier <cedk@gentoo.org> +nam-1.11-r1.ebuild:
+  Fix for bug #170655 and some ebuild improve
+
+  20 Feb 2007; Markus Ullmann <jokey@gentoo.org> ChangeLog:
+  Redigest for Manifest2
+
+  08 Oct 2006; Simon Stelling <blubb@gentoo.org> nam-1.11.ebuild:
+  marking -amd64; this is not 64bit save at all, doesn't even compile with
+  gcc4; bug 149880
 
   01 Aug 2006; Marcelo Goes <vanquirius@gentoo.org>
   +files/nam-1.11-gcc4.patch, nam-1.11.ebuild:
