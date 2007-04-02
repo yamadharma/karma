@@ -8,8 +8,9 @@ MY_PV=0.92.0
 S=${WORKDIR}/WindowMaker-${MY_PV}
 
 DESCRIPTION="The fast and light GNUstep window manager"
-SRC_URI="ftp://ftp.windowmaker.org/pub/source/snapshots/WindowMaker-CVS-${PV#*_pre}.tar.gz
-	http://www.windowmaker.org/pub/source/release/WindowMaker-extra-0.1.tar.gz"
+SRC_URI="ftp://windowmaker.info/pub/source/snapshots/WindowMaker-CVS-${PV#*_pre}.tar.gz
+	ftp://ftp.uvsq.fr/pub/X11/window-managers/windowmaker/source/snapshots/WindowMaker-CVS-${PV#*_pre}.tar.gz
+	http://windowmaker.info/pub/source/release/WindowMaker-extra-0.1.tar.gz"
 HOMEPAGE="http://www.windowmaker.org/"
 
 IUSE="gif gnustep jpeg nls png tiff modelock xinerama"
@@ -25,21 +26,25 @@ RDEPEND="${DEPEND}
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~alpha amd64 ~mips ~ppc ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~mips ~ppc ~sparc x86"
 
 if use gnustep 
     then
     egnustep_install_domain "System"
 fi
 
+
 src_unpack() {
 	is-flag -fstack-protector && filter-flags -fstack-protector \
 		&& ewarn "CFLAG -fstack-protector has been disabled, as it is known to cause bugs with WindowMaker (bug #78051)" && ebeep 2
-	filter-flags -Os
+	replace-flags "-Os" "-O2"
+	replace-flags "-O3" "-O2"
+
 	unpack ${A}
 	cd "${S}"
 	epatch ${FILESDIR}/0.91.0/singleclick-shadeormaxopts-0.9x.patch2
 	epatch ${FILESDIR}/0.91.0/wlist-0.9x.patch
+
 	EPATCH_SUFFIX="patch" \
 	EPATCH_FORCE="yes" \
 	    epatch ${FILESDIR}/${PV%_pre*}

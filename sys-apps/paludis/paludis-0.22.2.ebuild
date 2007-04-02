@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.22.1.ebuild,v 1.2 2007/03/29 22:44:19 kugelfang Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.22.2.ebuild,v 1.1 2007/04/01 22:26:28 peper Exp $
 
 inherit bash-completion eutils flag-o-matic
 
@@ -11,7 +11,7 @@ SRC_URI="mirror://berlios/${PN}/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ppc ~s390 ~sparc x86"
-IUSE="contrarius cran doc glsa inquisitio pink qa ruby zsh-completion"
+IUSE="contrarius cran doc glsa inquisitio pink portage qa ruby zsh-completion"
 
 WANT_AUTOCONF="2.5"
 WANT_AUTOMAKE="1.9"
@@ -22,6 +22,7 @@ COMMON_DEPEND="
 	inquisitio? ( dev-libs/pcre++ )
 	glsa? ( >=dev-libs/libxml2-2.6 )
 	ruby? ( >=dev-lang/ruby-1.8 )
+	virtual/c++-tr1-functional
 	virtual/c++-tr1-memory
 	virtual/c++-tr1-type-traits"
 
@@ -35,7 +36,7 @@ RDEPEND="${COMMON_DEPEND}
 	>=app-admin/eselect-1.0.2
 	net-misc/wget
 	net-misc/rsync
-	!mips? ( sys-apps/sandbox )"
+	sys-apps/sandbox"
 
 PROVIDE="virtual/portage"
 
@@ -52,15 +53,17 @@ pkg_setup() {
 src_compile() {
 	local repositories=`echo default $(usev cran) | tr -s \  ,`
 	local clients=`echo default $(usev contrarius) $(usev inquisitio) | tr -s \  ,`
+	local environments=`echo default $(usev portage) | tr -s \  ,`
 	econf \
 		$(use_enable doc doxygen ) \
-		$(use_enable !mips sandbox ) \
 		$(use_enable pink) \
 		$(use_enable qa) \
 		$(use_enable ruby) \
 		$(use_enable glsa) \
+		--enable-sandbox \
 		--with-repositories=${repositories} \
 		--with-clients=${clients} \
+		--with-environments=${environments} \
 		|| die "econf failed"
 
 	emake || die "emake failed"
