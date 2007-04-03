@@ -1,6 +1,102 @@
 # ChangeLog for sys-apps/hal
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/hal/ChangeLog,v 1.119 2007/01/22 05:13:26 tester Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/hal/ChangeLog,v 1.142 2007/04/02 17:06:31 cardoe Exp $
+
+  02 Apr 2007; Doug Goldstein <cardoe@gentoo.org> hal-0.5.9_rc3.ebuild:
+  Change linux-headers depend to 2.6.17 or higher. Remove mips-headers since
+  newest they have is 2.6.16. Add -mips since it won't work with their
+  headers.
+
+  02 Apr 2007; Steev Klimaszewski <steev@gentoo.org>
+  +files/hal-0.5.9-update_dtd.patch, hal-0.5.9_rc3.ebuild:
+  Update dtd for hal as well.
+
+  01 Apr 2007; Steev Klimaszewski <steev@gentoo.org>
+  -files/hal-0.5.9-button_capabilities.patch, hal-0.5.9_rc3.ebuild:
+  Back out the last commit.
+
+  01 Apr 2007; Steev Klimaszewski <steev@gentoo.org>
+  +files/hal-0.5.9-button_capabilities.patch, hal-0.5.9_rc3.ebuild:
+  Add patch to 0.5.9_rc3 for keyboard button capabilities.
+
+*hal-0.5.9_rc3 (01 Apr 2007)
+
+  01 Apr 2007; Steev Klimaszewski <steev@gentoo.org> +hal-0.5.9_rc3.ebuild:
+  New upstream release, again, please test this one, 0.5.9 is around the corner.
+
+  30 Mar 2007; Steev Klimaszewski <steev@gentoo.org>
+  +files/fix-scsi-fake-host-event.patch, hal-0.5.9_rc2.ebuild:
+  Patch for scsi devices that don't have parents... this will fix the "hald
+  won't start" errors.
+
+  30 Mar 2007; Doug Goldstein <cardoe@gentoo.org> metadata.xml,
+  -hal-0.5.7-r3.ebuild, -hal-0.5.7.1-r4.ebuild:
+  remove old version. metadata fixes.
+
+*hal-0.5.9_rc2 (30 Mar 2007)
+
+  30 Mar 2007; Steev Klimaszewski <steev@gentoo.org> +hal-0.5.9_rc2.ebuild:
+  New upstream release - this is a release candidate, and the final should be
+  released within the next few days.  Package.masked, please test.
+
+  19 Feb 2007; <cardoe@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  Add back hal_unmount that was accidently removed
+
+  15 Feb 2007; Jeroen Roovers <jer@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  Stable for HPPA (bug #166790).
+
+  15 Feb 2007; Gustavo Zacarias <gustavoz@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  Stable on sparc wrt #166790
+
+  14 Feb 2007; Doug Goldstein <cardoe@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  Fix issue with newer pciutils that uses gzipped pci.ids, which HAL can not
+  handle
+
+  14 Feb 2007; Markus Rothe <corsair@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  Stable on ppc64; bug #166790
+
+  14 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  hal-0.5.7.1-r5.ebuild:
+  stable x86; bug 166790
+
+  14 Feb 2007; Doug Goldstein <cardoe@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  HAL does not read gzipped pci.ids data.
+
+  14 Feb 2007; Doug Goldstein <cardoe@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  Retain current dmidecode behavior
+
+  14 Feb 2007; Doug Goldstein <cardoe@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  Changing kernel checks from eerror to ewarn for the 2007.0 release media
+
+  14 Feb 2007; Doug Goldstein <cardoe@gentoo.org> hal-0.5.7.1-r5.ebuild:
+  ACPI stuff didn't work for -r5. Waiting until 0.5.8.1
+
+  13 Feb 2007; Bryan Østergaard <kloeri@gentoo.org> hal-0.5.7.1-r3.ebuild:
+  Stable on Alpha + IA64.
+
+  30 Jan 2007; Doug Goldstein <cardoe@gentoo.org>
+  +files/hal-0.5.7.1-ctype-fix.patch, hal-0.5.7.1-r4.ebuild:
+  Fix undefined ctype.h include so everyone can stop getting their panties in
+  a bundle.
+
+*hal-0.5.7.1-r4 (30 Jan 2007)
+
+  30 Jan 2007; Doug Goldstein <cardoe@gentoo.org>
+  +files/hal-0.5.7.1-autofs-subfs.patch,
+  +files/hal-0.5.7.1-floppies-fix.patch,
+  +files/hal-0.5.7.1-hald-scripts.patch,
+  -files/hal-0.5.7.1-hibernate-fix-r1.patch,
+  +files/hal-0.5.7.1-ipod-nano.patch, -hal-0.5.5.1-r3.ebuild,
+  -hal-0.5.7.1-r2.ebuild, hal-0.5.7.1-r3.ebuild, +hal-0.5.7.1-r4.ebuild:
+  Fixed hotplug depend. Fixed installing old unused udev rule. Fix for bug
+  #133743 from Gilles Dartiguelongue <dartigug@esiee.fr>. Fix bug #154648. Fix
+  bug #158304. Fix bug #163233.
+
+  29 Jan 2007; Gustavo Zacarias <gustavoz@gentoo.org> hal-0.5.7.1-r3.ebuild:
+  Stable on sparc wrt #162942
+
+  23 Jan 2007; Jeroen Roovers <jer@gentoo.org> hal-0.5.7.1-r3.ebuild:
+  Stable for HPPA (bug #162942).
 
   22 Jan 2007; Olivier Crête <tester@gentoo.org> hal-0.5.7.1-r3.ebuild:
   Stable on amd64 per bug #162942

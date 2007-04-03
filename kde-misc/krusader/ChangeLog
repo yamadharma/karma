@@ -1,6 +1,18 @@
 # ChangeLog for kde-misc/krusader
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/kde-misc/krusader/ChangeLog,v 1.54 2007/01/05 17:03:03 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-misc/krusader/ChangeLog,v 1.56 2007/04/01 16:30:33 carlo Exp $
+
+*krusader-1.80.0_beta2 (01 Apr 2007)
+
+  01 Apr 2007; Carsten Lohrke <carlo@gentoo.org>
+  +krusader-1.80.0_beta2.ebuild:
+  Version bump.
+
+*krusader-1.80.0_beta1 (13 Jan 2007)
+
+  13 Jan 2007; Ioannis Aslanidis <deathwing00@gentoo.org>
+  +krusader-1.80.0_beta1.ebuild:
+  Version bump as detailed in bug #160657.
 
   05 Jan 2007; Diego Pettenò <flameeyes@gentoo.org> krusader-1.70.1.ebuild:
   Convert to use elog.
