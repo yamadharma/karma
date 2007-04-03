@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.14.ebuild,v 1.1 2007/01/26 20:50:14 marienz Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.15.ebuild,v 1.1 2007/04/02 23:07:14 marienz Exp $
 
 inherit distutils bash-completion elisp-common eutils
 
@@ -21,7 +21,10 @@ python_rdep="dev-python/celementtree
 	curl? ( dev-python/pycurl )"
 DEPEND=">=dev-lang/python-2.4
 	emacs? ( virtual/emacs )
-	test? ( $python_rdep )"
+	test? (
+		$python_rdep
+		dev-python/medusa
+	)"
 RDEPEND=">=dev-lang/python-2.4
 	$python_rdep"
 
@@ -62,9 +65,9 @@ pkg_postinst() {
 	use emacs && elisp-site-regen
 	bash-completion_pkg_postinst
 
-	einfo "If you just upgraded from a version of bzr older than 0.9"
-	einfo "you should rename your ~/.bazaar/branches.conf to locations.conf"
-	einfo "(see /usr/share/doc/${PF}/NEWS.gz)"
+	elog "If you just upgraded from a version of bzr older than 0.9"
+	elog "you should rename your ~/.bazaar/branches.conf to locations.conf"
+	elog "(see /usr/share/doc/${PF}/NEWS.gz)"
 }
 
 pkg_postrm() {
