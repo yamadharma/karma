@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-cluster/vzctl/vzctl-3.0.14.ebuild,v 1.3 2007/01/21 13:57:44 hollow Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-cluster/vzctl/vzctl-3.0.16.ebuild,v 1.1 2007/03/14 20:04:27 phreak Exp $
 
 inherit bash-completion eutils
 
@@ -24,7 +24,9 @@ DEPEND="${RDEPEND}"
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${P}-ndsend.c.patch
+	cd "${S}"
+
+	epatch "${FILESDIR}"/${P}-prevent-stripping.patch
 }
 
 src_compile() {
