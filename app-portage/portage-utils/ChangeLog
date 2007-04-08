@@ -2,6 +2,73 @@
 == portage-utils, patch for overlays and paludis compatibility ==
 =================================================================
 
+== version 20070405 ==
+# added info on the output of qlop --current, now possible to estimate
+how long before the whole install process finish:
+    while installing some stuffs, check this:
+     qlop -c  <-- this one is what you've had until now
+     qlop -cv
+     qlop -cvv
+
+# added informations, on how many package where searched, and on how many no
+previous install was found, in qlop -tv output (thanks to niki!)
+# added a --pipe switch to qlop to do things like:
+  paludis -ip world --log-level silent | qlop --pipe
+    media-gfx/gimp : 1449 seconds average for 3 merges
+    x11-apps/xinit : 16 seconds average for 3 merges
+    app-emulation/wine : 1511 seconds average for 9 merges
+    sys-apps/usbutils : 18 seconds average for 4 merges
+    sys-devel/gdb : 307 seconds average for 3 merges
+    sys-apps/einit : 32 seconds average for 33 merges
+    sys-apps/dbus : 159 seconds average for 4 merges
+    sys-apps/iproute2 : 33 seconds average for 1 merges
+    Total estimated time: 3525 seconds (8 packages)
+ 
+# added and adapted latest patch from TGL on bgo:
+    qgrep enhancement: searching through ebuild in the VDB
+
+
+
+== version 20070401 == (and no this is not an april fool..)
+# fixed a small bug with how p-u handles CACHE_EBUILD_FILE and CACHE_METADATA_FILE env var
+# added and adapted patches from bug 171374
+  qgrep enhancements:
+	*speed improvement
+	* new options:
+	   --with-name:		Print the package or eclass name for each match
+	   --list:		Only print FILE names containing matches
+	   --invert-list:	Only print FILE names containing no match
+	   --extended:		Use PATTERN as an extended regular expression
+	   --before    arg	Print <arg> lines of leading context
+	   --after     arg	Print <arg> lines of trailing context
+
+# modified qsearch for a little speed improvement (same trick as TGL suggested in the 
+regexp_compilation_speedup.patch from the bug above)
+  before:
+     time qsearch -N app-/ut::ge.*o$ >/dev/null
+	real    0m0.165s
+	user    0m0.155s
+	sys     0m0.007s
+  after:
+      time ./q search -N app-/ut::ge.*o$ >/dev/null
+	real    0m0.037s
+	user    0m0.026s
+	sys     0m0.008s
+
+  also works when searching the DESCRIPTION:
+  before:
+       time qsearch -S "unix.*clone" > /dev/null
+          real    0m0.595s
+          user    0m0.332s
+          sys     0m0.252s
+  after:
+       time ./q search -S "unix.*clone" > /dev/null
+          real    0m0.364s
+          user    0m0.101s
+          sys     0m0.257s
+# added and adapted patches from bug 172240
+
+
 == version 20070307 ==
 # added and adapted (for overlays) patches for the new qgrep options: --eclass and --skip-comments
 (from bugs: #170797 and #170795)

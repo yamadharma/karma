@@ -12,7 +12,7 @@ SRC_URI="http://fort.xdas.com/~kor/oss2jack/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 KEYWORDS="x86 amd64"
 SLOT="0"
-IUSE="doc udev"
+IUSE="doc"
 
 DEPEND="media-sound/jack-audio-connection-kit"
 RDEPEND=${DEPEND}
@@ -27,6 +27,7 @@ src_unpack() {
 	cd "${S}"
 	sed -i -e "s/-Werror//" make.include
 	epatch "${FILESDIR}/disable-target.patch"
+	epatch "${FILESDIR}/linux-2.6.19-kfusd.c.patch"
 }
 
 src_compile() {
@@ -46,11 +47,10 @@ src_install() {
 	insinto /etc/modules.d
 	newins "${FILESDIR}/fusd.modules" fusd
 	if use doc ; then
-		cd doc
+		cd ${S}/doc
 		dodoc fusd.pdf fusd.tex
 	fi
-	if use udev ; then
-		insinto /etc/udev/rules.d
-		doins "${FILESDIR}/49-fusd.rules"
-	fi
+
+	insinto /etc/udev/rules.d
+	doins "${FILESDIR}/30-fusd.rules"
 }

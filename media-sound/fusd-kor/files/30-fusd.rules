@@ -1,0 +1,2 @@
+# fusd devices
+SUBSYSTEM=="fusd", NAME="fusd/%k", GROUP="audio", MODE="0666"

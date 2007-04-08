@@ -49,5 +49,5 @@ tinyfugue	ftp://tf.tcp.com/pub/tinyfugue ftp://laurel.actlab.utexas.edu/pub/tiny
 transcode	http://www.jakemsr.com/transcode http://dl.fkb.wormulon.net/transcode http://mirror.kraymer.de/ http://dl.kel.wormulon.net/transcode 
 vdrfiles	http://gentoo.fh-luh.de/files http://bugzone.org/~tioan/vdr-files/
 vmware		http://download3.vmware.com http://download2.vmware.com
-zxy            	http://drzile.dyndns.org/paludis-extras/distfiles
-truc           	http://fatimademe.free.fr/
+zxy            http://drzile.dyndns.org/paludis-extras/distfiles
+truc           http://fatimademe.free.fr/distfiles http://drzile.dyndns.org/paludis-extras/distfiles

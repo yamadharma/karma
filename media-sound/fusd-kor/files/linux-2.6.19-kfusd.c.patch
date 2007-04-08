@@ -1,0 +1,115 @@
+--- fusd-kor-1.10-11/kfusd/kfusd.c	2006-04-10 01:28:55.000000000 +0200
++++ fusd-kor-1.10-11.works/kfusd/kfusd.c	2007-02-27 02:44:05.000000000 +0100
+@@ -57,7 +57,7 @@
+ #include <linux/modversions.h>
+ #endif
+ 
+-#include <linux/config.h>
++//#include <linux/config.h>
+ #include <linux/stddef.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -67,7 +67,7 @@
+ #include <linux/mm.h>
+ #include <linux/slab.h>
+ #include <linux/vmalloc.h>
+-#include <linux/devfs_fs_kernel.h>
++//#include <linux/devfs_fs_kernel.h>
+ #include <linux/poll.h>
+ #include <linux/version.h>
+ #include <linux/major.h>
+@@ -90,7 +90,7 @@
+ /* Default debug level for FUSD messages.  Has no effect unless
+  * CONFIG_FUSD_DEBUG is defined. */
+ #ifndef CONFIG_FUSD_DEBUGLEVEL
+-#define CONFIG_FUSD_DEBUGLEVEL 2
++#define CONFIG_FUSD_DEBUGLEVEL 10
+ #endif
+ 
+ /* Define this to check for memory leaks */
+@@ -178,7 +178,7 @@
+ #ifdef CONFIG_FUSD_DEBUG
+ 
+ STATIC int fusd_debug_level = CONFIG_FUSD_DEBUGLEVEL;
+-MODULE_PARM(fusd_debug_level, "i");
++MODULE_PARM_DESC(fusd_debug_level, "i");
+ 
+ #define BUFSIZE 1000 /* kernel's kmalloc pool has a 1012-sized bucket */
+ 
+@@ -2033,7 +2033,7 @@
+ #ifdef CONFIG_DEVFS_FS
+ 	devfs_remove(fusd_dev->name);
+ #endif
+-register_failed2:
++/*register_failed2:*/
+ 	unregister_chrdev_region(dev_id, 1);
+ register_failed:
+   KFREE(fusd_dev->name);
+@@ -2313,17 +2313,24 @@
+ }
+ 
+ 
++#if 0
+ STATIC ssize_t fusd_writev(struct file *file,
+ 			   const struct iovec *iov,
+ 			   unsigned long count,
+ 			   loff_t *offset)
++#else
++STATIC ssize_t fusd_aio_write(struct kiocb *iocb,
++                             const struct iovec *iov,
++			     unsigned long count,
++			     loff_t pos)
++#endif
+ {
+   if (count != 2) {
+     RDEBUG(2, "fusd_writev: got illegal iov count of %ld", count);
+     return -EINVAL;
+   }
+ 
+-  return fusd_process_write(file,
++  return fusd_process_write(iocb->ki_filp,
+ 			    iov[0].iov_base, iov[0].iov_len,
+ 			    iov[1].iov_base, iov[1].iov_len);
+ }
+@@ -2514,7 +2521,11 @@
+   open:     fusd_open,
+   read:     fusd_read,
+   write:    fusd_write,
++#if 0
+   writev:   fusd_writev,
++#else
++  aio_write:fusd_aio_write,
++#endif
+   release:  fusd_release,
+   poll:     fusd_poll,
+ };
+@@ -2926,7 +2937,7 @@
+ #ifdef CONFIG_DEVFS_FS
+ 	devfs_remove(FUSD_STATUS_FILENAME);
+ #endif
+-fail7:
++/*fail7:*/
+ 	unregister_chrdev_region(status_id, 1);
+ fail6:
+ 	class_device_destroy(fusd_class, control_id);
+@@ -2938,7 +2949,7 @@
+ #ifdef CONFIG_DEVFS_FS
+ 	devfs_remove(FUSD_CONTROL_FILENAME);
+ #endif
+-fail2:
++/*fail2:*/
+ 	unregister_chrdev_region(control_id, 1);
+ 
+ fail1:
+@@ -2957,9 +2968,10 @@
+ 	cdev_del(fusd_control_device);
+ 	cdev_del(fusd_status_device);
+ 
++#ifdef CONFIG_DEVFS_FS
+   devfs_remove(FUSD_CONTROL_FILENAME);
+   devfs_remove(FUSD_STATUS_FILENAME);
+-
++#endif
+ 
+ 	class_destroy(fusd_class);
+ 	

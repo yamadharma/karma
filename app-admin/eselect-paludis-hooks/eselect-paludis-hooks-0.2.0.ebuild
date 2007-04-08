@@ -24,7 +24,11 @@ src_install() {
 	insinto /usr/share/eselect/modules/ || die
 	newins ${FILESDIR}/eselect-${PV}/paludis-hook.eselect paludis-hook.eselect || die
 
-	dodir /usr/share/paludis/hooks/eselect/.db || die
+	touch ${WORKDIR}/.keep
+	dodir /usr/share/paludis/hooks/eselect/.db/ || die
+	insinto /usr/share/paludis/hooks/eselect/.db/ || die
+	newins ${WORKDIR}/.keep .keep || die
+
 	for i in `ls ${FILESDIR}/definitions/` ; do
 		insinto /usr/share/paludis/hooks/eselect/ || die
 		newins ${FILESDIR}/definitions/${i} ${i} || die

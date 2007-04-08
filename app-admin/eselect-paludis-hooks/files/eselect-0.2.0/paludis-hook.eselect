@@ -213,23 +213,36 @@ check_hook() {
         local hookname="${hookfile##*/}"
         local phf
 	local line
+	local hk_enabled
         shift
 
-	if [ `is_enabled ${hook}` == false ] ; then	
+	hk_enabled=`is_enabled ${hook}`
+	if [ ${hk_enabled} == false ] ; then	
 		write_kv_list_entry "${hookname}  is not enabled."
+		write_kv_list_entry "Checking stale links:"
 	else
 		write_kv_list_entry "${hookname}  should be linked to:"
-	
-		for hooktype in "$@"; do
-			phf=${phooksdir}/${hooktype}/${hookname}
-			line="    ${hooktype}/ ... "
-			if [ -e ${phf} ] ; then
+		
+	fi
+
+	for hooktype in "$@"; do
+		phf=${phooksdir}/${hooktype}/${hookname}
+		line="    ${hooktype}/ ... "
+		if [ -e ${phf} ] ; then
+			if [ ${hk_enabled} == true ] ; then	
 				echo "${line} OK"
 			else
-				echo "${line} symlink ${phf} doesn't exist"
+				echo "${line} symlink ${phf} still exists"
 			fi
-		done
-	fi
+		else
+			if [ ${hk_enabled} == true ] ; then	
+				echo "${line} symlink ${phf} doesn't exist"
+			else
+				echo "${line} no symlink ... OK"
+			fi
+		fi
+	done
+	
 }
 
 do_check() {
