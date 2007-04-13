@@ -8,7 +8,7 @@ endif
 
 source $GNUSTEP_SYSTEM_ROOT/Library/Makefiles/GNUstep.csh
 
-if ( -z "$GNUSTEP_FLATTENED" ) then
+if ( -z "$GNUSTEP_IS_FLATTENED" ) then
     set TDIR=${GNUSTEP_SYSTEM_ROOT}/Tools/${GNUSTEP_HOST_CPU}/${GNUSTEP_HOST_OS}/${LIBRARY_COMBO}
 else
     set TDIR=${GNUSTEP_SYSTEM_ROOT}/Tools
