@@ -22,8 +22,8 @@ KEYWORDS="x86 sparc alpha ia64 s390 ppc amd64"
 
 DEPEND="virtual/libc
 	sys-fs/fuse"
-RDEPEND="${DEPEND}
-	media-gfx/qiv"
+RDEPEND="${DEPEND}"
+# media-gfx/qiv
 
 PORTAGE_COMPRESS=""
 

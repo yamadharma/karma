@@ -125,7 +125,7 @@ src_install() {
 		cd ..
 	fi
 
-	newinitd "${FILESDIR}"/gnustep.initd-${PV} gnustep
+	newinitd "${FILESDIR}"/gnustep.initd-2 gnustep
 
 	dodir /etc/revdep-rebuild
 	sed -e 's|$GNUSTEP_SEARCH_DIRS|'"$GNUSTEP_PATHLIST"'|' \

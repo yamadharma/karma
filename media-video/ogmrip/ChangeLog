@@ -1,6 +1,34 @@
 # ChangeLog for media-video/ogmrip
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/ogmrip/ChangeLog,v 1.18 2006/11/11 22:07:12 vivo Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-video/ogmrip/ChangeLog,v 1.23 2007/03/13 03:39:02 beandog Exp $
+
+*ogmrip-0.10.3 (13 Mar 2007)
+
+  13 Mar 2007; Steve Dibb <beandog@gentoo.org> +ogmrip-0.10.3.ebuild:
+  Version bump, bug 170626
+
+  21 Feb 2007; Steve Dibb <beandog@gentoo.org>
+  -files/ogmrip-0.10.0-mp3-quality.patch,
+  -files/ogmrip-0.10.0-x264-suboptions.patch, -ogmrip-0.10.0-r1.ebuild,
+  -ogmrip-0.10.0-r2.ebuild:
+  Remove old versions, patches
+
+*ogmrip-0.10.2 (06 Feb 2007)
+
+  06 Feb 2007; Steve Dibb <beandog@gentoo.org> +ogmrip-0.10.2.ebuild:
+  Version bump, bug 165151
+
+*ogmrip-0.10.1 (29 Jan 2007)
+
+  29 Jan 2007; Steve Dibb <beandog@gentoo.org> +ogmrip-0.10.1.ebuild:
+  Version bump, thanks to Olivier Rolland for ebuild, bug 164290
+
+*ogmrip-0.10.0-r2 (19 Dec 2006)
+
+  19 Dec 2006; Steve Dibb <beandog@gentoo.org>
+  +files/ogmrip-0.10.0-mp3-quality.patch,
+  +files/ogmrip-0.10.0-x264-suboptions.patch, +ogmrip-0.10.0-r2.ebuild:
+  Add mp3, x264 patches from upstream, bug 158448
 
   11 Nov 2006; Francesco Riosa <vivo@gentoo.org> ogmrip-0.10.0-r1.ebuild:
   FILESDIR => DISTDIR for the patch

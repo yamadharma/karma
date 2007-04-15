@@ -10,6 +10,10 @@ AUX font-make-fix.patch-0.11.0 501 RMD160 4f9f550a85afaf7308487e4311d3b660b31ace
 MD5 f9dd4c1b68af4bef2e272d82202323ea files/font-make-fix.patch-0.11.0 501
 RMD160 4f9f550a85afaf7308487e4311d3b660b31acebe files/font-make-fix.patch-0.11.0 501
 SHA256 1cc400842a7e42f427c3bf2c5cf0a051349c22a8163a2d12bf4f48bb8bfc4462 files/font-make-fix.patch-0.11.0 501
+AUX font-make-fix.patch-0.11.1_pre25017 501 RMD160 4f9f550a85afaf7308487e4311d3b660b31acebe SHA1 ca761f3537c9f3f7b62f6cf0fa7de647ac6434fc SHA256 1cc400842a7e42f427c3bf2c5cf0a051349c22a8163a2d12bf4f48bb8bfc4462
+MD5 f9dd4c1b68af4bef2e272d82202323ea files/font-make-fix.patch-0.11.1_pre25017 501
+RMD160 4f9f550a85afaf7308487e4311d3b660b31acebe files/font-make-fix.patch-0.11.1_pre25017 501
+SHA256 1cc400842a7e42f427c3bf2c5cf0a051349c22a8163a2d12bf4f48bb8bfc4462 files/font-make-fix.patch-0.11.1_pre25017 501
 AUX font-make-fix.patch-0.9.5 737 RMD160 720ef4e5c77fc53a555b40c78620ea8c28b2f188 SHA1 b5cdb543b3d421f574be8cf45b6b7e2d068ce9e9 SHA256 cab84c89d2cb0416ed17f1737faf425f5c1c356454bd6e5b5417c471a0ae9255
 MD5 e80f67b11659da59c1aeb0d995a8cf4c files/font-make-fix.patch-0.9.5 737
 RMD160 720ef4e5c77fc53a555b40c78620ea8c28b2f188 files/font-make-fix.patch-0.9.5 737
@@ -19,6 +23,10 @@ EBUILD gnustep-back-art-0.11.0.ebuild 2424 RMD160 f19072e51b34fe698cda807b854fb0
 MD5 ad192913c6ace57d2d4e18244a60a564 gnustep-back-art-0.11.0.ebuild 2424
 RMD160 f19072e51b34fe698cda807b854fb02c6c870aa4 gnustep-back-art-0.11.0.ebuild 2424
 SHA256 9fcc77f4c887149f8c0e10e900a1c6625a05229a0d6372ff92b5f4738ca4b860 gnustep-back-art-0.11.0.ebuild 2424
+EBUILD gnustep-back-art-0.11.1_pre25017.ebuild 2704 RMD160 fcc3ff49ef4507314ab0cedf95900cedf1e977a3 SHA1 88de1e70a4ebf488da34622ec84905730eb07dbe SHA256 87c3848eb0d6ed2043246200c233683138ec4b0eaf203e51c0c789dbb4d850cd
+MD5 df598cc933776dcefe77c0d3cde9acb3 gnustep-back-art-0.11.1_pre25017.ebuild 2704
+RMD160 fcc3ff49ef4507314ab0cedf95900cedf1e977a3 gnustep-back-art-0.11.1_pre25017.ebuild 2704
+SHA256 87c3848eb0d6ed2043246200c233683138ec4b0eaf203e51c0c789dbb4d850cd gnustep-back-art-0.11.1_pre25017.ebuild 2704
 MISC ChangeLog 7380 RMD160 ab293a28623425353cb8f48083528ed80a3b7ef0 SHA1 6dc7a588ca4b454443b1c7ff9c3bb918f85637ba SHA256 ec507391bf6583a2d772fa43e6159030092b858059692b3f568a6bdc106d328e
 MD5 e136c91577b7fd8b5750e1837ead9b23 ChangeLog 7380
 RMD160 ab293a28623425353cb8f48083528ed80a3b7ef0 ChangeLog 7380
@@ -30,3 +38,6 @@ SHA256 4460a15f6e1831906348e0bdb6f0853fb286384f110da52874f6ae7d597236df metadata
 MD5 491474ed1beb114aa3831aca97297a9e files/digest-gnustep-back-art-0.11.0 259
 RMD160 e9289bffe48a50ccb46af80ec25671a7f7242b53 files/digest-gnustep-back-art-0.11.0 259
 SHA256 e8cd0ff59ea2a6bafc5e874243b0659751458148fbfba399f5c5ad17ae9d7fe9 files/digest-gnustep-back-art-0.11.0 259
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-gnustep-back-art-0.11.1_pre25017 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-gnustep-back-art-0.11.1_pre25017 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-gnustep-back-art-0.11.1_pre25017 0

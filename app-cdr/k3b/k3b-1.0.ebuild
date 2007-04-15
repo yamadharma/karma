@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-cdr/k3b/k3b-1.0.ebuild,v 1.2 2007/03/25 18:25:25 cryos Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-cdr/k3b/k3b-1.0.ebuild,v 1.5 2007/04/14 16:21:33 carlo Exp $
 
 inherit kde eutils
 
@@ -13,7 +13,7 @@ SRC_URI="mirror://sourceforge/k3b/${MY_P}.tar.bz2"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="amd64 ~ppc x86"
 IUSE="alsa css dvdr dvdread encode ffmpeg flac hal kde mp3 musepack musicbrainz
 	sndfile vcd vorbis emovix"
 
@@ -58,8 +58,7 @@ PATCHES="${FILESDIR}/${P}-alsa-fix.patch"
 I18N="${PN}-i18n-${PV}"
 
 # Supported languages and translated documentation
-LANGS="af bg bn br bs ca cs cy da de el en_GB es et eu fr ga he hi hu is it ja km lt mk ms nb nds nl nn pa pl pt pt_BR ro ru se sl sr sr@Latn sv ta tr uk zh_CN"
-
+LANGS="af ar bg br bs ca cs cy da de el en_GB es et eu fa fi fr ga gl he hi hu is it ja ka lt mk ms nb nds nl nn pa pl pt pt_BR ru rw se sk sr sr@Latn sv ta tr uk uz zh_CN zh_TW"
 for X in ${LANGS}; do
 	SRC_URI="${SRC_URI} linguas_${X}? ( mirror://sourceforge/k3b/${I18N}.tar.bz2 )"
 	IUSE="${IUSE} linguas_${X}"
@@ -78,6 +77,8 @@ pkg_setup() {
 		eerror "the dvdread USE flag will cause k3b to use libdvdread as well."
 		die "Please, rebuild media-video/transcode with the \"dvdread\" USE flag."
 	fi
+
+	use kde || elog "You haven't set the kde use flag. k3bsetup won't be installed."
 
 	kde_pkg_setup
 }

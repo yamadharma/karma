@@ -2,6 +2,9 @@
 == portage-utils, patch for overlays and paludis compatibility ==
 =================================================================
 
+== version 20070410 ==
+# fix the -t switch for qlop from last version
+
 == version 20070405 ==
 # added info on the output of qlop --current, now possible to estimate
 how long before the whole install process finish:

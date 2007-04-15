@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-text/gsview/gsview-4.8.ebuild,v 1.3 2006/04/21 17:08:17 vanquirius Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-text/gsview/gsview-4.8.ebuild,v 1.5 2006/10/15 09:07:57 genstef Exp $
 
 inherit eutils
 
@@ -12,12 +12,13 @@ HOMEPAGE="http://www.cs.wisc.edu/~ghost/gsview/"
 IUSE="doc"
 SLOT="0"
 LICENSE="Aladdin"
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="amd64 ~hppa ~ppc x86"
 
 RDEPEND="=x11-libs/gtk+-1.2*
 	app-text/epstool
 	virtual/ghostscript"
-DEPEND="app-arch/unzip"
+DEPEND="app-arch/unzip
+	=x11-libs/gtk+-1.2*"
 
 src_unpack() {
 	unpack ${A}
