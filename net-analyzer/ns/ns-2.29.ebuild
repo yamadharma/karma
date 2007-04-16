@@ -6,12 +6,13 @@ inherit eutils toolchain-funcs flag-o-matic
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.isi.edu/nsnam/ns/"
-SRC_URI="mirror://sourceforge/nsnam/${PN}-src-${PV}.tar.gz"
+SRC_URI="http://www.isi.edu/nsnam/dist/${PN}-src-${PV}.tar.gz
+	mirror://sourceforge/diffserv4ns/DiffServ4NS-0.2.tar.gz"
 
 LICENSE="BSD as-is"
 SLOT="0"
-KEYWORDS="~ppc ~sparc ~x86 ~amd64"
-IUSE="doc debug"
+KEYWORDS="~ppc ~sparc x86 amd64"
+IUSE="doc debug click"
 
 RDEPEND=">=dev-lang/tcl-8.4.5
 		>=dev-lang/tk-8.4.5
@@ -31,8 +32,16 @@ src_unpack() {
 	unpack ${A}
 	cd ${S}
 #	epatch ${FILESDIR}/${P}-gentoo.diff
-#	epatch "${FILESDIR}/${P}-gcc41.patch"
-	sed '/$(CC)/s!-g!$(CFLAGS)!g' ${S}/indep-utils/model-gen/Makefile
+	cp -R ${WORKDIR}/diffserv4ns/src/* ${S} || die
+	if ( use click )
+	then
+		epatch "${FILESDIR}/nsclick-${P}-patch.bz2"
+	else		
+		epatch "${FILESDIR}/${P}-gcc41.patch"
+	fi
+	sed -i '/$(CC)/s!-g!$(CFLAGS)!g' ${S}/indep-utils/model-gen/Makefile
+	
+	autoconf
 }
 
 src_compile() {

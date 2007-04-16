@@ -7,15 +7,11 @@ inherit subversion mono
 DESCRIPTION="Tapioca UI"
 HOMEPAGE="http://tapioca-voip.sf.net"
 #SRC_URI="mirror://sourceforge/tapioca-voip/${P}.tar.gz"
-
-ESVN_OPTIONS="-r${PV/*_pre}"
-ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/sourceforge.net/landell"
 ESVN_REPO_URI="https://svn.sourceforge.net/svnroot/landell/trunk/landell"
-
 LICENSE="LGPL-2"
 SLOT="0"
 
-KEYWORDS="amd64 x86"
+KEYWORDS="x86 amd64"
 IUSE=""
 
 # gtk-sharp gnome-sharp gnomevfs-sharp glade-sharp gconf-sharp
@@ -23,9 +19,7 @@ RDEPEND="net-im/tapiocad
 	gnome-base/gconf
 	media-libs/farsight
 	media-libs/gstreamer
-	>=media-libs/gst-plugins-base-0.10.5
-	>=dev-dotnet/gecko-sharp-0.11
-	dev-dotnet/tapioca-sharp"
+	>=media-libs/gst-plugins-base-0.10.5"
 #	net-im/tapioca-xmpp
 #	dev-libs/libxml2
 

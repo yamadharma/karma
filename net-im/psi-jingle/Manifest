@@ -1,0 +1,14 @@
+EBUILD psi-jingle-0.10-r1.ebuild 1651 RMD160 0ca508be726f3c5d31af179d36cdb68386fc5029 SHA1 4708b421f1dad18312fe20d5d402633288da239c SHA256 b51c6c69ced90e5e1fc58d146af8c324e7f664b14d8d02fc39eb5abaafd1b2b2 size 1651
+MD5 75eb03a5aba6291f404c538b43ab8d4d psi-jingle-0.10-r1.ebuild 1651
+RMD160 0ca508be726f3c5d31af179d36cdb68386fc5029 psi-jingle-0.10-r1.ebuild 1651
+SHA256 b51c6c69ced90e5e1fc58d146af8c324e7f664b14d8d02fc39eb5abaafd1b2b2 psi-jingle-0.10-r1.ebuild 1651
+EBUILD psi-jingle-0.10-r2.ebuild 1584 RMD160 f70f9a7481b578fa8da44640d91dbca97f560973 SHA1 7cf3a6f969e40164f72a3a5cebbc04f39c26a973 SHA256 77cf90fbd6a3ccd197daf159ec14469516e208e5f77a9f1e1c496cef56b270a4 size 1584
+MD5 7b1d4e3844bbc6ffdc06babf9bb44862 psi-jingle-0.10-r2.ebuild 1584
+RMD160 f70f9a7481b578fa8da44640d91dbca97f560973 psi-jingle-0.10-r2.ebuild 1584
+SHA256 77cf90fbd6a3ccd197daf159ec14469516e208e5f77a9f1e1c496cef56b270a4 psi-jingle-0.10-r2.ebuild 1584
+MD5 68b329da9893e34099c7d8ad5cb9c940 files/digest-psi-jingle-0.10-r1 1
+RMD160 c0da025038ed83c687ddc430da9846ecb97f3998 files/digest-psi-jingle-0.10-r1 1
+SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b files/digest-psi-jingle-0.10-r1 1
+MD5 68b329da9893e34099c7d8ad5cb9c940 files/digest-psi-jingle-0.10-r2 1
+RMD160 c0da025038ed83c687ddc430da9846ecb97f3998 files/digest-psi-jingle-0.10-r2 1
+SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b files/digest-psi-jingle-0.10-r2 1
