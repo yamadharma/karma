@@ -19,7 +19,8 @@ RDEPEND="net-im/tapiocad
 	gnome-base/gconf
 	media-libs/farsight
 	media-libs/gstreamer
-	>=media-libs/gst-plugins-base-0.10.5"
+	>=media-libs/gst-plugins-base-0.10.5
+	>=dev-dotnet/tapioca-sharp-0.13.2"
 #	net-im/tapioca-xmpp
 #	dev-libs/libxml2
 
