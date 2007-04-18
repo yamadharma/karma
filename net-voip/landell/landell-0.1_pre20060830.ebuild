@@ -27,17 +27,23 @@ RDEPEND="net-im/tapiocad
 src_unpack() {
 	subversion_src_unpack
 	cd ${S}
+	sed -i -e "s: \$(datadir)/landell/icons/hicolor: \$(DESTDIR)\$(datadir)/landell/icons/hicolor:g" \
+	    -e "s:touch \$(hicolordir):touch \$(DESTDIR)\$(hicolordir):g" \
+	    ${S}/data/images/Makefile.am
+	automake
 	NOCONFIGURE=1 ./autogen.sh
 }
 
 src_compile() {
+#	./autogen.sh --prefix=/usr
 	econf || die "econf failed"
 	emake
-	emake
+#	emake
 }
 
 src_install() {
-	emake DESTDIR=${D} install
+	# DESTDIR is not set in all files.
+#	make prefix=${D}/usr datadir=${D}/usr/share install
 	emake DESTDIR=${D} install
 	#|| die "make install failed"
 }
