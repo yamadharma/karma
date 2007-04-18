@@ -28,6 +28,7 @@ elisp-common_pkg_setup () {
             export SITELISP=/usr/share/site-lisp/common/packages
     	    export SITELISPROOT=/usr/share/site-lisp
     	    export SITELISPDOC=/usr/share/site-lisp/doc
+    	    export SITELISPEMACS=/usr/share/emacs/site-lisp
     	    
     	    export HAS_ECF=1
 	    # Sandbox issues
@@ -37,6 +38,8 @@ elisp-common_pkg_setup () {
     	    done
 	else    
             export SITELISP=/usr/share/emacs/site-lisp
+            export SITELISPEMACS=/usr/share/emacs/site-lisp
+
 	    export HAS_ECF=
 	fi
 }
