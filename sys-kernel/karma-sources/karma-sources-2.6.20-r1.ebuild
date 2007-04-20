@@ -17,17 +17,18 @@ else
     EXTRAREVISION="-${PR}"
 fi
 
-EXTRAVERSION="-karma_openvz${EXTRAREVISION}"
+EXTRAVERSION="-karma${EXTRAREVISION}"
 S=${WORKDIR}/linux-${KV}
 
-DESCRIPTION="KLK Sources with OpenVZ support."
+DESCRIPTION="KLK Sources."
 SRC_URI="${KERNEL_URI}"
-UNIPATCH_LIST="${FILESDIR}/misc/${PV}${EXTRAREVISION}/karma-openvz.tar.bz2"
+UNIPATCH_LIST="${FILESDIR}/misc/${PV}${EXTRAREVISION}/karma.tar.bz2"
 UNIPATCH_STRICTORDER="yes"
 
 #DEPEND="${DEPEND}"
+
 	
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="x86 amd64"
 
 pkg_postinst () 
 {
