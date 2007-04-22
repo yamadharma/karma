@@ -1,6 +1,168 @@
 # ChangeLog for app-editors/emacs-cvs
-# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs-cvs/ChangeLog,v 1.81 2007/02/08 14:03:45 opfer Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs-cvs/ChangeLog,v 1.110 2007/04/20 19:45:36 ulm Exp $
+
+  20 Apr 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.98.ebuild,
+  -emacs-cvs-22.0.9999-r7.ebuild, emacs-cvs-22.0.9999-r10.ebuild,
+  emacs-cvs-23.0.0-r6.ebuild:
+  Test for previous symlink and eselect the same SLOT, also for live CVS
+  ebuild. Added braces to variable name; split some long lines. Removed old
+  broken revision.
+
+  19 Apr 2007; Ulrich Mueller <ulm@gentoo.org>
+  +files/emacs-cvs-Xaw3d-headers.patch, emacs-cvs-22.0.98.ebuild,
+  emacs-cvs-22.0.9999-r10.ebuild, emacs-cvs-23.0.0-r6.ebuild:
+  Upstream patch for proper including of Xaw3d headers; removed build-time
+  dependency on x11-libs/libXaw; bug #174453.
+
+  18 Apr 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.98.ebuild,
+  emacs-cvs-22.0.9999-r10.ebuild, emacs-cvs-23.0.0-r6.ebuild:
+  Duplicate "--with-x-toolkit=lucid" removed since "athena" and "lucid" are
+  just synonyms. Thanks to <aryixb@gmail.com> for pointing this out.
+
+  18 Apr 2007; Gustavo Zacarias <gustavoz@gentoo.org>
+  emacs-cvs-22.0.98.ebuild, emacs-cvs-22.0.9999-r10.ebuild,
+  emacs-cvs-23.0.0-r6.ebuild:
+  Keyworded ~sparc wrt #174891
+
+  17 Apr 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.98.ebuild, emacs-cvs-22.0.9999-r10.ebuild,
+  emacs-cvs-23.0.0-r6.ebuild:
+  keyworded ~amd64, bug 174891
+
+  17 Apr 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.98.ebuild,
+  emacs-cvs-22.0.9999-r10.ebuild:
+  Removed dodoc MAINTAINERS since the file is not in the snapshot.
+
+  17 Apr 2007; Ulrich Mueller <ulm@gentoo.org> -emacs-cvs-22.0.96.ebuild,
+  -emacs-cvs-22.0.9999-r6.ebuild:
+  Old versions removed.
+
+*emacs-cvs-22.0.98 (17 Apr 2007)
+
+  17 Apr 2007; Ulrich Mueller <ulm@gentoo.org> +emacs-cvs-22.0.98.ebuild:
+  Taken from Emacs overlay: Prepare for new eselect module; new sound and
+  hesiod USE flags; dropped gnome USE flag; removed font dependencies for X;
+  suffix of emacs executable changed from .emacs- to -emacs- for better
+  compatibility with XEmacs; SLOT changed to 22. Request AUTOCONF 2.61 instead
+  of latest, fixes bug #170969. Remove colliding files between slots, fixes
+  bug #169033.
+
+  16 Apr 2007; Ulrich Mueller <ulm@gentoo.org> -files/emacs-22.0.50.desktop,
+  -files/emacs-23.0.0.desktop, -files/50emacs-23.0.0.envd,
+  -files/emacs-cvs-blessmail-build.patch,
+  -files/emacs-cvs-darwin-fsf-gcc.patch:
+  Clean up.
+
+*emacs-cvs-23.0.0-r6 (16 Apr 2007)
+*emacs-cvs-22.0.9999-r10 (16 Apr 2007)
+
+  16 Apr 2007; Christian Faulhammer <opfer@gentoo.org>
+  +files/emacs-cvs-disable_alsa_detection.patch,
+  +emacs-cvs-22.0.9999-r10.ebuild, +emacs-cvs-23.0.0-r6.ebuild:
+  prepared for new eselect module, no more automagic dependencies, cleanups
+  and straighter ebuild. Taken from Emacs Overlay
+
+  11 Apr 2007; <tester@gentoo.org> emacs-cvs-23.0.0-r1.ebuild:
+  Commenting out non-working patch
+
+  04 Apr 2007; Fabian Groffen <grobian@gentoo.org> emacs-cvs-22.0.96.ebuild,
+  emacs-cvs-22.0.97.ebuild, emacs-cvs-22.0.9999-r6.ebuild,
+  emacs-cvs-22.0.9999-r7.ebuild:
+  Dropped ppc-macos keywords, see you in prefix
+
+*emacs-cvs-22.0.9999-r7 (04 Apr 2007)
+*emacs-cvs-22.0.97 (04 Apr 2007)
+
+  04 Apr 2007; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.97.ebuild, +emacs-cvs-22.0.9999-r7.ebuild:
+  bumps to newer upstream CVS tags
+
+  26 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  -emacs-cvs-22.0.95-r1.ebuild, -emacs-cvs-22.0.9999-r5.ebuild:
+  clean up
+
+*emacs-cvs-22.0.9999-r6 (20 Mar 2007)
+*emacs-cvs-22.0.96 (20 Mar 2007)
+
+  20 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.96.ebuild, +emacs-cvs-22.0.9999-r6.ebuild:
+  version bump for 22.0.96 pretest
+
+  18 Mar 2007; Fabian Groffen <grobian@gentoo.org>
+  -files/emacs-cvs-21.3.50-nofink.diff,
+  +files/emacs-cvs-darwin-fsf-gcc.patch, +files/emacs-cvs-nofink.patch,
+  emacs-cvs-22.0.95-r1.ebuild, emacs-cvs-22.0.9999-r5.ebuild,
+  emacs-cvs-23.0.0-r1.ebuild:
+  Dropped ppc-macos keyword, see you in prefix
+
+  16 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.95-r1.ebuild, emacs-cvs-22.0.9999-r5.ebuild:
+  request AUTOCONF 2.61 instead of latest. Fixes bug 170969, reported by
+  <lkml_ccc@yahoo.it>
+
+  12 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.95-r1.ebuild, emacs-cvs-22.0.9999-r5.ebuild:
+  remove the dir file in the correct place and also remove desktop entry for
+  live ebuild, fixes bug 170133
+
+  07 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  -files/40aspell-gentoo.el, emacs-cvs-22.0.95-r1.ebuild,
+  emacs-cvs-22.0.9999-r5.ebuild, emacs-cvs-23.0.0-r1.ebuild:
+  removed aspell activation, as Emacs detects that itself
+
+  07 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  -emacs-cvs-22.0.95.ebuild, emacs-cvs-22.0.95-r1.ebuild,
+  -emacs-cvs-22.0.9999-r4.ebuild, emacs-cvs-22.0.9999-r5.ebuild:
+  corrected behaviour for copying subdirs.el and clean up
+
+*emacs-cvs-22.0.9999-r5 (04 Mar 2007)
+*emacs-cvs-22.0.95-r1 (04 Mar 2007)
+
+  04 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.95-r1.ebuild, +emacs-cvs-22.0.9999-r5.ebuild:
+  make subdirs patch obsolete by some changes in the ebuild and straighten
+  behaviour for USE=gzip-el
+
+  02 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.95.ebuild, emacs-cvs-22.0.9999-r4.ebuild,
+  emacs-cvs-23.0.0-r1.ebuild:
+  removed virtual/x11 from dependencies
+
+  02 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  -emacs-cvs-22.0.94.ebuild, -emacs-cvs-22.0.9999-r3.ebuild:
+  clean up
+
+*emacs-cvs-22.0.9999-r4 (02 Mar 2007)
+*emacs-cvs-22.0.95 (02 Mar 2007)
+
+  02 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  -emacs-cvs-22.0.93-r2.ebuild, +emacs-cvs-22.0.95.ebuild,
+  -emacs-cvs-22.0.9999-r2.ebuild, +emacs-cvs-22.0.9999-r4.ebuild:
+  revision bump to new pretest versions
+
+  27 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.94.ebuild, emacs-cvs-22.0.9999-r3.ebuild:
+  removed a dot
+
+  26 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.94.ebuild:
+  corrected SLOT
+
+*emacs-cvs-22.0.9999-r3 (26 Feb 2007)
+*emacs-cvs-22.0.94 (26 Feb 2007)
+
+  26 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  +emacs-cvs-22.0.94.ebuild, +emacs-cvs-22.0.9999-r3.ebuild:
+  if USE=gzip-el is not set, Emacs' build system will not compress el files
+  even if the gzip binary is found; 22.0.94: A new pretest version has been
+  released; 22.0.9999-r3: Fitted SLOT to the new pretest version
+
+  20 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  +files/emacs-cvs-blessmail-build.patch, emacs-cvs-22.0.93-r2.ebuild:
+  patch for handling a possible compilation error in special cases where Emacs
+  was called without disabling the start-up file (bug 166059). Everything
+  provided by Ulrich Mueller <ulm@kph.uni-mainz.de>
 
   08 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
   emacs-cvs-22.0.93-r2.ebuild, emacs-cvs-22.0.9999-r2.ebuild:

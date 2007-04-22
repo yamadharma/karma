@@ -155,6 +155,10 @@ src_compile() {
 
 	if ( use doc )
 	then
+		export MT_FEATURES=varfonts
+		mkdir -p ${T}/var/cache/fonts
+		export VARTEXFONTS=${T}/var/cache/fonts
+
 		cd ${WORKDIR}/${IONDOC_PN}-${IONDOC_PV}
 		make all
 		make all-pdf
@@ -197,8 +201,10 @@ src_install() {
 	
 	if ( use doc )
 	then
+		dodir /usr/share/doc/${PF}
 		cd ${WORKDIR}/${IONDOC_PN}-${IONDOC_PV}
 		cp *.pdf ${D}/usr/share/doc/${PF}
+		cd ${S}
 	fi	
 	
 

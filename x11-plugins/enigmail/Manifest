@@ -55,6 +55,6 @@ MISC metadata.xml 238 RMD160 20be188d400f8ae54fb1eae8bfb243c43eed2395 SHA1 fb7da
 MD5 22a1feabf45dadbfa2268b7fff3ce66e metadata.xml 238
 RMD160 20be188d400f8ae54fb1eae8bfb243c43eed2395 metadata.xml 238
 SHA256 ef51e99b6b1ccee48a71906e90a4111f58793292fe1248934a811fcb02506036 metadata.xml 238
-MD5 de1f0cc534dc870fa3a426cb3a87a455 files/digest-enigmail-0.94.3-r2 4783
-RMD160 7a260662aef8dfdcfa90eb769fdcf0505acedc6e files/digest-enigmail-0.94.3-r2 4783
-SHA256 3b24cea64c2eae6c431ba73e51a4d90cf0b5991c5722a0b996d8be69b3f0540d files/digest-enigmail-0.94.3-r2 4783
+MD5 bbc8702c27dd95b07585126cb595efef files/digest-enigmail-0.94.3-r2 4876
+RMD160 280e0f8c4b57d257fa886bb7986aeffd11d45169 files/digest-enigmail-0.94.3-r2 4876
+SHA256 9c245240d4c76d83e267a16942f071e13893633e04f86e9e51ddd764ea8c2b87 files/digest-enigmail-0.94.3-r2 4876

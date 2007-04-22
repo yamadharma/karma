@@ -9,7 +9,7 @@ fi
 
 . $GNUSTEP_SYSTEM_ROOT/Library/Makefiles/GNUstep.sh
 
-if [ -z "$GNUSTEP_IS_FLATTENED" ] 
+if [ -z "$GNUSTEP_FLATTENED" ] 
     then
     TDIR=${GNUSTEP_SYSTEM_ROOT}/Tools/${GNUSTEP_HOST_CPU}/${GNUSTEP_HOST_OS}/${LIBRARY_COMBO}
 else
