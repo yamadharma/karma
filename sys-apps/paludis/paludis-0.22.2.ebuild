@@ -42,7 +42,7 @@ PROVIDE="virtual/portage"
 
 create-paludis-user() {
 	enewgroup "paludisbuild"
-	enewuser "paludisbuild" -1 -1 -1 "paludisbuild"
+	enewuser "paludisbuild" -1 -1 "/var/tmp/paludis" "paludisbuild"
 }
 
 pkg_setup() {
@@ -92,6 +92,10 @@ src_install() {
 		doins zsh-completion/_inquisitio
 		doins zsh-completion/_paludis_packages
 	fi
+	
+	insinto /etc/cron.daily
+	doins ${FILESDIR}/update-paludis
+	chmod +x ${D}/etc/cron.daily/update-paludis
 }
 
 src_test() {
