@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.2.0.ebuild,v 1.3 2007/04/19 06:15:46 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.2.0.ebuild,v 1.5 2007/04/24 21:36:26 suka Exp $
 
 WANT_AUTOCONF="2.5"
 WANT_AUTOMAKE="1.9"
@@ -9,7 +9,7 @@ inherit autotools check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 
 
 IUSE="binfilter branding cairo cups dbus debug eds firefox gnome gstreamer gtk kde ldap mono sound odk pam seamonkey webdav"
 
-MY_PV="2.1.91"
+MY_PV="2.1.92"
 PATCHLEVEL="OOF680"
 SRC="OOo_${PV}_src"
 S="${WORKDIR}/ooo"
@@ -45,7 +45,7 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc -sparc ~x86"
+KEYWORDS="~amd64 ~ppc -sparc x86"
 
 COMMON_DEPEND="!app-office/openoffice-bin
 	x11-libs/libXaw
@@ -202,6 +202,7 @@ src_unpack() {
 	#Some fixes for our patchset
 	cd ${S}
 	epatch ${FILESDIR}/${PV}/gentoo-${PV}.diff
+	epatch ${FILESDIR}/${PV}/ooo-env_log.diff
 
 	if use ppc ; then
 		cp -f ${FILESDIR}/${PV}/disable-regcomp-java.diff ${S}/patches/src680 || die
