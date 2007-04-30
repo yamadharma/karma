@@ -18,7 +18,7 @@ SRC_URI="mirror://debian/pool/main/a/aplus-fsf/aplus-fsf_${PV}.orig.tar.gz
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~ppc ~sparc x86"
+KEYWORDS="~alpha amd64 ~ppc ~sparc ~x86"
 IUSE="emacs"
 
 RDEPEND=""
