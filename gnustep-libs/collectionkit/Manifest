@@ -2,6 +2,13 @@ EBUILD collectionkit-0.1.1_pre1700.ebuild 760 RMD160 c48f34cb233e317fa37e0701fda
 MD5 c3dc4d8598dda92c1298baf638f12dad collectionkit-0.1.1_pre1700.ebuild 760
 RMD160 c48f34cb233e317fa37e0701fdaee9680eeb444e collectionkit-0.1.1_pre1700.ebuild 760
 SHA256 369d3d0bae3e01a1bde5e8656139bc562ebd73ea926e3822e6d84c1f5f232803 collectionkit-0.1.1_pre1700.ebuild 760
+EBUILD collectionkit-0.1.1_pre1814.ebuild 748 RMD160 8dbfba75d80bedb0c338085fca7d7d56d8fdc198 SHA1 4fa4300c03bd12ab7ba6215d937dca93bc234efa SHA256 b0c585b0951fe286e60934a229567b6e4c0bf0a112861df5c3be6332b714aa22
+MD5 d6f5c92bd88fbad39e9660d0fd2128da collectionkit-0.1.1_pre1814.ebuild 748
+RMD160 8dbfba75d80bedb0c338085fca7d7d56d8fdc198 collectionkit-0.1.1_pre1814.ebuild 748
+SHA256 b0c585b0951fe286e60934a229567b6e4c0bf0a112861df5c3be6332b714aa22 collectionkit-0.1.1_pre1814.ebuild 748
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-collectionkit-0.1.1_pre1700 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-collectionkit-0.1.1_pre1700 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-collectionkit-0.1.1_pre1700 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-collectionkit-0.1.1_pre1814 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-collectionkit-0.1.1_pre1814 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-collectionkit-0.1.1_pre1814 0
