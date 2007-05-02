@@ -1,0 +1,15 @@
+DIST fedora-setuputil-1.0.3.tar.gz 421211 RMD160 3961c051574f35d57a15a33ae9bf8c65470c6a7e SHA1 21fb2a29e374c9ba3c1bb44a95db4d0b31fd4b4e SHA256 9852a9e9c0db55de07fd6868bb610fd187339db159e4f8a456bd9e6d7eccaab0
+EBUILD fedora-ds-setuputil-1.0.3.ebuild 1492 RMD160 4a712595090ca2578d53e6a9cd72d9da37b75941 SHA1 09574b645c0e8b3c460a0e5d26e7ace2efffe7b4 SHA256 34e5941e26963d9cad1b3fdf4c2f077b9094d494acccb0f6ec35729487407bcf
+MD5 fafdd2030769faf4951c6a29ab96e12a fedora-ds-setuputil-1.0.3.ebuild 1492
+RMD160 4a712595090ca2578d53e6a9cd72d9da37b75941 fedora-ds-setuputil-1.0.3.ebuild 1492
+SHA256 34e5941e26963d9cad1b3fdf4c2f077b9094d494acccb0f6ec35729487407bcf fedora-ds-setuputil-1.0.3.ebuild 1492
+EBUILD fedora-ds-setuputil-1.1.0_pre20070502.ebuild 1839 RMD160 5464dd85372c7a6c39a0c7cab9e4d89d70da2938 SHA1 27fe45a03890be29d14e7332837796b2113bc544 SHA256 db832fbea6f117dfe78b86a89e4f4c4c29df7c29bf3ec83d1c6a9b9bd9b64285
+MD5 a18ebb88ca68cdf871b6754a5d308dad fedora-ds-setuputil-1.1.0_pre20070502.ebuild 1839
+RMD160 5464dd85372c7a6c39a0c7cab9e4d89d70da2938 fedora-ds-setuputil-1.1.0_pre20070502.ebuild 1839
+SHA256 db832fbea6f117dfe78b86a89e4f4c4c29df7c29bf3ec83d1c6a9b9bd9b64285 fedora-ds-setuputil-1.1.0_pre20070502.ebuild 1839
+MD5 1ae504d67a461f15587257c78cd3bce9 files/digest-fedora-ds-setuputil-1.0.3 268
+RMD160 0d8c50bc25dc88f501413f947eb7710e06aa0030 files/digest-fedora-ds-setuputil-1.0.3 268
+SHA256 008196ff4901a6c7ce6a2199e297b480106ef70fd106d0ba676841103de2640e files/digest-fedora-ds-setuputil-1.0.3 268
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-fedora-ds-setuputil-1.1.0_pre20070502 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-fedora-ds-setuputil-1.1.0_pre20070502 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-fedora-ds-setuputil-1.1.0_pre20070502 0

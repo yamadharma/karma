@@ -1,0 +1,47 @@
+#!/sbin/runscript
+# Copyright 1999-2007 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+service="Fedora DS"
+baseexec="ns-slapd"
+exec="/usr/sbin/$baseexec"
+prog="fedora-ds"
+
+# Lockfile
+if [ -d "/var/lock/subsys" ] ; then
+    lockfile="/var/lock/subsys/fedora-ds"
+else
+    lockfile="/var/lock/fedora-ds/lock"
+fi
+# PID directory
+piddir="/var/run/fedora-ds"
+#pidfile=$piddir/slapd-$instance.pid
+pidfile=$piddir/slapd.pid
+
+# Instance basedir
+instbase="/etc/fedora-ds"
+
+depend () {
+        need net
+        use dns
+}
+
+
+start () {
+        LD_LIBRARY_PATH=/usr/lib/fedora-ds
+	export LD_LIBRARY_PATH
+        ebegin "Starting Fedora DS"
+        start-stop-daemon --start --quiet \
+        --make-pidfile --pidfile ${pidfile} \
+        --exec ${exec}
+        eend $?
+}
+
+stop () {
+        ebegin "Stopping Fedora DS"
+        start-stop-daemon --start --quiet \
+        --pidfile ${pidfile} \
+        --exec ${exec}
+        eend $?
+}

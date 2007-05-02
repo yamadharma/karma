@@ -1,0 +1,18 @@
+--- fedora-ds-1.0/ldap/cm/Makefile.orig	2005-12-05 17:32:21.000000000 +0100
++++ fedora-ds-1.0/ldap/cm/Makefile	2005-12-05 17:36:17.000000000 +0100
+@@ -673,6 +673,7 @@
+ 	fi ; \
+ 	done
+ 
++ifeq ($(USE_ADMINSERVER),1)
+ # if the untar directory is there, hooray; otherwise, we will have to unpack the
+ # binaries ourselves . . .
+ 	if [ ! -d $(ADMSERV_DIR)/admin ] ; \
+@@ -685,6 +686,7 @@
+ 			cp -r $(ADMSERV_DIR)/$$file $(INSTDIR)/$$file ; \
+ 		done ; \
+ 	fi
++endif
+ 
+ # we must remove the nsbase.zip file - we package those files now
+ 	rm -f $(INSTDIR)/base/nsbase.zip
