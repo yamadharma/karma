@@ -4,6 +4,8 @@
 
 inherit eutils cvs
 
+ECVS_CO_OPTS="-D ${PV/*_pre}"
+ECVS_UP_OPTS="-D ${PV/*_pre}"
 ECVS_AUTH="pserver"
 ECVS_SERVER="cvs.fedora.redhat.com:/cvs/dirsec"
 ECVS_MODULE="setuputil"

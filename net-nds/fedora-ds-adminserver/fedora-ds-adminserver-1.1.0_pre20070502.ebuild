@@ -8,7 +8,7 @@ ECVS_CO_OPTS="-D ${PV/*_pre}"
 ECVS_UP_OPTS="-D ${PV/*_pre}"
 ECVS_AUTH="pserver"
 ECVS_SERVER="cvs.fedora.redhat.com:/cvs/dirsec"
-ECVS_MODULE="adminutil"
+ECVS_MODULE="adminserver"
 #ECVS_BRANCH=""
 ECVS_USER="anonymous"
 ECVS_CVS_OPTIONS="-dP"
@@ -38,19 +38,32 @@ RDEPEND="${DEPEND}"
 #S="${WORKDIR}/fedora-setuputil-${PV}"
 
 src_compile() {
-
-	econf  --with-fhs \
-	    || die
-	emake || die
-#	    --with-ldapsdk-inc=/usr/include/mozldap --with-ldapsdk-lib=/usr/lib \
-
+	
+	make \
+		BUILD_DEBUG=optimize \
+		LDAPSDK_INCDIR="/usr/include/mozldap" \
+		NSPR_INCDIR="/usr/include" \
+		ICU_BUILD_DIR="/usr" \
+		SECURITY_INCDIR="/usr/include" \
+		|| die "make adminutil failed"
+		#SECURITY_INCDIR="/usr/include/nss/" \
 }
 
 src_install() {
-	make install DESTDIR=${D} || die
+	local DIST="${S}/built/adminutil/Linux2.6_x86_glibc_PTH_OPT.OBJ"
 
-#	rm -rf ${D}/usr/share/doc/setuputil
-#	dodoc installer/relnotes/*
-#	dohtml -r installer/doc/*
-	
+	# make directories
+#	dodir /usr/include/fedora-ds
+#	dodir /usr/lib/fedora-ds/adminutil-properties
+
+	# headers
+	insinto /usr/include/fedora-ds
+	doins -r ${DIST}/include/adminutil-1.0/*
+
+	# libs
+	insinto /usr/lib/fedora-ds
+	doins ${DIST}/lib/*
+
+	insinto /usr/lib/fedora-ds/adminutil-properties
+	doins ${DIST}/lib/adminutil-properties/*
 }
