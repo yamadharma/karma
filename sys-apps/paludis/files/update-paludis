@@ -2,3 +2,4 @@
 
 paludis --regenerate-installable-cache
 paludis --regenerate-installed-cache
+

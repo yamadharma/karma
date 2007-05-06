@@ -18,6 +18,10 @@ EBUILD xwindowserverkit-0.1.1_pre1814.ebuild 726 RMD160 d99e6a60fafd355cef330886
 MD5 ae05ed0f57c5046ea17bdc9c4e708727 xwindowserverkit-0.1.1_pre1814.ebuild 726
 RMD160 d99e6a60fafd355cef3308862a53bcc09e935bc8 xwindowserverkit-0.1.1_pre1814.ebuild 726
 SHA256 69f06d9d855cb79b3b3433e711ea60361086ae220138606e7a74456b0fce98eb xwindowserverkit-0.1.1_pre1814.ebuild 726
+EBUILD xwindowserverkit-0.1.1_pre1869.ebuild 403 RMD160 750b6b910736be5c085fc7b4244d502e319d225a SHA1 3abf67e514df59cecbd53ea8264eef5908ee659c SHA256 46d17908751be4021184b73d0d15866d81c8304d061623c12e132443d4a6294f
+MD5 3ff3acf4bdd5b4fa9e9a30014fc26cc2 xwindowserverkit-0.1.1_pre1869.ebuild 403
+RMD160 750b6b910736be5c085fc7b4244d502e319d225a xwindowserverkit-0.1.1_pre1869.ebuild 403
+SHA256 46d17908751be4021184b73d0d15866d81c8304d061623c12e132443d4a6294f xwindowserverkit-0.1.1_pre1869.ebuild 403
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-xwindowserverkit-0.1.1_pre1516 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-xwindowserverkit-0.1.1_pre1516 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-xwindowserverkit-0.1.1_pre1516 0
@@ -33,3 +37,6 @@ SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-xwindowserverkit-0.1.1_pre1814 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-xwindowserverkit-0.1.1_pre1814 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-xwindowserverkit-0.1.1_pre1814 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-xwindowserverkit-0.1.1_pre1869 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-xwindowserverkit-0.1.1_pre1869 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-xwindowserverkit-0.1.1_pre1869 0

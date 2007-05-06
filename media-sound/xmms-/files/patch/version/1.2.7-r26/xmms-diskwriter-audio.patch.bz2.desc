@@ -1,1 +1,0 @@
-This patch passes audio output through the output plugin before recording via the diskwriter plugin

@@ -1,8 +1,8 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/audacity/audacity-1.3.2-r1.ebuild,v 1.3 2006/12/14 20:31:14 aballier Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/audacity/audacity-1.3.2-r1.ebuild,v 1.9 2007/05/03 13:32:08 gustavoz Exp $
 
-inherit eutils autotools
+inherit eutils autotools wxwidgets
 
 IUSE="flac ladspa libsamplerate mp3 sse unicode vorbis"
 
@@ -13,10 +13,10 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="amd64 ~ppc ppc64 sparc x86"
 RESTRICT="test"
 
-DEPEND=">=x11-libs/wxGTK-2.6
+DEPEND="=x11-libs/wxGTK-2.6*
 	>=app-arch/zip-2.3
 	dev-libs/expat
 	vorbis? ( >=media-libs/libvorbis-1.0 )
@@ -41,6 +41,7 @@ src_unpack() {
 	fi
 	epatch "${FILESDIR}/${P}+flac-1.1.3.patch"
 	epatch "${FILESDIR}/${P}-libnyquistp.patch"
+	epatch "${FILESDIR}/${P}-desktopentry.patch"
 
 	eautoreconf || die
 	pushd "${S}"/lib-src/soundtouch
@@ -50,6 +51,13 @@ src_unpack() {
 
 src_compile() {
 	local myconf
+	WX_GTK_VER="2.6"
+
+	if use unicode; then
+		need-wxwidgets unicode
+	else
+		need-wxwidgets gtk2
+	fi
 
 	myconf="${myconf} --with-libsndfile=system"
 	myconf="${myconf} --with-libexpat=system"
@@ -59,7 +67,9 @@ src_compile() {
 	else
 		myconf="${myconf} --without-libsamplerate" # --with-libresample=local
 	fi
-
+	
+	myconf="${myconf} --without-portmixer --with-portaudio=v19"
+	
 	econf \
 		$(use_enable unicode) \
 		$(use_with ladspa) \

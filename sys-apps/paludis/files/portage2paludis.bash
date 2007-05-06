@@ -122,13 +122,15 @@ qmark_oper() {
 }
 
 canonicalise() {
-	case $(uname -s) in
-		FreeBSD) realpath $@ ;;
-		*) readlink -f $@ ;;
-	esac
+    case $(uname -s) in
+        FreeBSD) realpath $@ ;;
+        *) readlink -f $@ ;;
+    esac
 }
 
 # MAIN #
+
+bad=
 
 # Ask the user for an output directory.
 
@@ -215,12 +217,12 @@ echo -n "Generating use.conf (Pass 3 of 3)... "
 if [[ -f "/etc/portage/package.use" ]]; then
     split_comments "/etc/portage/package.use" >>"${outputdir}/use.conf"
 elif [[ -d "/etc/portage/package.use" ]]; then
-	for f in /etc/portage/package.use/*
-	do
-		echo "###$f begin" >>"${outputdir}/use.conf"
-		split_comments "/etc/portage/package.use/$f" >>"${outputdir}/use.conf"
-		echo "###$f end" >>"${outputdir}/use.conf"
-	done
+    mkdir -p "${outputdir}/use.conf.d"
+    for f in $(cd /etc/portage/package.use/; find -type f)
+    do
+        mkdir -p "${outputdir}/use.conf.d/$(dirname ${f})"
+        split_comments "$f" >>"${outputdir}/use.conf.d/${f}.conf"
+    done
 fi
 echo "done."
 
@@ -246,14 +248,15 @@ if [[ -f "/etc/portage/package.keywords" ]]; then
     | sed 's,\*\*,*,' \
     >>"${outputdir}/keywords.conf"
 elif [[ -d "/etc/portage/package.keywords" ]]; then
-	for f in /etc/portage/package.keywords/*
-	do
-		echo "###$f begin" >>"${outputdir}/keywords.conf"
-		split_comments "/etc/portage/package.keywords/$f" \
-		| sed 's,\*\*,*,' \
-		>>"${outputdir}/keywords.conf"
-		echo "###$f end" >>"${outputdir}/keywords.conf"
-	done
+    [[ -e "${outputdir}/keywords.conf.d" ]] \
+        || mkdir "${outputdir}/keywords.conf.d"
+    for f in $(cd /etc/portage/package.keywords/ ; find -type f)
+    do
+        mkdir -p "${outputdir}/keywords.conf.d/$(dirname ${f})"
+        split_comments "$f" \
+        | sed 's,\*\*,*,' \
+        >>"${outputdir}/keywords.conf.d/${f}.conf"
+    done
 fi
 echo "done."
 
@@ -273,13 +276,15 @@ EOF
 if [[ -f "/etc/portage/package.mask" ]]; then
     split_comments "/etc/portage/package.mask" >>"${outputdir}/package_mask.conf"
 elif [[ -d "/etc/portage/package.mask" ]]; then
-	for f in /etc/portage/package.mask/*
-	do
-		echo "###$f begin" >>"${outputdir}/package_mask.conf"
-		split_comments "/etc/portage/package.mask/$f" >>"${outputdir}/package_mask.conf"
-		echo "###$f end" >>"${outputdir}/package_mask.conf"
-	done
+    [[ -e "${outputdir}/package_mask.conf.d" ]] \
+        || mkdir "${outputdir}/package_mask.conf.d"
+    for f in $(cd /etc/portage/package.mask/ ; find -type f)
+    do
+        mkdir -p "${outputdir}/package_mask.conf.d/$(dirname ${f})"
+        split_comments "$f" >>"${outputdir}/package_mask.conf.d/${f}.conf"
+    done
 fi
+echo "done."
 
 echo -n "Generating package_unmask.conf (Pass 1 of 1)... "
 cat << EOF >"${outputdir}/package_unmask.conf"
@@ -289,12 +294,13 @@ EOF
 if [[ -f "/etc/portage/package.unmask" ]]; then
     split_comments "/etc/portage/package.unmask" >>"${outputdir}/package_unmask.conf"
 elif [[ -d "/etc/portage/package.unmask" ]]; then
-	for f in /etc/portage/package.unmask/*
-	do
-		echo "###$f begin" >>"${outputdir}/package_unmask.conf"
-		split_comments "/etc/portage/package.unmask/$f" >>"${outputdir}/package_unmask.conf"
-		echo "###$f end" >>"${outputdir}/package_unmask.conf"
-	done
+    [[ -e "${outputdir}/package_unmask.conf.d" ]] \
+        || mkdir "${outputdir}/package_unmask.conf.d"
+    for f in $(cd /etc/portage/package.unmask/ ; find -type f)
+    do
+        mkdir -p "${outputdir}/package_unmask.conf.d/$(dirname ${f})"
+        split_comments "$f" >>"${outputdir}/package_unmask.conf.d/${f}.conf"
+    done
 fi
 echo "done."
 
@@ -351,6 +357,9 @@ echo "* Overlays:"
 shopt -s extglob
 
 for o in ${portdir_overlay}; do
+    # Make sure we don't reuse the last repo's name
+    repo_name=
+
     # Get our repo_name
     [[ -f "${o}/profiles/repo_name" ]] \
         && repo_name=$(< "${o}/profiles/repo_name")
@@ -367,13 +376,13 @@ for o in ${portdir_overlay}; do
         echo "and _ (\"underscore\")."
         echo
         read -e -p "Name for ${o}: " repo_name
-        echo "${repo_name}" > "${o}/profiles/repo_name"
+        # echo "${repo_name}" > "${o}/profiles/repo_name"
     fi
     while [[ "${repo_name}" != +([A-Za-z0-9+_-]) ]] ; do
         echo
         echo "Invalid name; try again."
         read -e -p "Name for ${o}: " repo_name
-        echo "${repo_name}" > "${o}/profiles/repo_name"
+        # echo "${repo_name}" > "${o}/profiles/repo_name"
     done
 
     if [[ -f "${outputdir}/repositories/${repo_name}.conf" ]] ; then
@@ -382,7 +391,8 @@ for o in ${portdir_overlay}; do
         echo "for a config of the same name. You will have to finish" 1>&2
         echo "configuring your overlays on your own. For more info, see:" 1>&2
         echo "http://paludis.berlios.de/ConfigurationFiles.html" 1>&2
-        exit 1
+        bad=yes
+        continue
     fi
 
     echo -n "Generating ${repo_name}.conf (${o}) (Pass 1 of 1)... "
@@ -433,4 +443,9 @@ if [[ "${provides_cache}" == "y" ]] ; then
     echo "or uninstall a package with Paludis, or the next time you run:"
     echo
     echo "  paludis --regenerate-installed-cache"
+fi
+
+if [[ -n "${bad}" ]]; then
+    echo "!!! Some errors were encountered. Check the generated configuration." >&2
+    exit 1
 fi

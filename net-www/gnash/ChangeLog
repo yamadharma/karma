@@ -1,6 +1,31 @@
 # ChangeLog for net-www/gnash
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/net-www/gnash/ChangeLog,v 1.32 2006/11/30 17:45:25 genstef Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/net-www/gnash/ChangeLog,v 1.41 2007/05/03 19:57:43 genstef Exp $
+
+  03 May 2007; Stefan Schweizer <genstef@gentoo.org>
+  gnash-0.7.2_p20099999.ebuild:
+  Add boost thread check thanks to Chi-Thanh Christopher Nguyen
+  <chithanh@cs.tu-berlin.de> in bug 176901
+
+  16 Mar 2007; Gustavo Zacarias <gustavoz@gentoo.org> gnash-0.7.2.ebuild:
+  Keyworded ~sparc wrt #171038
+
+  04 Mar 2007; <genstef@gentoo.org> gnash-0.7.2_p20099999.ebuild:
+  Add --disable-gnash thanks to g-ranquet <ranquet@imerir.com> in bug 169336
+
+  23 Feb 2007; <genstef@gentoo.org> gnash-0.7.2_p20099999.ebuild:
+  Improve qt3 detection thanks to Sarath Menon <sarathmenon@gmail.com> in bug
+  168112
+
+  05 Feb 2007; <genstef@gentoo.org> gnash-0.7.2.ebuild,
+  gnash-0.7.2_p20099999.ebuild:
+  use mirror gnu
+
+  31 Jan 2007; <genstef@gentoo.org> gnash-0.7.2_p20099999.ebuild:
+  KEYWORDS=-* -> KEYWORDS="", bug 160519
+
+  26 Dec 2006; Timothy Redaelli <drizzt@gentoo.org> gnash-0.7.2.ebuild:
+  Add ~x86-fbsd keyword.
 
   30 Nov 2006; Stefan Schweizer <genstef@gentoo.org>
   gnash-0.7.2_p20099999.ebuild:
@@ -123,10 +148,10 @@
   <baard.sorngard@gmail.com> and Avuton Olrich <avuton@gmail.com> in bug
   135010
 
-  29 May 2006; <stefan@gentoo.org> gnash-0.7.1_p20060528.ebuild:
+  29 May 2006; Stefan Schweizer <genstef@gentoo.org> gnash-0.7.1_p20060528.ebuild:
   gtkglext dep fix
 
-  29 May 2006; <stefan@gentoo.org>
+  29 May 2006; Stefan Schweizer <genstef@gentoo.org>
   +files/gnash-0.7.1_p20060528-confcache-gtkglext.patch,
   gnash-0.7.1_p20060528.ebuild:
   Add confcache fix
