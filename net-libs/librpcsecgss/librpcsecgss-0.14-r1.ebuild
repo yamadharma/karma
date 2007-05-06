@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-libs/librpcsecgss/librpcsecgss-0.14-r1.ebuild,v 1.5 2006/12/04 05:09:35 jer Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-libs/librpcsecgss/librpcsecgss-0.14-r1.ebuild,v 1.11 2007/03/25 06:54:27 vapier Exp $
 
 inherit eutils
 
@@ -10,10 +10,11 @@ SRC_URI="http://www.citi.umich.edu/projects/nfsv4/linux/librpcsecgss/${P}.tar.gz
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="alpha amd64 arm hppa ia64 ~mips ~ppc ~ppc64 s390 sh ~sparc x86"
+KEYWORDS="alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sh sparc x86"
 IUSE=""
 
-RDEPEND=">=app-crypt/libgssapi-0.9"
+RDEPEND="|| ( >=app-crypt/heimdal-0.8 
+	     >=app-crypt/libgssapi-0.9 )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 

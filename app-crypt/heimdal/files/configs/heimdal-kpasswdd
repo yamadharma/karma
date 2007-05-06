@@ -1,0 +1,24 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	need net
+	use heimdal-kdc
+	after logger
+}
+
+start() {
+	ebegin "Starting heimdal kpasswdd"
+	start-stop-daemon --background --start --quiet --exec \
+		/usr/sbin/kpasswdd
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping heimdal kpasswdd"
+	start-stop-daemon --stop --quiet --exec \
+		/usr/sbin/kpasswdd
+	eend $?
+}

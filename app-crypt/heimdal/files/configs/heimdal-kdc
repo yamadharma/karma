@@ -1,0 +1,23 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	need net
+	after logger
+}
+
+start() {
+	ebegin "Starting heimdal kdc"
+	start-stop-daemon --start --quiet --exec \
+		/usr/sbin/kdc -- --detach
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping heimdal kdc"
+	start-stop-daemon --stop --quiet --exec \
+		/usr/sbin/kdc
+	eend $?
+}
