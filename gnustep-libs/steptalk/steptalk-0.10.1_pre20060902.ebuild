@@ -17,7 +17,7 @@ S=${WORKDIR}/${ESVN_PROJECT}
 DESCRIPTION="StepTalk is the official GNUstep scripting framework."
 HOMEPAGE="http://www.gnustep.org/experience/StepTalk.html"
 
-KEYWORDS="x86 amd64 ~ppc"
+KEYWORDS="~x86 ~amd64 ~ppc"
 LICENSE="LGPL-2.1"
 SLOT="0"
 

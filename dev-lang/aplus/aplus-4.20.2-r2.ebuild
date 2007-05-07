@@ -18,7 +18,7 @@ SRC_URI="mirror://debian/pool/main/a/aplus-fsf/aplus-fsf_${PV}.orig.tar.gz
 
 LICENSE="GPL"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~ppc ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~ppc ~sparc x86"
 IUSE="emacs"
 
 RDEPEND=""
@@ -76,15 +76,17 @@ src_install ()
 	cd ${D}/usr/share/fonts/pcf/public/aplus
 	mkfontdir \
 		-e /usr/share/fonts/encodings \
-		-e /usr/share/fonts/encodings/large 
+		-e /usr/share/fonts/encodings/large \
+		${D}/usr/share/fonts/pcf/public/aplus
 	cat Kapl.alias >> fonts.alias
 
 	cd ${D}/usr/share/fonts/truetype/public/aplus
-	mkfontscale
+	mkfontscale ${D}/usr/share/fonts/truetype/public/aplus
 	mkfontdir \
 		-e /usr/share/fonts/encodings \
-		-e /usr/share/fonts/encodings/large 
-	HOME="/root" fc-cache -f .
+		-e /usr/share/fonts/encodings/large \
+		${D}/usr/share/fonts/truetype/public/aplus
+	HOME="/root" fc-cache -f ${D}/usr/share/fonts/truetype/public/aplus
 
 	cd ${S}	
 	

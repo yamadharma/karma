@@ -16,7 +16,7 @@ S=${WORKDIR}/${PN}
 DESCRIPTION="An interactive shell for StepTalk."
 HOMEPAGE="http://www.gnustep.org/experience/StepTalk.html"
 
-KEYWORDS="x86 ~ppc"
+KEYWORDS="~x86 ~ppc"
 LICENSE="LGPL-2.1"
 SLOT="0"
 

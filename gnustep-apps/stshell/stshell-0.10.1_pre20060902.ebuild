@@ -17,7 +17,7 @@ S=${WORKDIR}/${ESVN_PROJECT}
 DESCRIPTION="An interactive shell for StepTalk."
 HOMEPAGE="http://www.gnustep.org/experience/StepTalk.html"
 
-KEYWORDS="x86 amd64 ~ppc"
+KEYWORDS="~x86 ~amd64 ~ppc"
 LICENSE="LGPL-2.1"
 SLOT="0"
 

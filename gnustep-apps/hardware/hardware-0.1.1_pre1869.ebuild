@@ -15,6 +15,8 @@ SLOT="0"
 
 IUSE=""
 DEPEND="${GS_DEPEND}
-	gnustep-libs/panekit"
+	gnustep-libs/panekit
+	gnustep-libs/systemconfig"
 RDEPEND="${GS_RDEPEND}
-	gnustep-libs/panekit"
+	gnustep-libs/panekit
+	gnustep-libs/systemconfig"

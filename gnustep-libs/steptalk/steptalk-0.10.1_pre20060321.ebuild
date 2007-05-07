@@ -15,7 +15,7 @@ S=${WORKDIR}/${PN}
 DESCRIPTION="StepTalk is the official GNUstep scripting framework."
 HOMEPAGE="http://www.gnustep.org/experience/StepTalk.html"
 
-KEYWORDS="x86 ~ppc"
+KEYWORDS="~x86 ~ppc"
 LICENSE="LGPL-2.1"
 SLOT="0"
 
