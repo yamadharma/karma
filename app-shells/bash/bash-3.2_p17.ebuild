@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-shells/bash/bash-3.1_p17.ebuild,v 1.16 2006/09/27 17:44:10 ferdy Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-shells/bash/bash-3.2_p17.ebuild,v 1.1 2007/05/03 05:49:17 vapier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs elisp-common
 
@@ -9,8 +9,8 @@ inherit eutils flag-o-matic toolchain-funcs elisp-common
 PLEVEL=${PV##*_p}
 MY_PV=${PV/_p*}
 MY_P=${PN}-${MY_PV}
-READLINE_VER=5.1
-READLINE_PLEVEL=1
+READLINE_VER=5.2
+READLINE_PLEVEL=0 # both readline patches are also released as bash patches
 
 DESCRIPTION="The standard GNU Bourne again shell"
 HOMEPAGE="http://cnswww.cns.cwru.edu/~chet/bash/bashtop.html"
@@ -32,7 +32,7 @@ SRC_URI="mirror://gnu/bash/${MY_P}.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="alpha amd64 arm hppa ia64 m68k ~mips ppc ppc-macos ppc64 s390 sh sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
 IUSE="afs bashlogger nls vanilla"
 
 DEPEND=">=sys-libs/ncurses-5.2-r2"
@@ -42,7 +42,6 @@ S=${WORKDIR}/${MY_P}
 src_unpack() {
 	unpack ${MY_P}.tar.gz
 	cd "${S}"
-	epatch "${FILESDIR}"/${PN}-3.1-gentoo.patch
 
 	# Include official patches
 	local i
@@ -56,18 +55,15 @@ src_unpack() {
 	cd ../..
 
 	if ! use vanilla ; then
-		# Fall back to /etc/inputrc
-		epatch "${FILESDIR}"/${PN}-3.0-etc-inputrc.patch
-		# Add more ulimit options (from Fedora)
-		epatch "${FILESDIR}"/${MY_P}-ulimit.patch
-		# Fix a memleak in read_builtin (from Fedora)
-		epatch "${FILESDIR}"/${PN}-3.0-read-memleak.patch
+		epatch "${FILESDIR}"/${PN}-3.1-gentoo.patch
+
+		# Fix process substitution on BSD.
+		epatch "${FILESDIR}"/${PN}-3.2-process-subst.patch
+
+		epatch "${FILESDIR}"/${PN}-3.2-ulimit.patch
 		# Don't barf on handled signals in scripts
 		epatch "${FILESDIR}"/${PN}-3.0-trap-fg-signals.patch
-		# Fix -/bin/bash login shell #118257
-		epatch "${FILESDIR}"/bash-3.1-fix-dash-login-shell.patch
-		# Fix /dev/fd test with FEATURES=userpriv #131875
-		epatch "${FILESDIR}"/bash-3.1-dev-fd-test-as-user.patch
+		epatch "${FILESDIR}"/${PN}-3.2-dev-fd-test-as-user.patch #131875
 		# Log bash commands to syslog #91327
 		if use bashlogger ; then
 			echo
@@ -116,7 +112,6 @@ src_install() {
 
 	dodir /bin
 	mv "${D}"/usr/bin/bash "${D}"/bin/
-	[[ ${USERLAND} != "BSD" ]] && dosym bash /bin/sh
 	dosym bash /bin/rbash
 
 	insinto /etc/bash
@@ -131,7 +126,7 @@ src_install() {
 
 	doman doc/*.1
 	dodoc README NEWS AUTHORS CHANGES COMPAT Y2K doc/FAQ doc/INTRO
-	dosym bash.info.gz /usr/share/info/bashref.info.gz
+	dosym bash.info /usr/share/info/bashref.info
 }
 
 pkg_preinst() {
@@ -144,5 +139,15 @@ pkg_preinst() {
 	# force users to go through etc-update all the time
 	if [[ -e ${ROOT}/etc/bash/bash_logout ]] ; then
 		rm -f "${D}"/etc/bash/bash_logout
+	fi
+
+	# If /bin/sh does not exist or is bash, then provide it
+	# Otherwise leave it alone
+	if [[ ! -e ${ROOT}/bin/sh ]] ; then
+		ln -s bash "${ROOT}"/bin/sh
+	elif [[ -L ${ROOT}/bin/sh ]] ; then
+		case $(readlink "${ROOT}"/bin/sh) in
+			bash|/bin/bash) cp -pPR "${ROOT}"/bin/sh "${D}"/bin/ ;;
+		esac
 	fi
 }
