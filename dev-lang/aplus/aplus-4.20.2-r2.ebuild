@@ -28,6 +28,17 @@ S=${WORKDIR}/${PN}-fsf-${PV}
 
 SITEFILE=50aplus-gentoo.el
 
+pkg_setup() {
+
+	# make sure we get no colissions
+	# setup is not the nicest place, but preinst doesn't cut it
+	for i in /usr/share/fonts/truetype/public/aplus /usr/share/fonts/pcf/public/aplus
+	do
+	    [[ -e "${i}/fonts.cache-1" ]] && rm -f "${i}/fonts.cache-1"
+	done	    
+}
+
+
 src_unpack ()
 {
 	unpack ${A}
@@ -86,7 +97,7 @@ src_install ()
 		-e /usr/share/fonts/encodings \
 		-e /usr/share/fonts/encodings/large \
 		${D}/usr/share/fonts/truetype/public/aplus
-	HOME="/root" fc-cache -f ${D}/usr/share/fonts/truetype/public/aplus
+#	HOME="/root" fc-cache -f ${D}/usr/share/fonts/truetype/public/aplus
 
 	cd ${S}	
 	
