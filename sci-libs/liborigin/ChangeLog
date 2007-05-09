@@ -1,0 +1,21 @@
+# ChangeLog for sci-libs/liborigin
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sci-libs/liborigin/ChangeLog,v 1.4 2007/05/06 14:34:13 carlo Exp $
+
+  06 May 2007; Carsten Lohrke <carlo@gentoo.org> liborigin-20070115.ebuild:
+  Update Labplot blocker.
+
+*liborigin-20070115 (23 Apr 2007)
+
+  23 Apr 2007; Sébastien Fabbro <bicatali@gentoo.org>
+  +liborigin-20070115.ebuild:
+  Version bump. Thanks for nonno.cicala@libero.it for and george for their work. 
+  Closing bug #151806.
+
+*liborigin-20060616 (07 Nov 2006)
+
+  07 Nov 2006; George Shapovalov <george@gentoo.org>
+  +liborigin-20060616.ebuild:
+  first commit. This is the library necessary for qtiplot, new version of
+  which (0.8.8) should be upcoming soon.
+

@@ -1,6 +1,45 @@
 # ChangeLog for sci-mathematics/maxima
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/maxima/ChangeLog,v 1.23 2007/01/13 10:41:58 cryos Exp $
+# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/maxima/ChangeLog,v 1.28 2007/04/18 17:53:41 bicatali Exp $
+
+*maxima-5.12.0 (4 May 2007)
+  4 May 2007; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  +maxima-5.12.0.ebuild, +files/maxima-5.12.0-xdg-utils.patch:
+  version bump
+
+  18 Apr 2007; Sébastien Fabbro <bicatali@gentoo.org>
+  maxima-5.11.0-r2.ebuild:
+  fixed nostrip->strip
+
+*maxima-5.11.0-r2 (18 Apr 2007)
+
+  18 Apr 2007; Sébastien Fabbro <bicatali@gentoo.org>
+  -files/maxima-5.10.0.patch, +files/maxima-5.11.0-xdg-utils.patch,
+  files/50maxima-gentoo.el, -maxima-5.9.3.ebuild, -maxima-5.10.0.ebuild,
+  +maxima-5.11.0-r2.ebuild:
+  auctex flag replaced by emacs+tetex. Cleaned ebuild, removed 
+  obsolete versions. Added a warning using gnuplot.
+  maxima-5.11.0-r2 now depends on x11-misc/xdg-utils,
+  default-browser.patch and default-psviewer.patch replaced 
+  by xdg-utils.patch; sbcl-disable-debugger.patch dropped, 
+  see http://bugzilla.redhat.com/214568. Thanks to Andrey Grozin for his 
+  work on the gentooscience overlay.
+
+*maxima-5.11.0-r1 (16 Apr 2007)
+
+  16 Apr 2007; Christian Faulhammer <opfer@gentoo.org> maxima-5.9.3.ebuild,
+  +maxima-5.11.0-r1.ebuild:
+  moved from USE flag tcltk to tk, see bug 17808; added check for TEXMFSITE
+  and install there to avoid possible collisions, see bug 169178, reported by
+  Sebastian Schubert <sebastian-schubert@gmx.de>
+
+  08 Mar 2007; Christian Faulhammer <opfer@gentoo.org>
+  files/50maxima-gentoo.el:
+  add load path correctly, fixes bug 169588, reported by Ulrich Mueller
+  <ulm@kph.uni-mainz.de>
+
+  22 Feb 2007; Markus Ullmann <jokey@gentoo.org> ChangeLog:
+  Redigest for Manifest2
 
 *maxima-5.11.0 (13 Jan 2007)
 

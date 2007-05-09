@@ -1,0 +1,10 @@
+--- grx247/test/mousetst.c~	2001-01-21 07:54:14.000000000 +0100
++++ grx247/test/mousetst.c	2007-05-04 18:30:34.000000000 +0200
+@@ -48,6 +48,7 @@
+ 		char msg[200];
+ 		drawing(ii,ii,(GrSizeX() - 20),(GrSizeY() - 20),((fgc ^ bgc) | GrXOR),GrNOCOLOR);
+ 		GrMouseGetEventT(GR_M_EVENT,&evt,0L);
++		GrSleep(1);
+ 		if(evt.flags & (GR_M_KEYPRESS | GR_M_BUTTON_CHANGE | testmotion)) {
+ 		    strcpy(msg,"Got event(s): ");
+ #                   define mend (&msg[strlen(msg)])

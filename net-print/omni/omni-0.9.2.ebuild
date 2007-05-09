@@ -1,8 +1,11 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-print/omni/omni-0.9.2.ebuild,v 1.3 2005/07/10 15:56:12 lanius Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-print/omni/omni-0.9.2.ebuild,v 1.6 2007/04/07 20:33:01 opfer Exp $
 
-inherit eutils
+WANT_AUTOMAKE="1.6"
+WANT_AUTOCONF="latest"
+
+inherit eutils autotools
 
 DESCRIPTION="Omni provides support for many printers with a pluggable framework (easy to add devices)"
 HOMEPAGE="http://sourceforge.net/projects/omniprint"
@@ -16,7 +19,7 @@ KEYWORDS="~ppc x86 amd64"
 DEPEND=""
 RDEPEND="virtual/ghostscript
 	dev-libs/libxml2
-	dev-libs/glib
+	=dev-libs/glib-1*
 	cups? ( >=net-print/cups-1.1.14 )
 	X? ( >=dev-cpp/gtkmm-1.2.5 )
 	>=dev-libs/libsigc++-1.01
@@ -40,28 +43,26 @@ src_compile() {
 		$(use_enable cups) \
 		$(use_enable static)"
 
-	export WANT_AUTOMAKE="1.6"
-	export WANT_AUTOCONF="2.5"
+	eautoreconf
 
-	libtoolize --copy --force
-
-	LC_ALL="" LC_NUMERIC="" LANG="" ./setupOmni ${myconf} --disable-device-xml --enable-device-compile || die
+	LC_ALL="" LC_NUMERIC="" LANG="" ./setupOmni ${myconf} --disable-device-xml --enable-device-compile \
+		|| die "setup0mni failed"
 
 	if use ppds && use cups; then
 		sed -i -e "s/model\/foomatic/model\/omni/g" CUPS/Makefile \
 			|| die 'sed failed'
-		make -C CUPS generateBuildPPDs || die
+		make -C CUPS generateBuildPPDs || die "make failed"
 	fi
 }
 
 src_install () {
-	make DESTDIR=${D} install || die
+	make DESTDIR="${D}" install || die "make install failed"
 
 	dodoc docs/*  # never forget this! ;-)
-	use doc && dodoc ${DISTDIR}/OmniArchitecture.0.3.pdf
+	use doc && dodoc "${DISTDIR}"/OmniArchitecture.0.3.pdf
 
 	if use foomaticdb; then
-		cd ${D}
+		cd "${D}"
 		unpack omni-${PV}-foomatic.tar.bz2
 	fi
 }

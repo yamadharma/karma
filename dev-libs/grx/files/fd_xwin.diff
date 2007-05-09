@@ -1,0 +1,23 @@
+Bug in the x11 framedriver
+
+malfer@telefonica.net
+
+After a security update in xorg 7.2 (CVE 2007-1667 see
+http://lists.freedesktop.org/archives/xorg-announce/2007-April/000286.html),
+the x11 mgrx driver stopped showing the mouse cursor. The problem was in
+the x11 bitblt ram to video function. We had a bug here. I have released
+a new, patched, mgrx version (see http://www.fgrim.com/mgrx/). I think
+it can apply to grx too. Here is the diff:
+
+--- grx247/src/fdrivers/fd_xwin.old    2005-11-03 00:10:06.000000000 +0100
++++ grx247/src/fdrivers/fd_xwin.c    2007-04-30 20:54:41.000000000 +0200
+@@ -665,7 +665,7 @@
+     XImage ximage;
+     Visual *visual = DefaultVisual(_XGrDisplay,_XGrScreen);
+ 
+-    ximage.width        = src->gf_lineoffset;
++    ximage.width        = sx + w;
+     ximage.height       = sy + h;
+     ximage.xoffset      = 0;
+     ximage.format       = ZPixmap;
+

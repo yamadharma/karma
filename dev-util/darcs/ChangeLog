@@ -1,6 +1,44 @@
 # ChangeLog for dev-util/darcs
-# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/darcs/ChangeLog,v 1.58 2006/08/12 16:48:12 kolmodin Exp $
+# Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-util/darcs/ChangeLog,v 1.67 2007/04/30 10:32:18 dcoutts Exp $
+
+  30 Apr 2007; Duncan Coutts <dcoutts@gentoo.org> darcs-1.0.7.ebuild,
+  darcs-1.0.8-r1.ebuild:
+  Add missing inherit eutils.
+
+  29 Apr 2007; Lennart Kolmodin <kolmodin@gentoo.org> darcs-1.0.4.ebuild,
+  darcs-1.0.5.ebuild, darcs-1.0.6.ebuild, darcs-1.0.7.ebuild,
+  darcs-1.0.8-r1.ebuild:
+  Added ghc-6.6 blocks for 1.0.4, 1.0.5 and 1.0.6. Added proper extra-libs
+  deps to 1.0.7 and 1.0.8-r1. 1.0.4 also got a src_unpack which the otherones
+  already had, wrt compiling C code with correct C flags.
+
+  16 Apr 2007; Markus Rothe <corsair@gentoo.org> darcs-1.0.8-r1.ebuild:
+  Stable on ppc64
+
+  21 Mar 2007; Raúl Porcel <armin76@gentoo.org> darcs-1.0.8-r1.ebuild:
+  x86 stable
+
+  09 Mar 2007; Duncan Coutts <dcoutts@gentoo.org> darcs-1.0.4.ebuild,
+  darcs-1.0.5.ebuild, darcs-1.0.6.ebuild, darcs-1.0.7.ebuild,
+  darcs-1.0.8-r1.ebuild:
+  Add dep on dev-libs/gmp as pointed out in bug #169848
+
+  20 Oct 2006; Duncan Coutts <dcoutts@gentoo.org>
+  +files/darcs-1.0.8-ghc66.patch:
+  Fix bug #150326 again, hopefully for good this time!
+
+  16 Oct 2006; Chris Parrott <cparrott@gentoo.org> darcs-1.0.7.ebuild,
+  darcs-1.0.8-r1.ebuild:
+  remove virtual/mta from DEPEND and add warning about mta
+
+  07 Oct 2006; Andres Loeh <kosmikus@gentoo.org> darcs-1.0.8-r1.ebuild:
+  Undo ghc-6.6-specific changes to darcs ebuild, hopefully fixing bug #150326
+
+*darcs-1.0.8-r1 (06 Oct 2006)
+
+  06 Oct 2006; Luis F. Araujo <araujo@gentoo.org> +darcs-1.0.8-r1.ebuild:
+  Fixing bug #148038
 
 *darcs-1.0.8 (12 Aug 2006)
 

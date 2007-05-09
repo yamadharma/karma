@@ -1,45 +1,59 @@
 # ChangeLog for app-office/texmacs
-# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/texmacs/ChangeLog,v 1.56 2007/03/12 23:41:55 nattfodd Exp $
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
 
-  12 Mar 2007; Alexandre Buisse <nattfodd@gentoo.org> metadata.xml:
-  Replaced text-markup by tex as maintaining herd (text-markup split).
+6 May 2007; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  Added a check that, if guile is 1.8, it is emerged with +deprecated
 
-  21 Feb 2007; Piotr Jaroszyński <peper@gentoo.org> ChangeLog:
-  Transition to Manifest2.
+*texmacs-1.0.6.9-r1 (3 May 2007)
+  3 May 2007; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  -texmacs-1.0.6.6.ebuild -texmacs-1.0.6.7.ebuild -texmacs-1.0.6.8.ebuild
+  +texmacs-1.0.6.9-r1.ebuild +files/texmacs-maxima-5.12.0.patch:
+  patch to run maxima-5.12.0 included
 
-  10 Jan 2007; Piotr Jaroszyński <peper@gentoo.org> Manifest:
-  Fix Manifest.
+*texmacs-1.0.6.8 (21 Jan 2007)
 
-  10 Jan 2007; Piotr Jaroszyński <peper@gentoo.org> Manifest:
-  Fix Manifest.
+  21 Jan 2007; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  +texmacs-1.0.6.8.ebuild:
+  Version bump
 
-  10 Jan 2007; <marijn@gentoo.org> texmacs-1.0.6-r1.ebuild:
-  Dependency update: dev-util/guile -> dev-scheme/guile.
+*texmacs-1.0.6.7 (26 Dec 2006)
 
-  10 Jan 2007; <marijn@gentoo.org> texmacs-1.0.4-r1.ebuild:
-  Dependency update: dev-util/guile -> dev-scheme/guile.
+  26 Dec 2006; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  +texmacs-1.0.6.7.ebuild -texmacs-1.0.6.2.ebuild -texmacs-1.0.6.3.ebuild
+  -texmacs-1.0.6.4.ebuild -texmacs-1.0.6.5.ebuild:
+  Version bump; USE flag aspell removed (now TeXmacs uses
+  either ispell or aspell automatically); cleaning up old versions
 
-  10 Jan 2007; <marijn@gentoo.org> texmacs-1.0.5.6.ebuild:
-  Dependency update: dev-util/guile -> dev-scheme/guile.
+*texmacs-1.0.6.6 (22 August 2006)
 
-  19 Oct 2006; Bryan Østergaard <kloeri@gentoo.org>
-  texmacs-1.0.6-r1.ebuild:
-  Stable on Alpha.
+  22 August 2006; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  +texmacs-1.0.6.6.ebuild:
+  Version bump
 
-  29 Aug 2006; Daniel Gryniewicz <dang@gentoo.org> texmacs-1.0.6-r1.ebuild:
-  Marked stable on amd64 bug #142267
+*texmacs-1.0.6.5 (8 August 2006)
 
-  06 Aug 2006; Andrej Kacian <ticho@gentoo.org> texmacs-1.0.6-r1.ebuild:
-  Stable on x86, bug #142267, tested by Christian 'Opfer' Faulhammer <gentoo
-  at faulhammer.org>.
+  8 August 2006; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  +texmacs-1.0.6.5.ebuild:
+  Version bump
 
-  06 Aug 2006; Jason Wever <weeve@gentoo.org> texmacs-1.0.6-r1.ebuild:
-  Stable on SPARC wrt bug #142267.
+*texmacs-1.0.6.4 (27 June 2006)
 
-  31 Jul 2006; Tobias Scherbaum <dertobi123@gentoo.org>
-  texmacs-1.0.6-r1.ebuild:
-  ppc stable, bug #142267
+  27 June 2006; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  +texmacs-1.0.6.4.ebuild:
+  Version bump
+
+*texmacs-1.0.6.3 (20 June 2006)
+
+  20 June 2006; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  +texmacs-1.0.6.3.ebuild:
+  Version bump
+
+*texmacs-1.0.6.2 (1 June 2006)
+
+  1 June 2006; Andrey Grozin <A.G.Grozin@inp.nsk.su>
+  +texmacs-1.0.6.2.ebuild:
+  Version bump, USE flag to use aspell instead of ispell
 
   29 May 2006; Martin Ehmsen <ehmsen@gentoo.org>
   +files/texmacs-1.0.6-gcc-4.1.patch, texmacs-1.0.6-r1.ebuild:
@@ -150,7 +164,7 @@
   01 May 2004; Jason Wever <weeve@gentoo.org> texmacs-1.0.3.7.ebuild:
   Added ~sparc keyword to help resolve #49540.
 
-  26 Apr 2004; Bryan Østergaard <kloeri@gentoo.org> texmacs-1.0.3.7.ebuild:
+  26 Apr 2004; Bryan Ãstergaard <kloeri@gentoo.org> texmacs-1.0.3.7.ebuild:
   Keyworded ~alpha, requested by Decade at freenode/#gentoo-alpha.
 
 *texmacs-1.0.3.7 (26 Apr 2004)
