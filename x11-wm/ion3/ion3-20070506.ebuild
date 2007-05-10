@@ -1,22 +1,22 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-wm/ion3/ion3-20070318-r2.ebuild,v 1.1 2007/04/30 16:04:17 mabi Exp $
+# $Header: $
 
 inherit eutils flag-o-matic
 
 MY_PV=${PV/_p/-}
-MY_PN=ion-3ds-${MY_PV}
+MY_PN=ion-3rc-${MY_PV}
 
-SCRIPTS_PV=20070322
+SCRIPTS_PV=20070510
 SCRIPTS_PN=ion3-scripts
 
-IONFLUX_PV=20061022
+IONFLUX_PV=20070410
 IONFLUX_PN=ion3-mod-ionflux
 
-IONXRANDR_PV=20070220
+IONXRANDR_PV=20070410
 IONXRANDR_PN=ion3-mod-xrandr
 
-IONDOC_PV=20070318
+IONDOC_PV=20070426
 IONDOC_PN=ion3-doc
 
 
@@ -25,11 +25,12 @@ HOMEPAGE="http://www.iki.fi/tuomov/ion/"
 SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 	mirror://gentoo/${SCRIPTS_PN}-${SCRIPTS_PV}.tar.bz2
 	mirror://gentoo/${IONXRANDR_PN}-${IONXRANDR_PV}.tar.bz2
+	mirror://gentoo/${IONFLUX_PN}-${IONFLUX_PV}.tar.bz2
 	doc?	( mirror://gentoo/${IONDOC_PN}-${IONDOC_PV}.tar.bz2 )"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="unicode iontruetype doc"
 DEPEND="
 	|| (
@@ -50,7 +51,7 @@ DEPEND="
 S=${WORKDIR}/${MY_PN}
 
 SCRIPTS_DIRS="keybindings scripts statusbar statusd styles"
-MODULES="${IONXRANDR_PN}-${IONXRANDR_PV}"
+MODULES="${IONXRANDR_PN}-${IONXRANDR_PV} ${IONFLUX_PN}-${IONFLUX_PV}"
 
 src_unpack() {
 	unpack ${A}
@@ -85,8 +86,8 @@ src_unpack() {
 	#sed -i system.mk build/ac/system-ac.mk.in \
 	#	-e "s:\(DOCDIR=@datadir@/doc/\)@PACKAGE_TARNAME@:\1${PF}:"
 
-	cd ${S}/build/ac/
-	autoreconf -i --force
+#	cd ${S}/build/ac/
+#	autoreconf -i --force
 
 	# FIX for modules
 	cd ${WORKDIR}
@@ -96,23 +97,18 @@ src_unpack() {
 src_compile() {
 	local myconf=""
 
-	myconf="${myconf} `use_enable iontruetype xft`"
+	use iontruetype && sed -i -e "s:#USE_XFT=1:USE_XFT=1:" ${S}/system.mk
 
 	# xfree 
 	if has_version '>=x11-base/xfree-4.3.0'; then
-		myconf="${myconf} --disable-xfree86-textprop-bug-workaround"
+		sed -i -e "s:DEFINES += -DCF_XFREE86_TEXTPROP_BUG_WORKAROUND:#DEFINES += -DCF_XFREE86_TEXTPROP_BUG_WORKAROUND:" ${S}/system.mk
 	fi
 
 	# help out this arch as it can't handle certain shared library linkage
-	use hppa && myconf="${myconf} --disable-shared"
+	use hppa && sed -i -e "s:#PRELOAD_MODULES=1:PRELOAD_MODULES=1:" ${S}/system.mk
 
 	# unicode support
-	use unicode && myconf="${myconf} --enable-Xutf8"
-
-	cd build/ac/
-	econf \
-		${myconf} \
-		--sysconfdir=/etc/X11 \
+	use unicode && sed -i -e "s:#DEFINES += -DCF_DE_USE_XUTF8:DEFINES += -DCF_DE_USE_XUTF8:" ${S}/system.mk
 
 	cd ${S}
 	make \
@@ -120,23 +116,16 @@ src_compile() {
 
 	for i in ${MODULES}
 	do
-	cd ${WORKDIR}/${i}
-
-	emake \
-		prefix=/usr \
-		ETCDIR=/etc/X11/ion3 \
-		SHAREDIR=/usr/share/ion3 \
-		MANDIR=/usr/share/man \
-		DOCDIR=/usr/share/doc/${PF} \
-		LOCALEDIR=/usr/share/locale \
-		LIBDIR=/usr/lib \
-		MODULEDIR=/usr/lib/ion3/mod \
-		LCDIR=/usr/lib/ion3/lc \
-		VARDIR=/var/cache/ion3
+	    cd ${WORKDIR}/${i}
+	    make
 	done
 
 	if ( use doc )
 	then
+		export MT_FEATURES=varfonts
+		mkdir -p ${T}/var/cache/fonts
+		export VARTEXFONTS=${T}/var/cache/fonts
+
 		cd ${WORKDIR}/${IONDOC_PN}-${IONDOC_PV}
 		make all
 		make all-pdf
@@ -182,7 +171,7 @@ src_install() {
 		dodoc *.pdf
 	fi
 
-	sed -i -e '/dopath("mod_sp")/a\dopath("mod_xrandr")' ${D}/etc/X11/ion3/cfg_defaults.lua
+	sed -i -e '/dopath("mod_sp")/a\dopath("mod_xrandr")\n--dopath("mod_ionflux")' ${D}/etc/X11/ion3/cfg_defaults.lua
 }
 
 pkg_postinst() {

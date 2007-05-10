@@ -131,11 +131,11 @@ DEPEND="${COMMON_DEPEND}
 
 PROVIDE="virtual/ooo"
 
-if use amd64; then
+#if use amd64; then
 	# All available Java 1.5 JDKs are broken, in one way or another, on amd64.
 	# Thus we force the use of a Java 1.4 JDK on amd64 (and amd64 only).
 	export JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
-fi
+#fi
 
 
 pkg_setup() {

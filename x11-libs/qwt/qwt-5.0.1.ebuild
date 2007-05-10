@@ -10,7 +10,7 @@ DESCRIPTION="2D plotting library for Qt4"
 LICENSE="qwt"
 KEYWORDS="amd64 ~ppc64 x86"
 SLOT="5"
-IUSE="doc qt3"
+IUSE="doc"
 
 QWTVER="5.0.1"
 
