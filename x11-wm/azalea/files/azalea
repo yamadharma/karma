@@ -1,0 +1,9 @@
+#!/bin/sh
+
+etoile_system &
+openapp AZBackground.app &
+openapp AZDock.app &
+openapp EtoileMenuServer.app &
+openapp TrashCan.app &
+
+openapp Azalea.app 

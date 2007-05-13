@@ -26,9 +26,12 @@ mydoc=""
 
 egnustep_install_domain "System"
 
+#export PROJECT_DIR=${S1}
+
 etoile-svn_src_compile() {
 	cd ${S1}
-	gnustep_src_compile
+	export PROJECT_DIR=${S1}
+	gnustep_src_compile 
 }
 
 etoile-svn_src_install() {

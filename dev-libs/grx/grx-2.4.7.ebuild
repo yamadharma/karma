@@ -15,7 +15,8 @@ S=${WORKDIR}/${MY_P}
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 ~ppc ~sparc ~alpha ~hppa amd64 ~ppc64 ~ia64"
-IUSE="X sdl"
+IUSE="X"
+#USE="X sdl"
 
 src_unpack() {
 	unpack ${A}
