@@ -7,7 +7,7 @@ inherit eutils flag-o-matic
 MY_PV=${PV/_p/-}
 MY_PN=ion-3rc-${MY_PV}
 
-SCRIPTS_PV=20070510
+SCRIPTS_PV=20070511
 SCRIPTS_PN=ion3-scripts
 
 IONFLUX_PV=20070410
@@ -168,7 +168,7 @@ src_install() {
 	if ( use doc )
 	then
 		cd ${WORKDIR}/${IONDOC_PN}-${IONDOC_PV}
-		dodoc *.pdf
+		cp *.pdf ${D}/usr/share/doc/${PF}
 	fi
 
 	sed -i -e '/dopath("mod_sp")/a\dopath("mod_xrandr")\n--dopath("mod_ionflux")' ${D}/etc/X11/ion3/cfg_defaults.lua
