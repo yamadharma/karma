@@ -1,0 +1,183 @@
+diff --git a/daemon/automount.c b/daemon/automount.c
+index 5989324..938ee1b 100644
+--- a/daemon/automount.c
++++ b/daemon/automount.c
+@@ -48,6 +48,8 @@ const char *mapdir = AUTOFS_MAP_DIR;	/* Location of mount maps */
+ const char *confdir = AUTOFS_CONF_DIR;	/* Location of autofs config file */
+ 
+ static char *pid_file = NULL;	/* File in which to keep pid */
++unsigned int random_selection;	/* use random policy when selecting
++				 * which multi-mount host to mount */
+ static int start_pipefd[2];
+ static int st_stat = 0;
+ static int *pst_stat = &st_stat;
+@@ -1363,6 +1365,8 @@ static void usage(void)
+ 		"	-d --debug	log debuging info\n"
+ 		"	-D --define	define global macro variable\n"
+ 		/*"	-f --foreground do not fork into background\n" */
++		"	-r --random-replicated-selection\n"
++		"			use ramdom replicated server selection\n"
+ 		"	-V --version	print version, build config and exit\n"
+ 		, program);
+ }
+@@ -1461,6 +1465,7 @@ int main(int argc, char *argv[])
+ 		{"debug", 0, 0, 'd'},
+ 		{"define", 1, 0, 'D'},
+ 		{"foreground", 0, 0, 'f'},
++		{"random-selection", 0, 0, 'r'},
+ 		{"version", 0, 0, 'V'},
+ 		{0, 0, 0, 0}
+ 	};
+@@ -1476,10 +1481,11 @@ int main(int argc, char *argv[])
+ 	timeout = defaults_get_timeout();
+ 	ghost = defaults_get_browse_mode();
+ 	logging = defaults_get_logging();
++	random_selection = 0;
+ 	foreground = 0;
+ 
+ 	opterr = 0;
+-	while ((opt = getopt_long(argc, argv, "+hp:t:vdD:fV", long_options, NULL)) != EOF) {
++	while ((opt = getopt_long(argc, argv, "+hp:t:vdD:fVr", long_options, NULL)) != EOF) {
+ 		switch (opt) {
+ 		case 'h':
+ 			usage();
+@@ -1513,6 +1519,10 @@ int main(int argc, char *argv[])
+ 			show_build_info();
+ 			exit(0);
+ 
++		case 'r':
++			random_selection = 1;
++			break;
++
+ 		case '?':
+ 		case ':':
+ 			printf("%s: Ambiguous or unknown options\n", program);
+diff --git a/include/replicated.h b/include/replicated.h
+index 970cd31..c77cda6 100644
+--- a/include/replicated.h
++++ b/include/replicated.h
+@@ -60,6 +60,7 @@ struct host {
+ 	struct host *next;
+ };
+ 
++void seed_random(void);
+ void free_host_list(struct host **);
+ int parse_location(struct host **, const char *);
+ int prune_host_list(struct host **, unsigned int, const char *);
+diff --git a/man/automount.8 b/man/automount.8
+index 9da82c4..59f2805 100644
+--- a/man/automount.8
++++ b/man/automount.8
+@@ -47,6 +47,10 @@ Define a global macro substitution variable. Global definitions
+ are over-ridden macro definitions of the same name specified in
+ mount entries.
+ .TP
++.I "\-r, \-\-random-replicated-selection"
++Enables the use of ramdom selection when choosing a host from a
++list of replicated servers.
++.TP
+ .I "\-V, \-\-version"
+ Display the version number, then exit.
+ .SH ARGUMENTS
+diff --git a/modules/mount_nfs.c b/modules/mount_nfs.c
+index 4063e9a..25f72b9 100644
+--- a/modules/mount_nfs.c
++++ b/modules/mount_nfs.c
+@@ -51,6 +51,8 @@ int mount_init(void **context)
+ 	} else
+ 		init_ctr++;
+ 
++	seed_random();
++
+ 	return !mount_bind;
+ }
+ 
+diff --git a/modules/replicated.c b/modules/replicated.c
+index cb65d82..de1b40c 100644
+--- a/modules/replicated.c
++++ b/modules/replicated.c
+@@ -74,6 +74,29 @@
+ #define max(x, y)	(x >= y ? x : y)
+ #define mmax(x, y, z)	(max(x, y) == x ? max(x, z) : max(y, z))
+ 
++extern unsigned int random_selection;
++
++void seed_random(void)
++{
++	int fd;
++	unsigned int seed;
++
++	fd = open("/dev/random", O_RDONLY);
++	if (fd < 0) {
++		srandom(time(NULL));
++		return;
++	}
++
++	if (read(fd, &seed, sizeof(seed)) != -1)
++		srandom(seed);
++	else
++		srandom(time(NULL));
++
++	close(fd);
++
++	return;
++}
++
+ static unsigned int get_proximity(const char *host_addr, int addr_len)
+ {
+ 	struct sockaddr_in *msk_addr, *if_addr;
+@@ -403,7 +426,11 @@ static unsigned int get_nfs_info(struct host *host,
+ 		status = rpc_ping_proto(rpc_info);
+ 		gettimeofday(&end, &tz);
+ 		if (status) {
+-			taken += elapsed(start, end);
++			if (random_selection)
++				/* Random value between 0 and 1 */
++				taken += ((float) random())/((float) RAND_MAX+1);
++			else
++				taken += elapsed(start, end);;
+ 			count++;
+ 			supported = NFS4_SUPPORTED;
+ 		}
+@@ -440,7 +467,11 @@ v3_ver:
+ 		status = rpc_ping_proto(rpc_info);
+ 		gettimeofday(&end, &tz);
+ 		if (status) {
+-			taken += elapsed(start, end);
++			if (random_selection)
++				/* Random value between 0 and 1 */
++				taken += ((float) random())/((float) RAND_MAX+1);
++			else
++				taken += elapsed(start, end);;
+ 			count++;
+ 			supported |= NFS3_SUPPORTED;
+ 		}
+@@ -470,7 +501,11 @@ v2_ver:
+ 		status = rpc_ping_proto(rpc_info);
+ 		gettimeofday(&end, &tz);
+ 		if (status) {
+-			taken += elapsed(start, end);
++			if (random_selection)
++				/* Random value between 0 and 1 */
++				taken += ((float) random())/((float) RAND_MAX+1);
++			else
++				taken += elapsed(start, end);;
+ 			count++;
+ 			supported |= NFS2_SUPPORTED;
+ 		}
+@@ -610,8 +645,13 @@ static int get_supported_ver_and_cost(struct host *host, unsigned int version, c
+ 		gettimeofday(&start, &tz);
+ 		status = rpc_ping_proto(&rpc_info);
+ 		gettimeofday(&end, &tz);
+-		if (status)
+-			taken = elapsed(start, end);
++		if (status) {
++			if (random_selection)
++				/* Random value between 0 and 1 */
++				taken = ((float) random())/((float) RAND_MAX+1);
++			else
++				taken = elapsed(start, end);
++		}
+ 	}
+ done:
+ 	if (rpc_info.proto->p_proto == IPPROTO_UDP) {

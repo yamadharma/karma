@@ -1,8 +1,0 @@
-autofs-5.0.1-rc3-fix-typo-rmdir-temp.patch
-autofs-5.0.1-rc3-remove-rpath-link-option.patch
-autofs-5.0.1-rc3-nsswitch-ignore-winbind.patch
-autofs-5.0.1-rc3-correct-expire-check.patch
-autofs-5.0.1-rc3-correct-offset-mount-busy-check.patch
-autofs-5.0.1-rc3-consistent-dquote-handling.patch
-autofs-5.0.1-rc3-trailing-whitespace.patch
-autofs-5.0.1-rc3-match-export-fqdn.patch

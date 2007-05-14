@@ -1,0 +1,26 @@
+diff --git a/aclocal.m4 b/aclocal.m4
+index 4816cfe..5202605 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
+@@ -178,7 +178,11 @@ dnl Check for lib hesiod
+ dnl --------------------------------------------------------------------------
+ AC_DEFUN([AF_CHECK_LIBHESIOD],
+ [AC_MSG_CHECKING(for libhesiod)
+-LIBS="$LIBHESIOD -lhesiod -lresolv"
++
++# save current ldflags
++af_check_hesiod_save_ldflags="$LDFLAGS"
++LDFLAGS="$LDFLAGS -lhesiod -lresolv"
++
+ AC_TRY_LINK(
+   [ #include <hesiod.h> ],
+   [ char *c; hesiod_init(&c); ],
+@@ -186,5 +190,8 @@ AC_TRY_LINK(
+     LIBHESIOD="$LIBHESIOD -lhesiod -lresolv"
+     AC_MSG_RESULT(yes) ],
+   [ AC_MSG_RESULT(no) ])
++
++# restore ldflags
++LDFLAGS="$af_check_hesiod_save_ldflags"
+ ])
+ 

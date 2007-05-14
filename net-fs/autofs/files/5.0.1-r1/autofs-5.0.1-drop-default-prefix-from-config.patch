@@ -1,0 +1,467 @@
+diff --git a/README.v5.release b/README.v5.release
+index 3f23b91..3b4e02b 100644
+--- a/README.v5.release
++++ b/README.v5.release
+@@ -13,8 +13,7 @@ Differences between version 4 and version 5.
+   installed "/etc/auto.master" to ensure that those using NIS will
+   still find their master map. This is in line with other industry
+   automount implementations. The name of the default master map can
+-  be overridden by setting the DEFAULT_MASTER_MAP_NAME configuration
+-  variable.
++  be overridden by setting the MASTER_MAP_NAME configuration variable.
+ 
+ - The `automount' daemon is now a multi-threaded application and so
+   appears as a single process (unless a thread process display option
+diff --git a/gentoo/net-fs/autofs/files/autofs.conf b/gentoo/net-fs/autofs/files/autofs.conf
+index 836a4a1..7b34c20 100644
+--- a/gentoo/net-fs/autofs/files/autofs.conf
++++ b/gentoo/net-fs/autofs/files/autofs.conf
+@@ -1,50 +1,50 @@
+ #
+ # Define default options for autofs.
+ #
+-# DEFAULT_MASTER_MAP_NAME - default map name for the master map.
++# MASTER_MAP_NAME - default map name for the master map.
+ #
+-#DEFAULT_MASTER_MAP_NAME="/etc/auto.master"
++#MASTER_MAP_NAME="/etc/auto.master"
+ #
+-# DEFAULT_TIMEOUT - set the default mount timeout (default 600).
++# TIMEOUT - set the default mount timeout (default 600).
+ #
+-DEFAULT_TIMEOUT=300
++TIMEOUT=300
+ #
+-# DEFAULT_BROWSE_MODE - maps are browsable by default.
++# BROWSE_MODE - maps are browsable by default.
+ #
+-DEFAULT_BROWSE_MODE="no"
++BROWSE_MODE="no"
+ #
+-# DEFAULT_LOGGING - set default log level "none", "verbode" or "debug"
++# LOGGING - set default log level "none", "verbode" or "debug"
+ #
+-#DEFAULT_LOGGING="none"
++#LOGGING="none"
+ #
+ # Define the default LDAP schema to use for lookups
+ #
+ # System default
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="nisMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="nisObject"
+-#DEFAULT_MAP_ATTRIBUTE="nisMapName"
+-#DEFAULT_ENTRY_ATTRIBUTE="cn"
+-#DEFAULT_VALUE_ATTRIBUTE="nisMapEntry"
++#MAP_OBJECT_CLASS="nisMap"
++#ENTRY_OBJECT_CLASS="nisObject"
++#MAP_ATTRIBUTE="nisMapName"
++#ENTRY_ATTRIBUTE="cn"
++#VALUE_ATTRIBUTE="nisMapEntry"
+ #
+ # Other common LDAP nameing
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="automount"
+-#DEFAULT_MAP_ATTRIBUTE="ou"
+-#DEFAULT_ENTRY_ATTRIBUTE="cn"
+-#DEFAULT_VALUE_ATTRIBUTE="automountInformation"
++#MAP_OBJECT_CLASS="automountMap"
++#ENTRY_OBJECT_CLASS="automount"
++#MAP_ATTRIBUTE="ou"
++#ENTRY_ATTRIBUTE="cn"
++#VALUE_ATTRIBUTE="automountInformation"
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="automount"
+-#DEFAULT_MAP_ATTRIBUTE="automountMapName"
+-#DEFAULT_ENTRY_ATTRIBUTE="automountKey"
+-#DEFAULT_VALUE_ATTRIBUTE="automountInformation"
++#MAP_OBJECT_CLASS="automountMap"
++#ENTRY_OBJECT_CLASS="automount"
++#MAP_ATTRIBUTE="automountMapName"
++#ENTRY_ATTRIBUTE="automountKey"
++#VALUE_ATTRIBUTE="automountInformation"
+ #
+-# DEFAULT_AUTH_CONF_FILE - set the default location for the SASL
+-#			   authentication configuration file.
++# AUTH_CONF_FILE - set the default location for the SASL
++#		   authentication configuration file.
+ #
+-#DEFAULT_AUTH_CONF_FILE="/etc/autofs/autofs-auth.conf"
++#AUTH_CONF_FILE="/etc/autofs/autofs-auth.conf"
+ #
+ # General global options
+ #
+diff --git a/lib/defaults.c b/lib/defaults.c
+index 65dbd8d..f76478e 100644
+--- a/lib/defaults.c
++++ b/lib/defaults.c
+@@ -23,21 +23,21 @@
+ #define DEFAULTS_CONFIG_FILE		AUTOFS_CONF_DIR "/autofs"
+ #define MAX_LINE_LEN			256
+ 
+-#define ENV_NAME_MASTER_MAP		"DEFAULT_MASTER_MAP_NAME"
++#define ENV_NAME_MASTER_MAP		"MASTER_MAP_NAME"
+ 
+-#define ENV_NAME_TIMEOUT		"DEFAULT_TIMEOUT"
+-#define ENV_NAME_BROWSE_MODE		"DEFAULT_BROWSE_MODE"
+-#define ENV_NAME_LOGGING		"DEFAULT_LOGGING"
++#define ENV_NAME_TIMEOUT		"TIMEOUT"
++#define ENV_NAME_BROWSE_MODE		"BROWSE_MODE"
++#define ENV_NAME_LOGGING		"LOGGING"
+ 
+-#define ENV_LDAP_SERVER			"DEFAULT_LDAP_SERVER"
++#define ENV_LDAP_SERVER			"LDAP_SERVER"
+ 
+-#define ENV_NAME_MAP_OBJ_CLASS		"DEFAULT_MAP_OBJECT_CLASS"
+-#define ENV_NAME_ENTRY_OBJ_CLASS	"DEFAULT_ENTRY_OBJECT_CLASS"
+-#define ENV_NAME_MAP_ATTR		"DEFAULT_MAP_ATTRIBUTE"
+-#define ENV_NAME_ENTRY_ATTR		"DEFAULT_ENTRY_ATTRIBUTE"
+-#define ENV_NAME_VALUE_ATTR		"DEFAULT_VALUE_ATTRIBUTE"
++#define ENV_NAME_MAP_OBJ_CLASS		"MAP_OBJECT_CLASS"
++#define ENV_NAME_ENTRY_OBJ_CLASS	"ENTRY_OBJECT_CLASS"
++#define ENV_NAME_MAP_ATTR		"MAP_ATTRIBUTE"
++#define ENV_NAME_ENTRY_ATTR		"ENTRY_ATTRIBUTE"
++#define ENV_NAME_VALUE_ATTR		"VALUE_ATTRIBUTE"
+ 
+-#define ENV_AUTH_CONF_FILE		"DEFAULT_AUTH_CONF_FILE"
++#define ENV_AUTH_CONF_FILE		"AUTH_CONF_FILE"
+ 
+ static const char *default_master_map_name = DEFAULT_MASTER_MAP_NAME;
+ 
+@@ -104,6 +104,39 @@ static int get_env_yesno(const char *name)
+ }
+ 
+ /*
++ * We've changed the key names so we need to check for the
++ * config key and it's old name for backward conpatibility.
++*/
++static int check_set_config_value(const char *res, const char *name, const char *value)
++{
++	char *old_name;
++	int ret;
++
++	if (!strcasecmp(res, name)) {
++		ret = setenv(name, value, 0);
++		if (ret)
++			fprintf(stderr,
++			        "can't set config value for %s, "
++				"error %d", name, ret);
++		return 1;
++	}
++
++	old_name = alloca(strlen(name) + 9);
++	strcpy(old_name, "DEFAULT_");
++	strcat(old_name, name);
++
++	if (!strcasecmp(res, old_name)) {
++		ret = setenv(name, value, 0);
++		if (ret)
++			fprintf(stderr,
++			        "can't set config value for %s, "
++				"error %d", name, ret);
++		return 1;
++	}
++	return 0;
++}
++
++/*
+  * Read config env variables and check they have been set.
+  *
+  * This simple minded routine assumes the config file
+@@ -115,7 +148,6 @@ unsigned int defaults_read_config(void)
+ 	FILE *f;
+ 	char buf[MAX_LINE_LEN];
+ 	char *res, *value;
+-	unsigned int ret;
+ 
+ 	f = fopen(DEFAULTS_CONFIG_FILE, "r");
+ 	if (!f)
+@@ -158,23 +190,18 @@ unsigned int defaults_read_config(void)
+ 		while (*trailer && (*trailer == '"' || isblank(*trailer)))
+ 			*(trailer--) = '\0';;
+ 
+-		if (!strcasecmp(res, ENV_NAME_MASTER_MAP) ||
+-		    !strcasecmp(res, ENV_NAME_TIMEOUT) ||
+-		    !strcasecmp(res, ENV_NAME_BROWSE_MODE) ||
+-		    !strcasecmp(res, ENV_NAME_LOGGING) ||
+-		    !strcasecmp(res, ENV_LDAP_SERVER) ||
+-		    !strcasecmp(res, ENV_NAME_MAP_OBJ_CLASS) ||
+-		    !strcasecmp(res, ENV_NAME_ENTRY_OBJ_CLASS) ||
+-		    !strcasecmp(res, ENV_NAME_MAP_ATTR) ||
+-		    !strcasecmp(res, ENV_NAME_ENTRY_ATTR) ||
+-		    !strcasecmp(res, ENV_NAME_VALUE_ATTR) ||
+-		    !strcasecmp(res, ENV_AUTH_CONF_FILE)) {
+-			ret = setenv(res, value, 0);
+-			if (ret)
+-				fprintf(stderr,
+-				        "can't set config value for %s, "
+-					"error %d", res, ret);
+-		}
++		if (check_set_config_value(res, ENV_NAME_MASTER_MAP, value) ||
++		    check_set_config_value(res, ENV_NAME_TIMEOUT, value) ||
++		    check_set_config_value(res, ENV_NAME_BROWSE_MODE, value) ||
++		    check_set_config_value(res, ENV_NAME_LOGGING, value) ||
++		    check_set_config_value(res, ENV_LDAP_SERVER, value) ||
++		    check_set_config_value(res, ENV_NAME_MAP_OBJ_CLASS, value) ||
++		    check_set_config_value(res, ENV_NAME_ENTRY_OBJ_CLASS, value) ||
++		    check_set_config_value(res, ENV_NAME_MAP_ATTR, value) ||
++		    check_set_config_value(res, ENV_NAME_ENTRY_ATTR, value) ||
++		    check_set_config_value(res, ENV_NAME_VALUE_ATTR, value) ||
++		    check_set_config_value(res, ENV_AUTH_CONF_FILE, value))
++			;
+ 	}
+ 
+ 	if (!feof(f)) {
+diff --git a/man/auto.master.5.in b/man/auto.master.5.in
+index cb3c1d6..cfeefe7 100644
+--- a/man/auto.master.5.in
++++ b/man/auto.master.5.in
+@@ -25,7 +25,7 @@ The default location of the master map is
+ but an alternate name may be given on the command line when running
+ the automounter and the default master map may changed by setting the
+ .nh
+-.B "DEFAULT_MASTER_MAP_NAME"
++.B "MASTER_MAP_NAME"
+ .hy
+ configuration variable in
+ .nh
+@@ -144,13 +144,13 @@ configuration file
+ .hy
+ They are:
+ .TP
+-.B DEFAULT_TIMEOUT
++.B TIMEOUT
+ sets the default mount timeout (program default 600).
+ .TP
+-.B DEFAULT_BROWSE_MODE
++.B BROWSE_MODE
+ Maps are browsable by default (program default "yes").
+ .TP
+-.B DEFAULT_LOGGING
++.B LOGGING
+ set default log level "none", "verbose" or "debug" (program default "none").
+ =======
+ .SH GENERAL SYSTEM DEFAULTS CONFIGURATION
+@@ -163,13 +163,13 @@ configuration file
+ .P
+ They are:
+ .TP
+-.B DEFAULT_TIMEOUT
++.B TIMEOUT
+ sets the default mount timeout (program default 600).
+ .TP
+-.B DEFAULT_BROWSE_MODE
++.B BROWSE_MODE
+ Maps are browsable by default (program default "yes").
+ .TP
+-.B DEFAULT_LOGGING
++.B LOGGING
+ set default log level "none", "verbose" or "debug" (program default "none").
+ .SH BUILTIN MAP -hosts
+ If "-hosts" is given as the map then accessing a key under the mount point
+@@ -215,7 +215,7 @@ located in
+ .P
+ The configuration settings available are:
+ .TP
+-\fBDEFAULT_MAP_OBJECT_CLASS\fP
++\fBMAP_OBJECT_CLASS\fP
+ The map object class. Its Default value is "nisMap". In the
+ .nh
+ automountMap
+@@ -225,14 +225,14 @@ schema this corresponds to the class
+ .BR automountMap .
+ .hy
+ .TP
+-.B DEFAULT_ENTRY_OBJECT_CLASS
++.B ENTRY_OBJECT_CLASS
+ The map entry object class. Its default value is \fBnisObject\fP.
+ In the automountMap schema this corresponds to the class
+ .nh
+ .BR automount .
+ .hy
+ .TP
+-.B DEFAULT_MAP_ATTRIBUTE
++.B MAP_ATTRIBUTE
+ The attribute used to identify the name of the map to which this
+ entry belongs. Its default value is
+ .nh
+@@ -247,7 +247,7 @@ schema this corresponds to the attributes \fBou\fP or
+ .BR automountMapName .
+ .hy
+ .TP
+-.B DEFAULT_ENTRY_ATTRIBUTE
++.B ENTRY_ATTRIBUTE
+ The attribute used to identify a map key. Its default value is
+ In the
+ .nh
+@@ -258,7 +258,7 @@ schema this corresponds to the attribute
+ .BR automountKey .
+ .hy
+ .TP
+-.B DEFAULT_VALUE_ATTRIBUTE
++.B VALUE_ATTRIBUTE
+ The attribute used to identify the value of the map entry. Its default
+ value is
+ .nh
+diff --git a/redhat/autofs.sysconfig.in b/redhat/autofs.sysconfig.in
+index 7cbc03f..84d524b 100644
+--- a/redhat/autofs.sysconfig.in
++++ b/redhat/autofs.sysconfig.in
+@@ -1,50 +1,50 @@
+ #
+ # Define default options for autofs.
+ #
+-# DEFAULT_MASTER_MAP_NAME - default map name for the master map.
++# MASTER_MAP_NAME - default map name for the master map.
+ #
+-#DEFAULT_MASTER_MAP_NAME="auto.master"
++#MASTER_MAP_NAME="auto.master"
+ #
+-# DEFAULT_TIMEOUT - set the default mount timeout (default 600).
++# TIMEOUT - set the default mount timeout (default 600).
+ #
+-DEFAULT_TIMEOUT=300
++TIMEOUT=300
+ #
+-# DEFAULT_BROWSE_MODE - maps are browsable by default.
++# BROWSE_MODE - maps are browsable by default.
+ #
+-DEFAULT_BROWSE_MODE="no"
++BROWSE_MODE="no"
+ #
+-# DEFAULT_LOGGING - set default log level "none", "verbose" or "debug"
++# LOGGING - set default log level "none", "verbose" or "debug"
+ #
+-#DEFAULT_LOGGING="none"
++#LOGGING="none"
+ #
+ # Define the default LDAP schema to use for lookups
+ #
+ # System default
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="nisMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="nisObject"
+-#DEFAULT_MAP_ATTRIBUTE="nisMapName"
+-#DEFAULT_ENTRY_ATTRIBUTE="cn"
+-#DEFAULT_VALUE_ATTRIBUTE="nisMapEntry"
++#MAP_OBJECT_CLASS="nisMap"
++#ENTRY_OBJECT_CLASS="nisObject"
++#MAP_ATTRIBUTE="nisMapName"
++#ENTRY_ATTRIBUTE="cn"
++#VALUE_ATTRIBUTE="nisMapEntry"
+ #
+ # Other common LDAP nameing
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="automount"
+-#DEFAULT_MAP_ATTRIBUTE="ou"
+-#DEFAULT_ENTRY_ATTRIBUTE="cn"
+-#DEFAULT_VALUE_ATTRIBUTE="automountInformation"
++#MAP_OBJECT_CLASS="automountMap"
++#ENTRY_OBJECT_CLASS="automount"
++#MAP_ATTRIBUTE="ou"
++#ENTRY_ATTRIBUTE="cn"
++#VALUE_ATTRIBUTE="automountInformation"
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="automount"
+-#DEFAULT_MAP_ATTRIBUTE="automountMapName"
+-#DEFAULT_ENTRY_ATTRIBUTE="automountKey"
+-#DEFAULT_VALUE_ATTRIBUTE="automountInformation"
++#MAP_OBJECT_CLASS="automountMap"
++#ENTRY_OBJECT_CLASS="automount"
++#MAP_ATTRIBUTE="automountMapName"
++#ENTRY_ATTRIBUTE="automountKey"
++#VALUE_ATTRIBUTE="automountInformation"
+ #
+-# DEFAULT_AUTH_CONF_FILE - set the default location for the SASL
++# AUTH_CONF_FILE - set the default location for the SASL
+ #			   authentication configuration file.
+ #
+-#DEFAULT_AUTH_CONF_FILE="@@autofsmapdir@@/autofs_ldap_auth.conf"
++#AUTH_CONF_FILE="@@autofsmapdir@@/autofs_ldap_auth.conf"
+ #
+ # General global options
+ #
+diff --git a/samples/autofs.conf.default.in b/samples/autofs.conf.default.in
+index 7cbc03f..84d524b 100644
+--- a/samples/autofs.conf.default.in
++++ b/samples/autofs.conf.default.in
+@@ -1,50 +1,50 @@
+ #
+ # Define default options for autofs.
+ #
+-# DEFAULT_MASTER_MAP_NAME - default map name for the master map.
++# MASTER_MAP_NAME - default map name for the master map.
+ #
+-#DEFAULT_MASTER_MAP_NAME="auto.master"
++#MASTER_MAP_NAME="auto.master"
+ #
+-# DEFAULT_TIMEOUT - set the default mount timeout (default 600).
++# TIMEOUT - set the default mount timeout (default 600).
+ #
+-DEFAULT_TIMEOUT=300
++TIMEOUT=300
+ #
+-# DEFAULT_BROWSE_MODE - maps are browsable by default.
++# BROWSE_MODE - maps are browsable by default.
+ #
+-DEFAULT_BROWSE_MODE="no"
++BROWSE_MODE="no"
+ #
+-# DEFAULT_LOGGING - set default log level "none", "verbose" or "debug"
++# LOGGING - set default log level "none", "verbose" or "debug"
+ #
+-#DEFAULT_LOGGING="none"
++#LOGGING="none"
+ #
+ # Define the default LDAP schema to use for lookups
+ #
+ # System default
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="nisMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="nisObject"
+-#DEFAULT_MAP_ATTRIBUTE="nisMapName"
+-#DEFAULT_ENTRY_ATTRIBUTE="cn"
+-#DEFAULT_VALUE_ATTRIBUTE="nisMapEntry"
++#MAP_OBJECT_CLASS="nisMap"
++#ENTRY_OBJECT_CLASS="nisObject"
++#MAP_ATTRIBUTE="nisMapName"
++#ENTRY_ATTRIBUTE="cn"
++#VALUE_ATTRIBUTE="nisMapEntry"
+ #
+ # Other common LDAP nameing
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="automount"
+-#DEFAULT_MAP_ATTRIBUTE="ou"
+-#DEFAULT_ENTRY_ATTRIBUTE="cn"
+-#DEFAULT_VALUE_ATTRIBUTE="automountInformation"
++#MAP_OBJECT_CLASS="automountMap"
++#ENTRY_OBJECT_CLASS="automount"
++#MAP_ATTRIBUTE="ou"
++#ENTRY_ATTRIBUTE="cn"
++#VALUE_ATTRIBUTE="automountInformation"
+ #
+-#DEFAULT_MAP_OBJECT_CLASS="automountMap"
+-#DEFAULT_ENTRY_OBJECT_CLASS="automount"
+-#DEFAULT_MAP_ATTRIBUTE="automountMapName"
+-#DEFAULT_ENTRY_ATTRIBUTE="automountKey"
+-#DEFAULT_VALUE_ATTRIBUTE="automountInformation"
++#MAP_OBJECT_CLASS="automountMap"
++#ENTRY_OBJECT_CLASS="automount"
++#MAP_ATTRIBUTE="automountMapName"
++#ENTRY_ATTRIBUTE="automountKey"
++#VALUE_ATTRIBUTE="automountInformation"
+ #
+-# DEFAULT_AUTH_CONF_FILE - set the default location for the SASL
++# AUTH_CONF_FILE - set the default location for the SASL
+ #			   authentication configuration file.
+ #
+-#DEFAULT_AUTH_CONF_FILE="@@autofsmapdir@@/autofs_ldap_auth.conf"
++#AUTH_CONF_FILE="@@autofsmapdir@@/autofs_ldap_auth.conf"
+ #
+ # General global options
+ #

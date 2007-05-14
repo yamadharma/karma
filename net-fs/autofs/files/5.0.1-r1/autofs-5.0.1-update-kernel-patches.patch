@@ -1,0 +1,1710 @@
+diff --git a/patches/autofs4-2.6.10-v5-update.patch b/patches/autofs4-2.6.10-v5-update.patch
+index 420066b..792a4ce 100644
+--- a/patches/autofs4-2.6.10-v5-update.patch
++++ b/patches/autofs4-2.6.10-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.10.orig/fs/autofs/autofs_i.h linux-2.6.10/fs/autofs/autofs_i.h
+ --- linux-2.6.10.orig/fs/autofs/autofs_i.h	2004-12-25 05:35:23.000000000 +0800
+-+++ linux-2.6.10/fs/autofs/autofs_i.h	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs/autofs_i.h	2007-04-13 14:00:39.000000000 +0800
+ @@ -150,6 +150,7 @@ extern struct file_operations autofs_roo
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs/autofs_i.h linux-2.6.10/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.10.orig/fs/autofs/dirhash.c linux-2.6.10/fs/autofs/dirhash.c
+ --- linux-2.6.10.orig/fs/autofs/dirhash.c	2004-12-25 05:33:51.000000000 +0800
+-+++ linux-2.6.10/fs/autofs/dirhash.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs/dirhash.c	2007-04-13 14:00:39.000000000 +0800
+ @@ -92,7 +92,7 @@ struct autofs_dir_ent *autofs_expire(str
+  			;
+  		dput(dentry);
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs/dirhash.c linux-2.6.10/fs/autofs/dirhash.
+  			return ent; /* Expirable! */
+ diff -Nurp linux-2.6.10.orig/fs/autofs/init.c linux-2.6.10/fs/autofs/init.c
+ --- linux-2.6.10.orig/fs/autofs/init.c	2004-12-25 05:35:01.000000000 +0800
+-+++ linux-2.6.10/fs/autofs/init.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs/init.c	2007-04-13 14:00:39.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -35,7 +35,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs/init.c linux-2.6.10/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.10.orig/fs/autofs/inode.c linux-2.6.10/fs/autofs/inode.c
+ --- linux-2.6.10.orig/fs/autofs/inode.c	2004-12-25 05:35:23.000000000 +0800
+-+++ linux-2.6.10/fs/autofs/inode.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs/inode.c	2007-04-13 14:00:40.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -103,7 +103,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs/inode.c linux-2.6.10/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.10.orig/fs/autofs/waitq.c linux-2.6.10/fs/autofs/waitq.c
+ --- linux-2.6.10.orig/fs/autofs/waitq.c	2004-12-25 05:35:50.000000000 +0800
+-+++ linux-2.6.10/fs/autofs/waitq.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs/waitq.c	2007-04-13 14:00:40.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -114,7 +114,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs/waitq.c linux-2.6.10/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.10.orig/fs/autofs4/autofs_i.h linux-2.6.10/fs/autofs4/autofs_i.h
+ --- linux-2.6.10.orig/fs/autofs4/autofs_i.h	2004-12-25 05:35:01.000000000 +0800
+-+++ linux-2.6.10/fs/autofs4/autofs_i.h	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs4/autofs_i.h	2007-04-13 14:00:40.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/autofs_i.h
+   *
+@@ -286,7 +286,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs4/autofs_i.h linux-2.6.10/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.10.orig/fs/autofs4/expire.c linux-2.6.10/fs/autofs4/expire.c
+ --- linux-2.6.10.orig/fs/autofs4/expire.c	2004-12-25 05:35:14.000000000 +0800
+-+++ linux-2.6.10/fs/autofs4/expire.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs4/expire.c	2007-04-13 14:00:39.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -761,7 +761,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs4/expire.c linux-2.6.10/fs/autofs4/expire.
+  
+ diff -Nurp linux-2.6.10.orig/fs/autofs4/init.c linux-2.6.10/fs/autofs4/init.c
+ --- linux-2.6.10.orig/fs/autofs4/init.c	2004-12-25 05:35:22.000000000 +0800
+-+++ linux-2.6.10/fs/autofs4/init.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs4/init.c	2007-04-13 14:00:39.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -773,7 +773,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs4/init.c linux-2.6.10/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.10.orig/fs/autofs4/inode.c linux-2.6.10/fs/autofs4/inode.c
+ --- linux-2.6.10.orig/fs/autofs4/inode.c	2004-12-25 05:35:23.000000000 +0800
+-+++ linux-2.6.10/fs/autofs4/inode.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs4/inode.c	2007-04-13 14:00:40.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/inode.c
+   *
+@@ -1111,7 +1111,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs4/inode.c linux-2.6.10/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.10.orig/fs/autofs4/root.c linux-2.6.10/fs/autofs4/root.c
+ --- linux-2.6.10.orig/fs/autofs4/root.c	2004-12-25 05:33:49.000000000 +0800
+-+++ linux-2.6.10/fs/autofs4/root.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs4/root.c	2007-04-13 14:00:40.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -1622,15 +1622,12 @@ diff -Nurp linux-2.6.10.orig/fs/autofs4/root.c linux-2.6.10/fs/autofs4/root.c
+  {
+  	struct autofs_info *inf;
+  
+-@@ -419,9 +464,18 @@ static void autofs4_dentry_release(struc
++@@ -419,6 +464,15 @@ static void autofs4_dentry_release(struc
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -1638,9 +1635,9 @@ diff -Nurp linux-2.6.10.orig/fs/autofs4/root.c linux-2.6.10/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -438,43 +492,135 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -1970,7 +1967,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs4/root.c linux-2.6.10/fs/autofs4/root.c
+  	DPRINTK("returning %d", status);
+ diff -Nurp linux-2.6.10.orig/fs/autofs4/waitq.c linux-2.6.10/fs/autofs4/waitq.c
+ --- linux-2.6.10.orig/fs/autofs4/waitq.c	2004-12-25 05:35:29.000000000 +0800
+-+++ linux-2.6.10/fs/autofs4/waitq.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/autofs4/waitq.c	2007-04-13 14:00:40.000000000 +0800
+ @@ -3,7 +3,7 @@
+   * linux/fs/autofs/waitq.c
+   *
+@@ -2260,7 +2257,7 @@ diff -Nurp linux-2.6.10.orig/fs/autofs4/waitq.c linux-2.6.10/fs/autofs4/waitq.c
+  	}
+ diff -Nurp linux-2.6.10.orig/fs/namei.c linux-2.6.10/fs/namei.c
+ --- linux-2.6.10.orig/fs/namei.c	2004-12-25 05:34:30.000000000 +0800
+-+++ linux-2.6.10/fs/namei.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/namei.c	2007-04-13 14:00:39.000000000 +0800
+ @@ -304,6 +304,29 @@ void path_release_on_umount(struct namei
+  	_mntput(nd->mnt);
+  }
+@@ -2365,7 +2362,7 @@ diff -Nurp linux-2.6.10.orig/fs/namei.c linux-2.6.10/fs/namei.c
+  			mntput(next.mnt);
+ diff -Nurp linux-2.6.10.orig/fs/namespace.c linux-2.6.10/fs/namespace.c
+ --- linux-2.6.10.orig/fs/namespace.c	2004-12-25 05:35:01.000000000 +0800
+-+++ linux-2.6.10/fs/namespace.c	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/fs/namespace.c	2007-04-13 14:00:39.000000000 +0800
+ @@ -308,9 +308,9 @@ resume:
+  	spin_unlock(&vfsmount_lock);
+  
+@@ -2393,7 +2390,7 @@ diff -Nurp linux-2.6.10.orig/fs/namespace.c linux-2.6.10/fs/namespace.c
+  EXPORT_SYMBOL(may_umount);
+ diff -Nurp linux-2.6.10.orig/include/linux/auto_fs4.h linux-2.6.10/include/linux/auto_fs4.h
+ --- linux-2.6.10.orig/include/linux/auto_fs4.h	2004-12-25 05:33:50.000000000 +0800
+-+++ linux-2.6.10/include/linux/auto_fs4.h	2007-02-16 13:40:26.000000000 +0900
+++++ linux-2.6.10/include/linux/auto_fs4.h	2007-04-13 14:00:40.000000000 +0800
+ @@ -19,18 +19,37 @@
+  #undef AUTOFS_MIN_PROTO_VERSION
+  #undef AUTOFS_MAX_PROTO_VERSION
+diff --git a/patches/autofs4-2.6.11-v5-update.patch b/patches/autofs4-2.6.11-v5-update.patch
+index 7d2edc4..73ce7e9 100644
+--- a/patches/autofs4-2.6.11-v5-update.patch
++++ b/patches/autofs4-2.6.11-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.11.orig/fs/autofs/autofs_i.h linux-2.6.11/fs/autofs/autofs_i.h
+ --- linux-2.6.11.orig/fs/autofs/autofs_i.h	2005-03-02 15:38:14.000000000 +0800
+-+++ linux-2.6.11/fs/autofs/autofs_i.h	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs/autofs_i.h	2007-04-13 14:03:11.000000000 +0800
+ @@ -150,6 +150,7 @@ extern struct file_operations autofs_roo
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs/autofs_i.h linux-2.6.11/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.11.orig/fs/autofs/dirhash.c linux-2.6.11/fs/autofs/dirhash.c
+ --- linux-2.6.11.orig/fs/autofs/dirhash.c	2005-03-02 15:37:48.000000000 +0800
+-+++ linux-2.6.11/fs/autofs/dirhash.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs/dirhash.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -92,7 +92,7 @@ struct autofs_dir_ent *autofs_expire(str
+  			;
+  		dput(dentry);
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs/dirhash.c linux-2.6.11/fs/autofs/dirhash.
+  			return ent; /* Expirable! */
+ diff -Nurp linux-2.6.11.orig/fs/autofs/init.c linux-2.6.11/fs/autofs/init.c
+ --- linux-2.6.11.orig/fs/autofs/init.c	2005-03-02 15:38:13.000000000 +0800
+-+++ linux-2.6.11/fs/autofs/init.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs/init.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -35,7 +35,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs/init.c linux-2.6.11/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.11.orig/fs/autofs/inode.c linux-2.6.11/fs/autofs/inode.c
+ --- linux-2.6.11.orig/fs/autofs/inode.c	2005-03-02 15:38:38.000000000 +0800
+-+++ linux-2.6.11/fs/autofs/inode.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs/inode.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -103,7 +103,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs/inode.c linux-2.6.11/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.11.orig/fs/autofs/waitq.c linux-2.6.11/fs/autofs/waitq.c
+ --- linux-2.6.11.orig/fs/autofs/waitq.c	2005-03-02 15:38:37.000000000 +0800
+-+++ linux-2.6.11/fs/autofs/waitq.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs/waitq.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -114,7 +114,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs/waitq.c linux-2.6.11/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.11.orig/fs/autofs4/autofs_i.h linux-2.6.11/fs/autofs4/autofs_i.h
+ --- linux-2.6.11.orig/fs/autofs4/autofs_i.h	2005-03-02 15:38:13.000000000 +0800
+-+++ linux-2.6.11/fs/autofs4/autofs_i.h	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs4/autofs_i.h	2007-04-13 14:03:11.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/autofs_i.h
+   *
+@@ -286,7 +286,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs4/autofs_i.h linux-2.6.11/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.11.orig/fs/autofs4/expire.c linux-2.6.11/fs/autofs4/expire.c
+ --- linux-2.6.11.orig/fs/autofs4/expire.c	2005-03-02 15:38:13.000000000 +0800
+-+++ linux-2.6.11/fs/autofs4/expire.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs4/expire.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -761,7 +761,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs4/expire.c linux-2.6.11/fs/autofs4/expire.
+  
+ diff -Nurp linux-2.6.11.orig/fs/autofs4/init.c linux-2.6.11/fs/autofs4/init.c
+ --- linux-2.6.11.orig/fs/autofs4/init.c	2005-03-02 15:38:13.000000000 +0800
+-+++ linux-2.6.11/fs/autofs4/init.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs4/init.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -773,7 +773,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs4/init.c linux-2.6.11/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.11.orig/fs/autofs4/inode.c linux-2.6.11/fs/autofs4/inode.c
+ --- linux-2.6.11.orig/fs/autofs4/inode.c	2005-03-02 15:38:17.000000000 +0800
+-+++ linux-2.6.11/fs/autofs4/inode.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs4/inode.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/inode.c
+   *
+@@ -1111,7 +1111,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs4/inode.c linux-2.6.11/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.11.orig/fs/autofs4/root.c linux-2.6.11/fs/autofs4/root.c
+ --- linux-2.6.11.orig/fs/autofs4/root.c	2005-03-02 15:37:31.000000000 +0800
+-+++ linux-2.6.11/fs/autofs4/root.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs4/root.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -1622,15 +1622,12 @@ diff -Nurp linux-2.6.11.orig/fs/autofs4/root.c linux-2.6.11/fs/autofs4/root.c
+  {
+  	struct autofs_info *inf;
+  
+-@@ -419,9 +464,18 @@ static void autofs4_dentry_release(struc
++@@ -419,6 +464,15 @@ static void autofs4_dentry_release(struc
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -1638,9 +1635,9 @@ diff -Nurp linux-2.6.11.orig/fs/autofs4/root.c linux-2.6.11/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -438,43 +492,135 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -1970,7 +1967,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs4/root.c linux-2.6.11/fs/autofs4/root.c
+  	DPRINTK("returning %d", status);
+ diff -Nurp linux-2.6.11.orig/fs/autofs4/waitq.c linux-2.6.11/fs/autofs4/waitq.c
+ --- linux-2.6.11.orig/fs/autofs4/waitq.c	2005-03-02 15:38:26.000000000 +0800
+-+++ linux-2.6.11/fs/autofs4/waitq.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/autofs4/waitq.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -3,7 +3,7 @@
+   * linux/fs/autofs/waitq.c
+   *
+@@ -2260,7 +2257,7 @@ diff -Nurp linux-2.6.11.orig/fs/autofs4/waitq.c linux-2.6.11/fs/autofs4/waitq.c
+  	}
+ diff -Nurp linux-2.6.11.orig/fs/namei.c linux-2.6.11/fs/namei.c
+ --- linux-2.6.11.orig/fs/namei.c	2005-03-02 15:37:55.000000000 +0800
+-+++ linux-2.6.11/fs/namei.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/namei.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -306,6 +306,29 @@ void path_release_on_umount(struct namei
+  	_mntput(nd->mnt);
+  }
+@@ -2365,7 +2362,7 @@ diff -Nurp linux-2.6.11.orig/fs/namei.c linux-2.6.11/fs/namei.c
+  			mntput(next.mnt);
+ diff -Nurp linux-2.6.11.orig/fs/namespace.c linux-2.6.11/fs/namespace.c
+ --- linux-2.6.11.orig/fs/namespace.c	2005-03-02 15:38:13.000000000 +0800
+-+++ linux-2.6.11/fs/namespace.c	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/fs/namespace.c	2007-04-13 14:03:11.000000000 +0800
+ @@ -308,9 +308,9 @@ resume:
+  	spin_unlock(&vfsmount_lock);
+  
+@@ -2393,7 +2390,7 @@ diff -Nurp linux-2.6.11.orig/fs/namespace.c linux-2.6.11/fs/namespace.c
+  EXPORT_SYMBOL(may_umount);
+ diff -Nurp linux-2.6.11.orig/include/linux/auto_fs4.h linux-2.6.11/include/linux/auto_fs4.h
+ --- linux-2.6.11.orig/include/linux/auto_fs4.h	2005-03-02 15:37:47.000000000 +0800
+-+++ linux-2.6.11/include/linux/auto_fs4.h	2007-02-16 13:41:52.000000000 +0900
+++++ linux-2.6.11/include/linux/auto_fs4.h	2007-04-13 14:03:11.000000000 +0800
+ @@ -19,18 +19,37 @@
+  #undef AUTOFS_MIN_PROTO_VERSION
+  #undef AUTOFS_MAX_PROTO_VERSION
+diff --git a/patches/autofs4-2.6.12-v5-update.patch b/patches/autofs4-2.6.12-v5-update.patch
+index ad2a9c1..f30bed8 100644
+--- a/patches/autofs4-2.6.12-v5-update.patch
++++ b/patches/autofs4-2.6.12-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.12.orig/fs/autofs/autofs_i.h linux-2.6.12/fs/autofs/autofs_i.h
+ --- linux-2.6.12.orig/fs/autofs/autofs_i.h	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs/autofs_i.h	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs/autofs_i.h	2007-04-13 14:05:44.000000000 +0800
+ @@ -150,6 +150,7 @@ extern struct file_operations autofs_roo
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs/autofs_i.h linux-2.6.12/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.12.orig/fs/autofs/dirhash.c linux-2.6.12/fs/autofs/dirhash.c
+ --- linux-2.6.12.orig/fs/autofs/dirhash.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs/dirhash.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs/dirhash.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -92,7 +92,7 @@ struct autofs_dir_ent *autofs_expire(str
+  			;
+  		dput(dentry);
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs/dirhash.c linux-2.6.12/fs/autofs/dirhash.
+  			return ent; /* Expirable! */
+ diff -Nurp linux-2.6.12.orig/fs/autofs/init.c linux-2.6.12/fs/autofs/init.c
+ --- linux-2.6.12.orig/fs/autofs/init.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs/init.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs/init.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -35,7 +35,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs/init.c linux-2.6.12/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.12.orig/fs/autofs/inode.c linux-2.6.12/fs/autofs/inode.c
+ --- linux-2.6.12.orig/fs/autofs/inode.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs/inode.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs/inode.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -103,7 +103,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs/inode.c linux-2.6.12/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.12.orig/fs/autofs/waitq.c linux-2.6.12/fs/autofs/waitq.c
+ --- linux-2.6.12.orig/fs/autofs/waitq.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs/waitq.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs/waitq.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -114,7 +114,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs/waitq.c linux-2.6.12/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.12.orig/fs/autofs4/autofs_i.h linux-2.6.12/fs/autofs4/autofs_i.h
+ --- linux-2.6.12.orig/fs/autofs4/autofs_i.h	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs4/autofs_i.h	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs4/autofs_i.h	2007-04-13 14:05:44.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/autofs_i.h
+   *
+@@ -266,7 +266,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs4/autofs_i.h linux-2.6.12/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.12.orig/fs/autofs4/expire.c linux-2.6.12/fs/autofs4/expire.c
+ --- linux-2.6.12.orig/fs/autofs4/expire.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs4/expire.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs4/expire.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -741,7 +741,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs4/expire.c linux-2.6.12/fs/autofs4/expire.
+  
+ diff -Nurp linux-2.6.12.orig/fs/autofs4/init.c linux-2.6.12/fs/autofs4/init.c
+ --- linux-2.6.12.orig/fs/autofs4/init.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs4/init.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs4/init.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -753,7 +753,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs4/init.c linux-2.6.12/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.12.orig/fs/autofs4/inode.c linux-2.6.12/fs/autofs4/inode.c
+ --- linux-2.6.12.orig/fs/autofs4/inode.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs4/inode.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs4/inode.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/inode.c
+   *
+@@ -1091,7 +1091,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs4/inode.c linux-2.6.12/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.12.orig/fs/autofs4/root.c linux-2.6.12/fs/autofs4/root.c
+ --- linux-2.6.12.orig/fs/autofs4/root.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs4/root.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs4/root.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -1602,15 +1602,12 @@ diff -Nurp linux-2.6.12.orig/fs/autofs4/root.c linux-2.6.12/fs/autofs4/root.c
+  {
+  	struct autofs_info *inf;
+  
+-@@ -419,9 +464,18 @@ static void autofs4_dentry_release(struc
++@@ -419,6 +464,15 @@ static void autofs4_dentry_release(struc
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -1618,9 +1615,9 @@ diff -Nurp linux-2.6.12.orig/fs/autofs4/root.c linux-2.6.12/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -438,43 +492,135 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -1954,7 +1951,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs4/root.c linux-2.6.12/fs/autofs4/root.c
+  	DPRINTK("returning %d", status);
+ diff -Nurp linux-2.6.12.orig/fs/autofs4/waitq.c linux-2.6.12/fs/autofs4/waitq.c
+ --- linux-2.6.12.orig/fs/autofs4/waitq.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/autofs4/waitq.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/autofs4/waitq.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -3,7 +3,7 @@
+   * linux/fs/autofs/waitq.c
+   *
+@@ -2252,7 +2249,7 @@ diff -Nurp linux-2.6.12.orig/fs/autofs4/waitq.c linux-2.6.12/fs/autofs4/waitq.c
+  	}
+ diff -Nurp linux-2.6.12.orig/fs/namei.c linux-2.6.12/fs/namei.c
+ --- linux-2.6.12.orig/fs/namei.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/namei.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/namei.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -317,6 +317,29 @@ void path_release_on_umount(struct namei
+  	_mntput(nd->mnt);
+  }
+@@ -2351,7 +2348,7 @@ diff -Nurp linux-2.6.12.orig/fs/namei.c linux-2.6.12/fs/namei.c
+  	return PTR_ERR(dentry);
+ diff -Nurp linux-2.6.12.orig/fs/namespace.c linux-2.6.12/fs/namespace.c
+ --- linux-2.6.12.orig/fs/namespace.c	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/fs/namespace.c	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/fs/namespace.c	2007-04-13 14:05:44.000000000 +0800
+ @@ -308,9 +308,9 @@ resume:
+  	spin_unlock(&vfsmount_lock);
+  
+@@ -2379,7 +2376,7 @@ diff -Nurp linux-2.6.12.orig/fs/namespace.c linux-2.6.12/fs/namespace.c
+  EXPORT_SYMBOL(may_umount);
+ diff -Nurp linux-2.6.12.orig/include/linux/auto_fs4.h linux-2.6.12/include/linux/auto_fs4.h
+ --- linux-2.6.12.orig/include/linux/auto_fs4.h	2005-06-18 03:48:29.000000000 +0800
+-+++ linux-2.6.12/include/linux/auto_fs4.h	2007-02-16 13:42:59.000000000 +0900
+++++ linux-2.6.12/include/linux/auto_fs4.h	2007-04-13 14:05:44.000000000 +0800
+ @@ -19,18 +19,37 @@
+  #undef AUTOFS_MIN_PROTO_VERSION
+  #undef AUTOFS_MAX_PROTO_VERSION
+diff --git a/patches/autofs4-2.6.13-v5-update.patch b/patches/autofs4-2.6.13-v5-update.patch
+index 75c1fb5..8da2929 100644
+--- a/patches/autofs4-2.6.13-v5-update.patch
++++ b/patches/autofs4-2.6.13-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.13.orig/fs/autofs/autofs_i.h linux-2.6.13/fs/autofs/autofs_i.h
+ --- linux-2.6.13.orig/fs/autofs/autofs_i.h	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs/autofs_i.h	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs/autofs_i.h	2007-04-13 14:07:31.000000000 +0800
+ @@ -150,6 +150,7 @@ extern struct file_operations autofs_roo
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs/autofs_i.h linux-2.6.13/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.13.orig/fs/autofs/dirhash.c linux-2.6.13/fs/autofs/dirhash.c
+ --- linux-2.6.13.orig/fs/autofs/dirhash.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs/dirhash.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs/dirhash.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -92,7 +92,7 @@ struct autofs_dir_ent *autofs_expire(str
+  			;
+  		dput(dentry);
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs/dirhash.c linux-2.6.13/fs/autofs/dirhash.
+  			return ent; /* Expirable! */
+ diff -Nurp linux-2.6.13.orig/fs/autofs/init.c linux-2.6.13/fs/autofs/init.c
+ --- linux-2.6.13.orig/fs/autofs/init.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs/init.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs/init.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -35,7 +35,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs/init.c linux-2.6.13/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.13.orig/fs/autofs/inode.c linux-2.6.13/fs/autofs/inode.c
+ --- linux-2.6.13.orig/fs/autofs/inode.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs/inode.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs/inode.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -103,7 +103,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs/inode.c linux-2.6.13/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.13.orig/fs/autofs/waitq.c linux-2.6.13/fs/autofs/waitq.c
+ --- linux-2.6.13.orig/fs/autofs/waitq.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs/waitq.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs/waitq.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -114,7 +114,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs/waitq.c linux-2.6.13/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.13.orig/fs/autofs4/autofs_i.h linux-2.6.13/fs/autofs4/autofs_i.h
+ --- linux-2.6.13.orig/fs/autofs4/autofs_i.h	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs4/autofs_i.h	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs4/autofs_i.h	2007-04-13 14:07:31.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/autofs_i.h
+   *
+@@ -257,7 +257,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs4/autofs_i.h linux-2.6.13/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.13.orig/fs/autofs4/expire.c linux-2.6.13/fs/autofs4/expire.c
+ --- linux-2.6.13.orig/fs/autofs4/expire.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs4/expire.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs4/expire.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -721,7 +721,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs4/expire.c linux-2.6.13/fs/autofs4/expire.
+  
+ diff -Nurp linux-2.6.13.orig/fs/autofs4/init.c linux-2.6.13/fs/autofs4/init.c
+ --- linux-2.6.13.orig/fs/autofs4/init.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs4/init.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs4/init.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -733,7 +733,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs4/init.c linux-2.6.13/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.13.orig/fs/autofs4/inode.c linux-2.6.13/fs/autofs4/inode.c
+ --- linux-2.6.13.orig/fs/autofs4/inode.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs4/inode.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs4/inode.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/inode.c
+   *
+@@ -1050,7 +1050,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs4/inode.c linux-2.6.13/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.13.orig/fs/autofs4/root.c linux-2.6.13/fs/autofs4/root.c
+ --- linux-2.6.13.orig/fs/autofs4/root.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs4/root.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs4/root.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -1558,15 +1558,12 @@ diff -Nurp linux-2.6.13.orig/fs/autofs4/root.c linux-2.6.13/fs/autofs4/root.c
+  {
+  	struct autofs_info *inf;
+  
+-@@ -430,9 +464,18 @@ static void autofs4_dentry_release(struc
++@@ -430,6 +464,15 @@ static void autofs4_dentry_release(struc
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -1574,9 +1571,9 @@ diff -Nurp linux-2.6.13.orig/fs/autofs4/root.c linux-2.6.13/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -449,43 +492,135 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -1910,7 +1907,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs4/root.c linux-2.6.13/fs/autofs4/root.c
+  	DPRINTK("returning %d", status);
+ diff -Nurp linux-2.6.13.orig/fs/autofs4/waitq.c linux-2.6.13/fs/autofs4/waitq.c
+ --- linux-2.6.13.orig/fs/autofs4/waitq.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/autofs4/waitq.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/autofs4/waitq.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -3,7 +3,7 @@
+   * linux/fs/autofs/waitq.c
+   *
+@@ -2210,7 +2207,7 @@ diff -Nurp linux-2.6.13.orig/fs/autofs4/waitq.c linux-2.6.13/fs/autofs4/waitq.c
+  	}
+ diff -Nurp linux-2.6.13.orig/fs/namei.c linux-2.6.13/fs/namei.c
+ --- linux-2.6.13.orig/fs/namei.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/namei.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/namei.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -317,6 +317,29 @@ void path_release_on_umount(struct namei
+  	mntput_no_expire(nd->mnt);
+  }
+@@ -2309,7 +2306,7 @@ diff -Nurp linux-2.6.13.orig/fs/namei.c linux-2.6.13/fs/namei.c
+  	return PTR_ERR(dentry);
+ diff -Nurp linux-2.6.13.orig/fs/namespace.c linux-2.6.13/fs/namespace.c
+ --- linux-2.6.13.orig/fs/namespace.c	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/fs/namespace.c	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/fs/namespace.c	2007-04-13 14:07:31.000000000 +0800
+ @@ -308,9 +308,9 @@ resume:
+  	spin_unlock(&vfsmount_lock);
+  
+@@ -2337,7 +2334,7 @@ diff -Nurp linux-2.6.13.orig/fs/namespace.c linux-2.6.13/fs/namespace.c
+  EXPORT_SYMBOL(may_umount);
+ diff -Nurp linux-2.6.13.orig/include/linux/auto_fs4.h linux-2.6.13/include/linux/auto_fs4.h
+ --- linux-2.6.13.orig/include/linux/auto_fs4.h	2005-08-29 07:41:01.000000000 +0800
+-+++ linux-2.6.13/include/linux/auto_fs4.h	2007-02-16 13:44:14.000000000 +0900
+++++ linux-2.6.13/include/linux/auto_fs4.h	2007-04-13 14:07:31.000000000 +0800
+ @@ -19,18 +19,37 @@
+  #undef AUTOFS_MIN_PROTO_VERSION
+  #undef AUTOFS_MAX_PROTO_VERSION
+diff --git a/patches/autofs4-2.6.14-v5-update.patch b/patches/autofs4-2.6.14-v5-update.patch
+index d8c0e90..29ffd6a 100644
+--- a/patches/autofs4-2.6.14-v5-update.patch
++++ b/patches/autofs4-2.6.14-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.14.orig/fs/autofs/autofs_i.h linux-2.6.14/fs/autofs/autofs_i.h
+ --- linux-2.6.14.orig/fs/autofs/autofs_i.h	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs/autofs_i.h	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs/autofs_i.h	2007-04-13 14:09:28.000000000 +0800
+ @@ -151,6 +151,7 @@ extern struct file_operations autofs_roo
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs/autofs_i.h linux-2.6.14/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.14.orig/fs/autofs/dirhash.c linux-2.6.14/fs/autofs/dirhash.c
+ --- linux-2.6.14.orig/fs/autofs/dirhash.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs/dirhash.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs/dirhash.c	2007-04-13 14:09:27.000000000 +0800
+ @@ -92,7 +92,7 @@ struct autofs_dir_ent *autofs_expire(str
+  			;
+  		dput(dentry);
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs/dirhash.c linux-2.6.14/fs/autofs/dirhash.
+  			return ent; /* Expirable! */
+ diff -Nurp linux-2.6.14.orig/fs/autofs/init.c linux-2.6.14/fs/autofs/init.c
+ --- linux-2.6.14.orig/fs/autofs/init.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs/init.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs/init.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -35,7 +35,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs/init.c linux-2.6.14/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.14.orig/fs/autofs/inode.c linux-2.6.14/fs/autofs/inode.c
+ --- linux-2.6.14.orig/fs/autofs/inode.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs/inode.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs/inode.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -103,7 +103,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs/inode.c linux-2.6.14/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.14.orig/fs/autofs/waitq.c linux-2.6.14/fs/autofs/waitq.c
+ --- linux-2.6.14.orig/fs/autofs/waitq.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs/waitq.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs/waitq.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -114,7 +114,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs/waitq.c linux-2.6.14/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.14.orig/fs/autofs4/autofs_i.h linux-2.6.14/fs/autofs4/autofs_i.h
+ --- linux-2.6.14.orig/fs/autofs4/autofs_i.h	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs4/autofs_i.h	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs4/autofs_i.h	2007-04-13 14:09:28.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/autofs_i.h
+   *
+@@ -257,7 +257,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs4/autofs_i.h linux-2.6.14/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.14.orig/fs/autofs4/expire.c linux-2.6.14/fs/autofs4/expire.c
+ --- linux-2.6.14.orig/fs/autofs4/expire.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs4/expire.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs4/expire.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -721,7 +721,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs4/expire.c linux-2.6.14/fs/autofs4/expire.
+  
+ diff -Nurp linux-2.6.14.orig/fs/autofs4/init.c linux-2.6.14/fs/autofs4/init.c
+ --- linux-2.6.14.orig/fs/autofs4/init.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs4/init.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs4/init.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -733,7 +733,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs4/init.c linux-2.6.14/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.14.orig/fs/autofs4/inode.c linux-2.6.14/fs/autofs4/inode.c
+ --- linux-2.6.14.orig/fs/autofs4/inode.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs4/inode.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs4/inode.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/inode.c
+   *
+@@ -1050,7 +1050,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs4/inode.c linux-2.6.14/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.14.orig/fs/autofs4/root.c linux-2.6.14/fs/autofs4/root.c
+ --- linux-2.6.14.orig/fs/autofs4/root.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs4/root.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs4/root.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -1558,15 +1558,12 @@ diff -Nurp linux-2.6.14.orig/fs/autofs4/root.c linux-2.6.14/fs/autofs4/root.c
+  {
+  	struct autofs_info *inf;
+  
+-@@ -430,9 +464,18 @@ static void autofs4_dentry_release(struc
++@@ -430,6 +464,15 @@ static void autofs4_dentry_release(struc
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -1574,9 +1571,9 @@ diff -Nurp linux-2.6.14.orig/fs/autofs4/root.c linux-2.6.14/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -449,43 +492,135 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -1910,7 +1907,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs4/root.c linux-2.6.14/fs/autofs4/root.c
+  	DPRINTK("returning %d", status);
+ diff -Nurp linux-2.6.14.orig/fs/autofs4/waitq.c linux-2.6.14/fs/autofs4/waitq.c
+ --- linux-2.6.14.orig/fs/autofs4/waitq.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/autofs4/waitq.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/autofs4/waitq.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -3,7 +3,7 @@
+   * linux/fs/autofs/waitq.c
+   *
+@@ -2210,7 +2207,7 @@ diff -Nurp linux-2.6.14.orig/fs/autofs4/waitq.c linux-2.6.14/fs/autofs4/waitq.c
+  	}
+ diff -Nurp linux-2.6.14.orig/fs/namei.c linux-2.6.14/fs/namei.c
+ --- linux-2.6.14.orig/fs/namei.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/namei.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/namei.c	2007-04-13 14:09:28.000000000 +0800
+ @@ -317,6 +317,29 @@ void path_release_on_umount(struct namei
+  	mntput_no_expire(nd->mnt);
+  }
+@@ -2351,7 +2348,7 @@ diff -Nurp linux-2.6.14.orig/fs/namei.c linux-2.6.14/fs/namei.c
+  	return PTR_ERR(dentry);
+ diff -Nurp linux-2.6.14.orig/fs/namespace.c linux-2.6.14/fs/namespace.c
+ --- linux-2.6.14.orig/fs/namespace.c	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/fs/namespace.c	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/fs/namespace.c	2007-04-13 14:09:27.000000000 +0800
+ @@ -308,9 +308,9 @@ resume:
+  	spin_unlock(&vfsmount_lock);
+  
+@@ -2379,7 +2376,7 @@ diff -Nurp linux-2.6.14.orig/fs/namespace.c linux-2.6.14/fs/namespace.c
+  EXPORT_SYMBOL(may_umount);
+ diff -Nurp linux-2.6.14.orig/include/linux/auto_fs4.h linux-2.6.14/include/linux/auto_fs4.h
+ --- linux-2.6.14.orig/include/linux/auto_fs4.h	2005-10-28 08:02:08.000000000 +0800
+-+++ linux-2.6.14/include/linux/auto_fs4.h	2007-02-16 13:45:30.000000000 +0900
+++++ linux-2.6.14/include/linux/auto_fs4.h	2007-04-13 14:09:28.000000000 +0800
+ @@ -19,18 +19,37 @@
+  #undef AUTOFS_MIN_PROTO_VERSION
+  #undef AUTOFS_MAX_PROTO_VERSION
+diff --git a/patches/autofs4-2.6.15-v5-update.patch b/patches/autofs4-2.6.15-v5-update.patch
+index 644c708..dda57c3 100644
+--- a/patches/autofs4-2.6.15-v5-update.patch
++++ b/patches/autofs4-2.6.15-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.15.orig/fs/autofs/autofs_i.h linux-2.6.15/fs/autofs/autofs_i.h
+ --- linux-2.6.15.orig/fs/autofs/autofs_i.h	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs/autofs_i.h	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/autofs/autofs_i.h	2007-04-13 14:11:56.000000000 +0800
+ @@ -151,6 +151,7 @@ extern struct file_operations autofs_roo
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs/autofs_i.h linux-2.6.15/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.15.orig/fs/autofs/dirhash.c linux-2.6.15/fs/autofs/dirhash.c
+ --- linux-2.6.15.orig/fs/autofs/dirhash.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs/dirhash.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/autofs/dirhash.c	2007-04-13 14:11:56.000000000 +0800
+ @@ -92,7 +92,7 @@ struct autofs_dir_ent *autofs_expire(str
+  			;
+  		dput(dentry);
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs/dirhash.c linux-2.6.15/fs/autofs/dirhash.
+  			return ent; /* Expirable! */
+ diff -Nurp linux-2.6.15.orig/fs/autofs/init.c linux-2.6.15/fs/autofs/init.c
+ --- linux-2.6.15.orig/fs/autofs/init.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs/init.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/autofs/init.c	2007-04-13 14:11:56.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -35,7 +35,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs/init.c linux-2.6.15/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.15.orig/fs/autofs/inode.c linux-2.6.15/fs/autofs/inode.c
+ --- linux-2.6.15.orig/fs/autofs/inode.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs/inode.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/autofs/inode.c	2007-04-13 14:11:56.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -103,7 +103,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs/inode.c linux-2.6.15/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.15.orig/fs/autofs/waitq.c linux-2.6.15/fs/autofs/waitq.c
+ --- linux-2.6.15.orig/fs/autofs/waitq.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs/waitq.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/autofs/waitq.c	2007-04-13 14:11:56.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -114,7 +114,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs/waitq.c linux-2.6.15/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.15.orig/fs/autofs4/autofs_i.h linux-2.6.15/fs/autofs4/autofs_i.h
+ --- linux-2.6.15.orig/fs/autofs4/autofs_i.h	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs4/autofs_i.h	2007-02-16 13:46:50.000000000 +0900
+++++ linux-2.6.15/fs/autofs4/autofs_i.h	2007-04-13 14:11:57.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/autofs_i.h
+   *
+@@ -257,7 +257,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs4/autofs_i.h linux-2.6.15/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.15.orig/fs/autofs4/expire.c linux-2.6.15/fs/autofs4/expire.c
+ --- linux-2.6.15.orig/fs/autofs4/expire.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs4/expire.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/autofs4/expire.c	2007-04-13 14:11:56.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -721,7 +721,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs4/expire.c linux-2.6.15/fs/autofs4/expire.
+  
+ diff -Nurp linux-2.6.15.orig/fs/autofs4/init.c linux-2.6.15/fs/autofs4/init.c
+ --- linux-2.6.15.orig/fs/autofs4/init.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs4/init.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/autofs4/init.c	2007-04-13 14:11:56.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -733,7 +733,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs4/init.c linux-2.6.15/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.15.orig/fs/autofs4/inode.c linux-2.6.15/fs/autofs4/inode.c
+ --- linux-2.6.15.orig/fs/autofs4/inode.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs4/inode.c	2007-02-16 13:46:50.000000000 +0900
+++++ linux-2.6.15/fs/autofs4/inode.c	2007-04-13 14:11:57.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/inode.c
+   *
+@@ -1050,7 +1050,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs4/inode.c linux-2.6.15/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.15.orig/fs/autofs4/root.c linux-2.6.15/fs/autofs4/root.c
+ --- linux-2.6.15.orig/fs/autofs4/root.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs4/root.c	2007-02-16 13:46:50.000000000 +0900
+++++ linux-2.6.15/fs/autofs4/root.c	2007-04-13 14:11:57.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -1558,15 +1558,12 @@ diff -Nurp linux-2.6.15.orig/fs/autofs4/root.c linux-2.6.15/fs/autofs4/root.c
+  {
+  	struct autofs_info *inf;
+  
+-@@ -430,9 +464,18 @@ static void autofs4_dentry_release(struc
++@@ -430,6 +464,15 @@ static void autofs4_dentry_release(struc
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -1574,9 +1571,9 @@ diff -Nurp linux-2.6.15.orig/fs/autofs4/root.c linux-2.6.15/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -449,43 +492,135 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -1910,7 +1907,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs4/root.c linux-2.6.15/fs/autofs4/root.c
+  	DPRINTK("returning %d", status);
+ diff -Nurp linux-2.6.15.orig/fs/autofs4/waitq.c linux-2.6.15/fs/autofs4/waitq.c
+ --- linux-2.6.15.orig/fs/autofs4/waitq.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/autofs4/waitq.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/autofs4/waitq.c	2007-04-13 14:11:57.000000000 +0800
+ @@ -3,7 +3,7 @@
+   * linux/fs/autofs/waitq.c
+   *
+@@ -2224,7 +2221,7 @@ diff -Nurp linux-2.6.15.orig/fs/autofs4/waitq.c linux-2.6.15/fs/autofs4/waitq.c
+  	}
+ diff -Nurp linux-2.6.15.orig/fs/namei.c linux-2.6.15/fs/namei.c
+ --- linux-2.6.15.orig/fs/namei.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/namei.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/namei.c	2007-04-13 14:11:56.000000000 +0800
+ @@ -362,6 +362,29 @@ void release_open_intent(struct nameidat
+  		fput(nd->intent.open.file);
+  }
+@@ -2365,7 +2362,7 @@ diff -Nurp linux-2.6.15.orig/fs/namei.c linux-2.6.15/fs/namei.c
+  	return PTR_ERR(dentry);
+ diff -Nurp linux-2.6.15.orig/fs/namespace.c linux-2.6.15/fs/namespace.c
+ --- linux-2.6.15.orig/fs/namespace.c	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/fs/namespace.c	2007-02-16 13:46:49.000000000 +0900
+++++ linux-2.6.15/fs/namespace.c	2007-04-13 14:11:56.000000000 +0800
+ @@ -416,9 +416,9 @@ int may_umount_tree(struct vfsmount *mnt
+  	spin_unlock(&vfsmount_lock);
+  
+@@ -2393,7 +2390,7 @@ diff -Nurp linux-2.6.15.orig/fs/namespace.c linux-2.6.15/fs/namespace.c
+  }
+ diff -Nurp linux-2.6.15.orig/include/linux/auto_fs4.h linux-2.6.15/include/linux/auto_fs4.h
+ --- linux-2.6.15.orig/include/linux/auto_fs4.h	2006-01-03 11:21:10.000000000 +0800
+-+++ linux-2.6.15/include/linux/auto_fs4.h	2007-02-16 13:46:50.000000000 +0900
+++++ linux-2.6.15/include/linux/auto_fs4.h	2007-04-13 14:11:57.000000000 +0800
+ @@ -19,18 +19,37 @@
+  #undef AUTOFS_MIN_PROTO_VERSION
+  #undef AUTOFS_MAX_PROTO_VERSION
+diff --git a/patches/autofs4-2.6.16-v5-update.patch b/patches/autofs4-2.6.16-v5-update.patch
+index 2815510..24e7ed7 100644
+--- a/patches/autofs4-2.6.16-v5-update.patch
++++ b/patches/autofs4-2.6.16-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.16.orig/fs/autofs/autofs_i.h linux-2.6.16/fs/autofs/autofs_i.h
+ --- linux-2.6.16.orig/fs/autofs/autofs_i.h	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs/autofs_i.h	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs/autofs_i.h	2007-04-13 14:14:17.000000000 +0800
+ @@ -151,6 +151,7 @@ extern struct file_operations autofs_roo
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs/autofs_i.h linux-2.6.16/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.16.orig/fs/autofs/dirhash.c linux-2.6.16/fs/autofs/dirhash.c
+ --- linux-2.6.16.orig/fs/autofs/dirhash.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs/dirhash.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs/dirhash.c	2007-04-13 14:14:17.000000000 +0800
+ @@ -92,7 +92,7 @@ struct autofs_dir_ent *autofs_expire(str
+  			;
+  		dput(dentry);
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs/dirhash.c linux-2.6.16/fs/autofs/dirhash.
+  			return ent; /* Expirable! */
+ diff -Nurp linux-2.6.16.orig/fs/autofs/init.c linux-2.6.16/fs/autofs/init.c
+ --- linux-2.6.16.orig/fs/autofs/init.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs/init.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs/init.c	2007-04-13 14:14:17.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -35,7 +35,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs/init.c linux-2.6.16/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.16.orig/fs/autofs/inode.c linux-2.6.16/fs/autofs/inode.c
+ --- linux-2.6.16.orig/fs/autofs/inode.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs/inode.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs/inode.c	2007-04-13 14:14:17.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -103,7 +103,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs/inode.c linux-2.6.16/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.16.orig/fs/autofs/waitq.c linux-2.6.16/fs/autofs/waitq.c
+ --- linux-2.6.16.orig/fs/autofs/waitq.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs/waitq.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs/waitq.c	2007-04-13 14:14:17.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -114,7 +114,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs/waitq.c linux-2.6.16/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.16.orig/fs/autofs4/autofs_i.h linux-2.6.16/fs/autofs4/autofs_i.h
+ --- linux-2.6.16.orig/fs/autofs4/autofs_i.h	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs4/autofs_i.h	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs4/autofs_i.h	2007-04-13 14:14:18.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/autofs_i.h
+   *
+@@ -257,7 +257,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs4/autofs_i.h linux-2.6.16/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.16.orig/fs/autofs4/expire.c linux-2.6.16/fs/autofs4/expire.c
+ --- linux-2.6.16.orig/fs/autofs4/expire.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs4/expire.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs4/expire.c	2007-04-13 14:14:17.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -721,7 +721,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs4/expire.c linux-2.6.16/fs/autofs4/expire.
+  
+ diff -Nurp linux-2.6.16.orig/fs/autofs4/init.c linux-2.6.16/fs/autofs4/init.c
+ --- linux-2.6.16.orig/fs/autofs4/init.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs4/init.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs4/init.c	2007-04-13 14:14:17.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -733,7 +733,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs4/init.c linux-2.6.16/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.16.orig/fs/autofs4/inode.c linux-2.6.16/fs/autofs4/inode.c
+ --- linux-2.6.16.orig/fs/autofs4/inode.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs4/inode.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs4/inode.c	2007-04-13 14:14:18.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/inode.c
+   *
+@@ -1050,7 +1050,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs4/inode.c linux-2.6.16/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.16.orig/fs/autofs4/root.c linux-2.6.16/fs/autofs4/root.c
+ --- linux-2.6.16.orig/fs/autofs4/root.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs4/root.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs4/root.c	2007-04-13 14:14:18.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -1574,15 +1574,12 @@ diff -Nurp linux-2.6.16.orig/fs/autofs4/root.c linux-2.6.16/fs/autofs4/root.c
+  {
+  	struct autofs_info *inf;
+  
+-@@ -434,9 +468,18 @@ static void autofs4_dentry_release(struc
++@@ -434,6 +468,15 @@ static void autofs4_dentry_release(struc
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -1590,9 +1587,9 @@ diff -Nurp linux-2.6.16.orig/fs/autofs4/root.c linux-2.6.16/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -453,43 +496,135 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -1926,7 +1923,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs4/root.c linux-2.6.16/fs/autofs4/root.c
+  	DPRINTK("returning %d", status);
+ diff -Nurp linux-2.6.16.orig/fs/autofs4/waitq.c linux-2.6.16/fs/autofs4/waitq.c
+ --- linux-2.6.16.orig/fs/autofs4/waitq.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/autofs4/waitq.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/autofs4/waitq.c	2007-04-13 14:14:18.000000000 +0800
+ @@ -3,7 +3,7 @@
+   * linux/fs/autofs/waitq.c
+   *
+@@ -2240,7 +2237,7 @@ diff -Nurp linux-2.6.16.orig/fs/autofs4/waitq.c linux-2.6.16/fs/autofs4/waitq.c
+  	}
+ diff -Nurp linux-2.6.16.orig/fs/namei.c linux-2.6.16/fs/namei.c
+ --- linux-2.6.16.orig/fs/namei.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/namei.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/namei.c	2007-04-13 14:14:17.000000000 +0800
+ @@ -365,6 +365,29 @@ void release_open_intent(struct nameidat
+  		fput(nd->intent.open.file);
+  }
+@@ -2381,7 +2378,7 @@ diff -Nurp linux-2.6.16.orig/fs/namei.c linux-2.6.16/fs/namei.c
+  	return PTR_ERR(dentry);
+ diff -Nurp linux-2.6.16.orig/fs/namespace.c linux-2.6.16/fs/namespace.c
+ --- linux-2.6.16.orig/fs/namespace.c	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/fs/namespace.c	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/fs/namespace.c	2007-04-13 14:14:17.000000000 +0800
+ @@ -421,9 +421,9 @@ int may_umount_tree(struct vfsmount *mnt
+  	spin_unlock(&vfsmount_lock);
+  
+@@ -2409,7 +2406,7 @@ diff -Nurp linux-2.6.16.orig/fs/namespace.c linux-2.6.16/fs/namespace.c
+  }
+ diff -Nurp linux-2.6.16.orig/include/linux/auto_fs4.h linux-2.6.16/include/linux/auto_fs4.h
+ --- linux-2.6.16.orig/include/linux/auto_fs4.h	2006-03-20 13:53:29.000000000 +0800
+-+++ linux-2.6.16/include/linux/auto_fs4.h	2007-02-16 13:48:04.000000000 +0900
+++++ linux-2.6.16/include/linux/auto_fs4.h	2007-04-13 14:14:18.000000000 +0800
+ @@ -19,18 +19,37 @@
+  #undef AUTOFS_MIN_PROTO_VERSION
+  #undef AUTOFS_MAX_PROTO_VERSION
+diff --git a/patches/autofs4-2.6.17-v5-update.patch b/patches/autofs4-2.6.17-v5-update.patch
+index 9e02607..fdc6c39 100644
+--- a/patches/autofs4-2.6.17-v5-update.patch
++++ b/patches/autofs4-2.6.17-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.17.orig/fs/autofs/autofs_i.h linux-2.6.17/fs/autofs/autofs_i.h
+ --- linux-2.6.17.orig/fs/autofs/autofs_i.h	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs/autofs_i.h	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs/autofs_i.h	2007-04-13 14:16:22.000000000 +0800
+ @@ -151,6 +151,7 @@ extern const struct file_operations auto
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs/autofs_i.h linux-2.6.17/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.17.orig/fs/autofs/init.c linux-2.6.17/fs/autofs/init.c
+ --- linux-2.6.17.orig/fs/autofs/init.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs/init.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs/init.c	2007-04-13 14:16:22.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs/init.c linux-2.6.17/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.17.orig/fs/autofs/inode.c linux-2.6.17/fs/autofs/inode.c
+ --- linux-2.6.17.orig/fs/autofs/inode.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs/inode.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs/inode.c	2007-04-13 14:16:22.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -91,7 +91,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs/inode.c linux-2.6.17/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.17.orig/fs/autofs/waitq.c linux-2.6.17/fs/autofs/waitq.c
+ --- linux-2.6.17.orig/fs/autofs/waitq.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs/waitq.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs/waitq.c	2007-04-13 14:16:22.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -102,7 +102,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs/waitq.c linux-2.6.17/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.17.orig/fs/autofs4/autofs_i.h linux-2.6.17/fs/autofs4/autofs_i.h
+ --- linux-2.6.17.orig/fs/autofs4/autofs_i.h	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs4/autofs_i.h	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs4/autofs_i.h	2007-04-13 14:16:22.000000000 +0800
+ @@ -54,6 +54,8 @@ struct autofs_info {
+  
+  	int		flags;
+@@ -137,7 +137,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs4/autofs_i.h linux-2.6.17/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.17.orig/fs/autofs4/expire.c linux-2.6.17/fs/autofs4/expire.c
+ --- linux-2.6.17.orig/fs/autofs4/expire.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs4/expire.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs4/expire.c	2007-04-13 14:16:21.000000000 +0800
+ @@ -174,6 +174,12 @@ static int autofs4_tree_busy(struct vfsm
+  			struct autofs_info *ino = autofs4_dentry_ino(p);
+  			unsigned int ino_count = atomic_read(&ino->count);
+@@ -153,7 +153,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs4/expire.c linux-2.6.17/fs/autofs4/expire.
+  				ino_count += 2;
+ diff -Nurp linux-2.6.17.orig/fs/autofs4/init.c linux-2.6.17/fs/autofs4/init.c
+ --- linux-2.6.17.orig/fs/autofs4/init.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs4/init.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs4/init.c	2007-04-13 14:16:22.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -165,7 +165,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs4/init.c linux-2.6.17/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.17.orig/fs/autofs4/inode.c linux-2.6.17/fs/autofs4/inode.c
+ --- linux-2.6.17.orig/fs/autofs4/inode.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs4/inode.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs4/inode.c	2007-04-13 14:16:22.000000000 +0800
+ @@ -47,6 +47,8 @@ struct autofs_info *autofs4_init_ino(str
+  	ino->dentry = NULL;
+  	ino->size = 0;
+@@ -295,7 +295,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs4/inode.c linux-2.6.17/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.17.orig/fs/autofs4/root.c linux-2.6.17/fs/autofs4/root.c
+ --- linux-2.6.17.orig/fs/autofs4/root.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs4/root.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs4/root.c	2007-04-13 14:16:22.000000000 +0800
+ @@ -137,7 +137,9 @@ static int autofs4_dir_open(struct inode
+  		nd.flags = LOOKUP_DIRECTORY;
+  		ret = (dentry->d_op->d_revalidate)(dentry, &nd);
+@@ -395,15 +395,12 @@ diff -Nurp linux-2.6.17.orig/fs/autofs4/root.c linux-2.6.17/fs/autofs4/root.c
+  	}
+  	spin_unlock(&dcache_lock);
+  
+-@@ -440,9 +468,18 @@ void autofs4_dentry_release(struct dentr
++@@ -440,6 +468,15 @@ void autofs4_dentry_release(struct dentr
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -411,9 +408,9 @@ diff -Nurp linux-2.6.17.orig/fs/autofs4/root.c linux-2.6.17/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -459,10 +496,80 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -658,7 +655,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs4/root.c linux-2.6.17/fs/autofs4/root.c
+  	spin_unlock(&dentry->d_lock);
+ diff -Nurp linux-2.6.17.orig/fs/autofs4/waitq.c linux-2.6.17/fs/autofs4/waitq.c
+ --- linux-2.6.17.orig/fs/autofs4/waitq.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/autofs4/waitq.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/autofs4/waitq.c	2007-04-13 14:16:22.000000000 +0800
+ @@ -41,10 +41,8 @@ void autofs4_catatonic_mode(struct autof
+  		wake_up_interruptible(&wq->queue);
+  		wq = nwq;
+@@ -714,7 +711,7 @@ diff -Nurp linux-2.6.17.orig/fs/autofs4/waitq.c linux-2.6.17/fs/autofs4/waitq.c
+  
+ diff -Nurp linux-2.6.17.orig/fs/namei.c linux-2.6.17/fs/namei.c
+ --- linux-2.6.17.orig/fs/namei.c	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/fs/namei.c	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/fs/namei.c	2007-04-13 14:16:21.000000000 +0800
+ @@ -365,6 +365,29 @@ void release_open_intent(struct nameidat
+  		fput(nd->intent.open.file);
+  }
+@@ -795,7 +792,7 @@ diff -Nurp linux-2.6.17.orig/fs/namei.c linux-2.6.17/fs/namei.c
+  	return PTR_ERR(dentry);
+ diff -Nurp linux-2.6.17.orig/include/linux/auto_fs4.h linux-2.6.17/include/linux/auto_fs4.h
+ --- linux-2.6.17.orig/include/linux/auto_fs4.h	2006-06-18 09:49:35.000000000 +0800
+-+++ linux-2.6.17/include/linux/auto_fs4.h	2007-02-16 13:49:23.000000000 +0900
+++++ linux-2.6.17/include/linux/auto_fs4.h	2007-04-13 14:16:22.000000000 +0800
+ @@ -59,6 +59,13 @@ struct autofs_packet_expire_multi {
+  	char name[NAME_MAX+1];
+  };
+diff --git a/patches/autofs4-2.6.18-v5-update.patch b/patches/autofs4-2.6.18-v5-update.patch
+index cb8ed73..470b6fb 100644
+--- a/patches/autofs4-2.6.18-v5-update.patch
++++ b/patches/autofs4-2.6.18-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.18.orig/fs/autofs/autofs_i.h linux-2.6.18/fs/autofs/autofs_i.h
+ --- linux-2.6.18.orig/fs/autofs/autofs_i.h	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs/autofs_i.h	2007-02-16 13:50:41.000000000 +0900
+++++ linux-2.6.18/fs/autofs/autofs_i.h	2007-04-13 14:18:17.000000000 +0800
+ @@ -151,6 +151,7 @@ extern const struct file_operations auto
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs/autofs_i.h linux-2.6.18/fs/autofs/autofs_
+  
+ diff -Nurp linux-2.6.18.orig/fs/autofs/init.c linux-2.6.18/fs/autofs/init.c
+ --- linux-2.6.18.orig/fs/autofs/init.c	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs/init.c	2007-02-16 13:50:41.000000000 +0900
+++++ linux-2.6.18/fs/autofs/init.c	2007-04-13 14:18:17.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs/init.c linux-2.6.18/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.18.orig/fs/autofs/inode.c linux-2.6.18/fs/autofs/inode.c
+ --- linux-2.6.18.orig/fs/autofs/inode.c	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs/inode.c	2007-02-16 13:50:42.000000000 +0900
+++++ linux-2.6.18/fs/autofs/inode.c	2007-04-13 14:18:17.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -91,7 +91,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs/inode.c linux-2.6.18/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.18.orig/fs/autofs/waitq.c linux-2.6.18/fs/autofs/waitq.c
+ --- linux-2.6.18.orig/fs/autofs/waitq.c	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs/waitq.c	2007-02-16 13:50:42.000000000 +0900
+++++ linux-2.6.18/fs/autofs/waitq.c	2007-04-13 14:18:17.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -102,7 +102,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs/waitq.c linux-2.6.18/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.18.orig/fs/autofs4/autofs_i.h linux-2.6.18/fs/autofs4/autofs_i.h
+ --- linux-2.6.18.orig/fs/autofs4/autofs_i.h	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs4/autofs_i.h	2007-02-16 13:50:42.000000000 +0900
+++++ linux-2.6.18/fs/autofs4/autofs_i.h	2007-04-13 14:18:17.000000000 +0800
+ @@ -54,6 +54,8 @@ struct autofs_info {
+  
+  	int		flags;
+@@ -137,7 +137,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs4/autofs_i.h linux-2.6.18/fs/autofs4/autof
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.18.orig/fs/autofs4/init.c linux-2.6.18/fs/autofs4/init.c
+ --- linux-2.6.18.orig/fs/autofs4/init.c	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs4/init.c	2007-02-16 13:50:41.000000000 +0900
+++++ linux-2.6.18/fs/autofs4/init.c	2007-04-13 14:18:17.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -149,7 +149,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs4/init.c linux-2.6.18/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.18.orig/fs/autofs4/inode.c linux-2.6.18/fs/autofs4/inode.c
+ --- linux-2.6.18.orig/fs/autofs4/inode.c	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs4/inode.c	2007-02-16 13:50:42.000000000 +0900
+++++ linux-2.6.18/fs/autofs4/inode.c	2007-04-13 14:18:18.000000000 +0800
+ @@ -47,6 +47,8 @@ struct autofs_info *autofs4_init_ino(str
+  	ino->dentry = NULL;
+  	ino->size = 0;
+@@ -279,7 +279,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs4/inode.c linux-2.6.18/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.18.orig/fs/autofs4/root.c linux-2.6.18/fs/autofs4/root.c
+ --- linux-2.6.18.orig/fs/autofs4/root.c	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs4/root.c	2007-02-16 13:50:42.000000000 +0900
+++++ linux-2.6.18/fs/autofs4/root.c	2007-04-13 14:18:18.000000000 +0800
+ @@ -137,7 +137,9 @@ static int autofs4_dir_open(struct inode
+  		nd.flags = LOOKUP_DIRECTORY;
+  		ret = (dentry->d_op->d_revalidate)(dentry, &nd);
+@@ -379,15 +379,12 @@ diff -Nurp linux-2.6.18.orig/fs/autofs4/root.c linux-2.6.18/fs/autofs4/root.c
+  	}
+  	spin_unlock(&dcache_lock);
+  
+-@@ -440,9 +468,18 @@ void autofs4_dentry_release(struct dentr
++@@ -440,6 +468,15 @@ void autofs4_dentry_release(struct dentr
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -395,9 +392,9 @@ diff -Nurp linux-2.6.18.orig/fs/autofs4/root.c linux-2.6.18/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -459,10 +496,80 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -642,7 +639,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs4/root.c linux-2.6.18/fs/autofs4/root.c
+  	spin_unlock(&dentry->d_lock);
+ diff -Nurp linux-2.6.18.orig/fs/autofs4/waitq.c linux-2.6.18/fs/autofs4/waitq.c
+ --- linux-2.6.18.orig/fs/autofs4/waitq.c	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/autofs4/waitq.c	2007-02-16 13:50:42.000000000 +0900
+++++ linux-2.6.18/fs/autofs4/waitq.c	2007-04-13 14:18:17.000000000 +0800
+ @@ -41,10 +41,8 @@ void autofs4_catatonic_mode(struct autof
+  		wake_up_interruptible(&wq->queue);
+  		wq = nwq;
+@@ -698,7 +695,7 @@ diff -Nurp linux-2.6.18.orig/fs/autofs4/waitq.c linux-2.6.18/fs/autofs4/waitq.c
+  
+ diff -Nurp linux-2.6.18.orig/fs/namei.c linux-2.6.18/fs/namei.c
+ --- linux-2.6.18.orig/fs/namei.c	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/fs/namei.c	2007-02-16 13:50:41.000000000 +0900
+++++ linux-2.6.18/fs/namei.c	2007-04-13 14:18:17.000000000 +0800
+ @@ -372,6 +372,29 @@ void release_open_intent(struct nameidat
+  		fput(nd->intent.open.file);
+  }
+@@ -779,7 +776,7 @@ diff -Nurp linux-2.6.18.orig/fs/namei.c linux-2.6.18/fs/namei.c
+  	return PTR_ERR(dentry);
+ diff -Nurp linux-2.6.18.orig/include/linux/auto_fs4.h linux-2.6.18/include/linux/auto_fs4.h
+ --- linux-2.6.18.orig/include/linux/auto_fs4.h	2006-09-20 11:42:06.000000000 +0800
+-+++ linux-2.6.18/include/linux/auto_fs4.h	2007-02-16 13:50:42.000000000 +0900
+++++ linux-2.6.18/include/linux/auto_fs4.h	2007-04-13 14:18:17.000000000 +0800
+ @@ -59,6 +59,13 @@ struct autofs_packet_expire_multi {
+  	char name[NAME_MAX+1];
+  };
+diff --git a/patches/autofs4-2.6.19-v5-update.patch b/patches/autofs4-2.6.19-v5-update.patch
+index b4d3cab..2a431d2 100644
+--- a/patches/autofs4-2.6.19-v5-update.patch
++++ b/patches/autofs4-2.6.19-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.19.orig/fs/autofs/inode.c linux-2.6.19/fs/autofs/inode.c
+ --- linux-2.6.19.orig/fs/autofs/inode.c	2006-11-30 05:57:37.000000000 +0800
+-+++ linux-2.6.19/fs/autofs/inode.c	2007-02-16 13:52:11.000000000 +0900
+++++ linux-2.6.19/fs/autofs/inode.c	2007-04-13 14:20:19.000000000 +0800
+ @@ -28,10 +28,11 @@ void autofs_kill_sb(struct super_block *
+  	/*
+  	 * In the event of a failure in get_sb_nodev the superblock
+@@ -33,7 +33,7 @@ diff -Nurp linux-2.6.19.orig/fs/autofs/inode.c linux-2.6.19/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.19.orig/fs/autofs4/autofs_i.h linux-2.6.19/fs/autofs4/autofs_i.h
+ --- linux-2.6.19.orig/fs/autofs4/autofs_i.h	2006-11-30 05:57:37.000000000 +0800
+-+++ linux-2.6.19/fs/autofs4/autofs_i.h	2007-02-16 13:52:11.000000000 +0900
+++++ linux-2.6.19/fs/autofs4/autofs_i.h	2007-04-13 14:20:19.000000000 +0800
+ @@ -52,6 +52,8 @@ struct autofs_info {
+  
+  	int		flags;
+@@ -54,7 +54,7 @@ diff -Nurp linux-2.6.19.orig/fs/autofs4/autofs_i.h linux-2.6.19/fs/autofs4/autof
+  static inline struct autofs_sb_info *autofs4_sbi(struct super_block *sb)
+ diff -Nurp linux-2.6.19.orig/fs/autofs4/inode.c linux-2.6.19/fs/autofs4/inode.c
+ --- linux-2.6.19.orig/fs/autofs4/inode.c	2006-11-30 05:57:37.000000000 +0800
+-+++ linux-2.6.19/fs/autofs4/inode.c	2007-02-16 13:52:11.000000000 +0900
+++++ linux-2.6.19/fs/autofs4/inode.c	2007-04-13 14:20:19.000000000 +0800
+ @@ -48,6 +48,8 @@ struct autofs_info *autofs4_init_ino(str
+  	ino->dentry = NULL;
+  	ino->size = 0;
+@@ -111,7 +111,7 @@ diff -Nurp linux-2.6.19.orig/fs/autofs4/inode.c linux-2.6.19/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.19.orig/fs/autofs4/root.c linux-2.6.19/fs/autofs4/root.c
+ --- linux-2.6.19.orig/fs/autofs4/root.c	2006-11-30 05:57:37.000000000 +0800
+-+++ linux-2.6.19/fs/autofs4/root.c	2007-02-16 13:52:11.000000000 +0900
+++++ linux-2.6.19/fs/autofs4/root.c	2007-04-13 14:20:19.000000000 +0800
+ @@ -263,7 +263,7 @@ static int try_to_fill_dentry(struct den
+  		 */
+  		status = d_invalidate(dentry);
+@@ -139,15 +139,12 @@ diff -Nurp linux-2.6.19.orig/fs/autofs4/root.c linux-2.6.19/fs/autofs4/root.c
+  
+  		return status;
+  	}
+-@@ -459,9 +468,18 @@ void autofs4_dentry_release(struct dentr
++@@ -459,6 +468,15 @@ void autofs4_dentry_release(struct dentr
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -155,9 +152,9 @@ diff -Nurp linux-2.6.19.orig/fs/autofs4/root.c linux-2.6.19/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -478,10 +496,80 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -399,7 +396,7 @@ diff -Nurp linux-2.6.19.orig/fs/autofs4/root.c linux-2.6.19/fs/autofs4/root.c
+  	spin_unlock(&dentry->d_lock);
+ diff -Nurp linux-2.6.19.orig/fs/autofs4/waitq.c linux-2.6.19/fs/autofs4/waitq.c
+ --- linux-2.6.19.orig/fs/autofs4/waitq.c	2006-11-30 05:57:37.000000000 +0800
+-+++ linux-2.6.19/fs/autofs4/waitq.c	2007-02-16 13:52:11.000000000 +0900
+++++ linux-2.6.19/fs/autofs4/waitq.c	2007-04-13 14:20:19.000000000 +0800
+ @@ -84,7 +84,11 @@ static void autofs4_notify_daemon(struct
+  				 struct autofs_wait_queue *wq,
+  				 int type)
+@@ -442,7 +439,7 @@ diff -Nurp linux-2.6.19.orig/fs/autofs4/waitq.c linux-2.6.19/fs/autofs4/waitq.c
+  
+ diff -Nurp linux-2.6.19.orig/include/linux/auto_fs4.h linux-2.6.19/include/linux/auto_fs4.h
+ --- linux-2.6.19.orig/include/linux/auto_fs4.h	2006-11-30 05:57:37.000000000 +0800
+-+++ linux-2.6.19/include/linux/auto_fs4.h	2007-02-16 13:52:11.000000000 +0900
+++++ linux-2.6.19/include/linux/auto_fs4.h	2007-04-13 14:20:19.000000000 +0800
+ @@ -59,6 +59,13 @@ struct autofs_packet_expire_multi {
+  	char name[NAME_MAX+1];
+  };
+diff --git a/patches/autofs4-2.6.20-v5-update.patch b/patches/autofs4-2.6.20-v5-update.patch
+index 68c73df..cf39fa8 100644
+--- a/patches/autofs4-2.6.20-v5-update.patch
++++ b/patches/autofs4-2.6.20-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.20.orig/fs/autofs4/autofs_i.h linux-2.6.20/fs/autofs4/autofs_i.h
+ --- linux-2.6.20.orig/fs/autofs4/autofs_i.h	2007-02-05 03:44:54.000000000 +0900
+-+++ linux-2.6.20/fs/autofs4/autofs_i.h	2007-02-16 13:53:34.000000000 +0900
+++++ linux-2.6.20/fs/autofs4/autofs_i.h	2007-04-13 14:22:29.000000000 +0800
+ @@ -52,6 +52,8 @@ struct autofs_info {
+  
+  	int		flags;
+@@ -21,7 +21,7 @@ diff -Nurp linux-2.6.20.orig/fs/autofs4/autofs_i.h linux-2.6.20/fs/autofs4/autof
+  static inline struct autofs_sb_info *autofs4_sbi(struct super_block *sb)
+ diff -Nurp linux-2.6.20.orig/fs/autofs4/inode.c linux-2.6.20/fs/autofs4/inode.c
+ --- linux-2.6.20.orig/fs/autofs4/inode.c	2007-02-05 03:44:54.000000000 +0900
+-+++ linux-2.6.20/fs/autofs4/inode.c	2007-02-16 13:53:34.000000000 +0900
+++++ linux-2.6.20/fs/autofs4/inode.c	2007-04-13 14:22:29.000000000 +0800
+ @@ -48,6 +48,8 @@ struct autofs_info *autofs4_init_ino(str
+  	ino->dentry = NULL;
+  	ino->size = 0;
+@@ -59,7 +59,7 @@ diff -Nurp linux-2.6.20.orig/fs/autofs4/inode.c linux-2.6.20/fs/autofs4/inode.c
+  	s->s_magic = AUTOFS_SUPER_MAGIC;
+ diff -Nurp linux-2.6.20.orig/fs/autofs4/root.c linux-2.6.20/fs/autofs4/root.c
+ --- linux-2.6.20.orig/fs/autofs4/root.c	2007-02-05 03:44:54.000000000 +0900
+-+++ linux-2.6.20/fs/autofs4/root.c	2007-02-16 13:53:34.000000000 +0900
+++++ linux-2.6.20/fs/autofs4/root.c	2007-04-13 14:22:29.000000000 +0800
+ @@ -263,7 +263,7 @@ static int try_to_fill_dentry(struct den
+  		 */
+  		status = d_invalidate(dentry);
+@@ -87,15 +87,12 @@ diff -Nurp linux-2.6.20.orig/fs/autofs4/root.c linux-2.6.20/fs/autofs4/root.c
+  
+  		return status;
+  	}
+-@@ -459,9 +468,18 @@ void autofs4_dentry_release(struct dentr
++@@ -459,6 +468,15 @@ void autofs4_dentry_release(struct dentr
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -103,9 +100,9 @@ diff -Nurp linux-2.6.20.orig/fs/autofs4/root.c linux-2.6.20/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -478,10 +496,80 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -347,7 +344,7 @@ diff -Nurp linux-2.6.20.orig/fs/autofs4/root.c linux-2.6.20/fs/autofs4/root.c
+  	spin_unlock(&dentry->d_lock);
+ diff -Nurp linux-2.6.20.orig/fs/autofs4/waitq.c linux-2.6.20/fs/autofs4/waitq.c
+ --- linux-2.6.20.orig/fs/autofs4/waitq.c	2007-02-05 03:44:54.000000000 +0900
+-+++ linux-2.6.20/fs/autofs4/waitq.c	2007-02-16 13:53:34.000000000 +0900
+++++ linux-2.6.20/fs/autofs4/waitq.c	2007-04-13 14:22:29.000000000 +0800
+ @@ -84,7 +84,11 @@ static void autofs4_notify_daemon(struct
+  				 struct autofs_wait_queue *wq,
+  				 int type)
+@@ -390,7 +387,7 @@ diff -Nurp linux-2.6.20.orig/fs/autofs4/waitq.c linux-2.6.20/fs/autofs4/waitq.c
+  
+ diff -Nurp linux-2.6.20.orig/include/linux/auto_fs4.h linux-2.6.20/include/linux/auto_fs4.h
+ --- linux-2.6.20.orig/include/linux/auto_fs4.h	2007-02-05 03:44:54.000000000 +0900
+-+++ linux-2.6.20/include/linux/auto_fs4.h	2007-02-16 13:53:34.000000000 +0900
+++++ linux-2.6.20/include/linux/auto_fs4.h	2007-04-13 14:22:29.000000000 +0800
+ @@ -59,6 +59,13 @@ struct autofs_packet_expire_multi {
+  	char name[NAME_MAX+1];
+  };
+diff --git a/patches/autofs4-2.6.9-v5-update.patch b/patches/autofs4-2.6.9-v5-update.patch
+index b6ceefd..53eb3b9 100644
+--- a/patches/autofs4-2.6.9-v5-update.patch
++++ b/patches/autofs4-2.6.9-v5-update.patch
+@@ -1,6 +1,6 @@
+ diff -Nurp linux-2.6.9.orig/fs/autofs/autofs_i.h linux-2.6.9/fs/autofs/autofs_i.h
+ --- linux-2.6.9.orig/fs/autofs/autofs_i.h	2004-10-19 05:54:40.000000000 +0800
+-+++ linux-2.6.9/fs/autofs/autofs_i.h	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/autofs/autofs_i.h	2007-04-13 13:58:27.000000000 +0800
+ @@ -150,6 +150,7 @@ extern struct file_operations autofs_roo
+  /* Initializing function */
+  
+@@ -11,7 +11,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs/autofs_i.h linux-2.6.9/fs/autofs/autofs_i.
+  
+ diff -Nurp linux-2.6.9.orig/fs/autofs/dirhash.c linux-2.6.9/fs/autofs/dirhash.c
+ --- linux-2.6.9.orig/fs/autofs/dirhash.c	2004-10-19 05:53:12.000000000 +0800
+-+++ linux-2.6.9/fs/autofs/dirhash.c	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/autofs/dirhash.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -92,7 +92,7 @@ struct autofs_dir_ent *autofs_expire(str
+  			;
+  		dput(dentry);
+@@ -23,7 +23,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs/dirhash.c linux-2.6.9/fs/autofs/dirhash.c
+  			return ent; /* Expirable! */
+ diff -Nurp linux-2.6.9.orig/fs/autofs/init.c linux-2.6.9/fs/autofs/init.c
+ --- linux-2.6.9.orig/fs/autofs/init.c	2004-10-19 05:54:38.000000000 +0800
+-+++ linux-2.6.9/fs/autofs/init.c	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/autofs/init.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -35,7 +35,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs/init.c linux-2.6.9/fs/autofs/init.c
+  static int __init init_autofs_fs(void)
+ diff -Nurp linux-2.6.9.orig/fs/autofs/inode.c linux-2.6.9/fs/autofs/inode.c
+ --- linux-2.6.9.orig/fs/autofs/inode.c	2004-10-19 05:54:40.000000000 +0800
+-+++ linux-2.6.9/fs/autofs/inode.c	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/autofs/inode.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -19,11 +19,20 @@
+  #include "autofs_i.h"
+  #include <linux/module.h>
+@@ -103,7 +103,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs/inode.c linux-2.6.9/fs/autofs/inode.c
+  }
+ diff -Nurp linux-2.6.9.orig/fs/autofs/waitq.c linux-2.6.9/fs/autofs/waitq.c
+ --- linux-2.6.9.orig/fs/autofs/waitq.c	2004-10-19 05:53:43.000000000 +0800
+-+++ linux-2.6.9/fs/autofs/waitq.c	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/autofs/waitq.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -41,6 +41,7 @@ void autofs_catatonic_mode(struct autofs
+  		wq = nwq;
+  	}
+@@ -114,7 +114,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs/waitq.c linux-2.6.9/fs/autofs/waitq.c
+  
+ diff -Nurp linux-2.6.9.orig/fs/autofs4/autofs_i.h linux-2.6.9/fs/autofs4/autofs_i.h
+ --- linux-2.6.9.orig/fs/autofs4/autofs_i.h	2004-10-19 05:54:38.000000000 +0800
+-+++ linux-2.6.9/fs/autofs4/autofs_i.h	2007-02-16 13:39:03.000000000 +0900
+++++ linux-2.6.9/fs/autofs4/autofs_i.h	2007-04-13 13:58:27.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/autofs_i.h
+   *
+@@ -286,7 +286,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs4/autofs_i.h linux-2.6.9/fs/autofs4/autofs_
+ +extern void autofs4_kill_sb(struct super_block *);
+ diff -Nurp linux-2.6.9.orig/fs/autofs4/expire.c linux-2.6.9/fs/autofs4/expire.c
+ --- linux-2.6.9.orig/fs/autofs4/expire.c	2004-10-19 05:54:39.000000000 +0800
+-+++ linux-2.6.9/fs/autofs4/expire.c	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/autofs4/expire.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -761,7 +761,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs4/expire.c linux-2.6.9/fs/autofs4/expire.c
+  
+ diff -Nurp linux-2.6.9.orig/fs/autofs4/init.c linux-2.6.9/fs/autofs4/init.c
+ --- linux-2.6.9.orig/fs/autofs4/init.c	2004-10-19 05:54:39.000000000 +0800
+-+++ linux-2.6.9/fs/autofs4/init.c	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/autofs4/init.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -24,7 +24,7 @@ static struct file_system_type autofs_fs
+  	.owner		= THIS_MODULE,
+  	.name		= "autofs",
+@@ -773,7 +773,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs4/init.c linux-2.6.9/fs/autofs4/init.c
+  static int __init init_autofs4_fs(void)
+ diff -Nurp linux-2.6.9.orig/fs/autofs4/inode.c linux-2.6.9/fs/autofs4/inode.c
+ --- linux-2.6.9.orig/fs/autofs4/inode.c	2004-10-19 05:54:40.000000000 +0800
+-+++ linux-2.6.9/fs/autofs4/inode.c	2007-02-16 13:39:03.000000000 +0900
+++++ linux-2.6.9/fs/autofs4/inode.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -3,6 +3,7 @@
+   * linux/fs/autofs/inode.c
+   *
+@@ -1111,7 +1111,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs4/inode.c linux-2.6.9/fs/autofs4/inode.c
+  }
+ diff -Nurp linux-2.6.9.orig/fs/autofs4/root.c linux-2.6.9/fs/autofs4/root.c
+ --- linux-2.6.9.orig/fs/autofs4/root.c	2004-10-19 05:53:06.000000000 +0800
+-+++ linux-2.6.9/fs/autofs4/root.c	2007-02-16 13:39:03.000000000 +0900
+++++ linux-2.6.9/fs/autofs4/root.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -4,7 +4,7 @@
+   *
+   *  Copyright 1997-1998 Transmeta Corporation -- All Rights Reserved
+@@ -1636,15 +1636,12 @@ diff -Nurp linux-2.6.9.orig/fs/autofs4/root.c linux-2.6.9/fs/autofs4/root.c
+  {
+  	struct autofs_info *inf;
+  
+-@@ -420,9 +464,18 @@ static void autofs4_dentry_release(struc
++@@ -420,6 +464,15 @@ static void autofs4_dentry_release(struc
+  	de->d_fsdata = NULL;
+  
+  	if (inf) {
+ +		struct autofs_sb_info *sbi = autofs4_sbi(de->d_sb);
+ +
+- 		inf->dentry = NULL;
+- 		inf->inode = NULL;
+- 
+ +		if (sbi) {
+ +			spin_lock(&sbi->rehash_lock);
+ +			if (!list_empty(&inf->rehash))
+@@ -1652,9 +1649,9 @@ diff -Nurp linux-2.6.9.orig/fs/autofs4/root.c linux-2.6.9/fs/autofs4/root.c
+ +			spin_unlock(&sbi->rehash_lock);
+ +		}
+ +
+- 		autofs4_free_ino(inf);
+- 	}
+- }
++ 		inf->dentry = NULL;
++ 		inf->inode = NULL;
++ 
+ @@ -439,58 +492,135 @@ static struct dentry_operations autofs4_
+  	.d_release	= autofs4_dentry_release,
+  };
+@@ -1996,7 +1993,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs4/root.c linux-2.6.9/fs/autofs4/root.c
+  	DPRINTK("returning %d", status);
+ diff -Nurp linux-2.6.9.orig/fs/autofs4/waitq.c linux-2.6.9/fs/autofs4/waitq.c
+ --- linux-2.6.9.orig/fs/autofs4/waitq.c	2004-10-19 05:55:27.000000000 +0800
+-+++ linux-2.6.9/fs/autofs4/waitq.c	2007-02-16 13:39:03.000000000 +0900
+++++ linux-2.6.9/fs/autofs4/waitq.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -3,7 +3,7 @@
+   * linux/fs/autofs/waitq.c
+   *
+@@ -2286,7 +2283,7 @@ diff -Nurp linux-2.6.9.orig/fs/autofs4/waitq.c linux-2.6.9/fs/autofs4/waitq.c
+  	}
+ diff -Nurp linux-2.6.9.orig/fs/namei.c linux-2.6.9/fs/namei.c
+ --- linux-2.6.9.orig/fs/namei.c	2004-10-19 05:53:46.000000000 +0800
+-+++ linux-2.6.9/fs/namei.c	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/namei.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -288,6 +288,29 @@ void path_release_on_umount(struct namei
+  	_mntput(nd->mnt);
+  }
+@@ -2391,7 +2388,7 @@ diff -Nurp linux-2.6.9.orig/fs/namei.c linux-2.6.9/fs/namei.c
+  			mntput(next.mnt);
+ diff -Nurp linux-2.6.9.orig/fs/namespace.c linux-2.6.9/fs/namespace.c
+ --- linux-2.6.9.orig/fs/namespace.c	2004-10-19 05:54:37.000000000 +0800
+-+++ linux-2.6.9/fs/namespace.c	2007-02-16 13:39:02.000000000 +0900
+++++ linux-2.6.9/fs/namespace.c	2007-04-13 13:58:27.000000000 +0800
+ @@ -309,9 +309,9 @@ resume:
+  	spin_unlock(&vfsmount_lock);
+  
+@@ -2419,7 +2416,7 @@ diff -Nurp linux-2.6.9.orig/fs/namespace.c linux-2.6.9/fs/namespace.c
+  EXPORT_SYMBOL(may_umount);
+ diff -Nurp linux-2.6.9.orig/include/linux/auto_fs4.h linux-2.6.9/include/linux/auto_fs4.h
+ --- linux-2.6.9.orig/include/linux/auto_fs4.h	2004-10-19 05:53:08.000000000 +0800
+-+++ linux-2.6.9/include/linux/auto_fs4.h	2007-02-16 13:39:03.000000000 +0900
+++++ linux-2.6.9/include/linux/auto_fs4.h	2007-04-13 13:58:27.000000000 +0800
+ @@ -19,18 +19,37 @@
+  #undef AUTOFS_MIN_PROTO_VERSION
+  #undef AUTOFS_MAX_PROTO_VERSION

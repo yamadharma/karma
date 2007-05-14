@@ -2,22 +2,25 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-fs/openafs/openafs-1.5.19.ebuild,v 1.1 2007/05/07 14:53:29 stefaan Exp $
 
-inherit flag-o-matic eutils linux-mod toolchain-funcs versionator
+inherit flag-o-matic eutils versionator
+
+MY_PN=openafs
+MY_P=${MY_PN}-${PV}
+S=${WORKDIR}/${MY_P}
 
 PATCHVER=0.12
 DESCRIPTION="The OpenAFS distributed file system"
 HOMEPAGE="http://www.openafs.org/"
-SRC_URI="http://openafs.org/dl/${PN}/${PV}/${P}-src.tar.bz2
-	doc? ( http://openafs.org/dl/${PN}/${PV}/${P}-doc.tar.bz2 )
-	mirror://gentoo/${PN}-gentoo-${PATCHVER}.tar.bz2"
+SRC_URI="http://openafs.org/dl/${MY_PN}/${PV}/${MY_P}-src.tar.bz2
+	doc? ( http://openafs.org/dl/${MY_PN}/${PV}/${MY_P}-doc.tar.bz2 )
+	mirror://gentoo/${MY_PN}-gentoo-${PATCHVER}.tar.bz2"
 
 LICENSE="IBM openafs-krb5 openafs-krb5-a APSL-2 sun-rpc"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~ia64 ~ppc ~ppc64 x86"
 IUSE="debug kerberos pam doc"
 
-RDEPEND="~net-fs/openafs-kernel-${PV}
-	pam? ( sys-libs/pam )
+RDEPEND="pam? ( sys-libs/pam )
 	kerberos? ( virtual/krb5 )"
 
 PATCHDIR=${WORKDIR}/gentoo/patches/$(get_version_component_range 1-2)
@@ -37,20 +40,45 @@ src_unpack() {
 }
 
 src_compile() {
+	local kv
+	local sysname
+	
+	case `uname -r` in
+	2.4.*)
+    	    kv='24'
+    	    ;;
+	2.6.*)
+    	    kv='26'
+    	    ;;
+	*)
+    	    echo "I don't know how to build linux-`expr ${kernvers} : \(^[0-9]*[.][0-9]*\)`"
+    	    exit 1
+    	    ;;
+	esac
+
+	
+	case `uname -m` in
+    	    x86_64)                         sysname=amd64_linux${kv}        ;;
+    	    alpha*)                         sysname=alpha_linux_${kv}       ;;
+    	    i386|i486|i586|i686|athlon)     sysname=i386_linux${kv}         ;;
+    	    *)                              sysname=`uname -m`_linux${kv}     ;;
+	esac
+
+
 	# cannot use "use_with" macro, as --without-krb5-config crashes the econf
 	local myconf=""
 	if use kerberos; then
 		myconf="--with-krb5-conf=$(type -p krb5-config)"
 	fi
 
-	ARCH="$(tc-arch-kernel)" \
 	XCFLAGS="${CFLAGS}" \
 	econf \
 		$(use_enable pam) \
 		$(use_enable debug) \
 		--enable-largefile-fileserver \
 		--enable-supergroups \
-		--with-linux-kernel-headers=${KV_DIR} \
+		--disable-kernel-module \
+		--with-afs-sysname=${sysname} \
 		${myconf} || die econf
 
 	emake -j1 all_nolibafs || die "Build failed"

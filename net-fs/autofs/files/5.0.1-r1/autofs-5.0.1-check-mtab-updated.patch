@@ -1,0 +1,87 @@
+diff --git a/daemon/spawn.c b/daemon/spawn.c
+index 7f0a6e0..271d37e 100644
+--- a/daemon/spawn.c
++++ b/daemon/spawn.c
+@@ -34,6 +34,8 @@ static pthread_mutex_t spawn_mutex = PTHREAD_MUTEX_INITIALIZER;
+ #define SPAWN_OPT_LOCK		0x0001
+ #define SPAWN_OPT_ACCESS	0x0002
+ 
++#define MTAB_LOCK_RETRIES	3
++
+ inline void dump_core(void)
+ {
+ 	sigset_t segv;
+@@ -267,6 +269,8 @@ int spawn_mount(logger *log, ...)
+ 	char prog[] = PATH_MOUNT;
+ 	char arg0[] = PATH_MOUNT;
+ 	unsigned int options;
++	unsigned int retries = MTAB_LOCK_RETRIES;
++	int ret;
+ 
+ 	/* If we use mount locking we can't validate the location */
+ #ifdef ENABLE_MOUNT_LOCKING
+@@ -289,7 +293,14 @@ int spawn_mount(logger *log, ...)
+ 	while ((*p++ = va_arg(arg, char *)));
+ 	va_end(arg);
+ 
+-	return do_spawn(log, options, prog, (const char **) argv);
++	while (retries--) {
++		ret = do_spawn(log, options, prog, (const char **) argv);
++		if (ret & MTAB_NOTUPDATED)
++			continue;
++		break;
++	}
++
++	return ret;
+ }
+ 
+ /*
+@@ -309,6 +320,8 @@ int spawn_bind_mount(logger *log, ...)
+ 	char arg0[] = PATH_MOUNT;
+ 	char bind[] = "--bind";
+ 	unsigned int options;
++	unsigned int retries = MTAB_LOCK_RETRIES;
++	int ret;
+ 
+ 	/* If we use mount locking we can't validate the location */
+ #ifdef ENABLE_MOUNT_LOCKING
+@@ -332,7 +345,14 @@ int spawn_bind_mount(logger *log, ...)
+ 	while ((*p++ = va_arg(arg, char *)));
+ 	va_end(arg);
+ 
+-	return do_spawn(log, options, prog, (const char **) argv);
++	while (retries--) {
++		ret = do_spawn(log, options, prog, (const char **) argv);
++		if (ret & MTAB_NOTUPDATED)
++			continue;
++		break;
++	}
++
++	return ret;
+ }
+ 
+ int spawn_umount(logger *log, ...)
+@@ -343,6 +363,8 @@ int spawn_umount(logger *log, ...)
+ 	char prog[] = PATH_UMOUNT;
+ 	char arg0[] = PATH_UMOUNT;
+ 	unsigned int options;
++	unsigned int retries = MTAB_LOCK_RETRIES;
++	int ret;
+ 
+ #ifdef ENABLE_MOUNT_LOCKING
+ 	options = SPAWN_OPT_LOCK;
+@@ -364,6 +386,13 @@ int spawn_umount(logger *log, ...)
+ 	while ((*p++ = va_arg(arg, char *)));
+ 	va_end(arg);
+ 
+-	return do_spawn(log, options, prog, (const char **) argv);
++	while (retries--) {
++		ret = do_spawn(log, options, prog, (const char **) argv);
++		if (ret & MTAB_NOTUPDATED)
++			continue;
++		break;
++	}
++
++	return ret;
+ }
+ 

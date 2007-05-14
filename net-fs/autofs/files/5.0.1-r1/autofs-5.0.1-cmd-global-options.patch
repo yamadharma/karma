@@ -1,0 +1,143 @@
+diff --git a/daemon/automount.c b/daemon/automount.c
+index 37e040b..a8327d1 100644
+--- a/daemon/automount.c
++++ b/daemon/automount.c
+@@ -47,6 +47,8 @@ const char *libdir = AUTOFS_LIB_DIR;	/* Location of library modules */
+ const char *mapdir = AUTOFS_MAP_DIR;	/* Location of mount maps */
+ const char *confdir = AUTOFS_CONF_DIR;	/* Location of autofs config file */
+ 
++const char *global_options;		/* Global option, from command line */
++
+ static char *pid_file = NULL;	/* File in which to keep pid */
+ unsigned int random_selection;	/* use random policy when selecting
+ 				 * which multi-mount host to mount */
+@@ -1367,6 +1369,8 @@ static void usage(void)
+ 		/*"	-f --foreground do not fork into background\n" */
+ 		"	-r --random-replicated-selection\n"
+ 		"			use ramdom replicated server selection\n"
++		"	-O --global-options\n"
++		"			specify global mount options\n"
+ 		"	-V --version	print version, build config and exit\n"
+ 		, program);
+ }
+@@ -1452,7 +1456,7 @@ int main(int argc, char *argv[])
+ {
+ 	int res, opt, status;
+ 	unsigned ghost, logging;
+-	unsigned foreground;
++	unsigned foreground, have_global_options;
+ 	time_t timeout;
+ 	time_t age = time(NULL);
+ 	sigset_t allsigs;
+@@ -1466,6 +1470,7 @@ int main(int argc, char *argv[])
+ 		{"define", 1, 0, 'D'},
+ 		{"foreground", 0, 0, 'f'},
+ 		{"random-selection", 0, 0, 'r'},
++		{"global-options", 1, 0, 'O'},
+ 		{"version", 0, 0, 'V'},
+ 		{0, 0, 0, 0}
+ 	};
+@@ -1482,10 +1487,12 @@ int main(int argc, char *argv[])
+ 	ghost = defaults_get_browse_mode();
+ 	logging = defaults_get_logging();
+ 	random_selection = 0;
++	global_options = NULL;
++	have_global_options = 0;
+ 	foreground = 0;
+ 
+ 	opterr = 0;
+-	while ((opt = getopt_long(argc, argv, "+hp:t:vdD:fVr", long_options, NULL)) != EOF) {
++	while ((opt = getopt_long(argc, argv, "+hp:t:vdD:fVrO:", long_options, NULL)) != EOF) {
+ 		switch (opt) {
+ 		case 'h':
+ 			usage();
+@@ -1523,6 +1530,16 @@ int main(int argc, char *argv[])
+ 			random_selection = 1;
+ 			break;
+ 
++		case 'O':
++			if (!have_global_options) {
++				global_options = strdup(optarg);
++				have_global_options = 1;
++				break;
++			}
++			printf("%s: global options already specified.\n",
++				program);
++			break;
++
+ 		case '?':
+ 		case ':':
+ 			printf("%s: Ambiguous or unknown options\n", program);
+diff --git a/man/automount.8 b/man/automount.8
+index 59f2805..b01be83 100644
+--- a/man/automount.8
++++ b/man/automount.8
+@@ -51,6 +51,12 @@ mount entries.
+ Enables the use of ramdom selection when choosing a host from a
+ list of replicated servers.
+ .TP
++.I "\-O, \-\-global-options"
++Allows the specification of global mount options used for all master
++map entries. These options will either replace or be appened to options
++given in a master map entry depending on the APPEND_OPTIONS configuration
++setting.
++.TP
+ .I "\-V, \-\-version"
+ Display the version number, then exit.
+ .SH ARGUMENTS
+diff --git a/modules/parse_sun.c b/modules/parse_sun.c
+index 276493a..0494e76 100644
+--- a/modules/parse_sun.c
++++ b/modules/parse_sun.c
+@@ -42,6 +42,8 @@ int parse_version = AUTOFS_PARSE_VERSION;	/* Required by protocol */
+ static struct mount_mod *mount_nfs = NULL;
+ static int init_ctr = 0;
+ 
++extern const char *global_options;
++
+ struct parse_context {
+ 	char *optstr;		/* Mount options */
+ 	char *macros;		/* Map wide macro defines */
+@@ -65,6 +67,8 @@ static struct parse_context default_context = {
+ 	1			/* Do slashify_colons */
+ };
+ 
++static char *concat_options(char *left, char *right);
++
+ /* Free all storage associated with this context */
+ static void kill_context(struct parse_context *ctxt)
+ {
+@@ -264,6 +268,7 @@ int parse_init(int argc, const char *const *argv, void **context)
+ 	const char *xopt;
+ 	int optlen, len, offset;
+ 	int i, bval;
++	unsigned int append_options;
+ 
+ 	/* Get processor information for predefined escapes */
+ 
+@@ -392,6 +397,25 @@ int parse_init(int argc, const char *const *argv, void **context)
+ 		}
+ 	}
+ 
++	if (global_options) {
++		append_options = defaults_get_append_options();
++		if (append_options) {
++			char *tmp = concat_options(global_options, ctxt->optstr);
++			if (!tmp) {
++				char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
++				error(LOGOPT_ANY, MODPREFIX "concat_options: %s", estr);
++			} else
++				ctxt->optstr = tmp;
++		} else {
++			if (!ctxt->optstr)
++				ctxt->optstr = strdup(global_options);
++			if (!ctxt->optstr) {
++				char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
++				warn(LOGOPT_ANY, MODPREFIX "%s", estr);
++			}
++		}
++	}
++
+ 	debug(LOGOPT_NONE,
+ 	      MODPREFIX "init gathered global options: %s", ctxt->optstr);
+ 

@@ -1,0 +1,158 @@
+diff --git a/include/defaults.h b/include/defaults.h
+index b64735f..ef58467 100644
+--- a/include/defaults.h
++++ b/include/defaults.h
+@@ -34,6 +34,7 @@
+ #define DEFAULT_ENTRY_ATTR		"cn"
+ #define DEFAULT_VALUE_ATTR		"nisMapEntry"
+ 
++#define DEFAULT_APPEND_OPTIONS		1
+ #define DEFAULT_AUTH_CONF_FILE		AUTOFS_MAP_DIR "/autofs_ldap_auth.conf"
+ 
+ unsigned int defaults_read_config(void);
+@@ -47,6 +48,7 @@ const char *defaults_get_entry_obj_class(void);
+ const char *defaults_get_map_attr(void);
+ const char *defaults_get_entry_attr(void);
+ const char *defaults_get_value_attr(void);
++unsigned int defaults_get_append_options(void);
+ const char *defaults_get_auth_conf_file(void);
+ 
+ #endif
+diff --git a/lib/defaults.c b/lib/defaults.c
+index f76478e..4b4acba 100644
+--- a/lib/defaults.c
++++ b/lib/defaults.c
+@@ -37,6 +37,7 @@
+ #define ENV_NAME_ENTRY_ATTR		"ENTRY_ATTRIBUTE"
+ #define ENV_NAME_VALUE_ATTR		"VALUE_ATTRIBUTE"
+ 
++#define ENV_APPEND_OPTIONS		"APPEND_OPTIONS"
+ #define ENV_AUTH_CONF_FILE		"AUTH_CONF_FILE"
+ 
+ static const char *default_master_map_name = DEFAULT_MASTER_MAP_NAME;
+@@ -200,6 +201,7 @@ unsigned int defaults_read_config(void)
+ 		    check_set_config_value(res, ENV_NAME_MAP_ATTR, value) ||
+ 		    check_set_config_value(res, ENV_NAME_ENTRY_ATTR, value) ||
+ 		    check_set_config_value(res, ENV_NAME_VALUE_ATTR, value) ||
++		    check_set_config_value(res, ENV_APPEND_OPTIONS, value) ||
+ 		    check_set_config_value(res, ENV_AUTH_CONF_FILE, value))
+ 			;
+ 	}
+@@ -338,6 +340,17 @@ const char *defaults_get_value_attr(void)
+ 	return (const char *) va;
+ }
+ 
++unsigned int defaults_get_append_options(void)
++{
++	int res;
++
++	res = get_env_yesno(ENV_APPEND_OPTIONS);
++	if (res < 0)
++		res = DEFAULT_APPEND_OPTIONS;
++
++	return res;
++}
++
+ const char *defaults_get_auth_conf_file(void)
+ {
+ 	char *cf;
+diff --git a/modules/parse_sun.c b/modules/parse_sun.c
+index 9323e7c..276493a 100644
+--- a/modules/parse_sun.c
++++ b/modules/parse_sun.c
+@@ -140,7 +140,7 @@ int expandsunent(const char *src, char *dst, const char *key,
+ 			 * re preserved, we need to escape them here.
+ 			 */
+ 			if (strchr(key, ' ')) {
+-				char *keyp = key;
++				const char *keyp = key;
+ 				while (*keyp) {
+ 					if (isspace(*keyp)) {
+ 						if (dst) {
+@@ -953,6 +953,7 @@ int parse_mount(struct autofs_point *ap, const char *name,
+ 	int mapent_len, rv = 0;
+ 	int optlen, cur_state;
+ 	int slashify = ctxt->slashify_colons;
++	unsigned int append_options;
+ 
+ 	source = ap->entry->current;
+ 	ap->entry->current = NULL;
+@@ -998,6 +999,7 @@ int parse_mount(struct autofs_point *ap, const char *name,
+ 
+ 	debug(ap->logopt, MODPREFIX "expanded entry: %s", pmapent);
+ 
++	append_options = defaults_get_append_options();
+ 	options = strdup(ctxt->optstr ? ctxt->optstr : "");
+ 	if (!options) {
+ 		char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+@@ -1010,10 +1012,10 @@ int parse_mount(struct autofs_point *ap, const char *name,
+ 
+ 	/* Deal with 0 or more options */
+ 	if (*p == '-') {
+-		char *mnt_options = NULL;
++		char *tmp, *mnt_options = NULL;
+ 
+ 		do {
+-			char *tmp, *noptions = NULL;
++			char *noptions = NULL;
+ 
+ 			p = parse_options(p, &noptions, ap->logopt);
+ 			tmp = concat_options(mnt_options, noptions);
+@@ -1033,10 +1035,25 @@ int parse_mount(struct autofs_point *ap, const char *name,
+ 			p = skipspace(p);
+ 		} while (*p == '-');
+ 
+-		if (options)
++		if (options && !append_options) {
+ 			free(options);
++			options = NULL;
++		}
+ 
+-		options = mnt_options;
++		if (append_options) {
++			tmp = concat_options(options, mnt_options);
++			if (!tmp) {
++				char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
++				error(ap->logopt, MODPREFIX "concat_options: %s", estr);
++				if (options)
++					free(options);
++				if (mnt_options)
++					free(mnt_options);
++				return 1;
++			}
++			options = tmp;
++		} else
++			options = mnt_options;
+ 	}
+ 
+ 	debug(ap->logopt, MODPREFIX "gathered options: %s", options);
+diff --git a/redhat/autofs.sysconfig.in b/redhat/autofs.sysconfig.in
+index 84d524b..8299b55 100644
+--- a/redhat/autofs.sysconfig.in
++++ b/redhat/autofs.sysconfig.in
+@@ -13,6 +13,10 @@ TIMEOUT=300
+ #
+ BROWSE_MODE="no"
+ #
++# APPEND_OPTIONS - append to global options instead of replace.
++#
++#APPEND_OPTIONS="yes"
++#
+ # LOGGING - set default log level "none", "verbose" or "debug"
+ #
+ #LOGGING="none"
+diff --git a/samples/autofs.conf.default.in b/samples/autofs.conf.default.in
+index 84d524b..8299b55 100644
+--- a/samples/autofs.conf.default.in
++++ b/samples/autofs.conf.default.in
+@@ -13,6 +13,10 @@ TIMEOUT=300
+ #
+ BROWSE_MODE="no"
+ #
++# APPEND_OPTIONS - append to global options instead of replace.
++#
++#APPEND_OPTIONS="yes"
++#
+ # LOGGING - set default log level "none", "verbose" or "debug"
+ #
+ #LOGGING="none"

@@ -1,0 +1,44 @@
+diff --git a/daemon/direct.c b/daemon/direct.c
+index 0869858..2dc23db 100644
+--- a/daemon/direct.c
++++ b/daemon/direct.c
+@@ -1335,7 +1335,7 @@ static void *do_mount_direct(void *arg)
+ 	}
+ 
+ 	status = getpwuid_r(mt->uid, ppw, pw_tmp, tmplen, pppw);
+-	if (status) {
++	if (status || !ppw) {
+ 		error(ap->logopt, "failed to get passwd info from getpwuid_r");
+ 		free(tsv);
+ 		free(pw_tmp);
+@@ -1382,7 +1382,7 @@ static void *do_mount_direct(void *arg)
+ 	}
+ 
+ 	status = getgrgid_r(mt->gid, pgr, gr_tmp, tmplen, ppgr);
+-	if (status) {
++	if (status || !pgr) {
+ 		error(ap->logopt, "failed to get group info from getgrgid_r");
+ 		free(tsv->user);
+ 		free(tsv->home);
+diff --git a/daemon/indirect.c b/daemon/indirect.c
+index 46e3f99..2068c16 100644
+--- a/daemon/indirect.c
++++ b/daemon/indirect.c
+@@ -807,7 +807,7 @@ static void *do_mount_indirect(void *arg)
+ 	}
+ 
+ 	status = getpwuid_r(mt->uid, ppw, pw_tmp, tmplen, pppw);
+-	if (status) {
++	if (status || !ppw) {
+ 		error(ap->logopt, "failed to get passwd info from getpwuid_r");
+ 		free(tsv);
+ 		free(pw_tmp);
+@@ -854,7 +854,7 @@ static void *do_mount_indirect(void *arg)
+ 	}
+ 
+ 	status = getgrgid_r(mt->gid, pgr, gr_tmp, tmplen, ppgr);
+-	if (status) {
++	if (status || !pgr) {
+ 		error(ap->logopt, "failed to get group info from getgrgid_r");
+ 		free(tsv->user);
+ 		free(tsv->home);

@@ -1,0 +1,300 @@
+diff --git a/daemon/automount.c b/daemon/automount.c
+index 08bf511..5989324 100644
+--- a/daemon/automount.c
++++ b/daemon/automount.c
+@@ -98,7 +98,7 @@ static int do_mkdir(const char *parent, const char *path, mode_t mode)
+ 	status = -1;
+ 	if (*parent)
+ 		status = statfs(parent, &fs);
+-	if ((status != -1 && fs.f_type == AUTOFS_SUPER_MAGIC) ||
++	if ((status != -1 && fs.f_type == (__SWORD_TYPE) AUTOFS_SUPER_MAGIC) ||
+ 	    contained_in_local_fs(path)) {
+ 		if (mkdir(path, mode) == -1)
+ 			return 0;
+@@ -178,7 +178,7 @@ int rmdir_path(struct autofs_point *ap, const char *path, dev_t dev)
+ 			return -1;
+ 		}
+ 
+-		if (fs.f_type != AUTOFS_SUPER_MAGIC) {
++		if (fs.f_type != (__SWORD_TYPE) AUTOFS_SUPER_MAGIC) {
+ 			crit(ap->logopt, "attempt to remove directory from a "
+ 			     "non-autofs filesystem!");
+ 			crit(ap->logopt,
+@@ -510,7 +510,7 @@ int umount_multi(struct autofs_point *ap, const char *path, int incl)
+ 		return 1;
+ 	}
+ 
+-	is_autofs_fs = fs.f_type == AUTOFS_SUPER_MAGIC ? 1 : 0;
++	is_autofs_fs = fs.f_type == (__SWORD_TYPE) AUTOFS_SUPER_MAGIC ? 1 : 0;
+ 
+ 	left = 0;
+ 
+diff --git a/daemon/direct.c b/daemon/direct.c
+index 2dc23db..38baabd 100644
+--- a/daemon/direct.c
++++ b/daemon/direct.c
+@@ -966,7 +966,7 @@ void *expire_proc_direct(void *arg)
+ 				continue;
+ 			}
+ 
+-			if (fs.f_type != AUTOFS_SUPER_MAGIC) {
++			if (fs.f_type != (__SWORD_TYPE) AUTOFS_SUPER_MAGIC) {
+ 				pthread_setcancelstate(cur_state, NULL);
+ 				continue;
+ 			}
+diff --git a/daemon/lookup.c b/daemon/lookup.c
+index db3dac0..aded82b 100644
+--- a/daemon/lookup.c
++++ b/daemon/lookup.c
+@@ -824,8 +824,6 @@ int lookup_nss_mount(struct autofs_point *ap, const char *name, int name_len)
+ 
+ 		head = &nsslist;
+ 		list_for_each(p, head) {
+-			enum nsswitch_status status;
+-
+ 			this = list_entry(p, struct nss_source, list);
+ 
+ 			result = lookup_map_name(this, ap, map, name, name_len);
+diff --git a/include/automount.h b/include/automount.h
+index 34edab3..01e5301 100644
+--- a/include/automount.h
++++ b/include/automount.h
+@@ -149,7 +149,7 @@ struct mapent {
+ 	char *mapent;
+ 	time_t age;
+ 	/* Time of last mount fail */
+-	unsigned int status;
++	time_t status;
+ 	/* For direct mounts per entry context is kept here */
+ 	int dir_created;
+ 	/* File descriptor for ioctls */
+@@ -484,30 +484,30 @@ int count_mounts(const char *path, dev_t dev);
+ 
+ #define state_mutex_lock(ap) \
+ do { \
+-	int status = pthread_mutex_lock(&ap->state_mutex); \
+-	if (status) \
+-		fatal(status); \
++	int _st_lock = pthread_mutex_lock(&ap->state_mutex); \
++	if (_st_lock) \
++		fatal(_st_lock); \
+ } while(0)
+ 
+ #define state_mutex_unlock(ap) \
+ do{ \
+-	int status = pthread_mutex_unlock(&ap->state_mutex); \
+-	if (status) \
+-		fatal(status); \
++	int _st_unlock = pthread_mutex_unlock(&ap->state_mutex); \
++	if (_st_unlock) \
++		fatal(_st_unlock); \
+ } while (0)
+ 
+ #define mounts_mutex_lock(ap) \
+ do { \
+-	int status = pthread_mutex_lock(&ap->mounts_mutex); \
+-	if (status) \
+-		fatal(status); \
++	int _m_lock = pthread_mutex_lock(&ap->mounts_mutex); \
++	if (_m_lock) \
++		fatal(_m_lock); \
+ } while (0)
+ 
+ #define mounts_mutex_unlock(ap) \
+ do { \
+-	int status = pthread_mutex_unlock(&ap->mounts_mutex); \
+-	if (status) \
+-		fatal(status); \
++	int _m_unlock = pthread_mutex_unlock(&ap->mounts_mutex); \
++	if (_m_unlock) \
++		fatal(_m_unlock); \
+ } while(0)
+ 
+ /* Expire alarm handling routines */
+diff --git a/include/state.h b/include/state.h
+index c756338..8aed234 100644
+--- a/include/state.h
++++ b/include/state.h
+@@ -61,16 +61,16 @@ struct expire_args {
+ 
+ #define expire_args_mutex_lock(ea) \
+ do { \
+-	int status = pthread_mutex_lock(&ea->mutex); \
+-	if (status) \
+-		fatal(status); \
++	int _ea_lock = pthread_mutex_lock(&ea->mutex); \
++	if (_ea_lock) \
++		fatal(_ea_lock); \
+ } while (0)
+ 
+ #define expire_args_mutex_unlock(ea) \
+ do { \
+-	int status = pthread_mutex_unlock(&ea->mutex); \
+-	if (status) \
+-		fatal(status); \
++	int _ea_unlock = pthread_mutex_unlock(&ea->mutex); \
++	if (_ea_unlock) \
++		fatal(_ea_unlock); \
+ } while (0)
+ 
+ struct readmap_args {
+diff --git a/lib/alarm.c b/lib/alarm.c
+index 8d8a140..e0e6fd4 100755
+--- a/lib/alarm.c
++++ b/lib/alarm.c
+@@ -28,16 +28,16 @@ static LIST_HEAD(alarms);
+ 
+ #define alarm_lock() \
+ do { \
+-	int status = pthread_mutex_lock(&mutex); \
+-	if (status) \
+-		fatal(status); \
++	int _alm_lock = pthread_mutex_lock(&mutex); \
++	if (_alm_lock) \
++		fatal(_alm_lock); \
+ } while (0)
+ 
+ #define alarm_unlock() \
+ do { \
+-	int status = pthread_mutex_unlock(&mutex); \
+-	if (status) \
+-		fatal(status); \
++	int _alm_unlock = pthread_mutex_unlock(&mutex); \
++	if (_alm_unlock) \
++		fatal(_alm_unlock); \
+ } while (0)
+ 
+ void dump_alarms(void)
+diff --git a/lib/parse_subs.c b/lib/parse_subs.c
+index bdb19cd..0c45905 100644
+--- a/lib/parse_subs.c
++++ b/lib/parse_subs.c
+@@ -316,8 +316,8 @@ int umount_ent(struct autofs_point *ap, const char *path)
+ 		warn(ap->logopt, "could not stat fs of %s", path);
+ 		is_smbfs = 0;
+ 	} else {
+-		int cifsfs = fs.f_type == CIFS_MAGIC_NUMBER;
+-		int smbfs = fs.f_type == SMB_SUPER_MAGIC;
++		int cifsfs = fs.f_type == (__SWORD_TYPE) CIFS_MAGIC_NUMBER;
++		int smbfs = fs.f_type == (__SWORD_TYPE) SMB_SUPER_MAGIC;
+ 		is_smbfs = (cifsfs | smbfs) ? 1 : 0;
+ 	}
+ 
+@@ -407,7 +407,7 @@ int mount_multi_triggers(struct autofs_point *ap, char *root, struct mapent *me,
+ 		else
+ 			return -1;
+ 	} else
+-		is_autofs_fs = fs.f_type == AUTOFS_SUPER_MAGIC ? 1 : 0;
++		is_autofs_fs = fs.f_type == (__SWORD_TYPE) AUTOFS_SUPER_MAGIC ? 1 : 0;
+ 
+ 	mounted = 0;
+ 	start = strlen(root);
+diff --git a/modules/lookup_hosts.c b/modules/lookup_hosts.c
+index 8855ed7..7eb5060 100644
+--- a/modules/lookup_hosts.c
++++ b/modules/lookup_hosts.c
+@@ -21,7 +21,13 @@
+ #include <sys/stat.h>
+ #include <netdb.h>
+ 
++/* 
++ * Avoid annoying compiler noise by using an alternate name for
++ * typedef name in mount.h
++ */
++#define name __dummy_type_name
+ #include "mount.h"
++#undef name
+ 
+ #define MODULE_LOOKUP
+ #include "automount.h"
+@@ -170,10 +176,11 @@ int lookup_mount(struct autofs_point *ap, const char *name, int name_len, void *
+ 	 */
+ 	if (*name == '/') {
+ 		pthread_cleanup_push(cache_lock_cleanup, mc);
+-		mapent = alloca(strlen(me->mapent) + 1);
+-		mapent_len = sprintf(mapent, me->mapent);
++		mapent_len = strlen(me->mapent);
++		mapent = alloca(mapent_len + 1);
++		if (mapent)
++			strcpy(mapent, me->mapent);
+ 		pthread_cleanup_pop(0);
+-		mapent[mapent_len] = '\0';
+ 	}
+ 	cache_unlock(mc);
+ 
+diff --git a/modules/parse_hesiod.c b/modules/parse_hesiod.c
+index 7f125eb..ff1f0a5 100644
+--- a/modules/parse_hesiod.c
++++ b/modules/parse_hesiod.c
+@@ -106,7 +106,7 @@ static int parse_nfs(struct autofs_point *ap,
+ 		p++;
+ 
+ 	/* Isolate the remote mountpoint for this NFS fs. */
+-	for (i = 0; (!isspace(p[i]) && i < sizeof(mount)); i++) {
++	for (i = 0; (!isspace(p[i]) && i < (int) sizeof(mount)); i++) {
+ 		mount[i] = p[i];
+ 	}
+ 
+diff --git a/modules/parse_sun.c b/modules/parse_sun.c
+index 7020902..93fe3de 100644
+--- a/modules/parse_sun.c
++++ b/modules/parse_sun.c
+@@ -822,11 +822,11 @@ static int parse_mapent(const char *ent, char *g_options, char **options, char *
+ 	p = skipspace(p);
+ 
+ 	while (*p && ((*p == '"' && *(p + 1) != '/') || (*p != '"' && *p != '/'))) {
+-		char *tmp, *ent;
++		char *tmp, *ent_chunk;
+ 
+ 		l = chunklen(p, check_colon(p));
+-		ent = dequote(p, l, logopt);
+-		if (!ent) {
++		ent_chunk = dequote(p, l, logopt);
++		if (!ent_chunk) {
+ 			warn(logopt, MODPREFIX "null location or out of memory");
+ 			free(myoptions);
+ 			free(loc);
+@@ -837,26 +837,27 @@ static int parse_mapent(const char *ent, char *g_options, char **options, char *
+ 		if (*p == '/') {
+ 			warn(logopt,
+ 			      MODPREFIX "error location begins with \"/\"");
++			free(ent_chunk);
+ 			free(myoptions);
+ 			free(loc);
+ 			return 0;
+ 		}
+ 
+-		if (!validate_location(ent)) {
++		if (!validate_location(ent_chunk)) {
+ 			warn(logopt,
+ 			      MODPREFIX "invalid location %s", ent);
+-			free(ent);
++			free(ent_chunk);
+ 			free(myoptions);
+ 			free(loc);
+ 			return 0;
+ 		}
+ 
+-		debug(logopt, MODPREFIX "dequote(\"%.*s\") -> %s", l, p, ent);
++		debug(logopt, MODPREFIX "dequote(\"%.*s\") -> %s", l, p, ent_chunk);
+ 
+ 		tmp = realloc(loc, strlen(loc) + l + 2);
+ 		if (!tmp) {
+ 			error(logopt, MODPREFIX "out of memory");
+-			free(ent);
++			free(ent_chunk);
+ 			free(myoptions);
+ 			free(loc);
+ 			return 0;
+@@ -864,9 +865,9 @@ static int parse_mapent(const char *ent, char *g_options, char **options, char *
+ 		loc = tmp;
+ 
+ 		strcat(loc, " ");
+-		strcat(loc, ent);
++		strcat(loc, ent_chunk);
+ 
+-		free(ent);
++		free(ent_chunk);
+ 
+ 		p += l;
+ 		p = skipspace(p);

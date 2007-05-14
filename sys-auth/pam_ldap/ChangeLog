@@ -1,6 +1,44 @@
 # ChangeLog for sys-auth/pam_ldap
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-auth/pam_ldap/ChangeLog,v 1.27 2006/06/07 20:46:00 robbat2 Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-auth/pam_ldap/ChangeLog,v 1.37 2006/12/17 21:57:50 killerfox Exp $
+
+  17 Dec 2006; René Nussbaumer <killerfox@gentoo.org> pam_ldap-183.ebuild:
+  Stable on hppa. See bug #153916.
+
+  13 Dec 2006; Bryan Østergaard <kloeri@gentoo.org> pam_ldap-183.ebuild:
+  Stable on Alpha, bug 153916.
+
+  13 Dec 2006; Tobias Scherbaum <dertobi123@gentoo.org> pam_ldap-183.ebuild:
+  ppc stable, bug #153916
+
+  12 Dec 2006; Peter Weller <welp@gentoo.org> pam_ldap-183.ebuild:
+  Added amd64 keyword wrt bug #153916
+
+  12 Dec 2006; Gustavo Zacarias <gustavoz@gentoo.org> pam_ldap-183.ebuild:
+  Stable on sparc wrt security #153916
+
+  12 Dec 2006; Christian Faulhammer <opfer@gentoo.org> pam_ldap-183.ebuild:
+  stable x86, security bug #153916
+
+  12 Dec 2006; Brent Baude <ranger@gentoo.org> pam_ldap-183.ebuild:
+  Marked sys-auth/pam_ldap-183 ppc64 for bug 153916
+
+*pam_ldap-183 (11 Dec 2006)
+
+  11 Dec 2006; Robin H. Johnson <robbat2@gentoo.org> +pam_ldap-183.ebuild:
+  Bug #153916, version bump.
+
+  12 Oct 2006; Diego Pettenò <flameeyes@gentoo.org> pam_ldap-180.ebuild,
+  pam_ldap-182.ebuild:
+  Fix autotools regeneration and dependencies. Thanks to Patric Lauer for
+  reporting in bug #151034.
+
+  12 Oct 2006; Diego Pettenò <flameeyes@gentoo.org>
+  -files/pam_ldap-176-fix-referral-tls.patch, -pam_ldap-156.ebuild,
+  -pam_ldap-161.ebuild, -pam_ldap-164.ebuild, -pam_ldap-167.ebuild,
+  -pam_ldap-171.ebuild, -pam_ldap-176.ebuild, -pam_ldap-176-r1.ebuild,
+  -pam_ldap-178.ebuild, -pam_ldap-178-r1.ebuild:
+  Remove old versions.
 
   07 Jun 2006; Robin H. Johnson <robbat2@gentoo.org> pam_ldap-182.ebuild:
   Bug #135903, fix IUSE.
