@@ -1,6 +1,21 @@
 # ChangeLog for net-misc/nxserver-freenx
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/net-misc/nxserver-freenx/ChangeLog,v 1.21 2007/03/21 12:18:15 voyageur Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-misc/nxserver-freenx/ChangeLog,v 1.25 2007/05/12 15:01:58 voyageur Exp $
+
+  12 May 2007; Bernard Cafarelli <voyageur@gentoo.org> metadata.xml:
+  Fixed maintainer in metadata.xml
+
+  26 Apr 2007; Bernard Cafarelli <voyageur@gentoo.org>
+  nxserver-freenx-0.5.0-r2.ebuild, nxserver-freenx-0.6.0.ebuild:
+  Updated blockers on other NX servers
+
+  18 Apr 2007; Bernard Cafarelli <voyageur@gentoo.org>
+  nxserver-freenx-0.6.0.ebuild:
+  Added xauth and font-alias deps, bug #172333
+
+  02 Apr 2007; Bernard Cafarelli <voyageur@gentoo.org>
+  nxserver-freenx-0.5.0-r2.ebuild:
+  Updated blockers on NoMachine servers
 
 *nxserver-freenx-0.5.0-r2 (21 Mar 2007)
 

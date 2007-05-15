@@ -38,6 +38,8 @@ src_unpack() {
 	cd "${S}"
 
 	EPATCH_SUFFIX="patch" epatch "${FILESDIR}"/patches
+	
+	cp ${FILESDIR}/sample_passwd_check.c ${S}/lib/kadm5
 
 	AT_M4DIR="cf" eautoreconf
 }
@@ -62,13 +64,13 @@ src_compile() {
 	emake || die "emake failed"
 
 	# Compile the added password checker:
-#	cd lib/kadm5
-#	tc-export CC
-#	${CC} -shared -fPIC \
-#		${CFLAGS} -I"${S}"/include \
-#		-DDICTPATH=\"/usr/$(get_libdir)/cracklib_dict\" \
-#		-o sample_passwd_check.so sample_passwd_check.c -lcrack || \
-#		die "Failed to compile password checker"
+	cd lib/kadm5
+	tc-export CC
+	${CC} -shared -fPIC \
+		${CFLAGS} -I"${S}"/include \
+		-DDICTPATH=\"/usr/$(get_libdir)/cracklib_dict\" \
+		-o sample_passwd_check.so sample_passwd_check.c -lcrack || \
+		die "Failed to compile password checker"
 }
 
 src_test() {
@@ -132,7 +134,4 @@ src_install() {
 
 	# default database dir
 	keepdir /var/heimdal
-	
-#	insinto /usr/$(get_libdir)/pkgconfig
-#	doins ${FILESDIR}/libgssapi.pc
 }
