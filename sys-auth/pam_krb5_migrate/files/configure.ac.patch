@@ -1,0 +1,9 @@
+--- pam-krb5-migrate-0.0.6.orig/configure.ac
++++ pam-krb5-migrate-0.0.6/configure.ac
+@@ -2,6 +2,5 @@
+ AC_PROG_CC
+ AC_PATH_PROG(KRB5CONFIG, krb5-config, no)
+ AC_CHECK_LIB(pam, pam_get_item, [], [AC_MSG_ERROR([pam not found])])
+-AC_CHECK_LIB(dl, dlopen, [], [AC_MSG_ERROR([libdl not found])])
+ AC_CONFIG_FILES([Makefile.settings])
+ AC_OUTPUT

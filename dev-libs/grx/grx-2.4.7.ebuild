@@ -29,7 +29,7 @@ src_compile() {
 	local myconf=""
 	use amd64 && myconf="${myconf} --enable-x86_64"
 #	use X && myconf="${myconf} --target=X11"
-	myconf="${myconf} --enable-jpeg --enable-png --enable-zlib --enable-png-z --enable-tiff --enable-bmp --enable-print"
+#	myconf="${myconf} --enable-jpeg --enable-png --enable-zlib --enable-png-z --enable-tiff --enable-bmp --enable-print"
 	myconf="${myconf} --enable-bgi --enable-shared"
 	
 	myconf="${myconf} --with-fontpath=/usr/share/fonts/grx"

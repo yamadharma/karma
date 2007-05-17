@@ -1,0 +1,9 @@
+--- pam-krb5-migrate-0.0.6.orig/Makefile.settings.in
++++ pam-krb5-migrate-0.0.6/Makefile.settings.in
+@@ -2,3 +2,6 @@
+ CFLAGS = @CFLAGS@
+ LIBS = @LIBS@
+ KRB5CONFIG = @KRB5CONFIG@
++prefix = @prefix@
++datarootdir = @datarootdir@
++mandir = @mandir@

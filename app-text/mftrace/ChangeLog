@@ -1,6 +1,17 @@
 # ChangeLog for app-text/mftrace
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-text/mftrace/ChangeLog,v 1.33 2006/07/08 05:29:54 mr_bones_ Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-text/mftrace/ChangeLog,v 1.36 2007/03/12 23:54:51 nattfodd Exp $
+
+  12 Mar 2007; Alexandre Buisse <nattfodd@gentoo.org> metadata.xml:
+  Replaced text-markup by tex as maintaining herd (text-markup split).
+
+  21 Feb 2007; Piotr Jaroszyński <peper@gentoo.org> ChangeLog:
+  Transition to Manifest2.
+
+*mftrace-1.2.9 (11 Feb 2007)
+
+  11 Feb 2007; Alexandre Buisse <nattfodd@gentoo.org> +mftrace-1.2.9.ebuild:
+  Bump to 1.2.9, requested in bug #163428.
 
   08 Jul 2006; Michael Sterrett <mr_bones_@gentoo.org>
   mftrace-1.1.16.ebuild, mftrace-1.1.17.ebuild:

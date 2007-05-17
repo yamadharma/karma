@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+inherit eutils flag-o-matic
+
 DESCRIPTION="Pam module for MIT Kerberos V"
 
 SRC_URI="ftp://ftp.netexpress.net/pub/pam/${P}.tgz"
@@ -38,8 +40,11 @@ src_unpack ()
 
 src_compile () 
 {
-  make || die
-  make -f Makefile.local || die
+	append-flags `krb5-config --cflags krb5 kadm-client`
+	append-flags -fPIC
+
+	make || die
+	make -f Makefile.local || die
 }
 
 src_install() {

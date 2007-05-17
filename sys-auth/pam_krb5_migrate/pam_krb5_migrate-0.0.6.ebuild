@@ -18,19 +18,30 @@ DEPEND="virtual/krb5
 
 S=${WORKDIR}/${P//_/-}
 
+src_unpack ()
+{
+	unpack ${A}
+	epatch ${FILESDIR}/configure.ac.patch
+	epatch ${FILESDIR}/Makefile.patch
+	epatch ${FILESDIR}/Makefile.settings.in.patch
+	autoconf
+}
 
 src_compile () 
 {
-	append-flags `krb5-config --cflags`
-	append-flags -fPIC -DPIC
+#	append-flags `krb5-config --cflags krb5 kadm-client`
+#	append-flags -fPIC
 	
 	econf || die
 	emake || die
 }
 
 src_install() {
-	exeinto /$(get_libdir)/security
-	doexe pam_krb5_migrate.so
-
+	make install DESTDIR=${D} || die
+#	exeinto /$(get_libdir)/security
+#	doexe pam_krb5_migrate.so
+	
+#	doman pam_krb5_migrate.5
+	
 	dodoc COPYING CHANGELOG README INSTALL login.pam
 }
