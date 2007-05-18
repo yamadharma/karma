@@ -15,7 +15,7 @@ SRC_URI="http://psi-im.org/files/snapshot/${MY_P}.tar.bz2"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~hppa ~x86"
+KEYWORDS="amd64 ~hppa x86"
 
 S="${WORKDIR}/${MY_P}"
 
@@ -58,6 +58,8 @@ src_unpack() {
 src_compile() {
 	# growl is mac osx extension only - maybe someday we will want this
 	local myconf="--disable-growl"
+
+	myconf="${myconf} --enable-google-ft"
 
 	# jingle is still alpha code...
 	if use jingle; then

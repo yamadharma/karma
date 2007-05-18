@@ -18,7 +18,7 @@ HOMEPAGE="http://psi-im.org/"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="amd64 ~hppa x86"
+KEYWORDS="~amd64 ~hppa ~x86"
 
 #S="${WORKDIR}/${MY_P}"
 
