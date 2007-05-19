@@ -1,20 +1,25 @@
-# ChangeLog for sci-libs/root
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
+# ChangeLog for sci-physics/root
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sci-physics/root/ChangeLog,v 1.6 2007/03/05 19:02:19 bicatali Exp $
 
-*root-5.12.00e-r1 (16 Oct 2006)
-  16 Oct 2006; Sebastien Fabbro <seb@ist.utl.pt> 
-  +root-5.12.00e-r1.ebuild
-  -root-5.12.00e.ebuild
-  Fixed libafterimage dep, added odbc flag, xrootd disable with
-  gcc>4.1. Fix bug when both qt3 and qt4 are installed.
-	
-*root-5.12.00e (12 Sep 2006)
+*root-5.14.00c (05 Mar 2007)
 
-  12 Sep 2006; Sebastien Fabbro <seb@ist.utl.pt> root-5.12.00e.ebuild
-  +root-5.12.00e.ebuild, +metadata.xml (added longdescription)
-  Major version bump, and major ebuild change.
-  Closes bug #109307, #124635, #98235, #98236, #34415.
+  05 Mar 2007; Sébastien Fabbro <bicatali@gentoo.org>
+  +files/sparc-root-5.14.00c.patch, +root-5.14.00c.ebuild:
+  Version bump. Fixed parallel compiling and sparc architecture with a 
+  patch, from bug #87305, thanks to fmmcor.
+
+*root-5.14.00b (05 Feb 2007)
+
+  05 Feb 2007; Sébastien Fabbro <bicatali@gentoo.org> metadata.xml,
+  +root-5.14.00b.ebuild:
+  Major version bump, with a lot of changes in ebuild. LICENSE changed.
+  Closing bugs #34415, #98235, #109307. Thanks for everyone in bug #109307 
+  for testing.
+
+  23 Nov 2006; Francesco Riosa <vivo@gentoo.org> root-3.05.04.ebuild,
+  root-3.10.02-r1.ebuild, root-4.02.00.ebuild:
+  dev-db/mysql => virtual/mysql
 
   02 Jul 2006; Luis Medinas <metalgod@gentoo.org> metadata.xml:
   Update metadata to sci-physics.

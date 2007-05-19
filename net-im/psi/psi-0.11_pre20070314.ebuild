@@ -59,8 +59,6 @@ src_compile() {
 	# growl is mac osx extension only - maybe someday we will want this
 	local myconf="--disable-growl"
 
-	myconf="${myconf} --enable-google-ft"
-
 	# jingle is still alpha code...
 	if use jingle; then
 		mv configure-jingle configure

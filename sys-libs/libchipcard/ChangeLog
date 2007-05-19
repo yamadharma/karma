@@ -1,6 +1,49 @@
 # ChangeLog for sys-libs/libchipcard
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-libs/libchipcard/ChangeLog,v 1.41 2006/09/08 16:34:52 hanno Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sys-libs/libchipcard/ChangeLog,v 1.53 2007/04/28 17:59:31 swegener Exp $
+
+  28 Apr 2007; Sven Wegener <swegener@gentoo.org>
+  libchipcard-0.9.1-r1.ebuild:
+  Fix *initd, *confd and *envd calls (#173884, #174266)
+
+  20 Apr 2007; Hanno Boeck <hanno@gentoo.org>
+  +files/libchipcard-ccid-dir.diff, libchipcard-3.0.2.ebuild:
+  Fix paths for ccid driver.
+
+  05 Apr 2007; Hanno Boeck <hanno@gentoo.org> libchipcard-3.0.2.ebuild:
+  Re-slot to 2, can't be installed parallel.
+
+  27 Jan 2007; Hanno Boeck <hanno@gentoo.org> files/chipcardd3:
+  Fix typo.
+
+  19 Jan 2007; Hanno Boeck <hanno@gentoo.org> libchipcard-3.0.2.ebuild:
+  Fix some paths, no bump cause a new release will come soon anyway.
+
+*libchipcard-3.0.2 (17 Jan 2007)
+
+  17 Jan 2007; Hanno Boeck <hanno@gentoo.org> +files/chipcardd3,
+  +libchipcard-3.0.2.ebuild:
+  Add first libchipcard 3 ebuild.
+
+  22 Dec 2006; Matti Bickel <mabi@gentoo.org> libchipcard-2.1.8.ebuild:
+  ppc stable (bug #149970)
+
+  04 Nov 2006; <blubb@gentoo.org> libchipcard-2.1.8.ebuild:
+  stable on amd64
+
+  15 Oct 2006; Aron Griffis <agriffis@gentoo.org> libchipcard-2.1.8.ebuild:
+  Mark 2.1.8 stable on ia64
+
+  14 Oct 2006; Hanno Boeck <hanno@gentoo.org> libchipcard-2.1.8.ebuild:
+  Re-add init.d-script, got lost in one of the last updates.
+
+  10 Oct 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  libchipcard-2.1.8.ebuild:
+  Stable on sparc wrt #149970
+
+  09 Oct 2006; Chris Gianelloni <wolf31o2@gentoo.org>
+  libchipcard-2.1.8.ebuild:
+  Stable on x86 wrt bug #149970.
 
 *libchipcard-2.1.8 (08 Sep 2006)
 
