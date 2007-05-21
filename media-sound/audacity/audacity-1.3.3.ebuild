@@ -63,6 +63,8 @@ src_compile() {
 	else
 		myconf="${myconf} --without-libsamplerate" # --with-libresample=local
 	fi
+	
+	myconf="${myconf} --without-portmixer --with-portaudio=v19"
 
 	econf \
 		$(use_enable unicode) \
