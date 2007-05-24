@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/scribus/scribus-1.3.3.8.ebuild,v 1.1 2007/02/25 18:43:18 hanno Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/scribus/scribus-1.3.3.9.ebuild,v 1.1 2007/05/16 21:25:16 hanno Exp $
 
 inherit qt3 eutils
 

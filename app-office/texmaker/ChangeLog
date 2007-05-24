@@ -1,6 +1,34 @@
 # ChangeLog for app-office/texmaker
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/texmaker/ChangeLog,v 1.23 2006/10/09 00:17:22 jokey Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-office/texmaker/ChangeLog,v 1.30 2007/05/13 08:34:18 jokey Exp $
+
+  13 May 2007; Markus Ullmann <jokey@gentoo.org> texmaker-1.50-r1.ebuild:
+  Stable on x86
+
+  12 Mar 2007; Alexandre Buisse <nattfodd@gentoo.org> metadata.xml:
+  Replaced text-markup by tex as maintaining herd (text-markup split).
+
+  08 Feb 2007; Alexandre Buisse <nattfodd@gentoo.org>
+  texmaker-1.50-r1.ebuild:
+  Correct wrong dodoc.
+
+*texmaker-1.50-r1 (05 Feb 2007)
+
+  05 Feb 2007; Alexandre Buisse <nattfodd@gentoo.org> -texmaker-1.50.ebuild,
+  +texmaker-1.50-r1.ebuild:
+  Fix compilation error and update of dep (>=qt-4.2.2) (bug #160465).
+
+  25 Jan 2007; Marius Mauch <genone@gentoo.org> texmaker-1.11-r1.ebuild,
+  texmaker-1.30.ebuild, texmaker-1.40.ebuild, texmaker-1.50.ebuild:
+  Replacing einfo with elog
+
+*texmaker-1.50 (04 Jan 2007)
+
+  04 Jan 2007; Przemysław Maciąg <troll@gentoo.org> +texmaker-1.50.ebuild:
+  Version bump (1.50).
+
+  04 Jan 2007; Przemysław Maciąg <troll@gentoo.org> texmaker-1.40.ebuild:
+  Fixed PREFIX use in cpp files (see #159400).
 
 *texmaker-1.40 (09 Oct 2006)
 
