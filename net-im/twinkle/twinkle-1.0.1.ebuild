@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/net-im/twinkle/twinkle-1.0.1.ebuild,v 1.1 2007/05/19 23:56:23 dragonheart Exp $
 
 
-ARTS_REQUIRED="never"
+ARTS_REQUIRED="yes"
 inherit eutils qt3 kde
 
 DESCRIPTION="a soft phone for your VOIP communcations using SIP"

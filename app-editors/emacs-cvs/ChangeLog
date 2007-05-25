@@ -1,6 +1,61 @@
 # ChangeLog for app-editors/emacs-cvs
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs-cvs/ChangeLog,v 1.110 2007/04/20 19:45:36 ulm Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs-cvs/ChangeLog,v 1.122 2007/05/23 10:29:12 ulm Exp $
+
+  23 May 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.990.ebuild,
+  emacs-cvs-22.0.9999-r10.ebuild, emacs-cvs-22.1.50.ebuild,
+  emacs-cvs-23.0.0-r6.ebuild:
+  Change RESTRICT="nostrip" to "strip" everywhere.
+
+*emacs-cvs-22.0.990 (17 May 2007)
+
+  17 May 2007; Ulrich Mueller <ulm@gentoo.org> -emacs-cvs-22.0.98.ebuild,
+  +emacs-cvs-22.0.990.ebuild, emacs-cvs-22.0.9999-r10.ebuild,
+  emacs-cvs-22.1.50.ebuild, emacs-cvs-23.0.0-r6.ebuild:
+  Version bump; logic of toolkit USE flags fixed. Clean up old version.
+
+  15 May 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.97.ebuild,
+  emacs-cvs-22.0.98.ebuild, emacs-cvs-22.0.99.ebuild,
+  emacs-cvs-22.0.9999-r10.ebuild, emacs-cvs-22.1.50.ebuild,
+  emacs-cvs-23.0.0-r1.ebuild, emacs-cvs-23.0.0-r6.ebuild:
+  Don't provide virtual/emacs, it is a new-style virtual now.
+
+  15 May 2007; Tony Vroon <chainsaw@gentoo.org> emacs-cvs-22.0.99.ebuild,
+  emacs-cvs-22.0.9999-r10.ebuild, emacs-cvs-22.1.50.ebuild:
+  Add ~ppc keywording, tested on a PowerBook 5,9 with GCC 4.1.2; as requested
+  by Opfer.
+
+  30 Apr 2007; Tony Vroon <chainsaw@gentoo.org> emacs-cvs-23.0.0-r6.ebuild:
+  Add ~ppc keywor. Tested on a PowerBook 5,9 with GCC 4.1.2
+
+  29 Apr 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.99.ebuild,
+  emacs-cvs-22.1.50.ebuild:
+  Synchronise keywords in newer versions.
+
+  28 Apr 2007; Markus Rothe <corsair@gentoo.org> emacs-cvs-22.0.98.ebuild,
+  emacs-cvs-22.0.9999-r10.ebuild, emacs-cvs-23.0.0-r6.ebuild:
+  Added ~ppc64; bug #174891
+
+*emacs-cvs-22.1.50 (26 Apr 2007)
+
+  26 Apr 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.98.ebuild,
+  emacs-cvs-22.0.99.ebuild, emacs-cvs-22.0.9999-r10.ebuild,
+  +emacs-cvs-22.1.50.ebuild, emacs-cvs-23.0.0-r6.ebuild:
+  New live CVS ebuild for Emacs 22 trunk. Fixed parameter expansion for file
+  name of man pages.
+
+  25 Apr 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.97.ebuild,
+  emacs-cvs-23.0.0-r1.ebuild:
+  Change SLOT also in old ebuilds to reflect slotmove.
+
+  24 Apr 2007; Christian Faulhammer <opfer@gentoo.org>
+  emacs-cvs-22.0.9999-r10.ebuild:
+  new branch has been opened, this is now reflected in the ebuild
+
+*emacs-cvs-22.0.99 (24 Apr 2007)
+
+  24 Apr 2007; Ulrich Mueller <ulm@gentoo.org> +emacs-cvs-22.0.99.ebuild:
+  Version bump.
 
   20 Apr 2007; Ulrich Mueller <ulm@gentoo.org> emacs-cvs-22.0.98.ebuild,
   -emacs-cvs-22.0.9999-r7.ebuild, emacs-cvs-22.0.9999-r10.ebuild,

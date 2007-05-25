@@ -1,6 +1,130 @@
 # ChangeLog for sys-libs/db
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sys-libs/db/ChangeLog,v 1.174 2006/09/28 20:49:16 robbat2 Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sys-libs/db/ChangeLog,v 1.207 2007/04/24 16:44:57 kloeri Exp $
+
+  24 Apr 2007; Bryan Østergaard <kloeri@gentoo.org> db-4.2.52_p4-r2.ebuild:
+  Stable on Mips, bug 168726.
+
+  23 Apr 2007; Raúl Porcel <armin76@gentoo.org> db-4.3.29-r2.ebuild:
+  ia64 stable
+
+  16 Apr 2007; Markus Rothe <corsair@gentoo.org> db-4.3.29-r2.ebuild:
+  Stable on ppc64
+
+  04 Apr 2007; Gustavo Zacarias <gustavoz@gentoo.org> db-4.3.29-r2.ebuild:
+  Stable on sparc
+
+  31 Mar 2007; Christian Faulhammer <opfer@gentoo.org> db-4.3.29-r2.ebuild:
+  stable x86, security bug #170828
+
+  29 Mar 2007; Tobias Scherbaum <dertobi123@gentoo.org> db-4.3.29-r2.ebuild:
+  Stable on ppc wrt bug #170828.
+
+  25 Mar 2007; Paul de Vrieze <pauldv@gentoo.org> db-4.5.20_p2.ebuild:
+  Have a different fix for not stripping as the old fix no longer works for this
+  db version.
+
+  02 Mar 2007; Caleb Tennis <caleb@gentoo.org> -files/db-4.1.25-java.patch,
+  -files/db-4.1.25-uclibc.patch, -files/db-4.1.25_p1-jarlocation.patch,
+  -db-4.0.14-r2.ebuild, -db-4.0.14-r3.ebuild, -db-4.1.25_p1-r3.ebuild,
+  -db-4.1.25_p1-r4.ebuild, -db-4.1.25_p2.ebuild:
+  Okay, I did it. I removed db 4.0 and db 4.1. I announced it on -dev and
+  there are no explicit deps on it, so it shouldn't create any issues.
+  However, if it does, please open a bug and let me know.
+
+  28 Feb 2007; Caleb Tennis <caleb@gentoo.org> db-4.4.20_p4.ebuild,
+  db-4.5.20_p2.ebuild:
+  Update 4.4 and 4.5 to use econf instead of gnuconfig_update per bug #160192
+
+  27 Feb 2007; Caleb Tennis <caleb@gentoo.org> db-4.5.20_p2.ebuild:
+  Paul asked to turn uniquename off, since it causes too many issues
+
+  27 Feb 2007; Caleb Tennis <caleb@gentoo.org> -db-4.2.52_p2.ebuild,
+  -db-4.2.52_p4.ebuild:
+  more stale versions
+
+  27 Feb 2007; Caleb Tennis <caleb@gentoo.org> -db-4.3.27.ebuild,
+  -db-4.3.29.ebuild, -db-4.4.20_p2.ebuild:
+  removing a few stale ebuilds, including 4.3.27 which isn't available anymore
+
+*db-4.4.20_p4 (27 Feb 2007)
+
+  27 Feb 2007; Caleb Tennis <caleb@gentoo.org> +db-4.4.20_p4.ebuild:
+  Bump to 4.4.20_p4, change SRC_URI to reflect new location of stuff
+
+*db-4.5.20_p2 (27 Feb 2007)
+
+  27 Feb 2007; Caleb Tennis <caleb@gentoo.org>
+  files/db-4.4-jarlocation.patch, +files/db-4.5-jarlocation.patch,
+  +files/db-4.5-libtool.patch, +db-4.5.20_p2.ebuild:
+  Bump to 4.5. SRC_URI and LICENSE have changed because Oracle bought
+  Sleepycat. I also revered back to --with-uniquename as it's supported again
+  with C++,Java, and RPC (was not in 4.2-4.4 series). >=4.4 is currently
+  masked, so this is currently in for testing
+
+  17 Feb 2007; Fabian Groffen <grobian@gentoo.org> db-4.2.52_p2.ebuild,
+  db-4.2.52_p2-r1.ebuild, db-4.2.52_p4.ebuild, db-4.2.52_p4-r2.ebuild:
+  Dropped ppc-macos keyword, see you in prefix
+
+  02 Feb 2007; Gustavo Zacarias <gustavoz@gentoo.org> db-3.2.9-r11.ebuild:
+  Stable on sparc
+
+  26 Jan 2007; Jeroen Roovers <jer@gentoo.org> db-4.3.29-r2.ebuild:
+  Marked ~hppa (bug #152713).
+
+  10 Jan 2007; Bryan Østergaard <kloeri@gentoo.org> db-4.2.52_p4-r2.ebuild:
+  Stable on Alpha.
+
+  09 Jan 2007; Christian Faulhammer <opfer@gentoo.org> db-1.85-r3.ebuild:
+  stable x86, bug #159445
+
+  09 Jan 2007; Markus Rothe <corsair@gentoo.org> db-1.85-r3.ebuild:
+  Stable on ppc64; bug #159445
+
+  08 Jan 2007; Jeroen Roovers <jer@gentoo.org> db-1.85-r3.ebuild:
+  Stable for HPPA (bug #159445).
+
+  07 Jan 2007; Tobias Scherbaum <dertobi123@gentoo.org> db-1.85-r3.ebuild:
+  ppc stable, bug #159445
+
+  04 Jan 2007; Peter Weller (welp) <welp@gentoo.org> db-1.85-r3.ebuild:
+  Stable on amd64 wrt bug #159445
+
+  04 Jan 2007; Bryan Østergaard <kloeri@gentoo.org> db-1.85-r3.ebuild:
+  Stable on IA64.
+
+  04 Jan 2007; Gustavo Zacarias <gustavoz@gentoo.org> db-1.85-r3.ebuild:
+  Stable on sparc wrt #159445
+
+  17 Oct 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  db-4.2.52_p4-r2.ebuild:
+  Stable on sparc
+
+  17 Oct 2006; Roy Marples <uberlord@gentoo.org> db-4.3.29-r2.ebuild:
+  Added ~sparc-fbsd keyword.
+
+  15 Oct 2006; Tobias Scherbaum <dertobi123@gentoo.org> db-3.2.9-r11.ebuild,
+  db-4.2.52_p4-r2.ebuild:
+  ppc stable. bug #147254
+
+  15 Oct 2006; Joshua Nichols <nichoj@gentoo.org> db-3.2.9-r11.ebuild,
+  db-4.2.52_p4-r2.ebuild:
+  Stabilizing on ia64 as part of new Java system, bug #147254.
+
+  14 Oct 2006; Thomas Cort <tcort@gentoo.org> db-1.85-r3.ebuild:
+  Stable on alpha wrt Bug #116177.
+
+  14 Oct 2006; Joshua Nichols <nichoj@gentoo.org> db-3.2.9-r11.ebuild,
+  db-4.2.52_p4-r2.ebuild:
+  Stabilizing on amd64 as part of new Java system, bug #147254.
+
+  14 Oct 2006; Joshua Nichols <nichoj@gentoo.org> db-3.2.9-r11.ebuild,
+  db-4.2.52_p4-r2.ebuild:
+  Stabilizing on ppc64 as part of new Java system, bug #147254.
+
+  14 Oct 2006; Joshua Jackson <tsunam@gentoo.org> db-3.2.9-r11.ebuild,
+  db-4.2.52_p4-r2.ebuild:
+  New java stable on x86; bug #147254
 
   28 Sep 2006; Robin H. Johnson <robbat2@gentoo.org> db-3.2.9-r11.ebuild:
   QA fix, fix upstream stripping, bug #149448.
