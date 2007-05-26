@@ -31,6 +31,8 @@ src_unpack() {
 }
 
 src_compile() {
+	export KERNEL_HOME=/lib/modules/${KV_FULL}/build
+	export KDIR=/lib/modules/${KV_FULL}/build
 	linux-mod_src_compile
 	set_arch_to_kernel
 	emake || die "emake failed"

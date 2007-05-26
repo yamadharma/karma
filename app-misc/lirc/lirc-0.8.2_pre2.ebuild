@@ -1,12 +1,17 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-misc/lirc/lirc-0.8.1.ebuild,v 1.5 2007/03/15 13:10:42 zzam Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-misc/lirc/lirc-0.8.2_pre2.ebuild,v 1.1 2007/04/27 09:03:26 zzam Exp $
 
 inherit eutils linux-mod flag-o-matic autotools
 
 DESCRIPTION="decode and send infra-red signals of many commonly used remote controls"
 HOMEPAGE="http://www.lirc.org/"
-SRC_URI="mirror://sourceforge/lirc/${P/_pre/pre}.tar.bz2"
+
+if [[ "${PV/_pre/}" = "${PV}" ]]; then
+	SRC_URI="mirror://sourceforge/lirc/${P/_/}.tar.bz2"
+else
+	SRC_URI="http://lirc.sourceforge.net/software/snapshots/${P/_/}.tar.bz2"
+fi
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -25,9 +30,11 @@ RDEPEND="
 	lirc_devices_audio? ( media-libs/portaudio )
 	lirc_devices_irman? ( media-libs/libirman )"
 
+# This are drivers with names matching the
+# parameter --with-driver=NAME
 IUSE_LIRC_DEVICES_DIRECT="
-	all userspace act200l act220l
-	adaptec alsa_usb animax atilibusb
+	all userspace accent act200l act220l
+	adaptec alsa_usb animax asusdh atilibusb
 	atiusb audio audio_alsa avermedia avermedia_vdomate
 	avermedia98 bestbuy bestbuy2 breakoutbox
 	bte bw6130 caraca chronos cmdir com1 com2 com3 com4
@@ -45,11 +52,14 @@ IUSE_LIRC_DEVICES_DIRECT="
 	packard_bell parallel pcmak pcmak_usb
 	pctv pixelview_bt878 pixelview_pak
 	pixelview_pro provideo realmagic
-	remotemaster sa1100 sasem serial
+	remotemaster sa1100 sasem sb0540 serial
 	silitek sir slinke streamzap tekram
-	tekram_bt829 tira tvbox udp uirt2
-	uirt2_raw usb_uirt_raw"
+	tekram_bt829 tira tuxbox tvbox udp uirt2
+	uirt2_raw usb_uirt_raw usbx"
 
+# drivers that need special handling and
+# must have another name specified for
+# parameter --with-driver=NAME
 IUSE_LIRC_DEVICES_SPECIAL="
 	imon_pad2keys serial_igor_cesko
 	remote_wonder_plus xboxusb usbirboy inputlirc"
@@ -208,7 +218,7 @@ pkg_setup() {
 	    		    --with-kerneldir=${KV_DIR}
 			        --with-moduledir=/lib/modules/${KV_FULL}/misc
 	    		    $(use_enable debug)
-					$(use_with X)
+					$(use_with X x)
 					${MY_OPTS}"
 
 	einfo
@@ -222,16 +232,10 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	# Fix a sandbox violation while checking which cc to use for Kernel 2.6.19
-	# and newer
-	epatch ${FILESDIR}/${PN}-0.8.0-sandbox-fix.diff
-	epatch ${FILESDIR}/${P}-kernel-2.6.20.diff
-
 	# Rip out dos CRLF
 	edos2unix contrib/lirc.rules
 
 	# Apply patches needed for some special device-types
-	epatch ${FILESDIR}/lirc-0.8.1-atiusb-xbox.diff
 	use lirc_devices_imon_pad2keys && epatch ${FILESDIR}/${PN}-0.8.1-imon-pad2keys.patch
 	use lirc_devices_remote_wonder_plus && epatch ${FILESDIR}/lirc-remotewonderplus.patch
 
