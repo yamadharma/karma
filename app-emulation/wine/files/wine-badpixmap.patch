@@ -1,0 +1,61 @@
+diff --git a/dlls/winex11.drv/xrender.c b/dlls/winex11.drv/xrender.c
+index e03540e..6b86c74 100644
+--- a/dlls/winex11.drv/xrender.c
++++ b/dlls/winex11.drv/xrender.c
+@@ -85,7 +85,6 @@ struct tagXRENDERINFO
+     int                cache_index;
+     Picture            pict;
+     Picture            tile_pict;
+-    Pixmap             tile_xpm;
+     COLORREF           lastTextColor;
+ };
+
+@@ -596,7 +595,6 @@ void X11DRV_XRender_UpdateDrawable(X11DRV_PDEVICE *physDev)
+     if(physDev->xrender->pict)
+     {
+         TRACE("freeing pict = %lx dc = %p\n", physDev->xrender->pict, physDev->hdc);
+-        XFlush(gdi_display);
+         pXRenderFreePicture(gdi_display, physDev->xrender->pict);
+         physDev->xrender->pict = 0;
+     }
+@@ -605,11 +603,6 @@ void X11DRV_XRender_UpdateDrawable(X11DRV_PDEVICE *physDev)
+         pXRenderFreePicture(gdi_display, physDev->xrender->tile_pict);
+         physDev->xrender->tile_pict = 0;
+     }
+-    if(physDev->xrender->tile_xpm)
+-    {
+-        XFreePixmap(gdi_display, physDev->xrender->tile_xpm);
+-        physDev->xrender->tile_xpm = 0;
+-    }
+
+     wine_tsx11_unlock();
+
+@@ -1186,18 +1179,21 @@ BOOL X11DRV_XRender_ExtTextOut( X11DRV_PDEVICE *physDev, INT x, INT y, UINT flag
+
+     if(X11DRV_XRender_Installed) {
+         /* Create a 1x1 pixmap to tile over the font mask */
+-        if(!physDev->xrender->tile_xpm) {
++        if(!physDev->xrender->tile_pict) {
+ 	    XRenderPictureAttributes pa;
++            Pixmap xpm;
+
+ 	    XRenderPictFormat *format = (physDev->depth == 1) ? mono_format : screen_format;
+ 	    wine_tsx11_lock();
+-	    physDev->xrender->tile_xpm = XCreatePixmap(gdi_display,
+-						       physDev->drawable,
+-						       1, 1,
+-						       format->depth);
++
++            /* The pixmap will be freed with XRenderFreePicture */
++            xpm = XCreatePixmap(gdi_display,
++                                physDev->drawable,
++                                1, 1,
++                                format->depth);
+ 	    pa.repeat = True;
+ 	    physDev->xrender->tile_pict = pXRenderCreatePicture(gdi_display,
+-								physDev->xrender->tile_xpm,
++								xpm,
+ 								format,
+ 								CPRepeat, &pa);
+ 	    wine_tsx11_unlock();
+--
