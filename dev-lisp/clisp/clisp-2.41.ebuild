@@ -1,8 +1,8 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lisp/clisp/clisp-2.39.ebuild,v 1.2 2006/07/23 13:03:43 dertobi123 Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-lisp/clisp/clisp-2.41.ebuild,v 1.4 2007/05/21 18:04:15 ulm Exp $
 
-inherit flag-o-matic common-lisp-common-2 eutils toolchain-funcs
+inherit flag-o-matic eutils toolchain-funcs
 
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
 HOMEPAGE="http://clisp.sourceforge.net/"
@@ -14,7 +14,6 @@ KEYWORDS="amd64 ~ppc ~ppc-macos -sparc x86"
 IUSE="X new-clx fastcgi pcre postgres readline zlib"
 
 RDEPEND=">=dev-libs/libsigsegv-2.4
-	>=dev-lisp/common-lisp-controller-4.27
 	sys-devel/gettext
 	virtual/tetex
 	fastcgi? ( dev-libs/fcgi )
@@ -32,16 +31,18 @@ PROVIDE="virtual/commonlisp"
 pkg_setup() {
 	if use X; then
 		if use new-clx; then
-			einfo "CLISP will be built with NEW-CLX support which is a C binding to Xorg libraries."
+			elog "CLISP will be built with NEW-CLX support which is a C binding to Xorg libraries."
 		else
-			einfo "CLISP will be built with MIT-CLX support."
+			elog "CLISP will be built with MIT-CLX support."
 		fi
 	fi
 }
 
 src_unpack() {
 	unpack ${A}
-	epatch ${FILESDIR}/${PV}/fastcgi-Makefile-gentoo.patch
+	cd "${S}"
+	epatch ${FILESDIR}/2.41-fastcgi-Makefile-gentoo.patch
+	epatch ${FILESDIR}/2.41-linux-headers.patch
 }
 
 src_compile() {
@@ -81,44 +82,11 @@ src_install() {
 	doman clisp.1
 	dodoc SUMMARY README* NEWS MAGIC.add GNU-GPL COPYRIGHT \
 		ANNOUNCE clisp.dvi clisp.html
-	rm -f ${D}/usr/lib/clisp/base/*
-	(cd ${D}/usr/lib/clisp/base && ln -s ../full/* .)
 	chmod a+x ${D}/usr/lib/clisp/clisp-link
 	popd
-	# install common-lisp-controller profile
-	exeinto /usr/lib/common-lisp/bin
-	doexe ${FILESDIR}/${PV}/clisp.sh
-	insinto /usr/lib/clisp
-	doins ${FILESDIR}/${PV}/install-clc.lisp
-	dodoc ${FILESDIR}/${PV}/README.Gentoo
-	keepdir /usr/lib/common-lisp/clisp
-
 	dohtml doc/impnotes.{css,html}
 	dohtml build/clisp.html
 	dohtml doc/clisp.png
-	dodoc build/clisp.{ps,pdf}
+	dodoc build/clisp.ps
 	dodoc doc/{editors,CLOS-guide,LISP-tutorial}.txt
-}
-
-pkg_preinst() {
-	local clisp_dir=/usr/lib/clisp
-	local old_mem=$clisp_dir/full/lispinit.mem
-	local new_mem=$clisp_dir/full/lispinit-new.mem
-	local clean_mem=$clisp_dir/full/lispinit-clean.mem
-	local lisp_run=$clisp_dir/full/lisp.run
-	rm -f $old_mem $new_mem $clean_mem $lisp_run
-}
-
-pkg_postinst() {
-	standard-impl-postinst clisp
-}
-
-pkg_postrm() {
-	standard-impl-postrm clisp /usr/bin/clisp
-}
-
-pkg_postrm() {
-	if [ ! -x /usr/bin/clisp ]; then
-		rm -rf /usr/lib/clisp/ || die
-	fi
 }

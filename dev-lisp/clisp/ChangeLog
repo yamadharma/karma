@@ -1,6 +1,27 @@
 # ChangeLog for dev-lisp/clisp
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lisp/clisp/ChangeLog,v 1.54 2006/07/23 13:03:43 dertobi123 Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-lisp/clisp/ChangeLog,v 1.59 2007/05/21 18:04:15 ulm Exp $
+
+  21 May 2007; Ulrich Mueller <ulm@gentoo.org>
+  +files/2.41-linux-headers.patch, clisp-2.41.ebuild:
+  Apply patch from upstream to fix compilation with sanitised linux-headers.
+  Fixes bug #173050.
+
+  03 Mar 2007; Marius Mauch <genone@gentoo.org> clisp-2.38-r2.ebuild,
+  clisp-2.41.ebuild:
+  Replacing einfo with elog
+
+  22 Feb 2007; Piotr Jaroszyński <peper@gentoo.org> ChangeLog:
+  Transition to Manifest2.
+
+  20 Dec 2006; Matthew Kennedy <mkennedy@gentoo.org> clisp-2.41.ebuild:
+  Remove Common Lisp Controller dependency.
+
+*clisp-2.41 (09 Nov 2006)
+
+  09 Nov 2006; Matthew Kennedy <mkennedy@gentoo.org>
+  +files/2.41-fastcgi-Makefile-gentoo.patch, +clisp-2.41.ebuild:
+  New upstream version; Remove support for Common Lisp Controller.
 
   23 Jul 2006; Tobias Scherbaum <dertobi123@gentoo.org> clisp-2.39.ebuild:
   Added ~ppc, bug #141470
