@@ -1,6 +1,106 @@
 # ChangeLog for dev-lang/erlang
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/erlang/ChangeLog,v 1.40 2006/11/17 12:39:38 opfer Exp $
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/erlang/ChangeLog,v 1.63 2007/05/21 06:27:20 opfer Exp $
+
+*erlang-11.2.4-r1 (21 May 2007)
+
+  21 May 2007; Christian Faulhammer <opfer@gentoo.org>
+  +erlang-11.2.4-r1.ebuild:
+  remove internal copy of zlib, so the header files from the system are used.
+  Fixes bug #178996, reported by Diego Pettenò <flameeyes@gmail.com>
+
+  20 Apr 2007; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.4.ebuild:
+  remove unneeded symlinks
+
+  19 Apr 2007; Fernando J. Pereda <ferdy@gentoo.org> erlang-11.2.4.ebuild:
+  Remove useless cd
+
+  17 Apr 2007; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.4.ebuild:
+  add -j1 for emake in src_install to prevent installation failures, fixes
+  bugs 174073 and 174492
+
+  12 Apr 2007; Markus Rothe <corsair@gentoo.org> erlang-11.2.4.ebuild:
+  Added ~ppc64
+
+*erlang-11.2.4 (06 Apr 2007)
+
+  06 Apr 2007; Christian Faulhammer <opfer@gentoo.org>
+  +erlang-11.2.4.ebuild:
+  version bump
+
+*erlang-11.2.3-r1 (24 Feb 2007)
+
+  24 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  +erlang-11.2.3-r1.ebuild:
+  added smp and kpoll USE flags to enable/disable those features, adjusted
+  some bits; thanks to Max Loparyev <max@city.veganet.ru>
+
+  22 Feb 2007; Simon Stelling <blubb@gentoo.org> erlang-11.2.3.ebuild:
+  put back the export-TARGET patch; bug 167909
+
+*erlang-11.2.3 (20 Feb 2007)
+
+  20 Feb 2007; Christian Faulhammer <opfer@gentoo.org>
+  +files/erl_process_dump_R11B-3.patch, +erlang-11.2.3.ebuild:
+  version bump which needs fewer patches and fixes, as reported by Christopher
+  Covington <covracer@gmail.com> in bug 167335
+
+  31 Jan 2007; Marius Mauch <genone@gentoo.org> erlang-11.2.1.ebuild,
+  erlang-11.2.2-r1.ebuild:
+  Replacing einfo with elog
+
+  22 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  erlang-11.2.2-r1.ebuild:
+  added info about what this version is called upstream
+
+  04 Jan 2007; Christian Faulhammer <opfer@gentoo.org>
+  erlang-11.2.2-r1.ebuild:
+  changed elisp.eclass to elisp-common.eclass as it was before. Thanks to
+  ferdy for pointing out.
+
+  30 Dec 2006; <fauli@gentoo.org> -files/9c.patch, -erlang-9c-r2.ebuild,
+  -erlang-10.2.5.ebuild, -erlang-11.2.0.ebuild:
+  clean-up old versions
+
+  29 Dec 2006; <fauli@gentoo.org> erlang-11.2.2-r1.ebuild:
+  inherit elisp instead of elisp-common; order inherited eclasses
+  alphabetically; add quotes around definition of $S
+
+  22 Dec 2006; Matti Bickel <mabi@gentoo.org> erlang-11.2.1.ebuild:
+  ppc stable (bug #151612)
+
+*erlang-11.2.2-r1 (12 Dec 2006)
+
+  12 Dec 2006; Christian Faulhammer <opfer@gentoo.org>
+  -erlang-11.2.2.ebuild, +erlang-11.2.2-r1.ebuild:
+  added hipe USE flag to give users control about that feature
+
+  06 Dec 2006; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.2.ebuild:
+  repaired the ebuild
+
+  06 Dec 2006; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.2.ebuild:
+  corrected a directory change to a more generic version
+
+*erlang-11.2.2 (06 Dec 2006)
+
+  06 Dec 2006; Christian Faulhammer <opfer@gentoo.org>
+  +erlang-11.2.2.ebuild:
+  version bump; revamped the ebuild, nearly all the work was done by Fernando
+  J. Pereda <ferdy@gentoo.org>, so hail to him; enables HiPE to test on
+  hardened systems
+
+  04 Dec 2006; Gustavo Zacarias <gustavoz@gentoo.org> erlang-11.2.1.ebuild:
+  Stable on sparc wrt #151612
+
+  04 Dec 2006; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.1.ebuild:
+  stable x86, bug #151612
+
+  04 Dec 2006; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.1.ebuild:
+  added correct path for cd command, reported by Markus Meier
+  <meier_markus@bluewin.ch> in bug #151612 comment 19
+
+  23 Nov 2006; Christian Faulhammer <opfer@gentoo.org> erlang-11.2.1.ebuild:
+  Added einfo about symlinks so users will read it
 
   17 Nov 2006; Christian Faulhammer <opfer@gentoo.org> +files/9c.patch:
   that patch needs to stay

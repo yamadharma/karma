@@ -9,8 +9,8 @@ S="${WORKDIR}/${PN}-perso-${MY_PV}"
 ADDON_LIST="batik_imagetoolkit jimi_imagetoolkit javadoc_format dav_vdrive ftp_vdrive zip_vdrive"
 ADDON_LIST="${ADDON_LIST} xxe_addon_config xxe_configuration_config xxe_gui_config xxe_spreadsheet_functions_config"
 ADDON_LIST="${ADDON_LIST} dita_dtd_config docbook5_config docbook5xi_config sample_customize_xxe sdocbook_config slides_config wxs_config"
-#ADDON_LIST="${ADDON_LIST} xep_foprocessor"
-#ADDON_LIST="${ADDON_LIST} fop_foprocessor fop1_foprocessor"
+ADDON_LIST="${ADDON_LIST} xep_foprocessor"
+ADDON_LIST="${ADDON_LIST} fop_foprocessor fop1_foprocessor"
 
 DESCRIPTION="The XMLmind XML Editor"
 
@@ -22,15 +22,6 @@ done
 SRC_URI="http://www.xmlmind.net/xmleditor/_download/${PN}-perso-${MY_PV}.tar.gz
 	doc? ( http://www.xmlmind.net/xmleditor/_download/${PN}-devdocs-${MY_PV}.tar.gz )
 	!minimal? ( ${SRC_URI_ADDON} )"
-
-#	    http://www.xmlmind.net/xmleditor/_download/batik_imagetoolkit-${MY_PV}.zip
-#	    http://www.xmlmind.net/xmleditor/_download/jimi_imagetoolkit-${MY_PV}.zip
-#	    http://www.xmlmind.net/xmleditor/_download/javadoc_format-${MY_PV}.zip 
-#	    http://www.xmlmind.net/xmleditor/_download/dav_vdrive-${MY_PV}.zip
-#	    http://www.xmlmind.net/xmleditor/_download/ftp_vdrive-${MY_PV}.zip	    
-#	    http://www.xmlmind.net/xmleditor/_download/zip_vdrive-${MY_PV}.zip	    
-
-#	    http://www.xmlmind.net/xmleditor/_download/apt_format-${MY_PV}.zip
 
 HOMEPAGE="http://www.xmlmind.com/xmleditor/index.html"
 IUSE="doc minimal"
