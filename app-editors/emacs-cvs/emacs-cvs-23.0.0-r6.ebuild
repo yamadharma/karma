@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs-cvs/emacs-cvs-23.0.0-r6.ebuild,v 1.12 2007/05/23 10:29:12 ulm Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs-cvs/emacs-cvs-23.0.0-r6.ebuild,v 1.19 2007/06/01 18:42:08 ulm Exp $
 
 ECVS_AUTH="pserver"
 ECVS_SERVER="cvs.savannah.gnu.org:/sources/emacs"
@@ -14,10 +14,13 @@ WANT_AUTOMAKE="latest"
 inherit autotools cvs elisp-common eutils flag-o-matic
 
 DESCRIPTION="The extensible, customizable, self-documenting real-time display editor"
-SRC_URI=""
 HOMEPAGE="http://www.gnu.org/software/emacs/"
-IUSE="alsa gif gtk gzip-el hesiod jpeg lesstif motif png spell sound source tiff toolkit-scroll-bars X Xaw3d xft xpm"
+SRC_URI=""
 
+LICENSE="GPL-2 FDL-1.2"
+SLOT="23"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
+IUSE="alsa gif gtk gzip-el hesiod jpeg lesstif motif png spell sound source tiff toolkit-scroll-bars X Xaw3d xft xpm"
 RESTRICT="strip"
 
 X_DEPEND="x11-libs/libXmu x11-libs/libXt x11-misc/xbitmaps"
@@ -41,8 +44,10 @@ RDEPEND="sys-libs/ncurses
 		!gtk? (
 			Xaw3d? ( x11-libs/Xaw3d )
 			!Xaw3d? (
-				motif? ( x11-libs/openmotif )
-				!motif? ( lesstif? ( x11-libs/lesstif ) )
+				motif? (
+					lesstif? ( x11-libs/lesstif )
+					!lesstif? ( x11-libs/openmotif )
+				)
 			)
 		)
 	)"
@@ -52,9 +57,6 @@ DEPEND="${RDEPEND}
 
 PROVIDE="virtual/editor"
 
-SLOT="23"
-LICENSE="GPL-2 FDL-1.2"
-KEYWORDS="amd64 ~ppc64 ~sparc x86 ~ppc"
 S="${WORKDIR}/${ECVS_LOCALNAME}"
 
 src_unpack() {
@@ -86,7 +88,7 @@ src_unpack() {
 	epatch "${FILESDIR}/${PN}-freebsd-sparc.patch"
 	# ALSA is detected and used even if not requested by the USE=alsa flag.
 	# So remove the automagic check
-	use alsa || epatch "${FILESDIR}/${PN}-disable_alsa_detection.patch"
+	use alsa || epatch "${FILESDIR}/${PN}-disable_alsa_detection-r1.patch"
 
 	eautoreconf
 }
@@ -134,12 +136,12 @@ src_compile() {
 			myconf="${myconf} --without-gtk"
 		elif use motif; then
 			einfo "Configuring to build with motif toolkit support"
-			myconf="${myconf} --without-gtk"
 			myconf="${myconf} --with-x-toolkit=motif"
-		elif use lesstif; then
-			einfo "Configuring to build with lesstif toolkit support"
 			myconf="${myconf} --without-gtk"
-			myconf="${myconf} --with-x-toolkit=motif"
+		else
+			einfo "Configuring to build with no toolkit"
+			myconf="${myconf} --with-x-toolkit=no"
+			myconf="${myconf} --without-gtk"
 		fi
 	else
 		myconf="${myconf} --without-x"
@@ -151,11 +153,11 @@ src_compile() {
 
 	econf \
 		--program-suffix=-emacs-${SLOT} \
+		--infodir=/usr/share/info/emacs-${SLOT} \
 		--without-carbon \
 		${myconf} || die "econf emacs failed"
 
-	emake CC="$(tc-getCC) " bootstrap \
-		|| die "make bootstrap failed."
+	emake CC="$(tc-getCC)" bootstrap || die "make bootstrap failed"
 }
 
 src_install () {
@@ -167,18 +169,13 @@ src_install () {
 		|| die "moving Emacs executable failed"
 
 	# move info documentation to the correct place
-	einfo "Fixing info documentation..."
-	dodir /usr/share/info/emacs-${SLOT}
-	mv "${D}"/usr/share/info/{,emacs-${SLOT}/}dir || die "mv dir failed"
-	for i in "${D}"/usr/share/info/*
-	do
-		if [ "${i##*/}" != emacs-${SLOT} ] ; then
-			mv ${i} ${i/info/info/emacs-${SLOT}}.info
-		fi
+	einfo "Fixing info documentation ..."
+	for i in "${D}"/usr/share/info/emacs-${SLOT}/*; do
+		mv ${i} ${i}.info || die "mv info failed"
 	done
 
 	# move man pages to the correct place
-	einfo "Fixing manpages..."
+	einfo "Fixing manpages ..."
 	for m in "${D}"/usr/share/man/man1/* ; do
 		mv ${m} ${m%.1}-emacs-${SLOT}.1 || die "mv man failed"
 	done
@@ -193,12 +190,12 @@ src_install () {
 		# This is not meant to install all the source -- just the
 		# C source you might find via find-function
 		doins src/*.[ch]
-		sed 's/^X//' >00emacs-cvs-${SLOT}-gentoo.el <<EOF
+		sed 's/^X//' >00${PN}-${SLOT}-gentoo.el <<EOF
 (if (string-match "\\\\\`${FULL_VERSION//./\\\\.}\\\\>" emacs-version)
 X    (setq find-function-C-source-directory
 X	  "/usr/share/emacs/${FULL_VERSION}/src"))
 EOF
-		elisp-site-file-install 00emacs-cvs-${SLOT}-gentoo.el
+		elisp-site-file-install 00${PN}-${SLOT}-gentoo.el
 	fi
 
 	dodoc AUTHORS BUGS CONTRIBUTE README README.unicode || die "dodoc failed"

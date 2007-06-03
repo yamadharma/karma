@@ -12,8 +12,10 @@ KEYWORDS="x86 amd64"
 IUSE=""
 
 DEPEND="media-libs/libsamplerate
-	media-sound/fusd-kor
-	sys-apps/realtime-lsm"
+	media-sound/fusd-kor"
+
+#	sys-apps/realtime-lsm	
+
 RDEPEND=${DEPEND}
 
 src_compile() {

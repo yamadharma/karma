@@ -4,11 +4,13 @@
 
 inherit toolchain-funcs
 
-MY_P=${P/_/-}
+#MY_P=${P/_/-}
+MY_PV=${PV#*_pre}
+MY_P=wmii+ixp-${MY_PV}
 
 DESCRIPTION="A dynamic window manager for X11"
 HOMEPAGE="http://wmii.suckless.org/"
-SRC_URI="http://suckless.org/download/${MY_P}.tar.gz"
+SRC_URI="http://suckless.org/snaps/${MY_P}.tgz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -29,16 +31,14 @@ src_unpack() {
 	sed -i \
 		-e "/^PREFIX/s|=.*|= /usr|" \
 		-e "/^CONFPREFIX/s|=.*|= /etc|" \
+		-e "/^ETC/s|=.*|= /etc|" \
 		-e "/^X11INC/s|=.*|= /usr/include|" \
 		-e "/^X11LIB/s|=.*|= /usr/lib|" \
-		-e "/^CFLAGS/s|=|+=|" \
-		-e "/^LDFLAGS/s|=|+=|" \
-		-e "/^CC/s|=.*|= $(tc-getCC)|" \
 		config.mk || die "sed failed"
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "emake install failed"
+	emake PREFIX=${D}/usr ETC=${D}/etc install || die "emake install failed"
 	dodoc README
 
 	echo -e "#!/bin/sh\n/usr/bin/wmii" > "${T}/${PN}"
