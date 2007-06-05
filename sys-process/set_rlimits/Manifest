@@ -1,0 +1,8 @@
+DIST set_rlimits-1.2.0.tgz 41824 RMD160 14aee331a2eb1f80825dfef3839b07125543fb7f SHA1 026cef96ca58d56d78dcb23f83fe5763ffc282cc SHA256 60ff1824befee29bb69a4e73de1033b614b8cc076f860c34ebfb97f5763d1a1f
+EBUILD set_rlimits-1.2.0.ebuild 1723 RMD160 a4450642a02e8ff3359b18e77aa245af98a6308f SHA1 24fe5e0ed31104b8219828beff0db264285ea24a SHA256 cf9c738aa359db50a9722dc6b8a36b615344caf2caf694234fbdaea2a88e8be0
+MD5 dd95f741ead226aa08fdf13ed35c73ec set_rlimits-1.2.0.ebuild 1723
+RMD160 a4450642a02e8ff3359b18e77aa245af98a6308f set_rlimits-1.2.0.ebuild 1723
+SHA256 cf9c738aa359db50a9722dc6b8a36b615344caf2caf694234fbdaea2a88e8be0 set_rlimits-1.2.0.ebuild 1723
+MD5 0687c26b2397f67df2888c9e4e09e98e files/digest-set_rlimits-1.2.0 241
+RMD160 67ffc89ceeb182d935970c15ede41906d2f0ecd7 files/digest-set_rlimits-1.2.0 241
+SHA256 52b8331e33f9d66bcf9de6d9c9005ccee94f0a29f8a9c0da8401d2cc16bdfe7c files/digest-set_rlimits-1.2.0 241
