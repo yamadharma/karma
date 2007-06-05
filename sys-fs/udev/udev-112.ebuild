@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/udev-111.ebuild,v 1.3 2007/05/16 10:31:30 zzam Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/udev-112.ebuild,v 1.1 2007/06/05 12:51:29 zzam Exp $
 
 inherit eutils flag-o-matic multilib toolchain-funcs
 
@@ -22,6 +22,21 @@ PROVIDE="virtual/dev-manager"
 
 pkg_setup() {
 	udev_helper_dir="/$(get_libdir)/udev"
+
+	myconf=
+	extras="extras/ata_id \
+			extras/cdrom_id \
+			extras/edd_id \
+			extras/firmware \
+			extras/floppy \
+			extras/path_id \
+			extras/scsi_id \
+			extras/usb_id \
+			extras/volume_id \
+			extras/rule_generator \
+			extras/root_link"
+
+	use selinux && myconf="${myconf} USE_SELINUX=true"
 }
 
 sed_helper_dir() {
@@ -36,6 +51,10 @@ src_unpack() {
 	# patches go here...
 	epatch ${FILESDIR}/${PN}-104-peristent-net-disable-xen.patch
 	EPATCH_OPTS="-p1" epatch ${FILESDIR}/${PN}-110-root-link-1.diff
+	epatch ${FILESDIR}/${PN}-112-rules.diff
+
+	# We already have that rule in 50-udev.rules
+	sed -i extras/cdrom_id/Makefile -e '/60-cdrom_id.rules/d'
 
 	# No need to clutter the logs ...
 	sed -ie '/^DEBUG/ c\DEBUG = false' Makefile
@@ -46,7 +65,7 @@ src_unpack() {
 	# (more for my own needs than anything else ...)
 	MD5=`md5sum < "${S}/etc/udev/gentoo/50-udev.rules"`
 	MD5=${MD5/  -/}
-	if [ "${MD5}" != "04a8f3303a2b172affbed26973745f26" ]
+	if [ "${MD5}" != "90d89fa5c97413d01d04eb7e718d34b6" ]
 	then
 		echo
 		eerror "gentoo/udev.rules has been updated, please validate!"
@@ -58,68 +77,44 @@ src_unpack() {
 		extras/rule_generator/write_*_rules \
 		udev_rules_parse.c \
 		udev_utils_run.c
+
+	# Use correct multilib dir
+	sed -i extras/volume_id/lib/Makefile \
+		-e "/ =/s-/lib-/$(get_libdir)-"
 }
 
 src_compile() {
 	filter-flags -fprefetch-loop-arrays
-	local myconf=
-	local extras="extras/ata_id \
-				  extras/cdrom_id \
-				  extras/edd_id \
-				  extras/firmware \
-				  extras/floppy \
-				  extras/path_id \
-				  extras/scsi_id \
-				  extras/usb_id \
-				  extras/volume_id \
-				  extras/rule_generator \
-				  extras/root_link"
-
-	use selinux && myconf="${myconf} USE_SELINUX=true"
 
 	# Not everyone has full $CHOST-{ld,ar,etc...} yet
 	local mycross=""
 	type -p ${CHOST}-ar && mycross=${CHOST}-
 
-	echo "get_libdir = $(get_libdir)"
 	emake \
 		EXTRAS="${extras}" \
-		udevdir="/dev/" \
+		libudevdir=${udev_helper_dir} \
 		CROSS_COMPILE=${mycross} \
 		OPTFLAGS="" \
 		${myconf} || die
 }
 
 src_install() {
-	# we install everything by "hand" and don't rely on the udev Makefile to do
-	# it for us (why? it's easier that way...)
-	dobin udevinfo		|| die "Required binary not installed properly"
-	dobin udevtest		|| die "Required binary not installed properly"
-	dobin udevmonitor	|| die "Required binary not installed properly"
 	into /
-	dosbin udevd		|| die "Required binary not installed properly"
-	dosbin udevstart	|| die "Required binary not installed properly"
-	dosbin udevtrigger	|| die "Required binary not installed properly"
-	dosbin udevcontrol	|| die "Required binary not installed properly"
-	dosbin udevsettle	|| die "Required binary not installed properly"
+	emake \
+		DESTDIR="${D}" \
+		libudevdir=${udev_helper_dir} \
+		EXTRAS="${extras}" \
+		${myconf} \
+		install || die
 
-	# Helpers
+	# make install does not install this
+	dosbin udevstart	|| die "Required binary not installed properly"
+	doman udevstart.8
+
 	exeinto "${udev_helper_dir}"
-	doexe extras/ata_id/ata_id		|| die "Required helper not installed properly"
-	doexe extras/volume_id/vol_id	|| die "Required helper not installed properly"
-	doexe extras/scsi_id/scsi_id	|| die "Required helper not installed properly"
-	doexe extras/usb_id/usb_id		|| die "Required helper not installed properly"
-	doexe extras/path_id/path_id	|| die "Required helper not installed properly"
-	doexe extras/cdrom_id/cdrom_id	|| die "Required helper not installed properly"
-	doexe extras/edd_id/edd_id		|| die "Required helper not installed properly"
-	doexe extras/rule_generator/write_cd_rules	|| die "Required helper not installed properly"
-	doexe extras/rule_generator/write_net_rules	|| die "Required helper not installed properly"
-	doexe extras/rule_generator/rule_generator.functions	|| die "Required helper not installed properly"
-	doexe extras/root_link/get_dir_major_minor || die "Required helper not installed properly"
-	doexe extras/floppy/create_floppy_devices	|| die "Required binary not installed properly"
-	doexe extras/firmware/firmware.sh			|| die "Required binary not installed properly"
-	newexe ${FILESDIR}/net-104-r10.sh net.sh	|| die "Required binary not installed properly"
-	newexe ${FILESDIR}/modprobe-105.sh modprobe.sh	|| die "Required binary not installed properly"
+	newexe "${FILESDIR}"/net-104-r10.sh net.sh	|| die "Required binary not installed properly"
+	newexe "${FILESDIR}"/modprobe-111-r1.sh modprobe.sh	|| die "Required binary not installed properly"
+	doexe "${FILESDIR}"/move_tmp_persistent_rules.sh || die "Required binary not installed properly"
 
 	keepdir "${udev_helper_dir}"/state
 	keepdir "${udev_helper_dir}"/devices
@@ -130,18 +125,14 @@ src_install() {
 	dosym "..${udev_helper_dir}/scsi_id" /sbin/scsi_id
 
 	# vol_id library (needed by mount and HAL)
-	dolib extras/volume_id/lib/*.a extras/volume_id/lib/*.so*
-	# move the .a files to /usr/lib
-	dodir /usr/$(get_libdir)
-	mv -f "${D}"/$(get_libdir)/*.a  "${D}"/usr/$(get_libdir)/
+	into /
+	dolib extras/volume_id/lib/*.so*
+	into /usr
+	dolib extras/volume_id/lib/*.a
 
 	# handle static linking bug #4411
+	rm -f "${D}/usr/$(get_libdir)/libvolume_id.so"
 	gen_usr_ldscript libvolume_id.so
-
-	# save pkgconfig info
-	insinto /usr/$(get_libdir)/pkgconfig
-	doins extras/volume_id/lib/*.pc
-
 
 	# Our udev config file
 	insinto /etc/udev
@@ -150,54 +141,26 @@ src_install() {
 	# Our rules files
 	insinto /etc/udev/rules.d/
 	doins etc/udev/gentoo/??-*.rules
-	#newins ${FILESDIR}/udev.rules-107-r1 50-udev.rules
-	#newins ${FILESDIR}/05-udev-early.rules-106-r5 05-udev-early.rules
-	#doins ${FILESDIR}/95-udev-late.rules
-	# Special rules for device-mapper
-	#newins ${FILESDIR}/64-device-mapper.rules-107-r1 64-device-mapper.rules
 	# Use upstream's persistent rules for devices
 	doins etc/udev/rules.d/60-*.rules
-	doins extras/rule_generator/75-*.rules || die "rules not installed properly"
-
-	# scsi_id configuration
-	insinto /etc
-	doins extras/scsi_id/scsi_id.config
-
-	# all of the man pages
-	doman *.7
-	doman *.8
-	doman extras/ata_id/ata_id.8
-	doman extras/edd_id/edd_id.8
-	doman extras/scsi_id/scsi_id.8
-	doman extras/volume_id/vol_id.8
-	doman extras/cdrom_id/cdrom_id.8
-	# create a extra symlink for udevcontrol
-	dosym udevd.8 /usr/share/man/man8/udevcontrol.8
 
 	# our udev hooks into the rc system
 	insinto /$(get_libdir)/rcscripts/addons
-	newins "${FILESDIR}"/udev-start-110-r1.sh udev-start.sh
-	newins "${FILESDIR}"/udev-stop-110-r1.sh udev-stop.sh
+	newins "${FILESDIR}"/udev-start-111-r3.sh udev-start.sh
+	newins "${FILESDIR}"/udev-stop-111-r2.sh udev-stop.sh
 
-	# convert /lib/udev to real used dir
-	sed_helper_dir "${D}/$(get_libdir)"/rcscripts/addons/*.sh
-
-	# needed to compile latest Hal
-	insinto /usr/include
-	doins extras/volume_id/lib/libvolume_id.h
-
-	dodoc ChangeLog FAQ README TODO RELEASE-NOTES
-	dodoc docs/{overview,udev_vs_devfs}
-	dodoc docs/writing_udev_rules/*
-
-	newdoc extras/volume_id/README README_volume_id
+	# The udev-post init-script
+	newinitd "${FILESDIR}"/udev-postmount-initd-111-r2 udev-postmount
 
 	insinto /etc/modprobe.d
 	newins ${FILESDIR}/blacklist-110 blacklist
 	doins ${FILESDIR}/pnp-aliases
 
 	# convert /lib/udev to real used dir
-	sed_helper_dir "${D}"/etc/modprobe.d/*
+	sed_helper_dir \
+		"${D}/$(get_libdir)"/rcscripts/addons/*.sh \
+		"${D}"/etc/init.d/udev* \
+		"${D}"/etc/modprobe.d/*
 
 	if use s390; then
 		# s390 does not has persistent mac addresses
@@ -205,6 +168,13 @@ src_install() {
 		# For now just remove the rules file.
 		rm ${D}/etc/udev/rules.d/75-persistent-net-generator.rules
 	fi
+
+	# documentation
+	dodoc ChangeLog FAQ README TODO RELEASE-NOTES
+	dodoc docs/{overview,udev_vs_devfs}
+	dodoc docs/writing_udev_rules/*
+
+	newdoc extras/volume_id/README README_volume_id
 
 }
 
