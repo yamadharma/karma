@@ -1,0 +1,822 @@
+diff -dPNur gftp-2.0.18-orig/configure.in gftp-2.0.18-new/configure.in
+--- gftp-2.0.18-orig/configure.in	2005-02-04 16:42:32.000000000 +0100
++++ gftp-2.0.18-new/configure.in	2005-07-23 18:54:53.000000000 +0200
+@@ -288,6 +288,20 @@
+ fi
+ AC_SUBST(SSL_LIBS)
+ 
++AC_CHECK_LIB(rccui, rccUiInit,[
++    AC_CHECK_HEADERS(librcc.h librccui.h,[
++       LIBRCC_LIBS="-lrccui"
++       LIBRCC_INCLUDES="-DHAVE_LIBRCC"
++    ],[
++       LIBRCC_LIBS=""
++       LIBRCC_INCLUDES=""
++])],[
++    LIBRCC_LIBS=""
++    LIBRCC_INCLUDES=""
++])
++AC_SUBST(LIBRCC_LIBS)
++AC_SUBST(LIBRCC_INCLUDES)
++
+ AM_GNU_GETTEXT
+ 
+ AC_CHECK_PROG(DB2HTML, db2html, true, false)
+diff -dPNur gftp-2.0.18-orig/lib/gftp.h gftp-2.0.18-new/lib/gftp.h
+--- gftp-2.0.18-orig/lib/gftp.h	2005-01-19 00:09:58.000000000 +0100
++++ gftp-2.0.18-new/lib/gftp.h	2005-07-23 20:57:03.000000000 +0200
+@@ -362,6 +362,7 @@
+ {
+   int protonum;			/* Current number of the protocol this is 
+                                    set to */
++  int language, charset;	/* Remote language and encoding */
+   char *hostname,		/* Hostname we will connect to */
+        *username,		/* Username for host*/
+        *password,		/* Password for host */
+@@ -928,6 +929,12 @@
+ 					  const char *filename,
+ 					  mode_t * mode );
+ 
++void gftp_set_language 			( gftp_request * request, 
++					  int language );
++
++void gftp_set_charset 			( gftp_request * request, 
++					  int charset );
++
+ void gftp_set_hostname 			( gftp_request * request, 
+ 					  const char *hostname );
+ 
+diff -dPNur gftp-2.0.18-orig/lib/Makefile.am gftp-2.0.18-new/lib/Makefile.am
+--- gftp-2.0.18-orig/lib/Makefile.am	2005-01-16 17:10:12.000000000 +0100
++++ gftp-2.0.18-new/lib/Makefile.am	2005-07-23 18:58:12.000000000 +0200
+@@ -4,6 +4,6 @@
+ noinst_LIBRARIES = libgftp.a
+ libgftp_a_SOURCES=bookmark.c cache.c config_file.c fsp.c ftps.c https.c \
+                   local.c misc.c mkstemps.c protocols.c pty.c rfc959.c \
+-                  rfc2068.c sshv2.c sslcommon.c
+-INCLUDES=@GLIB_CFLAGS@ @PTHREAD_CFLAGS@ -I../intl -DSHARE_DIR=\"$(datadir)/gftp\" -DLOCALE_DIR=\"$(datadir)/locale\"
+-noinst_HEADERS=gftp.h ftpcommon.h httpcommon.h options.h
++                  rfc2068.c sshv2.c sslcommon.c rcc.c
++INCLUDES=@LIBRCC_INCLUDES@ @GLIB_CFLAGS@ @PTHREAD_CFLAGS@ -I../intl -DSHARE_DIR=\"$(datadir)/gftp\" -DLOCALE_DIR=\"$(datadir)/locale\"
++noinst_HEADERS=gftp.h ftpcommon.h httpcommon.h options.h rcc.h
+diff -dPNur gftp-2.0.18-orig/lib/rcc.c gftp-2.0.18-new/lib/rcc.c
+--- gftp-2.0.18-orig/lib/rcc.c	1970-01-01 01:00:00.000000000 +0100
++++ gftp-2.0.18-new/lib/rcc.c	2005-07-24 01:53:25.000000000 +0200
+@@ -0,0 +1,289 @@
++#include <stdlib.h>
++
++#ifdef HAVE_LIBRCC
++# include <librcc.h>
++# include <librccui.h>
++#endif /* HAVE_LIBRCC */
++
++#include "rcc.h"
++
++#ifdef HAVE_LIBRCC
++static rcc_class classes[] = {
++    { "ftp", RCC_CLASS_STANDARD, NULL, NULL, "FTP Encoding", 0 },
++    { "http", RCC_CLASS_STANDARD, NULL, NULL, "HTTP Encoding", 0 },
++    { "ssh", RCC_CLASS_STANDARD, NULL, NULL, "SSH Encoding", 0 },
++    { "fs", RCC_CLASS_STANDARD, NULL, NULL, "FS Encoding", 0 },
++    { "out", RCC_CLASS_STANDARD, NULL, NULL, "Output Encoding", 0 },
++    { NULL, RCC_CLASS_STANDARD, NULL, NULL, NULL, 0 }
++};
++
++rcc_context ctx;
++rcc_ui_context uictx;
++static int rcc_initialized = 0;
++#endif /* HAVE_LIBRCC */
++
++
++void rccPatchFree() {
++#ifdef HAVE_LIBRCC
++    if (rcc_initialized) {
++	rccUiFreeContext(uictx);
++	rccFreeContext(ctx);
++	rccUiFree();
++	rccFree();
++	rcc_initialized = 0;
++    }
++#endif /* HAVE_LIBRCC */
++}
++
++void rccPatchInit() {
++#ifdef HAVE_LIBRCC
++    if (rcc_initialized) return;
++    rccInit();
++    ctx = rccCreateContext(NULL, 0, 0, classes, 0);
++    if (ctx) {
++	rccLoad(ctx, "ftp");
++	rccInitDb4(ctx, NULL, 0);
++	rccUiInit();
++	uictx = rccUiCreateContext(ctx);
++	if (uictx) rcc_initialized = 1;
++	else {
++	    rccUiFree();
++	    rccFreeContext(ctx);
++	    rccFree();
++	}
++    } else rccFree();
++#endif /* HAVE_LIBRCC */
++}
++
++
++#ifdef HAVE_LIBRCC
++static char *rcc_languages[RCC_MAX_LANGUAGES+1];
++static char *rcc_charsets[RCC_MAX_CHARSETS+1];
++#endif /* HAVE_LIBRCC */
++
++char **rccPatchGetLanguageList() {
++#ifdef HAVE_LIBRCC
++    unsigned int i, num;
++
++    if (rcc_initialized) {
++	num = rccGetLanguageNumber(ctx);
++	for (i=0;i<(num?num:1);i++)
++	    rcc_languages[i] = (char*)rccUiGetLanguageName(uictx, (rcc_language_id)i);
++
++	rcc_languages[i] = NULL;
++	return rcc_languages;
++    }
++#endif /* HAVE_LIBRCC */
++
++    return NULL;
++
++}
++
++char **rccPatchGetCharsetList(int lid) {
++#ifdef HAVE_LIBRCC
++    unsigned int i, num;
++    rcc_language_config config;
++
++    if (rcc_initialized) {
++	config = rccGetConfig(ctx, (rcc_language_id)lid);
++	num = rccConfigGetCharsetNumber(config);
++	for (i=0;i<(num?num:1);i++)
++	    rcc_charsets[i] = (char*)rccUiGetCharsetName(uictx, (rcc_language_id)lid, (rcc_class_id)0 /* first class, they are equal*/, (rcc_charset_id)i);
++
++	rcc_charsets[i] = NULL;
++	return rcc_charsets;
++    }
++#endif /* HAVE_LIBRCC */
++
++    return NULL;
++}
++
++char *rccPatchFrom(gftp_request * request, const char *str) {
++#ifdef HAVE_LIBRCC
++    rcc_class_id cl;
++    if (rcc_initialized) {
++	switch (request->protonum) {
++	    case GFTP_FTP_NUM:
++	    case GFTP_FTPS_NUM:
++		cl = (rcc_class_id)RCC_CLASS_FTP;
++	    break;
++	    case GFTP_HTTP_NUM:
++	    case GFTP_HTTPS_NUM:
++		cl = (rcc_class_id)RCC_CLASS_HTTP;
++	    break;
++	    case GFTP_SSHV2_NUM:
++		cl = (rcc_class_id)RCC_CLASS_SSH;
++	    break;
++	    case GFTP_LOCAL_NUM:
++		cl = (rcc_class_id)RCC_CLASS_FS;
++	    break;
++	    default:
++		return NULL;
++	}
++	
++	if ((cl == RCC_CLASS_FTP)||(cl == RCC_CLASS_HTTP)||(cl == RCC_CLASS_SSH)) {
++	    if (request->language) rccSetLanguage(ctx, (rcc_language_id)request->language);
++	    if (request->charset) rccSetCharset(ctx, cl, (rcc_charset_id)request->charset);
++	}
++
++	return rccRecodeFromCharset(ctx, cl, "UTF-8", str);
++    }
++#endif /* HAVE_LIBRCC */
++    return NULL;
++}
++
++char *rccPatchTo(gftp_request * request, const char *str) {
++#ifdef HAVE_LIBRCC
++    rcc_class_id cl;
++    if (rcc_initialized) {
++	switch (request->protonum) {
++	    case GFTP_FTP_NUM:
++	    case GFTP_FTPS_NUM:
++		cl = (rcc_class_id)RCC_CLASS_FTP;
++	    break;
++	    case GFTP_HTTP_NUM:
++	    case GFTP_HTTPS_NUM:
++		cl = (rcc_class_id)RCC_CLASS_HTTP;
++	    break;
++	    case GFTP_SSHV2_NUM:
++		cl = (rcc_class_id)RCC_CLASS_SSH;
++	    break;
++	    case GFTP_LOCAL_NUM:
++		cl = (rcc_class_id)RCC_CLASS_FS;
++	    break;
++	    default:
++		return NULL;
++	}
++	
++	if ((cl == RCC_CLASS_FTP)||(cl == RCC_CLASS_HTTP)||(cl == RCC_CLASS_SSH)) {
++	    if (request->language) rccSetLanguage(ctx, (rcc_language_id)request->language);
++	    if (request->charset) rccSetCharset(ctx, cl, (rcc_charset_id)request->charset);
++	}
++
++	return rccRecodeToCharset(ctx, cl, "UTF-8", str);
++    }
++#endif /* HAVE_LIBRCC */
++    return NULL;
++}
++
++char *rccPatch(gftp_request *from, gftp_request *to, const char *str) {
++    char *res, *ret;
++    const char *tmp;
++
++    if (from->protonum == to->protonum) return NULL;
++    printf("%u %u\n", from->protonum, to->protonum);
++
++    tmp = strstr(str, to->directory);
++    if (!tmp) tmp = str;
++        
++    res = rccPatchTo(from, tmp);
++    if (!res) res = (char*)tmp;
++
++    ret = rccPatchFrom(to, res);
++    if (ret) {
++	if (res!=tmp) free(res);
++    } else {
++	if (res!=tmp) ret = res;
++	else return NULL;
++    }
++    
++    if (tmp != str) {
++	res = (char*)malloc((strlen(ret) + (tmp-str) + 1)*sizeof(char));
++	if (res) {
++	    memcpy(res, str, (tmp-str));
++	    strcpy(res+(tmp-str), ret);
++	}
++	free(ret);
++	if (res) puts(res);
++	return res;
++    }
++
++    return ret;
++}
++
++char *rccPatchFromClass(gftp_request * request, int from, const char *str) {
++#ifdef HAVE_LIBRCC
++    rcc_class_id cl;
++    if (rcc_initialized) {
++	switch (request->protonum) {
++	    case GFTP_FTP_NUM:
++	    case GFTP_FTPS_NUM:
++		cl = (rcc_class_id)RCC_CLASS_FTP;
++	    break;
++	    case GFTP_HTTP_NUM:
++	    case GFTP_HTTPS_NUM:
++		cl = (rcc_class_id)RCC_CLASS_HTTP;
++	    break;
++	    case GFTP_SSHV2_NUM:
++		cl = (rcc_class_id)RCC_CLASS_SSH;
++	    break;
++	    case GFTP_LOCAL_NUM:
++		cl = (rcc_class_id)RCC_CLASS_FS;
++	    break;
++	    default:
++		return NULL;
++	}
++	
++	if ((cl == RCC_CLASS_FTP)||(cl == RCC_CLASS_HTTP)||(cl == RCC_CLASS_SSH)) {
++	    if (request->language) rccSetLanguage(ctx, (rcc_language_id)request->language);
++	    if (request->charset) rccSetCharset(ctx, cl, (rcc_charset_id)request->charset);
++	}
++
++	return rccRecode(ctx, (rcc_class_id)from, cl, str);
++    }
++#endif /* HAVE_LIBRCC */
++    return NULL;
++}
++
++char *rccPatchToClass(gftp_request * request, int to, const char *str) {
++#ifdef HAVE_LIBRCC
++    rcc_class_id cl;
++    if (rcc_initialized) {
++	switch (request->protonum) {
++	    case GFTP_FTP_NUM:
++	    case GFTP_FTPS_NUM:
++		cl = (rcc_class_id)RCC_CLASS_FTP;
++	    break;
++	    case GFTP_HTTP_NUM:
++	    case GFTP_HTTPS_NUM:
++		cl = (rcc_class_id)RCC_CLASS_HTTP;
++	    break;
++	    case GFTP_SSHV2_NUM:
++		cl = (rcc_class_id)RCC_CLASS_SSH;
++	    break;
++	    case GFTP_LOCAL_NUM:
++		cl = (rcc_class_id)RCC_CLASS_FS;
++	    break;
++	    default:
++		return NULL;
++	}
++	
++	if ((cl == RCC_CLASS_FTP)||(cl == RCC_CLASS_HTTP)||(cl == RCC_CLASS_SSH)) {
++	    if (request->language) rccSetLanguage(ctx, (rcc_language_id)request->language);
++	    if (request->charset) rccSetCharset(ctx, cl, (rcc_charset_id)request->charset);
++	}
++
++	return rccRecode(ctx, cl, (rcc_class_id)to, str);
++    }
++#endif /* HAVE_LIBRCC */
++    return NULL;
++}
++
++
++char *rccPatchUTF2OUT(const char *str) {
++#ifdef HAVE_LIBRCC
++    if (rcc_initialized) {
++    	return rccRecodeFromCharset(ctx, RCC_CLASS_OUT, "UTF-8", str);
++    }
++#endif /* HAVE_LIBRCC */
++    return NULL;
++}
++
++char *rccPatchOUT2UTF(const char *str) {
++#ifdef HAVE_LIBRCC
++    if (rcc_initialized) {
++    	return rccRecodeToCharset(ctx, RCC_CLASS_OUT, "UTF-8", str);
++    }
++#endif /* HAVE_LIBRCC */
++    return NULL;
++}
+diff -dPNur gftp-2.0.18-orig/lib/rcc.h gftp-2.0.18-new/lib/rcc.h
+--- gftp-2.0.18-orig/lib/rcc.h	1970-01-01 01:00:00.000000000 +0100
++++ gftp-2.0.18-new/lib/rcc.h	2005-07-24 01:49:20.000000000 +0200
+@@ -0,0 +1,28 @@
++#ifndef _RCC_H
++#define _RCC_H
++
++#include "gftp.h"
++
++#define RCC_CLASS_FTP 0
++#define RCC_CLASS_HTTP 1
++#define RCC_CLASS_SSH 2
++#define RCC_CLASS_FS 3
++#define RCC_CLASS_OUT 4
++
++void rccPatchFree(); 
++void rccPatchInit(); 
++
++char **rccPatchGetLanguageList();
++char **rccPatchGetCharsetList(int lid);
++
++char *rccPatchFrom(gftp_request * request, const char *str);
++char *rccPatchTo(gftp_request * request, const char *str);
++char *rccPatch(gftp_request *from, gftp_request *to, const char *str);
++
++char *rccPatchFromClass(gftp_request * request, int from, const char *str);
++char *rccPatchToClass(gftp_request * request, int to, const char *str);
++
++char *rccPatchUTF2OUT(const char *str);
++char *rccPatchOUT2UTF(const char *str);
++
++#endif /* _RCC_H */
+diff -dPNur gftp-2.0.18-orig/src/gtk/gtkui.c gftp-2.0.18-new/src/gtk/gtkui.c
+--- gftp-2.0.18-orig/src/gtk/gtkui.c	2005-01-26 04:22:05.000000000 +0100
++++ gftp-2.0.18-new/src/gtk/gtkui.c	2005-07-24 00:40:47.000000000 +0200
+@@ -351,6 +351,8 @@
+   filelist = wdata->files;
+   templist = get_next_selection (templist, &filelist, &num);
+   curfle = filelist->data;
++  cdata->source_string = gftp_string_to_utf8(wdata->request, curfle->file);
++  if (!cdata->source_string)
+   cdata->source_string = g_strdup (curfle->file);
+ 
+   tempstr = g_strdup_printf (_("What would you like to rename %s to?"),
+diff -dPNur gftp-2.0.18-orig/src/gtk/Makefile.am gftp-2.0.18-new/src/gtk/Makefile.am
+--- gftp-2.0.18-orig/src/gtk/Makefile.am	2005-01-16 17:12:08.000000000 +0100
++++ gftp-2.0.18-new/src/gtk/Makefile.am	2005-07-23 19:16:26.000000000 +0200
+@@ -5,6 +5,6 @@
+ gftp_gtk_SOURCES = bookmarks.c chmod_dialog.c delete_dialog.c dnd.c \
+                      gftp-gtk.c gtkui.c gtkui_transfer.c menu-items.c \
+                      misc-gtk.c options_dialog.c transfer.c view_dialog.c
+-INCLUDES = @GTK_CFLAGS@ @PTHREAD_CFLAGS@ -I../../intl
+-LDADD = ../../lib/libgftp.a ../../lib/fsplib/libfsp.a ../uicommon/libgftpui.a @GTK_LIBS@ @PTHREAD_LIBS@ @EXTRA_LIBS@ @GTHREAD_LIBS@ @SSL_LIBS@ @LIBINTL@
++INCLUDES = @LIBRCC_INCLUDES@ @GTK_CFLAGS@ @PTHREAD_CFLAGS@ -I../../intl
++LDADD = ../../lib/libgftp.a ../../lib/fsplib/libfsp.a ../uicommon/libgftpui.a @GTK_LIBS@ @PTHREAD_LIBS@ @EXTRA_LIBS@ @GTHREAD_LIBS@ @SSL_LIBS@ @LIBINTL@ @LIBRCC_LIBS@
+ noinst_HEADERS = gftp-gtk.h
+diff -dPNur gftp-2.0.18-orig/src/text/gftp-text.c gftp-2.0.18-new/src/text/gftp-text.c
+--- gftp-2.0.18-orig/src/text/gftp-text.c	2005-01-25 02:11:00.000000000 +0100
++++ gftp-2.0.18-new/src/text/gftp-text.c	2005-07-24 01:54:25.000000000 +0200
+@@ -18,6 +18,7 @@
+ /*****************************************************************************/
+ 
+ #include "gftp-text.h"
++#include "../../lib/rcc.h"
+ static const char cvsid[] = "$Id: gftp-text.c,v 1.45 2005/01/25 01:11:00 masneyb Exp $";
+ 
+ unsigned int
+@@ -93,6 +94,7 @@
+                const char *string, ...)
+ {
+   char tempstr[512], *utf8_str = NULL, *outstr;
++  char *locale_str;
+   va_list argp;
+ 
+   g_return_if_fail (string != NULL);
+@@ -140,7 +142,14 @@
+     }
+ 
+   if (level == gftp_logging_misc_nolog)
++{
++    locale_str = rccPatchUTF2OUT(outstr);
++    if (locale_str) {
++	printf ("%s", locale_str);
++	free(locale_str);
++    } else
+     printf ("%s", outstr);
++}
+   else
+     gftp_text_write_string (request, outstr);
+   
+@@ -158,6 +167,7 @@
+   gchar *locale_question;
+   sigset_t sig, sigsave;
+   char *pos, *termname;
++  char *tmp;
+   int singlechar;
+   FILE *infd;
+ 
+@@ -247,6 +257,9 @@
+ #else
+   char tempstr[512];
+ #endif
++  char *recoded = NULL;
++
++  rccPatchInit();
+ 
+   gftpui_common_init (&argc, &argv, gftp_text_log);
+ 
+@@ -298,9 +311,11 @@
+   g_snprintf (prompt, sizeof (prompt), "%sftp%s> ", GFTPUI_COMMON_COLOR_BLUE, GFTPUI_COMMON_COLOR_DEFAULT);
+   while ((tempstr = readline (prompt)))
+     {
++      if (recoded) free(recoded);
++      recoded = rccPatchFromClass(gftp_text_remreq, RCC_CLASS_OUT, tempstr);
+       if (gftpui_common_process_command (locuidata, gftp_text_locreq,
+                                          remuidata, gftp_text_remreq,
+-                                         tempstr) == 0)
++                                         recoded?recoded:tempstr) == 0)
+         break;
+    
+       add_history (tempstr);
+@@ -310,16 +325,20 @@
+   printf ("%sftp%s> ", GFTPUI_COMMON_COLOR_BLUE, GFTPUI_COMMON_COLOR_DEFAULT);
+   while (fgets (tempstr, sizeof (tempstr), stdin) != NULL)
+     {
++      if (recoded) free(recoded);
++      recoded = rccPatchFromClass(gftp_tetxt_remreq, RCC_CLASS_OUT, tempstr);
+       if (gftpui_common_process_command (locuidata, gftp_text_locreq,
+                                          remuidata, gftp_text_remreq,
+-                                         tempstr) == 0)
++                                         recoded?recoded:tempstr) == 0)
+         break;
+ 
+       printf ("%sftp%s> ", GFTPUI_COMMON_COLOR_BLUE, GFTPUI_COMMON_COLOR_DEFAULT);
+     }
+ #endif
+- 
++    if (recoded) free(recoded); 
++
+   gftp_shutdown ();
++  rccPatchFree();
+   return (0);
+ }
+ 
+diff -dPNur gftp-2.0.18-orig/src/text/Makefile.am gftp-2.0.18-new/src/text/Makefile.am
+--- gftp-2.0.18-orig/src/text/Makefile.am	2005-01-16 17:12:00.000000000 +0100
++++ gftp-2.0.18-new/src/text/Makefile.am	2005-07-23 19:16:39.000000000 +0200
+@@ -3,7 +3,7 @@
+ bin_PROGRAMS = @GFTP_TEXT@
+ EXTRA_PROGRAMS = gftp-text
+ gftp_text_SOURCES=gftp-text.c textui.c
+-INCLUDES=@GLIB_CFLAGS@ -I../../intl
+-LDADD = ../../lib/libgftp.a ../../lib/fsplib/libfsp.a ../uicommon/libgftpui.a @GLIB_LIBS@ @EXTRA_LIBS@ @READLINE_LIBS@ @SSL_LIBS@ @LIBINTL@
++INCLUDES=@LIBRCC_INCLUDES@ @GLIB_CFLAGS@ -I../../intl
++LDADD = ../../lib/libgftp.a ../../lib/fsplib/libfsp.a ../uicommon/libgftpui.a @GLIB_LIBS@ @EXTRA_LIBS@ @READLINE_LIBS@ @SSL_LIBS@ @LIBINTL@ @LIBRCC_LIBS@
+ noinst_HEADERS=gftp-text.h
+ localedir=$(datadir)/locale
+diff -dPNur gftp-2.0.18-orig/lib/protocols.c gftp-2.0.18-new/lib/protocols.c
+--- gftp-2.0.18-orig/lib/protocols.c	2005-07-23 15:30:59.000000000 +0200
++++ gftp-2.0.18-new/lib/protocols.c	2005-07-24 00:56:12.000000000 +0200
+@@ -18,6 +18,8 @@
+ /*****************************************************************************/
+ 
+ #include "gftp.h"
++#include "rcc.h"
++
+ static const char cvsid[] = "$Id: protocols.c,v 1.125 2005/01/25 02:34:18 masneyb Exp $";
+ 
+ gftp_request *
+@@ -26,6 +28,8 @@
+   gftp_request *request;
+ 
+   request = g_malloc0 (sizeof (*request));
++  request->language = 0;
++  request->charset = 0;
+   request->datafd = -1;
+   request->cachefd = -1;
+   request->server_type = GFTP_DIRTYPE_OTHER;
+@@ -460,6 +469,9 @@
+   gftp_lookup_request_option (request, "remote_charsets", &tempstr);
+   if (*tempstr == '\0')
+     {
++	ret = rccPatchTo(request, str);
++	if (ret) return ret;
++
+       error = NULL;
+       if ((ret = g_locale_to_utf8 (str, -1, &bread, &bwrite, &error)) != NULL)
+         return (ret);
+@@ -531,6 +544,9 @@
+   gftp_lookup_request_option (request, "remote_charsets", &tempstr);
+   if (*tempstr == '\0')
+     {
++      ret = rccPatchFrom(request, str);
++      if (ret) return ret;
++
+       error = NULL;
+       if ((ret = g_locale_from_utf8 (str, -1, &bread, &bwrite, &error)) != NULL)
+         return (ret);
+@@ -919,6 +935,18 @@
+ }
+ 
+ 
++void 
++gftp_set_language (gftp_request * request, int language) {
++  g_return_if_fail (request != NULL);
++  request->language = language;
++}
++
++void 
++gftp_set_charset (gftp_request * request, int charset) {
++  g_return_if_fail (request != NULL);
++  request->charset = charset;
++}
++
+ void
+ gftp_set_hostname (gftp_request * request, const char *hostname)
+ {
+@@ -1056,6 +1084,7 @@
+                   const char *newname)
+ {
+   char *utf8;
++  char *oldutf8;
+   int ret;
+ 
+   g_return_val_if_fail (request != NULL, GFTP_EFATAL);
+@@ -1064,13 +1093,13 @@
+     return (GFTP_EFATAL);
+ 
+   utf8 = gftp_string_from_utf8 (request, newname);
++  oldutf8 = gftp_string_from_utf8 (request, oldname);
++  ret = request->rename (request, oldutf8?oldutf8:oldname, utf8?utf8:newname);
++
+   if (utf8 != NULL)
+-    {
+-      ret = request->rename (request, oldname, utf8);
+       g_free (utf8);
+-    }
+-  else
+-    ret = request->rename (request, oldname, newname);
++  if (oldutf8 != NULL)
++      g_free (oldutf8);
+ 
+   return (ret);
+ }
+@@ -1948,11 +1977,14 @@
+           (newsize = g_hash_table_lookup (dirhash, fle->file)) != NULL)
+         fle->startsize = *newsize;
+ 
+-      if (transfer->toreq && fle->destfile == NULL)
++      if (transfer->toreq && fle->destfile == NULL) {
++	newname = rccPatch(transfer->fromreq, transfer->toreq, fle->file);
+         fle->destfile = gftp_build_path (transfer->toreq,
+                                          transfer->toreq->directory, 
+-                                         fle->file, NULL);
+-
++                                     newname?newname:fle->file, NULL);
++	if (newname) free(newname);
++      }
++	
+       if (transfer->fromreq->directory != NULL &&
+           *transfer->fromreq->directory != '\0' &&
+           *fle->file != '/')
+@@ -2026,11 +2058,15 @@
+             return (curfle->size);
+         }
+ 
+-      if (transfer->toreq && curfle->destfile == NULL)
++      if (transfer->toreq && curfle->destfile == NULL) {
++	newname = rccPatch(transfer->fromreq, transfer->toreq, curfle->file);
+         curfle->destfile = gftp_build_path (transfer->toreq,
+                                             transfer->toreq->directory, 
+-                                            curfle->file, NULL);
++                                            newname?newname:curfle->file, NULL);
++	if (newname) free(newname);
++      }
+ 
++	
+       if (transfer->fromreq->directory != NULL &&
+           *transfer->fromreq->directory != '\0' && *curfle->file != '/')
+         {
+diff -dPNur gftp-2.0.18-orig/src/gtk/gftp-gtk.c gftp-2.0.18-new/src/gtk/gftp-gtk.c
+--- gftp-2.0.18-orig/src/gtk/gftp-gtk.c	2005-01-25 03:34:19.000000000 +0100
++++ gftp-2.0.18-new/src/gtk/gftp-gtk.c	2005-07-23 22:22:42.000000000 +0200
+@@ -18,6 +18,7 @@
+ /*****************************************************************************/
+ 
+ #include "gftp-gtk.h"
++#include "../../lib/rcc.h"
+ static const char cvsid[] = "$Id: gftp-gtk.c,v 1.66 2005/01/25 02:34:19 masneyb Exp $";
+ 
+ static GtkItemFactory *log_factory, *dl_factory;
+@@ -28,6 +29,7 @@
+ GtkWidget * stop_btn, * hostedit, * useredit, * passedit, * portedit, * logwdw,
+           * dlwdw, * protocol_menu, * optionmenu, * gftpui_command_widget,
+           * download_left_arrow, * upload_right_arrow, * openurl_btn;
++GtkWidget * language_menu, * charset_menu;
+ GtkTooltips * openurl_tooltip;
+ GtkAdjustment * logwdw_vadj;
+ #if GTK_MAJOR_VERSION > 1
+@@ -420,6 +422,42 @@
+   return (factory->widget);
+ }
+ 
++#ifdef HAVE_LIBRCC
++static int rcc_current_language = 0;
++static int rcc_current_charset = 0;
++
++static void rccCharsetCB(GtkWidget * w, gpointer item) {
++  rcc_current_charset = g_list_index(GTK_MENU_SHELL(charset_menu)->children, gtk_menu_get_active(GTK_MENU(charset_menu)));
++}
++
++static void rccLanguageCB(GtkWidget * w, gpointer item) {
++  GtkWidget *tempwid, *optionmenu;
++  unsigned int i;
++  char **langs;
++  gint cur;
++
++  cur = g_list_index(GTK_MENU_SHELL(language_menu)->children, gtk_menu_get_active(GTK_MENU(language_menu)));
++  optionmenu = gtk_menu_get_attach_widget(GTK_MENU(charset_menu));
++  
++  rcc_current_language = cur;
++  rcc_current_charset = 0;
++
++  langs = rccPatchGetCharsetList(cur);
++  if (langs) {
++    charset_menu = gtk_menu_new ();
++    for (i=0;langs[i];i++) {
++	tempwid = gtk_menu_item_new_with_label (langs[i]);
++	gtk_object_set_user_data (GTK_OBJECT (tempwid), GINT_TO_POINTER(i));
++	gtk_menu_append (GTK_MENU (charset_menu), tempwid);
++	gtk_widget_show (tempwid);
++    }
++    
++    gtk_option_menu_remove_menu (GTK_OPTION_MENU (optionmenu));
++    gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), charset_menu);
++    gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 0);
++  }
++}
++#endif /* HAVE_LIBRCC */
+ 
+ static GtkWidget *
+ CreateConnectToolbar (GtkWidget * parent)
+@@ -430,14 +468,19 @@
+     {"application/x-rootwin-drop", 0, 1}
+   };
+   GtkWidget *toolbar, *box, *tempwid;
++  GtkWidget *vbox;
++  GtkWidget *tmpoptionmenu;
+   gftp_config_list_vars * tmplistvar;
+   char *default_protocol, *tempstr;
++  char **langs;
+   int i, num;
+ 
+   toolbar = gtk_handle_box_new ();
+ 
++  vbox = gtk_vbox_new (FALSE, 0);
+   box = gtk_hbox_new (FALSE, 4);
+-  gtk_container_add (GTK_CONTAINER (toolbar), box);
++  gtk_box_pack_start(GTK_BOX(vbox), box, FALSE, FALSE, 0);
++  gtk_container_add (GTK_CONTAINER (toolbar), vbox);
+   gtk_container_border_width (GTK_CONTAINER (box), 5);
+ 
+   openurl_tooltip = gtk_tooltips_new ();
+@@ -548,6 +591,7 @@
+   optionmenu = gtk_option_menu_new ();
+   gtk_box_pack_start (GTK_BOX (tempwid), optionmenu, TRUE, FALSE, 0);
+ 
++
+   num = 0;
+   gftp_lookup_global_option ("default_protocol", &default_protocol);
+   protocol_menu = gtk_menu_new ();
+@@ -584,6 +628,61 @@
+   gtk_container_border_width (GTK_CONTAINER (stop_btn), 1);
+   gtk_box_pack_start (GTK_BOX (box), stop_btn, FALSE, FALSE, 0);
+ 
++#ifdef HAVE_LIBRCC
++  box = gtk_hbox_new (FALSE, 4);
++  gtk_box_pack_start(GTK_BOX(vbox), box, FALSE, FALSE, 0);
++  gtk_container_border_width (GTK_CONTAINER (box), 5);
++
++  langs = rccPatchGetCharsetList(0);
++  if (langs) {
++    tempwid = gtk_vbox_new (FALSE, 0);
++    gtk_box_pack_end (GTK_BOX (box), tempwid, FALSE, FALSE, 0);
++    
++    tmpoptionmenu = gtk_option_menu_new ();
++    gtk_box_pack_start (GTK_BOX (tempwid), tmpoptionmenu, TRUE, FALSE, 0);
++     
++    charset_menu = gtk_menu_new ();
++    for (i=0;langs[i];i++) {
++	tempwid = gtk_menu_item_new_with_label (langs[i]);
++	gtk_signal_connect(GTK_OBJECT(tempwid), "activate", GTK_SIGNAL_FUNC(rccCharsetCB), NULL);
++	gtk_object_set_user_data (GTK_OBJECT (tempwid), GINT_TO_POINTER(i));
++	gtk_menu_append (GTK_MENU (charset_menu), tempwid);
++	gtk_widget_show (tempwid);
++    }
++    
++    gtk_option_menu_set_menu (GTK_OPTION_MENU (tmpoptionmenu), charset_menu);
++    gtk_option_menu_set_history (GTK_OPTION_MENU (tmpoptionmenu), rcc_current_charset);
++    
++    tempwid = gtk_label_new (_("Charset: "));
++    gtk_box_pack_end (GTK_BOX (box), tempwid, FALSE, FALSE, 0);
++  }
++
++  langs = rccPatchGetLanguageList();
++  if (langs) {
++    tempwid = gtk_vbox_new (FALSE, 0);
++    gtk_box_pack_end (GTK_BOX (box), tempwid, FALSE, FALSE, 0);
++    
++    tmpoptionmenu = gtk_option_menu_new ();
++    gtk_box_pack_start (GTK_BOX (tempwid), tmpoptionmenu, TRUE, FALSE, 0);
++     
++    language_menu = gtk_menu_new ();
++    for (i=0;langs[i];i++) {
++	tempwid = gtk_menu_item_new_with_label (langs[i]);
++	gtk_signal_connect(GTK_OBJECT(tempwid), "activate", GTK_SIGNAL_FUNC(rccLanguageCB), NULL);
++	gtk_object_set_user_data (GTK_OBJECT (tempwid), GINT_TO_POINTER(i));
++	gtk_menu_append (GTK_MENU (language_menu), tempwid);
++	gtk_widget_show (tempwid);
++    }
++    
++    gtk_option_menu_set_menu (GTK_OPTION_MENU (tmpoptionmenu), language_menu);
++    gtk_option_menu_set_history (GTK_OPTION_MENU (tmpoptionmenu), rcc_current_language);
++
++    tempwid = gtk_label_new (_("Language: "));
++    gtk_box_pack_end (GTK_BOX (box), tempwid, FALSE, FALSE, 0);
++  }
++#endif /* HAVE_LIBRCC */
++
++
+   gtk_widget_grab_focus (GTK_COMBO (hostedit)->entry);
+ 
+   return (toolbar);
+@@ -1132,6 +1231,16 @@
+   add_history (current_wdata->combo, current_wdata->history, 
+                current_wdata->histlen, current_wdata->request->directory);
+ 
++#ifdef HAVE_LIBRCC
++  tempwid = gtk_menu_get_active (GTK_MENU (language_menu));
++  num = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (tempwid)));
++  gftp_set_language(current_wdata->request, num);
++
++  tempwid = gtk_menu_get_active (GTK_MENU (charset_menu));
++  num = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (tempwid)));
++  gftp_set_charset(current_wdata->request, num);
++#endif /* HAVE_LIBRCC */
++
+   ftp_connect (current_wdata, current_wdata->request, 1);
+ }
+ 
+@@ -1270,6 +1379,8 @@
+ {
+   GtkWidget *window, *ui;
+ 
++  rccPatchInit();
++  
+   /* We override the read color functions because we are using a GdkColor 
+      structures to store the color. If I put this in lib/config_file.c, then 
+      the core library would be dependant on Gtk+ being present */
+@@ -1336,6 +1447,8 @@
+   GDK_THREADS_ENTER ();
+   gtk_main ();
+   GDK_THREADS_LEAVE ();
++  
++  rccPatchFree();
+ 
+   return (0);
+ }
