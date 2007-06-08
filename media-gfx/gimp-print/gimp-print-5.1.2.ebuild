@@ -1,10 +1,10 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/gimp-print/gimp-print-5.1.0.ebuild,v 1.4 2007/04/25 20:05:53 genstef Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/gimp-print/gimp-print-5.1.2.ebuild,v 1.1 2007/06/04 11:14:52 genstef Exp $
 
-inherit flag-o-matic eutils libtool multilib
+inherit flag-o-matic eutils multilib
 
-IUSE="cups foomaticdb gimp gtk nls readline ppds"
+IUSE="cups foomaticdb gimp gtk readline ppds"
 
 MY_P=gutenprint-${PV/_/-}
 
@@ -12,6 +12,7 @@ DESCRIPTION="Gimp Print Drivers"
 HOMEPAGE="http://gimp-print.sourceforge.net"
 KEYWORDS="x86 ~ppc ~alpha ~sparc ~hppa amd64 ~ppc64"
 SRC_URI="mirror://sourceforge/gimp-print/${MY_P}.tar.bz2"
+RESTRICT="test"
 
 RDEPEND="cups? ( >=net-print/cups-1.1.14 )
 	virtual/ghostscript
@@ -29,14 +30,6 @@ SLOT="0"
 S=${WORKDIR}/${MY_P}
 
 append-flags -fno-inline-functions
-
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	epatch ${FILESDIR}/gimp-print-5.1.0-nonls.patch
-
-	elibtoolize
-}
 
 src_compile() {
 	if use cups && use ppds; then
@@ -63,7 +56,7 @@ src_compile() {
 		--with-samples \
 		--with-escputil \
 		--disable-translated-cups-ppds \
-		$(use_enable nls) \
+		--enable-nls \
 		$(use_with readline) \
 		$(use_with gimp gimp2) \
 		$(use_with gimp gimp2-as-gutenprint) \
