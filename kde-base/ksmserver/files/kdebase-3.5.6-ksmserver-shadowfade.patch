@@ -1,0 +1,261 @@
+diff -purN kdebase-3.5.5.orig/ksmserver/shutdowndlg.cpp kdebase-3.5.5/ksmserver/shutdowndlg.cpp
+--- kdebase-3.5.5.orig/ksmserver/shutdowndlg.cpp	2006-03-17 04:17:10.000000000 -0600
++++ kdebase-3.5.5/ksmserver/shutdowndlg.cpp	2006-10-11 17:56:00.000000000 -0500
+@@ -2,6 +2,8 @@
+ ksmserver - the KDE session management server
+ 
+ Copyright (C) 2000 Matthias Ettrich <ettrich@kde.org>
++Copyright (C) 2005 Tobias Doerffel <tobias@doerffel.de>
++Copyright (C) 2006 Christian Tosta <tosta@users.sourceforge.net>
+ ******************************************************************/
+ 
+ #include <config.h>
+@@ -20,6 +22,7 @@ Copyright (C) 2000 Matthias Ettrich <ett
+ #include <qmessagebox.h>
+ #include <qbuttongroup.h>
+ #include <qiconset.h>
++#include <qpixmap.h>
+ #include <qpopupmenu.h>
+ #include <qtooltip.h>
+ #include <qimage.h>
+@@ -33,7 +36,6 @@ Copyright (C) 2000 Matthias Ettrich <ett
+ #include <kglobalsettings.h>
+ #include <kwin.h>
+ #include <kuser.h>
+-#include <kpixmap.h>
+ #include <kimageeffect.h>
+ #include <kdialog.h>
+ #include <kseparator.h>
+@@ -42,6 +44,7 @@ Copyright (C) 2000 Matthias Ettrich <ett
+ #include <sys/utsname.h>
+ #include <unistd.h>
+ #include <stdlib.h>
++#include <math.h>
+ #include <dmctl.h>
+ 
+ #include <X11/Xlib.h>
+@@ -49,10 +52,21 @@ Copyright (C) 2000 Matthias Ettrich <ett
+ #include "shutdowndlg.moc"
+ 
+ KSMShutdownFeedback * KSMShutdownFeedback::s_pSelf = 0L;
++// maybe one day we can make these fading-settings configurable in kcontrol...
++const float FADE_TIME = 5000.0f;           // 5000 ms = 5.0 s
++const float FADE_BACK_TIME = 1000.0f;      // 1000 ms = 1.0 s
++const float ADDITIONAL_DARKNESS = 0.6f;    // the smaller this value, the darker the final image
+ 
+ KSMShutdownFeedback::KSMShutdownFeedback()
+  : QWidget( 0L, "feedbackwidget", WType_Popup ),
+-   m_currentY( 0 )
++   m_grayOpacity( 0.0f ),
++   m_compensation( 0.0f ),
++   m_fadeBackwards( FALSE ),
++   m_unfadedImage( QPixmap::grabWindow(qt_xrootwin(), 0, 0, QApplication::desktop()->width(),
++   QApplication::desktop()->height()).convertToImage() ),
++       m_grayImage(),
++       m_fadeTime(),
++       m_pmio()
+ {
+     setBackgroundMode( QWidget::NoBackground );
+     setGeometry( QApplication::desktop()->geometry() );
+@@ -60,27 +74,134 @@ KSMShutdownFeedback::KSMShutdownFeedback
+     m_root.resize( width(), height() );
+ }
+ 
++// called after stopping shutdown-feedback -> smooth fade-back to color-mode
++void KSMShutdownFeedback::fadeBack( void )
++{
++      m_fadeTime.restart();
++      m_fadeBackwards = TRUE;
++       // its possible that we have to fade back, before all is completely gray, so we cannot start
++       // with completely gray when fading back...
++          m_compensation = 1.0f - m_grayOpacity;
++       // wait until we're completely back in color-mode...
++          while ( m_grayOpacity > 0.0f )
++              slotPaintEffect();
++}
+ 
+ void KSMShutdownFeedback::slotPaintEffect()
+ {
+-    if ( m_currentY >= height() ) {
+-        if ( backgroundMode() == QWidget::NoBackground ) {
+-            setBackgroundMode( QWidget::NoBackground );
+-            setBackgroundPixmap( m_root );
+-        }
+-        return;
+-    }
++	// if slotPaintEffect() is called first time, we have to 	initialize the gray image
++	// we also could do that in the constructor, but then the 	displaying of the
++	// logout-UI would be too much delayed...
++	if ( m_grayImage.isNull() )
++	{
++		m_grayImage = m_unfadedImage.copy();
++		register uchar * r = m_grayImage.bits();
++		register uchar * g = m_grayImage.bits() + 1;
++		register uchar * b = m_grayImage.bits() + 2;
++		uchar * end = m_grayImage.bits() + m_grayImage.numBytes();
++    
++	        while ( r != end ) {
++                  *r = *g = *b = (uchar) ( ( (*r)*11 + ((*g)<<4) + (*b)*5 ) * ADDITIONAL_DARKNESS / 32.0f );
++                  r += 4;
++                  g += 4;
++                  b += 4;
++	}
++        // start timer which is used for cpu-speed-independent fading
++	m_fadeTime.start();
++	m_rowsDone = 0;
++	}
++    
++        // return if fading is completely done...
++	if ( ( m_grayOpacity >= 1.0f && m_fadeBackwards == FALSE ) || ( m_grayOpacity <= 0.0f && m_fadeBackwards == TRUE ) )
++          return;
++
++	  if ( m_fadeBackwards == FALSE )
++	        {
++	            m_grayOpacity = m_fadeTime.elapsed() / FADE_TIME;
++	            if ( m_grayOpacity > 1.0f )
++	                  m_grayOpacity = 1.0f;
++	        }
++	        else
++	          {
++	              m_grayOpacity = 1.0f - m_fadeTime.elapsed() / FADE_BACK_TIME - m_compensation;
++	              if ( m_grayOpacity < 0.0f )
++		            m_grayOpacity = 0.0f;
++	          }
++	      
++		   const int imgWidth = m_unfadedImage.width();
++	          int imgHeight = m_unfadedImage.height();
++	          int heightUnit = imgHeight / 3;
++	          if( heightUnit < 1 )
++		        heightUnit = 1;
++	      
++		      int y1 = static_cast<int>( imgHeight*m_grayOpacity - heightUnit + m_grayOpacity*heightUnit*2.0f );
++	          if( y1 > imgHeight )
++		        y1 = imgHeight;
++	      
++		      int y2 = y1+heightUnit;
++	          if( y2 > imgHeight )
++		        y2 = imgHeight;
++	      
++		      if( m_fadeBackwards == FALSE )
++		      {
++		        if( y1 > 0 && y1 < imgHeight && y1-m_rowsDone > 0 && m_rowsDone < imgHeight )
++		          {
++		              QImage img( imgWidth, y1-m_rowsDone, 32 );
++		              memcpy( img.bits(), m_grayImage.scanLine( m_rowsDone ), imgWidth*(y1-m_rowsDone)*4 );
++		              // conversion is slow as hell if desktop-depth != 24bpp...
++		              QPixmap pm = m_pmio.convertToPixmap( img );
++		              bitBlt( this, 0, m_rowsDone, &pm );
++		              m_rowsDone = y1;
++		          }
++		      }
++		      else
++		      {
++		          // when fading back we have to blit area which isnt gray anymore to unfaded image
++		        if( y2 > 0 && y2 < imgHeight && m_rowsDone > y2 )
++		        {
++		              QImage img( imgWidth, m_rowsDone-y2, 32 );
++		              memcpy( img.bits(), m_unfadedImage.scanLine( y2 ), imgWidth*(m_rowsDone-y2)*4 );
++		              // conversion is slow as hell if desktop-depth != 24bpp...
++		            QPixmap pm = m_pmio.convertToPixmap( img );
++		              bitBlt( this, 0, y2, &pm );
++		              m_rowsDone = y2;
++		          }
++		      }
++		   
++		    int start_y1 = y1;
++		       if( start_y1 < 0 )
++		        start_y1 = 0;
++		       if( y2 > start_y1 )
++		    {
++		        QImage img( imgWidth, y2-start_y1, 32 );
++		        memcpy( img.bits(), m_grayImage.scanLine( start_y1 ), ( y2-start_y1 ) * imgWidth * 4 );
++		        register uchar * rs = m_unfadedImage.scanLine( start_y1 );
++		        register uchar * gs = rs + 1;
++		        register uchar * bs = gs + 1;
++		        register uchar * rd = img.bits();
++		        register uchar * gd = rd + 1;
++		        register uchar * bd = gd + 1;
++		        for( int y = start_y1; y < y2; ++y )
++		        {
++		            // linear gradients look bad, so use cos-function
++		            short int opac = static_cast<short int>( 128 - cosf( M_PI*(y-y1)/heightUnit )*128.0f );
++		            for( short int x = 0; x < imgWidth; ++x )
++		            {
++		                *rd += ( ( ( *rs - *rd ) * opac ) >> 8 );
++		                rs += 4; rd += 4;
++		                *gd += ( ( ( *gs - *gd ) * opac ) >> 8 );
++		                gs += 4; gd += 4;
++		                *bd += ( ( ( *bs - *bd ) * opac ) >> 8 );
++		                bs += 4; bd += 4;
++		            }
++		        }
++		        // conversion is slow as hell if desktop-depth != 24bpp...
++		        QPixmap pm = m_pmio.convertToPixmap( img );
++		        bitBlt( this, 0, start_y1, &pm );
++		    }
++		
++		    QTimer::singleShot( 5, this, SLOT( slotPaintEffect() ) );
+ 
+-    KPixmap pixmap;
+-    pixmap = QPixmap::grabWindow( qt_xrootwin(), 0, m_currentY, width(), 10 );
+-    QImage image = pixmap.convertToImage();
+-    KImageEffect::blend( Qt::black, image, 0.4 );
+-    KImageEffect::toGray( image, true );
+-    pixmap.convertFromImage( image );
+-    bitBlt( this, 0, m_currentY, &pixmap );
+-    bitBlt( &m_root, 0, m_currentY, &pixmap );
+-    m_currentY += 10;
+-    QTimer::singleShot( 1, this, SLOT( slotPaintEffect() ) );
+ }
+ 
+ //////
+diff -purN kdebase-3.5.5.orig/ksmserver/shutdowndlg.h kdebase-3.5.5/ksmserver/shutdowndlg.h
+--- kdebase-3.5.5.orig/ksmserver/shutdowndlg.h	2006-01-19 11:01:08.000000000 -0600
++++ kdebase-3.5.5/ksmserver/shutdowndlg.h	2006-10-11 17:56:00.000000000 -0500
+@@ -7,8 +7,9 @@ Copyright (C) 2000 Matthias Ettrich <ett
+ #ifndef SHUTDOWNDLG_H
+ #define SHUTDOWNDLG_H
+ 
+-#include <qpixmap.h>
+ #include <qdialog.h>
++#include <qimage.h>
++#include <qdatetime.h>
+ #include <kpushbutton.h>
+ class QPushButton;
+ class QVButtonGroup;
+@@ -16,15 +17,16 @@ class QPopupMenu;
+ class QTimer;
+ 
+ #include <kapplication.h>
++#include <kpixmapio.h>
+ 
+-// The (singleton) widget that makes the desktop gray.
++// The (singleton) widget that fades the desktop gray.
+ class KSMShutdownFeedback : public QWidget
+ {
+     Q_OBJECT
+ 
+ public:
+     static void start() { s_pSelf = new KSMShutdownFeedback(); s_pSelf->show(); }
+-    static void stop() { delete s_pSelf; s_pSelf = 0L; }
++    static void stop() { if ( s_pSelf != 0L ) s_pSelf->fadeBack(); delete s_pSelf; s_pSelf = 0L; }
+     static KSMShutdownFeedback * self() { return s_pSelf; }
+ 
+ protected:
+@@ -36,7 +38,15 @@ private slots:
+ private:
+     static KSMShutdownFeedback * s_pSelf;
+     KSMShutdownFeedback();
+-    int m_currentY;
++    void fadeBack( void );
++    float  m_grayOpacity;
++    float  m_compensation;
++    bool   m_fadeBackwards;
++    QImage m_unfadedImage;
++    QImage m_grayImage;
++    QTime  m_fadeTime;
++    int    m_rowsDone;
++    KPixmapIO m_pmio;
+     QPixmap m_root;
+ };
+ 

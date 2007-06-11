@@ -51,11 +51,9 @@ elisp-compile() {
 }
 
 elisp-install() {
-	elisp-common_pkg_setup
-
 	local subdir=$1
-	dodir ${SITELISP}/${subdir}
-	insinto ${SITELISP}/${subdir}
+	dodir "${SITELISP}/${subdir}"
+	insinto "${SITELISP}/${subdir}"
 	shift
 	doins $@
 }

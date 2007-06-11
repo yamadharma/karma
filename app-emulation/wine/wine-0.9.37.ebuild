@@ -62,6 +62,7 @@ src_unpack() {
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
 	
 	epatch "${FILESDIR}"/wine-badpixmap.patch
+	epatch "${FILESDIR}/${P}-alsamidi_fixes.patch"	
 }
 
 config_cache() {

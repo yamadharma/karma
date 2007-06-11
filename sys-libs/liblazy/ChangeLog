@@ -1,0 +1,13 @@
+# ChangeLog for kde-misc/kberylsettings
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  11 Mar 2007; Alex Heck <nesl247@gmail.com> Manifest:
+  Fix manifest
+
+  01 Mar 2007; <roderick_greening@hotmail.com> liblazy-0.1.ebuild:
+  Updated ebuild with post install warn for reporting bugs.
+
+  24 Feb 2007; <roderick_greening@hotmail.com> +liblazy-0.1.ebuild:
+  Initial commit 
+

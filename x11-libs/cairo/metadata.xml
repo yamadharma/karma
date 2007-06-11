@@ -2,10 +2,10 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <maintainer>
-  <email>cardoe@gentoo.org</email>
-  <name>Doug Goldstein</name>
+	<email>cardoe@gentoo.org</email>
+	<name>Doug Goldstein</name>
 </maintainer>
 <maintainer>
-  <email>compnerd@gentoo.org</email>
+	<email>compnerd@gentoo.org</email>
 </maintainer>
 </pkgmetadata>

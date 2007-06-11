@@ -1,0 +1,57 @@
+diff -purN kdebase-3.5.4.orig/kcontrol/konqhtml/advancedTabDialog.cpp kdebase-3.5.4/kcontrol/konqhtml/advancedTabDialog.cpp
+--- kdebase-3.5.4.orig/kcontrol/konqhtml/advancedTabDialog.cpp	2005-09-10 03:25:11.000000000 -0500
++++ kdebase-3.5.4/kcontrol/konqhtml/advancedTabDialog.cpp	2006-08-13 09:17:13.000000000 -0500
+@@ -65,6 +65,7 @@ advancedTabDialog::advancedTabDialog(QWi
+     connect(m_advancedWidget->m_pPermanentCloseButton, SIGNAL(clicked()), this, SLOT(changed()));
+     connect(m_advancedWidget->m_pKonquerorTabforExternalURL, SIGNAL(clicked()), this, SLOT(changed()));
+     connect(m_advancedWidget->m_pPopupsWithinTabs, SIGNAL(clicked()), this, SLOT(changed()));
++    connect(m_advancedWidget->m_pNewTabsHomeURL, SIGNAL(clicked()), this, SLOT(changed()));
+ 
+     load();
+ }
+@@ -82,6 +83,7 @@ void advancedTabDialog::load()
+     m_advancedWidget->m_pKonquerorTabforExternalURL->setChecked( m_pConfig->readBoolEntry( "KonquerorTabforExternalURL", false ) );
+     m_advancedWidget->m_pPopupsWithinTabs->setChecked( m_pConfig->readBoolEntry( "PopupsWithinTabs", false ) );
+     m_advancedWidget->m_pTabCloseActivatePrevious->setChecked( m_pConfig->readBoolEntry( "TabCloseActivatePrevious", false ) );
++    m_advancedWidget->m_pNewTabsHomeURL->setChecked( m_pConfig->readBoolEntry( "NewTabsHomeURL", false ) );
+ 
+     m_pConfig->setGroup("Notification Messages");
+     m_advancedWidget->m_pTabConfirm->setChecked( !m_pConfig->hasKey("MultipleTabConfirm") );
+@@ -98,6 +100,7 @@ void advancedTabDialog::save()
+     m_pConfig->writeEntry( "KonquerorTabforExternalURL", m_advancedWidget->m_pKonquerorTabforExternalURL->isChecked() );
+     m_pConfig->writeEntry( "PopupsWithinTabs", m_advancedWidget->m_pPopupsWithinTabs->isChecked() );
+     m_pConfig->writeEntry( "TabCloseActivatePrevious", m_advancedWidget->m_pTabCloseActivatePrevious->isChecked() );
++    m_pConfig->writeEntry( "NewTabsHomeURL", (m_advancedWidget->m_pNewTabsHomeURL->isChecked()) );
+     m_pConfig->sync();
+ 
+     // It only matters wether the key is present, its value has no meaning
+diff -purN kdebase-3.5.4.orig/kcontrol/konqhtml/advancedTabOptions.ui kdebase-3.5.4/kcontrol/konqhtml/advancedTabOptions.ui
+--- kdebase-3.5.4.orig/kcontrol/konqhtml/advancedTabOptions.ui	2005-09-10 03:25:11.000000000 -0500
++++ kdebase-3.5.4/kcontrol/konqhtml/advancedTabOptions.ui	2006-08-13 09:17:13.000000000 -0500
+@@ -9,7 +9,7 @@
+             <x>0</x>
+             <y>0</y>
+             <width>644</width>
+-            <height>208</height>
++            <height>231</height>
+         </rect>
+     </property>
+     <vbox>
+@@ -126,6 +126,17 @@
+                         <string>When you click a URL in another KDE program or call kfmclient to open a URL, the current desktop will be searched for a non-minimized Konqueror and, if found, the URL opened as a new tab within it. Otherwise a new Konqueror window will be opened with the required URL.</string>
+                     </property>
+                 </widget>
++                <widget class="QCheckBox">
++                    <property name="name">
++                        <cstring>m_pNewTabsHomeURL</cstring>
++                    </property>
++                    <property name="text">
++                        <string>New tab opens &amp;home URL instead of about:blank</string>
++                    </property>
++                    <property name="whatsThis" stdset="0">
++                        <string>Opening a new tab will load your home URL by default instead of a blank page.</string>
++                    </property>
++                 </widget>
+             </vbox>
+         </widget>
+         <spacer>

@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/${PN}/wine-${PV}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="-* amd64 x86"
+KEYWORDS="-* ~amd64 ~x86"
 IUSE="alsa cups dbus esd hal jack jpeg lcms ldap nas ncurses opengl oss scanner xml X"
 RESTRICT="test" #72375
 
@@ -62,6 +62,7 @@ src_unpack() {
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
 	
 	epatch "${FILESDIR}"/wine-badpixmap.patch	
+	epatch "${FILESDIR}/${P}-alsamidi_fixes.patch"
 }
 
 config_cache() {

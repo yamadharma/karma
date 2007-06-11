@@ -1,0 +1,303 @@
+diff -urN libwnck-2.16.3/libwnck/window-action-menu.c libwnck/libwnck/window-action-menu.c
+--- libwnck-2.16.3/libwnck/window-action-menu.c	2007-01-29 15:56:52.000000000 -0600
++++ libwnck/libwnck/window-action-menu.c	2007-01-30 06:50:33.000000000 -0600
+@@ -41,7 +41,13 @@
+   RIGHT,
+   UP,
+   DOWN,
+-  MOVE_TO_WORKSPACE
++  MOVE_TO_WORKSPACE,
++  STICK,
++  VIEWPORT_LEFT,
++  VIEWPORT_RIGHT,
++  VIEWPORT_UP,
++  VIEWPORT_DOWN,
++  MOVE_TO_VIEWPORT
+ } WindowAction;
+ 
+ typedef struct _ActionMenuData ActionMenuData;
+@@ -63,6 +69,13 @@
+   GtkWidget *up_item;
+   GtkWidget *down_item;
+   GtkWidget *workspace_item;
++  GtkWidget *viewport_separator;
++  GtkWidget *stick_item;
++  GtkWidget *viewport_left_item;
++  GtkWidget *viewport_right_item;
++  GtkWidget *viewport_up_item;
++  GtkWidget *viewport_down_item;
++  GtkWidget *viewport_item;
+   guint idle_handler;
+ };
+ 
+@@ -204,6 +217,86 @@
+                                        workspace_index));
+         break;
+       }
++    case STICK:
++        if (wnck_window_is_sticky (amd->window))
++            wnck_window_unstick (amd->window);
++        else
++            wnck_window_stick (amd->window);
++        break;
++    case VIEWPORT_LEFT:
++      {
++        int width, xw, yw, ww, hw;
++
++        width = wnck_screen_get_width (wnck_window_get_screen (amd->window));
++        wnck_window_get_geometry (amd->window, &xw, &yw, &ww, &hw);
++        wnck_window_set_geometry (amd->window, 0,
++                                  WNCK_WINDOW_CHANGE_X|WNCK_WINDOW_CHANGE_Y,
++                                  xw - width, yw,
++                                  ww, hw);
++        break;
++      }
++    case VIEWPORT_RIGHT:
++      {
++        int width, xw, yw, ww, hw;
++
++        width = wnck_screen_get_width (wnck_window_get_screen (amd->window));
++        wnck_window_get_geometry (amd->window, &xw, &yw, &ww, &hw);
++        wnck_window_set_geometry (amd->window, 0,
++                                  WNCK_WINDOW_CHANGE_X|WNCK_WINDOW_CHANGE_Y,
++                                  xw + width, yw,
++                                  ww, hw);
++        break;
++      }
++    case VIEWPORT_UP:
++      {
++        int height, xw, yw, ww, hw;
++
++        height = wnck_screen_get_height (wnck_window_get_screen (amd->window));
++        wnck_window_get_geometry (amd->window, &xw, &yw, &ww, &hw);
++        wnck_window_set_geometry (amd->window, 0,
++                                  WNCK_WINDOW_CHANGE_X|WNCK_WINDOW_CHANGE_Y,
++                                  xw, yw - height,
++                                  ww, hw);
++        break;
++      }
++    case VIEWPORT_DOWN:
++      {
++        int height, xw, yw, ww, hw;
++
++        height = wnck_screen_get_height (wnck_window_get_screen (amd->window));
++        wnck_window_get_geometry (amd->window, &xw, &yw, &ww, &hw);
++        wnck_window_set_geometry (amd->window, 0,
++                                  WNCK_WINDOW_CHANGE_X|WNCK_WINDOW_CHANGE_Y,
++                                  xw, yw + height,
++                                  ww, hw);
++        break;
++      }
++    case MOVE_TO_VIEWPORT:
++      {
++        WnckWorkspace *workspace;
++        int viewport_x, viewport_y, xw, yw, x, y, width, height;
++
++        workspace = wnck_window_get_workspace (amd->window);
++        if (!workspace)
++            break;
++        viewport_x = wnck_workspace_get_viewport_x (workspace);
++        viewport_y = wnck_workspace_get_viewport_y (workspace);
++
++        x = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menu_item), "x"));
++        y = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menu_item), "y"));
++
++        wnck_window_get_geometry (amd->window, &xw, &yw, &width, &height);
++
++        if (wnck_window_is_sticky (amd->window))
++            wnck_window_unstick (amd->window);
++
++        wnck_window_set_geometry (amd->window, 0,
++                                  WNCK_WINDOW_CHANGE_X|WNCK_WINDOW_CHANGE_Y,
++                                  xw + x - viewport_x,
++                                  yw + y - viewport_y,
++                                  width, height);
++        break;
++      }
+     }
+ }
+ 
+@@ -355,6 +448,56 @@
+       gtk_widget_hide (amd->pin_item);
+       gtk_widget_hide (amd->workspace_item);
+     }
++
++  if (wnck_window_is_sticky (amd->window))
++    {
++      set_item_text (amd->stick_item, _("_Only on This Workspace"));
++      set_item_stock (amd->stick_item, NULL);
++      gtk_widget_set_sensitive (amd->stick_item,
++                                (actions & WNCK_WINDOW_ACTION_STICK) != 0);
++    }
++  else
++    {
++      set_item_text (amd->stick_item, _("_Always on Visible Workspace"));
++      set_item_stock (amd->stick_item, NULL);
++      gtk_widget_set_sensitive (amd->stick_item,
++                                (actions & WNCK_WINDOW_ACTION_STICK) != 0);
++    }
++
++  if (!wnck_window_is_sticky (amd->window))
++    {
++      if (amd->viewport_item)
++          gtk_widget_set_sensitive (amd->viewport_item,
++                                    (actions & WNCK_WINDOW_ACTION_MOVE) != 0);
++
++      if (amd->viewport_left_item)
++          gtk_widget_set_sensitive (amd->viewport_left_item,
++                                    (actions & WNCK_WINDOW_ACTION_MOVE) != 0);
++
++      if (amd->viewport_right_item)
++          gtk_widget_set_sensitive (amd->viewport_right_item,
++                                    (actions & WNCK_WINDOW_ACTION_MOVE) != 0);
++
++      if (amd->viewport_up_item)
++          gtk_widget_set_sensitive (amd->viewport_up_item,
++                                    (actions & WNCK_WINDOW_ACTION_MOVE) != 0);
++
++      if (amd->viewport_down_item)
++          gtk_widget_set_sensitive (amd->viewport_down_item,
++                                    (actions & WNCK_WINDOW_ACTION_MOVE) != 0);
++    }
++  if (wnck_workspace_is_virtual (wnck_screen_get_active_workspace (screen)))
++    {
++      gtk_widget_show (amd->viewport_separator);
++      gtk_widget_show (amd->stick_item);
++      gtk_widget_show (amd->viewport_item);
++    }
++  else
++    {
++      gtk_widget_hide (amd->viewport_separator);
++      gtk_widget_hide (amd->stick_item);
++      gtk_widget_hide (amd->viewport_item);
++    }
+   
+   return FALSE;
+ }
+@@ -531,6 +674,9 @@
+   int num_workspaces, present_workspace, i;
+   WnckWorkspace *workspace;
+   WnckWorkspaceLayout layout;
++  int viewport_x, viewport_y, viewport_width, viewport_height;
++  int screen_width, screen_height;
++  int x, y;
+ 
+   _wnck_stock_icons_init ();
+   
+@@ -695,7 +841,115 @@
+       g_free (name);
+       g_free (label);	
+     }
+-		 
++
++  amd->viewport_separator = separator = gtk_separator_menu_item_new ();
++  gtk_widget_show (separator);
++  gtk_menu_shell_append (GTK_MENU_SHELL (menu),
++                         separator);
++
++  amd->stick_item = make_menu_item (amd, STICK);
++  gtk_menu_shell_append (GTK_MENU_SHELL (menu),
++                         amd->stick_item);
++  set_item_stock (amd->stick_item, NULL);
++
++  if (wnck_window_is_pinned (amd->window))
++      workspace = wnck_screen_get_active_workspace (wnck_window_get_screen (amd->window));
++  else
++      workspace = wnck_window_get_workspace (amd->window);
++  if (!workspace)
++      goto bail;
++
++  viewport_x = wnck_workspace_get_viewport_x (workspace);
++  viewport_y = wnck_workspace_get_viewport_y (workspace);
++  viewport_width = wnck_workspace_get_width (workspace);
++  viewport_height = wnck_workspace_get_height (workspace);
++
++  screen_width = wnck_screen_get_width (wnck_window_get_screen (amd->window));
++  screen_height = wnck_screen_get_height (wnck_window_get_screen (amd->window));
++
++  if (!wnck_window_is_sticky (amd->window))
++    {
++      if (viewport_x >= screen_width)
++        {
++          amd->viewport_left_item = make_menu_item (amd, VIEWPORT_LEFT);
++          gtk_menu_shell_append (GTK_MENU_SHELL (menu),
++                                 amd->viewport_left_item);
++          set_item_text (amd->viewport_left_item, _("Move to Workspace _Left"));
++          set_item_stock (amd->viewport_left_item, NULL);
++        }
++      else 
++          amd->viewport_left_item = NULL;
++
++      if (viewport_x <= viewport_width - 2 * screen_width)
++        {
++          amd->viewport_right_item = make_menu_item (amd, VIEWPORT_RIGHT);
++          gtk_menu_shell_append (GTK_MENU_SHELL (menu),
++                                 amd->viewport_right_item);
++          set_item_text (amd->viewport_right_item, _("Move to Workspace R_ight"));
++          set_item_stock (amd->viewport_right_item, NULL);
++        }
++      else 
++         amd->viewport_right_item = NULL;       
++
++      if (viewport_y >= screen_height)
++        {
++          amd->viewport_up_item = make_menu_item (amd, VIEWPORT_UP);
++          gtk_menu_shell_append (GTK_MENU_SHELL (menu),
++                                 amd->viewport_up_item);
++          set_item_text (amd->viewport_up_item, _("Move to Workspace _Up"));
++          set_item_stock (amd->viewport_up_item, NULL);
++        }
++      else 
++          amd->viewport_up_item = NULL; 
++
++      if (viewport_y <= viewport_height - 2 * screen_height)
++        {
++          amd->viewport_down_item = make_menu_item (amd, VIEWPORT_DOWN);
++          gtk_menu_shell_append (GTK_MENU_SHELL (menu),
++                                 amd->viewport_down_item);
++          set_item_text (amd->viewport_down_item, _("Move to Workspace _Down"));
++          set_item_stock (amd->viewport_down_item, NULL);
++        }
++      else 
++          amd->viewport_down_item = NULL;  
++
++      amd->viewport_item = gtk_menu_item_new_with_mnemonic (_("Move to Another _Workspace")); 
++      gtk_widget_show (amd->viewport_item);
++
++      submenu = gtk_menu_new ();
++      gtk_menu_item_set_submenu (GTK_MENU_ITEM (amd->viewport_item), 
++                                 submenu);
++
++      i = 1;
++      for (y = 0; y < viewport_height; y += screen_height)
++        {
++          char *label;
++          GtkWidget *item;
++
++          for (x = 0; x < viewport_width; x += screen_width)
++            {
++              label = g_strdup_printf (_("Workspace _%d"), i++);
++
++              item = make_menu_item (amd, MOVE_TO_VIEWPORT);
++              g_object_set_data (G_OBJECT (item), "x", GINT_TO_POINTER (x));
++              g_object_set_data (G_OBJECT (item), "y", GINT_TO_POINTER (y));
++
++              if (x == viewport_x && y == viewport_y)
++                  gtk_widget_set_sensitive (item, FALSE);
++
++              gtk_menu_shell_append (GTK_MENU_SHELL (submenu), item);
++              set_item_text (item, label);
++              set_item_stock (item, NULL);
++
++              g_free (label);
++            }
++        }
++
++      gtk_menu_shell_append (GTK_MENU_SHELL (menu),
++                             amd->viewport_item);
++    }
++
++  bail:
+   g_signal_connect_object (G_OBJECT (amd->window), 
+                            "state_changed",
+                            G_CALLBACK (state_changed_callback),

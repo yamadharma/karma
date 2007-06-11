@@ -135,6 +135,14 @@ src_unpack() {
 	epatch ${FILESDIR}/${PV}/96_plugdev_allow_send.patch
 	epatch ${FILESDIR}/${PV}/97_ignore_fixed_drives.patch
 
+
+	# allow plugdev group people to mount
+	epatch ${FILESDIR}/${P}-plugdev-allow-send.patch
+	# use ntfs-3g, then ntfs-fuse by default
+	epatch ${FILESDIR}/${P}-sabayonlinux-ntfs-3g.default.patch
+	# Write proper suspend priorities
+	epatch ${FILESDIR}/${P}-suspend-priorities.patch
+
 	eautoreconf
 }
 

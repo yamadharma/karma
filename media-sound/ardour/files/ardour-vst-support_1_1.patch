@@ -1,0 +1,28 @@
+--- 6/dour-0.99/gtk_ardour/SConscript	2005-09-24 03:10:39.000000000 +0200
++++ b/ardour/gtk_ardour/SConscript	2005-11-19 02:29:12.000000000 +0100
+@@ -37,8 +37,8 @@
+                    libraries['jack']
+               ])
+ 
+-if gtkardour['VST']:
+-    gtkardour.Merge ([ libraries['fst']])
++#if gtkardour['VST']:
++#    gtkardour.Merge ([ libraries['fst']])
+ 
+ gtkardour_files=Split("""
+ about.cc
+@@ -154,8 +154,14 @@
+ extra_sources = []
+ vst_files = [ 'vst_pluginui.cc' ]
+ 
++
+ if env['VST']:
+    extra_sources += vst_files
++   extra_sources.append (env['VSTPATH']+'/fst.o')
++   extra_sources.append (env['VSTPATH']+'/fstinfofile.o')
++   extra_sources.append (env['VSTPATH']+'/vstwin.o')
++   extra_sources.append (env['VSTPATH']+'/vsti.o')
++   gtkardour["LINK"] ="wineg++ -mwindows -lpthread -ldl"
+ 
+ gtkardour.Append(CCFLAGS="-D_REENTRANT -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE")
+ gtkardour.Append(CXXFLAGS="-DDATA_DIR=\\\""+final_prefix+"/share\\\"")
