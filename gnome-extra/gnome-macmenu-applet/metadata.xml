@@ -1,0 +1,7 @@
+<pkgmetadata>
+  <herd>no-herd</herd>
+  <maintainer>
+    <email>nesl247@gentoo-xeffects.org</email>
+  </maintainer>
+  <longdescription>Mac-style menubar applet for gnome panel</longdescription>
+</pkgmetadata>

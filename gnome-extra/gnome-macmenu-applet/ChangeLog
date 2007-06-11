@@ -1,0 +1,9 @@
+# ChangeLog for gnome-extra/gnome-macmenu-applet
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  24 Feb 2007; Alex Heck <nesl247@gmail.com>
+  +gnome-macmenu-applet-1.0.14.ebuild,
+  +files/gnome-macmenu-applet-location.patch, +metadata.xml:
+  Initial import
+
