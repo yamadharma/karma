@@ -1,32 +1,33 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/kdevelop/kdevelop-3.4.0-r2.ebuild,v 1.3 2007/02/16 15:44:28 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/kdevelop/kdevelop-3.4.1.ebuild,v 1.4 2007/06/07 15:40:57 philantrop Exp $
 
 inherit kde eutils db-use
 
 DESCRIPTION="Integrated Development Environment for Unix, supporting KDE/Qt, C/C++ and many other languages."
 HOMEPAGE="http://www.kdevelop.org"
-SRC_URI="mirror://kde/stable/${P}/src/${P}.tar.bz2
-	mirror://gentoo/${P}-qmake-parser-2.patch.bz2"
+SRC_URI="mirror://kde/stable/3.5.7/src/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 
 SLOT="3"
 KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
-IUSE="ada clearcase cvs fortran haskell java pascal perforce perl php python ruby sql subversion graphviz"
+IUSE="ada clearcase cvs fortran haskell java pascal perforce perl php python ruby sql subversion"
 
 DEPEND="sys-devel/gdb
 	>=sys-libs/db-4.1
-	cvs? ( || ( kde-base/cervisia kde-base/kdesdk ) )
-	graphviz? ( media-gfx/graphviz )"
+	cvs? ( || ( kde-base/cervisia kde-base/kdesdk ) )"
 
 RDEPEND="${DEPEND}
 	subversion? ( || ( kde-base/kdesdk-kioslaves kde-base/kdesdk ) )"
 DEPEND="${DEPEND}
 	>=sys-devel/flex-2.5.33"
+
 need-kde 3.5
 
-PATCHES="${DISTDIR}/${P}-qmake-parser-2.patch.bz2"
+PATCHES="${FILESDIR}/kdevelop-3.4.1-hang-fix.diff"
+
+MAKEOPTS="${MAKEOPTS} -j1"
 
 src_unpack() {
 	kde_src_unpack
@@ -58,7 +59,7 @@ src_compile() {
 
 	# Explicitly set db include directory (bug 128897)
 	myconf="${myconf} --with-db-includedir=${ROOT}$(db_includedir)
-		   --with-db-lib=$(db_libname)"
+			--with-db-lib=$(db_libname)"
 
 	kde_src_compile
 }
@@ -85,6 +86,7 @@ pkg_postinst() {
 	elog "dev-util/kdbg:		  (RECOMMENDED) kde frontend to gdb"
 	elog "dev-util/valgrind:	  (RECOMMENDED) integrates valgrind (memory debugger) commands"
 	elog "kde-base/kompare:		  (RECOMMENDED) show differences between files"
+	elog "media-gfx/graphviz:	  (RECOMMENDED) support the new graphical classbrowser"
 	elog "dev-java/ant:			  support projects using the ant build tool"
 	elog "dev-util/ctags:		  faster and more powerful code browsing logic"
 	elog "app-doc/doxygen:		  generate KDE-style documentation for your project"
