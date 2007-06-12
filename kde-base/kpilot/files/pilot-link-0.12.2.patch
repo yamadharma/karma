@@ -1,0 +1,44 @@
+--- kpilot/lib/pilotAppInfo.h.orig	2007-01-15 06:29:07.000000000 -0500
++++ kpilot/lib/pilotAppInfo.h	2007-03-19 17:01:22.000000000 -0400
+@@ -136,8 +136,14 @@
+ * (again, from pilot-link).
+ */
+ template <typename appinfo,
++#if PILOT_LINK_IS(0,12,2)
++	int(*unpack)(appinfo *, const unsigned char *, PI_SIZE_T),
++	int(*pack)(const appinfo *, unsigned char *, PI_SIZE_T)
++#else
+ 	int(*unpack)(appinfo *, unsigned char *, PI_SIZE_T),
+-	int(*pack)(appinfo *, unsigned char *, PI_SIZE_T)>
++	int(*pack)(appinfo *, unsigned char *, PI_SIZE_T)
++#endif
++	>
+ class PilotAppInfo : public PilotAppInfoBase
+ {
+ public:
+
+--- kpilot/kpilot/kpilot.desktop.orig	2007-01-15 06:29:06.000000000 -0500
++++ kpilot/kpilot/kpilot.desktop	2007-03-19 17:01:35.000000000 -0400
+@@ -7,6 +7,8 @@
+ Name[fr]=Palm Pilot
+ Name[hi]=के-पायलट
+ Name[lv]=KPilots
++Name[mk]=КПилот
++Name[ne]=केडीई पाइलट
+ Name[pt_BR]=Ferramenta para PalmPilot
+ Name[sv]=Kpilot
+ Name[ta]=கேபைலட்
+@@ -43,11 +45,12 @@
+ GenericName[km]=ឧបករណ៍ PalmPilot
+ GenericName[lt]=PalmPilot įrankis
+ GenericName[lv]=PalmPilota Rīks
+-GenericName[mk]=Алатка за Palm Pilot
++GenericName[mk]=Алатка за PalmPilot
+ GenericName[ms]=Alat PalmPilot 
+ GenericName[mt]=Għodda għall-Palm Pilot
+ GenericName[nb]=PalmPilot-verktøy
+ GenericName[nds]=PalmPilot-Warktüüch
++GenericName[ne]=पाल्म पाइलट उपकरण
+ GenericName[nl]=Palm Pilot-synchronisatie
+ GenericName[nn]=Palm Pilot-verktøy
+ GenericName[nso]=Sebereka sa PalmPilot

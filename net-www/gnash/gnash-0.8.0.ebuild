@@ -1,23 +1,17 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-www/gnash/gnash-0.7.2_p20099999.ebuild,v 1.10 2007/05/13 22:12:33 genstef Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-www/gnash/gnash-0.8.0.ebuild,v 1.2 2007/06/12 11:15:09 opfer Exp $
 
-WANT_AUTOCONF=latest
-inherit nsplugins autotools cvs kde-functions qt3 multilib
+inherit nsplugins kde-functions qt3 multilib
 set-kdedir
 
 DESCRIPTION="Gnash is a GNU Flash movie player that supports many SWF v7 features"
 HOMEPAGE="http://www.gnu.org/software/gnash"
-#SRC_URI="mirror://gnu/${PN}/${PV}/${P}.tar.bz2"
-ECVS_SERVER="cvs.sv.gnu.org:/sources/${PN}"
-ECVS_MODULE="${PN}"
-[ "${PV/0.7.2_p}" != "20099999" ] && ECVS_CO_OPTS="-D ${PV/0.7.2_p}"
-ECVS_UP_OPTS="-dP ${ECVS_CO_OPTS}"
-S=${WORKDIR}/${PN}
+SRC_URI="mirror://gnu/${PN}/${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="amd64 ~ppc ~sparc x86 ~x86-fbsd"
 IUSE="agg gstreamer ffmpeg kde nsplugin xml video_cards_i810"
 #dmalloc, broken see bug 142939
 #dmalloc? ( dev-libs/dmalloc )
@@ -60,7 +54,7 @@ RDEPEND="
 
 pkg_setup() {
 	if use agg && use kde; then
-		eerror "Building klash with the agg based renderer is not supportet"
+		eerror "Building klash with the agg based renderer is not supported"
 		eerror "Please USE -kde or -agg"
 		die "kde and agg not supported at the same time"
 	fi
@@ -72,7 +66,6 @@ pkg_setup() {
 }
 
 src_compile() {
-	./autogen.sh
 	local myconf
 
 	use nsplugin && myconf="${myconf} --with-plugindir=/opt/netscape/plugins"
@@ -119,9 +112,9 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR=${D} install || die "emake install failed"
+	emake DESTDIR="${D}" install || die "emake install failed"
 	use nsplugin && inst_plugin /opt/netscape/plugins/libgnashplugin.so \
-		|| rm -rf ${D}/opt
+		|| rm -rf "${D}/opt"
 	dodoc AUTHORS ChangeLog NEWS README
 }
 
