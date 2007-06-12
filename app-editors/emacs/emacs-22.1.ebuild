@@ -1,28 +1,26 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
-
-ECVS_AUTH="pserver"
-ECVS_SERVER="cvs.savannah.gnu.org:/sources/emacs"
-ECVS_MODULE="emacs"
-ECVS_BRANCH="multi-tty"
-ECVS_LOCALNAME="emacs-multi-tty"
+# $Header: /var/cvsroot/gentoo-x86/app-editors/emacs/emacs-22.1.ebuild,v 1.7 2007/06/05 15:07:43 gustavoz Exp $
 
 WANT_AUTOCONF="2.61"
 WANT_AUTOMAKE="latest"
 
-inherit autotools cvs elisp-common eutils flag-o-matic
+inherit autotools elisp-common eutils flag-o-matic
 
 DESCRIPTION="The extensible, customizable, self-documenting real-time display editor"
-SRC_URI=""
 HOMEPAGE="http://www.gnu.org/software/emacs/"
-IUSE="alsa gif gtk gzip-el hesiod jpeg lesstif motif png spell sound source tiff toolkit-scroll-bars X Xaw3d xpm"
+SRC_URI="mirror://gnu/emacs/${P}.tar.gz"
 
+LICENSE="GPL-2 FDL-1.2"
+SLOT="22"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
+IUSE="alsa gif gtk gzip-el hesiod jpeg lesstif motif png spell sound source tiff toolkit-scroll-bars X Xaw3d xpm"
 RESTRICT="strip"
 
 X_DEPEND="x11-libs/libXmu x11-libs/libXt x11-misc/xbitmaps"
 
-RDEPEND="sys-libs/ncurses
+RDEPEND="!<app-editors/emacs-cvs-22.1
+	sys-libs/ncurses
 	>=app-admin/eselect-emacs-0.7-r1
 	sys-libs/zlib
 	hesiod? ( net-dns/hesiod )
@@ -40,8 +38,10 @@ RDEPEND="sys-libs/ncurses
 		!gtk? (
 			Xaw3d? ( x11-libs/Xaw3d )
 			!Xaw3d? (
-				motif? ( x11-libs/openmotif )
-				!motif? ( lesstif? ( x11-libs/lesstif ) )
+				motif? (
+					lesstif? ( x11-libs/lesstif )
+					!lesstif? ( x11-libs/openmotif )
+				)
 			)
 		)
 	)"
@@ -51,25 +51,13 @@ DEPEND="${RDEPEND}
 
 PROVIDE="virtual/editor"
 
-SLOT="23-multi-tty"
-LICENSE="GPL-2 FDL-1.2"
-KEYWORDS="~x86 ~amd64"
-S="${WORKDIR}/${ECVS_LOCALNAME}"
-EMACS_SUFFIX="emacs-${SLOT}"
+# FULL_VERSION keeps the full version number, which is needed in order to
+# determine some path information correctly for copy/move operations later on
+FULL_VERSION="${PV}"
 
 src_unpack() {
-	cvs_src_unpack
-
+	unpack ${A}
 	cd "${S}"
-	# FULL_VERSION keeps the full version number, which is needed in
-	# order to determine some path information correctly for copy/move
-	# operations later on
-	FULL_VERSION=$(grep 'defconst[	 ]*emacs-version' lisp/version.el \
-		| sed -e 's/^[^"]*"\([^"]*\)".*$/\1/')
-	[ "${FULL_VERSION}" ] || die "Cannot determine current Emacs version"
-	echo
-	einfo "Emacs version number is ${FULL_VERSION}"
-	echo
 
 	sed -i -e "s:/usr/lib/crtbegin.o:$(`tc-getCC` -print-file-name=crtbegin.o):g" \
 		-e "s:/usr/lib/crtend.o:$(`tc-getCC` -print-file-name=crtend.o):g" \
@@ -82,11 +70,12 @@ src_unpack() {
 			|| die "unable to sed configure.in"
 	fi
 
-	epatch "${FILESDIR}/${PN}-Xaw3d-headers.patch"
-	epatch "${FILESDIR}/${PN}-freebsd-sparc.patch"
+	epatch "${FILESDIR}/${P}-Xaw3d-headers.patch"
+	epatch "${FILESDIR}/${P}-freebsd-sparc.patch"
+	epatch "${FILESDIR}/${P}-oldxmenu-qa.patch"
 	# ALSA is detected and used even if not requested by the USE=alsa flag.
 	# So remove the automagic check
-	use alsa || epatch "${FILESDIR}/${PN}-disable_alsa_detection.patch"
+	use alsa || epatch "${FILESDIR}/${P}-disable_alsa_detection.patch"
 
 	eautoreconf
 }
@@ -131,12 +120,12 @@ src_compile() {
 			myconf="${myconf} --without-gtk"
 		elif use motif; then
 			einfo "Configuring to build with motif toolkit support"
-			myconf="${myconf} --without-gtk"
 			myconf="${myconf} --with-x-toolkit=motif"
-		elif use lesstif; then
-			einfo "Configuring to build with lesstif toolkit support"
 			myconf="${myconf} --without-gtk"
-			myconf="${myconf} --with-x-toolkit=motif"
+		else
+			einfo "Configuring to build with no toolkit"
+			myconf="${myconf} --with-x-toolkit=no"
+			myconf="${myconf} --without-gtk"
 		fi
 	else
 		myconf="${myconf} --without-x"
@@ -147,37 +136,32 @@ src_compile() {
 	use hesiod && myconf="${myconf} --with-hesiod"
 
 	econf \
-		--program-suffix=-${EMACS_SUFFIX} \
+		--program-suffix=-emacs-${SLOT} \
+		--infodir=/usr/share/info/emacs-${SLOT} \
 		--without-carbon \
 		${myconf} || die "econf emacs failed"
 
-	emake CC="$(tc-getCC) " bootstrap \
-		|| die "make bootstrap failed."
+	emake CC="$(tc-getCC)" || die "emake failed"
 }
 
 src_install () {
 	emake install DESTDIR="${D}" || die "make install failed"
 
-	rm "${D}"/usr/bin/emacs-${FULL_VERSION}-${EMACS_SUFFIX} \
+	rm "${D}"/usr/bin/emacs-${FULL_VERSION}-emacs-${SLOT} \
 		|| die "removing duplicate emacs executable failed"
-	mv "${D}"/usr/bin/emacs-${EMACS_SUFFIX} "${D}"/usr/bin/${EMACS_SUFFIX} \
+	mv "${D}"/usr/bin/emacs-emacs-${SLOT} "${D}"/usr/bin/emacs-${SLOT} \
 		|| die "moving Emacs executable failed"
 
 	# move info documentation to the correct place
-	einfo "Fixing info documentation..."
-	dodir /usr/share/info/${EMACS_SUFFIX}
-	mv "${D}"/usr/share/info/{,${EMACS_SUFFIX}/}dir || die "mv dir failed"
-	for i in "${D}"/usr/share/info/*
-	do
-		if [ "${i##*/}" != ${EMACS_SUFFIX} ] ; then
-			mv ${i} ${i/info/info/${EMACS_SUFFIX}}.info
-		fi
+	einfo "Fixing info documentation ..."
+	for i in "${D}"/usr/share/info/emacs-${SLOT}/*; do
+		mv ${i} ${i}.info || die "mv info failed"
 	done
 
 	# move man pages to the correct place
-	einfo "Fixing manpages..."
+	einfo "Fixing manpages ..."
 	for m in "${D}"/usr/share/man/man1/* ; do
-		mv ${m} ${m%.1}-${EMACS_SUFFIX}.1 || die "mv man failed"
+		mv ${m} ${m%.1}-emacs-${SLOT}.1 || die "mv man failed"
 	done
 
 	# avoid collision between slots, see bug #169033 e.g.
@@ -198,7 +182,7 @@ EOF
 		elisp-site-file-install 00${PN}-${SLOT}-gentoo.el
 	fi
 
-	dodoc AUTHORS BUGS CONTRIBUTE README README.multi-tty || die "dodoc failed"
+	dodoc AUTHORS BUGS CONTRIBUTE README || die "dodoc failed"
 }
 
 emacs-infodir-rebuild() {
@@ -206,7 +190,7 @@ emacs-infodir-rebuild() {
 	# or removed. It is only rebuilt by Portage if our directory is in
 	# INFOPATH, which is not guaranteed. So we rebuild it ourselves.
 
-	local infodir=/usr/share/info/${EMACS_SUFFIX} f
+	local infodir=/usr/share/info/emacs-${SLOT} f
 	einfo "Regenerating Info directory index in ${infodir} ..."
 	rm -f ${ROOT}${infodir}/dir{,.*}
 	for f in ${ROOT}${infodir}/*.info*; do
@@ -222,7 +206,13 @@ pkg_postinst() {
 
 	elisp-site-regen
 	emacs-infodir-rebuild
-	eselect emacs update --if-unset
+
+	if [[ "$(readlink ${ROOT}/usr/bin/emacs)" == emacs.emacs-${SLOT}* ]]; then
+		# transition from pre-eselect revision
+		eselect emacs set emacs-${SLOT}
+	else
+		eselect emacs update --if-unset
+	fi
 
 	if use X; then
 		elog "You need to install some fonts for Emacs. Under monolithic"
@@ -235,8 +225,8 @@ pkg_postinst() {
 	echo
 	elog "You can set the version to be started by /usr/bin/emacs through"
 	elog "the Emacs eselect module. Man and info pages are automatically"
-	elog "redirected, so you are to test emacs-cvs along with the stable"
-	elog "release. \"man emacs.eselect\" for details."
+	elog "redirected, so you may have several installed Emacs versions at the"
+	elog "same time. \"man emacs.eselect\" for details."
 }
 
 pkg_postrm() {
