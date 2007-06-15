@@ -45,10 +45,12 @@ src_install () {
 	cp -L ${S1}/lib/*.a ${D}/usr/lib
 
 	# Copy the binaries we want
+	# placement like Fedora (not Debian)
 	cd ${S1}/bin
+	exeinto /usr/lib/${PN}
 	for i in ldap*
 	do
-		newbin ${i} moz${i}
+		doexe ${i}
 	done
 
 	# Copy the include files
@@ -65,7 +67,7 @@ src_install () {
 	# Set up our package file
 	dodir /usr/lib/pkgconfig
 	sed \
-	    -e "s,%bindir%,/usr/bin,g" \
+	    -e "s,%bindir%,\${libdir}/${PN},g" \
 	    -e "s,%libdir%,\${exec_prefix}/lib,g" \
 	    -e "s,%prefix%,/usr,g" \
 	    -e "s,%exec_prefix%,\${prefix},g" \

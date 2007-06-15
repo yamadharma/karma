@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-wm/openbox/openbox-3.4.0.ebuild,v 1.1 2007/06/05 23:25:58 omp Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-wm/openbox/openbox-3.4.2.ebuild,v 1.1 2007/06/11 03:29:21 omp Exp $
 
 DESCRIPTION="A standards compliant, fast, light-weight, extensible window manager."
 HOMEPAGE="http://icculus.org/openbox/"
