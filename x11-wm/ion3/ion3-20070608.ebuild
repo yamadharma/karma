@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils flag-o-matic
+inherit eutils flag-o-matic multilib
 
 MY_PV=${PV/_p/-}
 MY_PN=ion-3rc-${MY_PV}
@@ -30,7 +30,7 @@ SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="unicode iontruetype doc"
 DEPEND="
 	|| (
@@ -95,6 +95,8 @@ src_unpack() {
 }
 
 src_compile() {
+#	filter-flags -O3 -O2
+	
 	local myconf=""
 
 	use iontruetype && sed -i -e "s:#USE_XFT=1:USE_XFT=1:" ${S}/system.mk

@@ -1,8 +1,8 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sci-physics/root/root-5.14.00c.ebuild,v 1.1 2007/03/05 19:02:19 bicatali Exp $
+# $Header: $
 
-inherit versionator flag-o-matic eutils toolchain-funcs qt3
+inherit versionator flag-o-matic eutils toolchain-funcs qt3 fortran
 
 DOC_PV=$(get_major_version)_$(get_version_component_range 2)
 
@@ -14,7 +14,7 @@ HOMEPAGE="http://root.cern.ch/"
 SLOT="0"
 LICENSE="LGPL-2"
 KEYWORDS="amd64 ~sparc x86"
-IUSE="afs doc fftw kerberos ldap mysql odbc opengl postgres
+IUSE="afs cern doc fftw kerberos ldap mysql odbc opengl postgres
 	  python ruby qt3 ssl xml"
 
 DEPEND="sys-apps/shadow
@@ -25,7 +25,7 @@ DEPEND="sys-apps/shadow
 	mysql? ( dev-db/mysql )
 	postgres? ( dev-db/postgresql )
 	afs? ( net-fs/openafs )
-	kerberos? ( app-crypt/mit-krb5 )
+	kerberos? ( virtual/krb5 )
 	ldap? ( net-nds/openldap )
 	qt3? ( $(qt_min_version 3.3.4) )
 	fftw? ( >=sci-libs/fftw-3 )
@@ -33,6 +33,7 @@ DEPEND="sys-apps/shadow
 	ruby? ( dev-lang/ruby )
 	ssl? ( dev-libs/openssl )
 	xml? ( dev-libs/libxml2 )
+	cern? ( sci-physics/cernlib )
 	odbc? ( dev-db/unixODBC )"
 
 S=${WORKDIR}/${PN}
@@ -46,10 +47,20 @@ pkg_setup() {
 	elog "Example, for PYTHIA, you would do: "
 	elog "EXTRA_CONF=\"--enable-pythia --with-pythia-libdir=/usr/$(get_libdir)\" emerge root"
 	elog
+
+	if use cern; then
+		FORTRAN="gfortran g77 ifc"
+		fortran_pkg_setup
+	fi
 }
 
 src_unpack() {
-	unpack ${A}
+
+	if use cern; then
+		fortran_src_unpack
+	else
+		unpack ${A}
+	fi
 	if [[ ${ARCH} == sparc ]]; then
 		einfo "Patch to allow ${ARCH} autoconf --- Bug 87305"
 		# first unpack all the way
@@ -95,7 +106,6 @@ src_compile() {
 		--disable-builtin-freetype \
 		--disable-builtin-pcre \
 		--disable-builtin-zlib \
-		--disable-cern \
 		--disable-chirp \
 		--disable-dcache \
 		--disable-globus \
@@ -118,8 +128,10 @@ src_compile() {
 		--enable-soversion \
 		--enable-table \
 		--enable-thread \
+		--enable-unuran \
 		--enable-xrootd \
 		$(use_enable afs) \
+		$(use_enable cern) \
 		$(use_enable fftw fftw3) \
 		$(use_enable kerberos krb5) \
 		$(use_enable ldap) \
@@ -134,15 +146,26 @@ src_compile() {
 		$(use_enable ssl) \
 		$(use_enable xml) \
 		|| die "configure failed"
-
+	local myfortran
+	if use cern; then
+		myfortran="F77=${FORTRANC} F77LD=${FORTRANC}"
+		if [[ "${FORTRANC}" == "g77" ]]; then
+			myfortran="${myfortran} F77LIBS=-lg2c"
+		else
+			myfortran="${myfortran} F77LIBS=-lgfortran"
+		fi
+	fi
 	emake \
 		OPTFLAGS="${CXXFLAGS}" \
+		${myfortran} \
 		rootcint compiledata || die "emake rootcint failed"
 	emake -j1 \
 		OPTFLAGS="${CXXFLAGS}" \
+		${myfortran} \
 		rootlibs || die "emake rootlibs failed"
 	emake \
 		OPTFLAGS="${CXXFLAGS}" \
+		${myfortran} \
 		|| die "emake failed"
 
 	# is this only for windows? not quite sure.

@@ -11,3 +11,14 @@ diff -Naur ../work/ion-3rc-20070608/libmainloop/signal.c ion-3rc-20070608/libmai
  int mainloop_gettime(struct timeval *val)
  {
  #ifdef _POSIX_MONOTONIC_CLOCK
+--- ../work/ion-3rc-20070608/system.mk	2007-06-16 13:52:08.000000000 +0400
++++ ion-3rc-20070608/system.mk.new	2007-06-16 13:53:34.000000000 +0400
+@@ -116,7 +116,7 @@
+ #EXTRA_INCLUDES +=
+ 
+ # clock_gettime for monotonic time
+-EXTRA_LIBS += -lrt
++#EXTRA_LIBS += -lrt
+ 
+ ##
+ ## Xft support

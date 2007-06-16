@@ -56,8 +56,8 @@ diff -Nur ion-3ds-20060519.orig/system.mk ion-3ds-20060519/system.mk
 -#LUAC=/usr/bin/luac5.1
 +LUA_LIBS=`pkg-config --libs lua`
 +LUA_INCLUDES=`pkg-config --cflags lua`
-+LUA=/usr/bin/lua
-+LUAC=/usr/bin/luac
++LUA=`which lua`
++LUAC=`which luac`
  
  
  ##

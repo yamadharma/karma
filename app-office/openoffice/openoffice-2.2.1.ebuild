@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.2.0.ebuild,v 1.10 2007/06/07 09:54:09 suka Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-office/openoffice/openoffice-2.2.1.ebuild,v 1.4 2007/06/16 04:24:03 opfer Exp $
 
 WANT_AUTOCONF="2.5"
 WANT_AUTOMAKE="1.9"
@@ -27,7 +27,6 @@ SRC_URI="mirror://openoffice/stable/${PV}/${SRC}_core.tar.bz2
 	http://go-oo.org/packages/SRC680/hunspell_UNO_1.1.tar.gz
 	http://go-oo.org/packages/xt/xt-20051206-src-only.zip
 	http://go-oo.org/packages/SRC680/lp_solve_5.5.tar.gz
-	http://go-oo.org/packages/libwpd/libwpd-0.8.8.tar.gz
 	http://go-oo.org/packages/SRC680/libwps-0.1.0~svn20070129.tar.gz
 	http://go-oo.org/packages/SRC680/libwpg-0.1.0~cvs20070507.tar.gz"
 
@@ -133,11 +132,11 @@ DEPEND="${COMMON_DEPEND}
 
 PROVIDE="virtual/ooo"
 
-#if use amd64; then
+if use amd64; then
 	# All available Java 1.5 JDKs are broken, in one way or another, on amd64.
 	# Thus we force the use of a Java 1.4 JDK on amd64 (and amd64 only).
 	export JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
-#fi
+fi
 
 
 pkg_setup() {
@@ -304,7 +303,7 @@ src_compile() {
 		--with-num-cpus="${JOBS}" \
 		--without-binsuffix \
 		--with-installed-ooo-dirname="openoffice" \
-		--with-tag="OOF680_m14" \
+		--with-tag="OOF680_m18" \
 		"${GTKFLAG}" \
 		`use_enable kde` \
 		`use_enable cairo` \
@@ -355,7 +354,7 @@ pkg_postinst() {
 	[[ -x /sbin/chpax ]] && [[ -e /usr/$(get_libdir)/openoffice/program/soffice.bin ]] && chpax -zm /usr/$(get_libdir)/openoffice/program/soffice.bin
 
 	# Add available & useful jars to openoffice classpath
-	use java && /usr/lib/openoffice/program/java-set-classpath $(java-config --classpath=jdbc-mysql 2>/dev/null) >/dev/null
+	use java && /usr/$(get_libdir)/openoffice/program/java-set-classpath $(java-config --classpath=jdbc-mysql 2>/dev/null) >/dev/null
 
 	elog " To start OpenOffice.org, run:"
 	elog
