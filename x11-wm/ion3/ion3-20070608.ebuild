@@ -30,7 +30,7 @@ SRC_URI="http://iki.fi/tuomov/dl/${MY_PN}.tar.gz
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="unicode iontruetype doc"
 DEPEND="
 	|| (
