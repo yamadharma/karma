@@ -1,0 +1,2 @@
+->=app-editors/emacs-cvs-23
+->=virtual/emacs-23
