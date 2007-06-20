@@ -41,7 +41,7 @@ src_unpack() {
 	epatch "${FILESDIR}/${PN}-0.16-fix-manpage-location.patch"
 
 	# Make a timing-sensitive test pass on a slow or heavily loaded box
-	epatch "${FILESDIR}/${PN}-0.16-timed-tests-fix.patch"
+#	epatch "${FILESDIR}/${PN}-0.16-timed-tests-fix.patch"
 }
 
 src_compile() {
