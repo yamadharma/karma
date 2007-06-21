@@ -37,7 +37,6 @@ src_unpack() {
 	while read patch  
 	    do 
 	    epatch ${DISTDIR}/${patch}
-#	    epatch ${FILESDIR}/${PVR}/${patch}
 	done < ${FILESDIR}/patch_order-${PVR}
 
 	cd ${S}
