@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_ushakov-2.4.2.tar.bz2 8252356 RMD160 b275178081d63ef9c8d9f130ce9784b80b5ad74a SHA1 6c33f55cf034afbacea6beaaf39140ac8d52f9e1 SHA256 97b09ac25c2fdcc255ee7a6eddeb07a4b6303681a9e15ffee1c06e7380ff8ab8
+EBUILD stardict-mova-ushakov-ru-2.4.2.ebuild 555 RMD160 4cd4c32925c2e7b375ee235ddf5853174b251d3e SHA1 86e03b912fccdd656d91e031c2dabaec9ea655da SHA256 ec18c96c789a888c118224216712ff6af62e86d71453facda0ea6bfcd2a0f5e8
+MD5 65c42a96434cb7f980c2e56a43792579 stardict-mova-ushakov-ru-2.4.2.ebuild 555
+RMD160 4cd4c32925c2e7b375ee235ddf5853174b251d3e stardict-mova-ushakov-ru-2.4.2.ebuild 555
+SHA256 ec18c96c789a888c118224216712ff6af62e86d71453facda0ea6bfcd2a0f5e8 stardict-mova-ushakov-ru-2.4.2.ebuild 555
+MD5 b75fdb03bd8db7bde500de7c2196025e files/digest-stardict-mova-ushakov-ru-2.4.2 331
+RMD160 7fbc4c4054d7429e06b22ec13e60f0b7a85ceab6 files/digest-stardict-mova-ushakov-ru-2.4.2 331
+SHA256 f7d1ffdb9a1b1f92a018ea1b7697997c612bfb86e0007a87172b56f7aaf13567 files/digest-stardict-mova-ushakov-ru-2.4.2 331

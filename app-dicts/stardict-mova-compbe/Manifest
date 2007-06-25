@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_compbe-2.4.2.tar.bz2 4724 RMD160 f83be33af0ade30bbea8dafe4a5463b89d9f8e13 SHA1 ca53df6dc5671d43b38647e5c73663619080d2e8 SHA256 3aed45d91ee15bfe919381fab81d141a9829a4d7af27693104f02c8193b2af9f
+EBUILD stardict-mova-compbe-2.4.2.ebuild 546 RMD160 b1d1b771302769c5bcb41fe2d136f9b330c0e650 SHA1 94ec381b7ef386f81a344821569151628ba7eb7a SHA256 e07d18c464de43ee484dc5dade0484033c0f592b033aef3ed2328ab50996d053
+MD5 8ac29bead33f58df2e611b25b94aabcc stardict-mova-compbe-2.4.2.ebuild 546
+RMD160 b1d1b771302769c5bcb41fe2d136f9b330c0e650 stardict-mova-compbe-2.4.2.ebuild 546
+SHA256 e07d18c464de43ee484dc5dade0484033c0f592b033aef3ed2328ab50996d053 stardict-mova-compbe-2.4.2.ebuild 546
+MD5 77f360e0fe2b65534c49738fba4441cd files/digest-stardict-mova-compbe-2.4.2 319
+RMD160 2b1ffe737f98fe237957c4fcf137a7e36350d8f2 files/digest-stardict-mova-compbe-2.4.2 319
+SHA256 fd2821c65663a5f6e87e314d28c91fd8a3da3726ed444343b524b13c7c6af419 files/digest-stardict-mova-compbe-2.4.2 319

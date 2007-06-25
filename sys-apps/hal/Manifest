@@ -58,10 +58,10 @@ AUX 0.5.9/12_hal_fix-vol_label_probe_volume.patch 2720 RMD160 972107dbb7a325aeee
 MD5 26a93aff650c702597a02003e897c53b files/0.5.9/12_hal_fix-vol_label_probe_volume.patch 2720
 RMD160 972107dbb7a325aeeee992454f33c860035eb755 files/0.5.9/12_hal_fix-vol_label_probe_volume.patch 2720
 SHA256 5e2c186ec2e24c53ec4b16921aed5ae0dfc39f7137f791341ba3dffa56d07f1a files/0.5.9/12_hal_fix-vol_label_probe_volume.patch 2720
-AUX 0.5.9/13_detect_newer_macbooks.patch 836 RMD160 fa066ba9b1b734f34bdc6daa67e00b0e3e1e3707 SHA1 6d7a16512f503e0ba6803daeeeccc82a96f30a5c SHA256 fe68a79f893725b4492c513df47f1f3e28096b1f0b4a203aeafe32b8d0ad0974
-MD5 7f70ffb93dece74ab3b9724f8bf2c4c9 files/0.5.9/13_detect_newer_macbooks.patch 836
-RMD160 fa066ba9b1b734f34bdc6daa67e00b0e3e1e3707 files/0.5.9/13_detect_newer_macbooks.patch 836
-SHA256 fe68a79f893725b4492c513df47f1f3e28096b1f0b4a203aeafe32b8d0ad0974 files/0.5.9/13_detect_newer_macbooks.patch 836
+AUX 0.5.9/13_detect_newer_macbooks.patch 2010 RMD160 700b59c183aa18f08f795256b43921beff394b8b SHA1 a78708fc81be80454c7d24a5ff31bce502482606 SHA256 81c167bfabab5704153f0484e45fd9a574368b1ca2dd44149ce80ffd4011212c
+MD5 7eb277b1933ef8404a86c402de874927 files/0.5.9/13_detect_newer_macbooks.patch 2010
+RMD160 700b59c183aa18f08f795256b43921beff394b8b files/0.5.9/13_detect_newer_macbooks.patch 2010
+SHA256 81c167bfabab5704153f0484e45fd9a574368b1ca2dd44149ce80ffd4011212c files/0.5.9/13_detect_newer_macbooks.patch 2010
 AUX 0.5.9/14_ntfs_allows_utf8.patch 791 RMD160 51dd2eab4d77bdc10f63500d05621650ebb58738 SHA1 cf8f08894fd33cf297d7cd7c7168a11824b534a3 SHA256 eac2b172054dc8c658428f65e2d88454cecf7a5766b359ff7b3a6744878ee65f
 MD5 6f0b723829536ff43e7d9f42dcd89317 files/0.5.9/14_ntfs_allows_utf8.patch 791
 RMD160 51dd2eab4d77bdc10f63500d05621650ebb58738 files/0.5.9/14_ntfs_allows_utf8.patch 791
@@ -86,6 +86,18 @@ AUX 0.5.9/19_hald_runner_catch_dbus_disconnect.patch 863 RMD160 b94c71c312874c09
 MD5 1bd88a34c2b8285a28e60100069a27c9 files/0.5.9/19_hald_runner_catch_dbus_disconnect.patch 863
 RMD160 b94c71c312874c09d006ccea782c1f9a569367f6 files/0.5.9/19_hald_runner_catch_dbus_disconnect.patch 863
 SHA256 38c925f0eee76dfcbe43afad2e9bf01f2f6c416e6a4efb1c373bc8f07f9e9bef files/0.5.9/19_hald_runner_catch_dbus_disconnect.patch 863
+AUX 0.5.9/20_firewire_prober_ioctls_fix.patch 1315 RMD160 eca585824dccdaf50776d12e8813f8c5c19279b5 SHA1 bd5f7f1f182f0e06a9a175cf07db613761bc5d06 SHA256 e2c93828da6c17d42f1348c04c4290d6dd54f99b598d8fb1637477995aff6df2
+MD5 49caa58abfbcf2d7e7e6381ef5a2cbd4 files/0.5.9/20_firewire_prober_ioctls_fix.patch 1315
+RMD160 eca585824dccdaf50776d12e8813f8c5c19279b5 files/0.5.9/20_firewire_prober_ioctls_fix.patch 1315
+SHA256 e2c93828da6c17d42f1348c04c4290d6dd54f99b598d8fb1637477995aff6df2 files/0.5.9/20_firewire_prober_ioctls_fix.patch 1315
+AUX 0.5.9/21_pm-suspend_correct_options.patch 1608 RMD160 ea544d39efeeaac60b4bc2c4f6e10eee211ac387 SHA1 a0432e98d3d0a5d34762fce33c5b27e2e05b3280 SHA256 a2cf656ff4db17f7b2ca7398b6f5988c3b297bdc12fe20a0c36f62c72d1598f3
+MD5 c17877d910271ab5af65337ff23f9e33 files/0.5.9/21_pm-suspend_correct_options.patch 1608
+RMD160 ea544d39efeeaac60b4bc2c4f6e10eee211ac387 files/0.5.9/21_pm-suspend_correct_options.patch 1608
+SHA256 a2cf656ff4db17f7b2ca7398b6f5988c3b297bdc12fe20a0c36f62c72d1598f3 files/0.5.9/21_pm-suspend_correct_options.patch 1608
+AUX 0.5.9/22_pm-hibernate_correct_options.patch 1582 RMD160 456063cc7d6e026785b97d27e7d26f26988eaaed SHA1 0468cadf51c58ecbf7ab0c283ef6a368648ca99a SHA256 854b487bc46c9bf130d4d748df588a24d93820a516af1c271d6fbe83f7ba909f
+MD5 f0ca81730cd55f45c09bd585e3c1cb98 files/0.5.9/22_pm-hibernate_correct_options.patch 1582
+RMD160 456063cc7d6e026785b97d27e7d26f26988eaaed files/0.5.9/22_pm-hibernate_correct_options.patch 1582
+SHA256 854b487bc46c9bf130d4d748df588a24d93820a516af1c271d6fbe83f7ba909f files/0.5.9/22_pm-hibernate_correct_options.patch 1582
 AUX 0.5.9/95_gentoo_man_page.patch 18159 RMD160 cd4bf6c16e84464b11de755323ef2d0f5c1a54f9 SHA1 f9de30d705eada8e2f631e51b715b9923f732fb4 SHA256 59d81dcb273f3cdc9c7fc9f195331529642fef2c2150b3eeb3fd98ea555b1893
 MD5 f6d115e0eb501aba476f4df965bfeb6c files/0.5.9/95_gentoo_man_page.patch 18159
 RMD160 cd4bf6c16e84464b11de755323ef2d0f5c1a54f9 files/0.5.9/95_gentoo_man_page.patch 18159
@@ -98,106 +110,18 @@ AUX 0.5.9/97_ignore_fixed_drives.patch 1529 RMD160 ca9c907351003a9924d1e7a472d8d
 MD5 148972bf6d73b10fe75f1a3fef21f346 files/0.5.9/97_ignore_fixed_drives.patch 1529
 RMD160 ca9c907351003a9924d1e7a472d8dfec21533e79 files/0.5.9/97_ignore_fixed_drives.patch 1529
 SHA256 b71fdb49a1ad0376f305caf1d11c75dfe8370b970d29adbfe8bd3320757a5259 files/0.5.9/97_ignore_fixed_drives.patch 1529
-AUX 0.5.9/series 744 RMD160 9fc18571ebf93c312a50c4f8b2c278b54f65c2d6 SHA1 08731adc9ecbbb466a18317941df47672752d1d9 SHA256 71ddb731797b27df7878dc09089b22ea9c288e0f71ac7bd1e9ff1d044623775f
-MD5 043fb96ab128eb4d06032a6c79bb229b files/0.5.9/series 744
-RMD160 9fc18571ebf93c312a50c4f8b2c278b54f65c2d6 files/0.5.9/series 744
-SHA256 71ddb731797b27df7878dc09089b22ea9c288e0f71ac7bd1e9ff1d044623775f files/0.5.9/series 744
+AUX 0.5.9/98_hald_cache_test_path.patch 898 RMD160 da4949adae527cee53795666027243161a20400e SHA1 6552ab53c002536e01011ddb2b89d3ead2fef553 SHA256 dd60c1165b79301099053cf299f9b1aaea23c1a767a5494ab896590fd2a368e0
+MD5 5b0e12ba184d9d5049af5b2c2fb17100 files/0.5.9/98_hald_cache_test_path.patch 898
+RMD160 da4949adae527cee53795666027243161a20400e files/0.5.9/98_hald_cache_test_path.patch 898
+SHA256 dd60c1165b79301099053cf299f9b1aaea23c1a767a5494ab896590fd2a368e0 files/0.5.9/98_hald_cache_test_path.patch 898
+AUX 0.5.9/series 884 RMD160 c6e02754d6267aa39c54fba13c46c88f280d89a2 SHA1 d335bbe2a7bb56c8f41d002b4568e111d9fd053f SHA256 66673408d621e7be6db7cfbaca68bc269b49f2c7c768e338ee0aabef722651ca
+MD5 0f3b83015212712185d1984eaab19dce files/0.5.9/series 884
+RMD160 c6e02754d6267aa39c54fba13c46c88f280d89a2 files/0.5.9/series 884
+SHA256 66673408d621e7be6db7cfbaca68bc269b49f2c7c768e338ee0aabef722651ca files/0.5.9/series 884
 AUX fix-scsi-fake-host-event.patch 3108 RMD160 2bda406fcb2dd92c348781a6c0958d40c79d78ea SHA1 af1d5c9a2cde091bd7abe04ed5e91a4bb815b675 SHA256 199749c188e5fb4858e4c1dac8800525377daf6a680dcd13e7096e71266ed05d
 MD5 3b6df9a24978d931781dc029c85288a9 files/fix-scsi-fake-host-event.patch 3108
 RMD160 2bda406fcb2dd92c348781a6c0958d40c79d78ea files/fix-scsi-fake-host-event.patch 3108
 SHA256 199749c188e5fb4858e4c1dac8800525377daf6a680dcd13e7096e71266ed05d files/fix-scsi-fake-host-event.patch 3108
-AUX hal-0.5.1-old_storage_policy.patch 856 RMD160 d73708510cbfebc897fe20070e3c6997559f8296 SHA1 9fb9facb27e381fb27c0658de3482c8aa0754c40 SHA256 6ea5cd467e1b7b34308c9ecc0eaf2442a3272b7c02ef75d7c0af16566e523cc2
-MD5 25cb64ec27a48a80126b6de5ff6c3340 files/hal-0.5.1-old_storage_policy.patch 856
-RMD160 d73708510cbfebc897fe20070e3c6997559f8296 files/hal-0.5.1-old_storage_policy.patch 856
-SHA256 6ea5cd467e1b7b34308c9ecc0eaf2442a3272b7c02ef75d7c0af16566e523cc2 files/hal-0.5.1-old_storage_policy.patch 856
-AUX hal-0.5.5.1-RBC.patch 660 RMD160 36368684295dcfa4809ba0fe7b6a2575d2091e1e SHA1 a845a7a324c9b9069b8a4c366d3f7e800200c2cf SHA256 6e0b71024bc857e72ce694282f098e3d5fb17b7a2dec579193878f0812360799
-MD5 54eaacd46e87bd8025da51f2f9aaf56b files/hal-0.5.5.1-RBC.patch 660
-RMD160 36368684295dcfa4809ba0fe7b6a2575d2091e1e files/hal-0.5.5.1-RBC.patch 660
-SHA256 6e0b71024bc857e72ce694282f098e3d5fb17b7a2dec579193878f0812360799 files/hal-0.5.5.1-RBC.patch 660
-AUX hal-0.5.7-hald-scripts.patch 8636 RMD160 339765377e3573b382df987903f301860601668f SHA1 c2ffb779f423e07b38f12a852d942928394abc63 SHA256 d0b713f84c7bc782ba7b13f439630a995588097db2141f4a97c110036f64001a
-MD5 521a06ba0845bd3246d6ed4b589f110f files/hal-0.5.7-hald-scripts.patch 8636
-RMD160 339765377e3573b382df987903f301860601668f files/hal-0.5.7-hald-scripts.patch 8636
-SHA256 d0b713f84c7bc782ba7b13f439630a995588097db2141f4a97c110036f64001a files/hal-0.5.7-hald-scripts.patch 8636
-AUX hal-0.5.7-hibernate.patch 405 RMD160 1d98e55ffc6ca9fd8ed32bf7e7a5b174da619088 SHA1 811ea39b956c213c4603a7ae97e28ebc42fd8774 SHA256 dfa5d976868fb755f441cea17fed94f5128d14e3049f7cbeac7fe7010786f7cc
-MD5 d654d65c7d398523342deb94bec68925 files/hal-0.5.7-hibernate.patch 405
-RMD160 1d98e55ffc6ca9fd8ed32bf7e7a5b174da619088 files/hal-0.5.7-hibernate.patch 405
-SHA256 dfa5d976868fb755f441cea17fed94f5128d14e3049f7cbeac7fe7010786f7cc files/hal-0.5.7-hibernate.patch 405
-AUX hal-0.5.7-ignored-volumes.patch 1639 RMD160 7e56e8d2c8196baf3dcb3057296f24f6bb96f4fb SHA1 14eeacaf96ebaba14af9506ae8e7869b797957f7 SHA256 2b66eba6b8d34c88219ac126e5f86843a8b207332c1e78c260bcc5458c3b3a63
-MD5 74ec55ccd95f9be1c3b68443bffa8ee4 files/hal-0.5.7-ignored-volumes.patch 1639
-RMD160 7e56e8d2c8196baf3dcb3057296f24f6bb96f4fb files/hal-0.5.7-ignored-volumes.patch 1639
-SHA256 2b66eba6b8d34c88219ac126e5f86843a8b207332c1e78c260bcc5458c3b3a63 files/hal-0.5.7-ignored-volumes.patch 1639
-AUX hal-0.5.7-part-table.patch 447 RMD160 6432358deffe83d12e908517ab0cc4ee58052287 SHA1 5dc6162c00da2e8ecfb64b19aa0cde049d73297e SHA256 3b99d293545d6d9c02b467a32625057d4502b1d92f8d14e34d65382f0c0cb0db
-MD5 7db42f6984b16dc4d4c5b8ba74c126e3 files/hal-0.5.7-part-table.patch 447
-RMD160 6432358deffe83d12e908517ab0cc4ee58052287 files/hal-0.5.7-part-table.patch 447
-SHA256 3b99d293545d6d9c02b467a32625057d4502b1d92f8d14e34d65382f0c0cb0db files/hal-0.5.7-part-table.patch 447
-AUX hal-0.5.7-plugdev-allow-send.patch 767 RMD160 81da1983cd31552de014142b839f0e43d08909e5 SHA1 055e9cc03a30268b680493e3f4eba4b24348db0f SHA256 19e5f88a512f8e146f63d43935039638b8e51be71f6eea8adcbf3f0c8ab63239
-MD5 05b561f59abfd3c77f737b54ecf3505c files/hal-0.5.7-plugdev-allow-send.patch 767
-RMD160 81da1983cd31552de014142b839f0e43d08909e5 files/hal-0.5.7-plugdev-allow-send.patch 767
-SHA256 19e5f88a512f8e146f63d43935039638b8e51be71f6eea8adcbf3f0c8ab63239 files/hal-0.5.7-plugdev-allow-send.patch 767
-AUX hal-0.5.7-pmu-fix.patch 982 RMD160 930d9bed6014167629a93ead6f2bc9f2b03f04d1 SHA1 36f5f14e0e88ff7aa71f6bf6b0c2a8130b1358dd SHA256 23b9e12361eb56c481ee747bac8adc6cda148faa6901507bc7e8479ee92aaf98
-MD5 935e086508663682ed61c2ea2c0d1d18 files/hal-0.5.7-pmu-fix.patch 982
-RMD160 930d9bed6014167629a93ead6f2bc9f2b03f04d1 files/hal-0.5.7-pmu-fix.patch 982
-SHA256 23b9e12361eb56c481ee747bac8adc6cda148faa6901507bc7e8479ee92aaf98 files/hal-0.5.7-pmu-fix.patch 982
-AUX hal-0.5.7-rescan-on-resume.patch 516 RMD160 bbf2b4bc576e0aace4a736e15b04a89d5b031f96 SHA1 b4af37f2582dd07b08e35f9bf5dd85ffa150e8c0 SHA256 dbcead5b9276ac85862ac88951278fb7e749ae371808cf5d7142bee85ba16456
-MD5 98b1f7424a7e64e60dde5cee26bb9e6a files/hal-0.5.7-rescan-on-resume.patch 516
-RMD160 bbf2b4bc576e0aace4a736e15b04a89d5b031f96 files/hal-0.5.7-rescan-on-resume.patch 516
-SHA256 dbcead5b9276ac85862ac88951278fb7e749ae371808cf5d7142bee85ba16456 files/hal-0.5.7-rescan-on-resume.patch 516
-AUX hal-0.5.7-sony-brightness.patch 717 RMD160 85c53fb1c49fbb7325398173a43f256ba179c6a7 SHA1 b2694fbda96d7fe0f3b3431cc7a6f3cc4585bb12 SHA256 25522ed95df9838401684184cc08364058dde6b2b064d3d4e1ba4ddaef9263d2
-MD5 92141d6b083464e78ce0166e4c60c981 files/hal-0.5.7-sony-brightness.patch 717
-RMD160 85c53fb1c49fbb7325398173a43f256ba179c6a7 files/hal-0.5.7-sony-brightness.patch 717
-SHA256 25522ed95df9838401684184cc08364058dde6b2b064d3d4e1ba4ddaef9263d2 files/hal-0.5.7-sony-brightness.patch 717
-AUX hal-0.5.7-unclean-unmount-r1.patch 342 RMD160 768f6274dab1be8c535d681d7f61a0544bb7c26d SHA1 88276d7f5240594c475e1b9c3ef2a664d5fb22f8 SHA256 2036e0e0e46edf347982a20e9ffeb8b7dc7added85a8ef9f23083c225709eca3
-MD5 3e44b8f198ffe5c5d1a6d7915d9d3399 files/hal-0.5.7-unclean-unmount-r1.patch 342
-RMD160 768f6274dab1be8c535d681d7f61a0544bb7c26d files/hal-0.5.7-unclean-unmount-r1.patch 342
-SHA256 2036e0e0e46edf347982a20e9ffeb8b7dc7added85a8ef9f23083c225709eca3 files/hal-0.5.7-unclean-unmount-r1.patch 342
-AUX hal-0.5.7.1-autofs-subfs.patch 3051 RMD160 7a0d89fc77ae2bc752517873dd9d302431a5234b SHA1 0715a7a0dfc9cfc9c1dcd86177a0c691990d53a6 SHA256 82ea42ea380a6f4544739ff2f28f47f3182604af0ebb0525d0613b5f24fa296c
-MD5 68943a0abbca466218b41a5bf700b17e files/hal-0.5.7.1-autofs-subfs.patch 3051
-RMD160 7a0d89fc77ae2bc752517873dd9d302431a5234b files/hal-0.5.7.1-autofs-subfs.patch 3051
-SHA256 82ea42ea380a6f4544739ff2f28f47f3182604af0ebb0525d0613b5f24fa296c files/hal-0.5.7.1-autofs-subfs.patch 3051
-AUX hal-0.5.7.1-ctype-fix.patch 366 RMD160 759e19d7e1046bb88f46a51a84c39c9eef2ca371 SHA1 b30b68a4ddee5db53431328a00334b7229f9a5ab SHA256 1b5b8ef8c37437cae7b0a614033cde953765e67d643b0bfc94f8a2c05970054c
-MD5 d0f931efa68173d5e46e8767e8084d65 files/hal-0.5.7.1-ctype-fix.patch 366
-RMD160 759e19d7e1046bb88f46a51a84c39c9eef2ca371 files/hal-0.5.7.1-ctype-fix.patch 366
-SHA256 1b5b8ef8c37437cae7b0a614033cde953765e67d643b0bfc94f8a2c05970054c files/hal-0.5.7.1-ctype-fix.patch 366
-AUX hal-0.5.7.1-dbus-close.patch 859 RMD160 942829e237154e6612d806d9f3af0d393582f418 SHA1 a190efb43c22dbe7aa3363f3b0fb5e93497bb2da SHA256 7739541fde66bcfcb6bbeb2d5e66976e856ea066aed34c847b38539a2c42b183
-MD5 1fa646b45e845031f09515731dba40c7 files/hal-0.5.7.1-dbus-close.patch 859
-RMD160 942829e237154e6612d806d9f3af0d393582f418 files/hal-0.5.7.1-dbus-close.patch 859
-SHA256 7739541fde66bcfcb6bbeb2d5e66976e856ea066aed34c847b38539a2c42b183 files/hal-0.5.7.1-dbus-close.patch 859
-AUX hal-0.5.7.1-fix-dbus.patch 5438 RMD160 dc725822a2959c7a2426215b015bf29a085fca69 SHA1 da415a38bbbecd1790037b505adee53344aae9f7 SHA256 37898de6afb3c383b8d52067a089ebbb87608c76e527d795f73ed58344920e0a
-MD5 b5c272cfcc167bea3f9faf53322ca7fe files/hal-0.5.7.1-fix-dbus.patch 5438
-RMD160 dc725822a2959c7a2426215b015bf29a085fca69 files/hal-0.5.7.1-fix-dbus.patch 5438
-SHA256 37898de6afb3c383b8d52067a089ebbb87608c76e527d795f73ed58344920e0a files/hal-0.5.7.1-fix-dbus.patch 5438
-AUX hal-0.5.7.1-floppies-fix.patch 581 RMD160 ebb1a1a3edfdfe1eb380226d4092422d8d9a26d0 SHA1 b12ef26f7d335343b85cad1d8ba8495b249c82e5 SHA256 7b780fd26a7de2354890b526737d995f63316fded04a4af061926c95a1cc90fc
-MD5 80832a688c51720cdd01981be6494f36 files/hal-0.5.7.1-floppies-fix.patch 581
-RMD160 ebb1a1a3edfdfe1eb380226d4092422d8d9a26d0 files/hal-0.5.7.1-floppies-fix.patch 581
-SHA256 7b780fd26a7de2354890b526737d995f63316fded04a4af061926c95a1cc90fc files/hal-0.5.7.1-floppies-fix.patch 581
-AUX hal-0.5.7.1-hald-scripts.patch 8854 RMD160 e54b2c512a6db2ed948d43efe0ce05ea2efaaeb1 SHA1 0631540ded9a0ef83f7633ce8a02b761b67a6cde SHA256 0a227ccbdb90aa30a87a5112ff27518299880aafac85c4b879c11f0a76f8c944
-MD5 216c7c8b2576abb9a5f59d777c4d46ff files/hal-0.5.7.1-hald-scripts.patch 8854
-RMD160 e54b2c512a6db2ed948d43efe0ce05ea2efaaeb1 files/hal-0.5.7.1-hald-scripts.patch 8854
-SHA256 0a227ccbdb90aa30a87a5112ff27518299880aafac85c4b879c11f0a76f8c944 files/hal-0.5.7.1-hald-scripts.patch 8854
-AUX hal-0.5.7.1-hibernate-fix.patch 421 RMD160 126228bda942a061e87d15bdf6df0740b53f924c SHA1 9412c4c6dbab4133bb3dbbb6baae1cef9dd054a1 SHA256 9f27c993bc54010aec22b4955c149882e18ff2629155dcab372fec4695141826
-MD5 eb37b5e42e81753922463ad6f463aee2 files/hal-0.5.7.1-hibernate-fix.patch 421
-RMD160 126228bda942a061e87d15bdf6df0740b53f924c files/hal-0.5.7.1-hibernate-fix.patch 421
-SHA256 9f27c993bc54010aec22b4955c149882e18ff2629155dcab372fec4695141826 files/hal-0.5.7.1-hibernate-fix.patch 421
-AUX hal-0.5.7.1-ignored-volumes.patch 2864 RMD160 2b4031e24b57c2b8685eb95e39f7b3e6eb0c7576 SHA1 c7dc9a6ff210cea6546dfc50c0817308dbe7397c SHA256 054a2db0fd30d6ae9ef828fec930cf55df4e5cbbcc20f3cb86c8801714063790
-MD5 d7bd86d8837014d37208a3604c4fcb33 files/hal-0.5.7.1-ignored-volumes.patch 2864
-RMD160 2b4031e24b57c2b8685eb95e39f7b3e6eb0c7576 files/hal-0.5.7.1-ignored-volumes.patch 2864
-SHA256 054a2db0fd30d6ae9ef828fec930cf55df4e5cbbcc20f3cb86c8801714063790 files/hal-0.5.7.1-ignored-volumes.patch 2864
-AUX hal-0.5.7.1-indirection-fix.patch 4548 RMD160 aab83618c5859f616119df9af80d881957f1f88b SHA1 27758415910b47af73e39d0fc7086d3ef3ec068f SHA256 3612a5238817dedb8d4d31c131ec8fc6baaffcce8b237c5620d9437c1c8677fa
-MD5 c9ec54ae222330c0daebb8c65f2dcaa5 files/hal-0.5.7.1-indirection-fix.patch 4548
-RMD160 aab83618c5859f616119df9af80d881957f1f88b files/hal-0.5.7.1-indirection-fix.patch 4548
-SHA256 3612a5238817dedb8d4d31c131ec8fc6baaffcce8b237c5620d9437c1c8677fa files/hal-0.5.7.1-indirection-fix.patch 4548
-AUX hal-0.5.7.1-ipod-nano.patch 1411 RMD160 295b3d19d0f3a55343ca5ab95a256fac34e6439c SHA1 18bea5459a848789e22cd3458efaa9120274f342 SHA256 4df49efb2657cb21ca8d7597fc1e83e33d387d0bd07a403f0749bfe6a23bebb5
-MD5 f9a92273f54f17c14db923a315ec1542 files/hal-0.5.7.1-ipod-nano.patch 1411
-RMD160 295b3d19d0f3a55343ca5ab95a256fac34e6439c files/hal-0.5.7.1-ipod-nano.patch 1411
-SHA256 4df49efb2657cb21ca8d7597fc1e83e33d387d0bd07a403f0749bfe6a23bebb5 files/hal-0.5.7.1-ipod-nano.patch 1411
-AUX hal-0.5.7.1-rescan-on-resume.patch 517 RMD160 7b16d9f68e32945951a1f5d6c27f6920404f66e5 SHA1 c46ee436146f91f60eaf16840a5a889fdd1127a8 SHA256 97524ef90ea5666885a604bdd40bb0e51495ffe0c123f939eaaa12642c9d3904
-MD5 8e922af6294647b5b3c24e70f97af8de files/hal-0.5.7.1-rescan-on-resume.patch 517
-RMD160 7b16d9f68e32945951a1f5d6c27f6920404f66e5 files/hal-0.5.7.1-rescan-on-resume.patch 517
-SHA256 97524ef90ea5666885a604bdd40bb0e51495ffe0c123f939eaaa12642c9d3904 files/hal-0.5.7.1-rescan-on-resume.patch 517
-AUX hal-0.5.7.1-sr-driver.patch 654 RMD160 86a98b6ceb98f797badd3e1c653f181d498138b1 SHA1 8c1538eb5d1192e336627f1c59c365b2b73b0a6d SHA256 52191c2230af31f0bf18f39a5f0e6d24728da5c7e0de627be55046561318ca55
-MD5 a6cfdd91f94b01684e1c3063dd07cbd8 files/hal-0.5.7.1-sr-driver.patch 654
-RMD160 86a98b6ceb98f797badd3e1c653f181d498138b1 files/hal-0.5.7.1-sr-driver.patch 654
-SHA256 52191c2230af31f0bf18f39a5f0e6d24728da5c7e0de627be55046561318ca55 files/hal-0.5.7.1-sr-driver.patch 654
 AUX hal-0.5.9-plugdev-allow-send.patch 767 RMD160 81da1983cd31552de014142b839f0e43d08909e5 SHA1 055e9cc03a30268b680493e3f4eba4b24348db0f SHA256 19e5f88a512f8e146f63d43935039638b8e51be71f6eea8adcbf3f0c8ab63239
 MD5 05b561f59abfd3c77f737b54ecf3505c files/hal-0.5.9-plugdev-allow-send.patch 767
 RMD160 81da1983cd31552de014142b839f0e43d08909e5 files/hal-0.5.9-plugdev-allow-send.patch 767
@@ -214,6 +138,10 @@ AUX hal-0.5.9-update_dtd.patch 749 RMD160 7d9dac09669bf8172744c731abbe9dbdf95617
 MD5 9f8e703845dbaa240b11dd68264e0f7b files/hal-0.5.9-update_dtd.patch 749
 RMD160 7d9dac09669bf8172744c731abbe9dbdf95617cd files/hal-0.5.9-update_dtd.patch 749
 SHA256 39e5501837d828be443802df4fe8bfb7e0d721c773a43ca2aa28cb5cb4ef9596 files/hal-0.5.9-update_dtd.patch 749
+AUX hal-alignment.patch 763 RMD160 768b316422b996e72625bd3796d10c805af195ad SHA1 21b4b3fe19605451c9b4bcf09b9ca416fdfb7468 SHA256 b8e4100e33d4b6fcf973be683c9710a514c7d6461a8ac34b8aad8c1ecccc3398
+MD5 3f3f7efd7c9336f3e97688711f981a50 files/hal-alignment.patch 763
+RMD160 768b316422b996e72625bd3796d10c805af195ad files/hal-alignment.patch 763
+SHA256 b8e4100e33d4b6fcf973be683c9710a514c7d6461a8ac34b8aad8c1ecccc3398 files/hal-alignment.patch 763
 AUX hal-unmount.dev 397 RMD160 78286dd9527bbb421082e73b0d08e06cd514d275 SHA1 31169a28448fb1eb1dfee5d1699de9a02449a6b7 SHA256 747a4c483f8a558f2c75666e9547e539475f112363f1dbfc6ea19ca393c8e89b
 MD5 7ee3fd5b5ee117f14633350e5b335c2f files/hal-unmount.dev 397
 RMD160 78286dd9527bbb421082e73b0d08e06cd514d275 files/hal-unmount.dev 397
@@ -223,10 +151,15 @@ MD5 35750516d24e67c9f24f5f1e0da22ca0 files/hald 522
 RMD160 3d15723862416de29b6e2d18c53aec05b05216c3 files/hald 522
 SHA256 92f584b631026307485faa9ba386353b6d833349999e052fae0e8e9f82f83b6e files/hald 522
 DIST hal-0.5.9.tar.gz 1587364 RMD160 bc97bf63e35d36bdb5731c3447036425dc7adeb9 SHA1 5832d97bcaf3dabb9aeb919226e3c38d366057ac SHA256 65d8f8eeb61e7609a8c5001b6660d90e7a482c4b74b4e226d09b433dc1a80c9d
+DIST hal-info-20070402.tar.gz 106830 RMD160 e35f5f013b8f1ecfb1164967894c8bfcd9edc22e SHA1 fe769ca1af779780842d0f4650bee4f9eb4e0521 SHA256 d82c3edf68f6af02bbfe4028133bade950bbd2a9661a936c4b5f05a5ef999432
 EBUILD hal-0.5.9-r1.ebuild 8695 RMD160 6b747d72c9971548422fee8e934e17c79ddfa7e1 SHA1 6235aaa0b2e59a7bd55758da8d368eefd9e7f422 SHA256 dd1457110c8531306b07fe875c2b0025393acd24264126edb667b6e99d3556a9
 MD5 4489e27c16bf3aae765bf4adb0990414 hal-0.5.9-r1.ebuild 8695
 RMD160 6b747d72c9971548422fee8e934e17c79ddfa7e1 hal-0.5.9-r1.ebuild 8695
 SHA256 dd1457110c8531306b07fe875c2b0025393acd24264126edb667b6e99d3556a9 hal-0.5.9-r1.ebuild 8695
+EBUILD hal-0.5.9-r6.ebuild 8581 RMD160 24d9f1d354a475e381e49c90e7f10ae7935ce672 SHA1 3c3c424ba1f6a371eb9e3807762a7ee415b4d7b4 SHA256 ecbfea08e9adbc447907578ad654f0fb18b602c2ddfbbc3587e02f8da82fab00
+MD5 d9dc13bfdec34bc25fc8036e30213f9d hal-0.5.9-r6.ebuild 8581
+RMD160 24d9f1d354a475e381e49c90e7f10ae7935ce672 hal-0.5.9-r6.ebuild 8581
+SHA256 ecbfea08e9adbc447907578ad654f0fb18b602c2ddfbbc3587e02f8da82fab00 hal-0.5.9-r6.ebuild 8581
 MISC ChangeLog 21887 RMD160 bf1466d4835eccc7535f8eaaad2ead13114a2b7d SHA1 92aa05f0cc0c82bf54181ef0ffaa8bef5066aa11 SHA256 cf8cd3d8ba85d41ee2bc38b442c2f67eb5c3eddb3c57b21e2231a90b7fa19cff
 MD5 02c5bc3bfb06ca0db31fefdf928a8b7c ChangeLog 21887
 RMD160 bf1466d4835eccc7535f8eaaad2ead13114a2b7d ChangeLog 21887
@@ -238,3 +171,6 @@ SHA256 0c9aeabf473a6836c25a5db2ca86b880dec1efa9e52310725e08d1e0df93447d metadata
 MD5 75c89219e1c767bdbfa9942258c86827 files/digest-hal-0.5.9-r1 232
 RMD160 6244ab5be8bbc652f1130c2715f32bf881710f31 files/digest-hal-0.5.9-r1 232
 SHA256 d862b002c9a5547954874b2a0cbadd614381d085e850539e6aef2dd9e9d52dfe files/digest-hal-0.5.9-r1 232
+MD5 1286aa603350b3f1714cd909aef68c11 files/digest-hal-0.5.9-r6 485
+RMD160 1a63466760b9807af11f138f4955b7b72f9b39a5 files/digest-hal-0.5.9-r6 485
+SHA256 dab518e43f4f7011cca8832cb3649b1c9caecc1aff1ab8f598fb5e5aba51f969 files/digest-hal-0.5.9-r6 485

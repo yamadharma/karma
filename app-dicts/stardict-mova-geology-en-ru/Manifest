@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_geology_enru-2.4.2.tar.bz2 52871 RMD160 6fe7d27aa61d9c66972948a90d95d3e60edee460 SHA1 80ec8c052bb141ad4a15d24b6cee6053c54d754d SHA256 4e95788b127f0a9140fc60b60f0f0850a27fa468a6a055a7b26c3b71acc0da36
+EBUILD stardict-mova-geology-en-ru-2.4.2.ebuild 572 RMD160 8dcb74a1ecacd5be51dccb8b0452ad8818404990 SHA1 97492aa24c9b0c8d252628b05d7c894fad80287e SHA256 3574ec637bab9568f900959bcdcffd77f4bac476ee177249b79a17f240c56f19
+MD5 6918e20528621c21424fc635e9c835a5 stardict-mova-geology-en-ru-2.4.2.ebuild 572
+RMD160 8dcb74a1ecacd5be51dccb8b0452ad8818404990 stardict-mova-geology-en-ru-2.4.2.ebuild 572
+SHA256 3574ec637bab9568f900959bcdcffd77f4bac476ee177249b79a17f240c56f19 stardict-mova-geology-en-ru-2.4.2.ebuild 572
+MD5 69ae37c6356c97fafe81533aa8e6973c files/digest-stardict-mova-geology-en-ru-2.4.2 340
+RMD160 d02431f4032ba3232305735ba228690826026995 files/digest-stardict-mova-geology-en-ru-2.4.2 340
+SHA256 bd709d0b47eae1386f0712a8a0f1c6ffab627b7f5875537fef1a3fae6565937b files/digest-stardict-mova-geology-en-ru-2.4.2 340

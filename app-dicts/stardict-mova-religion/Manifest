@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_religion-2.4.2.tar.bz2 558603 RMD160 469eb10d9e6340b0a685358f3cf555e88d87aae9 SHA1 6ac62a4a6a927ab3934d6352b006aabca981d659 SHA256 bb955a1e92316d7c5b47e5f9bce7f76f4b213b8f035f82040b306465ce65cf1d
+EBUILD stardict-mova-religion-2.4.2.ebuild 548 RMD160 4b8fde71ea7f266a978bd6f2c50daf1b3fb2a1df SHA1 96a50796d45a3f48be485884d1bf5ca466d4be0c SHA256 da6b1e05bfdedd0c4bee6967f903ebc7f8ddfec8e0bde8690d80d130d2aa5256
+MD5 473f8836afe56be21fe336e0c63ac3d2 stardict-mova-religion-2.4.2.ebuild 548
+RMD160 4b8fde71ea7f266a978bd6f2c50daf1b3fb2a1df stardict-mova-religion-2.4.2.ebuild 548
+SHA256 da6b1e05bfdedd0c4bee6967f903ebc7f8ddfec8e0bde8690d80d130d2aa5256 stardict-mova-religion-2.4.2.ebuild 548
+MD5 1a0530ce331d75376ef3d02d4b86a140 files/digest-stardict-mova-religion-2.4.2 331
+RMD160 4b0d9375d78475f1488719e9d78ea8328373ce17 files/digest-stardict-mova-religion-2.4.2 331
+SHA256 0cb118d74c1424c4ae9e70a51d833e90a039ca8cd102fc66b964f4fdd20ab257 files/digest-stardict-mova-religion-2.4.2 331

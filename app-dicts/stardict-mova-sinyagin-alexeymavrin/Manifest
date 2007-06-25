@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_sinyagin_alexeymavrin-2.4.2.tar.bz2 511105 RMD160 b609ad30db4ad198b4ece3023080658585ec3a02 SHA1 120b8cd085874c36e7dc5135e58fe3d60ba930e6 SHA256 282a3727f68ebc0087d473c8cc26210f7db415c532597325acc42f30e02ccb89
+EBUILD stardict-mova-sinyagin-alexeymavrin-2.4.2.ebuild 561 RMD160 26fa10cf90735b87aed674ce7c81241e7040eb78 SHA1 c0ca8e599e9d9e68363c6dd2acae3c9e9c433ea4 SHA256 57dfdaebf655e9a1dc8314d426e4f5cb35f18d6d072770fd31b039217e8eed8e
+MD5 74b2e7985223a7a752b53e1f612e2976 stardict-mova-sinyagin-alexeymavrin-2.4.2.ebuild 561
+RMD160 26fa10cf90735b87aed674ce7c81241e7040eb78 stardict-mova-sinyagin-alexeymavrin-2.4.2.ebuild 561
+SHA256 57dfdaebf655e9a1dc8314d426e4f5cb35f18d6d072770fd31b039217e8eed8e stardict-mova-sinyagin-alexeymavrin-2.4.2.ebuild 561
+MD5 bcb626ae8e17ee416adc5d9422d59983 files/digest-stardict-mova-sinyagin-alexeymavrin-2.4.2 370
+RMD160 09c5bfb31a00c3e8721500a24bc478a2420a65a4 files/digest-stardict-mova-sinyagin-alexeymavrin-2.4.2 370
+SHA256 b399abd8079c6a9dd252932f58887b49fbbac5b016c7043b99ab28ac3dfacb7c files/digest-stardict-mova-sinyagin-alexeymavrin-2.4.2 370

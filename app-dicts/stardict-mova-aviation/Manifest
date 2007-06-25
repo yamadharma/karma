@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_aviation-2.4.2.tar.bz2 16453 RMD160 655c100132c9a170b31a6f74a9232f8a4be9115d SHA1 6e560b29a32dd53c57161a4fae85bac9cf362cb7 SHA256 b1e86eb4da27b93b7d9b8dc3436afb577ff2567850ebfd4f812829a4b2d98913
+EBUILD stardict-mova-aviation-2.4.2.ebuild 548 RMD160 00d0e0ff12e126df029c94face3c37d9ee35ed61 SHA1 490199d60ec88840fe02f15843e6248d4a20a68f SHA256 a58472dfd59382aaaa53fa5200f4a51ad5fe46d71d5b0b69bc36c0c0e32b16e2
+MD5 11ba2dcc42e7f246da150e492c237443 stardict-mova-aviation-2.4.2.ebuild 548
+RMD160 00d0e0ff12e126df029c94face3c37d9ee35ed61 stardict-mova-aviation-2.4.2.ebuild 548
+SHA256 a58472dfd59382aaaa53fa5200f4a51ad5fe46d71d5b0b69bc36c0c0e32b16e2 stardict-mova-aviation-2.4.2.ebuild 548
+MD5 84829f72c298b095bd8b070e281af1d0 files/digest-stardict-mova-aviation-2.4.2 328
+RMD160 93c95f9a02db0d873bfcd9ddbd2da7af47ae81a2 files/digest-stardict-mova-aviation-2.4.2 328
+SHA256 c119c2c9081807f361336b7fcc266c81d984883f29b10fc65be536110d92f96e files/digest-stardict-mova-aviation-2.4.2 328

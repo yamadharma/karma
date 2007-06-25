@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_sinyagin_unsorted-2.4.2.tar.bz2 1484 RMD160 5d8dec5f89152e7f29b84a6cfa84f1e4f46b13ad SHA1 cc6771af709775c54637c5e08d7315fddcd1e1ae SHA256 9d93e27f652eb2bc2d7cb6f507c8b5559e68a574fd596707e3cbd091a8d34c0d
+EBUILD stardict-mova-sinyagin-unsorted-2.4.2.ebuild 557 RMD160 98cd58c929026d40d399d888688db632fa1734f2 SHA1 7572d9d3c3411847dbff64d651d9ffa7b77ef51f SHA256 71bd7bbfd0a5e7a132b3be839c8bfe3bcf44258aa261da1093882dc991b9e152
+MD5 2910eeb398ff53520dc089a2bdbc89ce stardict-mova-sinyagin-unsorted-2.4.2.ebuild 557
+RMD160 98cd58c929026d40d399d888688db632fa1734f2 stardict-mova-sinyagin-unsorted-2.4.2.ebuild 557
+SHA256 71bd7bbfd0a5e7a132b3be839c8bfe3bcf44258aa261da1093882dc991b9e152 stardict-mova-sinyagin-unsorted-2.4.2.ebuild 557
+MD5 113bd6b4581ae024e928a2228e90deb8 files/digest-stardict-mova-sinyagin-unsorted-2.4.2 352
+RMD160 4743b2c649a5208890783e9aaa1dee706289a08d files/digest-stardict-mova-sinyagin-unsorted-2.4.2 352
+SHA256 978c8d75b024542869dcfba415a8657f5d67684ee305be50dbd832ad41fe99c4 files/digest-stardict-mova-sinyagin-unsorted-2.4.2 352

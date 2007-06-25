@@ -2,9 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header:$
 
-inherit eutils flag-o-matic elisp-common toolchain-funcs versionator virtualx
+inherit eutils flag-o-matic toolchain-funcs versionator virtualx elisp-common
 
 TEXMF_PATH=/var/lib/texmf
+#TEXMF_PATH=/etc/texmf
 
 DESCRIPTION="a complete TeX distribution"
 HOMEPAGE="http://tug.org/texlive/"
@@ -71,6 +72,8 @@ RDEPEND="${DEPEND}
 	>=dev-lang/perl-5.2
 	tk? ( dev-perl/perl-tk )
 	dev-util/dialog"
+
+ELISP_DIRS="texk/xdvik texk/chktex utils/texinfo/util texmf-dist/doc/latex/curve texmf-dist/doc/mex/utf8mex texk/web2c/cwebdir"
 
 src_unpack() {
 	unpack ${P}-src.tar.bz2 || die "unpack src"
@@ -155,6 +158,16 @@ src_compile() {
 	fi
 
 	emake -j1 texmf=${TEXMF_PATH:-/usr/share/texmf} || die "make"
+
+	if ( use emacs )
+	then
+	    for i in ${ELISP_DIRS}
+	    do
+		elisp-compile ${S}/$i/*.el
+	    done	
+	fi
+
+
 }
 
 src_test() {
@@ -168,7 +181,10 @@ src_install() {
 	cp -R texmf-dist "${D}/usr/share"
 
 	dodir ${TEXMF_PATH:-/usr/share/texmf}/web2c
-	einstall bindir="${D}/usr/bin" texmf="${D}${TEXMF_PATH:-/usr/share/texmf}" || die "install"
+	einstall \
+		bindir="${D}/usr/bin" \
+		texmf="${D}${TEXMF_PATH:-/usr/share/texmf}" \
+	|| die "install"
 
 	dosbin "${FILESDIR}/texmf-update"
 
@@ -254,10 +270,12 @@ src_install() {
 	# take care of updmap.cfg, fmtutil.cnf and texmf.cnf
 	dodir /etc/texmf/{updmap.d,fmtutil.d,texmf.d}
 	dosym /etc/texmf/web2c/updmap.cfg ${TEXMF_PATH}/web2c/updmap.cfg
+	dosym /etc/texmf/web2c/fmtutil.cnf ${TEXMF_PATH}/web2c/fmtutil.cnf
+	dosym /etc/texmf/web2c/texmf.cnf ${TEXMF_PATH}/web2c/texmf.cnf
 	mv "${D}/usr/share/texmf/web2c/updmap.cfg" "${D}/etc/texmf/updmap.d/00updmap.cfg"
-	mv "${D}/etc/texmf/web2c/fmtutil.cnf" "${D}/etc/texmf/fmtutil.d/00fmtutil.cnf"
-	mv "${D}/etc/texmf/web2c/texmf.cnf" "${D}/etc/texmf/texmf.d/00texmf.cnf"
-	rm -f "${D}/usr/share/texmf/web2c/texmf.*"
+	mv "${D}/usr/share/texmf/web2c/fmtutil.cnf" "${D}/etc/texmf/fmtutil.d/00fmtutil.cnf"
+	mv "${S}/texk/kpathsea/texmf.cnf" "${D}/etc/texmf/texmf.d/00texmf.cnf"
+	find ${D}/usr/share/texmf/web2c -name texmf.\* -exec rm -f {} \;
 
 	# xdvi
 	if use X ; then
@@ -273,23 +291,28 @@ src_install() {
 	# is not present at this stage and MacOS doesn't
 	# like non-existing targets
 	cd "${D}/usr/bin/"
+	ln -snf platex latex
+	ln -snf pdftex pdflatex
 	ln -snf tex virtex
 	ln -snf pdftex pdfvirtex
-	
+
 	if ( use emacs )
 	then
-	    elisp-install tex-utils ${S}/texk/xdvik/*.el
-	    elisp-install tex-utils ${S}/texk/chktex/*.el
-	    elisp-install tex-utils ${S}/utils/texinfo/util/*.el
-	    elisp-install tex-utils ${S}/texmf-dist/doc/latex/curve/*.el
-	    elisp-install tex-utils ${S}/texmf-dist/doc/mex/utf8mex/*.el
-	    elisp-install tex-utils ${S}/texk/web2c/cwebdir/*.el
+	    for i in ${ELISP_DIRS}
+	    do
+		elisp-install tex-utils ${S}/$i/*.el ${S}/$i/*.elc
+	    done	
 	fi
+	
 }
 
 pkg_preinst() {
 	ewarn "Removing ${ROOT}usr/share/texmf/web2c"
 	rm -rf "${ROOT}usr/share/texmf/web2c"
+	ewarn "Removing ${ROOT}var/lib/texmf/web2c"
+	rm -rf "${ROOT}var/lib/texmf/web2c"
+	ewarn "Removing ${ROOT}etc/texmf/web2c"
+	rm -rf "${ROOT}etc/texmf/web2c"
 }
 
 pkg_postinst() {

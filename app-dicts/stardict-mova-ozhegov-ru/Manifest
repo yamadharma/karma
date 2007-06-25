@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_ozhegov-2.4.2.tar.bz2 2882744 RMD160 391ef214f591b7e8f1c04ec4ebb0e0900cc0ccb0 SHA1 12ac312867aa3db6ff7625de663bc64671399cbd SHA256 7fedc71955f70d1406bbd31ea85aa65a4224d8296df8269c00774598acd8df9a
+EBUILD stardict-mova-ozhegov-ru-2.4.2.ebuild 555 RMD160 b7648286593f08520b4f8cafc582ad4a9ff40333 SHA1 24c1ec8cfb0e23b32b82903b1d4b6a4bf2c35c20 SHA256 989ca6178f2d95ede8a6502aaa854648aa2fe9e126f450b598be791eabe723a4
+MD5 0204c2e5a97ae749082700b4ed6873a0 stardict-mova-ozhegov-ru-2.4.2.ebuild 555
+RMD160 b7648286593f08520b4f8cafc582ad4a9ff40333 stardict-mova-ozhegov-ru-2.4.2.ebuild 555
+SHA256 989ca6178f2d95ede8a6502aaa854648aa2fe9e126f450b598be791eabe723a4 stardict-mova-ozhegov-ru-2.4.2.ebuild 555
+MD5 048b1bd1572abb1f0be51decb4248573 files/digest-stardict-mova-ozhegov-ru-2.4.2 331
+RMD160 94c4b981c56361d2dd4e4a66d790017448fa9010 files/digest-stardict-mova-ozhegov-ru-2.4.2 331
+SHA256 56b76d8adc96b83a07845884df39010284868ed9b169bec8a9b6a035da0c82d3 files/digest-stardict-mova-ozhegov-ru-2.4.2 331

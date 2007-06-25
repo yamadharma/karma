@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_sinyagin_computer-2.4.2.tar.bz2 391318 RMD160 f79c66c149cb2168968a461fed17eb9096f894c5 SHA1 1b2372138d8956b2f6d680bce36f1bce3d5aa109 SHA256 f0b2c33dd2740cc545d71b73ff9d56931b88bbf43213c6a155d0960187c308de
+EBUILD stardict-mova-sinyagin-computer-2.4.2.ebuild 557 RMD160 9251f21171b1d5b423e0b9df6f648f733ff0a9b7 SHA1 8c4936d28aaf280d7d851ebf1e1e65276f4a986a SHA256 74c510802fb376d581addd5bac59243954e14b24b2fafb0adc00a0d6a007f10b
+MD5 135bba1d8932e4dd5b51a95c61078110 stardict-mova-sinyagin-computer-2.4.2.ebuild 557
+RMD160 9251f21171b1d5b423e0b9df6f648f733ff0a9b7 stardict-mova-sinyagin-computer-2.4.2.ebuild 557
+SHA256 74c510802fb376d581addd5bac59243954e14b24b2fafb0adc00a0d6a007f10b stardict-mova-sinyagin-computer-2.4.2.ebuild 557
+MD5 3fed60f02964fb25763e59b53a66790e files/digest-stardict-mova-sinyagin-computer-2.4.2 358
+RMD160 f29dd88d075aa515c7c87662bfa2f013a00a3cff files/digest-stardict-mova-sinyagin-computer-2.4.2 358
+SHA256 0e777b0091ac3a6c27117b43f6e5782a574a9073ac24294ac000df701990abad files/digest-stardict-mova-sinyagin-computer-2.4.2 358

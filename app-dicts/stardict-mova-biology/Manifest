@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_biology-2.4.2.tar.bz2 127036 RMD160 ee608ac9a6ce3b18af084a2373791205bdbb6fba SHA1 098f32285f230f9b3d0725f7aa2eb2b3b9d9a88f SHA256 e695c0ea36c6a3a0e401081bea511c16d32d99fc930889e543d11998d0789b74
+EBUILD stardict-mova-biology-2.4.2.ebuild 547 RMD160 bb9afc33547cf4bcc5ac8aa427c6364e6c4b1873 SHA1 8b947a78824a5aa3b21373624a8d9df5a282f2d2 SHA256 2b0fd707c6d64aad725917d3a112b8931c9a9e73373f749096c8a056ef06019c
+MD5 e5d9e30f13e69d90965d5089d6139c0b stardict-mova-biology-2.4.2.ebuild 547
+RMD160 bb9afc33547cf4bcc5ac8aa427c6364e6c4b1873 stardict-mova-biology-2.4.2.ebuild 547
+SHA256 2b0fd707c6d64aad725917d3a112b8931c9a9e73373f749096c8a056ef06019c stardict-mova-biology-2.4.2.ebuild 547
+MD5 60b732364afc00ed1529d2db326e2f59 files/digest-stardict-mova-biology-2.4.2 328
+RMD160 4be329f897d8b4d0e0bcb883e066d252d80bf36e files/digest-stardict-mova-biology-2.4.2 328
+SHA256 caa13b2ddaa03c23734d7fc1143ad5853e04769dc888dae2e2142be0e61c04c0 files/digest-stardict-mova-biology-2.4.2 328

@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_beslov-2.4.2.tar.bz2 14437119 RMD160 f24b6a9a8b80c168f339d8c39e4f4f33993da601 SHA1 e3b195b1479b390804959355cc698b51c4701d38 SHA256 d8664a8783809e376af91ba6b13c049bb0b5b0dc03b2b9abec1e8d63dd7c482a
+EBUILD stardict-mova-beslov-2.4.2.ebuild 546 RMD160 ba8767ba4d59e2f287e9f071066be9669f5ef236 SHA1 8e86458d28d1ee4f42aa4af622d7be1672d20eab SHA256 fcb4e15ded0d7d48f8d26abfc6297bd4e8391260074127bea45e67cb6bdf01c5
+MD5 01187212c908d922772e135627a8217d stardict-mova-beslov-2.4.2.ebuild 546
+RMD160 ba8767ba4d59e2f287e9f071066be9669f5ef236 stardict-mova-beslov-2.4.2.ebuild 546
+SHA256 fcb4e15ded0d7d48f8d26abfc6297bd4e8391260074127bea45e67cb6bdf01c5 stardict-mova-beslov-2.4.2.ebuild 546
+MD5 cb29dd07f3c1038b4aae920b49378236 files/digest-stardict-mova-beslov-2.4.2 331
+RMD160 5d73c68aa41f3acb542cb33f44e07ac33da80bed files/digest-stardict-mova-beslov-2.4.2 331
+SHA256 6eae16e25589b44da6c8f0de925765b908bd01636a9de9a18d906032bf90c861 files/digest-stardict-mova-beslov-2.4.2 331

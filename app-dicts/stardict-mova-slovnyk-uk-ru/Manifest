@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_slovnyk_uk-ru-2.4.2.tar.bz2 7068357 RMD160 19632afbafdc8c0fb7fb3d3600e879f00f1e620d SHA1 a27bfcc767a007c88e930caa542e4ae7f0918b47 SHA256 b2e0b17cbead2ebaa6a64e7208d99e4c2be0fbbb6f5270d3e141b3f14e7d5c9f
+EBUILD stardict-mova-slovnyk-uk-ru-2.4.2.ebuild 575 RMD160 f9d461f85c91cb4c04db6f2032b4f544222de032 SHA1 581bd8239e86b43296da62a613576d77a09b7249 SHA256 49b159bcfef84d07ca1b5f1c2bd966eb1feea6c2fed8a9ef1c1fa7073a78d167
+MD5 60c36c251cbbd96953b53c7ecdb7efb5 stardict-mova-slovnyk-uk-ru-2.4.2.ebuild 575
+RMD160 f9d461f85c91cb4c04db6f2032b4f544222de032 stardict-mova-slovnyk-uk-ru-2.4.2.ebuild 575
+SHA256 49b159bcfef84d07ca1b5f1c2bd966eb1feea6c2fed8a9ef1c1fa7073a78d167 stardict-mova-slovnyk-uk-ru-2.4.2.ebuild 575
+MD5 743e59b2274a2663c7acaea35ee01ad8 files/digest-stardict-mova-slovnyk-uk-ru-2.4.2 349
+RMD160 32a03c30e5d2b15087e3db278e1929969d233281 files/digest-stardict-mova-slovnyk-uk-ru-2.4.2 349
+SHA256 73821ce70ee465a6f66785f0aeda3dae215d5476df44e1dabe14c059a9fec9fd files/digest-stardict-mova-slovnyk-uk-ru-2.4.2 349

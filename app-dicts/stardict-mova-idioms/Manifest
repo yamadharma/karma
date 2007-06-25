@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_idioms-2.4.2.tar.bz2 28547 RMD160 c2de7cfe02141c220671d23d4485fe05cb404a0d SHA1 0090c074a183a45618cb67e20cdb064ea7ee3c2a SHA256 c2248d85ecf7afa7da51e1a3ade46c7e0cc290f7211f306424d2bc2108284203
+EBUILD stardict-mova-idioms-2.4.2.ebuild 546 RMD160 862b244cc93cec9d49f08ad57d179fdbe9235867 SHA1 7614ac1811203b2b9f535abd46ee4f6f6600fcb1 SHA256 6e6eaf953443bbe2e7d1309363db97743aca6f0474205d78269cc6164f15e2f9
+MD5 9d2f40750d91d6b4076bcf6a5dede23c stardict-mova-idioms-2.4.2.ebuild 546
+RMD160 862b244cc93cec9d49f08ad57d179fdbe9235867 stardict-mova-idioms-2.4.2.ebuild 546
+SHA256 6e6eaf953443bbe2e7d1309363db97743aca6f0474205d78269cc6164f15e2f9 stardict-mova-idioms-2.4.2.ebuild 546
+MD5 2f768927f80a99ff4c8845a30620681b files/digest-stardict-mova-idioms-2.4.2 322
+RMD160 7e8864082cc0bc23d7d8dbb51196da1c586bb3aa files/digest-stardict-mova-idioms-2.4.2 322
+SHA256 2040fe4bc19b12af5c90db2a4b89afa3c1d62fc2e4e1e006a82588afa5d2d6cc files/digest-stardict-mova-idioms-2.4.2 322

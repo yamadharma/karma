@@ -1,0 +1,8 @@
+DIST stardict-dictd_www.mova.org_deutsch-2.4.2.tar.bz2 300972 RMD160 ce0c12821a379dbe03e2dde1a6dc544660b49edb SHA1 75d21bc4533707b765cdfc8baa5a27114b5ae393 SHA256 978bbfd5eb67d25e91b2f4f83f7484f875ac300a016789ee719d19463ac0eaba
+EBUILD stardict-mova-deutsch-2.4.2.ebuild 547 RMD160 70e68f78bfe2d050f27619af9060a633e7a930b0 SHA1 a41454290206ca9e25eb47e8a0faed0c18db156f SHA256 0f2d8af36694c9400f29be4f195e3728723e23c40ed2efd6d7d40eb2dac8e051
+MD5 0622eacd9fc61653ce0cafd9cc59d802 stardict-mova-deutsch-2.4.2.ebuild 547
+RMD160 70e68f78bfe2d050f27619af9060a633e7a930b0 stardict-mova-deutsch-2.4.2.ebuild 547
+SHA256 0f2d8af36694c9400f29be4f195e3728723e23c40ed2efd6d7d40eb2dac8e051 stardict-mova-deutsch-2.4.2.ebuild 547
+MD5 cb73d995a8cec38630b2921e9f74b714 files/digest-stardict-mova-deutsch-2.4.2 328
+RMD160 e5bb7e8f14277a8a0df548edaacc9f73553b5476 files/digest-stardict-mova-deutsch-2.4.2 328
+SHA256 738366fd77db0844d17643d30f62d51ed4f1c1464239645f9e568f9c1a2820f0 files/digest-stardict-mova-deutsch-2.4.2 328
