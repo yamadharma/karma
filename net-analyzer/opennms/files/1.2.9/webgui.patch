@@ -1,0 +1,147 @@
+Index: src/web/web/admin/eventconf/rearrangeEvents.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/eventconf/Attic/rearrangeEvents.jsp,v
+retrieving revision 1.7
+diff -u -u -r1.7 rearrangeEvents.jsp
+--- src/web/web/admin/eventconf/rearrangeEvents.jsp	7 Oct 2004 20:23:26 -0000	1.7
++++ src/web/web/admin/eventconf/rearrangeEvents.jsp	27 Feb 2006 10:33:02 -0000
+@@ -171,8 +171,7 @@
+   
+ <br>
+ 
+-<jsp:include page="/includes/footer.jsp" flush="false" >
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ 
+ </body>
+ </html>
+Index: src/web/web/admin/userGroupView/groups/groupDetail.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/userGroupView/groups/groupDetail.jsp,v
+retrieving revision 1.7.12.1
+diff -u -u -r1.7.12.1 groupDetail.jsp
+--- src/web/web/admin/userGroupView/groups/groupDetail.jsp	21 Oct 2005 16:27:49 -0000	1.7.12.1
++++ src/web/web/admin/userGroupView/groups/groupDetail.jsp	27 Feb 2006 10:33:02 -0000
+@@ -178,7 +178,6 @@
+ 
+ <br>
+ 
+-<jsp:include page="/includes/footer.jsp" flush="false" >
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ </body>
+ </html>
+Index: src/web/web/admin/userGroupView/groups/list.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/userGroupView/groups/list.jsp,v
+retrieving revision 1.7
+diff -u -u -r1.7 list.jsp
+--- src/web/web/admin/userGroupView/groups/list.jsp	7 Oct 2004 20:23:33 -0000	1.7
++++ src/web/web/admin/userGroupView/groups/list.jsp	27 Feb 2006 10:33:02 -0000
+@@ -201,7 +201,6 @@
+ </FORM>
+ 
+ <br>
+-<jsp:include page="/includes/footer.jsp" flush="false" >
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ </body>
+ </html>
+Index: src/web/web/admin/userGroupView/groups/modifyGroup.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/userGroupView/groups/modifyGroup.jsp,v
+retrieving revision 1.7.12.1
+diff -u -u -r1.7.12.1 modifyGroup.jsp
+--- src/web/web/admin/userGroupView/groups/modifyGroup.jsp	21 Oct 2005 16:27:49 -0000	1.7.12.1
++++ src/web/web/admin/userGroupView/groups/modifyGroup.jsp	27 Feb 2006 10:33:02 -0000
+@@ -400,8 +400,7 @@
+   
+ <br>
+ 
+-<jsp:include page="/includes/footer.jsp" flush="false" >
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ 
+ <script language="JavaScript">
+   // shorthand for refering to menus
+Index: src/web/web/admin/userGroupView/users/modifyUser.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/userGroupView/users/modifyUser.jsp,v
+retrieving revision 1.7.12.1
+diff -u -u -r1.7.12.1 modifyUser.jsp
+--- src/web/web/admin/userGroupView/users/modifyUser.jsp	10 Mar 2005 19:03:42 -0000	1.7.12.1
++++ src/web/web/admin/userGroupView/users/modifyUser.jsp	27 Feb 2006 10:33:02 -0000
+@@ -405,7 +405,6 @@
+ 
+ <br>
+ 
+-<jsp:include page="/includes/footer.jsp" flush="false" >
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ </body>
+ </html>
+Index: src/web/web/admin/userGroupView/users/userDetail.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/userGroupView/users/userDetail.jsp,v
+retrieving revision 1.7.12.1
+diff -u -u -r1.7.12.1 userDetail.jsp
+--- src/web/web/admin/userGroupView/users/userDetail.jsp	10 Mar 2005 19:03:42 -0000	1.7.12.1
++++ src/web/web/admin/userGroupView/users/userDetail.jsp	27 Feb 2006 10:33:02 -0000
+@@ -234,7 +234,6 @@
+  
+ <br>
+ 
+-<jsp:include page="/includes/footer.jsp" flush="false" >
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ </body>
+ </html>
+Index: src/web/web/admin/userGroupView/views/list.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/userGroupView/views/list.jsp,v
+retrieving revision 1.7
+diff -u -u -r1.7 list.jsp
+--- src/web/web/admin/userGroupView/views/list.jsp	7 Oct 2004 20:23:33 -0000	1.7
++++ src/web/web/admin/userGroupView/views/list.jsp	27 Feb 2006 10:33:02 -0000
+@@ -181,7 +181,6 @@
+ </FORM>
+ 
+ <br>
+-<jsp:include page="/includes/footer.jsp" flush="false" >
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ </body>
+ </html>
+Index: src/web/web/admin/userGroupView/views/modifyView.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/userGroupView/views/modifyView.jsp,v
+retrieving revision 1.7
+diff -u -u -r1.7 modifyView.jsp
+--- src/web/web/admin/userGroupView/views/modifyView.jsp	7 Oct 2004 20:23:33 -0000	1.7
++++ src/web/web/admin/userGroupView/views/modifyView.jsp	27 Feb 2006 10:33:02 -0000
+@@ -335,8 +335,7 @@
+   
+ <br>
+ 
+-<jsp:include page="/includes/footer.jsp" flush="false" >
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ 
+ <script language="JavaScript">
+   // shorthand for refering to menus
+Index: src/web/web/admin/userGroupView/views/viewDetail.jsp
+===================================================================
+RCS file: /cvsroot/opennms/opennms/src/web/web/admin/userGroupView/views/viewDetail.jsp,v
+retrieving revision 1.7
+diff -u -u -r1.7 viewDetail.jsp
+--- src/web/web/admin/userGroupView/views/viewDetail.jsp	7 Oct 2004 20:23:33 -0000	1.7
++++ src/web/web/admin/userGroupView/views/viewDetail.jsp	27 Feb 2006 10:33:02 -0000
+@@ -229,7 +229,6 @@
+  
+ <br>
+ 
+-<jsp:include page="/includes/footer.jsp" flush="false">
+-</jsp:include>
++<jsp:include page="/includes/footer.jsp" flush="false" />
+ </body>
+ </html>

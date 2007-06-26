@@ -1,0 +1,28 @@
+--- tools/run/opennms.sh	2005-08-08 15:20:40.000000000 -0230
++++ tools/run/opennms.sh	2005-08-08 15:22:28.000000000 -0230
+@@ -358,7 +358,7 @@
+     while [ $STOP_ATTEMPTS -lt 5 ]; do
+ 	doStatus
+ 	if [ $? -eq 3 ]; then
+-	    echo "" > "@install.pid.file@"
++	    echo "" > "$OPENNMS_PIDFILE"
+ 	    return 0
+ 	fi
+ 
+@@ -382,14 +382,14 @@
+ 	get_url "${INVOKE_URL}&operation=doSystemExit"
+     fi
+ 
+-    pid="`cat @install.pid.file@`"
++    pid="`cat $OPENNMS_PIDFILE`"
+     if [ x"$pid" != x"" ]; then
+ 	if ps -p "$pid" | grep "^root" > /dev/null; then
+ 	    kill -9 $pid > /dev/null 2>&1
+ 	fi
+     fi
+ 
+-    echo "" > "@install.pid.file@"
++    echo "" > "$OPENNMS_PIDFILE"
+ }
+ 
+ doStatus(){

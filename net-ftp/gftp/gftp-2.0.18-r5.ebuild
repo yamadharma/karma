@@ -19,7 +19,7 @@ RDEPEND=">=dev-libs/glib-2
 		 sys-libs/readline
 		 gtk? ( >=x11-libs/gtk+-2 )
 		 ssl? ( dev-libs/openssl )
-		 rcc? (app-i18n/librcc)"
+		 rcc? ( app-i18n/librcc )"
 
 DEPEND="${RDEPEND}
 		>=dev-util/pkgconfig-0.9"

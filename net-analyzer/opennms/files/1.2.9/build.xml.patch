@@ -1,0 +1,11 @@
+--- sources/build.xml.orig	2005-08-08 21:51:23.000000000 +0200
++++ sources/build.xml	2005-08-08 21:57:16.000000000 +0200
+@@ -1406,6 +1406,8 @@
+   <jar jarfile="${build.jar.dir}/opennms_web.jar">
+    <fileset dir="${build.classes.dir}"
+ 	    includesfile="${web.source.dir}/classlist"/>
++   <fileset dir="${basedir}/etc/"
++            includes="mbean-descriptor.xml"/>
+   </jar>
+  </target>
+ 

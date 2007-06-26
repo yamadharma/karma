@@ -38,7 +38,7 @@ RDEPEND=">=virtual/jdk-1.4.2
 
 DEPEND="${RDEPEND}"
 
-KEYWORDS="x86 amd64"
+KEYWORDS="~x86 ~amd64"
 
 OPENNMS_DIR="/opt/opennms"
 
@@ -138,10 +138,10 @@ src_unpack() {
 
 	# Mend a few broken things
 	#epatch ${FILESDIR}/${PV}/config-override.patch
-	epatch ${FILESDIR}/${PV}/install-pid-file.patch
+#	epatch ${FILESDIR}/${PV}/install-pid-file.patch
 
 	# Fixup webgui, broken with tomcat 5.x
-	epatch ${FILESDIR}/${PV}/webgui.patch
+#	epatch ${FILESDIR}/${PV}/webgui.patch
 
 	# Tomcat stuff
 	source /etc/conf.d/${TOMCAT_V}
