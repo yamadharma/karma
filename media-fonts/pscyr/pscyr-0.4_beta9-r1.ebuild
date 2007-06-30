@@ -51,7 +51,7 @@ src_install() {
 pkg_postinst() {
 
 	latex-package_pkg_postinst
-	updmap
+	updmap-sys
 }
 
 pkg_postrm() {
@@ -65,5 +65,5 @@ pkg_postrm() {
 	rm -f $VARTEXMF/fonts/pk/modeless/public/pscyr/*
 
 	latex-package_pkg_postrm
-	updmap
+	updmap-sys
 }
