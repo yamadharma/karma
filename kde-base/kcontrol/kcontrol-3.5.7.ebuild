@@ -62,7 +62,7 @@ src_unpack() {
 	#
 	# If we are using kickoff, then epatch here and extract icons
 	#
-	if has_version kde-base/kicker && built_with_use --missing false kde-base/kicker kickoff; then
+	if has_version kde-base/kicker && built_with_use --missing false =kde-base/kicker-3.5* kickoff; then
 		epatch "${FILESDIR}/$KMNAME-3.5.6-$PN-kickoff-suse.patch"
 		# Add Xeffects/Gentoo changes
 		epatch "${FILESDIR}/kickoff-kcontrol-gentoo-xeffects-integration-v3.patch"
@@ -71,7 +71,8 @@ src_unpack() {
 
 
 pkg_setup() {
-	if use pertty && has_version kde-base/konqueror && ! built_with_use --missing true kde-base/konqueror pertty; then
+	kde_pkg_setup
+	if use pertty && has_version kde-base/konqueror && ! built_with_use --missing true =kde-base/konqueror-3.5* pertty; then
 		eerror "The pertty USE flag in this package enables special extensions"
 		eerror "and requires that konqueror be patched to support these extensions."
 		eerror "Since it appears your version of konqueror was not compiled with these"
@@ -91,7 +92,8 @@ src_compile() {
 pkg_postinst() {
 	kde_pkg_postinst
 	echo
-	ewarn "DO NOT report bugs to Gentoo's bugzilla"
-	einfo "Please report all bugs to http://trac.gentoo-xeffects.org"
+	ewarn "Do NOT report bugs to Gentoo's bugzilla"
+	einfo "Please report all bugs to roderick.greening@gmail.com"
+	einfo "Or, you may post them to http://forums.gentoo-xeffects.org"
 	einfo "Thank you on behalf of the Gentoo Xeffects team"
 }

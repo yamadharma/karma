@@ -44,7 +44,8 @@ then
 fi
 
 pkg_setup() {
-	if use pertty && ! built_with_use kde-base/kdelibs pertty;
+	kde_pkg_setup
+	if use pertty && ! built_with_use --missing false =kde-base/kdelibs-3.5* pertty;
 	then
 		eerror "The pertty USE flag in this package enables special extensions"
 		eerror "and requires that kdelibs be patched to support these extensions."
@@ -78,7 +79,8 @@ pkg_postinst() {
 	kde_pkg_postinst
 	mkdir -p "${PREFIX}/share/templates/.source/emptydir"
 	echo
-	ewarn "DO NOT report bugs to Gentoo's bugzilla"
-	einfo "Please report all bugs to http://trac.gentoo-xeffects.org"
+	ewarn "Do NOT report bugs to Gentoo's bugzilla"
+	einfo "Please report all bugs to roderick.greening@gmail.com"
+	einfo "Or, you may post them to http://forums.gentoo-xeffects.org"
 	einfo "Thank you on behalf of the Gentoo Xeffects team"
 }

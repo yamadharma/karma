@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/konqueror/konqueror-3.5.7.ebuild,v 1.1 2007/05/23 00:44:15 carlo Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/konqueror/konqueror-3.5.7.ebuild,v 1.3 2007/06/23 18:08:23 philantrop Exp $
 
 KMNAME=kdebase
 # Note: we need >=kdelibs-3.3.2-r1, but we don't want 3.3.3!
@@ -42,7 +42,8 @@ pkg_preinst() {
 }
 
 pkg_setup() {
-	if use pertty && ! built_with_use --missing true kde-base/libkonq pertty;
+	kde_pkg_setup
+	if use pertty && ! built_with_use --missing true =kde-base/libkonq-3.5* pertty;
 	then
 		eerror "The pertty USE flag in this package enables special extensions"
 		eerror "and requires that libkonq be patched to support these extensions."
@@ -53,10 +54,32 @@ pkg_setup() {
 	fi
 }
 
+src_install() {
+	kde_src_install
+
+	dodir ${PREFIX}/share/services/searchproviders
+	insinto ${PREFIX}/share/services/searchproviders
+	doins ${FILESDIR}/*.desktop
+}
+
 pkg_postinst() {
 	kde_pkg_postinst
+
 	echo
-	ewarn "DO NOT report bugs to Gentoo's bugzilla"
-	einfo "Please report all bugs to http://trac.gentoo-xeffects.org"
+	elog "We've added three Gentoo-related web shortcuts:"
+	elog "- gb           Gentoo Bugzilla searching"
+	elog "- gf           Gentoo Forums searching"
+	elog "- gp           Gentoo Package searching"
+	echo
+	elog "You'll have to activate them in 'Configure Konqueror...'."
+	echo
+	elog "If you can't open new ${PN} windows and get something like"
+	elog "'WARNING: Outdated database found' when starting ${PN} in a console, run"
+	elog "kbuildsycoca as the user you're running KDE under."
+	elog "This is NOT a bug."
+	echo
+	ewarn "Do NOT report bugs to Gentoo's bugzilla"
+	einfo "Please report all bugs to roderick.greening@gmail.com"
+	einfo "Or, you may post them to http://forums.gentoo-xeffects.org"
 	einfo "Thank you on behalf of the Gentoo Xeffects team"
 }

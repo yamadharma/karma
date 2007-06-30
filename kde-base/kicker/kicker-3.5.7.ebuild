@@ -73,6 +73,7 @@ src_unpack() {
 }
 
 pkg_setup() {
+	kde_pkg_setup
 	if use kickoff && use kdehiddenvisibility ; then
 		echo ""
 		ewarn "You have enabled use flags 'kdehiddenvisibility' and 'kickoff'"
@@ -83,7 +84,7 @@ pkg_setup() {
 		echo ""
 	fi
 
-	if use pertty && ! built_with_use kde-base/kdelibs pertty; then
+	if use pertty && ! built_with_use --missing false =kde-base/kdelibs-3.5* pertty; then
 		eerror "The pertty USE flag in this package enables special extensions"
 		eerror "and requires that kdelibs be patched to support these extensions."
 		eerror "Since it appears your version of kdelibs was not compiled with these"
@@ -142,7 +143,8 @@ src_compile() {
 pkg_postinst() {
 	kde_pkg_postinst
 	echo
-	ewarn "DO NOT report bugs to Gentoo's bugzilla"
-	einfo "Please report all bugs to http://trac.gentoo-xeffects.org"
+	ewarn "Do NOT report bugs to Gentoo's bugzilla"
+	einfo "Please report all bugs to roderick.greening@gmail.com"
+	einfo "Or, you may post them to http://forums.gentoo-xeffects.org"
 	einfo "Thank you on behalf of the Gentoo Xeffects team"
 }

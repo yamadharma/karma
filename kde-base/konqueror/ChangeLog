@@ -2,6 +2,20 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/konqueror/ChangeLog,v 1.73 2007/01/16 21:00:03 flameeyes Exp $
 
+  28 Jun 2007; <roderick_greening@hotmail.com> -konqueror-3.5.6.ebuild,
+  konqueror-3.5.7.ebuild:
+  Attempt to fix false pos check when greater than ver (3.5).
+
+  28 Jun 2007; <roderick_greening@hotmail.com> -konqueror-3.5.6.ebuild:
+  Remove 3.5.6 builds - migrate to 3.5.7
+
+  28 Jun 2007; <roderick_greening@hotmail.com> konqueror-3.5.6.ebuild,
+  konqueror-3.5.7.ebuild:
+  Updated postinstall warning and added kde_pkg_setup call
+
+  27 Jun 2007; <roderick_greening@hotmail.com> konqueror-3.5.7.ebuild:
+  Fixed ebuild to match portage
+
   25 May 2007; <roderick_greening@hotmail.com> +konqueror-3.5.7.ebuild:
   Rev bump
 

@@ -69,4 +69,9 @@ pkg_postinst() {
 		cp "${ROOT}${KDEDIR}/share/apps/kdm/pics/users/root1.png" \
 			"${ROOT}${KDEDIR}/share/apps/kdm/faces/root.face.icon"
 	fi
+	echo
+	ewarn "Do NOT report bugs to Gentoo's bugzilla"
+	einfo "Please report all bugs to roderick.greening@gmail.com"
+	einfo "Or, you may post them to http://forums.gentoo-xeffects.org"
+	einfo "Thank you on behalf of the Gentoo Xeffects team"
 }

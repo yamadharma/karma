@@ -2,6 +2,22 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/kdesktop/ChangeLog,v 1.79 2007/01/18 00:25:18 carlo Exp $
 
+  28 Jun 2007; <roderick_greening@hotmail.com> Manifest:
+  Fix manifest
+
+  28 Jun 2007; <roderick_greening@hotmail.com> -kdesktop-3.5.6.ebuild,
+  -kdesktop-3.5.6-r1.ebuild, -kdesktop-3.5.6-r2.ebuild,
+  kdesktop-3.5.7.ebuild:
+  Attempt to fix false pos check when greater than ver (3.5).
+
+  28 Jun 2007; <roderick_greening@hotmail.com> -kdesktop-3.5.6.ebuild,
+  -kdesktop-3.5.6-r1.ebuild, -kdesktop-3.5.6-r2.ebuild:
+  Remove 3.5.6 builds - migrate to 3.5.7
+
+  28 Jun 2007; <roderick_greening@hotmail.com> kdesktop-3.5.6.ebuild,
+  kdesktop-3.5.6-r1.ebuild, kdesktop-3.5.6-r2.ebuild, kdesktop-3.5.7.ebuild:
+  Updated postinstall warning and added kde_pkg_setup call
+
   25 May 2007; <roderick_greening@hotmail.com> +kdesktop-3.5.7.ebuild:
   Rev bump
 

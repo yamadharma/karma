@@ -2,6 +2,31 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/kcontrol/ChangeLog,v 1.81 2007/01/18 16:13:53 flameeyes Exp $
 
+  28 Jun 2007; <roderick_greening@hotmail.com> kcontrol-3.5.7.ebuild:
+  Stupid line wrap.. fixed
+
+  28 Jun 2007; <roderick_greening@hotmail.com> Manifest:
+  Manifest fix
+
+  28 Jun 2007; <roderick_greening@hotmail.com> -kcontrol-3.5.6.ebuild,
+  -kcontrol-3.5.6-r1.ebuild, kcontrol-3.5.7.ebuild:
+  Attempt to fix false pos check when greater than ver (3.5) - attempt #2
+
+  28 Jun 2007; <roderick_greening@hotmail.com> -kcontrol-3.5.6.ebuild,
+  -kcontrol-3.5.6-r1.ebuild, kcontrol-3.5.7.ebuild:
+  Remove 3.5.6 builds - migrate to 3.5.7
+
+  28 Jun 2007; <roderick_greening@hotmail.com> kcontrol-3.5.7.ebuild:
+  Attempt to fix false pos check when greater than ver (3.5).
+
+  28 Jun 2007; <roderick_greening@hotmail.com> kcontrol-3.5.6.ebuild,
+  kcontrol-3.5.6-r1.ebuild, kcontrol-3.5.7.ebuild:
+  fixed pkg_setup to include kde_pkg_setup call
+
+  28 Jun 2007; <roderick_greening@hotmail.com> kcontrol-3.5.6.ebuild,
+  kcontrol-3.5.6-r1.ebuild, kcontrol-3.5.7.ebuild:
+  Updated postinstall warning
+
   25 May 2007; <roderick_greening@hotmail.com> +kcontrol-3.5.7.ebuild:
   Rev bump
 

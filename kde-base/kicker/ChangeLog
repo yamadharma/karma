@@ -2,6 +2,19 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/kicker/ChangeLog,v 1.74 2007/01/16 20:39:17 flameeyes Exp $
 
+  28 Jun 2007; <roderick_greening@hotmail.com> Manifest:
+  Manifest fix
+
+  28 Jun 2007; <roderick_greening@hotmail.com> -kicker-3.5.6.ebuild:
+  Remove 3.5.6 builds - migrate to 3.5.7
+
+  28 Jun 2007; <roderick_greening@hotmail.com> kicker-3.5.7.ebuild:
+  Attempt to fix kdelibs false pos check when greater than ver (3.5).
+
+  28 Jun 2007; <roderick_greening@hotmail.com> kicker-3.5.6.ebuild,
+  kicker-3.5.7.ebuild:
+  Updated postinstall warning and added kde_pkg_setup call
+
   25 May 2007; <roderick_greening@hotmail.com> kicker-3.5.7.ebuild,
   +files/kdebase-3.5.7-kicker-kickoff-suse-642174.diff:
   Fix kickoff patch from SUSE to work with 3.5.7 - hopefully

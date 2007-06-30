@@ -2,6 +2,17 @@
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/kdelibs/ChangeLog,v 1.306 2006/02/04 20:39:10 flameeyes Exp $
 
+  28 Jun 2007; <roderick_greening@hotmail.com> -kdelibs-3.5.6-r7.ebuild,
+  -kdelibs-3.5.6-r8.ebuild, -kdelibs-3.5.6-r9.ebuild:
+  Remove 3.5.6 builds - migrate to 3.5.7
+
+  28 Jun 2007; <roderick_greening@hotmail.com> kdelibs-3.5.6-r7.ebuild,
+  kdelibs-3.5.6-r8.ebuild, kdelibs-3.5.6-r9.ebuild, kdelibs-3.5.7.ebuild:
+  Updated postinstall warning
+
+  27 Jun 2007; <roderick_greening@hotmail.com> kdelibs-3.5.7.ebuild:
+  Fixed up ebuild
+
   06 Jun 2007; <roderick_greening@hotmail.com> kdelibs-3.5.7.ebuild,
   +files/kdelibs-3.5.7-html-style.patch:
   Added a patch for using Gmail with konqueror, fixes bug 179152.
