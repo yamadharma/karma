@@ -1,0 +1,31 @@
+--- avidemux_2.4_preview2/configure.in.old	2006-10-26 21:18:36.453792624 +0200
++++ avidemux_2.4_preview2/configure.in	2006-10-26 22:41:06.403158349 +0200
+@@ -898,17 +898,17 @@
+     have_libdca=yes
+     AC_CHECK_HEADERS([dts.h], , have_libdca=no)
+     
+-    if test "x$have_libdca" = "xyes"; then
+-    	AC_CHECK_HEADERS([dts_internal.h], , have_libdca=no)
+-    	
+-    	if test "x$have_libdca" = "xyes"; then
+-    		if test "x$use_late_binding" = "xno"; then
+-				AC_CHECK_LIB(dts, dts_init, , have_libdca=no)
+-			fi
+-		else
+-    		AC_MSG_WARN(dts.h is there but I also need dts_internal.h to compile libdca/libdts. Please copy dts_internal.h where dts.h is)
+-    	fi
+-    fi
++#    if test "x$have_libdca" = "xyes"; then
++#    	AC_CHECK_HEADERS([dts_internal.h], , have_libdca=no)
++#    	
++#    	if test "x$have_libdca" = "xyes"; then
++#    		if test "x$use_late_binding" = "xno"; then
++#				AC_CHECK_LIB(dts, dts_init, , have_libdca=no)
++#			fi
++#		else
++#    		AC_MSG_WARN(dts.h is there but I also need dts_internal.h to compile libdca/libdts. Please copy dts_internal.h where dts.h is)
++#    	fi
++#    fi
+     
+     if test "x$have_libdca" = "xyes"; then
+ 		AC_DEFINE(USE_LIBDCA, 1, "[libdca detected]")

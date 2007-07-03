@@ -7,7 +7,7 @@ WANT_AUTOMAKE="latest"
 
 inherit eutils flag-o-matic subversion autotools
 
-MY_P=${PN}_${PV}
+MY_P=${PN}_${PV/pre/preview}
 S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Great Video editing/encoding tool"
@@ -16,8 +16,8 @@ SRC_URI="http://download.berlios.de/${PN}/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="2"
 KEYWORDS="amd64 ~ppc x86"
-IUSE="a52 aac alsa altivec arts encode esd mad nls vorbis sdl truetype x264 xvid xv oss"
-
+IUSE="a52 aac alsa altivec arts encode esd mad nls vorbis sdl truetype x264 xvid xv oss qt"
+# dts 
 RDEPEND="
 	>=x11-libs/gtk+-2.6
 	>=dev-libs/libxml2-2.6.7
@@ -37,13 +37,14 @@ RDEPEND="
 	truetype? ( >=media-libs/freetype-2.1.5 )
 	alsa? ( >=media-libs/alsa-lib-1.0.3b-r2 )
 	sdl? ( media-libs/libsdl )
+	qt? ( >=x11-libs/qt-4.2 )
 	|| ( (
 			xv? ( x11-libs/libXv )
 			x11-libs/libX11
 			x11-libs/libXext
 			x11-libs/libXrender
 		) virtual/x11 )"
-
+#	dts? ( media-libs/libdts )
 DEPEND="$RDEPEND
 	|| ( (
 			x11-base/xorg-server
@@ -75,17 +76,22 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-
+	
+	make -f Makefile.dist
+	
 	epatch "${FILESDIR}/${P}-dts.patch"
-	epatch "${FILESDIR}/${P}-configure.patch"
+	epatch "${FILESDIR}/${P}-qt4-configure.patch"
 	epatch "${FILESDIR}/${P}-po.makefile.patch"
-	epatch "${FILESDIR}/${P}-amprogas.patch"
-	epatch "${FILESDIR}/${P}-twolame.patch"
 
 	AT_M4DIR="m4" eautoreconf
 }
 
 src_compile() {
+	local myconf
+	use qt && myconf="${myconf} --with-qt-dir=/usr --with-qt-include=/usr/include/qt4 --with-qt-lib=/usr/lib/qt4"
+	# FIXME
+	myconf="${myconf} --without-libdca"
+
 	econf \
 		$(use_enable nls) \
 		$(use_enable altivec) \

@@ -1,0 +1,15 @@
+--- avidemux_2.4_preview2/configure.in.old	2006-10-26 21:18:36.453792624 +0200
++++ avidemux_2.4_preview2/configure.in	2006-10-26 22:41:06.403158349 +0200
+@@ -264,9 +264,9 @@
+ ADM_QTINCLUDES="$QTINC"
+ ADM_QTCFLAGS="$QTINC"
+ 
+-MOC="$QTBIN/moc$QTPOSTFIX"
+-UIC="$QTBIN/uic$QTPOSTFIX"
+-RCC="$QTBIN/rcc"
++MOC="/usr/bin/moc"
++UIC="/usr/bin/uic"
++RCC="/usr/bin/rcc"
+ AC_SUBST(MOC)
+ AC_SUBST(UIC)
+ AC_SUBST(RCC)
