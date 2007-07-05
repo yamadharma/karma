@@ -1,0 +1,8 @@
+DIST kxdocker-dcop-1.0.0.tar.bz2 796129 RMD160 207cb63e429c9f80e8ec643dc3c0c0f933040e7c SHA1 0879d747bb915a9a2a6eead4b770117f0ca22782 SHA256 b0009325afbafd8cc928f91b5636c390779f3d477d75c39fcce92e5b61407211
+EBUILD kxdocker-dcop-1.0.0-r1.ebuild 468 RMD160 7c27d7f4f7c6f8081dc285f6828c890fdc69baa4 SHA1 ba2dd610f1dbb32246e25fcd931ce930e1a33820 SHA256 0ece7307b8d1b405cc9c39ddd2a70bdbfc25a5aff9904ce7cdcdf01dba1a41a0
+MD5 2da4f77f7990c452e3fbab051ac37fba kxdocker-dcop-1.0.0-r1.ebuild 468
+RMD160 7c27d7f4f7c6f8081dc285f6828c890fdc69baa4 kxdocker-dcop-1.0.0-r1.ebuild 468
+SHA256 0ece7307b8d1b405cc9c39ddd2a70bdbfc25a5aff9904ce7cdcdf01dba1a41a0 kxdocker-dcop-1.0.0-r1.ebuild 468
+MD5 ecee154ce146bcd1b8fb524f5a49a8b4 files/digest-kxdocker-dcop-1.0.0-r1 262
+RMD160 82c4f5ac93ac038ab3a4d7cd837775fd87a1f691 files/digest-kxdocker-dcop-1.0.0-r1 262
+SHA256 d6f66b92dbdb1f8c0e1b7626cf1590c98c60e6cac9304a45f340be25c3792b8a files/digest-kxdocker-dcop-1.0.0-r1 262

@@ -1,0 +1,8 @@
+DIST kxdocker-configurator-1.0.2.tar.bz2 777048 RMD160 66c25e4c6d58f5780f7b2fdc0cfb3c3163f795eb SHA1 067df4206d4bd1d3f8cd3b4c386707fd2328be80 SHA256 ca14b622350cadcfe97094d4668d8cf0ccb52f8138fb92b842ddb57942a1d413
+EBUILD kxdocker-configurator-1.0.2.ebuild 479 RMD160 af8935b8b05f011086c7a4346e1c01c90d34dbb7 SHA1 0a5d637365aa045ae48387453dc4b7d2f3048e7d SHA256 b144045586a0f4d00c0992e36a40befcb746ee0465b6a57e2bb6e9f8fa124745
+MD5 e2a835ed49a64d2fed1c1da482c7e1b8 kxdocker-configurator-1.0.2.ebuild 479
+RMD160 af8935b8b05f011086c7a4346e1c01c90d34dbb7 kxdocker-configurator-1.0.2.ebuild 479
+SHA256 b144045586a0f4d00c0992e36a40befcb746ee0465b6a57e2bb6e9f8fa124745 kxdocker-configurator-1.0.2.ebuild 479
+MD5 c218476639dbbaac7e5889c99b17b24b files/digest-kxdocker-configurator-1.0.2 286
+RMD160 2581dbae82e46f73799b4a658ba62485af9b916f files/digest-kxdocker-configurator-1.0.2 286
+SHA256 1cb10080bc2c658e00899d238835bc70e72d9d93eabcf0482f0ec5c2ec972e0d files/digest-kxdocker-configurator-1.0.2 286

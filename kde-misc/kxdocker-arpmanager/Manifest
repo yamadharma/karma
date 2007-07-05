@@ -1,0 +1,8 @@
+DIST kxdocker-arpmanager-1.0.0.tar.bz2 761978 RMD160 9ec2c9760565c34e45807424c2942d28315599fd SHA1 47560d3a1d37ca13a7712df4f0188302045e3b0e SHA256 06fcf79dec9c63db9b913b7341d474d06650d45dee49203e5b335f8f3a42ef9a
+EBUILD kxdocker-arpmanager-1.0.0.ebuild 512 RMD160 f86917e90b80fbfbeab7c3f999d12b17a44d3933 SHA1 45a754bf50cca66cd18c8059eb56b3dfa53278ff SHA256 a36900e5e8c5253874a0181750a6aeabad6bed2ac0500a7c639494a165bbfdd1
+MD5 6115635d9a4c8b87c88e27c355aea285 kxdocker-arpmanager-1.0.0.ebuild 512
+RMD160 f86917e90b80fbfbeab7c3f999d12b17a44d3933 kxdocker-arpmanager-1.0.0.ebuild 512
+SHA256 a36900e5e8c5253874a0181750a6aeabad6bed2ac0500a7c639494a165bbfdd1 kxdocker-arpmanager-1.0.0.ebuild 512
+MD5 d0753cfa3653d6607412d5d4c127dc62 files/digest-kxdocker-arpmanager-1.0.0 280
+RMD160 de297b59f1e59f3ccc5fab30edcfb5e9fbcd4b0e files/digest-kxdocker-arpmanager-1.0.0 280
+SHA256 3c73fdeef9297c8c947810cb525687676fd3dec8005ae54664dcf8fe09095c48 files/digest-kxdocker-arpmanager-1.0.0 280

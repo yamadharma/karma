@@ -1,0 +1,213 @@
+diff -ur kxdocker-1.1.4a/Makefile.in /home/chris/src/kxdocker-1.1.4a/Makefile.in
+--- kxdocker-1.1.4a/Makefile.in	2006-01-21 13:08:18.000000000 -0500
++++ /home/chris/src/kxdocker-1.1.4a/Makefile.in	2006-06-20 05:06:09.000000000 -0400
+@@ -315,7 +315,7 @@
+ #>+ 3
+ 	cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  Makefile
+-	cd $(top_srcdir) && perl admin/am_edit Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin Makefile.in
+ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+ 	cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__depfiles_maybe)
+ 
+@@ -737,6 +737,7 @@
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+ 
++
+ #>+ 2
+ KDE_DIST=kxdocker.kdevelop stamp-h.in subdirs Makefile.in kxdocker.kdevelop.pcs configure.files Makefile.cvs Doxyfile kxdocker.kdevses 
+ 
+@@ -747,7 +748,7 @@
+ force-reedit:
+ 		cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  Makefile
+-	cd $(top_srcdir) && perl admin/am_edit Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin Makefile.in
+ 
+ 
+ #>+ 21
+Only in /home/chris/src/kxdocker-1.1.4a/: debian
+diff -ur kxdocker-1.1.4a/doc/Makefile.in /home/chris/src/kxdocker-1.1.4a/doc/Makefile.in
+--- kxdocker-1.1.4a/doc/Makefile.in	2006-01-21 13:08:43.000000000 -0500
++++ /home/chris/src/kxdocker-1.1.4a/doc/Makefile.in	2006-06-20 05:06:09.000000000 -0400
+@@ -310,7 +310,7 @@
+ #>+ 3
+ 	cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  doc/Makefile
+-	cd $(top_srcdir) && perl admin/am_edit doc/Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin doc/Makefile.in
+ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+ 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
+ 
+@@ -596,6 +596,7 @@
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+ 
++
+ #>+ 2
+ KDE_DIST=Makefile.in 
+ 
+@@ -606,7 +607,7 @@
+ force-reedit:
+ 		cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  doc/Makefile
+-	cd $(top_srcdir) && perl admin/am_edit doc/Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin doc/Makefile.in
+ 
+ 
+ #>+ 21
+diff -ur kxdocker-1.1.4a/doc/en/Makefile.in /home/chris/src/kxdocker-1.1.4a/doc/en/Makefile.in
+--- kxdocker-1.1.4a/doc/en/Makefile.in	2006-01-21 13:08:47.000000000 -0500
++++ /home/chris/src/kxdocker-1.1.4a/doc/en/Makefile.in	2006-06-20 05:06:09.000000000 -0400
+@@ -290,7 +290,7 @@
+ #>+ 3
+ 	cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  doc/en/Makefile
+-	cd $(top_srcdir) && perl admin/am_edit doc/en/Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin doc/en/Makefile.in
+ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+ 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
+ 
+@@ -440,8 +440,9 @@
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+ 
++
+ #>+ 2
+-KDE_DIST=index.docbook Makefile.in 
++KDE_DIST=Makefile.in index.docbook index.cache.bz2 
+ 
+ #>+ 24
+ index.cache.bz2: $(srcdir)/index.docbook $(KDE_XSL_STYLESHEET) index.docbook 
+@@ -492,7 +493,7 @@
+ force-reedit:
+ 		cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  doc/en/Makefile
+-	cd $(top_srcdir) && perl admin/am_edit doc/en/Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin doc/en/Makefile.in
+ 
+ 
+ #>+ 21
+Only in /home/chris/src/kxdocker-1.1.4a/: kxdocker-0.40.tar.gz
+diff -ur kxdocker-1.1.4a/po/Makefile.in /home/chris/src/kxdocker-1.1.4a/po/Makefile.in
+--- kxdocker-1.1.4a/po/Makefile.in	2006-01-21 13:08:54.000000000 -0500
++++ /home/chris/src/kxdocker-1.1.4a/po/Makefile.in	2006-06-20 05:06:09.000000000 -0400
+@@ -289,7 +289,7 @@
+ #>+ 3
+ 	cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  po/Makefile
+-	cd $(top_srcdir) && perl admin/am_edit po/Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin po/Makefile.in
+ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+ 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
+ 
+@@ -433,6 +433,7 @@
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+ 
++
+ #>+ 2
+ KDE_DIST=Makefile.in 
+ 
+@@ -443,7 +444,7 @@
+ force-reedit:
+ 		cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  po/Makefile
+-	cd $(top_srcdir) && perl admin/am_edit po/Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin po/Makefile.in
+ 
+ 
+ #>+ 21
+diff -ur kxdocker-1.1.4a/src/Makefile.in /home/chris/src/kxdocker-1.1.4a/src/Makefile.in
+--- kxdocker-1.1.4a/src/Makefile.in	2006-04-07 13:40:36.000000000 -0400
++++ /home/chris/src/kxdocker-1.1.4a/src/Makefile.in	2006-06-20 05:06:10.000000000 -0400
+@@ -528,7 +528,7 @@
+ #>+ 3
+ 	cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  src/Makefile
+-	cd $(top_srcdir) && perl admin/am_edit src/Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin src/Makefile.in
+ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+ 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
+ libLTLIBRARIES_INSTALL = $(INSTALL)
+@@ -951,6 +951,7 @@
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
+ 
++
+ #>+ 3
+ kxdocker.moc: $(srcdir)/kxdocker.h
+ 	$(MOC) $(srcdir)/kxdocker.h -o kxdocker.moc
+@@ -1156,7 +1157,7 @@
+ force-reedit:
+ 		cd $(top_srcdir) && \
+ 	  $(AUTOMAKE) --gnu  src/Makefile
+-	cd $(top_srcdir) && perl admin/am_edit src/Makefile.in
++	cd $(top_srcdir) && perl admin/am_edit -padmin src/Makefile.in
+ 
+ 
+ #>+ 21
+diff -ur kxdocker-1.1.4a/src/xgdockercomposite.cpp /home/chris/src/kxdocker-1.1.4a/src/xgdockercomposite.cpp
+--- kxdocker-1.1.4a/src/xgdockercomposite.cpp	2006-04-17 08:47:18.000000000 -0400
++++ /home/chris/src/kxdocker-1.1.4a/src/xgdockercomposite.cpp	2006-06-20 04:21:48.000000000 -0400
+@@ -160,10 +160,11 @@
+ 	}
+ 	setBackgroundMode(Qt::NoBackground,Qt::NoBackground);
+ 	// compiz
++	KWin::setType(winId(), NET::Override);
+ 	KWin::setType(winId(), NET::Dock);
+-	KWin::setState( winId(), NET::StaysOnTop );
++	KWin::setState( winId(), NET::StaysOnTop || NET::KeepAbove || NET::SkipTaskbar || NET::SkipPager || NET::Sticky );
+ 	// altre prove
+-	//KWin::setType(winId(), NET::Override);
++    KWin::setOnAllDesktops(winId(),true);
+ 	NETWinInfo* info;
+ 	info = new NETWinInfo( qt_xdisplay(), winId(), qt_xrootwin(), NET::WMState );
+ 	info->setDesktop( NETWinInfo::OnAllDesktops);
+@@ -2860,7 +2861,8 @@
+ 	setUnShadowed();
+ 	// compiz
+ 	//qWarning("KWin::setState(winId(), NET::KeepAbove);");
+-	KWin::setState(winId(), NET::KeepAbove);
++	KWin::setState( winId(), NET::StaysOnTop || NET::KeepAbove || NET::SkipTaskbar || NET::SkipPager || NET::Sticky );
++	//KWin::setState(winId(), NET::KeepAbove);
+ 	//KWin::setState( winId(), NET::StaysOnTop );
+ 	KWin::setOnAllDesktops(winId(),true);
+ 	qApp->syncX();
+@@ -3472,7 +3474,7 @@
+ 	if(xPillow!=NULL)xPillow->hide();
+ 	//QWidget::lower();
+ 	//qWarning("KWin::setState( winId(), NET::KeepBelow);");
+- 	KWin::setState(winId(),NET::KeepBelow);
++	KWin::setState( winId(), NET::KeepBelow || NET::SkipTaskbar || NET::SkipPager || NET::Sticky );
+ 	repaint(false);
+ 	lastRaise=0;
+ 	isRaised=0;
+diff -ur kxdocker-1.1.4a/src/xgdockerfake.cpp /home/chris/src/kxdocker-1.1.4a/src/xgdockerfake.cpp
+--- kxdocker-1.1.4a/src/xgdockerfake.cpp	2006-04-09 06:10:58.000000000 -0400
++++ /home/chris/src/kxdocker-1.1.4a/src/xgdockerfake.cpp	2006-06-20 04:21:50.000000000 -0400
+@@ -153,8 +153,9 @@
+ 	}
+ 	setBackgroundMode(Qt::NoBackground,Qt::NoBackground);
+ 	KWin::setType(winId(), NET::Dock);
++	KWin::setState( winId(), NET::StaysOnTop || NET::KeepAbove || NET::SkipTaskbar || NET::SkipPager || NET::Sticky );
+ 	//KWin::setType(winId(), NET::Override);
+-	KWin::setState( winId(), NET::StaysOnTop );
++    KWin::setOnAllDesktops(winId(),true);
+ 	NETWinInfo* info;
+ 	info = new NETWinInfo( qt_xdisplay(), winId(), qt_xrootwin(), NET::WMState );
+ 	info->setDesktop( NETWinInfo::OnAllDesktops);
+diff -ur kxdocker-1.1.4a/src/xgfloater.cpp /home/chris/src/kxdocker-1.1.4a/src/xgfloater.cpp
+--- kxdocker-1.1.4a/src/xgfloater.cpp	2006-01-03 08:55:05.000000000 -0500
++++ /home/chris/src/kxdocker-1.1.4a/src/xgfloater.cpp	2006-06-20 04:18:14.000000000 -0400
+@@ -45,7 +45,8 @@
+ 	setBackgroundMode(Qt::NoBackground,Qt::NoBackground);
+ 	KWin::setType(winId(), NET::Dock);
+ 	//KWin::setType(winId(), NET::Override);
+-	KWin::setState( winId(), NET::StaysOnTop );
++	KWin::setState( winId(), NET::StaysOnTop || NET::KeepAbove || NET::SkipTaskbar || NET::SkipPager || NET::Sticky );
++    KWin::setOnAllDesktops(winId(),true);
+ 	setFocusPolicy(QWidget::StrongFocus);
+ 	setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+ 	MaxY=0;

@@ -1,0 +1,8 @@
+DIST kxdocker-gmail-1.0.0.tar.bz2 817550 RMD160 1f297677d67f340d80ac7000af829ebea516d6df SHA1 9fa14c7c6c79c62adb67dfbb7b2476af730a44a7 SHA256 e5bdbef3e0cf81c0f99e446d3ae348b917a0a2589502bc33f2319bef31251d69
+EBUILD kxdocker-gmail-1.0.0.ebuild 506 RMD160 5360e65e352b7bba81e1c2186b3b46dc7d115f84 SHA1 b3ced7897176d3daf4f7d066158eadf5008a7562 SHA256 62170bd42c8cb10c6a190e4df0ae6f17dd1985889dcdf7e4806171a9ed273ccb
+MD5 cf77868a430f05305e08679159dca0fa kxdocker-gmail-1.0.0.ebuild 506
+RMD160 5360e65e352b7bba81e1c2186b3b46dc7d115f84 kxdocker-gmail-1.0.0.ebuild 506
+SHA256 62170bd42c8cb10c6a190e4df0ae6f17dd1985889dcdf7e4806171a9ed273ccb kxdocker-gmail-1.0.0.ebuild 506
+MD5 6da79a99bfd5a31adb0819ecb09f04a2 files/digest-kxdocker-gmail-1.0.0 265
+RMD160 ed584e8d181d22f13ca133a6ae4cf176bf0f0f26 files/digest-kxdocker-gmail-1.0.0 265
+SHA256 d1830bee57ef8f14d9c58523cc25af7ab91fd62ba29ed83251c71254a9fc84a2 files/digest-kxdocker-gmail-1.0.0 265

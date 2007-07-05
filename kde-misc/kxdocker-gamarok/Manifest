@@ -1,0 +1,8 @@
+DIST kxdocker-gamarok-1.0.0.tar.bz2 744706 RMD160 8608ef8e527aa36dae933501af0673250333dd4b SHA1 ef96aec2255d97f1bcf06e15ad3b2f7ba62865be SHA256 6d5a2832ca2f87e424b0a93829365c1ac5d72f8cd07ca76ecc144d27d321004a
+EBUILD kxdocker-gamarok-1.0.0.ebuild 508 RMD160 bd6cd9d3dadc10fa595888e696c836cfa564d5a9 SHA1 69e48b137c4e88cf4d9b770ac4ce9f06a6ec5f8d SHA256 8d4279bfab37863e6dbb63c6b945b46e4ac134cfd283c141a3f822346151008d
+MD5 57abf452b11abcf5bbd45d0bd00caa48 kxdocker-gamarok-1.0.0.ebuild 508
+RMD160 bd6cd9d3dadc10fa595888e696c836cfa564d5a9 kxdocker-gamarok-1.0.0.ebuild 508
+SHA256 8d4279bfab37863e6dbb63c6b945b46e4ac134cfd283c141a3f822346151008d kxdocker-gamarok-1.0.0.ebuild 508
+MD5 3cf99bc7ac9dc95b1e569d07cad29c74 files/digest-kxdocker-gamarok-1.0.0 271
+RMD160 b387548c5b6b5a9eb93c3672bc569ea67468849b files/digest-kxdocker-gamarok-1.0.0 271
+SHA256 d0e445d415d03aaddcf4729c9845a9c3db36d70a196d7d1edd99b74400f2f10e files/digest-kxdocker-gamarok-1.0.0 271

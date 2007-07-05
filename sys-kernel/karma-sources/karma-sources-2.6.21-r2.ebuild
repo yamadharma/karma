@@ -28,7 +28,7 @@ UNIPATCH_STRICTORDER="yes"
 #DEPEND="${DEPEND}"
 
 	
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="x86 ~amd64"
 
 pkg_postinst () 
 {

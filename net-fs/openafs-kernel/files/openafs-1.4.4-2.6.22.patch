@@ -1,0 +1,1355 @@
+--- openafs-1.4.4.dfsg1.orig/Makefile.in
++++ openafs-1.4.4.dfsg1/Makefile.in
+@@ -515,8 +515,6 @@
+ # pthread based user space RX library
+ shlibafsrpc: rx rxkad des
+ 	case ${SYS_NAME} in \
+-	amd64_linux24) \
+-		echo Skipping shlibafsrpc for amd64_linux24 ;; \
+ 	alpha_dux*|sgi_*|sun4x_*|sunx86_*|rs_aix*|*linux*|hp_ux11*|ia64_hpux*) \
+ 	${COMPILE_PART1} shlibafsrpc ${COMPILE_PART2} ;; \
+ 	*) \
+@@ -525,8 +523,6 @@
+ 
+ shlibafsauthent: ubik auth kauth shlibafsrpc
+ 	case ${SYS_NAME} in \
+-	amd64_linux24) \
+-		echo Skipping shlibafsauthent for amd64_linux24 ;; \
+ 	alpha_dux*|sgi_*|sun4x_*|sunx86_*|rs_aix*|*linux*|hp_ux11*|ia64_hpux*) \
+ 	${COMPILE_PART1} shlibafsauthent ${COMPILE_PART2} ;; \
+ 	*) \
+--- openafs-1.4.4.dfsg1.orig/acinclude.m4
++++ openafs-1.4.4.dfsg1/acinclude.m4
+@@ -611,6 +611,7 @@
+ 		 LINUX_FS_STRUCT_FOP_HAS_FLOCK
+ 		 LINUX_KERNEL_LINUX_SYSCALL_H
+ 		 LINUX_KERNEL_LINUX_SEQ_FILE_H
++		 LINUX_KERNEL_POSIX_LOCK_FILE_WAIT_ARG
+ 		 LINUX_KERNEL_SELINUX
+ 		 LINUX_KERNEL_SOCK_CREATE
+ 		 LINUX_KERNEL_PAGE_FOLLOW_LINK
+@@ -626,6 +627,7 @@
+ 		 LINUX_SCHED_STRUCT_TASK_STRUCT_HAS_EXIT_STATE
+ 		 LINUX_SCHED_STRUCT_TASK_STRUCT_HAS_TGID
+ 		 LINUX_SCHED_STRUCT_TASK_STRUCT_HAS_TODO
++		 LINUX_SCHED_STRUCT_TASK_STRUCT_HAS_THREAD_INFO
+ 		 LINUX_EXPORTS_TASKLIST_LOCK
+ 		 LINUX_GET_SB_HAS_STRUCT_VFSMOUNT
+ 		 LINUX_STATFS_TAKES_DENTRY
+@@ -767,6 +769,9 @@
+ 		 if test "x$ac_cv_linux_func_recalc_sigpending_takes_void" = "xyes"; then 
+ 		  AC_DEFINE(RECALC_SIGPENDING_TAKES_VOID, 1, [define if your recalc_sigpending takes void])
+ 		 fi
++		 if test "x$ac_cv_linux_kernel_posix_lock_file_wait_arg" = "xyes" ; then
++		  AC_DEFINE(POSIX_LOCK_FILE_WAIT_ARG, 1, [define if your linux kernel uses 3 arguments for posix_lock_file])
++		 fi
+ 		 if test "x$ac_cv_linux_kernel_is_selinux" = "xyes" ; then
+ 		  AC_DEFINE(LINUX_KERNEL_IS_SELINUX, 1, [define if your linux kernel uses SELinux features])
+ 		 fi
+@@ -812,6 +817,9 @@
+ 		 if test "x$ac_cv_linux_sched_struct_task_struct_has_todo" = "xyes"; then 
+ 		  AC_DEFINE(STRUCT_TASK_STRUCT_HAS_TODO, 1, [define if your struct task_struct has todo])
+ 		 fi
++		 if test "x$ac_cv_linux_sched_struct_task_struct_has_thread_info" = "xyes"; then 
++		  AC_DEFINE(STRUCT_TASK_STRUCT_HAS_THREAD_INFO, 1, [define if your struct task_struct has thread_info])
++		 fi
+ 		 if test "x$ac_cv_linux_get_sb_has_struct_vfsmount" = "xyes"; then
+ 		  AC_DEFINE(GET_SB_HAS_STRUCT_VFSMOUNT, 1, [define if your get_sb_nodev needs a struct vfsmount argument])
+ 		 fi
+--- openafs-1.4.4.dfsg1.orig/src/afs/Makefile.in
++++ openafs-1.4.4.dfsg1/src/afs/Makefile.in
+@@ -13,7 +13,7 @@
+ all: depinstall
+ 
+ depinstall: ${TOP_INCDIR}/afs/afs.h ${TOP_INCDIR}/afs/osi_inode.h ${TOP_INCDIR}/afs/afs_stats.h \
+-	${TOP_INCDIR}/afs/exporter.h ${TOP_INCDIR}/afs/nfsclient.h afszcm.cat AFS_component_version_number.c ${TOP_INCDIR}/afs/unified_afs.h ${TOP_INCDIR}/afs/sysctl.h
++	${TOP_INCDIR}/afs/exporter.h ${TOP_INCDIR}/afs/nfsclient.h afszcm.cat AFS_component_version_number.c ${TOP_INCDIR}/afs/unified_afs.h
+ 	case ${SYS_NAME} in \
+ 		pmax_ul43 | pmax_ul43a) \
+ 			${INSTALL} longc_procs.h ${TOP_INCDIR}/afs ;; \
+@@ -43,7 +43,7 @@
+ 			gencat afszcm.cat afs_trace.msf ;; \
+ 	esac
+ 
+-install:   ${DESTDIR}${includedir}/afs/afs.h  ${DESTDIR}${includedir}/afs/osi_inode.h ${DESTDIR}${includedir}/afs/afs_stats.h ${DESTDIR}${includedir}/afs/exporter.h ${DESTDIR}${includedir}/afs/nfsclient.h ${DESTDIR}${includedir}/afs/unified_afs.h ${DESTDIR}${includedir}/afs/sysctl.h
++install:   ${DESTDIR}${includedir}/afs/afs.h  ${DESTDIR}${includedir}/afs/osi_inode.h ${DESTDIR}${includedir}/afs/afs_stats.h ${DESTDIR}${includedir}/afs/exporter.h ${DESTDIR}${includedir}/afs/nfsclient.h ${DESTDIR}${includedir}/afs/unified_afs.h
+ 	case ${SYS_NAME} in \
+ 		pmax_ul43 | pmax_ul43a) \
+ 			${INSTALL} longc_procs.h ${DESTDIR}${includedir}/afs ;; \
+@@ -131,7 +131,7 @@
+ 	${INSTALL} $? $@
+ 
+ 
+-dest:   ${DEST}/include/afs/afs.h ${DEST}/include/afs/osi_inode.h ${DEST}/include/afs/afs_stats.h ${DEST}/include/afs/exporter.h ${DEST}/include/afs/nfsclient.h ${DEST}/include/afs/unified_afs.h ${DEST}/include/afs/sysctl.h
++dest:   ${DEST}/include/afs/afs.h ${DEST}/include/afs/osi_inode.h ${DEST}/include/afs/afs_stats.h ${DEST}/include/afs/exporter.h ${DEST}/include/afs/nfsclient.h ${DEST}/include/afs/unified_afs.h
+ 	case ${SYS_NAME} in \
+ 		pmax_ul43 | pmax_ul43a) \
+ 			${INSTALL} longc_procs.h ${DEST}/include/afs ;; \
+--- openafs-1.4.4.dfsg1.orig/src/afs/afs_call.c
++++ openafs-1.4.4.dfsg1/src/afs/afs_call.c
+@@ -858,6 +858,8 @@
+ #if	(!defined(AFS_NONFSTRANS)) || defined(AFS_AIX_IAUTH_ENV)
+ 	afs_nfsclient_init();
+ #endif
++	if (afs_cb_interface.numberOfInterfaces < 1)
++	    afs_uuid_create(&afs_cb_interface.uuid);
+ 	printf("found %d non-empty cache files (%d%%).\n",
+ 	       afs_stats_cmperf.cacheFilesReused,
+ 	       (100 * afs_stats_cmperf.cacheFilesReused) /
+--- openafs-1.4.4.dfsg1.orig/src/afs/LINUX/osi_groups.c
++++ openafs-1.4.4.dfsg1/src/afs/LINUX/osi_groups.c
+@@ -230,6 +230,7 @@
+     struct key *old;
+     char desc[20];
+     unsigned long not_in_quota;
++    unsigned long f;
+     int code = -EINVAL;
+ 
+     if (!__key_type_keyring)
+@@ -265,11 +266,11 @@
+     }
+ 
+     /* install the keyring */
+-    spin_lock_irq(&task->sighand->siglock);
++    SIG_LOCK(task, f);
+     old = task->signal->session_keyring;
+     smp_wmb();
+     task->signal->session_keyring = keyring;
+-    spin_unlock_irq(&task->sighand->siglock);
++    SIG_UNLOCK(task, f);
+ 
+     if (old)
+ 	    key_put(old);
+@@ -594,13 +595,18 @@
+ {
+     afs_uint32 pag = key->payload.value;
+     struct unixuser *pu;
++    int locked = ISAFS_GLOCK();
+ 
++    if (!locked)
++	AFS_GLOCK();
+     pu = afs_FindUser(pag, -1, READ_LOCK);
+     if (pu) {
+ 	pu->ct.EndTimestamp = 0;
+ 	pu->tokenTime = 0;
+ 	afs_PutUser(pu, READ_LOCK);
+     }
++    if (!locked)
++	AFS_GUNLOCK();
+ }
+ 
+ struct key_type key_type_afs_pag =
+--- openafs-1.4.4.dfsg1.orig/src/afs/LINUX/osi_machdep.h
++++ openafs-1.4.4.dfsg1/src/afs/LINUX/osi_machdep.h
+@@ -55,14 +55,14 @@
+ #endif
+ 
+ #if defined (STRUCT_TASK_STRUCT_HAS_SIGMASK_LOCK)
+-#define SIG_LOCK(X) spin_lock_irq(&X->sigmask_lock)
+-#define SIG_UNLOCK(X) spin_unlock_irq(&X->sigmask_lock)
++#define SIG_LOCK(X,flags) spin_lock_irqsave(&X->sigmask_lock,flags)
++#define SIG_UNLOCK(X),flags spin_unlock_irqrestore(&X->sigmask_lock,flags)
+ #elif defined (STRUCT_TASK_STRUCT_HAS_SIGHAND)
+-#define SIG_LOCK(X) spin_lock_irq(&X->sighand->siglock)
+-#define SIG_UNLOCK(X) spin_unlock_irq(&X->sighand->siglock)
++#define SIG_LOCK(X,flags) spin_lock_irqsave(&X->sighand->siglock,flags)
++#define SIG_UNLOCK(X,flags) spin_unlock_irqrestore(&X->sighand->siglock,flags)
+ #else
+-#define SIG_LOCK(X) spin_lock_irq(&X->sig->siglock)
+-#define SIG_UNLOCK(X) spin_unlock_irq(&X->sig->siglock)
++#define SIG_LOCK(X,flags) spin_lock_irqsave(&X->sig->siglock,flags)
++#define SIG_UNLOCK(X,flags) spin_unlock_irqrestore(&X->sig->siglock,flags)
+ #endif
+ 
+ #if defined (STRUCT_TASK_STRUCT_HAS_RLIM)
+--- openafs-1.4.4.dfsg1.orig/src/afs/LINUX/osi_misc.c
++++ openafs-1.4.4.dfsg1/src/afs/LINUX/osi_misc.c
+@@ -353,10 +353,11 @@
+ void
+ osi_linux_mask(void)
+ {
+-    SIG_LOCK(current);
++    unsigned long f;
++    SIG_LOCK(current, f);
+     sigfillset(&current->blocked);
+     RECALC_SIGPENDING(current);
+-    SIG_UNLOCK(current);
++    SIG_UNLOCK(current, f);
+ }
+ 
+ void
+--- openafs-1.4.4.dfsg1.orig/src/afs/LINUX/osi_sleep.c
++++ openafs-1.4.4.dfsg1/src/afs/LINUX/osi_sleep.c
+@@ -205,7 +205,11 @@
+ #if defined(STRUCT_TASK_STRUCT_HAS_TODO)
+ 	    !current->todo
+ #else
++#if defined(STRUCT_TASK_STRUCT_HAS_THREAD_INFO)
+             test_ti_thread_flag(current->thread_info, TIF_FREEZE)
++#else
++            test_ti_thread_flag(task_thread_info(current), TIF_FREEZE)
++#endif
+ #endif
+ #endif
+ 	    )
+@@ -240,19 +244,20 @@
+ afs_osi_Sleep(void *event)
+ {
+     sigset_t saved_set;
++    unsigned long f;
+ 
+-    SIG_LOCK(current);
++    SIG_LOCK(current,f);
+     saved_set = current->blocked;
+     sigfillset(&current->blocked);
+     RECALC_SIGPENDING(current);
+-    SIG_UNLOCK(current);
++    SIG_UNLOCK(current,f);
+ 
+     afs_osi_SleepSig(event);
+ 
+-    SIG_LOCK(current);
++    SIG_LOCK(current,f);
+     current->blocked = saved_set;
+     RECALC_SIGPENDING(current);
+-    SIG_UNLOCK(current);
++    SIG_UNLOCK(current,f);
+ }
+ 
+ /* osi_TimedSleep
+@@ -303,7 +308,11 @@
+ #if defined(STRUCT_TASK_STRUCT_HAS_TODO)
+ 	    !current->todo
+ #else
++#if defined(STRUCT_TASK_STRUCT_HAS_THREAD_INFO)
+             test_ti_thread_flag(current->thread_info, TIF_FREEZE)
++#else
++            test_ti_thread_flag(task_thread_info(current), TIF_FREEZE)
++#endif
+ #endif
+ #endif
+ 	    )
+--- openafs-1.4.4.dfsg1.orig/src/afs/LINUX/osi_sysctl.c
++++ openafs-1.4.4.dfsg1/src/afs/LINUX/osi_sysctl.c
+@@ -1,7 +1,7 @@
+ /*
+  * osi_sysctl.c: Linux sysctl interface to OpenAFS
+  *
+- * $Id: osi_sysctl.c,v 1.7.2.4 2007/02/22 21:49:01 shadow Exp $
++ * $Id: osi_sysctl.c,v 1.7.2.5 2007/06/12 18:28:49 shadow Exp $
+  *
+  * Written Jan 30, 2002 by Kris Van Hees (Sine Nomine Associates)
+  */
+@@ -27,35 +27,64 @@
+ static struct ctl_table_header *afs_sysctl = NULL;
+ 
+ static ctl_table afs_sysctl_table[] = {
+-    {1, "hm_retry_RO",
+-     &hm_retry_RO, sizeof(afs_int32), 0644, NULL,
+-     &proc_dointvec}
+-    ,
+-    {2, "hm_retry_RW",
+-     &hm_retry_RW, sizeof(afs_int32), 0644, NULL,
+-     &proc_dointvec}
+-    ,
+-    {3, "hm_retry_int",
+-     &hm_retry_int, sizeof(afs_int32), 0644, NULL,
+-     &proc_dointvec}
+-    ,
+-    {4, "GCPAGs",
+-     &afs_gcpags, sizeof(afs_int32), 0644, NULL,
+-     &proc_dointvec}
+-    ,
+-    {5, "rx_deadtime",
+-     &afs_rx_deadtime, sizeof(afs_int32), 0644, NULL,
+-     &proc_dointvec}
+-    ,
+-    {6, "bkVolPref",
+-     &afs_bkvolpref, sizeof(afs_int32), 0644, NULL,
+-     &proc_dointvec}
+-    ,
++    {
++	.ctl_name 	= 1, 
++	.procname 	= "hm_retry_RO",
++	.data 		= &hm_retry_RO, 
++	.maxlen		= sizeof(afs_int32), 
++	.mode     	= 0644,
++	.proc_handler	= &proc_dointvec
++    },
++    {
++        .ctl_name 	= 2, 
++        .procname 	= "hm_retry_RW",
++        .data		= &hm_retry_RW,
++	.maxlen		= sizeof(afs_int32), 
++	.mode		= 0644,
++     	.proc_handler	= &proc_dointvec
++    },
++    {
++	.ctl_name	= 3, 
++	.procname	= "hm_retry_int",
++	.data		= &hm_retry_int, 
++	.maxlen		= sizeof(afs_int32), 
++	.mode		= 0644,
++	.proc_handler	= &proc_dointvec
++    },
++    {
++	.ctl_name	= 4, 
++	.procname	= "GCPAGs",
++	.data		= &afs_gcpags, 
++	.maxlen		= sizeof(afs_int32), 
++	.mode		= 0644,
++	.proc_handler 	= &proc_dointvec
++    },
++    {
++	.ctl_name	= 5, 
++	.procname	= "rx_deadtime",
++	.data		= &afs_rx_deadtime, 
++	.maxlen		= sizeof(afs_int32), 
++	.mode		= 0644,
++	.proc_handler	= &proc_dointvec
++    },
++    {
++	.ctl_name	= 6, 
++	.procname	= "bkVolPref",
++	.data		= &afs_bkvolpref, 
++	.maxlen		= sizeof(afs_int32), 
++	.mode		= 0644,
++	.proc_handler	= &proc_dointvec
++    },
+     {0}
+ };
+ 
+ static ctl_table fs_sysctl_table[] = {
+-    {1, "afs", NULL, 0, 0555, afs_sysctl_table},
++    {
++	.ctl_name	= 1, 
++	.procname	= "afs", 
++	.mode		= 0555, 
++	.child		= afs_sysctl_table
++    },
+     {0}
+ };
+ 
+--- openafs-1.4.4.dfsg1.orig/src/afs/LINUX/osi_vfsops.c
++++ openafs-1.4.4.dfsg1/src/afs/LINUX/osi_vfsops.c
+@@ -292,8 +292,10 @@
+ {
+     struct vcache *vcp = (struct vcache *) foo;
+ 
++#if defined(SLAB_CTOR_VERIFY)
+     if ((flags & (SLAB_CTOR_VERIFY|SLAB_CTOR_CONSTRUCTOR)) ==
+ 	SLAB_CTOR_CONSTRUCTOR)
++#endif
+ 	inode_init_once(AFSTOV(vcp));
+ }
+ 
+--- openafs-1.4.4.dfsg1.orig/src/afs/LINUX/osi_vnodeops.c
++++ openafs-1.4.4.dfsg1/src/afs/LINUX/osi_vnodeops.c
+@@ -473,11 +473,11 @@
+ #ifdef AFS_LINUX24_ENV
+     if ((code == 0 || flp->fl_type == F_UNLCK) && 
+         (cmd == F_SETLK || cmd == F_SETLKW)) {
+-#ifdef AFS_LINUX26_ENV
++#ifdef POSIX_LOCK_FILE_WAIT_ARG
++	code = posix_lock_file(fp, flp, 0);
++#else
+ 	flp->fl_flags &=~ FL_SLEEP;
+ 	code = posix_lock_file(fp, flp);
+-#else
+-	code = posix_lock_file(fp, flp, 0);
+ #endif 
+ 	if (code && flp->fl_type != F_UNLCK) {
+ 	    struct AFS_FLOCK flock2;
+--- openafs-1.4.4.dfsg1.orig/src/cf/linux-test4.m4
++++ openafs-1.4.4.dfsg1/src/cf/linux-test4.m4
+@@ -444,6 +444,18 @@
+   AC_MSG_RESULT($ac_cv_linux_sched_struct_task_struct_has_exit_state)])
+ 
+ 
++AC_DEFUN([LINUX_SCHED_STRUCT_TASK_STRUCT_HAS_THREAD_INFO], [
++  AC_MSG_CHECKING([for thread_info in struct task_struct])
++  AC_CACHE_VAL([ac_cv_linux_sched_struct_task_struct_has_thread_info], [
++    AC_TRY_KBUILD(
++[#include <linux/sched.h>],
++[struct task_struct _tsk;
++printk("%d\n", _tsk.thread_info);],
++      ac_cv_linux_sched_struct_task_struct_has_thread_info=yes,
++      ac_cv_linux_sched_struct_task_struct_has_thread_info=no)])
++  AC_MSG_RESULT($ac_cv_linux_sched_struct_task_struct_has_thread_info)])
++
++
+ AC_DEFUN([LINUX_FS_STRUCT_SUPER_HAS_ALLOC_INODE], [
+   AC_MSG_CHECKING([for alloc_inode in struct super_operations])
+   AC_CACHE_VAL([ac_cv_linux_fs_struct_super_has_alloc_inode], [
+@@ -456,6 +468,17 @@
+   AC_MSG_RESULT($ac_cv_linux_fs_struct_super_has_alloc_inode)])
+ 
+ 
++AC_DEFUN([LINUX_KERNEL_POSIX_LOCK_FILE_WAIT_ARG], [
++  AC_MSG_CHECKING([for 3rd argument in posix_lock_file found in new kernels])
++  AC_CACHE_VAL([ac_cv_linux_kernel_posix_lock_file_wait_arg], [
++    AC_TRY_KBUILD(
++[#include <linux/fs.h>],
++[posix_lock_file(0,0,0);],
++      ac_cv_linux_kernel_posix_lock_file_wait_arg=yes,
++      ac_cv_linux_kernel_posix_lock_file_wait_arg=no)])
++  AC_MSG_RESULT($ac_cv_linux_kernel_posix_lock_file_wait_arg)])
++
++
+ AC_DEFUN([LINUX_KERNEL_SOCK_CREATE], [
+   AC_MSG_CHECKING([for 5th argument in sock_create found in some SELinux kernels])
+   AC_CACHE_VAL([ac_cv_linux_kernel_sock_create_v], [
+--- openafs-1.4.4.dfsg1.orig/src/cf/osconf.m4
++++ openafs-1.4.4.dfsg1/src/cf/osconf.m4
+@@ -244,6 +243,7 @@
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+ 		MT_LIBS="-lpthread"
+ 		PAM_CFLAGS="-g -O2 -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-g -O2 -D_LARGEFILE64_SOURCE -G0"
+@@ -271,6 +271,7 @@
+ 		MT_LIBS="-lpthread"
+ 		PAM_CFLAGS="-g -O2 -Dlinux -DLINUX_PAM -fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
++		SHLIB_CFLAGS="-fPIC"
+ 		TXLIBS="/usr/lib64/libncurses.so"
+ 		XCFLAGS="-g -O2 -D_LARGEFILE64_SOURCE"
+ 		SHLIB_LINKER="${MT_CC} -shared"
+@@ -291,14 +292,14 @@
+ 		;;
+ 
+ 	i386_umlinux22)
+-		CC="gcc -pipe"
+-		CCOBJ="gcc -pipe"
+-		MT_CC="gcc -pipe"
++		CCOBJ="${CC} -pipe"
++		MT_CC="${CC} -pipe"
+ 		KERN_OPTMZ=-O2
+ 		LEX="flex -l"
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+ 		MT_LIBS="-lpthread"
+ 		PAM_CFLAGS="-O2 -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-O2 -D_LARGEFILE64_SOURCE"
+@@ -307,9 +308,8 @@
+ 		;;
+ 
+ 	i386_linux*)
+-		CC="gcc -pipe"
+-		CCOBJ="gcc -pipe"
+-		MT_CC="gcc -pipe"
++		CCOBJ="${CC} -pipe"
++		MT_CC="${CC} -pipe"
+ 		KERN_OPTMZ=-O2
+ 		LEX="flex -l"
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+@@ -320,6 +320,7 @@
+ 		LWP_OPTMZ=-O2
+ 		OPTMZ=-O2
+ 		PAM_CFLAGS="-g -O2 -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-g -O2 -D_LARGEFILE64_SOURCE"
+@@ -327,9 +328,8 @@
+ 		;;
+ 
+ 	i386_umlinux24)
+-		CC="gcc -pipe"
+-		CCOBJ="gcc -pipe"
+-		MT_CC="gcc -pipe"
++		CCOBJ="${CC} -pipe"
++		MT_CC="${CC} -pipe"
+ 		KERN_OPTMZ=-O2
+ 		LEX="flex -l"
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+@@ -340,6 +340,7 @@
+ 		LWP_OPTMZ=-O2
+ 		OPTMZ=-O2
+ 		PAM_CFLAGS="-g -O2 -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-g -O2 -D_LARGEFILE64_SOURCE"
+@@ -347,9 +348,8 @@
+ 		;;
+ 
+ 	i386_umlinux26)
+-		CC="gcc -pipe"
+-		CCOBJ="gcc -pipe"
+-		MT_CC="gcc -pipe"
++		CCOBJ="${CC} -pipe"
++		MT_CC="${CC} -pipe"
+ 		KERN_OPTMZ=-O2
+ 		LEX="flex -l"
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+@@ -360,6 +360,7 @@
+ 		LWP_OPTMZ=-O2
+ 		OPTMZ=-O2
+ 		PAM_CFLAGS="-g -O2 -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-g -O2 -D_LARGEFILE64_SOURCE"
+@@ -385,6 +386,7 @@
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+ 		MT_LIBS="-lpthread"
+ 		PAM_CFLAGS="-O2 -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-O2 -D_LARGEFILE64_SOURCE"
+@@ -555,8 +557,7 @@
+ 		;;
+ 
+ 	s390_linux22)
+-		CC="gcc"
+-		CCOBJ="gcc"
++		CCOBJ="$CC"
+ 		LD="ld"
+ 		KERN_OPTMZ=-O2
+ 		LEX="flex -l"
+@@ -564,6 +565,7 @@
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+ 		MT_LIBS="-lpthread"
+ 		PAM_CFLAGS="-O -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-O -g -D_LARGEFILE64_SOURCE"
+@@ -572,8 +574,7 @@
+ 		;;
+ 
+ 	s390_linux24|s390_linux26)
+-		CC="gcc"
+-		CCOBJ="gcc"
++		CCOBJ="$CC"
+ 		LD="ld"
+ 		KERN_OPTMZ=-O2
+ 		LEX="flex -l"
+@@ -581,6 +582,7 @@
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+ 		MT_LIBS="-lpthread"
+ 		PAM_CFLAGS="-O -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-O -g -D_LARGEFILE64_SOURCE"
+@@ -589,8 +591,7 @@
+ 		;;
+ 
+ 	s390x_linux24|s390x_linux26)
+-		CC="gcc"
+-		CCOBJ="gcc -fPIC"
++		CCOBJ="$CC"
+ 		LD="ld"
+ 		KERN_OPTMZ=-O2
+ 		LEX="flex -l"
+@@ -598,6 +599,7 @@
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+ 		MT_LIBS="-lpthread"
+ 		PAM_CFLAGS="-O -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x -Xlinker -Bsymbolic"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-O -g -D_LARGEFILE64_SOURCE -D__s390x__"
+@@ -667,12 +669,13 @@
+ 		SHLIB_LINKER="${CC} -shared"
+ 		;;
+ 
+-	sparc64_linux*)
++	sparc*_linux*)
+ 		KERN_OPTMZ=-O2
+ 		LEX="flex -l"
+ 		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+ 		MT_LIBS="-lpthread"
+ 		PAM_CFLAGS="-O2 -Dlinux -DLINUX_PAM -fPIC"
++		SHLIB_CFLAGS="-fPIC"
+ 		SHLIB_LDFLAGS="-shared -Xlinker -x"
+ 		TXLIBS="-lncurses"
+ 		XCFLAGS="-O2 -D_LARGEFILE64_SOURCE"
+@@ -682,19 +685,6 @@
+ 		SHLIB_LINKER="${MT_CC} -shared"
+ 		;;
+ 
+-	sparc_linux22)
+-		KERN_OPTMZ=-O2
+-		LEX="flex -l"
+-		MT_CFLAGS='-DAFS_PTHREAD_ENV -pthread -D_REENTRANT ${XCFLAGS}'
+-		MT_LIBS="-lpthread"
+-		PAM_CFLAGS="-O2 -Dlinux -DLINUX_PAM -fPIC"
+-		SHLIB_LDFLAGS="-shared -Xlinker -x"
+-		TXLIBS="-lncurses"
+-		XCFLAGS="-O2 -D_LARGEFILE64_SOURCE"
+-		YACC="bison -y"
+-		SHLIB_LINKER="${MT_CC} -shared"
+-		;;
+-
+ 	sun4_413)
+ 		CCXPG2="/usr/xpg2bin/cc"
+ 		CC="gcc"
+--- openafs-1.4.4.dfsg1.orig/src/aklog/Makefile.in
++++ openafs-1.4.4.dfsg1/src/aklog/Makefile.in
+@@ -16,7 +16,7 @@
+ SRCS=	aklog.c aklog_main.c  krb_util.c linked_list.c
+ OBJS=   aklog.o aklog_main.o krb_util.o linked_list.o
+ 
+-all: aklog asetkey
++all: aklog asetkey ka-forwarder
+ 
+ aklog:	${OBJS} ${AFSLIBS}
+ 	${CC} -o $@ ${CFLAGS} ${OBJS} ${AKLIBS} ${AFSLIBS} ${XLIBS}
+@@ -24,11 +24,16 @@
+ asetkey: asetkey.o ${AFSLIBS}
+ 	${CC} -o $@ ${CFLAGS} asetkey.o ${AKLIBS} ${AFSLIBS} ${XLIBS}
+ 
++ka-forwarder: ka-forwarder.o
++	${CC} -o $@ ${CFLAGS} ka-forwarder.o ${LIBS} ${XLIBS}
++
+ #
+ # Installation targets
+ #
+ install: \
+-	${DESTDIR}${bindir}/aklog ${DESTDIR}${afssrvbindir}/asetkey
++	${DESTDIR}${bindir}/aklog \
++	${DESTDIR}${afssrvbindir}/asetkey \
++	${DESTDIR}${afssrvbindir}/ka-forwarder
+ 
+ ${DESTDIR}${bindir}/aklog: aklog
+ 	${INSTALL} $? $@
+@@ -36,8 +41,13 @@
+ ${DESTDIR}${afssrvbindir}/asetkey: asetkey
+ 	${INSTALL} $? $@
+ 
++${DESTDIR}${afssrvbindir}/ka-forwarder: ka-forwarder
++	${INSTALL} $? $@
++
+ dest: \
+-	${DEST}/bin/aklog ${DEST}/root.server/usr/afs/bin/asetkey
++	${DEST}/bin/aklog \
++	${DEST}/root.server/usr/afs/bin/asetkey \
++	${DEST}/root.server/usr/afs/bin/ka-forwarder
+ 
+ ${DEST}/bin/aklog: aklog
+ 	${INSTALL} $? $@
+@@ -45,11 +55,14 @@
+ ${DEST}/root.server/usr/afs/bin/asetkey: asetkey
+ 	${INSTALL} $? $@
+ 
++${DEST}/root.server/usr/afs/bin/ka-forwarder: ka-forwarder
++	${INSTALL} $? $@
++
+ #
+ # Misc. targets
+ #
+ clean:
+-	$(RM) -f *.o ${OBJS} aklog asetkey
++	$(RM) -f *.o ${OBJS} aklog asetkey ka-forwarder
+ 
+ include ../config/Makefile.version
+ 
+--- openafs-1.4.4.dfsg1.orig/src/aklog/ka-forwarder.c
++++ openafs-1.4.4.dfsg1/src/aklog/ka-forwarder.c
+@@ -0,0 +1,282 @@
++/*
++ * COPYRIGHT NOTICE
++ * Copyright (c) 1994 Carnegie Mellon University
++ * All Rights Reserved.
++ * 
++ * See <cmu_copyright.h> for use and distribution information.
++ */
++
++/*
++ * HISTORY
++ * $Log: ka-forwarder.c,v $
++ * Revision 1.1  1997/06/03 18:23:54  kenh
++ * .
++ *
++ * Revision 1.4  1996/08/09  01:00:21  jhutz
++ * 	When initializing the array of fakeka servers, remember to set
++ * 	the address family of each server; otherwise SunOS complains.
++ * 	[1996/08/09  00:58:46  jhutz]
++ *
++ * Revision 1.3  1996/08/09  00:17:19  jhutz
++ * 	Merged in changes from Chuck Silvers:
++ * 	- Support for more than one fakeka server
++ * 	- Support for specifying ports for each fakeka server separately from the
++ * 	  others, and from the port we listen on.
++ * 
++ * 	Plus a minor bug fix to Chuck's code.
++ * 	Basically, this version is designed to provide both reliability and
++ * 	load-balancing cheaply.  Basically, we forward packets to all of the
++ * 	fakeka servers in round-robin fashion.  So, if a client is losing on
++ * 	one server, its retry should go to a different one, if more than one
++ * 	is specified.
++ * 	[1996/08/03  02:13:36  jhutz]
++ * 
++ * Revision 1.2  1995/02/23  18:26:36  chs
++ * 	Created.
++ * 	[1995/02/23  18:26:03  chs]
++ * 
++ * $EndLog$
++ */
++
++/*
++ * This program is intended to run on afs DB servers.
++ * Its function is to forward KA requests to a fakeka server
++ * running on an MIT kerberos server.
++ */
++
++#include <sys/types.h>
++#include <sys/socket.h>
++#include <sys/ioctl.h>
++#include <netinet/in.h>
++#include <arpa/inet.h>
++#include <stdio.h>
++#include <netdb.h>
++#include <ctype.h>
++#include <stdlib.h>
++#include <string.h>
++#include <syslog.h>
++#include <unistd.h>
++
++#if	HAVE_GETOPT_H
++#include <getopt.h>
++#else
++int getopt (int, char * const *, const char *);
++int optind, opterr;
++char *optarg;
++#endif
++
++#define BUFFER_SIZE 2048
++
++
++char *prog;
++
++int num_servers, cur_server;
++struct sockaddr_in *servers;
++
++
++void
++perrorexit(str)
++char *str;
++{
++    perror(str);
++    exit(1);
++}
++
++
++void
++setup_servers(argc, argv)
++int argc;
++char **argv;
++{
++    int i;
++    u_int fwdaddr;
++    u_short fwdport;
++
++    num_servers = argc;
++
++    servers = malloc(sizeof(*servers) * num_servers);
++    if (servers == NULL)
++	perrorexit("malloc failed");
++
++    for (i = 0; i < num_servers; i++) {
++	char *host, *port;
++
++	fwdport = htons(7004);
++
++	host = argv[i];
++	port = strchr(host, '/');
++	if (port != NULL) {
++	    *port++ = 0;
++
++	    if (isdigit(port[0])) {
++		fwdport = htons(atoi(port));
++	    }
++	    else {
++		struct servent *srv = getservbyname(port, "udp");
++		if (!srv) {
++		    fprintf(stderr, "%s: unknown service %s\n", prog, port);
++		    exit(1);
++		}
++		fwdport = srv->s_port;
++	    }
++	}
++
++	if (isdigit(host[0])) {
++	    fwdaddr = inet_addr(host);
++	}
++	else {
++	    struct hostent *h = gethostbyname(host);
++	    if (!h) {
++		fprintf(stderr, "%s: unknown host %s\n", prog, host);
++		exit(1);
++	    }
++	    bcopy(h->h_addr, &fwdaddr, 4);
++	}
++
++	servers[i].sin_family = AF_INET;
++	servers[i].sin_addr.s_addr = fwdaddr;
++	servers[i].sin_port = fwdport;
++    }
++}
++
++
++int
++setup_socket(port)
++u_short port;
++{
++    int s, rv;
++    struct sockaddr_in sin;
++
++    s = socket(AF_INET, SOCK_DGRAM, 0);
++    if (s < 0)
++	perrorexit("Couldn't create socket");
++
++    sin.sin_family = AF_INET;
++    sin.sin_addr.s_addr = 0;
++    sin.sin_port = htons(port);
++
++    rv = bind(s, (struct sockaddr *)&sin, sizeof(sin));
++    if (rv < 0)
++	perrorexit("Couldn't bind socket");
++
++    return s;
++}
++
++
++int
++packet_is_reply(from)
++struct sockaddr_in *from;
++{
++    int i;
++
++    for (i = 0; i < num_servers; i++) {
++	struct sockaddr_in *sin = &servers[i];
++
++	if (from->sin_addr.s_addr == sin->sin_addr.s_addr &&
++	    from->sin_port == sin->sin_port)
++	{
++	    return 1;
++	}
++    }
++
++    return 0;
++}
++
++
++int
++main(argc, argv)
++int argc;
++char **argv;
++{
++    int c, s, rv;
++    u_short port;
++
++    if (argc < 2) {
++	fprintf(stderr,
++		"usage: %s [-p port] <host>[/port] [host/port ...]\n",
++		argv[0]);
++	exit(1);
++    }
++
++    prog = argv[0];
++    port = 7004;
++
++    while ((c = getopt(argc, argv, "p:")) != -1) {
++	switch (c) {
++	case 'p':
++	    port = atoi(optarg);
++	    break;
++	default:
++	    fprintf(stderr, "%s: invalid option '%c'\n", prog, c);
++	    exit(1);
++	}
++    }
++
++    /*
++     * hmm, different implementations of getopt seem to do different things
++     * when there aren't any options.  linux sets optind = 1, which I would
++     * call correct, but sunos sets optind = 0.  try to do the right thing.
++     */
++    if (optind == 0)
++	optind = 1;
++
++    setup_servers(argc - optind, argv + optind);
++    s = setup_socket(port);
++
++    openlog("ka-forwarder", LOG_PID, LOG_DAEMON);
++
++    for (;;) {
++	char buf[BUFFER_SIZE], *bufp, *sendptr;
++	struct sockaddr_in from, reply, *to;
++	int fromlen, sendlen;
++
++	bufp = buf + 8;
++	fromlen = sizeof(from);
++
++	rv = recvfrom(s, bufp, sizeof(buf) - 8,
++		      0, (struct sockaddr *)&from, &fromlen);
++	if (rv < 0) {
++	    syslog(LOG_ERR, "recvfrom: %m");
++	    sleep(1);
++	    continue;
++	}
++
++	if (packet_is_reply(&from)) {
++	    /* this is a reply, forward back to user */
++
++	    to = &reply;
++	    reply.sin_family = AF_INET;
++	    bcopy(bufp, &reply.sin_addr.s_addr, 4);
++	    bcopy(bufp + 4, &reply.sin_port, 2);
++	    sendptr = bufp + 8;
++	    sendlen = rv - 8;
++	}
++	else {
++	    /* this is a request, forward to server */
++
++	    cur_server = (cur_server + 1) % num_servers;
++	    to = &servers[cur_server];
++
++	    bcopy(&from.sin_addr.s_addr, bufp - 8, 4);
++	    bcopy(&from.sin_port, bufp - 4, 2);
++
++	    sendptr = bufp - 8;
++	    sendlen = rv + 8;
++	}
++
++	{
++	    char a1[16], a2[16];
++	    strcpy(a1, inet_ntoa(from.sin_addr));
++	    strcpy(a2, inet_ntoa(to->sin_addr));
++
++	    syslog(LOG_INFO, "forwarding %d bytes from %s/%d to %s/%d\n",
++		   sendlen, a1, htons(from.sin_port), a2, htons(to->sin_port));
++	}
++
++	rv = sendto(s, sendptr, sendlen,
++		    0, (struct sockaddr *)to, sizeof(*to));
++	if (rv < 0) {
++	    syslog(LOG_ERR, "sendto: %m");
++	}
++    }
++}
+--- openafs-1.4.4.dfsg1.orig/src/bozo/bosoprocs.c
++++ openafs-1.4.4.dfsg1/src/bozo/bosoprocs.c
+@@ -1324,12 +1324,12 @@
+ 
+ struct bozo_bosEntryStats bozo_bosEntryStats[] = {
+     {NULL, 1, 1, 0755, 02},	/* AFSDIR_SERVER_AFS_DIRPATH    */
+-    {NULL, 1, 1, 0755, 02},	/* AFSDIR_SERVER_ETC_DIRPATH    */
++    {NULL, 1, 1, 0700, 02},	/* AFSDIR_SERVER_ETC_DIRPATH    */
+     {NULL, 1, 1, 0755, 02},	/* AFSDIR_SERVER_BIN_DIRPATH    */
+     {NULL, 1, 1, 0755, 02},	/* AFSDIR_SERVER_LOGS_DIRPATH   */
+     {NULL, 1, 0, 0700, 07},	/* AFSDIR_SERVER_BACKUP_DIRPATH */
+     {NULL, 1, 1, 0700, 07},	/* AFSDIR_SERVER_DB_DIRPATH     */
+-    {NULL, 1, 1, 0700, 07},	/* AFSDIR_SERVER_LOCAL_DIRPATH  */
++    {NULL, 1, 1, 0700, 02},	/* AFSDIR_SERVER_LOCAL_DIRPATH  */
+     {NULL, 0, 1, 0600, 07},	/* AFSDIR_SERVER_KEY_FILEPATH   */
+     {NULL, 0, 1, 0600, 03}
+ };				/* AFSDIR_SERVER_ULIST_FILEPATH */
+--- openafs-1.4.4.dfsg1.orig/src/config/linux-version
++++ openafs-1.4.4.dfsg1/src/config/linux-version
+@@ -38,7 +38,7 @@
+ CAN_BUILD=""
+ 
+ for VERS in $LINUX_VERS ; do
+-	dir=$LINUX_SRCDIR$VERS
++	dir=$LINUX_SRCDIR
+ 	if [ ! -d $dir ] ; then
+ 	    dir=$LINUX_SRCDIR
+ 	    if [ ! -d $dir ] ; then
+@@ -47,7 +47,7 @@
+ 		continue
+       	    fi
+ 	fi
+-	header=$LINUX_SRCDIR$VERS/include/linux/version.h
++	header=$LINUX_SRCDIR/include/linux/version.h
+ 	if [ ! -f $header ] ; then
+ 	    header=$LINUX_SRCDIR/include/linux/version.h
+ 	    if [ ! -f $header ] ; then
+--- openafs-1.4.4.dfsg1.orig/src/config/param.alpha_linux_26.h
++++ openafs-1.4.4.dfsg1/src/config/param.alpha_linux_26.h
+@@ -81,6 +81,11 @@
+ #define SYS_NAME_ID    SYS_NAME_ID_alpha_linux_26
+ 
+ 
++#ifdef __GLIBC__
++#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 3)
++#define USE_UCONTEXT
++#endif
++#endif
+ #endif /* AFS_PARAM_H */
+ 				     
+ #else /* !defined(UKERNEL) */
+--- openafs-1.4.4.dfsg1.orig/src/config/param.ia64_linux24.h
++++ openafs-1.4.4.dfsg1/src/config/param.ia64_linux24.h
+@@ -87,6 +87,7 @@
+ #endif
+ #endif /* KERNEL */
+ 
++#define USE_UCONTEXT		/* should be in afsconfig.h */
+ 
+ #endif /* _PARAM_IA64_LINUX20_H_ */
+ 
+@@ -157,6 +158,7 @@
+ #define CMSERVERPREF
+ #endif
+ 
++#define USE_UCONTEXT		/* should be in afsconfig.h */
+ 
+ #endif /* AFS_PARAM_H */
+ 
+--- openafs-1.4.4.dfsg1.orig/src/config/param.ia64_linux26.h
++++ openafs-1.4.4.dfsg1/src/config/param.ia64_linux26.h
+@@ -96,6 +96,7 @@
+ #endif
+ #endif /* KERNEL */
+ 
++#define USE_UCONTEXT		/* should be in afsconfig.h */
+ 
+ #endif /* _PARAM_IA64_LINUX20_H_ */
+ 
+@@ -167,6 +168,7 @@
+ #define CMSERVERPREF
+ #endif
+ 
++#define USE_UCONTEXT		/* should be in afsconfig.h */
+ 
+ #endif /* AFS_PARAM_H */
+ 
+--- openafs-1.4.4.dfsg1.orig/src/config/param.parisc_linux24.h
++++ openafs-1.4.4.dfsg1/src/config/param.parisc_linux24.h
+@@ -70,6 +70,11 @@
+ #endif
+ #endif /* KERNEL */
+ 
++#ifdef __GLIBC__
++#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 3)
++#define USE_UCONTEXT
++#endif
++#endif
+ #endif /* AFS_PARAM_H */
+ 
+ #else /* !defined(UKERNEL) */
+--- openafs-1.4.4.dfsg1.orig/src/config/param.ppc64_linux26.h
++++ openafs-1.4.4.dfsg1/src/config/param.ppc64_linux26.h
+@@ -76,6 +76,11 @@
+ #endif
+ #endif /* KERNEL */
+ 
++#ifdef __GLIBC__
++#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 3)
++#define USE_UCONTEXT
++#endif
++#endif
+ #endif /* _PARAM_PPC64_LINUX20_H_ */
+ 
+ #else /* !defined(UKERNEL) */
+--- openafs-1.4.4.dfsg1.orig/src/config/param.ppc_linux26.h
++++ openafs-1.4.4.dfsg1/src/config/param.ppc_linux26.h
+@@ -74,6 +74,11 @@
+ #endif
+ #endif /* KERNEL */
+ 
++#ifdef __GLIBC__
++#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 3)
++#define USE_UCONTEXT
++#endif
++#endif
+ #endif /* AFS_PARAM_H */
+ 
+ #else /* !defined(UKERNEL) */
+--- openafs-1.4.4.dfsg1.orig/src/config/param.s390_linux26.h
++++ openafs-1.4.4.dfsg1/src/config/param.s390_linux26.h
+@@ -86,6 +86,11 @@
+ #endif
+ #endif /* KERNEL */
+ 
++#ifdef __GLIBC__
++#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 3)
++#define USE_UCONTEXT
++#endif
++#endif
+ #endif /* AFS_PARAM_H */
+ 
+ #else /* !defined(UKERNEL) */
+--- openafs-1.4.4.dfsg1.orig/src/config/param.s390x_linux26.h
++++ openafs-1.4.4.dfsg1/src/config/param.s390x_linux26.h
+@@ -89,6 +89,11 @@
+ #endif
+ #endif /* KERNEL */
+ 
++#ifdef __GLIBC__
++#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 3)
++#define USE_UCONTEXT
++#endif
++#endif
+ #endif /* AFS_PARAM_H */
+ 
+ #else /* !defined(UKERNEL) */
+--- openafs-1.4.4.dfsg1.orig/src/config/param.sparc64_linux26.h
++++ openafs-1.4.4.dfsg1/src/config/param.sparc64_linux26.h
+@@ -95,6 +95,11 @@
+ #endif
+ #endif
+ 
++#ifdef __GLIBC__
++#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 3)
++#define USE_UCONTEXT
++#endif
++#endif
+ #endif /* _PARAM_SPARC64_LINUX26_H_ */
+ 
+ #else /* !defined(UKERNEL) */
+--- openafs-1.4.4.dfsg1.orig/src/config/param.sparc_linux24.h
++++ openafs-1.4.4.dfsg1/src/config/param.sparc_linux24.h
+@@ -98,6 +98,11 @@
+ #endif
+ #endif
+ 
++#ifdef __GLIBC__
++#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 3)
++#define USE_UCONTEXT
++#endif
++#endif
+ #endif /* AFS_PARAM_H */
+ 
+ #else /* !defined(UKERNEL) */
+--- openafs-1.4.4.dfsg1.orig/src/libafs/MakefileProto.LINUX.in
++++ openafs-1.4.4.dfsg1/src/libafs/MakefileProto.LINUX.in
+@@ -222,8 +222,8 @@
+ 
+ # Below this line are targets when in the COMMON directory:
+ # For Linux there is no kernel NFS server.
+-LIBAFS = libafs-${CLIENT}.${LINUX_MODULE_EXT}
+-LIBAFS_MP = libafs-${CLIENT}.mp.${LINUX_MODULE_EXT}
++LIBAFS = openafs.${LINUX_MODULE_EXT}
++LIBAFS_MP = openafs.${LINUX_MODULE_EXT}
+ LIBAFS_EP = libafs-${CLIENT}.ep.${LINUX_MODULE_EXT}
+ LIBAFS_BM = libafs-${CLIENT}.bm.${LINUX_MODULE_EXT}
+ 
+@@ -232,10 +232,8 @@
+ INST_LIBAFS_EP = ${DESTDIR}${afskerneldir}/${LIBAFS_EP}
+ INST_LIBAFS_BM = ${DESTDIR}${afskerneldir}/${LIBAFS_BM}
+ 
+-DEST_LIBAFS = ${DEST}/root.client/usr/vice/etc/modload/${LIBAFS}
+-DEST_LIBAFS_MP = ${DEST}/root.client/usr/vice/etc/modload/${LIBAFS_MP}
+-DEST_LIBAFS_EP = ${DEST}/root.client/usr/vice/etc/modload/${LIBAFS_EP}
+-DEST_LIBAFS_BM = ${DEST}/root.client/usr/vice/etc/modload/${LIBAFS_BM}
++DEST_LIBAFS = ${DEST}/root.client/usr/vice/etc/modload/openafs.o
++DEST_LIBAFS_MP = ${DEST}/root.client/usr/vice/etc/modload/openafs.mp.o
+ 
+ 
+ libafs:	$(LIBAFS) 
+@@ -251,11 +249,11 @@
+ 	echo BM Build Complete
+ 
+ <linux26 linux_26 umlinux26>
+-${LIBAFS} ${LIBAFS_MP} ${LIBAFS_EP} ${LIBAFS_BM}: libafs.ko
+-	cp libafs.ko $@
++${LIBAFS} ${LIBAFS_MP} ${LIBAFS_EP} ${LIBAFS_BM}: openafs.ko
++	cp openafs.ko $@
+ 
+ .FORCE:
+-libafs.ko: .FORCE
++openafs.ko: .FORCE
+ 	env EXTRA_CFLAGS="${EXTRA_CFLAGS}" @TOP_SRCDIR@/libafs/make_kbuild_makefile.pl ${KDIR} $@ @TOP_OBJDIR@/src/config/Makefile.config Makefile.afs Makefile.common
+ 	env EXTRA_CFLAGS="${EXTRA_CFLAGS}" $(MAKE) -C ${LINUX_KERNEL_PATH} M=@TOP_OBJDIR@/src/libafs/${KDIR} modules
+         
+--- openafs-1.4.4.dfsg1.orig/src/libafs/make_kbuild_makefile.pl
++++ openafs-1.4.4.dfsg1/src/libafs/make_kbuild_makefile.pl
+@@ -79,7 +79,7 @@
+ foreach (@objects) {
+   die "No source known for $_\n" unless exists $deps{$_};
+   if($deps{$_} =~ /\.s$/) {
+-     ($src = $_) =~ s/\.o$/.s/;
++     ($src = $_) =~ s/\.o$/.S/;
+   } else {
+      ($src = $_) =~ s/\.o$/.c/;
+   }
+--- openafs-1.4.4.dfsg1.orig/src/lwp/process.c
++++ openafs-1.4.4.dfsg1/src/lwp/process.c
+@@ -92,7 +92,9 @@
+ #elif	defined(AFS_HPUX_ENV) || defined(AFS_PARISC_LINUX24_ENV)
+ #define	LWP_SP	1
+ #elif	defined(AFS_LINUX20_ENV)
+-#if defined(AFS_PPC_LINUX20_ENV) || defined(AFS_PPC64_LINUX20_ENV)
++#if defined(AFS_PARISC_LINUX24_ENV )
++#define	LWP_SP	1
++#elif defined(AFS_PPC_LINUX20_ENV)|| defined(AFS_PPC64_LINUX20_ENV)
+ #define LWP_SP 0
+ #elif   defined(AFS_I386_LINUX20_ENV)
+ #define LWP_SP 4
+--- openafs-1.4.4.dfsg1.orig/src/pam/Makefile.in
++++ openafs-1.4.4.dfsg1/src/pam/Makefile.in
+@@ -47,6 +57,9 @@
+ afs_util_krb.o: afs_util.c afs_pam_msg.h afs_message.h afs_util.h
+ 	${CC} ${CFLAGS} -DAFS_KERBEROS_ENV -c ${srcdir}/afs_util.c -o afs_util_krb.o
+ 
++ktc.o: ${srcdir}/../auth/ktc.c
++	${CC} ${CFLAGS} -DAFS_KERBEROS_ENV -c ${srcdir}/../auth/ktc.c
++
+ pam_afs.so.1: $(SHOBJS) afs_setcred.o afs_auth.o afs_util.o
+ 	set -x; \
+ 	case "$(SYS_NAME)" in \
+@@ -59,8 +72,9 @@
+ 			afs_setcred.o afs_auth.o afs_util.o \
+ 			$(SHOBJS) $(LIBS) ;; \
+ 	*linux*) \
+-		$(CC) $(LDFLAGS) -o $@ afs_setcred.o \
+-			afs_auth.o afs_util.o $(SHOBJS) $(LIBS) ;;\
++		$(CC) $(LDFLAGS) $(PAM_CFLAGS) -o $@ afs_setcred.o \
++			afs_auth.o afs_util.o $(SHOBJS) $(SHLIB_OBJS) \
++			$(MT_LIBS) -lpam -lresolv;;\
+ 	*fbsd*| *nbsd*) \
+ 		$(CC) $(LDFLAGS) -o $@ afs_setcred.o \
+ 			afs_auth.o afs_util.o $(SHOBJS) $(LIBS) ;;\
+@@ -68,7 +82,7 @@
+ 		echo No link line for system $(SYS_NAME). ;; \
+ 	esac
+ 
+-pam_afs.krb.so.1: $(SHOBJS) afs_setcred_krb.o afs_auth_krb.o afs_util_krb.o
++pam_afs.krb.so.1: $(SHOBJS) afs_setcred_krb.o afs_auth_krb.o afs_util_krb.o ktc.o
+ 	set -x; \
+ 	case "$(SYS_NAME)" in \
+ 	hp_ux* | ia64_hpux*) \
+@@ -81,7 +95,8 @@
+ 			$(SHOBJS) $(LDFLAGS) $(KLIBS) ;; \
+ 	*linux*) \
+ 		$(CC) $(LDFLAGS) -o $@ afs_setcred_krb.o \
+-			afs_auth_krb.o afs_util_krb.o $(SHOBJS) $(KLIBS) ;;\
++			afs_auth_krb.o afs_util_krb.o ktc.o $(SHOBJS) \
++			$(KRB_SHLIB_OBJS) $(MT_LIBS) -lpam -lresolv;;\
+ 	*fbsd*| *nbsd*) \
+ 		$(CC) $(LDFLAGS) -o $@ afs_setcred_krb.o \
+ 			afs_auth_krb.o afs_util_krb.o $(SHOBJS) $(KLIBS) ;;\
+--- openafs-1.4.4.dfsg1.orig/src/ptserver/pt_util.c
++++ openafs-1.4.4.dfsg1/src/ptserver/pt_util.c
+@@ -136,7 +136,7 @@
+     struct prentry uentry, gentry;
+     struct ubik_hdr *uh;
+     char *dfile = 0;
+-    char *pfile = "/usr/afs/db/prdb.DB0";
++    char *pfile = "/var/lib/openafs/db/prdb.DB0";
+     struct cmd_parmdesc *tparm;
+ 
+     tparm = a_as->parms;
+--- openafs-1.4.4.dfsg1.orig/src/rx/LINUX/rx_kmutex.c
++++ openafs-1.4.4.dfsg1/src/rx/LINUX/rx_kmutex.c
+@@ -104,11 +104,12 @@
+     MUTEX_EXIT(l);
+ 
+     if (!sigok) {
+-	SIG_LOCK(current);
++	unsigned long f;
++	SIG_LOCK(current,f);
+ 	saved_set = current->blocked;
+ 	sigfillset(&current->blocked);
+ 	RECALC_SIGPENDING(current);
+-	SIG_UNLOCK(current);
++	SIG_UNLOCK(current,f);
+     }
+ 
+     while(seq == cv->seq) {
+@@ -122,7 +123,11 @@
+ #if defined(STRUCT_TASK_STRUCT_HAS_TODO)
+ 	    !current->todo
+ #else
++#if defined(STRUCT_TASK_STRUCT_HAS_THREAD_INFO)
+ 	    test_ti_thread_flag(current->thread_info, TIF_FREEZE)
++#else
++	    test_ti_thread_flag(task_thread_info(current), TIF_FREEZE)
++#endif
+ #endif
+ #endif
+ 	    )
+@@ -140,10 +145,11 @@
+     set_current_state(TASK_RUNNING);
+ 
+     if (!sigok) {
+-	SIG_LOCK(current);
++	unsigned long f;
++	SIG_LOCK(current, f);
+ 	current->blocked = saved_set;
+ 	RECALC_SIGPENDING(current);
+-	SIG_UNLOCK(current);
++	SIG_UNLOCK(current, f);
+     }
+ 
+     if (isAFSGlocked)
+--- openafs-1.4.4.dfsg1.orig/src/rx/LINUX/rx_knet.c
++++ openafs-1.4.4.dfsg1/src/rx/LINUX/rx_knet.c
+@@ -173,7 +173,11 @@
+ #if defined(STRUCT_TASK_STRUCT_HAS_TODO)
+ 	    !current->todo
+ #else
++#if defined(STRUCT_TASK_STRUCT_HAS_THREAD_INFO)
+             test_ti_thread_flag(current->thread_info, TIF_FREEZE)
++#else
++            test_ti_thread_flag(task_thread_info(current), TIF_FREEZE)
++#endif
+ #endif
+ #endif
+ 	    )
+--- openafs-1.4.4.dfsg1.orig/src/rx/SUNOS/rx_knet.c
++++ openafs-1.4.4.dfsg1/src/rx/SUNOS/rx_knet.c
+@@ -1 +1 @@
+-#error kernel code not supported on SunOS 4 
++#error kernel code not supported on SunOS 4
+--- openafs-1.4.4.dfsg1.orig/src/tviced/Makefile.in
++++ openafs-1.4.4.dfsg1/src/tviced/Makefile.in
+@@ -38,8 +38,7 @@
+ DIROBJS=buffer.o dir.o salvage.o
+ 
+ VOLOBJS= vnode.o volume.o vutil.o partition.o fssync.o purge.o \
+-	 clone.o devname.o common.o ihandle.o listinodes.o namei_ops.o \
+-	 fstab.o
++	 clone.o devname.o common.o ihandle.o listinodes.o namei_ops.o
+ 
+ FSINTOBJS= afsaux.o afscbint.cs.o afsint.ss.o afsint.xdr.o
+ 
+--- openafs-1.4.4.dfsg1.orig/src/util/Makefile.in
++++ openafs-1.4.4.dfsg1/src/util/Makefile.in
+@@ -12,7 +12,7 @@
+ 
+ objects = assert.o base64.o casestrcpy.o ktime.o volparse.o hostparse.o \
+ 	 hputil.o kreltime.o isathing.o get_krbrlm.o uuid.o serverLog.o \
+-	 dirpath.o fileutil.o netutils.o flipbase64.o fstab.o \
++	 dirpath.o fileutil.o netutils.o flipbase64.o \
+ 	 afs_atomlist.o afs_lhash.o snprintf.o strlcat.o strlcpy.o \
+ 	 daemon.o rxkstats.o ${REGEX_OBJ}
+ 
+@@ -392,4 +392,4 @@
+ 	    assert.c base64.c casestrcpy.c ktime.c volparse.c hostparse.c \
+ 	    hputil.c kreltime.c isathing.c get_krbrlm.c uuid.c serverLog.c \
+ 	    dirpath.c fileutil.c netutils.c flipbase64.c \
+-	    afs_atomlist.c afs_lhash.c snprintf.c fstab.c
++	    afs_atomlist.c afs_lhash.c snprintf.c
+--- openafs-1.4.4.dfsg1.orig/src/venus/fstrace.c
++++ openafs-1.4.4.dfsg1/src/venus/fstrace.c
+@@ -1471,7 +1471,7 @@
+  */
+ 
+ #ifndef RPC_NLS_FORMAT
+-#define RPC_NLS_FORMAT "%s.cat"
++#define RPC_NLS_FORMAT "/usr/share/openafs/%s.cat"
+ #endif
+ 
+ dce1_error_inq_text(status_to_convert, error_text, status)
+@@ -1488,7 +1488,8 @@
+     char component_name[4];
+     char *facility_name;
+     char filename_prefix[7];
+-    char nls_filename[11];
++    /* strlen("/usr/share/openafs/") + 6 + strlen(".cat") + 1 */
++    char nls_filename[19 + 6 + 4 + 1];
+     char alt_filename[80];
+     char *message;
+ #if defined(AFS_64BITPOINTER_ENV)

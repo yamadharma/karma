@@ -1,0 +1,8 @@
+DIST kxdocker-mountmanager-1.0.0.tar.bz2 727213 RMD160 3862f001ab48387e6b06be05da7c12629af32f2d SHA1 65303096c2b4a3e1aba619fadeaa90f35d14e3d4 SHA256 79514b65fd3ab554226e8203758a49fdaf640d2052b7b9d60a42c79f3dc07d53
+EBUILD kxdocker-mountmanager-1.0.0-r1.ebuild 476 RMD160 68e7a33e8ed8663ba4810525c462837115629737 SHA1 0a579a3b70b0f6b4f19dc5a560ac4a0ddc6cba75 SHA256 a02c9296f562a137a2ccddc354ed996b282beb339ae8e8c36aa718ebc72a5531
+MD5 b9ee0f6b50aa9479e275c820ee28b40b kxdocker-mountmanager-1.0.0-r1.ebuild 476
+RMD160 68e7a33e8ed8663ba4810525c462837115629737 kxdocker-mountmanager-1.0.0-r1.ebuild 476
+SHA256 a02c9296f562a137a2ccddc354ed996b282beb339ae8e8c36aa718ebc72a5531 kxdocker-mountmanager-1.0.0-r1.ebuild 476
+MD5 7465d998b7059600f636d060ec24fc49 files/digest-kxdocker-mountmanager-1.0.0-r1 286
+RMD160 c9c862586c5b7137c6b9ac5c5841b262d3763399 files/digest-kxdocker-mountmanager-1.0.0-r1 286
+SHA256 9f5c4584385fe748cf427734d99fb0f50362cc626bf477ffa6db96f5a5709e5c files/digest-kxdocker-mountmanager-1.0.0-r1 286
