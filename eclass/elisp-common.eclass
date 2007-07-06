@@ -131,6 +131,13 @@ INHERITED="$INHERITED $ECLASS"
 
 SITELISPEMACS=/usr/share/emacs/site-lisp
 #SITELISP=/usr/share/emacs/site-lisp
+SITELISP=/usr/share/site-lisp/common/packages
+SITELISPROOT=/usr/share/site-lisp
+SITELISPDOC=/usr/share/site-lisp/doc
+SITELISPEMACS=/usr/share/emacs/site-lisp
+    	    
+HAS_ECF=1
+
 
 # Sandbox issues
 for i in ${INFOPATH}

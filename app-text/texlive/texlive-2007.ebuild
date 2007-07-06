@@ -291,7 +291,7 @@ src_install() {
 	# is not present at this stage and MacOS doesn't
 	# like non-existing targets
 	cd "${D}/usr/bin/"
-	ln -snf platex latex
+	ln -snf pdftex latex
 	ln -snf pdftex pdflatex
 	ln -snf tex virtex
 	ln -snf pdftex pdfvirtex
@@ -303,7 +303,6 @@ src_install() {
 		elisp-install tex-utils ${S}/$i/*.el ${S}/$i/*.elc
 	    done	
 	fi
-	
 }
 
 pkg_preinst() {
