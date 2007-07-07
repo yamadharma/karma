@@ -1,6 +1,0 @@
-# ChangeLog for app-paludis/paludis-hooks-check-security-updates
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-2007-03-12 ver 1.1 : updated for eselect support. Hook is now symlinked from /common/ folder. 
-2007-02-23 ver 1.0 : Initial entry

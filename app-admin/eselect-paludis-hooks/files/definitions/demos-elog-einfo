@@ -1,3 +1,0 @@
-# file: eselect/demos-elog-einfo
-# eselect definition file for optional parts of demos/elog.bash hook
-demos/elog.bash einfo 
