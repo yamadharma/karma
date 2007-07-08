@@ -3,7 +3,7 @@
 # $Header: $
 
 DEB_PV="${PV}.dfsg.2"
-DEB_PR="1"
+DEB_PR="2"
 inherit cernlib
 DEPEND="app-admin/eselect-blas"
 KEYWORDS="x86 amd64"
@@ -36,4 +36,9 @@ src_unpack() {
 		debian/add-ons/cernlib.mk || die "sed failed"
 
 	cernlib_patch
+
+	# fix an ifort problem
+	sed -i \
+		-e 's/= $(CLIBS) -nofor_main/+= -nofor_main/' \
+		src/packlib/kuip/programs/kxterm/Imakefile || die "sed failed"
 }

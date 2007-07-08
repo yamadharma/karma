@@ -1,0 +1,300 @@
+# ChangeLog for gnome-base/gdm
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  19 Jun 2007; Saleem Abdulrasool <compnerd@gentoo.org> -gdm-2.19.2.ebuild,
+  +gdm-2.19.3.ebuild:
+  - Ensure non-null size is set by default for pango font
+    description (Frederic Crozat) 
+  - Now set WINDOWPATH so that AT programs such as braille
+    displays can work better with Xnest and sessions started
+    via VT.
+  - Now support VT on Solaris where available (Brian Cameron)
+  - No longer call logindevperm logic when logging into XNEST 
+    sessions since we do not want to change device permissions
+    on Solaris for XNEST sessions, only for the real console
+    session.
+  - Doc and string improvements.  (Brian Cameron)
+  - Translation updates (Pema Geyleg, Priit Laes, Alexander
+    Shopov)
+
+  09 Jun 2007; Saleem Abdulrasool <compnerd@gentoo.org> gdm-2.19.2.ebuild:
+  x11-libs/dmxproto -> x11-proto/dmxproto fix thanks to Ed Catmur
+  <ed@catmur.co.uk> for noticing
+
+  04 Jun 2007; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Interface Changes:
+  - The location of the .gdm_socket file has been moved from /tmp to 
+    /var/run.  This interface change has been coordinated with 
+    gnome-session, gnome-panel, and the Fast-User-Switch Applet (FUSA).
+    This is a more sensible place for GDM to store its sockets file.
+    (Lo\357c Minier)
+  
+  - Now GDM desktop files are installed to /usr/share/gdm/applications and
+    GDM appends this directory to XDG_DATA_DIR.  This way GDM programs only
+    show up in the menus if GDM is actually being used as the login program.
+    This prevents the menu items from showing up if the user switches to
+    another login program.  (Brian Cameron)
+  
+  - The greeter programs no longer accept the Tab key as Enter so that now
+    the GUI's are now more navigable for a11y users.  (Patrick Wade)
+  
+  New features, improvements, and bug fixes:
+  
+  - Now support Linux auditing if configure detects libaudit on the system.
+    See enhancement request #349835.  (Ray Strode)
+  
+  - Now GDM greeters only display languages that are installed on the system. 
+    (Ray Strode)
+  
+  - The Face Browser now prunes out users if their shell is /sbin/nologin,
+    /bin/true, or /bin/false.  (Ray Strode)
+  
+  - Improve custom command logic so that you can specify a widget in the
+    gdmgreeter theme with the following sort of tag:
+  .  (Lukasz Zalewski)
+  
+  - Now the greeter invisible character is set explicitely to '*' if
+    the configuration file doesn't specify to use invisible or circles.
+    (Sebastien Bacher)
+  
+  - GDM documention make logic has been updated so it works better and we
+    now generate documentation for more languages.  Now mdash and percnt
+    entities have definitions so they no longer generate warnings.
+    (Brian Cameron)
+  
+  - Translation updates (Djihed Afifi, Theppitak Karoonboonyanan,
+    Priit Laes, David Lodge, Kjartan Maraas, Christophe Merlet,
+    Daniel Nylander, Ignacio Casal Quinteiro, St\303\251phane Raimbault,
+    Funda Wang)
+
+  14 May 2007; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  - Now GDM desktop files support the optional X-Gdm-XserverArgs extension to
+    the desktop files installed to /usr/share/xsessions.  This allows a desktop
+    session file to specify additional Xserver flags to be used with the
+    session.  This could be useful to turn on special extensions needed for
+    certain accessibility features, or to use sessions that require special
+    Xserver flags or extensions, etc.  Note that sessions that use this
+    feature cause GDM to restart the Xserver after authentication.
+  
+  - Now gdmgreeter themes support a "background=[true|false]" element to be 
+    specified for any item tag.  Items which have this tag set to true will
+    be mapped to the root window after authentication.  This way the 
+    background image to be displayed can be specified for the interim 
+    between authentication and when the session starts.  (Frederic Crozat)
+  
+  - Fix gdm_daemon_check_permissions so it resets the permissions of the
+    ServAuthDir rather than LogDir.  This bug was introduced into 2.19.0.
+    (Brian Cameron)
+  
+  - Correct handling of AlwaysLoginCurrentSession and DoubleLoginWarning so they
+    work more sensibly.  Previously they caused a silent login failure for
+    non-migratable sessions (e.g. Xnest and XDMCP) if both were set to true.
+    (Brian Cameron)
+  
+  - When using PAM, if it receives a PAM_AUTHINFO_UNAVAIL message, it will
+    display the default "authentication failed" message.  This ensures that
+    the error message is the same for invalid user and incorrect password,
+    making it harder to tell whether an account is a valid one or not. 
+    (Lo\357c Minier)
+  
+  - Avoid starting timed login timer if a username has already been entered.
+    (Lo\357c Minier)
+  
+  - Check for existance of a gdmgreeter theme before selecting a random 
+    theme.  Skip over themes that don't exist on the system.  (Lo\357c Minier)
+  
+  - Fix a bug that was causing gdmflexiserver commands SET_LOGOUT_ACTION and
+    SET_SAFE_LOGOUT action to not work.  Also fix a bug that was causing the
+    gdmflexiserver command UPDATE_CONFIG to return an incorrect return code.
+    These issues were introduced in GDM 2.19.0.  (Brian Cameron) 
+  
+  - Now used an unsigned character buffer in gdm_fdgetc because the GDM GUI
+    sends the username/password data as utf8 and the daemon will interpret
+    any character sent with its high bit set as EOF unless we use an unsigned
+    buffer.  This should improve support of usernames and passwords which 
+    contain non-ASCII characters.  (Lo\357c Minier)
+  
+  - This change should only affect Solaris users.  Add support for ctrun, so
+    that when running GDM as a svc service via svcadm(1M), subprocesses are run
+    in a separate contract.  This ensures that when programs in the user session
+    crash, it doesn't cause a GDM restart.  (Brian Cameron)
+  
+  - Remove unused failsafe logic from the GDM Xsession script.  For
+    some time GDM has called failsafe directly from the daemon slave,
+    so this code hasn't been used for some time.  (Brian Cameron)
+  
+  - Improvements to how GDM sets umask.  (Peter Baumann)
+  
+  - No longer unset MAIL when starting a user session, and set PWD before 
+    starting a user session.  This fixes problems when the user's $HOME
+    directory is a symlink.  (Lo\357c Minier)
+  
+  - Fix detection of Xserver so that it should work on Solaris, Debian and
+    Ubuntu without needing to patch the code.  (Brian Cameron, Lo\357c Minier)
+  
+  - Documentation and manpage improvements (Brian Cameron, Lo\357c Minier)
+  
+  - Several build fixes (Saleem Abdulrasool, Ed Catmur, Jens Granseuer).
+  
+  - Translation updates (David Lodge, Kjartan Maraas, Christophe Merlet)
+
+  24 Apr 2007; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Version bump for 2.19.0
+
+  14 Mar 2007; Gilles Dartiguelongue <dartigug@esiee.fr> -gdm-2.17.8.ebuild,
+  +gdm-2.18.0.ebuild:
+  bump to 2.18.0
+  * Fix gdmchooser so the Cancel button works. (Brian Cameron)
+  * Fix desktop files so they include "GNOME" and "GTK" and remove
+  "Application".
+  * Fixes bug #417350. Now gdmsetup uses the full path in Exec, not just
+  TryExec, so that if gdmsetup isn't in the user's PATH it will still work.
+  (Brian Cameron)
+  * Update of ConsoleKit parameter names. Fixes enhancement request #415181.
+  (William Jon McCann)
+  * Fix memory leaks. (Brian Cameron)
+  * Translation updates
+
+  26 Feb 2007; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Fix dependencies for build time
+
+  26 Feb 2007; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  - In gdmlogin, change "Session" mnemonic to "e" instead of "s"
+    so it doesn't conflict with the "Start Again" button.
+  - Now AlwaysLoginCurrentSession is set to true by default.
+  - Fix spacing in gdmsetup so it uses less vertical space.  (Lukasz
+    Zalewski)
+  - Fix gdmchooser so it builds with HURD.
+  - Fix comparison with string literal in gdmdynamic.  (Hans Petter
+    Jansson)
+  - On Solaris, gnome.session script calls /usr/dt/config/Xsession.jds
+    instead of gnome.session since Xsession.jds starts D-Bus daemons
+    needed for GNOME to run properly.  (Brian Cameron)
+
+  15 Feb 2007; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Add in consolekit support for PAM
+  2.17.7 Stuff:
+  - New sockets command FLEXI_XNEST_USER and FLEXI_XSERVER_USER.  This is
+    used to start login procedure by programs like gnome-screensaver and the
+    Fast User Switch applet.  (Matthias Clasen)
+  - Improvements to PAM logic so that it works more generically with PAM
+    modules.  (Ludwig Nussel)
+  - Better fix for not showing the face browser if the userlist is empty.
+    This avoids a needless selection "changed" signal from getting generated.
+    (Ludwig Nussel)
+  - Fix so ConsoleKit logic does not use dbus-glib bindings to using the
+    lower level API instead.  Fixes bug #400793.
+  - Fixes for compiler warnings and for c99 compile issues.  (Ludwig Nussel
+    and Jens Granseuer)
+  - Avoid catching sigchld when trying to call XOpenDisplay.  This corrects
+    an issue where GDM catches a second SIGCHLD when trying to restart.  
+    This causes the slave to freeze even though the Xserver and the session
+    are killed, causing the display to no longer manage. 
+    (Roberto Tam)
+  - Improvements to PAM documentation in GDM docs.  (Brian Cameron and
+    Gary Winiger)
+  - Translation updates (Djihed Afifi, Theppitak Karoonboonyanan, Priit Laes,
+    David Lodge, Duarte Loreto, Daniel Nylander, St\303\251phane Raimbault,
+    Hendrik Richter, Alexander Shopov)
+
+  23 Jan 2007; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Version bump for beta 1 cycle
+
+  19 Jan 2007; Daniel Gryniewicz <dang@gentoo.org> -gdm-2.17.4.ebuild,
+  +gdm-2.17.5.ebuild:
+  Bump to 2.17.5
+  - No longer close file descripters in forked process which
+    shows dialog boxes since this causes the dialogs to not
+    display any text.  (Brian Cameron)
+  
+  - Now GDM will recognize when the system default language
+    has changed and will display new GUI's with the new
+    default language.  By default the /var/sysconfig/i18n
+    file is assumed to have the language defined in LANG=foo
+    format.  The --with-lang-file configure option may be
+    needed to specify a different system language configuration
+    file.  On Solaris, for example, it would be
+    /etc/default/init.  (Ray Strode and Takao Fujiwara)
+  
+  - Remove filter_watch after it is called for the first time.
+    This filter is used to start the at_spi_registryd, but
+    after it is started there is no need to listen to the
+    propery any more.  (Li Yuan)
+  
+  - Further improvements to gdmsetup to improve usability.
+    (Lukasz Zalewski)
+  
+  - No longer hardcode invisible_char property in glade files,
+    instead realy on GTK+ default.  (Vitaliy Ischenko)
+  
+  - Fix so that the userlist is hidden properly when there
+    are no users.  (Brian Cameron)
+    
+  - Fixes for compiling with gcc 2.95. (Jens Granseuer)
+  
+  - Translation updates (Djihed Afifi, Raivis Dejus,
+    Theppitak Karoonboonyanan, Gabor Kelemen, David Lodge,
+    Jovan Naumovski, Amitakhya Phukan, Danilo \305\240egan,
+    Francisco Javier F. Serrador, Ilkka Tuohela, Matic Zgur)
+
+  14 Dec 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Version bump with security fix
+
+  09 Nov 2006; Remi Cardona <remi2402@free.fr> ChangeLog:
+  Bump to version 2.17.2
+  Various bugfixes (2.17.0 did not work on my test box)
+
+  27 Oct 2006; Daniel Gryniewicz <dang@gentoo.org> -gdm-2.16.0.ebuild,
+  +gdm-2.17.0.ebuild:
+  Bump to 2.17.0
+  	- Assorted bug fixes
+
+  04 Sep 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  drop devel version
+
+  04 Sep 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  version bump for 2.16
+
+  21 Aug 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  pruning old versions
+
+  21 Aug 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  version bump from upstream
+
+  10 Aug 2006; Daniel Gryniewicz <dang@gentoo.org> ChangeLog:
+  Bump to 2.15.9
+
+  04 Aug 2006; Daniel Gryniewicz <dang@gentoo.org> ChangeLog:
+  Bump to 2.15.8
+
+  26 Jul 2006; Daniel Gryniewicz <dang@gentoo.org> ChangeLog:
+  Bump to 2.15.7
+
+  22 Jul 2006; Daniel Gryniewicz <dang@gentoo.org> ChangeLog:
+  Bump for 2.15.4
+
+  14 Jun 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Version bump for 2.15.3
+
+  16 May 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  version bump for 2.15.2
+
+  12 May 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Version bump for 2.15
+
+  04 May 2006; Daniel Gryniewicz <dang@gentoo.org> ChangeLog:
+  No gdm yet
+
+  02 Mar 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Version bump
+
+  14 Feb 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Version bump from upstream
+
+  31 Jan 2006; <dang@gentoo.org> ChangeLog:
+  Add patch to fix locale build error, remove old version
+
+  31 Jan 2006; Saleem Abdulrasool <compnerd@gentoo.org> ChangeLog:
+  Version bump to 2.13.0.7
+

@@ -1,0 +1,37 @@
+# ChangeLog for sys-fs/aufs
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  18 Apr 2007; Markus Ullmann <jokey@gentoo.org> -aufs-20070212.ebuild,
+  aufs-20070402.ebuild:
+  Drop old and some cosmetics
+
+  14 Apr 2007; Torsten Kockler (conbart) <torsten.kockler@fh-kl.de>
+  +aufs-20070402.ebuild, +files/aufs-20070402-ksize.patch,
+  +files/aufs-20070402-lhash.patch:
+  New aufs (Another Union FS) ebuild
+
+  12 Mar 2007; Jakub Moc <jakub@gentoo.org> aufs-20070212.ebuild:
+  Fix up the postinst/postrm checks a bit
+
+  12 Mar 2007; Torsten Kockler (conbart) <torsten.kockler@fh-kl.de>
+  aufs-20070212.ebuild, +files/aufs-20070212-ksize.patch,
+  +files/aufs-20070212-lhash.patch:
+  Fixed a bug using the lhash and ksize kernel patch
+
+  14 Feb 2007; Torsten Kockler (conbart) <torsten.kockler@fh-kl.de>
+  aufs-20070212.ebuild:
+  Changed Variablename  to , changed ! kernel_is gt to kernel_is lt
+
+  14 Feb 2007; Torsten Kockler (conbart) <torsten.kockler@fh-kl.de>
+  aufs-20070212.ebuild:
+  Deleted redundant functions src_compile src_unpack
+
+  13 Feb 2007; Torsten Kockler (conbart) <torsten.kockler@fh-kl.de>
+  aufs-20070212.ebuild:
+  Changed order of KEYWORDS, added http:// to SRC_URI and grouped variables
+
+  13 Feb 2007; Torsten Kockler (conbart) <torsten.kockler@fh-kl.de>
+  +aufs-20070212.ebuild, +metadata.xml:
+  New Ebuild for bug 160065
+
