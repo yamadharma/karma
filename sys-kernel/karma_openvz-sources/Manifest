@@ -14,10 +14,10 @@ AUX misc/2.6.18-r3/karma-openvz.tar.bz2 1187427 RMD160 b9cb5f5210f68e961dc6aca28
 MD5 a75bc2cb9dbcd85a6d41827c6cbc28d4 files/misc/2.6.18-r3/karma-openvz.tar.bz2 1187427
 RMD160 b9cb5f5210f68e961dc6aca28a9c2163418e0cbe files/misc/2.6.18-r3/karma-openvz.tar.bz2 1187427
 SHA256 174a63960312dab44f3a4907ffda1f41abcda182b746614cc6b99cf0b0ce5a7f files/misc/2.6.18-r3/karma-openvz.tar.bz2 1187427
-AUX misc/2.6.18-r4/karma-openvz.tar.bz2 3826904 RMD160 15f0f2a3c8c8a9ed6d97e39104cbf06ede29fbe2 SHA1 22c36fc77cbca055d4cb6d50e717e758b69a6a1a SHA256 dc69fab1b70ba0f10c2f0c14a1b687e5f330c4a6706c98029cb47f489dd10d2b
-MD5 246e6705997678fe43a4ae4b86e2f93f files/misc/2.6.18-r4/karma-openvz.tar.bz2 3826904
-RMD160 15f0f2a3c8c8a9ed6d97e39104cbf06ede29fbe2 files/misc/2.6.18-r4/karma-openvz.tar.bz2 3826904
-SHA256 dc69fab1b70ba0f10c2f0c14a1b687e5f330c4a6706c98029cb47f489dd10d2b files/misc/2.6.18-r4/karma-openvz.tar.bz2 3826904
+AUX misc/2.6.18-r4/karma-openvz.tar.bz2 3825965 RMD160 1ff41cf92bb03b3cb229a0ff82c1b0357e90e331 SHA1 c04a28e7ee8623b3dba3d18c3b452dc63fdfceee SHA256 82486da0f1e7877d5d890acae423d9b833b622d862800e1a3f95ae62b2730f9f
+MD5 59daf6d4eec9366c8b7b09571f0a9fa6 files/misc/2.6.18-r4/karma-openvz.tar.bz2 3825965
+RMD160 1ff41cf92bb03b3cb229a0ff82c1b0357e90e331 files/misc/2.6.18-r4/karma-openvz.tar.bz2 3825965
+SHA256 82486da0f1e7877d5d890acae423d9b833b622d862800e1a3f95ae62b2730f9f files/misc/2.6.18-r4/karma-openvz.tar.bz2 3825965
 AUX misc/2.6.18/karma-openvz.tar.bz2 919974 RMD160 d3aeb11c41e969f7d80c58d79685f0782874a7e9 SHA1 21ac9ccec832b7366b7c4ca381b7e4ad0ed07886 SHA256 cb60a2bd7590295ed6d918e38f7391ff1c4fdca451ac2ed344055d17f324989e
 MD5 cf695684c7ac13c4eb81131bc2e142bb files/misc/2.6.18/karma-openvz.tar.bz2 919974
 RMD160 d3aeb11c41e969f7d80c58d79685f0782874a7e9 files/misc/2.6.18/karma-openvz.tar.bz2 919974

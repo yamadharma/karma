@@ -40,7 +40,7 @@ BROTHERMFCDRIVER="sane-${BROTHERMFCPATCHVER}-brother-driver.diff"
 #		http://dev.gentoo.org/~phosphan/${BROTHERMFCDRIVER}.bz2 )"
 SLOT="0"
 LICENSE="GPL-2 public-domain"
-KEYWORDS="alpha amd64 hppa ia64 ppc ppc64 sparc x86"
+KEYWORDS="alpha amd64 hppa ia64 ppc ppc64 sparc ~x86"
 
 # To enable specific backends, define SANE_BACKENDS with the backends you want
 # in those:

@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.24.1.ebuild,v 1.1 2007/05/05 23:55:52 ferdy Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/paludis/paludis-0.24.5.ebuild,v 1.1 2007/07/09 21:32:47 peper Exp $
 
 inherit bash-completion eutils flag-o-matic
 
@@ -31,6 +31,7 @@ DEPEND="${COMMON_DEPEND}
 
 RDEPEND="${COMMON_DEPEND}
 	>=app-admin/eselect-1.0.2
+	app-admin/eselect-news
 	net-misc/wget
 	net-misc/rsync
 	sys-apps/sandbox"
@@ -44,7 +45,7 @@ PROVIDE="virtual/portage"
 
 create-paludis-user() {
 	enewgroup "paludisbuild"
-	enewuser "paludisbuild" -1 -1 "/var/tmp/paludis" "paludisbuild"
+	enewuser "paludisbuild" -1 -1 "/var/tmp/paludis" "paludisbuild"		
 }
 
 pkg_setup() {
