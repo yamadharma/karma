@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt/qt-3.3.8-r2.ebuild,v 1.6 2007/04/12 20:40:23 jer Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt/qt-3.3.8-r2.ebuild,v 1.10 2007/05/30 11:49:19 caleb Exp $
 
 # *** Please remember to update qt3.eclass when revbumping this ***
 
@@ -22,9 +22,8 @@ SRC_URI="ftp://ftp.trolltech.com/qt/source/qt-x11-${SRCTYPE}-${PV}.tar.gz
 LICENSE="|| ( QPL-1.0 GPL-2 )"
 
 SLOT="3"
-KEYWORDS="~alpha amd64 hppa ia64 ~mips ppc ppc64 ~sparc x86 ~x86-fbsd"
+KEYWORDS="alpha amd64 hppa ia64 ~mips ppc ppc64 sparc x86 ~x86-fbsd"
 IUSE="cups debug doc examples firebird gif ipv6 mysql nas nis odbc opengl pertty postgres qt-copy sqlite xinerama immqt immqt-bc"
-#qt-copy risky sqlite xinerama immqt immqt-bc"
 
 DEPEND="|| ( ( x11-libs/libXcursor
 			x11-libs/libXi
@@ -138,6 +137,10 @@ src_unpack() {
 		epatch ${FILESDIR}/0048-qclipboard_hack_80072.patch
 	fi
 
+	# Fix some issues with compositing flicker (will include in next qt-copy
+	# snapshot). 
+	epatch ${FILESDIR}/0080-net-wm-sync-request.patch
+
 	# ulibc patch (bug #100246)
 	epatch ${FILESDIR}/qt-ulibc.patch
 
@@ -147,11 +150,7 @@ src_unpack() {
 	epatch ${FILESDIR}/utf8-bug-qt3.diff
 
 	# Visibility patch
-	#if use risky ; then
-	#	epatch ${FILESDIR}/qt-visibility2.patch
-	#else
-		epatch "${FILESDIR}/${P}-visibility.patch"
-	#fi
+	epatch "${FILESDIR}/${P}-visibility.patch"
 
 	if use immqt || use immqt-bc ; then
 		epatch ../${IMMQT_P}.diff
@@ -198,7 +197,7 @@ src_compile() {
 	use gif		&& myconf="${myconf} -qt-gif" || myconf="${myconf} -no-gif"
 	use mysql	&& myconf="${myconf} -plugin-sql-mysql -I/usr/include/mysql -L/usr/$(get_libdir)/mysql" || myconf="${myconf} -no-sql-mysql"
 	use postgres	&& myconf="${myconf} -plugin-sql-psql -I/usr/include/postgresql/server -I/usr/include/postgresql/pgsql -I/usr/include/postgresql/pgsql/server" || myconf="${myconf} -no-sql-psql"
-	use firebird    && myconf="${myconf} -plugin-sql-ibase" || myconf="${myconf} -no-sql-ibase"
+	use firebird    && myconf="${myconf} -plugin-sql-ibase -I/opt/firebird/include" || myconf="${myconf} -no-sql-ibase"
 	use sqlite	&& myconf="${myconf} -plugin-sql-sqlite" || myconf="${myconf} -no-sql-sqlite"
 	use cups	&& myconf="${myconf} -cups" || myconf="${myconf} -no-cups"
 	use opengl	&& myconf="${myconf} -enable-module=opengl" || myconf="${myconf} -disable-opengl"
@@ -355,8 +354,7 @@ EOF
 	insinto /etc/revdep-rebuild
 	doins ${T}/50-qt3-revdep
 
-	insinto /etc/env.d
-	doins ${T}/45qt3 ${T}/50qtdir3
+	doenvd ${T}/45qt3 ${T}/50qtdir3
 
 	if [ "${SYMLINK_LIB}" = "yes" ]; then
 		dosym $(get_abi_LIBDIR ${DEFAULT_ABI}) ${QTBASE}/lib
@@ -406,7 +404,8 @@ pkg_postinst() {
 	elog "kde-base/kdelibs, kde-base/kdeartwork and kde-base/kdeartwork-styles."
 	elog "See http://doc.trolltech.com/3.3/plugins-howto.html for more infos."
 	echo
-	ewarn "DO NOT report bugs to Gentoo's bugzilla"
-	einfo "Please report all bugs to http://trac.gentoo-xeffects.org"
+	ewarn "Do NOT report bugs to Gentoo's bugzilla"
+	einfo "Please report all bugs to roderick.greening@gmail.com"
+	einfo "Or, you may post them to http://forums.gentoo-xeffects.org"
 	einfo "Thank you on behalf of the Gentoo Xeffects team"
 }

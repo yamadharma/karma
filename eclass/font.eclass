@@ -111,6 +111,18 @@ font_xft_config() {
 	fi
 }
 
+font_fontconfig() {
+
+	local conffile
+	if has_version '>=media-libs/fontconfig-2.4'; then
+		insinto /etc/fonts/conf.avail/
+		for conffile in "${FONT_CONF}"; do
+			[[ -e  "${FILESDIR}/${conffile}" ]] && doins "${FILESDIR}/${conffile}"
+		done
+	fi
+
+}
+
 #
 # Public inheritable functions
 #
@@ -133,6 +145,7 @@ font_src_install() {
 		set_FONTDIR ${suffix}
 		font_xfont_config
 		font_xft_config
+		font_fontconfig
 	done
 
 	cd "${S}"

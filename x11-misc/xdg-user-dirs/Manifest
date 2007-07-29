@@ -1,0 +1,8 @@
+DIST xdg-user-dirs-0.8.tar.gz 225124 RMD160 f8eacd6bac3f6d8fdcc679d349cad5024615dd4e SHA1 82082e3a29581c9b54539afde3f189993662826a SHA256 e0b18dd4ca81aa51cfae499b990c3e1baf1440a9cfa24518e8a3bdd79847b3cf
+EBUILD xdg-user-dirs-0.8.ebuild 565 RMD160 1f36116e0415bdf040b2a2be55774a876eba7eba SHA1 911673f11416c2733902ff1ddcd1eb63f29d8a5d SHA256 b3ad1f8b925775502ab9d647bd64d6c988197836ef44b69a5347f55e6698b254
+MD5 bbf8a9c347f1d64bb092c1ffa10b369d xdg-user-dirs-0.8.ebuild 565
+RMD160 1f36116e0415bdf040b2a2be55774a876eba7eba xdg-user-dirs-0.8.ebuild 565
+SHA256 b3ad1f8b925775502ab9d647bd64d6c988197836ef44b69a5347f55e6698b254 xdg-user-dirs-0.8.ebuild 565
+MD5 1bd87af9d9a4680dedd455de9613eb9a files/digest-xdg-user-dirs-0.8 253
+RMD160 dec9f00fdc9bac4e9b448aeca7e481fbb8139e62 files/digest-xdg-user-dirs-0.8 253
+SHA256 f8e0be89175c621f7bd8f87ea5e82a9fec7aeda8b33e3d86758da6ed1247665c files/digest-xdg-user-dirs-0.8 253

@@ -2,6 +2,16 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Jul 2007; <roderick_greening@hotmail.com>
+  -files/qt-3.3.5-uic-fix.patch, +files/0080-net-wm-sync-request.patch,
+  -qt-3.3.6-r5.ebuild, -files/qt-3.3.6-CVE-2006-4811-bis.patch,
+  -files/0037-dnd-timestamp-fix.patch, -files/qt-3.3.6-CVE-2006-4811.patch,
+  -files/qt-3.3.6-seli-xinerama.patch, -files/qt-3.3.6-uic-fix.patch,
+  -files/qt-3.3.6-visibility.patch, -qt-3.3.8.ebuild, -qt-3.3.8-r1.ebuild,
+  qt-3.3.8-r2.ebuild, -files/qt-visibility2.patch:
+  Ebuild clean-up. Added patch to remove flicker from compositing WM's like
+  compiz.
+
   13 Apr 2007; <roderick_greening@hotmail.com> qt-3.3.8-r2.ebuild:
   Keyword update
 

@@ -2,6 +2,13 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/konqueror/ChangeLog,v 1.73 2007/01/16 21:00:03 flameeyes Exp $
 
+  28 Jul 2007; <roderick_greening@hotmail.com> ++:
+  Rev bump in portage: Make Gentoo specific web shortcuts optional.
+
+  23 Jul 2007; <roderick_greening@hotmail.com>
+  +files/konqueror-3.5.7-location.patch, ++:
+  Applied patch to prevent URI address bar spoofing, should solve bug 185603.
+
   28 Jun 2007; <roderick_greening@hotmail.com> -konqueror-3.5.6.ebuild,
   konqueror-3.5.7.ebuild:
   Attempt to fix false pos check when greater than ver (3.5).
