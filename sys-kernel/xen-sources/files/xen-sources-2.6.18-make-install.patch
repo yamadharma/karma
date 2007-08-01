@@ -1,0 +1,52 @@
+diff -ru linux-2.6.18-xen.orig/arch/i386/Makefile linux-2.6.18-xen/arch/i386/Makefile
+--- linux-2.6.18-xen.orig/arch/i386/Makefile	2007-07-16 17:58:05.000000000 -0700
++++ linux-2.6.18-xen/arch/i386/Makefile	2007-07-16 18:22:18.000000000 -0700
+@@ -125,7 +125,7 @@
+ 	$(Q)$(MAKE) $(build)=$(boot) $@
+ 
+ install:
+-	$(Q)$(MAKE) $(build)=$(boot) XENGUEST=$(XENGUEST) $@
++	$(Q)$(MAKE) $(build)=$(boot) $@
+ else
+ all: bzImage
+ 
+diff -ru linux-2.6.18-xen.orig/arch/i386/boot-xen/Makefile linux-2.6.18-xen/arch/i386/boot-xen/Makefile
+--- linux-2.6.18-xen.orig/arch/i386/boot-xen/Makefile	2007-07-16 17:58:05.000000000 -0700
++++ linux-2.6.18-xen/arch/i386/boot-xen/Makefile	2007-07-16 18:36:08.000000000 -0700
+@@ -10,12 +10,17 @@
+ INSTALL_ROOT := $(patsubst %/boot,%,$(INSTALL_PATH))
+ 
+ XINSTALL_NAME ?= $(KERNELRELEASE)
++
++ifdef CONFIG_XEN_PRIVILEGED_GUEST
++XENGUEST=
++else
++XENGUEST=-domU
++endif
++
+ install:
+ 	mkdir -p $(INSTALL_ROOT)/boot
+-	ln -f -s vmlinuz-$(XINSTALL_NAME)$(INSTALL_SUFFIX) $(INSTALL_ROOT)/boot/vmlinuz-$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)$(XENGUEST)$(INSTALL_SUFFIX)
+-	rm -f $(INSTALL_ROOT)/boot/vmlinuz-$(XINSTALL_NAME)$(INSTALL_SUFFIX)
+-	install -m0644 vmlinuz $(INSTALL_ROOT)/boot/vmlinuz-$(XINSTALL_NAME)$(INSTALL_SUFFIX)
+-	install -m0644 vmlinux $(INSTALL_ROOT)/boot/vmlinux-syms-$(XINSTALL_NAME)$(INSTALL_SUFFIX)
+-	install -m0664 .config $(INSTALL_ROOT)/boot/config-$(XINSTALL_NAME)$(INSTALL_SUFFIX)
+-	install -m0664 System.map $(INSTALL_ROOT)/boot/System.map-$(XINSTALL_NAME)$(INSTALL_SUFFIX)
+-	ln -f -s vmlinuz-$(XINSTALL_NAME)$(INSTALL_SUFFIX) $(INSTALL_ROOT)/boot/vmlinuz-$(VERSION).$(PATCHLEVEL)$(XENGUEST)$(INSTALL_SUFFIX)
++	install -m0644 vmlinuz $(INSTALL_ROOT)/boot/vmlinuz-$(XINSTALL_NAME)$(XENGUEST)$(INSTALL_SUFFIX)
++	install -m0644 vmlinux $(INSTALL_ROOT)/boot/vmlinux-syms-$(XINSTALL_NAME)$(XENGUEST)$(INSTALL_SUFFIX)
++	install -m0664 .config $(INSTALL_ROOT)/boot/config-$(XINSTALL_NAME)$(XENGUEST)$(INSTALL_SUFFIX)
++	install -m0664 System.map $(INSTALL_ROOT)/boot/System.map-$(XINSTALL_NAME)$(XENGUEST)$(INSTALL_SUFFIX)
++	ln -f -s vmlinuz-$(XINSTALL_NAME)$(INSTALL_SUFFIX) $(INSTALL_ROOT)/boot/vmlinuz-$(VERSION).$(PATCHLEVEL)-xen$(XENGUEST)$(INSTALL_SUFFIX)
+diff -ru linux-2.6.18-xen.orig/arch/x86_64/Makefile linux-2.6.18-xen/arch/x86_64/Makefile
+--- linux-2.6.18-xen.orig/arch/x86_64/Makefile	2007-07-16 17:58:05.000000000 -0700
++++ linux-2.6.18-xen/arch/x86_64/Makefile	2007-07-16 18:22:34.000000000 -0700
+@@ -91,7 +91,7 @@
+ 	$(Q)$(MAKE) $(build)=$(boot) $@
+ 
+ install:
+-	$(Q)$(MAKE) $(build)=$(boot) XENGUEST=$(XENGUEST) $@
++	$(Q)$(MAKE) $(build)=$(boot) $@
+ else
+ #Default target when executing "make"
+ all: bzImage

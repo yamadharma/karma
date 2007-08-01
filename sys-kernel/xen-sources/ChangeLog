@@ -1,0 +1,31 @@
+# ChangeLog for sys-kernel/xen-sources
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  24 Jul 2007; Robert Buchholz <rbu@gentoo.org>
+  +xen-sources-2.6.18-r2.ebuild, +xen-sources-2.6.20-r1.ebuild:
+  Adding 2.6.18-2 with security updates, see
+  http://overlays.gentoo.org/proj/xen/browser/patches/tags/2.6.18/debian-secur
+  ity-patches-2.6.18.1-12etch2/README for details. Adding 2.6.20-r1 with three
+  bugfixes (TCP Checksum error, LVM race condition and No-Poweroff problem)
+
+  23 Jul 2007; Michael Marineau <marineam@gentoo.org>
+  xen-sources-2.6.20.ebuild, +files/xen-sources-2.6.20-quirks-no-smp-fix.patch:
+  Fix xen 2.6.20 for single proc configurations.
+
+  17 Jul 2007; Michael Marineau <marineam@gentoo.org>
+  +xen-sources-2.6.18-r1.ebuild, xen-sources-2.6.20.ebuild
+  Add genpatches based 2.6.18 xen kernel
+
+  17 Jul 2007; Michael Marineau <marineam@gentoo.org>
+  xen-sources-2.6.18.ebuild, xen-sources-2.6.20.ebuild,
+  +files/xen-sources-2.6.18-make-install.patch:
+  Tweek xen-source's make install to generally do the right thing.
+
+  17 Jul 2007; Michael Marineau <marineam@gentoo.org>
+  +xen-sources-2.6.20.ebuild, +files/xen-sources-2.6.20-console-tty-fix.patch:
+  Copy 2.6.20 to xen project overlay from marineam's overlay
+
+  14 Jul 2007; Michael Marineau <marineam@gentoo.org>
+  +xen-sources-2.6.18.ebuild:
+  copy the current xen-3.1.0 ebuilds over from my marineam-xen overlay

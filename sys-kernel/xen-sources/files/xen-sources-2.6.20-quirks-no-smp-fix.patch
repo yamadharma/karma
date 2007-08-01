@@ -1,0 +1,12 @@
+diff -rup linux-2.6.20-xen.orig/arch/i386/kernel/quirks.c linux-2.6.20-xen/arch/i386/kernel/quirks.c
+--- linux-2.6.20-xen.orig/arch/i386/kernel/quirks.c	2007-07-23 10:59:51.000000000 -0700
++++ linux-2.6.20-xen/arch/i386/kernel/quirks.c	2007-07-23 11:02:15.000000000 -0700
+@@ -7,7 +7,7 @@
+ #include <asm/genapic.h>
+ #include <asm/cpu.h>
+ 
+-#if defined(CONFIG_X86_IO_APIC) && (defined(CONFIG_SMP) || defined(CONFIG_XEN)) && defined(CONFIG_PCI)
++#if defined(CONFIG_X86_IO_APIC) && defined(CONFIG_SMP) && defined(CONFIG_PCI)
+ static void __devinit verify_quirk_intel_irqbalance(struct pci_dev *dev)
+ {
+ 	u8 config, rev;
