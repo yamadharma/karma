@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt/qt-3.3.8-r2.ebuild,v 1.10 2007/05/30 11:49:19 caleb Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt/qt-3.3.8-r3.ebuild,v 1.3 2007/08/02 21:21:18 opfer Exp $
 
 # *** Please remember to update qt3.eclass when revbumping this ***
 
@@ -10,7 +10,7 @@ SRCTYPE="free"
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework."
 HOMEPAGE="http://www.trolltech.com/"
 
-QT_COPY_SNAP="20070301"
+QT_COPY_SNAP="20070802"
 
 IMMQT_P="qt-x11-immodule-unified-qt3.3.8-20070321-gentoo"
 
@@ -22,7 +22,7 @@ SRC_URI="ftp://ftp.trolltech.com/qt/source/qt-x11-${SRCTYPE}-${PV}.tar.gz
 LICENSE="|| ( QPL-1.0 GPL-2 )"
 
 SLOT="3"
-KEYWORDS="alpha amd64 hppa ia64 ~mips ppc ppc64 sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~hppa ~ia64 ~mips ~ppc ppc64 ~sparc x86 ~x86-fbsd"
 IUSE="cups debug doc examples firebird gif ipv6 mysql nas nis odbc opengl pertty postgres qt-copy sqlite xinerama immqt immqt-bc"
 
 DEPEND="|| ( ( x11-libs/libXcursor
@@ -135,27 +135,35 @@ src_unpack() {
 		epatch ${FILESDIR}/0044-qscrollview-windowactivate-fix.diff
 		epatch ${FILESDIR}/0047-fix-kmenu-widget.diff
 		epatch ${FILESDIR}/0048-qclipboard_hack_80072.patch
+		epatch ${FILESDIR}/0080-net-wm-sync-request.patch
+		epatch ${FILESDIR}/0081-format-string-fixes.diff
+		epatch ${FILESDIR}/utf8-bug-qt3.diff
 	fi
-
-	# Fix some issues with compositing flicker (will include in next qt-copy
-	# snapshot). 
-	epatch ${FILESDIR}/0080-net-wm-sync-request.patch
-	
-	# possible rce, CVE-2007-3388
-	epatch ${FILESDIR}/0081-format-string-fixes.diff
 
 	# ulibc patch (bug #100246)
 	epatch ${FILESDIR}/qt-ulibc.patch
 
 	# xinerama patch: http://ktown.kde.org/~seli/xinerama/
-	epatch "${FILESDIR}/${P}-seli-xinerama.patch"
-
-	epatch ${FILESDIR}/utf8-bug-qt3.diff
+	if use qt-copy ; then
+		# qt-copy patch 0079-compositing-types.patch conflicts, so we need to
+		# mod it slightly to play nice
+		epatch "${FILESDIR}/${P}-seli-xinerama-qt-copy-fixed.patch"
+	else
+		# no qt-copy, then use standard patch
+		epatch "${FILESDIR}/${P}-seli-xinerama.patch"
+	fi
 
 	# Visibility patch
 	epatch "${FILESDIR}/${P}-visibility.patch"
 
 	if use immqt || use immqt-bc ; then
+		# Hackish patch to allow qt-copy and immqt to work together...
+		# 0080-net-wm-sync-request.patch is the patch that breaks immqt patch
+		# so the fixup below is required to make it apply cleanly
+		cd ..
+		epatch ${FILESDIR}/qt-copy-immodule-fixup.patch
+		# Not sure if I should cd around or not... but let's go back to ${S} now
+		cd ${S}
 		epatch ../${IMMQT_P}.diff
 		sh make-symlinks.sh || die "make symlinks failed"
 	fi

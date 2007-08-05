@@ -1,0 +1,52 @@
+--- qt-x11-immodule-unified-qt3.3.8-20070321-gentoo.diff	2007-08-03 01:30:26.000000000 -0230
++++ qt-x11-immodule-unified-qt3.3.8-20070321-gentoo.diff.new	2007-08-03 01:59:41.000000000 -0230
+@@ -6558,9 +6558,9 @@
+ +#if defined(QT_NO_IM_EXTENSIONS)
+ +    void    *xic;				// Input Context
+ +#endif
+- #endif
+- #if defined(Q_WS_MAC)
+-     WindowGroupRef group;
++ #ifndef QT_NO_XSYNC
++     ulong    syncCounter;
++     uint     syncRequestValue[2];
+ diff -duNr qt-x11-free-3.3.8.orig/make-symlinks.sh qt-x11-free-3.3.8/make-symlinks.sh
+ --- qt-x11-free-3.3.8.orig/make-symlinks.sh	1970-01-01 09:00:00.000000000 +0900
+ +++ qt-x11-free-3.3.8/make-symlinks.sh	2007-03-20 23:18:45.000000000 +0900
+@@ -19113,11 +19113,11 @@
+      uint     ussize : 1;			// User defined size
+ -    void    *xic;				// XIM Input Context
+ +#if defined(QT_NO_IM_EXTENSIONS)
+-+    void    *xic;				// Input Context
+++    void    *xic;				// XIM Input Context
+ +#endif
+- #endif
+- #if defined(Q_WS_MAC)
+-     WindowGroupRef group;
++ #ifndef QT_NO_XSYNC
++     ulong    syncCounter;
++     uint     syncRequestValue[2];
+ diff -duNr qt-x11-free-3.3.8.orig/src/kernel/qwidget_x11.cpp qt-x11-free-3.3.8/src/kernel/qwidget_x11.cpp
+ --- qt-x11-free-3.3.8.orig/src/kernel/qwidget_x11.cpp	2007-03-20 22:11:17.000000000 +0900
+ +++ qt-x11-free-3.3.8/src/kernel/qwidget_x11.cpp	2007-03-20 23:20:27.000000000 +0900
+@@ -19227,7 +19227,7 @@
+          focusInputContext();
+      }
+  }
+-@@ -2422,13 +2429,16 @@
++@@ -2422,8 +2429,10 @@
+  
+  void QWidget::createTLSysExtra()
+  {
+@@ -19235,7 +19235,10 @@
+      // created lazily
+      extra->topextra->xic = 0;
+ +#endif
+- }
++ #ifndef QT_NO_XSYNC
++     extra->topextra->syncCounter = 0;
++     extra->topextra->syncRequestValue[0] = 0;
++@@ -2434,7 +2443,8 @@
+  
+  void QWidget::deleteTLSysExtra()
+  {
