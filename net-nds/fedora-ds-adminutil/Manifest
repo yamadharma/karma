@@ -11,6 +11,10 @@ EBUILD fedora-ds-adminutil-1.1.1_pre20070613.ebuild 1193 RMD160 ca85e14e07e88ae1
 MD5 321eef36bc7807c2dc3b0ff5593f40ee fedora-ds-adminutil-1.1.1_pre20070613.ebuild 1193
 RMD160 ca85e14e07e88ae170ce1e7ea0bb084763a72de2 fedora-ds-adminutil-1.1.1_pre20070613.ebuild 1193
 SHA256 4026a5d8912b6a4505572e67297ce7eeb6da34fc7302baa8277e9b3656fcc9ab fedora-ds-adminutil-1.1.1_pre20070613.ebuild 1193
+EBUILD fedora-ds-adminutil-1.1.2_pre20070808.ebuild 1193 RMD160 ca85e14e07e88ae170ce1e7ea0bb084763a72de2 SHA1 cf85fa16e53610a8c5c6a568bd6036aeef44d641 SHA256 4026a5d8912b6a4505572e67297ce7eeb6da34fc7302baa8277e9b3656fcc9ab
+MD5 321eef36bc7807c2dc3b0ff5593f40ee fedora-ds-adminutil-1.1.2_pre20070808.ebuild 1193
+RMD160 ca85e14e07e88ae170ce1e7ea0bb084763a72de2 fedora-ds-adminutil-1.1.2_pre20070808.ebuild 1193
+SHA256 4026a5d8912b6a4505572e67297ce7eeb6da34fc7302baa8277e9b3656fcc9ab fedora-ds-adminutil-1.1.2_pre20070808.ebuild 1193
 MD5 3c43c99b153252a8e1192adfcb4ee7d8 files/digest-fedora-ds-adminutil-1.0.4 268
 RMD160 c082a8f38fb1c92797febfe8f7581e9a36c32966 files/digest-fedora-ds-adminutil-1.0.4 268
 SHA256 392b2733382ce86042b1259bf78543895ef6a720585e529d7b755825877bcba5 files/digest-fedora-ds-adminutil-1.0.4 268
@@ -20,3 +24,6 @@ SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-fedora-ds-adminutil-1.1.1_pre20070613 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-fedora-ds-adminutil-1.1.1_pre20070613 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-fedora-ds-adminutil-1.1.1_pre20070613 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-fedora-ds-adminutil-1.1.2_pre20070808 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-fedora-ds-adminutil-1.1.2_pre20070808 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-fedora-ds-adminutil-1.1.2_pre20070808 0
