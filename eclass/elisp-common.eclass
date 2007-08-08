@@ -140,7 +140,7 @@ HAS_ECF=1
 
 
 # Sandbox issues
-for i in ${INFOPATH}
+for i in /usr/info ${INFOPATH}
 do
     addpredict ${i}
 done

@@ -31,16 +31,14 @@ DEPEND="${COMMON_DEPEND}
 
 RDEPEND="${COMMON_DEPEND}
 	>=app-admin/eselect-1.0.2
+	app-admin/eselect-news
 	net-misc/wget
 	net-misc/rsync
 	sys-apps/sandbox"
 
 # Keep vim as a PDEPEND. It avoids issues when Paludis is used as the
 # default virtual/portage provider.
-# eselect-news here for easier upgrade path for portage users with
-# collision-protect.
 PDEPEND="
-	app-admin/eselect-news
 	vim-syntax? ( >=app-editors/vim-core-7 )"
 
 PROVIDE="virtual/portage"
