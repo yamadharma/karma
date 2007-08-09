@@ -1,0 +1,11 @@
+--- knetworkmanager-9999/knetworkmanager/knetworkmanager.conf.orig	2007-03-17 18:19:08.000000000 -0230
++++ knetworkmanager-9999/knetworkmanager/knetworkmanager.conf	2007-03-17 18:18:16.000000000 -0230
+@@ -8,7 +8,7 @@
+ 		<allow send_destination="org.freedesktop.NetworkManagerInfo"/>
+                 <allow send_interface="org.freedesktop.NetworkManagerInfo"/>
+ 	</policy>
+-	<policy at_console="true">
++	<policy group="plugdev">
+ 		<allow own="org.freedesktop.NetworkManagerInfo"/>
+ 
+ 		<allow send_destination="org.freedesktop.NetworkManagerInfo"/>
