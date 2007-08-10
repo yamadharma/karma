@@ -1,0 +1,11 @@
+--- appl/gssmask/gssmaestro.c	2006-09-29 11:42:57.000000000 -0400
++++ appl/gssmask/gssmaestro.c.new	2006-09-29 11:42:49.000000000 -0400
+@@ -238,7 +238,7 @@
+ 
+     memset(&sast, 0, sizeof(sast));
+ 
+-    assert(sizeof(sast) >= c->salen);
++    //assert(sizeof(sast) >= c->salen);
+ 
+     fd = socket(c->sa->sa_family, SOCK_STREAM, 0);
+     if (fd < 0)

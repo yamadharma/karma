@@ -53,6 +53,7 @@ src_unpack() {
 	subversion_src_unpack
 
 	epatch "${FILESDIR}/knetworkmanager-pam_console-fix.patch"
+	epatch "${FILESDIR}/knetworkmanager-devicestore.patch"	
 }
 
 pkg_postinst() {
