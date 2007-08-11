@@ -97,6 +97,16 @@ src_install() {
 	mv "${D}"/usr/share/man/man5/{,k}ftpusers.5
 	mv "${D}"/usr/share/man/man5/{,k}login.access.5
 
+	# Create symlinks for the includes
+	dosym heimdal/krb5-types.h /usr/include/krb5-types.h
+	dosym heimdal/krb5.h /usr/include/krb5.h
+	dosym heimdal/asn1_err.h /usr/include/asn1_err.h
+	dosym heimdal/krb5_asn1.h /usr/include/krb5_asn1.h
+	dosym heimdal/krb5_err.h /usr/include/krb5_err.h
+	dosym heimdal/heim_err.h /usr/include/heim_err.h
+	dosym heimdal/k524_err.h /usr/include/k524_err.h
+	dosym heimdal/krb5-protos.h /usr/include/krb5-protos.h
+
 	# Hacky symlinks for silly old SASL checks
 	dosym . /usr/include/heimdal/include
 	dosym /usr/lib /usr/include/heimdal/lib
