@@ -14,7 +14,7 @@ HOMEPAGE="http://www.collaboration-world.com/pantomime/"
 SRC_URI="http://www.collaboration-world.com/pantomime.data/releases/Stable/${MY_PN}-${MY_PV}pre3.tar.gz"
 
 LICENSE="LGPL-2.1 Elm"
-KEYWORDS="x86 amd64 ~ppc"
+KEYWORDS="~x86 ~amd64 ~ppc"
 SLOT="0"
 
 IUSE=""

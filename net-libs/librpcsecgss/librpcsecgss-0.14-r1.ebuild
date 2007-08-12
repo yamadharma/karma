@@ -13,8 +13,7 @@ SLOT="0"
 KEYWORDS="alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sh sparc x86"
 IUSE=""
 
-RDEPEND="|| ( >=app-crypt/heimdal-0.8 
-	     >=app-crypt/libgssapi-0.9 )"
+RDEPEND=">=app-crypt/libgssapi-0.9"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 

@@ -13,7 +13,7 @@ DESCRIPTION="A fully featured mail application for GNUstep"
 HOMEPAGE="http://www.collaboration-world.com/gnumail/"
 SRC_URI="http://www.collaboration-world.com/gnumail.data/releases/Stable/${MY_PN}-${MY_PV}pre3.tar.gz"
 
-KEYWORDS="x86 amd64 ~ppc"
+KEYWORDS="~x86 ~amd64 ~ppc"
 LICENSE="GPL-2"
 SLOT="0"
 

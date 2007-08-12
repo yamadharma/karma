@@ -10,7 +10,7 @@ DESCRIPTION="Simple library for reading the different types of RSS file formats"
 HOMEPAGE="http://www.unix-ag.uni-kl.de/~guenther/rssreader.html"
 SRC_URI="http://www.unix-ag.uni-kl.de/~guenther/RSSReader-${PV}-complete.tar"
 
-KEYWORDS="~ppc x86 amd64"
+KEYWORDS="~ppc ~x86 ~amd64"
 LICENSE="GPL-2"
 SLOT="0"
 

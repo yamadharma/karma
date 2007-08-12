@@ -106,6 +106,9 @@ src_install() {
 	dosym heimdal/heim_err.h /usr/include/heim_err.h
 	dosym heimdal/k524_err.h /usr/include/k524_err.h
 	dosym heimdal/krb5-protos.h /usr/include/krb5-protos.h
+	
+	dosym heimdal/gssapi /usr/include/gssapi
+	dosym heimdal/gssapi/gssapi.h /usr/include/gssapi.h
 
 	# Hacky symlinks for silly old SASL checks
 	dosym . /usr/include/heimdal/include

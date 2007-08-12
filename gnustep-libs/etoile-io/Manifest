@@ -1,0 +1,8 @@
+DIST etoile-0.2.tar.gz 21373391 RMD160 99aa05909469fc7ffae9118829a5f155050271c5 SHA1 9ecf33b0130687c1946da3eb7568605b5e9dfcbf SHA256 293cb9e5c50b27a8e38f16374c17595f20c5950ba44d00ffac3fb17ddd852d2c
+EBUILD etoile-io-0.2.ebuild 701 RMD160 90f2ef63181ca795dd67e03d32950bc3036f5f4e SHA1 1c5187cdd1728a5936dc745dc974c9b21f3dc6ae SHA256 e0c09f7fbcf3d50897c6da35be1c2ce6ff8afffb462a5437ceb6ee1c79cd7604
+MD5 8b62333a4e54bf1ab7c8e9593bdd3cdd etoile-io-0.2.ebuild 701
+RMD160 90f2ef63181ca795dd67e03d32950bc3036f5f4e etoile-io-0.2.ebuild 701
+SHA256 e0c09f7fbcf3d50897c6da35be1c2ce6ff8afffb462a5437ceb6ee1c79cd7604 etoile-io-0.2.ebuild 701
+MD5 e0efd0a9e9ebd05c477186c5bb8baefd files/digest-etoile-io-0.2 238
+RMD160 dbce15cea54ac568477cd44329e0c3e1fd7e7f3a files/digest-etoile-io-0.2 238
+SHA256 3de3234af9600e4e5eec8ca30d5e689a7c94494725b415d3f9d326451cc99393 files/digest-etoile-io-0.2 238

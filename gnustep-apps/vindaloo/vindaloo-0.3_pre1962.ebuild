@@ -12,7 +12,7 @@ HOMEPAGE="http://gna.org/projects/gsimageapps"
 #SRC_URI="http://download.gna.org/gsimageapps/${PN/v/V}/${P/v/V}.tar.gz"
 
 LICENSE="GPL-2"
-KEYWORDS="~ppc x86 amd64"
+KEYWORDS="~ppc ~x86 ~amd64"
 SLOT="0"
 
 IUSE=""
