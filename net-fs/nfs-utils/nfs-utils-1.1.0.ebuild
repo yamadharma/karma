@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/nfs-utils/nfs-utils-1.0.12-r3.ebuild,v 1.3 2007/04/07 17:34:52 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/nfs-utils/nfs-utils-1.1.0.ebuild,v 1.3 2007/05/19 04:40:56 vapier Exp $
 
 inherit eutils flag-o-matic multilib
 
@@ -14,7 +14,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86
 IUSE="nonfsv4 tcpd kerberos"
 
 # kth-krb doesn't provide the right include
-# files, and nfs-utils doesn't build against heimdal either, 
+# files, and nfs-utils doesn't build against heimdal either,
 # so don't depend on virtual/krb.
 # (04 Feb 2005 agriffis)
 RDEPEND="tcpd? ( sys-apps/tcp-wrappers )
@@ -25,14 +25,16 @@ RDEPEND="tcpd? ( sys-apps/tcp-wrappers )
 	)
 	kerberos? (
 		net-libs/librpcsecgss
+		>=app-crypt/libgssapi-0.11
 		virtual/krb5
 	)"
-DEPEND="${RDEPEND}"
+# util-linux dep is to prevent man-page collision
+DEPEND="${RDEPEND}
+	>=sys-apps/util-linux-2.12r-r7"
 
 src_unpack() {
 	unpack ${P}.tar.gz
 	cd "${S}"
-	epatch "${FILESDIR}"/${P}-mountd-memleak.patch #172014
 	#epatch "${DISTDIR}"/nfs-utils-${PV}-CITI_NFS4_ALL-1.dif
 }
 
@@ -63,7 +65,7 @@ src_install() {
 
 	# Install some client-side binaries in /sbin
 	dodir /sbin
-	mv "${D}"/usr/sbin/rpc.{lockd,statd} "${D}"/sbin/ || die
+	mv "${D}"/usr/sbin/rpc.statd "${D}"/sbin/ || die
 
 	dodoc ChangeLog README
 	docinto linux-nfs ; dodoc linux-nfs/*
