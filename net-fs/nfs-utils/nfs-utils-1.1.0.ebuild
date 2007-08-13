@@ -39,6 +39,7 @@ src_unpack() {
 }
 
 src_compile() {
+	append-ldflags `pkg-config libgssapi --libs`
 	econf \
 		--mandir=/usr/share/man \
 		--with-statedir=/var/lib/nfs \
