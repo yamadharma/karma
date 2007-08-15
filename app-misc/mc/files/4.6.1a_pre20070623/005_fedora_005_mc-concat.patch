@@ -1,0 +1,20 @@
+--- mc-4.6.1a/src/util.c.jn	2005-12-02 11:08:26.000000000 +0100
++++ mc-4.6.1a/src/util.c	2005-12-02 13:11:19.000000000 +0100
+@@ -1515,9 +1515,16 @@
+ 
+ /* If filename is NULL, then we just append PATH_SEP to the dir */
+ char *
+-concat_dir_and_file (const char *dir, const char *file)
++concat_dir_and_file (const char *dir, const char *filename)
+ {
+     int i = strlen (dir);
++    const char *file = filename;
++    
++    /* Return filename when dir is empty */
++    if (!i) return g_strdup (filename);
++    
++    if (file != NULL && *file == PATH_SEP)
++    	file++;
+     
+     if (dir [i-1] == PATH_SEP)
+ 	return  g_strconcat (dir, file, (char *) NULL);

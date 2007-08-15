@@ -1,0 +1,53 @@
+--- mc-20050518/src/execute.c.orig	2005-05-18 16:50:35 +0400
++++ mc-20050518/src/execute.c	2005-06-01 12:29:09 +0400
+@@ -31,6 +31,7 @@
+ #include "wtools.h"
+ #include "execute.h"
+ 
++int force_subshell_execution = 0;
+ 
+ static void
+ edition_post_exec (void)
+@@ -185,7 +186,7 @@
+ 
+ #ifdef HAVE_SUBSHELL_SUPPORT
+     if (use_subshell)
+-	if (subshell_state == INACTIVE)
++	if (subshell_state == INACTIVE || force_subshell_execution)
+ 	    do_execute (shell, cmd ? cmd : command, flags | EXECUTE_AS_SHELL);
+ 	else
+ 	    message (1, MSG_ERROR,
+--- mc-20050518/src/execute.h.orig	2005-05-18 16:50:35 +0400
++++ mc-20050518/src/execute.h	2005-06-01 12:29:00 +0400
+@@ -6,6 +6,9 @@
+ #define EXECUTE_AS_SHELL	(1 << 2)
+ #define EXECUTE_HIDE		(1 << 3)
+ 
++/* If true message "The shell is already running a command" never */
++extern int force_subshell_execution;
++
+ /* Execute functions that use the shell to execute */
+ void shell_execute (const char *command, int flags);
+ 
+--- mc-20050518/src/main.c.orig	2005-06-01 12:30:06 +0400
++++ mc-20050518/src/main.c	2005-06-01 12:29:36 +0400
+@@ -1957,6 +1957,10 @@ process_args (poptContext ctx, int c, co
+     case 'u':
+ 	use_subshell = 0;
+ 	break;
++
++    case 'r':
++	force_subshell_execution = 1;
++	break;
+ #endif				/* HAVE_SUBSHELL_SUPPORT */
+ 
+     case 'H':
+@@ -2025,6 +2029,8 @@ static const struct poptOption argument_
+      N_("Enables subshell support (default)"), NULL},
+     {"nosubshell", 'u', POPT_ARG_NONE, NULL, 'u',
+      N_("Disables subshell support"), NULL},
++    {"forceexec", 'r', POPT_ARG_NONE, &force_subshell_execution, 0,
++     N_("Force subshell execution")},
+ #endif
+ 
+     /* single file operations */

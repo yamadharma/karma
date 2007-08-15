@@ -1,0 +1,11 @@
+--- vfs/extfs/urar.in
++++ vfs/extfs/urar.in
+@@ -24,7 +24,7 @@
+ 
+ mcrarfs_list ()
+ {
+-     $UNRAR v -c- "$1" | @AWK@ -v uid=`id -u` -v gid=`id -g` '
++     $UNRAR v -p- -c- "$1" | @AWK@ -v uid=`id -u` -v gid=`id -g` '
+ BEGIN { flag=0 }
+ /^-------/ { flag++; if (flag > 1) exit 0; next }
+ {

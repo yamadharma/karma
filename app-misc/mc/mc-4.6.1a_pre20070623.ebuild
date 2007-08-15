@@ -2,23 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-misc/mc/mc-4.6.0-r14.ebuild,v 1.4 2005/09/01 20:44:37 sbriesen Exp $
 
-inherit flag-o-matic eutils cvs
-#gnuconfig 
+inherit flag-o-matic eutils
 
-ECVS_CVS_COMMAND="cvs -q"
-ECVS_SERVER="cvs.savannah.gnu.org:/sources/mc"
-ECVS_USER="anoncvs"
-ECVS_AUTH="pserver"
-ECVS_MODULE="mc"
-ECVS_CO_OPTS="-D ${PV/*_pre}"
-ECVS_UP_OPTS="-D ${PV/*_pre}"
-ECVS_TOP_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/cvs-src/savannah.gnu.org/mc"
 
-S=${WORKDIR}/${ECVS_MODULE}
+MY_PV=2007-06-23-14
+MY_P=mc-${MY_PV}
+S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="GNU Midnight Commander cli-based file manager"
 HOMEPAGE="http://www.ibiblio.org/mc/"
 #SRC_URI="http://www.ibiblio.org/pub/Linux/utils/file/managers/${PN}/${P}.tar.gz"
+SRC_URI="http://www.ibiblio.org/pub/Linux/utils/file/managers/${PN}/snapshots/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -29,6 +23,7 @@ PROVIDE="virtual/editor"
 
 RDEPEND=">=sys-fs/e2fsprogs-1.19
 	ncurses? ( >=sys-libs/ncurses-5.2-r5 )
+	slang? ( >=sys-libs/slang-2.0.5 )
 	=dev-libs/glib-2*
 	pam? ( >=sys-libs/pam-0.72 )
 	gpm? ( >=sys-libs/gpm-1.19.3 )
@@ -37,26 +32,100 @@ RDEPEND=">=sys-fs/e2fsprogs-1.19
 	x86? ( 7zip? ( >=app-arch/p7zip-4.16 ) )
 	ppc? ( 7zip? ( >=app-arch/p7zip-4.16 ) )
 	amd64? ( 7zip? ( >=app-arch/p7zip-4.16 ) )"
-
-# FIXME: >=sys-libs/slang-2.0.5 not in portage tree
-# 	slang? ( >=sys-libs/slang-2.0.5 )
+	
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 src_unpack() {
-	cvs_src_unpack
-
-	tar xjf ${FILESDIR}/mc-4.6.1a-patches.tar.bz2 -C ${WORKDIR}
+	unpack ${A}
 
 	cd ${S}
 	EPATCH_FORCE="yes" \
 	EPATCH_SUFFIX="patch" \
-	    epatch ${WORKDIR}/patches
+	    epatch ${FILESDIR}/${PV}
+	    
+	#FIX for slang-2
+	sed -i -e "s:slang/slang.h:slang-2/slang.h:g"  acinclude.m4	    
+	sed -i -e "s:-lslang:-lslang-2:g"  acinclude.m4	    	
 }
 
 src_compile() {
+
+	if ( use unicode )
+	    then
+	    # convert files in /lib to UTF-8
+	    pushd lib
+	    for i in mc.hint mc.hint.es mc.hint.it mc.hint.nl 
+	    do
+		iconv -f iso-8859-1 -t utf-8 < ${i} > ${i}.tmp
+	        mv -f ${i}.tmp ${i}
+	    done
+
+	    for i in mc.hint.cs mc.hint.hu mc.hint.pl 
+	    do
+		iconv -f iso-8859-2 -t utf-8 < ${i} > ${i}.tmp
+		mv -f ${i}.tmp ${i}
+	    done
+
+	    for i in mc.hint.sr mc.menu.sr 
+	    do
+		iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
+		mv -f ${i}.tmp ${i}
+	    done
+
+	    iconv -f koi8-r -t utf8 < mc.hint.ru > mc.hint.ru.tmp
+	    mv -f mc.hint.ru.tmp mc.hint.ru
+	    iconv -f koi8-u -t utf8 < mc.hint.uk > mc.hint.uk.tmp
+	    mv -f mc.hint.uk.tmp mc.hint.uk
+	    iconv -f big5 -t utf8 < mc.hint.zh > mc.hint.zh.tmp
+	    mv -f mc.hint.zh.tmp mc.hint.zh
+	    popd
+
+	    # convert man pages in /doc to UTF-8
+	    pushd doc
+
+	    pushd ru
+	    for i in mc.1.in xnc.hlp 
+	    do
+		iconv -f koi8-r -t utf-8 < ${i} > ${i}.tmp
+		mv -f ${i}.tmp ${i}
+	    done
+	    popd
+
+	    pushd sr
+	    for i in mc.1.in mcserv.8.in xnc.hlp 
+	    do
+		iconv -f iso-8859-5 -t utf-8 < ${i} > ${i}.tmp
+		mv -f ${i}.tmp ${i}
+	    done
+	    popd
+
+	    for d in es it 
+	    do
+		for i in mc.1.in xnc.hlp
+		do
+		    iconv -f iso-8859-3 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
+		    mv -f ${d}/${i}.tmp ${d}/${i}
+		done
+	    done
+
+	    for d in hu pl 
+	    do
+		for i in mc.1.in xnc.hlp 
+		do
+		    iconv -f iso-8859-2 -t utf-8 < ${d}/${i} > ${d}/${i}.tmp
+		    mv -f ${d}/${i}.tmp ${d}/${i}
+		done
+	    done
+
+	    popd
+	fi
+
 	append-flags -I/usr/include/gssapi
+	use unicode && append-flags -DUTF8=1
+	use slang && append-flags -I/usr/include/slang-2
+	
 	filter-flags -malign-double
 
 	local myconf=""
@@ -66,9 +135,9 @@ src_compile() {
 	elif use ncurses && ! use slang ; then
 		myconf="${myconf} --with-screen=ncurses"
 	else
-# FIXME: >=sys-libs/slang-2.0.5 not in portage tree
-#		use slang && myconf="${myconf} --with-screen=slang"
-		use slang && myconf="${myconf} --with-screen=mcslang"		
+		use slang && myconf="${myconf} --with-screen=slang"
+		! use slang && myconf="${myconf} --with-screen=mcslang"		
+		myconf="${myconf} --with-screen=mcslang"		
 	fi
 
 	myconf="${myconf} `use_with gpm gpm-mouse`"
@@ -83,8 +152,8 @@ src_compile() {
 	    && myconf="${myconf} --with-samba --with-configdir=/etc/samba --with-codepagedir=/var/lib/samba/codepages --with-privatedir=/etc/samba/private" \
 	    || myconf="${myconf} --without-samba"
 
-#	econf \
-	./autogen.sh \
+#	./autogen.sh \
+	econf \
 	    --prefix=/usr \
 	    --datadir=/usr/share \
 	    --sysconfdir=/usr/share \
@@ -133,14 +202,13 @@ src_install() {
 	insinto /etc/pam.d
         newins ${FILESDIR}/mcserv.pamd mcserv
     
-
-	# Add Russian and Ukrainian hints and help for CP1251 & UTF-8 locales
-	iconv -fkoi8-r -tcp1251 ${D}/usr/share/mc/mc.hint.ru > ${D}/usr/share/mc/mc.hint.ru_RU.CP1251
-	iconv -fkoi8-u -tcp1251 ${D}/usr/share/mc/mc.hint.uk > ${D}/usr/share/mc/mc.hint.uk_UA.CP1251
-	iconv -fkoi8-u -tcp1251 ${D}/usr/share/mc/mc.hlp.ru >  ${D}/usr/share/mc/mc.hlp.ru_RU.CP1251
-	iconv -fkoi8-r -tutf8   ${D}/usr/share/mc/mc.hint.ru > ${D}/usr/share/mc/mc.hint.ru_RU.UTF-8
-	iconv -fkoi8-u -tutf8   ${D}/usr/share/mc/mc.hint.uk > ${D}/usr/share/mc/mc.hint.uk_UA.UTF-8
-	iconv -fkoi8-r -tutf8 ${D}/usr/share/mc/mc.hlp.ru >  ${D}/usr/share/mc/mc.hlp.ru_RU.UTF-8
+	if ( ! use unicode )
+	    then
+	    # Add Russian and Ukrainian hints and help for CP1251 & UTF-8 locales
+	    iconv -fkoi8-r -tcp1251 ${D}/usr/share/mc/mc.hint.ru > ${D}/usr/share/mc/mc.hint.ru_RU.CP1251
+	    iconv -fkoi8-u -tcp1251 ${D}/usr/share/mc/mc.hint.uk > ${D}/usr/share/mc/mc.hint.uk_UA.CP1251
+	    iconv -fkoi8-r -tcp1251 ${D}/usr/share/mc/mc.hlp.ru >  ${D}/usr/share/mc/mc.hlp.ru_RU.CP1251
+	fi
 	
 	dodoc ${FILESDIR}/*.color	
 }

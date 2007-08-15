@@ -1,0 +1,344 @@
+--- mc-4.6.1a/src/charsets.c.etcmc	2005-05-27 05:35:15.000000000 +0200
++++ mc-4.6.1a/src/charsets.c	2006-02-24 15:17:05.000000000 +0100
+@@ -45,12 +45,17 @@ load_codepages_list (void)
+     char *fname;
+     char buf[256];
+     extern char *mc_home;
++    extern char *mc_home_alt;
+     extern int display_codepage;
+     char *default_codepage = NULL;
+ 
+     fname = concat_dir_and_file (mc_home, CHARSETS_INDEX);
+     if (!(f = fopen (fname, "r"))) {
+-	fprintf (stderr, _("Warning: file %s not found\n"), fname);
++        g_free (fname);
++        fname = concat_dir_and_file (mc_home_alt, CHARSETS_INDEX);
++        if (!(f = fopen (fname, "r"))) {
++	    fprintf (stderr, _("Warning: file %s not found\n"), fname);
++        }
+ 	g_free (fname);
+ 	return -1;
+     }
+--- mc-4.6.1a/src/main.h.etcmc	2006-02-24 15:17:05.000000000 +0100
++++ mc-4.6.1a/src/main.h	2006-02-24 15:17:05.000000000 +0100
+@@ -112,7 +112,7 @@ void print_vfs_message(const char *msg, 
+ 
+ extern const char *prompt;
+ extern const char *edit_one_file;
+-extern char *mc_home;
++extern char *mc_home, *mc_home_alt;
+ char *get_mc_lib_dir (void);
+ 
+ int maybe_cd (int move_up_dir);
+--- mc-4.6.1a/src/ext.c.etcmc	2005-07-31 22:29:35.000000000 +0200
++++ mc-4.6.1a/src/ext.c	2006-02-24 15:17:05.000000000 +0100
+@@ -444,6 +444,10 @@ regex_command (const char *filename, con
+ 	    g_free (extension_file);
+ 	  check_stock_mc_ext:
+ 	    extension_file = concat_dir_and_file (mc_home, MC_LIB_EXT);
++	    if (!exist_file (extension_file)) {
++	    	g_free (extension_file);
++	    	extension_file = concat_dir_and_file (mc_home_alt, MC_LIB_EXT);
++	    }
+ 	    mc_user_ext = 0;
+ 	}
+ 	data = load_file (extension_file);
+--- mc-4.6.1a/src/setup.c.etcmc	2006-01-29 21:26:05.000000000 +0100
++++ mc-4.6.1a/src/setup.c	2006-02-24 15:17:05.000000000 +0100
+@@ -481,8 +481,15 @@ setup_init (void)
+ 	if (exist_file (inifile)){
+ 	    g_free (profile);
+ 	    profile = inifile;
+-	} else
++	} else {
+ 	    g_free (inifile);
++	    inifile = concat_dir_and_file (mc_home_alt, "mc.ini");
++	    if (exist_file (inifile)) {
++	        g_free (profile);
++	        profile = inifile;
++	    } else 
++	        g_free (inifile);
++	}
+     }
+ 
+     profile_name = profile;
+@@ -501,6 +508,11 @@ load_setup (void)
+     /* mc.lib is common for all users, but has priority lower than
+        ~/.mc/ini.  FIXME: it's only used for keys and treestore now */
+     global_profile_name = concat_dir_and_file (mc_home, "mc.lib");
++    
++    if (!exist_file(global_profile_name)) {
++    	g_free (global_profile_name);
++    	global_profile_name = concat_dir_and_file (mc_home_alt, "mc.lib");
++    }
+ 
+     /* Load integer boolean options */
+     for (i = 0; int_options[i].opt_name; i++)
+--- mc-4.6.1a/src/Makefile.am.etcmc	2006-02-04 12:13:30.000000000 +0100
++++ mc-4.6.1a/src/Makefile.am	2006-02-24 15:17:05.000000000 +0100
+@@ -8,9 +8,11 @@ bin_PROGRAMS = mc mcmfmt
+ if CONS_SAVER
+ pkglibexec_PROGRAMS = cons.saver
+ AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\" \
+-	-DSAVERDIR=\""$(pkglibexecdir)"\"
++	-DSAVERDIR=\""$(pkglibexecdir)"\" \
++	-DSYSCONFDIR=\""$(sysconfdir)/@PACKAGE@/"\"
+ else
+-AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\"
++AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\" \
++	-DSYSCONFDIR=\""$(sysconfdir)/@PACKAGE@/"\"
+ endif
+ 
+ noinst_PROGRAMS = man2hlp
+--- mc-4.6.1a/src/util.c.etcmc	2006-02-24 15:17:05.000000000 +0100
++++ mc-4.6.1a/src/util.c	2006-02-24 15:17:05.000000000 +0100
+@@ -40,7 +40,7 @@
+ #include "tty.h"
+ #include "global.h"
+ #include "profile.h"
+-#include "main.h"		/* mc_home */
++#include "main.h"		/* mc_home, mc_home_alt */
+ #include "cmd.h"		/* guess_message_value */
+ #include "mountlist.h"
+ #include "win.h"		/* xterm_flag */
+@@ -950,16 +950,25 @@ load_mc_home_file (const char *filename,
+ 
+     if (!data) {
+ 	g_free (hintfile);
+-	/* Fall back to the two-letter language code */
+-	if (lang[0] && lang[1])
+-	    lang[2] = 0;
++	g_free (hintfile_base);
++
++	hintfile_base = concat_dir_and_file (mc_home_alt, filename);
++
+ 	hintfile = g_strconcat (hintfile_base, ".", lang, (char *) NULL);
+ 	data = load_file (hintfile);
+-
++	
+ 	if (!data) {
+-	    g_free (hintfile);
+-	    hintfile = hintfile_base;
+-	    data = load_file (hintfile_base);
++	    /* Fall back to the two-letter language code */
++	    if (lang[0] && lang[1])
++	        lang[2] = 0;
++	    hintfile = g_strconcat (hintfile_base, ".", lang, (char *) NULL);
++	    data = load_file (hintfile);
++
++	    if (!data) {
++	        g_free (hintfile);
++	        hintfile = hintfile_base;
++	        data = load_file (hintfile_base);
++	    }
+ 	}
+     }
+ 
+--- mc-4.6.1a/src/cmd.c.etcmc	2006-02-04 12:12:28.000000000 +0100
++++ mc-4.6.1a/src/cmd.c	2006-02-24 15:17:05.000000000 +0100
+@@ -570,8 +570,13 @@ void ext_cmd (void)
+ 	check_for_default (extdir, buffer);
+ 	do_edit (buffer);
+ 	g_free (buffer);
+-    } else if (dir == 1)
++    } else if (dir == 1) {
++    	if (!exist_file(extdir)) {
++	    g_free (extdir);
++	    extdir = concat_dir_and_file (mc_home_alt, MC_LIB_EXT);
++	}
+ 	do_edit (extdir);
++    }
+ 
+    g_free (extdir);
+    flush_extension_file ();
+@@ -594,6 +599,11 @@ menu_edit_cmd (int where)
+     );
+ 
+     menufile = concat_dir_and_file (mc_home, where ? CEDIT_GLOBAL_MENU : MC_GLOBAL_MENU);
++    
++    if (!exist_file(menufile)) {
++    	g_free (menufile);
++    	menufile = concat_dir_and_file (mc_home_alt, where ? CEDIT_GLOBAL_MENU : MC_GLOBAL_MENU);
++    }
+ 
+     switch (dir) {
+ 	case 0:
+@@ -608,6 +618,10 @@ menu_edit_cmd (int where)
+ 	
+ 	case 2:
+ 	    buffer = concat_dir_and_file (mc_home, where ? CEDIT_GLOBAL_MENU : MC_GLOBAL_MENU);
++	    if (!exist_file(buffer)) {
++	        g_free (buffer);
++	        buffer = concat_dir_and_file (mc_home_alt, where ? CEDIT_GLOBAL_MENU : MC_GLOBAL_MENU);
++	    }
+ 	    break;
+ 
+ 	default:
+@@ -666,7 +680,7 @@ edit_syntax_cmd (void)
+ 			  _(" Which syntax file you want to edit? "), 0, 2,
+ 			  _("&User"), _("&System Wide"));
+     }
+-    extdir = concat_dir_and_file (mc_home, "syntax" PATH_SEP_STR "Syntax");
++    extdir = concat_dir_and_file (mc_home_alt, "syntax" PATH_SEP_STR "Syntax");
+ 
+     if (dir == 0) {
+ 	buffer = concat_dir_and_file (home_dir, SYNTAX_FILE);
+--- mc-4.6.1a/src/main.c.etcmc	2006-02-24 15:17:05.000000000 +0100
++++ mc-4.6.1a/src/main.c	2006-02-24 15:17:05.000000000 +0100
+@@ -282,9 +282,12 @@ gboolean is_utf8 = FALSE;
+ /* The xterm title */
+ char *xterm_title_str = NULL;
+ 
+-/* mc_home: The home of MC */
++/* mc_home: The home of MC - /etc/mc or defined by MC_DATADIR */
+ char *mc_home = NULL;
+ 
++/* mc_home_alt: Alternative home of MC - deprecated /usr/share/mc */
++char *mc_home_alt = NULL;
++
+ char cmd_buf[512];
+ 
+ static void
+@@ -1817,8 +1820,9 @@ OS_Setup (void)
+     if ((mc_libdir = getenv ("MC_DATADIR")) != NULL) {
+ 	mc_home = g_strdup (mc_libdir);
+     } else {
+-	mc_home = g_strdup (DATADIR);
++	mc_home = g_strdup (SYSCONFDIR);
+     }
++    mc_home_alt = mc_libdir != NULL ? g_strdup (SYSCONFDIR) : g_strdup (DATADIR);
+ }
+ 
+ static void
+@@ -1948,7 +1952,7 @@ process_args (poptContext ctx, int c, co
+ 	break;
+ 
+     case 'f':
+-	printf ("%s\n", mc_home);
++	printf ("%s (%s)\n", mc_home, mc_home_alt);
+ 	exit (0);
+ 	break;
+ 
+@@ -2326,6 +2330,7 @@ main (int argc, char *argv[])
+     }
+     g_free (last_wd_string);
+ 
++    g_free (mc_home_alt);
+     g_free (mc_home);
+     done_key ();
+ #ifdef HAVE_CHARSET
+--- mc-4.6.1a/src/Makefile.in.etcmc	2006-02-15 21:12:44.000000000 +0100
++++ mc-4.6.1a/src/Makefile.in	2006-02-24 15:17:05.000000000 +0100
+@@ -314,9 +314,10 @@ target_alias = @target_alias@
+ AM_CFLAGS = $(GLIB_CFLAGS)
+ localedir = $(datadir)/locale
+ pkglibexecdir = $(libexecdir)/@PACKAGE@
+-@CONS_SAVER_FALSE@AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\"
++@CONS_SAVER_FALSE@AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\" \
++@CONS_SAVER_FALSE@	-DSYSCONFDIR=\""$(sysconfdir)/@PACKAGE@/"\"
+ @CONS_SAVER_TRUE@AM_CPPFLAGS = -DDATADIR=\""$(pkgdatadir)/"\" -DLOCALEDIR=\""$(localedir)"\" \
+-@CONS_SAVER_TRUE@	-DSAVERDIR=\""$(pkglibexecdir)"\"
++@CONS_SAVER_TRUE@	-DSAVERDIR=\""$(pkglibexecdir)"\" -DSYSCONFDIR=\""$(sysconfdir)/@PACKAGE@/"\"
+ 
+ man2hlp_LDADD = $(GLIB_LIBS)
+ mcmfmt_SOURCES = mfmt.c
+--- mc-4.6.1a/src/user.c.etcmc	2006-02-04 15:41:42.000000000 +0100
++++ mc-4.6.1a/src/user.c	2006-02-24 15:17:05.000000000 +0100
+@@ -726,6 +726,11 @@ user_menu_cmd (struct WEdit *edit_widget
+ 	    g_free (menu);
+ 	    menu = concat_dir_and_file \
+                         (mc_home, edit_widget ? CEDIT_GLOBAL_MENU : MC_GLOBAL_MENU);
++	    if (!exist_file (menu)) {
++	        g_free (menu);
++	        menu = concat_dir_and_file \
++                        (mc_home_alt, edit_widget ? CEDIT_GLOBAL_MENU : MC_GLOBAL_MENU);
++	    }
+ 	}
+     }
+ 
+--- mc-4.6.1a/edit/editcmd.c.etcmc	2006-02-24 15:17:05.000000000 +0100
++++ mc-4.6.1a/edit/editcmd.c	2006-02-24 15:17:05.000000000 +0100
+@@ -49,7 +49,7 @@
+ #include "../src/tty.h"		/* LINES */
+ #include "../src/widget.h"	/* listbox_new() */
+ #include "../src/layout.h"	/* clr_scr() */
+-#include "../src/main.h"	/* mc_home */
++#include "../src/main.h"	/* mc_home, mc_home_alt */
+ #include "../src/help.h"	/* interactive_display() */
+ #include "../src/key.h"		/* XCTRL */
+ #include "../src/dialog.h"	/* do_refresh() */
+@@ -2790,12 +2790,15 @@ edit_block_process_cmd (WEdit *edit, con
+ 	    return;
+ 	}
+ 	if (!(script_src = fopen (o, "r"))) {
+-	    fclose (script_home);
+-	    unlink (h);
+-	    edit_error_dialog ("", get_sys_error (catstrs
+-						  (_("Error reading script:"),
+-						   o, (char *) NULL)));
+-	    return;
++	    o = catstrs (mc_home_alt, shell_cmd, (char *) NULL);
++	    if (!(script_src = fopen (o, "r"))) {
++	        fclose (script_home);
++	        unlink (h);
++	        edit_error_dialog ("", get_sys_error (catstrs
++						      (_("Error reading script:"),
++						      o, (char *) NULL)));
++	        return;
++	    }
+ 	}
+ 	while (fgets (buf, sizeof (buf), script_src))
+ 	    fputs (buf, script_home);
+--- mc-4.6.1a/edit/syntax.c.etcmc	2006-02-04 15:41:42.000000000 +0100
++++ mc-4.6.1a/edit/syntax.c	2006-02-24 15:17:05.000000000 +0100
+@@ -37,7 +37,7 @@
+ #include "edit.h"
+ #include "edit-widget.h"
+ #include "../src/color.h"	/* use_colors */
+-#include "../src/main.h"	/* mc_home */
++#include "../src/main.h"	/* mc_home, mc_home_alt */
+ #include "../src/wtools.h"	/* message() */
+ 
+ /* bytes */
+@@ -680,6 +680,12 @@ static FILE *open_include_file (const ch
+     g_free (error_file_name);
+     error_file_name = g_strconcat (mc_home, PATH_SEP_STR "syntax" PATH_SEP_STR,
+ 				   filename, (char *) NULL);
++    if (!(f = fopen (error_file_name, "r"))) {
++        g_free (error_file_name);
++        error_file_name = g_strconcat (mc_home_alt, PATH_SEP_STR "syntax" PATH_SEP_STR,
++				       filename, (char *) NULL);
++    } else return f;
++    
+     return fopen (error_file_name, "r");
+ }
+ 
+--- mc-4.6.1a/vfs/extfs.c.etcmc	2005-09-05 02:52:57.000000000 +0200
++++ mc-4.6.1a/vfs/extfs.c	2006-02-24 15:22:16.000000000 +0100
+@@ -242,7 +242,7 @@ extfs_open_archive (int fstype, const ch
+ 	tmp = name_quote (name, 0);
+     }
+ 
+-    mc_extfsdir = concat_dir_and_file (mc_home, "extfs" PATH_SEP_STR);
++    mc_extfsdir = concat_dir_and_file (mc_home_alt, "extfs" PATH_SEP_STR);
+     cmd =
+ 	g_strconcat (mc_extfsdir, extfs_prefixes[fstype], " list ",
+ 		     local_name ? local_name : tmp, (char *) NULL);
+@@ -617,7 +617,7 @@ extfs_cmd (const char *extfs_cmd, struct
+     archive_name = name_quote (extfs_get_archive_name (archive), 0);
+     quoted_localname = name_quote (localname, 0);
+ 
+-    mc_extfsdir = concat_dir_and_file (mc_home, "extfs" PATH_SEP_STR);
++    mc_extfsdir = concat_dir_and_file (mc_home_alt, "extfs" PATH_SEP_STR);
+     cmd = g_strconcat (mc_extfsdir, extfs_prefixes[archive->fstype],
+ 		       extfs_cmd, archive_name, " ", quoted_file, " ",
+ 		       quoted_localname, (char *) NULL);
+@@ -646,7 +646,7 @@ extfs_run (struct vfs_class *me, const c
+     g_free (p);
+ 
+     archive_name = name_quote (extfs_get_archive_name (archive), 0);
+-    mc_extfsdir = concat_dir_and_file (mc_home, "extfs" PATH_SEP_STR);
++    mc_extfsdir = concat_dir_and_file (mc_home_alt, "extfs" PATH_SEP_STR);
+     cmd = g_strconcat (mc_extfsdir, extfs_prefixes[archive->fstype],
+ 		       " run ", archive_name, " ", q, (char *) NULL);
+     g_free (mc_extfsdir);

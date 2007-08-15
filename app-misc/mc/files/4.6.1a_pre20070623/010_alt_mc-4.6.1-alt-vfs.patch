@@ -1,0 +1,20 @@
+--- mc-20050518/vfs/vfs.c.orig	2005-05-18 16:50:52 +0400
++++ mc-20050518/vfs/vfs.c	2005-05-18 17:02:57 +0400
+@@ -357,6 +357,8 @@
+     int result; \
+     char *mpath = vfs_canon (path); \
+     vfs = vfs_get_class (mpath); \
++    if (!vfs) \
++	return -1; \
+     result = vfs->name ? (*vfs->name)callarg : -1; \
+     g_free (mpath); \
+     if (result == -1) \
+@@ -383,6 +385,8 @@
+     if (handle == -1) \
+ 	return -1; \
+     vfs = vfs_op (handle); \
++    if (!vfs) \
++	return -1; \
+     result = vfs->name ? (*vfs->name)callarg : -1; \
+     if (result == -1) \
+ 	errno = vfs->name ? ferrno (vfs) : E_NOTSUPP; \
