@@ -24,7 +24,7 @@ src_compile() {
 }
 
 src_install() {
-	make prefix=${D}/usr mandir=${D}/usr/share/man install || die
+	make prefix=${D} mandir=${D}/usr/share/man install || die
 
 	dodoc CHANGES* COPYRIGHT NEWS README TODO
 }
