@@ -1,0 +1,18 @@
+--- goban-1.0/src/goban.c~	1999-08-18 03:33:09.000000000 +0100
++++ goban-1.0/src/goban.c	2004-02-24 04:40:57.617953504 +0000
+@@ -127,11 +127,11 @@
+   }
+ 
+   if (cg->screensaver) {
+-    g->win->isroot = clp_getBool(cg->clp, "root");
+     sscanf(clp_getStr(cg->clp, "window-id"), "%x", &g->win->window_id);
+-    if (g->win->isroot && g->win->window_id) {
+-      fprintf(stderr, "cannot set both -root and -window-id\n");
+-      exit(1);
++    if (!g->win->window_id) {
++      g->win->isroot = clp_getBool(cg->clp, "root");
++    } else {
++      g->win->isroot = 0;
+     }
+     butWin_setX(g->win, 0);
+     butWin_setY(g->win, 0);

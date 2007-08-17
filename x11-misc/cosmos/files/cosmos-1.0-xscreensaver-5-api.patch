@@ -1,0 +1,127 @@
+--- ./cosmos.cpp	2006/07/05 11:17:00	1.1
++++ ./cosmos.cpp	2006/07/05 11:51:04
+@@ -189,17 +189,17 @@ CCosmos::CCosmos()
+ 	cyclecolor=1;
+ 	color=248;
+ 	ncolors=256;
+-	showstars = get_boolean_resource("showstars","Boolean");
+-	showflame = get_boolean_resource("showflame","Boolean");
+-	sparkle = get_boolean_resource("sparkle","Boolean");
+-	stars =  get_integer_resource("stars","Integer");
+-	actorcount = get_integer_resource("actors","Integer");
+-	castcount = get_integer_resource("casts","Integer");
+-	resetcount = get_integer_resource("resetcount","Integer");
+ }
+ 
+ void CCosmos::InitDisplay(Display* dpy, Window win)
+ {
++	showstars = get_boolean_resource(dpy, "showstars","Boolean");
++	showflame = get_boolean_resource(dpy, "showflame","Boolean");
++	sparkle = get_boolean_resource(dpy, "sparkle","Boolean");
++	stars =  get_integer_resource(dpy, "stars","Integer");
++	actorcount = get_integer_resource(dpy, "actors","Integer");
++	castcount = get_integer_resource(dpy, "casts","Integer");
++	resetcount = get_integer_resource(dpy, "resetcount","Integer");
+ 
+ 	GetXInfo(dpy,win);
+ 	InitColors();
+@@ -663,9 +663,44 @@ void CCosmos::Run()
+ 
+ 
+ 
+-char *progclass = "Cosmos";
++static void *
++cosmos_init (Display *disp, Window win)
++{
++	CCosmos *ccosmos = new CCosmos();
++	CCosmos::m_instance = ccosmos;
++	ccosmos->InitDisplay(disp,win);
++	return ccosmos;
++}
++
++static unsigned long 
++cosmos_draw (Display *disp, Window win, void *closure)
++{
++	CCosmos *ccosmos = (CCosmos *) closure;
++	ccosmos->Run();
++	return 1000l;
++}
+ 
+-char *defaults [] = {
++static void 
++cosmos_reshape (Display *disp, Window win, void *closure, 
++		unsigned int width, unsigned int height)
++{
++	CCosmos *ccosmos = (CCosmos *) closure;
++}
++
++static Bool 
++cosmos_event (Display *disp, Window win, void *closure, XEvent *event)
++{
++	return False;
++}
++
++static void 
++cosmos_free (Display *, Window, void *closure)
++{
++	CCosmos *ccosmos = (CCosmos *) closure;
++	delete ccosmos;
++}
++
++static char *cosmos_defaults [] = {
+   ".background:     black",
+   ".foreground:     #FFAF5F",
+   "*bitmap:         (default)",
+@@ -695,7 +730,7 @@ char *defaults [] = {
+   0
+ };
+ 
+-XrmOptionDescRec options [] = {
++XrmOptionDescRec cosmos_options [] = {
+   { "-delay",     ".delay",          XrmoptionSepArg, 0 },
+   { "-bitmap",    ".bitmap",         XrmoptionSepArg, 0 },
+   { "-baseline",  ".bitmapBaseline", XrmoptionSepArg, 0 },
+@@ -720,15 +755,4 @@ XrmOptionDescRec options [] = {
+ 	{ 0, 0, XrmoptionNoArg, 0 }
+ };
+ 
+-void
+-screenhack (Display *disp, Window win)
+-{
+-	CCosmos::GetInstance()->InitDisplay(disp,win);
+-  while (1) {
+-		CCosmos::GetInstance()->Run();
+-		XSync(disp,False);
+-		screenhack_handle_events(disp);
+-		//if (delay)
+-		//	usleep (delay);
+-	}
+-}
++XSCREENSAVER_MODULE ("Cosmos", cosmos)
+--- ./cosmos.h	2006/07/05 11:45:00	1.1
++++ ./cosmos.h	2006/07/05 11:51:42
+@@ -42,6 +42,8 @@ class CCosmos
+ {
+  public:
+         static CCosmos* GetInstance();
++	static CCosmos* m_instance;
++	CCosmos();
+ 	void InitDisplay(Display *dpy,Window window);
+ 	~CCosmos();
+ 	void Run();
+@@ -53,7 +55,6 @@ class CCosmos
+ 	int castcount;
+ 
+  private:
+-	CCosmos();
+ 	void MakeImage();
+ 	void InitColors();
+ 	void InitColors(unsigned int r,unsigned int b,unsigned int g);
+@@ -83,7 +84,6 @@ class CCosmos
+ 
+ 
+  private:
+-	static CCosmos* m_instance;
+ 	int             width;  // The actual width of the XImage
+ 	int             height; // The actual hight of the XImage
+ 	XImage          *xim;

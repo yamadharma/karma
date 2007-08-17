@@ -1,0 +1,58 @@
+diff -ur cosmos/cosmoscast.h cosmos-1.0/cosmoscast.h
+--- cosmos/cosmoscast.h	2001-02-20 04:34:59.000000000 +0000
++++ cosmos-1.0/cosmoscast.h	2004-02-24 01:44:37.758336640 +0000
+@@ -36,6 +36,8 @@
+ #define CHASE   1
+ #define SCRIPTS 2
+ 
++using namespace std;
++
+ class CCast {
+  public:
+ 	CCast(CCosmos *cosmos,CScript *script);
+diff -ur cosmos/cosmos.cpp cosmos-1.0/cosmos.cpp
+--- cosmos/cosmos.cpp	2001-02-20 04:34:59.000000000 +0000
++++ cosmos-1.0/cosmos.cpp	2004-02-24 01:43:49.277706816 +0000
+@@ -28,9 +28,6 @@
+ #include <X11/Xutil.h>
+ #include <limits.h>
+ 
+-#include "stream.h"
+-
+-
+ #ifdef HAVE_XSHM_EXTENSION
+ # include "xshm.h"
+ #endif /* HAVE_XSHM_EXTENSION */
+@@ -52,6 +49,8 @@
+ 
+ }
+ 
++#include <iostream>
++
+ #include "cosmos.h"
+ #include "chasescript.h"
+ #include "explodescript.h"
+diff -ur cosmos/cosmos.h cosmos-1.0/cosmos.h
+--- cosmos/cosmos.h	2001-02-20 04:34:59.000000000 +0000
++++ cosmos-1.0/cosmos.h	2004-02-24 01:46:14.364650248 +0000
+@@ -36,6 +36,8 @@
+ #include "cosmoscast.h"
+ #include <vector>
+ 
++using namespace std;
++
+ class CCosmos
+ {
+  public:
+diff -ur cosmos/points.h cosmos-1.0/points.h
+--- cosmos/points.h	2001-02-20 04:34:59.000000000 +0000
++++ cosmos-1.0/points.h	2004-02-24 01:45:11.678180040 +0000
+@@ -22,6 +22,8 @@
+ 
+ #include <vector>
+ 
++using namespace std;
++
+ class CPoint {
+  public:
+  	float x;

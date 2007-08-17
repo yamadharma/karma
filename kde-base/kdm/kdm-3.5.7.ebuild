@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/kdm/kdm-3.5.7.ebuild,v 1.1 2007/05/22 23:33:10 carlo Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/kdm/kdm-3.5.7.ebuild,v 1.8 2007/08/11 16:31:24 armin76 Exp $
 
 KMNAME=kdebase
 MAXKDEVER=$PV
@@ -11,8 +11,8 @@ SRC_URI="${SRC_URI}
 	mirror://gentoo/kdebase-3.5-patchset-04.tar.bz2"
 
 DESCRIPTION="KDE login manager, similar to xdm and gdm"
-KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="elibc_glibc kdehiddenvisibility pam"
+KEYWORDS="alpha amd64 ia64 ppc ppc64 sparc x86 ~x86-fbsd"
+IUSE="elibc_glibc kdehiddenvisibility pam pertty"
 
 KMEXTRA="kdmlib/"
 # kioslave/thumbnail/configure.in.in is to have HAVE_LIBART. Can be dropped on
@@ -29,7 +29,11 @@ RDEPEND="${DEPEND}
 	x11-apps/xmessage"
 PDEPEND="$(deprange $PV $MAXKDEVER kde-base/kdesktop)"
 
-PATCHES="${FILESDIR}/kdm-make_it_cool.diff"
+PATCHES=""
+
+if use pertty; then
+	PATCHES="${FILESDIR}/kdm-make_it_cool.diff"
+fi
 
 src_compile() {
 	local myconf="--with-x-binaries-dir=/usr/bin $(use_with pam)"

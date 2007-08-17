@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/kdesktop/kdesktop-3.5.7.ebuild,v 1.2 2007/05/23 10:30:26 carlo Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/kdesktop/kdesktop-3.5.7.ebuild,v 1.8 2007/08/11 16:38:13 armin76 Exp $
 
 KMNAME=kdebase
 MAXKDEVER=$PV
@@ -11,8 +11,8 @@ SRC_URI="${SRC_URI}
 	mirror://gentoo/kdebase-3.5-patchset-05.tar.bz2"
 
 DESCRIPTION="KDesktop is the KDE interface that handles the icons, desktop popup menus and the screensaver system."
-KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="kdehiddenvisibility pertty xscreensaver"
+KEYWORDS="alpha amd64 ia64 ppc ppc64 sparc x86 ~x86-fbsd"
+IUSE="kdehiddenvisibility pertty transparency xscreensaver"
 
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkonq)
 	$(deprange $PV $MAXKDEVER kde-base/kcontrol)
@@ -41,6 +41,12 @@ if use pertty;
 then
 	PATCHES="${PATCHES}
 		 	 ${FILESDIR}/$KMNAME-3.5.5-$PN-rounded-text-box-corners.patch"
+fi
+
+if use transparency;
+then
+	PATCHES="${PATCHES}
+		 	 ${FILESDIR}/$PN-transparency-0.1.patch"
 fi
 
 pkg_setup() {

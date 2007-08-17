@@ -1,0 +1,32 @@
+--- Makefile.in	2004-02-24 02:20:01.336503688 +0000
++++ goban-1.0/Makefile.in	2004-02-24 02:30:52.831461400 +0000
+@@ -36,7 +36,11 @@
+ 
+ # Change these values to tell make where to put the binary and the man page
+ #   when it's done compiling.
+-PREFIX = /usr/games
++DESTDIR = /
++PREFIX = $(DESTDIR)/usr
++DATADIR = $(PREFIX)/share/goban
++PIXMAPSDIR = $(PREFIX)/share/pixmaps
++SCREENSAVERDIR = $(PREFIX)/lib/misc/xscreensaver
+ BINDIR = $(PREFIX)/bin
+ MANDIR = $(PREFIX)/man
+ 
+@@ -68,11 +72,11 @@
+ #	$(INSTALL_DATA) man6/cgoban.6 $(MANDIR)/man6/cgoban.6
+ 
+ install:	cgoban-$(SYSTEM_TYPE) man6/cgoban.6
+-	$(INSTALL_PROGRAM) cgoban-$(SYSTEM_TYPE) /usr/X11R6/lib/xscreensaver/goban
+-	$(INSTALL) -d /usr/share/goban
+-	$(INSTALL_DATA) games/* /usr/share/goban
+-	$(INSTALL_DATA) Goban.desktop /usr/share/control-center/.data/Goban.desktop
+-	$(INSTALL_DATA) goban.png /usr/share/control-center/.data/goban.png
++	$(INSTALL_PROGRAM) -D cgoban-$(SYSTEM_TYPE) $(SCREENSAVERDIR)/goban
++	$(INSTALL_DATA) -D man6/cgoban.6 $(MANDIR)/man6/goban.6
++	$(INSTALL_DATA) -d $(DATADIR) -m 0755
++	$(INSTALL_DATA) -D games/* $(DATADIR)
++	$(INSTALL_DATA) -D goban.png $(PIXMAPSDIR)/goban.png
+ 
+ 
+ GEN_FILES = *.[oa]

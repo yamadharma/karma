@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/kicker/kicker-3.5.7.ebuild,v 1.1 2007/05/22 23:56:41 carlo Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/kicker/kicker-3.5.7.ebuild,v 1.7 2007/08/11 16:52:22 armin76 Exp $
 
 KMNAME=kdebase
 
@@ -14,7 +14,7 @@ SRC_URI="${SRC_URI}
 	mirror://gentoo/kdebase-3.5-patchset-03.tar.bz2"
 
 DESCRIPTION="Kicker is the KDE application starter panel and is also capable of some useful applets and extensions."
-KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="alpha amd64 ia64 ppc ppc64 sparc x86 ~x86-fbsd"
 IUSE="kdehiddenvisibility kickoff pertty xcomposite"
 
 RDEPEND="
@@ -27,7 +27,7 @@ $(deprange $PV $MAXKDEVER kde-base/kdebase-data)
 	xcomposite? ( x11-libs/libXcomposite )"
 
 DEPEND="${RDEPEND}
-	kickoff? ( sys-libs/liblazy >=app-misc/beagle-0.2.11 )"
+	kickoff? ( dev-libs/liblazy !sys-libs/liblazy >=app-misc/beagle-0.2.11 )"
 
 KMCOPYLIB="libkonq libkonq"
 KMEXTRACTONLY="libkonq

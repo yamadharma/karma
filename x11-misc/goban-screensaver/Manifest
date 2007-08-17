@@ -1,0 +1,16 @@
+AUX goban-screensaver-1.0-Makefile.in.patch 1186 RMD160 fbd125060189472881150a7048b9b6ca2754921a SHA1 8d78ea58b41925b208483b1299b8f867af0d32e8 SHA256 9e75f18484b91ebf91f7a33e88efb5102ddef1cd09a35e0ab5324f25eb4af2e5
+MD5 9d1410cb447d80dc22adb062bf96dee5 files/goban-screensaver-1.0-Makefile.in.patch 1186
+RMD160 fbd125060189472881150a7048b9b6ca2754921a files/goban-screensaver-1.0-Makefile.in.patch 1186
+SHA256 9e75f18484b91ebf91f7a33e88efb5102ddef1cd09a35e0ab5324f25eb4af2e5 files/goban-screensaver-1.0-Makefile.in.patch 1186
+AUX goban-screensaver-1.0-root-and-id.patch 626 RMD160 bf0c68d8528f5f3addda4f0d0a125c4c36b51395 SHA1 c9d05e2ba9ed469811e035ba8bf565d4872c8579 SHA256 f5793a9ffe33ec52460f0e1c0acefc89083fca251792e8ca16c4eda015b44bc8
+MD5 f2b90d2b7b2474c846a94b7d24f382c1 files/goban-screensaver-1.0-root-and-id.patch 626
+RMD160 bf0c68d8528f5f3addda4f0d0a125c4c36b51395 files/goban-screensaver-1.0-root-and-id.patch 626
+SHA256 f5793a9ffe33ec52460f0e1c0acefc89083fca251792e8ca16c4eda015b44bc8 files/goban-screensaver-1.0-root-and-id.patch 626
+DIST goban-1.0.tar.gz 727872 RMD160 2fc81edcd744d97b88c8b6c74b7717c0520e9f3f SHA1 8f22452c2870d834ea4baf1b6c6a63624bc35d23 SHA256 ed239e3a899fde91ee7bc741608987a3a768a415c75504a008fe9540e23aa865
+EBUILD goban-screensaver-1.0.ebuild 779 RMD160 50735dade6a38e829ec9640620190a90b949ffd8 SHA1 2a5f761ef98a36acd96316c94b132b1eca2e14df SHA256 b41df1b10d5ab994a61c61aeea601edcc62a2689ac3481c8ed551b0f3d27a812
+MD5 24b9170ee04d019e606a0d95a3cdb7a4 goban-screensaver-1.0.ebuild 779
+RMD160 50735dade6a38e829ec9640620190a90b949ffd8 goban-screensaver-1.0.ebuild 779
+SHA256 b41df1b10d5ab994a61c61aeea601edcc62a2689ac3481c8ed551b0f3d27a812 goban-screensaver-1.0.ebuild 779
+MD5 fb9ba2f0285f4f90f42391fae0ba95bb files/digest-goban-screensaver-1.0 229
+RMD160 e81e78f0aa9b08fc161815dbe964679d3e1786b1 files/digest-goban-screensaver-1.0 229
+SHA256 65b08154b38946eb2358f01ad7c413210fc51b6e6dea77c925e13f63545126d7 files/digest-goban-screensaver-1.0 229

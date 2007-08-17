@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/kdelibs/kdelibs-3.5.7-r2.ebuild,v 1.1 2007/07/26 12:40:44 carlo Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/kdelibs/kdelibs-3.5.7-r2.ebuild,v 1.8 2007/08/11 14:55:50 armin76 Exp $
 
 inherit kde flag-o-matic eutils multilib
 set-kdedir 3.5
@@ -13,7 +13,7 @@ SRC_URI="mirror://kde/stable/${PV}/src/${P}.tar.bz2
 
 LICENSE="GPL-2 LGPL-2"
 SLOT="3.5"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="alpha amd64 ~hppa ia64 ppc ppc64 sparc x86 ~x86-fbsd"
 IUSE="acl alsa arts branding cups doc jpeg2k kerberos legacyssl utempter openexr pertty spell tiff 
 avahi kernel_linux fam lua kdehiddenvisibility"
 
@@ -33,7 +33,7 @@ RDEPEND="$(qt_min_version 3.3.3)
 	acl? ( kernel_linux? ( sys-apps/acl ) )
 	alsa? ( media-libs/alsa-lib )
 	cups? ( >=net-print/cups-1.1.19 )
-	pertty? ( >=x11-libs/qt-3.3.6-r5 <x11-libs/qt-4.0.0 )
+	pertty? ( $(qt_min_version 3.3.8-r2) )
 	tiff? ( media-libs/tiff )
 	kerberos? ( virtual/krb5 )
 	jpeg2k? ( media-libs/jasper )
@@ -45,7 +45,7 @@ RDEPEND="$(qt_min_version 3.3.3)
 	!kde-base/kde-env
 	lua? ( dev-lang/lua )
 	spell? ( >=app-text/aspell-0.60.5 >=app-dicts/aspell-en-6.0.0 )
-	>=sys-apps/portage-2.1.2.6
+	>=sys-apps/portage-2.1.2.11
 	!kde-base/ksync"
 
 DEPEND="${RDEPEND}
@@ -211,6 +211,9 @@ KDEDIRS="/usr:/usr/local:${PREFIX}"
 XDG_DATA_DIRS="/usr/share:${PREFIX}/share:/usr/local/share"
 COLON_SEPARATED="XDG_DATA_DIRS"
 EOF
+
+	# Make sure the target for the revdep-rebuild stuff exists. Fixes bug 184441.
+	dodir /etc/revdep-rebuild
 
 cat <<EOF > "${D}"/etc/revdep-rebuild/50-kde3
 SEARCH_DIRS="${PREFIX}/bin ${PREFIX}/lib*"

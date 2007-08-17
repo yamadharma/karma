@@ -12,24 +12,24 @@ S="${WORKDIR}/xen-${PV}-src"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="doc debug screen custom-cflags pygrub ioemu"
+IUSE="doc debug screen custom-cflags pygrub hvm"
 
 CDEPEND="dev-lang/python
 	sys-libs/zlib
-	ioemu? ( media-libs/libsdl )"
+	hvm? ( media-libs/libsdl )"
 
 DEPEND="${CDEPEND}
 	sys-devel/gcc
 	dev-lang/perl
-	sys-devel/dev86
 	app-misc/pax-utils
 	doc? (
 		dev-tex/latex2html
 		media-gfx/transfig
 	)
-	ioemu? (
+	hvm? (
 		x11-proto/xproto
 		net-libs/libvncserver
+		sys-devel/dev86
 	)"
 
 RDEPEND="${CDEPEND}
@@ -48,6 +48,13 @@ PYTHON_MODNAME="xen grub"
 QA_WX_LOAD="usr/lib/xen/boot/hvmloader"
 
 pkg_setup() {
+	if ! use x86 && ! has x86 $(get_all_abis) && use hvm; then
+		eerror "HVM (VT-x and AMD-v) cannot be built on this system. An x86 or"
+		eerror "an amd64 multilib profile is required. Remove the hvm use flag"
+		eerror "to build xen-tools on your current profile."
+		die "USE=hvm is unsupported on this system."
+	fi
+
 	if [[ "$(scanelf -s __guard -q `which python`)" ]] ; then
 		ewarn "xend may not work when python is built with stack smashing protection (ssp)."
 		ewarn "If 'xm create' fails with '<ProtocolError for /RPC2: -1 >', see bug #141866"
@@ -81,21 +88,15 @@ src_unpack() {
 			-i {} \;
 	fi
 
-	# Disable the 32bit-only vmxassist if we are not on x86 and we don't
-	# support the x86 ABI. Also disable hvmloader, since it requires vmxassist.
-	if ! use x86 && ! has x86 $(get_all_abis); then
-		sed -i -e "/SUBDIRS += vmxassist/d" "${S}"/tools/firmware/Makefile
-		sed -i -e "/SUBDIRS += hvmloader/d" "${S}"/tools/firmware/Makefile
+	# Disable hvm support on systems that don't support x86_32 binaries. 
+	if ! use hvm; then
+		chmod 644 tools/check/check_x11_devel
+		sed -i -e '/^CONFIG_IOEMU := y$/d' "${S}"/config/*.mk
+		sed -i -e '/SUBDIRS-$(CONFIG_X86) += firmware/d' "${S}"/tools/Makefile
 	fi
 
 	if ! use pygrub; then
 		sed -i -e "/^SUBDIRS-y += pygrub$/d" "${S}"/tools/Makefile
-	fi
-
-	# Don't bother with ioemu, only needed for fully virtualised guests
-	if ! use ioemu; then
-		chmod 644 tools/check/check_x11_devel
-		sed -i -e "/^CONFIG_IOEMU := y$/d" "${S}"/config/*.mk
 	fi
 
 	# Allow --as-needed LDFLAGS
@@ -115,7 +116,7 @@ src_compile() {
 	use custom-cflags || unset CFLAGS
 	#gcc-specs-ssp && append-flags -fno-stack-protector -fno-stack-protector-all
 
-	if use ioemu; then
+	if use hvm; then
 		myconf="${myconf} --disable-system --disable-user"
 		(cd tools/ioemu && econf ${myconf}) || die "configure failured"
 	fi
@@ -179,10 +180,13 @@ pkg_postinst() {
 		ewarn "Please rebuild python with USE=ncurses to make use of xenmon.py."
 	fi
 
-	if ! use x86 && ! has x86 $(get_all_abis); then
+	if ! use hvm; then
 		echo
-		elog "Your system does not support building x86 binaries (amd64 no-multilib)"
-		elog "hvmloader has not been built, which is required for HVM guests."
+		elog "HVM (VT-x and AMD-V) support has been disabled. If you need hvm"
+		elog "support enable the hvm use flag."
+		elog "An x86 or amd64 multilib system is required to build HVM support."
+		echo
+		elog "The ioemu use flag has been removed and replaced with hvm."
 	fi
 
 	if grep -qsF XENSV= "${ROOT}/etc/conf.d/xend"; then

@@ -21,3 +21,10 @@ src_install() {
 	mkdir -p ${D}${GNUSTEP_SYSTEM_LIBRARY}/Themes
 	ln -s ${GNUSTEP_SYSTEM_LIBRARY}/Bundles/Camaelon.themeEngine/Resources/Nesedah.theme ${D}${GNUSTEP_SYSTEM_LIBRARY}/Themes/
 }
+
+gnustep_config_script() {
+	echo "echo ' * setting NSGlobalDomain GSAppKitUserBundles'"
+	echo "defaults write NSGlobalDomain GSAppKitUserBundles '(\"/usr/GNUstep/System/Library/Bundles/Camaelon.themeEngine\")'"
+	echo "echo ' * using Camaelon Theme: Nesdah'"
+	echo "defaults write Camaelon Theme Nesedah"
+}
