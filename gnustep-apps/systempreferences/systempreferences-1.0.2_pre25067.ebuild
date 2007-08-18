@@ -14,7 +14,7 @@ DESCRIPTION="System Preferences is a clone of the Apple OS X System Preferences 
 HOMEPAGE="http://www.gnustep.it/enrico/system-preferences/"
 #SRC_URI="http://www.gnustep.it/enrico/system-preferences/${P}.tar.gz"
 
-KEYWORDS="~ppc x86 amd64"
+KEYWORDS="~ppc ~x86 ~amd64"
 LICENSE="GPL-2"
 SLOT="0"
 

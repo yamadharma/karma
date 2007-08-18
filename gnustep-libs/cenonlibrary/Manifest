@@ -4,10 +4,10 @@ EBUILD cenonlibrary-3.80.1.ebuild 757 RMD160 e0fc535af62ccd7619c81662d1e4c68c2fb
 MD5 ecc48fdd0c2899ad857d140fc0959749 cenonlibrary-3.80.1.ebuild 757
 RMD160 e0fc535af62ccd7619c81662d1e4c68c2fb6d0d0 cenonlibrary-3.80.1.ebuild 757
 SHA256 52bcd89ab08c9d8ea847b8f4608141b87225ecc12f9c29bb855363b9feacaa40 cenonlibrary-3.80.1.ebuild 757
-EBUILD cenonlibrary-3.82.1.ebuild 753 RMD160 5a2cb27cfefcb6fd48a42fe73746c303bea7f06c SHA1 1f1b1cc1b49ce39e55d6008755ad5dfa27ff9144 SHA256 5a745af5eb467085540576a16c00ea13986f68c56e36ae36a0f708d67acd200b
-MD5 b2861aa80ef7eff036efb35daccd409f cenonlibrary-3.82.1.ebuild 753
-RMD160 5a2cb27cfefcb6fd48a42fe73746c303bea7f06c cenonlibrary-3.82.1.ebuild 753
-SHA256 5a745af5eb467085540576a16c00ea13986f68c56e36ae36a0f708d67acd200b cenonlibrary-3.82.1.ebuild 753
+EBUILD cenonlibrary-3.82.ebuild 544 RMD160 e7a9e21789aee61a986bced38ce9c5f737d4a67a SHA1 137d5a761048acd5661745613ca1f41f930a40b1 SHA256 511a5ceac148ac2cd373495a0c0796cbd15d1bf08010fb1436dcb0742acf5f60
+MD5 9645f7d31dec0a8b1925612043cb0500 cenonlibrary-3.82.ebuild 544
+RMD160 e7a9e21789aee61a986bced38ce9c5f737d4a67a cenonlibrary-3.82.ebuild 544
+SHA256 511a5ceac148ac2cd373495a0c0796cbd15d1bf08010fb1436dcb0742acf5f60 cenonlibrary-3.82.ebuild 544
 MISC ChangeLog 423 RMD160 8e9b4fb48532ea9d1a2d2bc810d1a9271d8e213b SHA1 174c6e966a076fc268ea3a18721f66b67dc218e6 SHA256 afcdef1f43743cf5fe6b8736ed3022ccf6200b0a18e0535fd220f261b5076077
 MD5 0df7b262253cf79fbea473f5d336cf23 ChangeLog 423
 RMD160 8e9b4fb48532ea9d1a2d2bc810d1a9271d8e213b ChangeLog 423
@@ -19,6 +19,6 @@ SHA256 3528f04dc79ccce040e53bc3f755eece10c3fe45ae5b9517cdc59509fc43c682 metadata
 MD5 7ee5bdaf0eef2c4570b22f46dca057db files/digest-cenonlibrary-3.80.1 268
 RMD160 7c097c2dc24aa13b117b510bfd89678dc61fd761 files/digest-cenonlibrary-3.80.1 268
 SHA256 701bcd7c819fabdbaac870d1a7e8a258a504fa46d109cc4ff9216bcf1a1d6582 files/digest-cenonlibrary-3.80.1 268
-MD5 b963dc0c306df015ad25311f8672437f files/digest-cenonlibrary-3.82.1 268
-RMD160 e1765a979ad2e08c1be448c0516401936dd2703f files/digest-cenonlibrary-3.82.1 268
-SHA256 be04b1d0a667a987ad0832c22ce80c5e7622280658af1411db43fdc61870c362 files/digest-cenonlibrary-3.82.1 268
+MD5 b963dc0c306df015ad25311f8672437f files/digest-cenonlibrary-3.82 268
+RMD160 e1765a979ad2e08c1be448c0516401936dd2703f files/digest-cenonlibrary-3.82 268
+SHA256 be04b1d0a667a987ad0832c22ce80c5e7622280658af1411db43fdc61870c362 files/digest-cenonlibrary-3.82 268
