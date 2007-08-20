@@ -14,7 +14,7 @@ S=${WORKDIR}/${MY_P}
 DESCRIPTION="System imager boot-i386. Software that automates Linux installs, software distribution, and production deployment."
 HOMEPAGE="http://www.systemimager.org/"
 SRC_URI="mirror://sourceforge/systemimager/${MY_P}.tar.bz2
-	bittorrent? http://download.systemimager.org/pub/bittorrent/BitTorrent-${BITTORRENT_VERSION}.tar.gz"
+	bittorrent? ( http://download.systemimager.org/pub/bittorrent/BitTorrent-${BITTORRENT_VERSION}.tar.gz )"
 
 SLOT="0"
 LICENSE="GPL-2"

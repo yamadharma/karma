@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86 ~ppc"
+KEYWORDS="amd64 x86 ~ppc"
 IUSE="X debug doc fortran ifc itcl java jpeg octave png python tk tetex truetype"
 
 RDEPEND="virtual/libc
@@ -61,8 +61,8 @@ src_unpack() {
 	cd ${S}
 	# Fix compilation problems on GCC 3.4 and the octave
 	# bindings, thanks to the patch from Debian's BTS bug 274359.
-	epatch ${FILESDIR}/${PN}-5.5.1-gcc-3.4-fix.patch
-	epatch ${FILESDIR}/${P}-macro-fix.patch
+#	epatch ${FILESDIR}/${PN}-5.5.1-gcc-3.4-fix.patch
+#	epatch ${FILESDIR}/${P}-macro-fix.patch
 
 	# properly detect octave 2.9.x
 	sed -e "s:filepath:filedir:" \
