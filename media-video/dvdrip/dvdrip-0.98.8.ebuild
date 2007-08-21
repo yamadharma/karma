@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/dvdrip/dvdrip-0.98.1.ebuild,v 1.4 2006/10/06 03:35:34 josejx Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/dvdrip/dvdrip-0.98.6.ebuild,v 1.2 2007/08/12 15:15:37 beandog Exp $
 
 inherit eutils flag-o-matic perl-module
 
@@ -10,17 +10,18 @@ SRC_URI="http://www.exit1.org/${PN}/dist/${P}.tar.gz"
 
 LICENSE="Artistic GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ppc ~ppc64 sparc x86"
-IUSE="fping hal mplayer ogg subtitles vcd vorbis xine xvid"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
+IUSE="ffmpeg fping hal mplayer ogg subtitles vcd vorbis xine xvid"
 
-DEPEND=">=dev-perl/Event-ExecFlow-0.62
+DEPEND=">=dev-perl/Event-ExecFlow-0.63
 	>=dev-perl/Event-RPC-0.89
 	dev-perl/gtk2-perl
 	>=dev-perl/gtk2-ex-formfactory-0.65
 	>=dev-perl/libintl-perl-1.16
 	media-gfx/imagemagick
-	media-video/transcode"
+	<media-video/transcode-1.1.0_pre0"
 RDEPEND="${DEPEND}
+	ffmpeg? ( media-video/ffmpeg )
 	fping? ( >=net-analyzer/fping-2.2 )
 	hal? ( >=sys-apps/hal-0.5 )
 	mplayer? ( media-video/mplayer )
@@ -33,13 +34,30 @@ RDEPEND="${DEPEND}
 	>=media-video/lsdvd-0.15"
 
 pkg_setup() {
-	if ! built_with_use media-video/transcode dvdread || \
-		built_with_use media-video/transcode extrafilters; then
-			eerror "transcode needs dvdread support builtin."
-			eerror "Please re-emerge transcode with the dvdread USE flag."
-			eerror "Please remerge transcode with -extrafilters in USE=,"
-			eerror "you have filters installed not compatible with dvdrip."
-		die "Fix transcode USE flags and re-emerge."
+
+	local rebuild=0
+
+	if ! built_with_use x11-libs/gtk+ jpeg; then
+		eerror "Please re-emerge x11-libs/gtk+ with the jpeg use flag"
+		rebuild=1
+	fi
+	if ! built_with_use media-video/transcode dvdread; then
+		eerror "Please re-emerge media-video/transcode with the dvdread"
+		eerror "USE flag."
+		rebuild=1
+	fi
+	if built_with_use media-video/transcode extrafilters; then
+		eerror "Please re-emerge media-video/transcode without the"
+		eerror "extrafilters USE flag."
+		rebuild=1
+	fi
+	if use vcd && ! built_with_use media-video/transcode mjpeg; then
+		eerror "Please re-emerge media-video/transcode with the"
+		eerror "mjpeg USE flag."
+		rebuild=1
+	fi
+	if [[ rebuild -eq 1 ]]; then
+		die "Fix use flags and re-emerge."
 	fi
 }
 

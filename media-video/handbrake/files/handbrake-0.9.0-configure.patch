@@ -1,0 +1,10 @@
+--- configure	2007-08-20 20:33:09.000000000 +0400
++++ configure.new	2007-08-21 14:20:58.000000000 +0400
+@@ -5,6 +5,7 @@
+ CCFLAGS="$CCFLAGS -Wall -g"
+ OPTIM="$OPTIM -O3 -funroll-loops"
+ LINKLIBS="-lz"
++LINKLIBS="$LINKLIBS -ldvdread -logg -lvorbis -ldvdcss -lavcodec -lfaac -la52 -lmp3lame -lvorbisenc -lsamplerate -lxvidcore -lmp4v2 -lx264 -lmpeg2"
+ 
+ # System-specific flags
+ SYSTEM=`uname -s`
