@@ -13,12 +13,12 @@ SRC_URI="http://archives.eyrie.org/software/kerberos/${MY_P}.tar.gz"
 
 LICENSE="as-is"
 KEYWORDS="x86 amd64"
+IUSE=""
 
 DEPEND="virtual/krb5
 	>=sys-libs/pam-0.78-r2"
 
 src_compile() {
-#	export CFLAGS="${CFLAGS} -fPIC"
 	econf || die "econf failed"
 	emake || die "emake failed"
 }
