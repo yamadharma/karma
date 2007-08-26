@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/gtk+/gtk+-2.10.11.ebuild,v 1.1 2007/03/14 16:01:52 dang Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/gtk+/gtk+-2.10.14.ebuild,v 1.1 2007/07/16 23:53:28 leio Exp $
 
 inherit gnome.org flag-o-matic eutils autotools virtualx
 
@@ -44,8 +44,6 @@ DEPEND="${RDEPEND}
 			~app-text/docbook-xml-dtd-4.1.2
 		 )"
 
-RESTRICT="confcache"
-
 pkg_setup() {
 	if ! built_with_use x11-libs/cairo X; then
 		einfo "Please re-emerge x11-libs/cairo with the X USE flag set"
@@ -64,11 +62,14 @@ src_unpack() {
 	cd "${S}"
 
 	# Optionalize xinerama support
-	epatch "${FILESDIR}"/${PN}-2.8.10-xinerama.patch
+	epatch "${FILESDIR}/${PN}-2.8.10-xinerama.patch"
+
+	# Make gtk-update-icon-cache check subdirs in it's update check
+	epatch "${FILESDIR}"/${PN}-2.10.11-update-icon-subdirs.patch
 
 	# use an arch-specific config directory so that 32bit and 64bit versions
 	# dont clash on multilib systems
-	has_multilib_profile && epatch "${FILESDIR}"/${PN}-2.8.0-multilib.patch
+	has_multilib_profile && epatch "${FILESDIR}/${PN}-2.8.0-multilib.patch"
 
 	# Revert DND change that makes mozilla products DND broken
 	EPATCH_OPTS="-R" epatch "${FILESDIR}/${PN}-2.10.7-mozilla-dnd-fix.patch"

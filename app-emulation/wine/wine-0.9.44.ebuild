@@ -1,6 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/wine/wine-0.9.18.ebuild,v 1.2 2006/07/30 17:52:17 vapier Exp $
+# $Header: $
 
 inherit eutils flag-o-matic multilib
 
@@ -20,23 +20,24 @@ RDEPEND=">=media-libs/freetype-2.0.0
 	jack? ( media-sound/jack-audio-connection-kit )
 	dbus? ( sys-apps/dbus )
 	hal? ( sys-apps/hal )
-	X? ( || ( ( x11-libs/libXrandr x11-libs/libXi x11-libs/libXmu
-				x11-libs/libXxf86dga x11-libs/libXxf86vm x11-apps/xmessage )
-		virtual/x11 )
+	X? (
+		x11-libs/libXcursor
+		x11-libs/libXrandr
+		x11-libs/libXi
+		x11-libs/libXmu
+		x11-libs/libXxf86vm
+		x11-apps/xmessage
 	)
-	arts? ( kde-base/arts )
 	alsa? ( media-libs/alsa-lib )
 	esd? ( media-sound/esound )
 	nas? ( media-libs/nas )
 	cups? ( net-print/cups )
 	opengl? ( virtual/opengl )
-	gif? ( media-libs/giflib )
 	jpeg? ( media-libs/jpeg )
 	ldap? ( net-nds/openldap )
-	glut? ( virtual/glut )
 	lcms? ( media-libs/lcms )
 	xml? ( dev-libs/libxml2 dev-libs/libxslt )
-	>=media-gfx/fontforge-20060406
+	>=media-gfx/fontforge-20060703
 	scanner? ( media-gfx/sane-backends )
 	amd64? (
 		>=app-emulation/emul-linux-x86-xlibs-2.1
@@ -44,16 +45,21 @@ RDEPEND=">=media-libs/freetype-2.0.0
 		>=sys-kernel/linux-headers-2.6
 	)"
 DEPEND="${RDEPEND}
-	X? ( || ( ( x11-proto/inputproto
-				x11-proto/xextproto
-				x11-proto/xf86dgaproto
-				x11-proto/xf86vidmodeproto
-			)
-			virtual/x11
-		)
+	X? (
+		x11-proto/inputproto
+		x11-proto/xextproto
+		x11-proto/xf86vidmodeproto
 	)
 	sys-devel/bison
 	sys-devel/flex"
+
+pkg_setup() {
+	use alsa || return 0
+	if ! built_with_use --missing true media-libs/alsa-lib midi ; then
+		eerror "You must build media-libs/alsa-lib with USE=midi"
+		die "please re-emerge media-libs/alsa-lib with USE=midi"
+	fi
+}
 
 src_unpack() {
 	unpack wine-${PV}.tar.bz2
@@ -63,10 +69,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/wine-gentoo-no-ssp.patch #66002
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
 
-	# http://bugs.winehq.org/show_bug.cgi?id=7959#c15
-	epatch "${FILESDIR}/xrender.patch" #176801
-	
-	epatch "${FILESDIR}/wine-0.9.39-iocompletion.patch.bz2"
+#	epatch "${FILESDIR}/wine-0.9.39-iocompletion.patch.bz2"	
 }
 
 config_cache() {
@@ -83,7 +86,6 @@ config_cache() {
 
 src_compile() {
 	export LDCONFIG=/bin/true
-	use arts    || export ac_cv_path_ARTSCCONFIG=""
 	use esd     || export ac_cv_path_ESDCONFIG=""
 	use scanner || export ac_cv_path_sane_devel="no"
 	config_cache jack jack/jack.h
@@ -92,8 +94,6 @@ src_compile() {
 	config_cache nas audio/audiolib.h audio/soundlib.h
 	config_cache xml libxml/parser.h libxslt/pattern.h libxslt/transform.h
 	config_cache ldap ldap.h lber.h
-	config_cache gif gif_lib.h
-	config_cache glut glut:glutMainLoop
 	config_cache dbus dbus/dbus.h
 	config_cache hal hal/libhal.h
 	config_cache jpeg jpeglib.h
@@ -102,17 +102,13 @@ src_compile() {
 
 	strip-flags
 
-	EXTRA_OPTS=""
+	use amd64 && multilib_toolchain_setup x86
 
-	use amd64 && EXTRA_OPTS="${EXTRA_OPTS} --libdir=/usr/lib32"
-
-	export LDFLAGS="-m32 -L/usr/lib32 -L/lib32"
 	#	$(use_enable amd64 win64)
-	econf ${EXTRA_OPTS} \
+	econf \
 		--sysconfdir=/etc/wine \
 		$(use_with ncurses curses) \
 		$(use_with opengl) \
-		--x-libraries=/emul/linux/x86/usr/lib \
 		$(use_with X x) \
 		|| die "configure failed"
 
@@ -124,7 +120,7 @@ src_install() {
 	make DESTDIR="${D}" install || die
 	dodoc ANNOUNCE AUTHORS ChangeLog DEVELOPERS-HINTS README
 
-	newinitd ${FILESDIR}/wine.init wine
+	newinitd ${FILESDIR}/wine.init wine	
 }
 
 pkg_postinst() {

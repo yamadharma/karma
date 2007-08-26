@@ -2,6 +2,24 @@
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/x11-libs/gtk+/ChangeLog,v 1.299 2007/02/21 12:54:25 blubb Exp $
 
+  22 Aug 2007; <roderick_greening@hotmail.com>
+  -files/gtk+-2.8-gtkmenubar.diff, -files/gtk+-2.10.7-textview-fix.patch,
+  +files/gtk+-2.10.11-update-icon-subdirs.patch,
+  -files/gtk+-2-xpm_loader.patch, -files/gtkrc, -gtk+-2.10.9.ebuild,
+  -gtk+-2.10.11.ebuild, +gtk+-2.10.13.ebuild, +gtk+-2.10.14.ebuild:
+  Updated GTK+ macmenu support for latest stable and unstable packages.
+  Removed old cruft.
+
+  22 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  -gtk+-2.8.20-r1.ebuild:
+  Removed gtk+-2.8.20-r1
+
+  21 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  metadata.xml, gtk+-2.8.20-r1.ebuild, gtk+-2.10.9.ebuild,
+  gtk+-2.10.11.ebuild:
+  Dropped keywords for all arches we don't support.
+  Updated metadata.xml
+
   15 Apr 2007; Alex Heck <nesl247@gmail.com> gtk+-2.10.9.ebuild:
   Rekeyword gtk+-2.10.9
 

@@ -2,6 +2,29 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Aug 2007; <roderick_greening@hotmail.com>
+  -files/cairo-1.4.8-newspr.patch, -files/cairo-updated-newspr.patch,
+  cairo-1.4.10.ebuild:
+  Moved newspr patch to distfiles
+
+  22 Aug 2007; <roderick_greening@hotmail.com> -cairo-1.4.6.ebuild,
+  cairo-1.4.10.ebuild:
+  Updated keywords and removed old ebuild
+
+  21 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  cairo-1.4.10.ebuild:
+  Dropped keywords for unsupported arches.
+
+  21 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  metadata.xml, cairo-1.4.6.ebuild:
+  Updated metadata.xml
+
+  20 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  metadata.xml, -cairo-1.4.4.ebuild, cairo-1.4.6.ebuild,
+  -cairo-1.4.8.ebuild:
+  Removed old cairo-1.4.4 and cairo-1.4.8 versions.
+  Fixed small syntax error on cairo-1.4.6 and added my details to metadata.xml
+
   04 Jul 2007; <roderick_greening@hotmail.com> cairo-1.4.10.ebuild:
   Look for 1.4.8 rev of newspr patch.. no update needed
 

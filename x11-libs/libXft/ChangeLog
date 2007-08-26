@@ -2,6 +2,22 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Aug 2007; <roderick_greening@hotmail.com> libXft-2.1.12.ebuild:
+  Fix header issue
+
+  22 Aug 2007; <roderick_greening@hotmail.com> libXft-2.1.12.ebuild:
+  Fixed keywording
+
+  22 Aug 2007; <roderick_greening@hotmail.com>
+  -files/libXft-dont_interfere_with_newspr.patch,
+  +files/libXft-dont_interfere_with_newspr.patch.bz2, libXft-2.1.12.ebuild:
+  Shrunk patch
+
+  21 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  metadata.xml, libXft-2.1.12.ebuild:
+  Some more QA fixes.
+  Updated metadata.xml
+
   19 Feb 2007; Rafal Boniecki <rfb@onet.eu> libXft-2.1.12.ebuild:
   Modified pkg_postinst() a bit.
 
