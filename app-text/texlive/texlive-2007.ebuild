@@ -6,18 +6,19 @@ inherit eutils flag-o-matic toolchain-funcs versionator virtualx elisp-common
 
 TEXMF_PATH=/var/lib/texmf
 #TEXMF_PATH=/etc/texmf
+TEXMF_PATH_ROOT=../../..
 
 DESCRIPTION="a complete TeX distribution"
 HOMEPAGE="http://tug.org/texlive/"
 SLOT="0"
 LICENSE="GPL-2"
 
-SRC_URI="http://134.60.104.12/gentoo/${P}-src.tar.bz2
-	http://134.60.104.12/gentoo/${P}-texmf-dist.tar.bz2
-	http://134.60.104.12/gentoo/${P}-texmf.tar.bz2"
+SRC_URI="http://dev.gentoo.gr.jp/~hiyuh/misc/${P}-src.tar.bz2
+	!cdinstall? ( http://dev.gentoo.gr.jp/~hiyuh/misc/${P}-texmf-dist.tar.bz2 )
+	http://dev.gentoo.gr.jp/~hiyuh/misc/${P}-texmf.tar.bz2"
 
 KEYWORDS="amd64 x86"
-IUSE="X doc tk Xaw3d lesstif motif neXt png zlib emacs"
+IUSE="X doc tk Xaw3d lesstif motif neXt png zlib emacs cdinstall t1lib gd"
 
 # This is less than an ideal name
 PROVIDE="virtual/tetex"
@@ -25,6 +26,12 @@ PROVIDE="virtual/tetex"
 # I hope to kick this very soon
 BLOCKS="!dev-tex/memoir
 	!dev-tex/lineno
+	!dev-tex/tex4ht
+	!dev-tex/latex-unicode
+	!dev-tex/rcsinfo
+	!dev-tex/dvi2tty
+	!dev-tex/dvibook
+	!dev-tex/detex
 	!dev-tex/SIunits
 	!dev-tex/floatflt
 	!dev-tex/g-brief
@@ -60,7 +67,9 @@ DEPEND="${MODULAR_X_DEPEND}
 		!motif? ( neXt? ( x11-libs/neXtaw )
 			!neXt? ( Xaw3d? ( x11-libs/Xaw3d ) ) )
 		!app-text/xdvik
+		t1lib? ( >=media-libs/t1lib-5 )
 	)
+	gd? ( media-libs/gd )
 	sys-apps/ed
 	sys-libs/zlib
 	>=media-libs/libpng-1.2.1
@@ -81,11 +90,19 @@ src_unpack() {
 	cd "${S}"
 
 	unpack ${P}-texmf.tar.bz2 || die "unpack texmf"
-	unpack ${P}-texmf-dist.tar.bz2 || die "unpack texmf-dist"
+	if use cdinstall ; then
+		[ -d "${ROOT}usr/share/texmf-dist" ] || \
+			die "You must manually create or mount ${ROOT}usr/share/texmf-dist"
+		ln -s "${ROOT}usr/share/texmf-dist" texmf-dist
+	else
+		unpack ${P}-texmf-dist.tar.bz2 || die "unpack texmf-dist"
+	fi
 
 	epatch "${FILESDIR}/${PV}/${P}-use-system-libtool.patch" || die
 	epatch "${FILESDIR}/${PV}/${P}-gentoo-texmf.patch" || die
+	epatch "${FILESDIR}/${PV}/${P}-mv-texmf.patch" || die
 	epatch "${FILESDIR}/${PV}/${P}-mpware-libtool.patch" || die
+	epatch "${FILESDIR}/${PV}/xpdf-3.02pl1.patch" || die
 
 	sed -i -e "/mktexlsr/,+3d" -e "s/\(updmap-sys\)/\1 --nohash/" \
 		Makefile.in || die "sed"
@@ -96,8 +113,9 @@ src_compile() {
 
 	export LC_ALL=C
 
-	filter-flags "-fstack-protector" "-Os"
-	use amd64 && replace-flags "-O3" "-O2"
+	filter-flags "-fstack-protector" "-Os" \
+		"-DNDEBUG" "-DNO_DEBUG" "-DG_DISABLE_ASSERT"
+	#use amd64 && replace-flags "-O3" "-O2"
 
 	if use X ; then
 		addwrite /var/cache/fonts
@@ -117,6 +135,14 @@ src_compile() {
 		fi
 	else
 		my_conf="${my_conf} --without-xdvik --without-oxdvik"
+	fi
+
+	if use t1lib; then
+		my_conf="${my_conf} --with-system-t1lib"
+	fi
+
+	if use gd; then
+		my_conf="${my_conf} --with-system-gd"
 	fi
 
 	if use zlib ; then
@@ -161,10 +187,15 @@ src_compile() {
 
 	if ( use emacs )
 	then
-	    for i in ${ELISP_DIRS}
-	    do
-		elisp-compile ${S}/$i/*.el
-	    done	
+		for i in ${ELISP_DIRS}
+		do
+			if use cdinstall ; then
+				case "$i" in texmf-dist/*)
+						continue;;
+				esac
+			fi
+			elisp-compile "${S}/$i"/*.el
+		done
 	fi
 
 
@@ -178,7 +209,9 @@ src_test() {
 src_install() {
 	dodir /usr/share/
 	cp -R texmf "${D}/usr/share"
-	cp -R texmf-dist "${D}/usr/share"
+	if ! use cdinstall ; then
+		cp -R texmf-dist "${D}/usr/share"
+	fi
 
 	dodir ${TEXMF_PATH:-/usr/share/texmf}/web2c
 	einstall \
@@ -218,24 +251,35 @@ src_install() {
 
 	if use doc ; then
 		dodir /usr/share/doc/${PF}/texmf
-		mv ${D}/usr/share/texmf/doc/* \
+		mv "${D}/usr/share/texmf/doc"/* \
 			"${D}/usr/share/doc/${PF}/texmf" \
 			|| die "mv texmf doc failed."
 		cd "${D}/usr/share/texmf"
 		rmdir doc
 		ln -s ../doc/${PF}/texmf doc || die "ln -s doc failed."
 		cd -
-		dodir /usr/share/doc/${PF}/texmf-dist
-		mv ${D}/usr/share/texmf-dist/doc/* \
-			"${D}/usr/share/doc/${PF}/texmf-dist" \
-			|| die "mv texmf-dist doc failed."
-		cd "${D}/usr/share/texmf-dist"
-		rmdir doc
-		ln -s ../doc/${PF}/texmf-dist doc || die "ln -s doc failed."
+		if use cdinstall ; then
+			cd "${D}/usr/share/doc/${PF}"
+			ln -s "../../texmf-dist/doc" texmf-dist || die "ln -s texmf-dist doc failed."
+			cd -
+		else
+			dodir /usr/share/doc/${PF}/texmf-dist
+			mv ${D}/usr/share/texmf-dist/doc/* \
+				"${D}/usr/share/doc/${PF}/texmf-dist" \
+				|| die "mv texmf-dist doc failed."
+			cd "${D}/usr/share/texmf-dist"
+			rmdir doc
+			ln -s ../doc/${PF}/texmf-dist doc || die "ln -s doc texmf-dist failed."
+			cd -
+		fi
+		cd "${D}/usr/share/doc/${PF}"
+		ln -s "../../texmf-doc" texmf-doc || die "ln -s texmf-doc failed."
 		cd -
 	else
 		rm -rf "${D}/usr/share/texmf/doc"
-		rm -rf "${D}/usr/share/texmf-dist/doc"
+		if ! use cdinstall ; then
+			rm -rf "${D}/usr/share/texmf-dist/doc"
+		fi
 	fi
 
 	dodir /var/cache/fonts
@@ -269,13 +313,13 @@ src_install() {
 
 	# take care of updmap.cfg, fmtutil.cnf and texmf.cnf
 	dodir /etc/texmf/{updmap.d,fmtutil.d,texmf.d}
-	dosym /etc/texmf/web2c/updmap.cfg ${TEXMF_PATH}/web2c/updmap.cfg
-	dosym /etc/texmf/web2c/fmtutil.cnf ${TEXMF_PATH}/web2c/fmtutil.cnf
-	dosym /etc/texmf/web2c/texmf.cnf ${TEXMF_PATH}/web2c/texmf.cnf
+	dosym "${TEXMF_PATH_ROOT}/../etc/texmf/web2c/updmap.cfg" "${TEXMF_PATH}/web2c/updmap.cfg"
+	dosym "${TEXMF_PATH_ROOT}/../etc/texmf/web2c/fmtutil.cnf" "${TEXMF_PATH}/web2c/fmtutil.cnf"
+	dosym "${TEXMF_PATH_ROOT}/../etc/texmf/web2c/texmf.cnf" "${TEXMF_PATH}/web2c/texmf.cnf"
 	mv "${D}/usr/share/texmf/web2c/updmap.cfg" "${D}/etc/texmf/updmap.d/00updmap.cfg"
 	mv "${D}/usr/share/texmf/web2c/fmtutil.cnf" "${D}/etc/texmf/fmtutil.d/00fmtutil.cnf"
 	mv "${S}/texk/kpathsea/texmf.cnf" "${D}/etc/texmf/texmf.d/00texmf.cnf"
-	find ${D}/usr/share/texmf/web2c -name texmf.\* -exec rm -f {} \;
+	find "${D}/usr/share/texmf/web2c" -name texmf.\* -exec rm -f {} \;
 
 	# xdvi
 	if use X ; then
@@ -298,10 +342,10 @@ src_install() {
 
 	if ( use emacs )
 	then
-	    for i in ${ELISP_DIRS}
-	    do
-		elisp-install tex-utils ${S}/$i/*.el ${S}/$i/*.elc
-	    done	
+		for i in ${ELISP_DIRS}
+		do
+			elisp-install tex-utils "${S}/$i"/*.el "${S}/$i"/*.elc
+		done
 	fi
 }
 
@@ -315,7 +359,7 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	if [ "$ROOT" = "/" ] ; then
+	if [ "${ROOT}" = "/" ] ; then
 		/usr/sbin/texmf-update
 	fi
 

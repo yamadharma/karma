@@ -73,7 +73,7 @@
 +% ls-R is present, it will be used, and the disk will not be searched.
 +% This is arguably a bug in kpathsea, but we will not think about it now.
 +% 
-+TEXMFDBS = {!!$TEXMFSYSCONFIG,!!$TEXMFSYSVAR,!!$TEXMFMAIN,!!$TEXMFLOCAL,!!$TEXMFDIST}
++TEXMFDBS = {!!$TEXMFSYSCONFIG,!!$TEXMFSYSVAR,!!$TEXMFMAIN,!!$TEXMFLOCAL,!!$TEXMFSITE,!!$TEXMFDIST}
  
  % It may be convenient to define TEXMF like this:
  %   TEXMF = {$TEXMFHOME,!!$TEXMFLOCAL,!!$TEXMFMAIN,$HOME}
