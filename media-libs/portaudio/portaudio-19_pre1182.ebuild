@@ -20,7 +20,7 @@ HOMEPAGE="http://www.portaudio.com"
 
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS="amd64 ~hppa ~mips ~ppc ~ppc-macos ~ppc64 ~sparc x86"
+KEYWORDS="~amd64 ~hppa ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
 IUSE="oss alsa jack doc nocxx"
 
 DEPEND="alsa? ( >=media-libs/alsa-lib-0.9 )

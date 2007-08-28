@@ -23,13 +23,15 @@ RDEPEND="dev-util/pkgconfig
 	sndfile? ( >=media-libs/libsndfile-1.0.0 )
 	sys-libs/ncurses
 	caps? ( sys-libs/libcap )
-	portaudio? ( =media-libs/portaudio-18* )
+	portaudio? ( =media-libs/portaudio-18* )	
 	alsa? ( >=media-libs/alsa-lib-0.9.1 )
 	netjack? ( dev-util/scons )
 	!media-sound/jack-audio-connection-kit-svn
 	freebob? ( sys-libs/libfreebob )"
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
+	
+
 
 pkg_setup() {
 	if ! use sndfile ; then
