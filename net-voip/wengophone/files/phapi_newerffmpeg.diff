@@ -1,0 +1,235 @@
+Index: wifo/phapi/phcodec-h263.c
+===================================================================
+--- wifo/phapi/phcodec-h263.c	(revision 11987)
++++ wifo/phapi/phcodec-h263.c	(working copy)
+@@ -29,6 +29,8 @@
+ #include <osipparser2/osip_list.h>
+ #include <webcam/webcam.h>
+ 
++#include "config.h"
++
+ #include "phcodec.h"
+ #include "phapi.h"
+ #include "phcall.h"
+@@ -113,7 +115,11 @@
+ 
+ void h263_encoder_cleanup(void *ctx) {
+ 	ph_h263_encoder_ctx_t * encoder = (ph_h263_encoder_ctx_t *) ctx;
+-	img_resample_close(encoder->encoder_ctx.res_ctx);
++#ifndef HAVE_SWSCALE
++       img_resample_close(encoder->encoder_ctx.res_ctx);
++#else
++	//sws_freeContext(encoder->encoder_ctx.sws_ctx);
++#endif
+ 	//avcodec_flush_buffers(encoder->encoder_ctx.context);
+ 	avcodec_close(encoder->encoder_ctx.context);
+ 	av_free(encoder->encoder_ctx.resized_pic);
+Index: wifo/phapi/phcodec-mpeg4.c
+===================================================================
+--- wifo/phapi/phcodec-mpeg4.c	(revision 11987)
++++ wifo/phapi/phcodec-mpeg4.c	(working copy)
+@@ -30,6 +30,8 @@
+ #include <osipparser2/osip_list.h>
+ #include <webcam/webcam.h>
+ 
++#include "config.h"
++
+ #include "phcodec.h"
+ #include "phapi.h"
+ #include "phcall.h"
+@@ -116,7 +118,11 @@
+ 
+ void mpeg4_encoder_cleanup(void *ctx) {
+ 	ph_mpeg4_encoder_ctx_t * encoder = (ph_mpeg4_encoder_ctx_t *) ctx;
+-	img_resample_close(encoder->encoder_ctx.res_ctx);
++#ifndef HAVE_SWSCALE
++       img_resample_close(encoder->encoder_ctx.res_ctx);
++#else
++	//sws_freeContext(encoder->encoder_ctx.sws_ctx);
++#endif
+ 	av_free(encoder->encoder_ctx.resized_pic);
+ 	av_free(encoder->encoder_ctx.sampled_frame);
+ 	av_free(encoder->data_enc);
+Index: wifo/phapi/phcodec-avcodec-wrapper.c
+===================================================================
+--- wifo/phapi/phcodec-avcodec-wrapper.c	(revision 11987)
++++ wifo/phapi/phcodec-avcodec-wrapper.c	(working copy)
+@@ -43,6 +43,8 @@
+ #include <osipparser2/osip_list.h>
+ #include <webcam/webcam.h>
+ 
++#include "config.h"
++
+ #include "phcodec.h"
+ #include "phapi.h"
+ #include "phcall.h"
+@@ -128,11 +130,23 @@
+ 	encoder_t->context->rtp_payload_size = 1000;
+ 	encoder_t->context->rtp_callback = phcodec_avcodec_video_rtp_callback;
+ 
+-	encoder_t->res_ctx = img_resample_init(
+-			dest_width, dest_height,
+-			meta_t->frame_width, meta_t->frame_height
++#ifndef HAVE_SWSCALE
++       encoder_t->res_ctx = img_resample_init(
++                       dest_width, dest_height,
++                       meta_t->frame_width, meta_t->frame_height
++
+ 	);
+-
++#else
++/*
++	encoder_t->sws_ctx = sws_getContext(
++		meta_t->frame_width, meta_t->frame_height, PIX_FMT_YUV420P,
++		dest_width, dest_height,PIX_FMT_YUV420P,
++		SWS_BICUBIC, NULL, NULL, NULL
++			
++	);
++	sws_scale(encoder_t->sws_ctx, 
++*/
++#endif
+     encoder_t->resized_pic = avcodec_alloc_frame();
+     encoder_t->sampled_frame = avcodec_alloc_frame();
+ 
+Index: wifo/phapi/phcodec-avcodec-wrapper.h
+===================================================================
+--- wifo/phapi/phcodec-avcodec-wrapper.h	(revision 11987)
++++ wifo/phapi/phcodec-avcodec-wrapper.h	(working copy)
+@@ -19,10 +19,15 @@
+ #ifndef PHCODEC_AVCODEC_WRAPPER_H
+ #define PHCODEC_AVCODEC_WRAPPER_H
+ 
++#include "config.h"
++
+ #include "phapi.h"
+ #include "phcall.h"
+ #include "phmedia.h"
+ #include <avcodec.h>
++#ifdef HAVE_SWSCALE
++#include <swscale.h>
++#endif
+ 
+ #define PHCODEC_DEFAULT_BITRATE 1000000
+ // 99 = 11*9 = (176/16)*(144/16) = a partition of macroblocs ( 1 MB = four 8x8 squares)
+@@ -49,7 +54,11 @@
+ 	AVPicture pictureOut;
+ 	AVFrame *resized_pic, *sampled_frame;
+ 	AVCodecContext *context;
+-	ImgReSampleContext *res_ctx;
++#ifndef HAVE_SWSCALE
++       ImgReSampleContext *res_ctx;
++#else
++	struct SwsContext *sws_ctx;
++#endif
+ 	AVCodec* encoder;
+ 	int maxencodesize;
+ };
+Index: wifo/phapi/phcodec-h263flv1.c
+===================================================================
+--- wifo/phapi/phcodec-h263flv1.c	(revision 11987)
++++ wifo/phapi/phcodec-h263flv1.c	(working copy)
+@@ -29,6 +29,8 @@
+ #include <osipparser2/osip_list.h>
+ #include <webcam/webcam.h>
+ 
++#include "config.h"
++
+ #include "phcodec.h"
+ #include "phapi.h"
+ #include "phcall.h"
+@@ -113,7 +115,11 @@
+ 
+ void h263flv1_encoder_cleanup(void *ctx) {
+ 	ph_h263_encoder_ctx_t * encoder = (ph_h263_encoder_ctx_t *) ctx;
+-	img_resample_close(encoder->encoder_ctx.res_ctx);
++#ifndef HAVE_SWSCALE
++       img_resample_close(encoder->encoder_ctx.res_ctx);
++#else
++	//sws_freeContext(encoder->encoder_ctx.sws_ctx);
++#endif
+ 	//avcodec_flush_buffers(encoder->encoder_ctx.context);
+ 	avcodec_close(encoder->encoder_ctx.context);
+ 	av_free(encoder->encoder_ctx.resized_pic);
+Index: wifo/phapi/phcodec-h264.c
+===================================================================
+--- wifo/phapi/phcodec-h264.c	(revision 11987)
++++ wifo/phapi/phcodec-h264.c	(working copy)
+@@ -27,6 +27,8 @@
+ #include <osipparser2/osip_list.h>
+ #include <webcam/webcam.h>
+ 
++#include "config.h"
++
+ #include "phcodec.h"
+ #include "phapi.h"
+ #include "phcall.h"
+@@ -98,7 +100,11 @@
+ 
+ void h264_encoder_cleanup(void *ctx) {
+ 	ph_h264_encoder_ctx_t * encoder = (ph_h264_encoder_ctx_t *) ctx;
+-	img_resample_close(encoder->encoder_ctx.res_ctx);
++#ifndef HAVE_SWSCALE
++       img_resample_close(encoder->encoder_ctx.res_ctx);
++#else
++	//sws_freeContext(encoder->encoder_ctx.sws_ctx);
++#endif
+ 	av_free(encoder->encoder_ctx.resized_pic);
+ 	av_free(encoder->encoder_ctx.sampled_frame);
+ 	av_free(encoder->data_enc);
+Index: wifo/phapi/CMakeLists.txt
+===================================================================
+--- wifo/phapi/CMakeLists.txt	(revision 11987)
++++ wifo/phapi/CMakeLists.txt	(working copy)
+@@ -29,6 +29,7 @@
+ 
+ ow_add_public_include_dirs(
+ 	${CMAKE_CURRENT_SOURCE_DIR}
++	${CMAKE_CURRENT_BINARY_DIR}
+ )
+ 
+ if (WIN32)
+@@ -323,4 +324,7 @@
+ 
+ ow_set_library_version(0.2.0 0)
+ 
++configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
++
++
+ ow_create_binary()
+Index: wifo/phapi/phcodec-h263plus.c
+===================================================================
+--- wifo/phapi/phcodec-h263plus.c	(revision 11987)
++++ wifo/phapi/phcodec-h263plus.c	(working copy)
+@@ -22,6 +22,8 @@
+ #include <osipparser2/osip_list.h>
+ #include <webcam/webcam.h>
+ 
++#include "config.h"
++
+ #include "phcodec.h"
+ #include "phapi.h"
+ #include "phcall.h"
+@@ -106,7 +108,11 @@
+ 
+ void h263p_encoder_cleanup(void *ctx) {
+ 	ph_h263_encoder_ctx_t * encoder = (ph_h263_encoder_ctx_t *) ctx;
+-	img_resample_close(encoder->encoder_ctx.res_ctx);
++#ifndef HAVE_SWSCALE
++       img_resample_close(encoder->encoder_ctx.res_ctx);
++#else
++	//sws_freeContext(encoder->encoder_ctx.sws_ctx);
++#endif
+ 	//avcodec_flush_buffers(encoder->encoder_ctx.context);
+ 	avcodec_close(encoder->encoder_ctx.context);
+ 	av_free(encoder->encoder_ctx.resized_pic);
+Index: wifo/phapi/config.h.cmake
+===================================================================
+--- wifo/phapi/config.h.cmake	(revision 0)
++++ wifo/phapi/config.h.cmake	(revision 0)
+@@ -0,0 +1,6 @@
++#ifndef PIXERTOOL_CONFIG_H
++#define PIXERTOOL_CONFIG_H
++
++#cmakedefine HAVE_SWSCALE
++
++#endif

@@ -1,0 +1,15 @@
+Index: wengophone/src/WengoPhoneBuildId.cpp
+===================================================================
+--- wengophone/src/WengoPhoneBuildId.cpp	(révision 11987)
++++ wengophone/src/WengoPhoneBuildId.cpp	(copie de travail)
+@@ -27,9 +27,9 @@
+ 	#include <portaudio.h>
+ #endif
+ #include <boost/version.hpp>
+-#include <avcodec.h>
+ #include <tinyxml.h>
+ extern "C" {
++#include <avcodec.h>
+ #include <glib.h>
+ #include <gaim/core.h>
+ }

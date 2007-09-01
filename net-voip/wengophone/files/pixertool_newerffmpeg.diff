@@ -1,0 +1,308 @@
+Index: libs/owpixertool/include/pixertool/ffmpeg-pixertool.h
+===================================================================
+--- libs/owpixertool/include/pixertool/ffmpeg-pixertool.h	(révision 11987)
++++ libs/owpixertool/include/pixertool/ffmpeg-pixertool.h	(copie de travail)
+@@ -22,7 +22,18 @@
+ 
+ #include <pixertool/pixertool.h>
+ 
++#include "config.h"
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++#ifdef HAVE_SWSCALE
++#include <swscale.h>
++#endif
+ #include <avcodec.h>
++#ifdef __cplusplus
++}
++#endif
+ 
+ #ifdef __cplusplus
+ extern "C" {
+Index: libs/owpixertool/src/ffmpeg/ffmpeg-pixertool.c
+===================================================================
+--- libs/owpixertool/src/ffmpeg/ffmpeg-pixertool.c	(révision 11987)
++++ libs/owpixertool/src/ffmpeg/ffmpeg-pixertool.c	(copie de travail)
+@@ -17,15 +17,23 @@
+  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  */
+ 
++#include "config.h"
++
+ #include <pixertool/ffmpeg-pixertool.h>
+ 
++#include <stdlib.h>
++
+ #include <avcodec.h>
++#ifdef HAVE_SWSCALE
++#include <swscale.h>
++#endif
+ 
+-#include <stdlib.h>
+ 
+ /** Used by pix_convert_avpicture */
+ static AVPicture * pictureBuffer = NULL;
+ 
++
++
+ /** Called at program exit */
+ static void pix_ffmpeg_cleanup(void);
+ 
+@@ -123,8 +131,12 @@
+ }
+ 
+ pixerrorcode pix_convert_avpicture(int flags, piximage * img_dst, AVPicture * img_src, pixosi src_fmt) {
++#ifdef HAVE_SWSCALE
++	struct SwsContext *convert_context;
++#endif
+ 	pixosi desiredPalette = pix_ffmpeg_from_pix_osi(img_dst->palette);
+ 
++
+ 	if (!pictureBuffer) {
+ 		pictureBuffer = (AVPicture *) malloc(sizeof(AVPicture));
+ 		atexit(pix_ffmpeg_cleanup);
+@@ -132,9 +144,19 @@
+ 
+ 	avpicture_fill(pictureBuffer, img_dst->data, desiredPalette, img_dst->width, img_dst->height);
+ 
+-	img_convert(pictureBuffer, desiredPalette,
+-		img_src, pix_ffmpeg_from_pix_osi(src_fmt),
+-		img_dst->width, img_dst->height);
++#ifndef HAVE_SWSCALE
++       img_convert(pictureBuffer, desiredPalette,
++               img_src, pix_ffmpeg_from_pix_osi(src_fmt),
++               img_dst->width, img_dst->height);
++#else
++	convert_context = sws_getContext(img_dst->width, img_dst->height, pix_ffmpeg_from_pix_osi(src_fmt),
++		    img_dst->width, img_dst->height, desiredPalette,
++		    SWS_BICUBIC, NULL, NULL, NULL);
++	sws_scale(convert_context, img_src->data, img_src->linesize, 
++		      0, img_dst->height,
++		      pictureBuffer->data, pictureBuffer->linesize);
++	sws_freeContext(convert_context);
++#endif
+ 
+ 	//pictureBuffer->data[0] should contain only valid data
+ 
+Index: libs/owpixertool/src/pixertool.cpp
+===================================================================
+--- libs/owpixertool/src/pixertool.cpp	(révision 11987)
++++ libs/owpixertool/src/pixertool.cpp	(copie de travail)
+@@ -17,10 +17,24 @@
+  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  */
+ 
++#include "config.h"
++
+ #include <pixertool/pixertool.h>
+ 
+ #include <pixertool/ffmpeg-pixertool.h>
+ 
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++#include <avcodec.h>
++#ifdef HAVE_SWSCALE
++#include <swscale.h>
++#endif
++#ifdef __cplusplus
++}
++#endif
++
+ #include <stdlib.h>
+ #include <string.h>
+ 
+@@ -73,6 +87,9 @@
+ 
+ 	uint8_t * buf_source = img_src->data;
+ 	int need_avfree = 0;
++#ifdef HAVE_SWSCALE
++	struct SwsContext *convert_context;
++#endif
+ 
+ 	//If the format is NV12, transforming it
+ 	if (img_src->palette == PIX_OSI_NV12) {
+@@ -90,7 +107,7 @@
+ 	}
+ 	////
+ 
+-	int len_target = pix_size(img_dst->palette, img_src->width, img_src->height);
++	//int len_target = pix_size(img_dst->palette, img_src->width, img_src->height);
+ 
+ 	int pix_fmt_source = pix_ffmpeg_from_pix_osi(img_src->palette);
+ 	int pix_fmt_target = pix_ffmpeg_from_pix_osi(img_dst->palette);
+@@ -121,43 +138,66 @@
+ 			return PIX_NOK;
+ 		}
+ 
+-		//TODO optimize this part but will need the preparation of contexts
+-		ImgReSampleContext * resample_context = img_resample_init(img_dst->width, img_dst->height,
+-			img_src->width, img_src->height);
++#ifndef HAVE_SWSCALE
++	      //TODO optimize this part but will need the preparation of contexts
++               ImgReSampleContext * resample_context = img_resample_init(img_dst->width, img_dst->height,
++                       img_src->width, img_src->height);
+ 
+-		if (!resample_context) {
+-			return PIX_NOK;
+-		}
++               if (!resample_context) {
++                       return PIX_NOK;
++               }
+ 
+-		AVPicture avp_tmp_target;
++               AVPicture avp_tmp_target;
+ 
+-		//we need to prepare a tmp buffer
+-		uint8_t * buf_tmp_target = (uint8_t *)av_malloc(avpicture_get_size(pix_fmt_source, img_dst->width, img_dst->height)  * sizeof(uint8_t));
+-		avpicture_fill(&avp_tmp_target, buf_tmp_target, pix_fmt_source, img_dst->width, img_dst->height);
+-		//
++               //we need to prepare a tmp buffer
++               uint8_t * buf_tmp_target = (uint8_t *)av_malloc(avpicture_get_size(pix_fmt_source, img_dst->width, img_dst->height)  * sizeof(uint8_t));
++               avpicture_fill(&avp_tmp_target, buf_tmp_target, pix_fmt_source, img_dst->width, img_dst->height);
++               //
+ 
+-		//do the resampling
+-		img_resample(resample_context, &avp_tmp_target, &avp_source);
+-		img_resample_close(resample_context);
+-		//
++               //do the resampling
++               img_resample(resample_context, &avp_tmp_target, &avp_source);
++               img_resample_close(resample_context);
++               //
+ 
++                //do the conversion
++		if (img_convert(&avp_target, pix_fmt_target,
++		        &avp_tmp_target, pix_fmt_source,
++	  	        img_dst->width, img_dst->height) == -1) {
++			av_free(buf_tmp_target);
++                        return PIX_NOK;
++	        }
++	        av_free(buf_tmp_target);
++#else
+ 		//do the conversion
+-		if (img_convert(&avp_target, pix_fmt_target,
+-			&avp_tmp_target, pix_fmt_source,
+-			img_dst->width, img_dst->height) == -1) {
++		convert_context = sws_getContext(img_src->width, img_src->height, pix_fmt_source, img_dst->width, img_dst->height, pix_fmt_target, SWS_BICUBIC, NULL, NULL, NULL);
++		if (sws_scale(convert_context, avp_source.data, avp_source.linesize,
++		    0, img_src->height, 
++		    avp_target.data, avp_target.linesize) == -1) {
++			sws_freeContext(convert_context);
+ 
+-			av_free(buf_tmp_target);
+ 			return PIX_NOK;
+ 		}
+-		av_free(buf_tmp_target);
++		sws_freeContext(convert_context);
+ 		//
++#endif
+ 
+ 	} else {
+-		if (img_convert(&avp_target, pix_fmt_target,
+-			&avp_source, pix_fmt_source,
+-			img_src->width, img_src->height) == -1) {
++#ifndef HAVE_SWSCALE
++               if (img_convert(&avp_target, pix_fmt_target,
++                       &avp_source, pix_fmt_source,
++                       img_src->width, img_src->height) == -1) {
+ 			return PIX_NOK;
+ 		}
++#else
++		convert_context = sws_getContext(img_src->width, img_src->height, pix_fmt_source, img_dst->width, img_dst->height, pix_fmt_target, SWS_BICUBIC, NULL, NULL, NULL);
++		if (sws_scale(convert_context, avp_source.data, avp_source.linesize,
++		    0, img_src->height, 
++		    avp_target.data, avp_target.linesize) == -1) {
++			sws_freeContext(convert_context);
++			return PIX_NOK;
++		}
++		sws_freeContext(convert_context);
++#endif
+ 	}
+ 	////
+ 
+Index: libs/owpixertool/config.h.cmake
+===================================================================
+--- libs/owpixertool/config.h.cmake	(révision 0)
++++ libs/owpixertool/config.h.cmake	(révision 0)
+@@ -0,0 +1,6 @@
++#ifndef PIXERTOOL_CONFIG_H
++#define PIXERTOOL_CONFIG_H
++
++#cmakedefine HAVE_SWSCALE
++
++#endif
+Index: libs/owpixertool/CMakeLists.txt
+===================================================================
+--- libs/owpixertool/CMakeLists.txt	(révision 11987)
++++ libs/owpixertool/CMakeLists.txt	(copie de travail)
+@@ -17,6 +17,7 @@
+ 
+ ow_add_public_include_dirs(
+ 	${CMAKE_CURRENT_SOURCE_DIR}/include
++	${CMAKE_CURRENT_BINARY_DIR}
+ )
+ 
+ ow_add_sources(
+@@ -48,4 +49,6 @@
+ 	endif(APPLE)
+ endif (UNIX AND NOT WIN32)
+ 
++configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
++
+ ow_create_binary()
+Index: owbuild/FindFFMPEG.cmake
+===================================================================
+--- owbuild/FindFFMPEG.cmake	(révision 11987)
++++ owbuild/FindFFMPEG.cmake	(copie de travail)
+@@ -21,6 +21,7 @@
+   # use pkg-config to get the directories and then use these values
+   # in the FIND_PATH() and FIND_LIBRARY() calls
+   include(UsePkgConfig)
++  include(CheckFunctionExists)
+ 
+   pkgconfig(libavcodec _FFMPEGIncDir _FFMPEGLinkDir _FFMPEGLinkFlags _FFMPEGCflags)
+ 
+@@ -72,6 +73,17 @@
+       /sw/lib
+   )
+ 
++  find_library(SWSCALE_LIBRARY
++    NAMES
++      swscale
++    PATHS
++      ${_FFMPEGLinkDir}
++      /usr/lib
++      /usr/local/lib
++      /opt/local/lib
++      /sw/lib
++  )
++
+   set(FFMPEG_INCLUDE_DIRS
+     ${FFMPEG_INCLUDE_DIR}
+   )
+@@ -99,6 +111,20 @@
+     )
+   endif (AVFORMAT_LIBRARY)
+ 
++  if (SWSCALE_LIBRARY)
++    set(FFMPEG_LIBRARIES
++      ${FFMPEG_LIBRARIES}
++      ${SWSCALE_LIBRARY}
++    )
++  endif (SWSCALE_LIBRARY)
++
++  set(CMAKE_REQUIRED_INCLUDES ${FFMPEG_INCLUDE_DIR})
++  set(CMAKE_REQUIRED_LIBRARIES ${FFMPEG_LIBRARIES})
++  check_function_exists(
++    sws_scale HAVE_SWSCALE
++  )
++
++
+   if (FFMPEG_INCLUDE_DIRS AND FFMPEG_LIBRARIES)
+      set(FFMPEG_FOUND TRUE)
+   endif (FFMPEG_INCLUDE_DIRS AND FFMPEG_LIBRARIES)
+

@@ -1,6 +1,17 @@
 # ChangeLog for media-sound/audacity
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/audacity/ChangeLog,v 1.65 2007/05/21 16:23:09 gustavoz Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-sound/audacity/ChangeLog,v 1.68 2007/07/02 15:08:06 flameeyes Exp $
+
+  02 Jul 2007; Diego Pettenò <flameeyes@gentoo.org> metadata.xml:
+  Hand to newly-born proaudio herd.
+
+  27 May 2007; MATSUU Takuto <matsuu@gentoo.org>
+  -files/audacity-1.2.3-gcc41.patch, -files/audacity-1.3.0b-x86.patch,
+  -audacity-1.3.0b.ebuild:
+  Removed old versions.
+
+  25 May 2007; Brent Baude <ranger@gentoo.org> audacity-1.3.3.ebuild:
+  Marking audacity-1.3.3 ~ppc64 for bug 179173
 
   21 May 2007; Gustavo Zacarias <gustavoz@gentoo.org> audacity-1.3.3.ebuild:
   Keyworded ~sparc wrt #179173
