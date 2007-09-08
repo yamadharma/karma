@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils flag-o-matic cvs
+inherit eutils cvs
 
 ECVS_CVS_COMMAND="cvs -q"
 ECVS_CVS_COMPRESS="-z3"
@@ -61,8 +61,6 @@ PKG_CLIPROOT=/usr/lib/clip
 src_compile() {
 	mkdir ${S}/build
 	
-	use amd64 && append-flags -fPIC
-#	
 #	export CLIP_LANG=ru_RU.KOI8-R 
 	export CLIP_LANG=POSIX
 	export CLIPROOT=${BUILD_DIR}/${PKG_CLIPROOT}
@@ -76,12 +74,12 @@ src_compile() {
 
 #	export CLIPROOT=${BUILD_DIR}/${PKG_CLIPROOT}
 	export LD_LIBRARY_PATH=${BUILD_DIR}/usr/$(get_libdir):$$LD_LIBRARY_PATH
+	use amd64 && sed -i -e "s:^C_FLAGS=\(.*\):C_FLAGS=\1 -fPIC:" ${BUILD_DIR}/${PKG_CLIPROOT}/include/Makefile.inc
 
 	for i in ${CLIPLIBS}
 	do
 	    cd ${S}/cliplibs/${i}
 	    [ -x ./configure ] && ( ./configure || die )
-	    C_FLAGS=-fPIC \
 	    make || die
 	    make install || die
 	done
