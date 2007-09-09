@@ -22,15 +22,10 @@ S=${WORKDIR}/${ECVS_MODULE}
 DESCRIPTION="Clipper/Xbase compatible compiler"
 HOMEPAGE="http://sourceforge.net/projects/clip-itk"
 #SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tgz
-#	doc? ( 
-#	    linguas_en? ( mirror://sourceforge/${PN}/clip-doc-en-html-${PV}.tgz )
+#	doc? ( mirror://sourceforge/${PN}/clip-doc-en-html-${PV}.tgz 
 #	    linguas_ru? ( mirror://sourceforge/${PN}/clip-doc-ru-html-${PV}.tgz )
 #	)"
-SRC_URI="doc? ( 
-	    ( mirror://sourceforge/${PN}/clip-doc-en-html-1.2.0.tgz )
-	    linguas_ru? ( mirror://sourceforge/${PN}/clip-doc-ru-html-1.2.0.tgz )
-	)"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 LICENSE="GPL-2"
 IUSE="doc linguas_ru 
 mysql gd postgres oracle interbase odbc gtk2 ssl glade fcgi"
@@ -52,12 +47,6 @@ RDEPEND=""
 
 BUILD_DIR=${S}/build
 PKG_CLIPROOT=/usr/$(get_libdir)/clip
-
-src_unpack () {
-	cvs_src_unpack
-	unpack clip-doc-en-html-1.2.0.tgz
-	unpack clip-doc-ru-html-1.2.0.tgz
-}
 
 src_compile() {
 	CLIPLIBS="clip-gzip
@@ -158,11 +147,4 @@ src_install() {
 	dodir /etc/env.d
 	echo "CLIPROOT=${PKG_CLIPROOT}" > ${D}/etc/env.d/50clip
 #	echo "CLIP_LANG=POSIX" >> ${D}/etc/env.d/50clip
-
-	if ( use doc )
-	then
-	    dohtml -r ${WORKDIR}/html/en/*
-	    use linguas_ru && dohtml -r ${WORKDIR}/html/ru/*
-	fi
-
 }
