@@ -77,8 +77,8 @@ src_compile() {
 
 	mkdir ${BUILD_DIR}
 
-#	export CLIP_LANG=POSIX
-	export CLIP_LANG=ru_RU.KOI8-R	
+	export CLIP_LANG=POSIX
+#	export CLIP_LANG=ru_RU.KOI8-R	
 	export CLIPROOT=${BUILD_DIR}/${PKG_CLIPROOT}
 	export CLIP_LOCALE_ROOT=${BUILD_DIR}/${PKG_CLIPROOT}
 	export STD_LIBDIR=${BUILD_DIR}/usr/$(get_libdir)

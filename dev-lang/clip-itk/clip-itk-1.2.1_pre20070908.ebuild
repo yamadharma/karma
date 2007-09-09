@@ -55,8 +55,9 @@ PKG_CLIPROOT=/usr/$(get_libdir)/clip
 
 src_unpack () {
 	cvs_src_unpack
-	unpack clip-doc-en-html-1.2.0.tgz
-	unpack clip-doc-ru-html-1.2.0.tgz
+	cd ${WORKDIR}
+	tar xzf ${DISTDIR}/clip-doc-en-html-1.2.0.tgz
+	tar xzf ${DISTDIR}/ clip-doc-ru-html-1.2.0.tgz
 }
 
 src_compile() {
@@ -88,8 +89,8 @@ src_compile() {
 
 	mkdir ${BUILD_DIR}
 
-#	export CLIP_LANG=POSIX
-	export CLIP_LANG=ru_RU.KOI8-R	
+	export CLIP_LANG=POSIX
+#	export CLIP_LANG=ru_RU.KOI8-R	
 	export CLIPROOT=${BUILD_DIR}/${PKG_CLIPROOT}
 	export CLIP_LOCALE_ROOT=${BUILD_DIR}/${PKG_CLIPROOT}
 	export STD_LIBDIR=${BUILD_DIR}/usr/$(get_libdir)
