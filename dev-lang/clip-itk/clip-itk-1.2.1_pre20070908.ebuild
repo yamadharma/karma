@@ -56,8 +56,8 @@ PKG_CLIPROOT=/usr/$(get_libdir)/clip
 src_unpack () {
 	cvs_src_unpack
 	cd ${WORKDIR}
-	tar xzf ${DISTDIR}/clip-doc-en-html-1.2.0.tgz
-	tar xzf ${DISTDIR}/ clip-doc-ru-html-1.2.0.tgz
+	tar xzf ${PORTAGE_ACTUAL_DISTDIR}/clip-doc-en-html-1.2.0.tgz
+	tar xzf ${PORTAGE_ACTUAL_DISTDIR}/clip-doc-ru-html-1.2.0.tgz
 }
 
 src_compile() {

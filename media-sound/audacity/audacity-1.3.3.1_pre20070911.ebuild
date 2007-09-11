@@ -45,16 +45,16 @@ RDEPEND="${DEPEND}
 
 #S="${WORKDIR}/${MY_P}-beta"
 
-src_unpack() {
-##	unpack ${A}
-	cvs_src_unpack
-
-	cd "${S}"
-	epatch "${FILESDIR}/audacity-1.3.3-gentoo.patch"
-	epatch "${FILESDIR}/audacity-1.3.3+flac-1.1.3.patch"
-
-	eautoreconf || die
-}
+#src_unpack() {
+###	unpack ${A}
+#	cvs_src_unpack
+#
+#	cd "${S}"
+#	epatch "${FILESDIR}/audacity-1.3.3-gentoo.patch"
+#	epatch "${FILESDIR}/audacity-1.3.3+flac-1.1.3.patch"
+#
+#	eautoreconf || die
+#}
 
 src_compile() {
 	local myconf
@@ -82,8 +82,11 @@ src_compile() {
 		$(use_with vorbis vorbis system) \
 		$(use_with mp3 libmad system) \
 		$(use_with mp3 id3tag system) \
-		$(use_with flac flac system) \
-		${myconf} || die
+		$(use_with flac flac) \
+		${myconf} 
+		# || die
+
+# $(use_with flac flac system) \
 
 	emake || die
 }
