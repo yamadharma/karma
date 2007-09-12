@@ -158,7 +158,7 @@ src_install() {
 
 	dodir /etc/env.d
 	echo "CLIPROOT=${PKG_CLIPROOT}" > ${D}/etc/env.d/50clip
-#	echo "CLIP_LANG=POSIX" >> ${D}/etc/env.d/50clip
+	echo "CLIP_LANG=POSIX" >> ${D}/etc/env.d/50clip
 
 	if ( use doc )
 	then
