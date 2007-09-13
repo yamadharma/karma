@@ -29,7 +29,8 @@ RDEPEND="${DEPEND}
 	x11-apps/xmessage"
 PDEPEND="$(deprange $PV $MAXKDEVER kde-base/kdesktop)"
 
-PATCHES=""
+PATCHES="${FILESDIR}/${P}-bsd-shutdown.patch
+               ${FILESDIR}/${P}-login.diff"
 
 if use pertty; then
 	PATCHES="${FILESDIR}/kdm-make_it_cool.diff"
