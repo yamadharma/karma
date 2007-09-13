@@ -27,10 +27,12 @@ DOCS="" # Docs to install
 
 IUSE="X"
 
-DEPEND="X? ( || ( x11-apps/mkfontdir virtual/x11 ) )
-	media-libs/fontconfig"
+DEPEND="X? ( x11-apps/mkfontdir )
+		media-libs/fontconfig"
 
-FONTDIR_ROOT=/usr/share/fonts
+FONTPATH_DIR="/etc/X11/fontpath.d"
+
+FONTDIR_ROOT="/usr/share/fonts"
 
 if [ -z "${FONT_SUPPLIER}" ]
     then
@@ -68,14 +70,14 @@ set_FONTDIR ()
     	    afm|pfm|pfa|pfb) 
 		FONTDIR=${FONTDIR_ROOT}/type1/${FONTS_NAME_DIR}
 		;;
-    	    pcf) 
+    	    pcf*) 
 		FONTDIR=${FONTDIR_ROOT}/pcf/${FONTS_NAME_DIR}
 		;;
     	    bdf) 
 		FONTDIR=${FONTDIR_ROOT}/bdf/${FONTS_NAME_DIR}
 		;;
     	    *) 
-		einfo "Fonts format ${format} does not known"
+#		einfo "Fonts format ${format} does not known"
 		;;
 	esac
 }
@@ -123,6 +125,15 @@ font_fontconfig() {
 
 }
 
+font_fontpath_dir_config() {
+	if use X 
+	then
+		einfo "Creating fontpath.d entry"
+		dosym ${FONTDIR} ${FONTPATH_DIR}/`echo ${FONTDIR} | sed s:${FONTDIR_ROOT}/:: | sed s:^/*:: | sed s:/*$:: | sed s:/:_:g`
+	fi
+	
+}
+
 #
 # Public inheritable functions
 #
@@ -146,6 +157,7 @@ font_src_install() {
 		font_xfont_config
 		font_xft_config
 		font_fontconfig
+		font_fontpath_dir_config
 	done
 
 	cd "${S}"
@@ -172,10 +184,10 @@ font_pkg_postinst ()
 	for suffix in ${FONT_SUFFIX}; do
 		set_FONTDIR ${suffix}
 		rm "${FONTDIR}/fonts.cache-1"
-		chkfontpath -q -a ${FONTDIR}
+#		chkfontpath -q -a ${FONTDIR}
 	done
 
-	/etc/init.d/xfs restart
+#	/etc/init.d/xfs restart
 }
 
 font_pkg_prerm () 
@@ -184,10 +196,10 @@ font_pkg_prerm ()
 	for suffix in ${FONT_SUFFIX}; do
 		set_FONTDIR ${suffix}
 		rm "${FONTDIR}/fonts.cache-1"
-		chkfontpath -r ${FONTDIR}
+#		chkfontpath -r ${FONTDIR}
 	done
 
-	/etc/init.d/xfs restart
+#	/etc/init.d/xfs restart
 }
 
 font_pkg_postrm() {
