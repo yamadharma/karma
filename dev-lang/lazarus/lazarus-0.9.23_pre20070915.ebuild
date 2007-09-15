@@ -1,10 +1,18 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/lazarus/lazarus-0.9.22-r1.ebuild,v 1.2 2007/04/14 16:06:58 truedfx Exp $
+# $Header: $
 
-inherit eutils
+inherit eutils subversion
 
-FPCVER="2.0.4"
+ESVN_PROJECT=${PN}
+ESVN_OPTIONS="-r{${PV/*_pre}}"
+# ESVN_REPO_URI="http://svn.freepascal.org/svn/${PN}/trunk"
+ESVN_REPO_URI="https://${PN}.svn.sourceforge.net/svnroot/${PN}/trunk"
+
+# bug #183604
+RESTRICT="strip"
+
+FPCVER="2.2.0"
 
 SLOT="0" # Note: Slotting Lazarus needs slotting fpc, see DEPEND.
 LICENSE="GPL-2 LGPL-2.1 LGPL-2.1-linking-exception"
@@ -12,7 +20,7 @@ KEYWORDS="amd64 ~ppc x86"
 DESCRIPTION="Lazarus IDE is a feature rich visual programming environment emulating Delphi."
 HOMEPAGE="http://www.lazarus.freepascal.org/"
 IUSE=""
-SRC_URI="mirror://sourceforge/lazarus/${P}-0.tar.gz"
+#SRC_URI="mirror://sourceforge/lazarus/${P}-0.tar.gz"
 
 DEPEND="~dev-lang/fpc-${FPCVER}
 	net-misc/rsync
@@ -41,7 +49,8 @@ src_unpack() {
 		die "don't set the LCL path in /etc/fpc.cfg"
 	fi
 
-	unpack ${A}
+#	unpack ${A}
+	subversion_src_unpack
 	sed -e "s/@FPCVER@/${FPCVER}/" "${FILESDIR}"/${PN}-0.9.20-fpcsrc.patch \
 		> "${T}"/fpcsrc.patch || die "could not sed fpcsrc patch"
 
