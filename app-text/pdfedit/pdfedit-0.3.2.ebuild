@@ -2,26 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils qt3
-
 DESCRIPTION="Editor for manipulating PDF documents. GUI and commandline interface."
-HOMEPAGE="http://pdfedit.petricek.net"
-SRC_URI="http://downloads.sourceforge.net/pdfedit/${P}.tar.gz"
+HOMEPAGE="http://pdfedit.petricek.net/"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="amd64 x86"
 
 IUSE=""
-RDEPEND="$(qt_min_version 3.3)"
+RDEPEND="=x11-libs/qt-3*"
 DEPEND="${RDEPEND}
 	dev-libs/boost"
-
-src_unpack(){
-	unpack ${A}
-	cd "${S}"
-	epatch "${FILESDIR}/${PN}-0.2.3-build-fix.patch"
-}
 
 src_compile(){
 	econf || die "econf failed"
