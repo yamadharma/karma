@@ -51,6 +51,9 @@ BITTORRENT_VERSION=4.4.0
 
 BUSYBOX_VERSION="1.1.1"
 
+UDEV_VERSION=108
+UDEV_DIFF_VERSION=0ubuntu19
+
 case $ARCH in
     x86) 
     LINUX_VERSION=2.6.21
@@ -93,10 +96,12 @@ SRC_URI="mirror://sourceforge/systemimager/${MY_P}.tar.bz2
 	http://download.systemimager.org/pub/zlib/zlib-${ZLIB_VERSION}.tar.gz
 	http://download.systemimager.org/pub/module-init-tools/module-init-tools-${MODULE_INIT_TOOLS_VERSION}.tar.bz2
 	
+	http://download.systemimager.org/pub/kexec-tools-testing-${KEXEC_VERSION}.tar.bz2
+	
 	http://download.systemimager.org/pub/bittorrent/BitTorrent-${BITTORRENT_VERSION}.tar.gz
 
 	http://download.systemimager.org/pub/busybox/busybox-${BUSYBOX_VERSION}.tar.bz2
-	
+	http://download.systemimager.org/pub/udev/udev_${UDEV_VERSION}.orig.tar.gz
 	http://download.systemimager.org/pub/linux/linux-${LINUX_VERSION}.tar.bz2"
 
 #	http://download.systemimager.org/pub/discover/discover_${DISCOVER_VERSION}-${DISCOVER_PATCH_VERSION}.tar.gz
@@ -151,7 +156,10 @@ src_unpack ()
 	cp ${DISTDIR}/util-linux-${UTIL_LINUX_VERSION}.tar.bz2 ${S}/src
 	cp ${DISTDIR}/xfsprogs-${XFSPROGS_VERSION}.src.tar.gz ${S}/src
 	cp ${DISTDIR}/zlib-${ZLIB_VERSION}.tar.gz ${S}/src
+	cp ${DISTDIR}/kexec-tools-testing-${KEXEC_VERSION}.tar.bz2 ${S}/src
+	
 	cp ${DISTDIR}/linux-${LINUX_VERSION}.tar.bz2 ${S}/src
+	
 
 	cp ${DISTDIR}/busybox-${BUSYBOX_VERSION}.tar.bz2 ${S}/initrd_source/src
 	
@@ -160,6 +168,10 @@ src_unpack ()
 	cp ${DISTDIR}/module-init-tools-${MODULE_INIT_TOOLS_VERSION}.tar.bz2 ${S}/initrd_source/src
 
 	cp ${DISTDIR}/coreutils-${COREUTILS_VERSION}.tar.bz2 ${S}/initrd_source/src
+
+	cp ${DISTDIR}/udev_${UDEV_VERSION}.orig.tar.gz ${S}/initrd_source/src
+#	cp ${DISTDIR}/udev_${UDEV_VERSION}-${UDEV_DIFF_VERSION}.diff.gz ${S}/initrd_source/src
+	
 	
 	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:g" ${S}/initrd_source/initrd.rul 
 	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:g" ${S}/make.d/boel_binaries.inc
@@ -210,10 +222,10 @@ src_compile ()
 	make ${MAKEOPTS} kernel || die "Compiling error"    
 	
 	CFLAGS=-I${S}/src/linux-${LINUX_VERSION}/include \
-	    make ${MAKEOPTS} initrd || die "Compiling error"    
+	    make initrd || die "Compiling error"    
 	    
 	CFLAGS=-I${S}/src/linux-${LINUX_VERSION}/include \
-	    make ${MAKEOPTS} boel_binaries_tarball || die "Compiling error"    
+	    make boel_binaries_tarball || die "Compiling error"    
 }
 
 src_install () 

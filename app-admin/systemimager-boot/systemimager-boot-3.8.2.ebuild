@@ -53,10 +53,10 @@ BUSYBOX_VERSION="1.1.1"
 
 case $ARCH in
     x86) 
-    LINUX_VERSION=2.6.21
+    LINUX_VERSION=2.6.18.1
     ;;
     amd64)
-    LINUX_VERSION=2.6.21
+    LINUX_VERSION=2.6.18.1
     ;;
 esac    
 

@@ -41,10 +41,10 @@ UTIL_LINUX_VERSION=2.12r
 
 case $ARCH in
     x86) 
-    LINUX_VERSION=2.6.18.1
+    LINUX_VERSION=2.6.21
     ;;
     amd64)
-    LINUX_VERSION=2.6.18.1
+    LINUX_VERSION=2.6.21
     ;;
 esac    
 
