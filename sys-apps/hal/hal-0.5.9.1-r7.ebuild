@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/hal/hal-0.5.9-r1.ebuild,v 1.2 2007/04/27 19:06:35 cardoe Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/hal/hal-0.5.9.1.ebuild,v 1.2 2007/06/19 20:12:00 cardoe Exp $
 
 inherit eutils linux-info autotools flag-o-matic
 
@@ -10,7 +10,7 @@ SRC_URI="http://people.freedesktop.org/~david/dist/${P}.tar.gz"
 
 LICENSE="|| ( GPL-2 AFL-2.0 )"
 SLOT="0"
-KEYWORDS="amd64 ~hppa ~ia64 -mips ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
+KEYWORDS="amd64 ~hppa ~ia64 -mips ~ppc -ppc64 ~sparc x86 ~x86-fbsd"
 
 KERNEL_IUSE="kernel_linux kernel_FreeBSD"
 IUSE="acpi crypt debug dell disk-partition doc pcmcia selinux ${KERNEL_IUSE}"
@@ -25,6 +25,7 @@ RDEPEND=">=dev-libs/glib-2.6
 		>=sys-apps/pciutils-2.2.3
 		>=dev-libs/libusb-0.1.10a
 		sys-apps/usbutils
+		>=sys-fs/ntfs3g-1.0
 		virtual/eject
 		amd64? ( >=sys-apps/dmidecode-2.7 )
 		x86? ( >=sys-apps/dmidecode-2.7 )
@@ -37,9 +38,11 @@ RDEPEND=">=dev-libs/glib-2.6
 #		pam? ( sys-auth/consolekit )"
 
 DEPEND="${RDEPEND}
-		  dev-util/pkgconfig
+		dev-util/pkgconfig
 		>=dev-util/intltool-0.35
-		doc? ( app-doc/doxygen app-text/docbook-sgml-utils )"
+		doc? ( app-doc/doxygen
+				app-text/docbook-sgml-utils
+				app-text/xmlto )"
 
 PDEPEND="app-misc/hal-info"
 
@@ -77,10 +80,10 @@ function notify_inotify() {
 }
 
 pkg_setup() {
-	if built_with_use --missing false sys-apps/pciutils zlib ; then
-		eerror "You MUST build sys-apps/pciutils without the zlib USE flag"
-		die "You MUST build sys-apps/pciutils without the zlib USE flag"
-	fi
+	#if built_with_use --missing false sys-apps/pciutils zlib ; then
+	#	eerror "You MUST build sys-apps/pciutils without the zlib USE flag"
+	#	die "You MUST build sys-apps/pciutils without the zlib USE flag"
+	#fi
 
 	if use kernel_linux; then
 		kernel_is ge 2 6 17 || ewarn "HAL requires a kernel version 2.6.17 or newer"
@@ -108,42 +111,25 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
-
-	# Patches accepted upstream
-	epatch ${FILESDIR}/${PV}/01_luks_mount_fix.patch
-	epatch ${FILESDIR}/${PV}/02_acpi_repeated_property_change.patch
-	epatch ${FILESDIR}/${PV}/03_crasher_fix_fail_to_return_value.patch
-	epatch ${FILESDIR}/${PV}/04_cache_regen_return_fix.patch
-	epatch ${FILESDIR}/${PV}/05_freebsd_partutil_make_fix.patch
-	epatch ${FILESDIR}/${PV}/06_freebsd_backend_fix.patch
-	epatch ${FILESDIR}/${PV}/07_malloc_h_for_stdlib_h.patch
-	epatch ${FILESDIR}/${PV}/08_contains_not_fdi_directive.patch
-	epatch ${FILESDIR}/${PV}/09_hald_addon_keyboard_start_one.patch
-	epatch ${FILESDIR}/${PV}/10_freebsd_storage_reprobe_fix.patch
-	epatch ${FILESDIR}/${PV}/11_hal_fix_segfault_probe_volume.patch
-	epatch ${FILESDIR}/${PV}/12_hal_fix-vol_label_probe_volume.patch
-	epatch ${FILESDIR}/${PV}/13_detect_newer_macbooks.patch
-	epatch ${FILESDIR}/${PV}/14_ntfs_allows_utf8.patch
-	epatch ${FILESDIR}/${PV}/15_spec_fdi_matching.patch
-	epatch ${FILESDIR}/${PV}/16_dev_root_is_mounted.patch
-	epatch ${FILESDIR}/${PV}/18_hal_fix_info.category_for_laptop_panel_v2.patch
-	epatch ${FILESDIR}/${PV}/19_hald_runner_catch_dbus_disconnect.patch
-
-	# Gentoo patchset
-	epatch ${FILESDIR}/${PV}/95_gentoo_man_page.patch
-	epatch ${FILESDIR}/${PV}/96_plugdev_allow_send.patch
-	epatch ${FILESDIR}/${PV}/97_ignore_fixed_drives.patch
-
+	cd "${S}"
 
 	# allow plugdev group people to mount
 	epatch ${FILESDIR}/${P}-plugdev-allow-send.patch
+
 	# use ntfs-3g, then ntfs-fuse by default
 	epatch ${FILESDIR}/${P}-sabayonlinux-ntfs-3g.default.patch
+
 	# Write proper suspend priorities
 	epatch ${FILESDIR}/${P}-suspend-priorities.patch
+	
+	# cache patch
+	epatch ${FILESDIR}/${P}-hald-cache-test-path.patch
+
+	# update parted support
+	epatch ${FILESDIR}/${P}-update-parted-support.patch
 
 	eautoreconf
+
 }
 
 src_compile() {
@@ -167,7 +153,7 @@ src_compile() {
 	fi
 
 	econf --disable-policy-kit \
-		  --with-doc-dir=/usr/share/doc/${PF} \
+		  --docdir=/usr/share/doc/${PF} \
 		  --with-os-type=gentoo \
 		  --with-pid-file=/var/run/hald.pid \
 		  --with-socket-dir=/var/run/hald \
@@ -188,6 +174,7 @@ src_compile() {
 #$(use_enable pam console-kit)
 
 	emake || die "make failed"
+
 }
 
 src_install() {
@@ -215,16 +202,24 @@ src_install() {
 
 	# We now create and keep /media here as both gnome-mount and pmount
 	# use these directories, to avoid collision.
+	dodir /media
 	keepdir /media
 
 	# We also need to create and keep /etc/fdi/{information,policy,preprobe}
 	# or else hal bombs.
+	dodir /etc/hal/fdi/{information,policy,preprobe}
 	keepdir /etc/hal/fdi/{information,policy,preprobe}
 
+	dodir /usr/share/hal/fdi/{information,policy,preprobe}
+	keepdir /usr/share/hal/fdi/{information,policy,preprobe}
+	
+
 	# HAL stores it's fdi cache in /var/lib/cache/hald
+	dodir /var/lib/cache/hald
 	keepdir /var/lib/cache/hald
 
 	# HAL keeps its unix socket here
+	dodir /var/run/hald
 	keepdir /var/run/hald
 }
 
