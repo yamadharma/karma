@@ -1,0 +1,948 @@
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/include/apr.swg subversion-1.4.0-patch1/subversion/bindings/swig/include/apr.swg
+--- subversion-1.4.0-clean/subversion/bindings/swig/include/apr.swg	2005-10-25 06:39:49.000000000 +0200
++++ subversion-1.4.0-patch1/subversion/bindings/swig/include/apr.swg	2007-01-26 17:54:33.463524500 +0100
+@@ -146,14 +146,24 @@ typedef apr_int32_t time_t;
+ 
+ /* -----------------------------------------------------------------------
+    create an OUTPUT argument defn for an apr_hash_t ** which is storing
++   dirent values
++*/
++%typemap(python,in,numinputs=0) apr_hash_t **DIRENTHASH = apr_hash_t **OUTPUT;
++%typemap(python,argout,fragment="t_output_helper") apr_hash_t **DIRENTHASH {
++    $result = t_output_helper($result,
++                              svn_swig_py_convert_hash(*$1, 
++                                                       SWIGTYPE_p_svn_dirent_t,
++                                                       NULL));
++}
++
++/* -----------------------------------------------------------------------
++   create an OUTPUT argument defn for an apr_hash_t ** which is storing
+    property values
+ */
+ 
+ %typemap(python,in,numinputs=0) apr_hash_t **PROPHASH = apr_hash_t **OUTPUT;
+-%typemap(python,argout) apr_hash_t **PROPHASH {
+-    /* toss prior result, get new result from the hash */
+-    Py_DECREF($result);
+-    $result = svn_swig_py_prophash_to_dict(*$1);
++%typemap(python,argout,fragment="t_output_helper") apr_hash_t **PROPHASH {
++    $result = t_output_helper($result, svn_swig_py_prophash_to_dict(*$1));
+ }
+ 
+ %typemap(perl5,in,numinputs=0) apr_hash_t **PROPHASH = apr_hash_t **OUTPUT;
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/include/proxy_apr.swg subversion-1.4.0-patch1/subversion/bindings/swig/include/proxy_apr.swg
+--- subversion-1.4.0-clean/subversion/bindings/swig/include/proxy_apr.swg	2006-03-05 08:31:48.000000000 +0100
++++ subversion-1.4.0-patch1/subversion/bindings/swig/include/proxy_apr.swg	2007-01-26 17:54:33.795545250 +0100
+@@ -159,6 +159,28 @@ struct apr_pool_t {
+           del self._parent_pool
+         if hasattr(self, "_is_valid"):
+           del self._is_valid
++        
++        # Clear out any pool-owned references inserted by typemaps
++        if hasattr(self, "_owned_refs"):
++          del self._owned_refs
++
++      def _add_owned_ref(self, ref):
++        """Add a new 'owned' reference -- i.e. a Python object contained in a C
++           structure allocated in this pool.  Used by the typemaps to manage
++           reference counting semantics."""
++        if not hasattr(self, "_owned_refs"):
++          self._owned_refs = {}
++        if self._owned_refs.has_key(ref):
++          self._owned_refs[ref] += 1
++        else:
++          self._owned_refs[ref] = 1
++      
++      def _remove_owned_ref(self, ref):
++        """Remove an existing 'owned' reference.  Also used by typemaps."""
++        if hasattr(self, "_owned_refs") and self._owned_refs.has_key(ref):
++          self._owned_refs[ref] -= 1
++          if self._owned_refs[ref] == 0:
++            del self._owned_refs[ref]
+   
+       def __del__(self):
+         """Automatically destroy memory pools, if necessary"""
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/include/svn_types.swg subversion-1.4.0-patch1/subversion/bindings/swig/include/svn_types.swg
+--- subversion-1.4.0-clean/subversion/bindings/swig/include/svn_types.swg	2006-04-20 04:47:39.000000000 +0200
++++ subversion-1.4.0-patch1/subversion/bindings/swig/include/svn_types.swg	2007-01-27 09:05:41.585591500 +0100
+@@ -444,6 +444,12 @@
+   svn_swig_rb_set_baton($result, (VALUE)$2);
+ };
+ 
++%typemap(python, in) (svn_commit_callback2_t callback, void *callback_baton)
++{
++  $1 = svn_swig_py_commit_callback2;
++  $2 = (void *)$input;
++}
++
+ /* -----------------------------------------------------------------------
+    Callback: svn_cancel_func_t
+ */
+@@ -519,6 +525,33 @@
+   $1 = svn_swig_rb_make_stream($input);
+ }
+ 
++#ifdef SWIGPYTHON
++%typemap(in) (svn_commit_callback_t callback, void *callback_baton)
++{
++  $1 = svn_swig_py_commit_callback;
++  $2 = (void *)$input;
++}
++#endif
++
++/* -----------------------------------------------------------------------
++   Mapper to automatically turn Python objects into void* batons on assignment
++*/
++
++#ifdef SWIGPYTHON
++%typemap(in) void *PY_AS_VOID (PyObject *newRef) {
++  newRef = $input;
++  if ($input == Py_None) {
++    $1 = newRef = NULL;
++  } else {
++    newRef = $input;
++    $1 = (void *)$input;
++  }
++  if (svn_swig_py_pool_set_owned_ref(obj0, (PyObject *)arg1->$1_name, newRef)) {
++    SWIG_fail;
++  }
++}
++#endif
++
+ /* -----------------------------------------------------------------------
+    Wrap the digest output for functions populating digests.
+ */
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.c subversion-1.4.0-patch1/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.c
+--- subversion-1.4.0-clean/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.c	2006-04-18 21:49:41.000000000 +0200
++++ subversion-1.4.0-patch1/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.c	2007-01-27 08:57:48.532027500 +0100
+@@ -104,6 +104,8 @@ static apr_pool_t *_global_pool = NULL;
+ static PyObject *_global_svn_swig_py_pool = NULL;
+ static char assertValid[] = "assert_valid";
+ static char parentPool[] = "_parent_pool";
++static char addOwnedRef[] = "_add_owned_ref";
++static char removeOwnedRef[] = "_remove_owned_ref";
+ static char wrap[] = "_wrap";
+ static char unwrap[] = "_unwrap";
+ static char setParentPool[] = "set_parent_pool";
+@@ -166,6 +168,51 @@ static int proxy_set_pool(PyObject **pro
+ 
+   return 0;
+ }
++
++/* Get the parent pool of a proxy object, or return the global application
++ * pool if one is not set.  Returns a BORROWED reference! */
++static PyObject *proxy_get_pool(PyObject *proxy)
++{
++  PyObject *result;
++
++  if (PyObject_HasAttrString(proxy, parentPool)) {
++    result = PyObject_GetAttrString(proxy, parentPool);
++    Py_DECREF(result);
++  } else {
++    result = _global_svn_swig_py_pool;
++  }
++
++  return result;
++}
++
++/* Change an 'owned reference' allocated in a pool from oldRef to newRef.
++ * If oldRef is non-NULL and present in the parent pool of proxy, it is removed.
++ */
++int svn_swig_py_pool_set_owned_ref(PyObject *proxy, PyObject *oldRef,
++                                   PyObject *newRef)
++{
++  PyObject *temp;
++  PyObject *py_pool = proxy_get_pool(proxy);
++
++  if (oldRef != NULL) {
++    temp = PyObject_CallMethod(py_pool, removeOwnedRef, objectTuple, oldRef);
++    if (temp == NULL) {
++      return 1;
++    } else {
++      Py_DECREF(temp);
++    }
++  }
++  if (newRef != NULL) {
++    temp = PyObject_CallMethod(py_pool, addOwnedRef, objectTuple, newRef);
++    if (temp == NULL) {
++      return 1;
++    } else {
++      Py_DECREF(temp);
++    }
++  }
++
++  return 0;
++}
+ 
+ /* Wrapper for SWIG_TypeQuery */
+ #define svn_swig_TypeQuery(x) SWIG_TypeQuery(x)
+@@ -239,14 +286,11 @@ void *svn_swig_MustGetPtr(void *input, s
+     }
+     Py_DECREF(result);
+   }
++
+   if (py_pool != NULL) {
+-    if (PyObject_HasAttrString(input, parentPool)) {
+-      *py_pool = PyObject_GetAttrString(input, parentPool);
+-      Py_DECREF(*py_pool);
+-    } else {
+-      *py_pool = _global_svn_swig_py_pool;
+-    }
++    *py_pool = proxy_get_pool((PyObject *) input);
+   }
++
+   if (PyObject_HasAttrString(input, unwrap)) {
+     input = PyObject_CallMethod(input, unwrap, emptyTuple);
+     if (input == NULL) {
+@@ -486,6 +530,47 @@ PyObject *svn_swig_py_prophash_to_dict(a
+   return convert_hash(hash, convert_svn_string_t, NULL, NULL);
+ }
+ 
++static PyObject *proparray_to_dict(const apr_array_header_t *array)
++{
++  PyObject *dict = PyDict_New();
++  int i;
++
++  if (dict == NULL) {
++    return NULL;
++  }
++
++  for (i = 0; i < array->nelts; ++i) {
++    svn_prop_t prop;
++    PyObject *py_key, *py_value;
++
++    prop = APR_ARRAY_IDX(array, i, svn_prop_t);
++
++    py_key = PyString_FromString(prop.name);
++    if (py_key == NULL) {
++      goto error;
++    }
++
++    if (prop.value == NULL) {
++      py_value = Py_None;
++      Py_INCREF(Py_None);
++    } else {
++      py_value = PyString_FromStringAndSize((void *)prop.value->data,
++                                            prop.value->len);
++      if (py_value == NULL) {
++        Py_DECREF(py_key);
++        goto error;
++      }
++    }
++
++    PyDict_SetItem(dict, py_key, py_value);
++  }
++
++  return dict;
++
++error:
++  Py_DECREF(dict);
++  return NULL;
++}
+ 
+ PyObject *svn_swig_py_locationhash_to_dict(apr_hash_t *hash)
+ {
+@@ -552,6 +637,8 @@ DECLARE_SWIG_CONSTRUCTOR(lock, svn_lock_
+ DECLARE_SWIG_CONSTRUCTOR(auth_ssl_server_cert_info,
+     svn_auth_ssl_server_cert_info_dup)
+ DECLARE_SWIG_CONSTRUCTOR(info, svn_info_dup)
++DECLARE_SWIG_CONSTRUCTOR(commit_info, svn_commit_info_dup)
++DECLARE_SWIG_CONSTRUCTOR(wc_notify, svn_wc_dup_notify)
+ 
+ static PyObject *convert_log_changed_path(void *value, void *ctx,
+                                           PyObject *py_pool)
+@@ -1448,6 +1535,14 @@ write_handler_pyio(void *baton, const ch
+   return err;
+ }
+ 
++static svn_error_t *
++close_handler_pyio(void *baton)
++{
++  PyObject *py_io = baton;
++  Py_DECREF(py_io);
++  return SVN_NO_ERROR;
++}
++
+ svn_stream_t *
+ svn_swig_py_make_stream(PyObject *py_io, apr_pool_t *pool)
+ {
+@@ -1458,9 +1553,11 @@ svn_swig_py_make_stream(PyObject *py_io,
+    * bindings, and we will be finished with the py_io object before we return
+    * to python. I.e. DO NOT STORE AWAY THE RESULTING svn_stream_t * for use
+    * over multiple calls into the bindings. */
++  Py_INCREF(py_io);
+   stream = svn_stream_create(py_io, pool);
+   svn_stream_set_read(stream, read_handler_pyio);
+   svn_stream_set_write(stream, write_handler_pyio);
++  svn_stream_set_close(stream, close_handler_pyio);
+ 
+   return stream;
+ }
+@@ -1507,6 +1604,40 @@ void svn_swig_py_notify_func(void *baton
+   svn_swig_py_release_py_lock();
+ }
+ 
++void svn_swig_py_notify_func2(void *baton,
++                              const svn_wc_notify_t *notify,
++                              apr_pool_t *pool)
++{
++  PyObject *function = baton;
++  PyObject *result;
++  svn_error_t *err = SVN_NO_ERROR;
++
++  if (function == NULL || function == Py_None) {
++    return;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallFunction(function,
++                                      (char *)"(O&O&)",
++                                      make_ob_wc_notify, notify,
++                                      make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else {
++    /* The callback shouldn't be returning anything. */
++    if (result != Py_None) {
++      err = callback_bad_return_error("Not None");
++    }
++    Py_DECREF(result);
++  }
++
++  /* Our error has no place to go. :-( */
++  if (err) {
++    svn_error_clear(err);
++  }
++
++  svn_swig_py_release_py_lock();
++}
+ 
+ void svn_swig_py_status_func(void *baton,
+                              const char *path,
+@@ -2142,3 +2273,353 @@ svn_swig_py_auth_ssl_client_cert_pw_prom
+   *cred = creds;
+   return err;
+ }
++
++/* svn_ra_callbacks_t */
++static svn_error_t *
++ra_callbacks_open_tmp_file(apr_file_t **fp,
++                           void *callback_baton,
++                           apr_pool_t *pool)
++{
++  PyObject *callbacks = (PyObject *)callback_baton;
++  PyObject *result;
++  svn_error_t *err = SVN_NO_ERROR;
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallMethod(callbacks, 
++                                    "open_tmp_file",
++                                    (char *)"O&", 
++                                    make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else if (result == Py_None) {
++    *fp = NULL;
++  } else {
++    *fp = svn_swig_py_make_file(result, pool);
++    if (*fp == NULL) {
++      err = callback_exception_error();
++    }
++  }
++
++  Py_XDECREF(result);
++  svn_swig_py_release_py_lock();
++  return err;
++}
++
++void
++svn_swig_py_setup_ra_callbacks(svn_ra_callbacks2_t **callbacks,
++                               void **baton,
++                               PyObject *py_callbacks,
++                               apr_pool_t *pool)
++{
++  svn_error_t *err = svn_ra_create_callbacks(callbacks, pool);
++  PyObject *py_auth_baton;
++
++  if (err) {
++    svn_swig_py_svn_exception(err);
++    return;
++  }
++
++  (*callbacks)->open_tmp_file = ra_callbacks_open_tmp_file;
++
++  py_auth_baton = PyObject_GetAttrString(py_callbacks, "auth_baton");
++
++  if (svn_swig_ConvertPtrString(py_auth_baton, 
++                                (void **)&((*callbacks)->auth_baton),
++                                "svn_auth_baton_t *")) {
++    err = type_conversion_error("svn_auth_baton_t *");
++    svn_swig_py_svn_exception(err);
++    Py_DECREF(py_auth_baton);
++    return;
++  }
++  
++  Py_XDECREF(py_auth_baton);
++
++  *baton = py_callbacks;
++}
++
++svn_error_t *svn_swig_py_commit_callback2(const svn_commit_info_t *commit_info,
++                                          void *baton,
++                                          apr_pool_t *pool)
++{
++  PyObject *receiver = baton;
++  PyObject *result;
++  svn_error_t *err = SVN_NO_ERROR;
++
++  if ((receiver == NULL) || (receiver == Py_None)) {
++    return SVN_NO_ERROR;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallFunction(receiver,
++                                      (char *)"O&O&",
++                                      make_ob_commit_info, commit_info,
++                                      make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else {
++    if (result != Py_None) {
++      err = callback_bad_return_error("Not None");
++    }
++    Py_DECREF(result);
++  }
++
++  svn_swig_py_release_py_lock();
++
++  return err;
++}
++
++svn_error_t *svn_swig_py_commit_callback(svn_revnum_t new_revision,
++                                         const char *date,
++                                         const char *author,
++                                         void *baton)
++{
++  PyObject *receiver = baton;
++  PyObject *result;
++  svn_error_t *err = SVN_NO_ERROR;
++
++  if ((receiver == NULL) || (receiver == Py_None)) {
++    return SVN_NO_ERROR;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallFunction(receiver,
++                                      (char *)"lss",
++                                      new_revision, date, author)) == NULL) {
++    err = callback_exception_error();
++  } else {
++    if (result != Py_None) {
++      err = callback_bad_return_error("Not None");
++    }
++    Py_DECREF(result);
++  }
++
++  svn_swig_py_release_py_lock();
++
++  return err;
++}
++
++svn_error_t *svn_swig_py_ra_file_rev_handler_func(void *baton,
++                                                  const char *path,
++                                                  svn_revnum_t rev,
++                                                  apr_hash_t *rev_props,
++                                                  svn_txdelta_window_handler_t *delta_handler,
++                                                  void **delta_baton,
++                                                  apr_array_header_t *prop_diffs,
++                                                  apr_pool_t *pool)
++{
++  PyObject *handler = baton;
++  PyObject *result, *py_rev_props = NULL, *py_prop_diffs = NULL;
++  svn_error_t *err = SVN_NO_ERROR;
++
++  if ((handler == NULL) || (handler == Py_None)) {
++    return SVN_NO_ERROR;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  py_rev_props = svn_swig_py_prophash_to_dict(rev_props);
++  if (py_rev_props == NULL) {
++    err = type_conversion_error("apr_hash_t *");
++    goto error;
++  }
++
++  py_prop_diffs = proparray_to_dict(prop_diffs);
++
++  if (py_prop_diffs == NULL) {
++    err = type_conversion_error("apr_array_header_t *");
++    goto error;
++  }
++
++  if ((result = PyObject_CallFunction(handler,
++                                      (char *)"slOOO&",
++                                      path, rev, py_rev_props, py_prop_diffs,
++                                      make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else {
++    if (result != Py_None) {
++      err = callback_bad_return_error("Not None");
++    }
++
++    /* FIXME: Support returned TxDeltaWindow object and
++     * set delta_handler and delta_baton */
++    *delta_handler = NULL;
++    *delta_baton = NULL;
++
++    Py_XDECREF(result);
++  }
++
++error:
++
++  Py_XDECREF(py_rev_props);
++  Py_XDECREF(py_prop_diffs);
++
++  svn_swig_py_release_py_lock();
++
++  return err;
++}
++
++static svn_error_t *reporter_set_path(void *report_baton,
++                                      const char *path,
++                                      svn_revnum_t revision,
++                                      svn_boolean_t start_empty,
++                                      const char *lock_token,
++                                      apr_pool_t *pool)
++{
++  svn_error_t *err = SVN_NO_ERROR;
++  PyObject *py_reporter = report_baton, *result;
++
++  if (py_reporter == NULL || py_reporter == Py_None) {
++    return SVN_NO_ERROR;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallMethod(py_reporter,
++                                    (char *)"set_path",
++                                    (char *)"slbsO&",
++                                    path, revision,
++                                    start_empty, lock_token,
++                                    make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else if (result != Py_None) {
++    err = callback_bad_return_error("Not None");
++  }
++
++  Py_XDECREF(result);
++
++  svn_swig_py_release_py_lock();
++
++  return err;
++}
++
++static svn_error_t *reporter_delete_path(void *report_baton,
++                         const char *path,
++                        apr_pool_t *pool)
++{
++  svn_error_t *err = SVN_NO_ERROR;
++  PyObject *py_reporter = report_baton, *result;
++
++  if (py_reporter == NULL || py_reporter == Py_None) {
++    return SVN_NO_ERROR;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallMethod(py_reporter,
++                                    (char *)"delete_path",
++                                    (char *)"sO&",
++                                    path, 
++                                    make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else if (result != Py_None) {
++    err = callback_bad_return_error("Not None");
++  }
++
++  Py_XDECREF(result);
++
++  svn_swig_py_release_py_lock();
++
++  return err;
++}
++    
++static svn_error_t *reporter_link_path(void *report_baton,
++                                       const char *path,
++                                       const char *url,
++                                       svn_revnum_t revision,
++                                       svn_boolean_t start_empty,
++                                       const char *lock_token,
++                                       apr_pool_t *pool)
++{
++  svn_error_t *err = SVN_NO_ERROR;
++  PyObject *py_reporter = report_baton, *result;
++
++  if (py_reporter == NULL || py_reporter == Py_None) {
++    return SVN_NO_ERROR;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallMethod(py_reporter,
++                                    (char *)"link_path",
++                                    (char *)"sslbsO&",
++                                    path, url, revision,
++                                    start_empty, lock_token,
++                                    make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else if (result != Py_None) {
++    err = callback_bad_return_error("Not None");
++  }
++
++  Py_XDECREF(result);
++
++  svn_swig_py_release_py_lock();
++
++  return err;
++}
++
++static svn_error_t *reporter_finish_report(void *report_baton,
++                                           apr_pool_t *pool)
++{
++  svn_error_t *err = SVN_NO_ERROR;
++
++  PyObject *py_reporter = report_baton, *result;
++
++  if (py_reporter == NULL || py_reporter == Py_None) {
++    return SVN_NO_ERROR;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallMethod(py_reporter,
++                                    (char *)"finish_report",
++                                    (char *)"O&",
++                                    make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else if (result != Py_None) {
++    err = callback_bad_return_error("Not None");
++  }
++
++  Py_XDECREF(result);
++
++  svn_swig_py_release_py_lock();
++
++  return err;
++}
++
++static svn_error_t *reporter_abort_report(void *report_baton,
++                               apr_pool_t *pool)
++{
++  svn_error_t *err = SVN_NO_ERROR;
++
++  PyObject *py_reporter = report_baton, *result;
++
++  if (py_reporter == NULL || py_reporter == Py_None) {
++    return SVN_NO_ERROR;
++  }
++
++  svn_swig_py_acquire_py_lock();
++
++  if ((result = PyObject_CallMethod(py_reporter,
++                                    (char *)"abort_report",
++                                    (char *)"O&",
++                                    make_ob_pool, pool)) == NULL) {
++    err = callback_exception_error();
++  } else if (result != Py_None) {
++    err = callback_bad_return_error("Not None");
++  }
++
++  Py_XDECREF(result);
++
++  svn_swig_py_release_py_lock();
++
++  return err;
++}
++
++const svn_ra_reporter2_t swig_py_ra_reporter2 = {
++    reporter_set_path,
++    reporter_delete_path,
++    reporter_link_path,
++    reporter_finish_report,
++    reporter_abort_report
++};
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.h subversion-1.4.0-patch1/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.h
+--- subversion-1.4.0-clean/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.h	2006-04-18 21:49:41.000000000 +0200
++++ subversion-1.4.0-patch1/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.h	2007-01-27 08:58:32.346765750 +0100
+@@ -79,6 +79,9 @@ void svn_swig_py_clear_application_pool(
+ SVN_SWIG_SWIGUTIL_EXPORT
+ void svn_swig_get_application_pool(PyObject **py_pool, apr_pool_t **pool);
+ 
++/* Set a Python 'owned' reference on the pool of the given proxy object */
++int svn_swig_py_pool_set_owned_ref(PyObject *proxy, PyObject *oldRef, PyObject *newRef);
++
+ 
+ /*** SWIG Wrappers ***/
+ 
+@@ -198,6 +201,11 @@ void svn_swig_py_notify_func(void *baton
+                              svn_wc_notify_state_t prop_state,
+                              svn_revnum_t revision);
+ 
++SVN_SWIG_SWIGUTIL_EXPORT
++void svn_swig_py_notify_func2(void *baton,
++                              const svn_wc_notify_t *notify,
++                              apr_pool_t *pool);
++
+ /* a status function that executes a Python function that is passed in
+    via the baton argument */
+ SVN_SWIG_SWIGUTIL_EXPORT
+@@ -310,6 +318,45 @@ svn_error_t *svn_swig_py_auth_ssl_client
+     svn_boolean_t may_save,
+     apr_pool_t *pool);
+ 
++SVN_SWIG_SWIGUTIL_EXPORT
++void
++svn_swig_py_setup_ra_callbacks(svn_ra_callbacks2_t **callbacks,
++                               void **baton,
++                               PyObject *py_callbacks,
++                               apr_pool_t *pool);
++SVN_SWIG_SWIGUTIL_EXPORT
++svn_error_t *svn_swig_py_commit_callback2(const svn_commit_info_t *commit_info,
++                                          void *baton,
++                                          apr_pool_t *pool);
++
++SVN_SWIG_SWIGUTIL_EXPORT
++svn_error_t *svn_swig_py_commit_callback(svn_revnum_t new_revision,
++                                         const char *date,
++                                         const char *author,
++                                         void *baton);
++
++
++SVN_SWIG_SWIGUTIL_EXPORT
++svn_error_t *svn_swig_py_ra_file_rev_handler_func(
++                    void *baton,
++                    const char *path,
++                    svn_revnum_t rev,
++                    apr_hash_t *rev_props,
++                    svn_txdelta_window_handler_t *delta_handler,
++                    void **delta_baton,
++                    apr_array_header_t *prop_diffs,
++                    apr_pool_t *pool);
++
++SVN_SWIG_SWIGUTIL_EXPORT
++extern const svn_ra_reporter2_t swig_py_ra_reporter2;
++
++SVN_SWIG_SWIGUTIL_EXPORT
++void
++svn_swig_py_setup_ra_callbacks(svn_ra_callbacks2_t **callbacks,
++                               void **baton,
++                               PyObject *py_callbacks,
++                               apr_pool_t *pool);
++
+ #ifdef __cplusplus
+ }
+ #endif /* __cplusplus */
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/svn_client.i subversion-1.4.0-patch1/subversion/bindings/swig/svn_client.i
+--- subversion-1.4.0-clean/subversion/bindings/swig/svn_client.i	2006-04-21 01:25:54.000000000 +0200
++++ subversion-1.4.0-patch1/subversion/bindings/swig/svn_client.i	2007-01-27 09:09:48.813042250 +0100
+@@ -25,6 +25,7 @@
+ #endif
+ 
+ %include typemaps.i
++%include constraints.i
+ 
+ %include svn_global.swg
+ %import core.i
+@@ -49,6 +50,11 @@
+   svn_client_ctx_t **
+ };
+ 
++%apply Pointer NONNULL { 
++  const svn_opt_revision_t *revision,
++  const svn_opt_revision_t *peg_revision
++};
++
+ %apply const apr_array_header_t *STRINGLIST {
+     const apr_array_header_t *targets,
+     const apr_array_header_t *diff_options
+@@ -71,6 +77,16 @@
+ 
+ #ifdef SWIGPYTHON
+ %apply svn_stream_t *WRAPPED_STREAM { svn_stream_t * };
++
++/* members of svn_client_ctx_t */
++%apply void *PY_AS_VOID {
++    void *notify_baton,
++    void *log_msg_baton,
++    void *cancel_baton,
++    void *notify_baton2,
++    void *log_msg_baton2,
++    void *progress_baton
++};
+ #endif
+ 
+ /* -----------------------------------------------------------------------
+@@ -240,6 +256,18 @@
+ }
+ 
+ /* -----------------------------------------------------------------------
++   Callback: svn_info_receiver_t
++   svn_client_info()
++*/
++
++%typemap(python, in) (svn_info_receiver_t receiver, 
++                      void *receiver_baton) {
++    $1 = svn_swig_py_info_receiver_func;
++    $2 = (void *)$input;
++}
++
++
++/* -----------------------------------------------------------------------
+    We use 'svn_wc_status_t *' in some custom code, but it isn't in the
+    API anywhere. Thus, SWIG doesn't generate a typemap entry for it. by
+    adding a simple declaration here, SWIG will insert a name for it.
+@@ -498,6 +526,15 @@
+ %include svn_time_h.swg
+ %include svn_client_h.swg
+ 
++#ifdef SWIGPYTHON
++
++/* provide Python with access to some thunks. */
++%constant svn_cancel_func_t svn_swig_py_cancel_func;
++%constant svn_client_get_commit_log2_t svn_swig_py_get_commit_log_func;
++%constant svn_wc_notify_func2_t svn_swig_py_notify_func;
++
++#endif
++
+ #ifdef SWIGRUBY
+ %inline %{
+ static VALUE
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/svn_delta.i subversion-1.4.0-patch1/subversion/bindings/swig/svn_delta.i
+--- subversion-1.4.0-clean/subversion/bindings/swig/svn_delta.i	2006-08-16 04:53:06.000000000 +0200
++++ subversion-1.4.0-patch1/subversion/bindings/swig/svn_delta.i	2007-01-26 17:54:34.759605500 +0100
+@@ -47,7 +47,8 @@
+     const char *error_info,
+     const char *copyfrom_path,
+     const char *copy_path,
+-    const char *base_checksum
++    const char *base_checksum,
++    const char *text_checksum
+ };
+ 
+ #ifdef SWIGPYTHON
+@@ -148,6 +149,17 @@ void svn_swig_py_make_editor(const svn_d
+ #endif
+ %}
+ 
++#ifdef SWIGPYTHON
++%inline %{
++svn_error_t *svn_delta_invoke_txdelta_window_handler (
++  svn_txdelta_window_handler_t handler,
++  svn_txdelta_window_t *window, void *baton) {
++  return handler(window, baton);
++}
++%}
++#endif
++
++
+ /* -----------------------------------------------------------------------
+    handle svn_txdelta_window_t::ops
+ */
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/svn_ra.i subversion-1.4.0-patch1/subversion/bindings/swig/svn_ra.i
+--- subversion-1.4.0-clean/subversion/bindings/swig/svn_ra.i	2006-04-20 04:25:35.000000000 +0200
++++ subversion-1.4.0-patch1/subversion/bindings/swig/svn_ra.i	2007-01-26 18:20:24.464456000 +0100
+@@ -25,6 +25,7 @@
+ #endif
+ 
+ %include typemaps.i
++%include constraints.i
+ 
+ %include svn_global.swg
+ %import apr.swg
+@@ -49,10 +50,12 @@
+     const svn_ra_reporter2_t **reporter,
+     void **report_baton,
+     svn_dirent_t **dirent,
+-    svn_lock_t **lock
++    svn_lock_t **lock,
++    const svn_delta_editor_t **
+ };
+ 
+ %apply apr_hash_t **PROPHASH { apr_hash_t **props };
++%apply apr_hash_t **DIRENTHASH { apr_hash_t **dirents };
+ 
+ %apply const char *MAY_BE_NULL {
+     const char *comment,
+@@ -120,6 +123,11 @@
+   svn_swig_rb_setup_ra_callbacks(&$1, &$2, $input, _global_pool);
+ }
+ 
++%typemap(python, in) (const svn_ra_callbacks2_t *callbacks, 
++                      void *callback_baton) {
++  svn_swig_py_setup_ra_callbacks(&$1, &$2, $input, _global_pool);
++}
++
+ %typemap(perl5, in) apr_hash_t *config {
+     $1 = svn_swig_pl_objs_to_hash_by_name ($input, "svn_config_t *",
+ 					   _global_pool);
+@@ -142,6 +150,22 @@
+   $1 = svn_swig_rb_hash_to_apr_hash_revnum($input, _global_pool);
+ }
+ 
++#ifdef SWIGPYTHON
++%typemap(in) (svn_ra_file_rev_handler_t handler, void *handler_baton)
++{
++   $1 = svn_swig_py_ra_file_rev_handler_func;
++   $2 = (void *)$input;
++}
++#endif
++
++#ifdef SWIGPYTHON
++%typemap(in) (const svn_ra_reporter2_t *reporter, void *report_baton)
++{
++  $1 = (svn_ra_reporter2_t *)&swig_py_ra_reporter2;
++  $2 = (void *)$input;
++}
++#endif
++
+ /* ----------------------------------------------------------------------- */
+ 
+ %{
+diff -Npur subversion-1.4.0-clean/subversion/bindings/swig/svn_wc.i subversion-1.4.0-patch1/subversion/bindings/swig/svn_wc.i
+--- subversion-1.4.0-clean/subversion/bindings/swig/svn_wc.i	2006-04-20 04:49:42.000000000 +0200
++++ subversion-1.4.0-patch1/subversion/bindings/swig/svn_wc.i	2007-01-26 17:54:34.807608500 +0100
+@@ -226,6 +226,20 @@
+   }
+ }
+ 
++#ifdef SWIGPYTHON
++%typemap(in, numinputs=0)
++     apr_array_header_t **patterns (apr_array_header_t *temp)
++{
++  $1 = &temp;
++}
++%typemap(argout, fragment="t_output_helper")
++     apr_array_header_t **patterns
++{
++  $result = t_output_helper($result,
++                          svn_swig_py_array_to_list(*$1));
++}
++#endif
++
+ /* -----------------------------------------------------------------------
+    Callback: svn_wc_notify_func_t
+    svn_client_ctx_t
+@@ -272,6 +286,11 @@
+   $2 = $input; /* our function is the baton. */
+ }
+ 
++%typemap(python,in) (svn_wc_notify_func2_t notify_func, void *notify_baton) {
++   $1 = svn_swig_py_notify_func2;
++   $2 = $input; /* our function is the baton. */
++}
++
+ %typemap(perl5,in) (svn_wc_status_func_t status_func, void *status_baton) {
+   $1 = svn_swig_pl_status_func;
+   $2 = $input; /* our function is the baton. */
