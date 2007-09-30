@@ -1,0 +1,8 @@
+DIST modglue-1.8.tar.gz 171639 RMD160 3213a08e3defbc2c372c8ad67a190a7568c0bbbe SHA1 1c95073df0a6d76ccd3f367dafe9e07203712921 SHA256 e0526111625c95d2f8d0026d32fe71f095fb6be2e699adff3db7b98f3aae073c
+EBUILD modglue-1.8.ebuild 564 RMD160 b31eb2fbdca743577bdcfaf9f8579db949896bf8 SHA1 c80a76052264dced0e1af8cd7785e8ce323f83b3 SHA256 53051ef0b8184559d813ec7642e1128a2269070bb9bb48dfd23f4cbe9e0bdbcb
+MD5 0918fa1cac93f399b888decabd17e6ca modglue-1.8.ebuild 564
+RMD160 b31eb2fbdca743577bdcfaf9f8579db949896bf8 modglue-1.8.ebuild 564
+SHA256 53051ef0b8184559d813ec7642e1128a2269070bb9bb48dfd23f4cbe9e0bdbcb modglue-1.8.ebuild 564
+MD5 fa9ecf986efb0d0fdde938b551b67812 files/digest-modglue-1.8 235
+RMD160 effac28d48e7d35b06dfd427625adff80406fd4e files/digest-modglue-1.8 235
+SHA256 4291cab9dcdad952deb3da5d5b09f3861d5f6dcb132d07895232e9cb5010f2b9 files/digest-modglue-1.8 235
