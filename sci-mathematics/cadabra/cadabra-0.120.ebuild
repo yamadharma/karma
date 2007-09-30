@@ -25,7 +25,11 @@ RDEPEND="${DEPEND}
 	|| ( app-text/texlive dev-tex/breqn )"
 
 src_compile() {
-	econf || die
+	local myconf=""
+	
+	myconf="${myconf} `use enable X gui`"
+	
+	econf ${myconf} || die
 	emake || die
 
 	if ( use doc )
@@ -41,7 +45,7 @@ src_install() {
 	einstall DESTDIR=${D} DEVDESTDIR=${D} || die
 
 	dodoc AUTHORS COPYING ChangeLog INSTALL
-#	use doc && dohtml ${S}/doc/*
+
 	use examples &&	cp -R ${S}/examples ${D}/usr/share/doc/${PF}
 
 	if ( use doc )	
