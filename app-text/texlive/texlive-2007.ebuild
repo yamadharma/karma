@@ -18,7 +18,8 @@ SRC_URI="http://dev.gentoo.gr.jp/~hiyuh/misc/${P}-src.tar.bz2
 	http://dev.gentoo.gr.jp/~hiyuh/misc/${P}-texmf.tar.bz2"
 
 KEYWORDS="amd64 x86"
-IUSE="X doc tk Xaw3d lesstif motif neXt png zlib emacs cdinstall t1lib gd"
+# For security reasons, gd is not in IUSE anymore, see gentoo bug #182055
+IUSE="X doc tk Xaw3d lesstif motif neXt png zlib emacs cdinstall t1lib"
 
 # This is less than an ideal name
 PROVIDE="virtual/tetex"
@@ -69,7 +70,7 @@ DEPEND="${MODULAR_X_DEPEND}
 		!app-text/xdvik
 		t1lib? ( >=media-libs/t1lib-5 )
 	)
-	gd? ( media-libs/gd )
+	media-libs/gd
 	sys-apps/ed
 	sys-libs/zlib
 	>=media-libs/libpng-1.2.1
@@ -102,7 +103,10 @@ src_unpack() {
 	epatch "${FILESDIR}/${PV}/${P}-gentoo-texmf.patch" || die
 	epatch "${FILESDIR}/${PV}/${P}-mv-texmf.patch" || die
 	epatch "${FILESDIR}/${PV}/${P}-mpware-libtool.patch" || die
+	# Modified security patch. See Gentoo bug #188172 (CVE-2007-3387)
 	epatch "${FILESDIR}/${PV}/xpdf-3.02pl1.patch" || die
+	# Security patch. See Gentoo bug #170861
+	epatch "${FILESDIR}/${PV}/tetex-3.0_p1-CVE-2007-0650.patch" || die
 
 	sed -i -e "/mktexlsr/,+3d" -e "s/\(updmap-sys\)/\1 --nohash/" \
 		Makefile.in || die "sed"
@@ -141,10 +145,6 @@ src_compile() {
 		my_conf="${my_conf} --with-system-t1lib"
 	fi
 
-	if use gd; then
-		my_conf="${my_conf} --with-system-gd"
-	fi
-
 	if use zlib ; then
 		my_conf="${my_conf} --with-system-zlib"
 	fi
@@ -157,6 +157,7 @@ src_compile() {
 		--datadir="${S}" \
 		--with-system-ncurses \
 		--with-system-freetype2 \
+		--with-system-gd \
 		--with-freetype2-include=/usr/include \
 		--without-texinfo \
 		--without-dialog \
