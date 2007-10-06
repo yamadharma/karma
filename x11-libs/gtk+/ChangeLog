@@ -2,6 +2,18 @@
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/x11-libs/gtk+/ChangeLog,v 1.299 2007/02/21 12:54:25 blubb Exp $
 
+  24 Sep 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  +files/gtk+-2.12.0-icon-cache-speedup.patch,
+  +files/gtk+-2.12.0-libtracker_so.patch, gtk+-2.10.14.ebuild,
+  +gtk+-2.12.0.ebuild:
+  Synced keywords with portage and added gtk+-2.12.0 to the overlay.
+
+  29 Aug 2007; <roderick_greening@hotmail.com> gtk+-2.10.13.ebuild:
+  Updated KEYWORDS to match portage
+
+  29 Aug 2007; <roderick_greening@hotmail.com> gtk+-2.10.14.ebuild:
+  Updated keywords to match portage
+
   22 Aug 2007; <roderick_greening@hotmail.com>
   -files/gtk+-2.8-gtkmenubar.diff, -files/gtk+-2.10.7-textview-fix.patch,
   +files/gtk+-2.10.11-update-icon-subdirs.patch,
