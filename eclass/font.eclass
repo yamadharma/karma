@@ -8,7 +8,7 @@
 #
 # Eclass to make font installation more uniform
 
-inherit eutils
+inherit eutils 
 
 
 #
@@ -25,10 +25,14 @@ FONTDIR="/usr/share/fonts/${FONT_PN}" # this is where the fonts are installed
 
 DOCS="" # Docs to install
 
-IUSE="X"
+IUSE="X gnustep"
 
 DEPEND="X? ( x11-apps/mkfontdir )
-		media-libs/fontconfig"
+	gnustep? ( >=gnustep-base/mknfonts-0.5-r1 )
+	media-libs/fontconfig"
+
+# Where to install GNUstep
+GNUSTEP_PREFIX="/usr/GNUstep"
 
 FONTPATH_DIR="/etc/X11/fontpath.d"
 
@@ -77,7 +81,6 @@ set_FONTDIR ()
 		FONTDIR=${FONTDIR_ROOT}/bdf/${FONTS_NAME_DIR}
 		;;
     	    *) 
-#		einfo "Fonts format ${format} does not known"
 		;;
 	esac
 }
@@ -126,7 +129,7 @@ font_fontconfig() {
 }
 
 font_fontpath_dir_config() {
-	if use X 
+	if ( use X )
 	then
 		einfo "Creating fontpath.d entry"
 		dosym ${FONTDIR} ${FONTPATH_DIR}/`echo ${FONTDIR} | sed s:${FONTDIR_ROOT}/:: | sed s:^/*:: | sed s:/*$:: | sed s:/:_:g`
@@ -134,13 +137,49 @@ font_fontpath_dir_config() {
 	
 }
 
+font_make_nfont() {
+	if ( use gnustep )
+	then
+		# Get additional variables
+		GNUSTEP_SH_EXPORT_ALL_VARIABLES="true"
+
+		if [ -f ${GNUSTEP_PREFIX}/System/Library/Makefiles/GNUstep.sh ] 
+		then
+			# Reset GNUstep variables
+			source "${GNUSTEP_PREFIX}"/System/Library/Makefiles/GNUstep-reset.sh
+			source "${GNUSTEP_PREFIX}"/System/Library/Makefiles/GNUstep.sh
+		fi
+		
+		einfo "Generating nfonts support files"
+		dodir "${GNUSTEP_PREFIX}"/System/Library/Fonts
+		cd ${D}"${GNUSTEP_PREFIX}"/System/Library/Fonts
+		for suffix in ${FONT_SUFFIX}; do
+			set_FONTDIR ${suffix}
+			insinto "${FONTDIR}"
+			${GNUSTEP_SYSTEM_TOOLS}/mknfonts \
+			    ${D}"${FONTDIR}"/* \
+			    || die "nfonts support files creation failed"
+		done
+		
+		# Trim whitepsaces
+		for fdir in *\ */; do
+			mv "$fdir" `echo $fdir | tr -d [:space:]`
+		done
+		
+		# Remove DESTDIR
+		find . -name "*.plist" -exec sed -ie "s:${D}::g" {} \;
+		find . -name "*.plist" -exec sed -ie "s://:/:g" {} \;		
+		find . -name "*.pliste" -exec rm {} \;
+	fi
+}	
+
 #
 # Public inheritable functions
 #
 
 font_src_install() {
 	set_FONTDIR
-	local suffix
+	local suffix commondoc
 
 	cd "${FONT_S}"
 
@@ -158,13 +197,16 @@ font_src_install() {
 		font_xft_config
 		font_fontconfig
 		font_fontpath_dir_config
+		font_make_nfont
 	done
 
 	cd "${S}"
-	# try to install some common docs
-	DOCS="${DOCS} COPYRIGHT README NEWS"
-	dodoc ${DOCS}
+	dodoc ${DOCS} 2> /dev/null
 
+	# install common docs
+	for commondoc in COPYRIGHT README NEWS AUTHORS BUGS ChangeLog; do
+		[[ -s ${commondoc} ]] && dodoc ${commondoc}
+	done
 }
 
 font_pkg_setup() {
@@ -180,38 +222,31 @@ font_pkg_setup() {
 
 font_pkg_postinst ()
 {
-	set_FONTDIR
-	for suffix in ${FONT_SUFFIX}; do
-		set_FONTDIR ${suffix}
-		rm "${FONTDIR}/fonts.cache-1"
-#		chkfontpath -q -a ${FONTDIR}
-	done
+	# unreadable font files = fontconfig segfaults
+	find "${ROOT}"usr/share/fonts/ -type f '!' -perm 0644 -print0 \
+		| xargs -0 chmod -v 0644 2>/dev/null
 
-#	/etc/init.d/xfs restart
-}
-
-font_pkg_prerm () 
-{
-	set_FONTDIR
-	for suffix in ${FONT_SUFFIX}; do
-		set_FONTDIR ${suffix}
-		rm "${FONTDIR}/fonts.cache-1"
-#		chkfontpath -r ${FONTDIR}
-	done
-
-#	/etc/init.d/xfs restart
-}
-
-font_pkg_postrm() {
-	set_FONTDIR
 	if has_version '>=media-libs/fontconfig-2.4'; then
 		if [ ${ROOT} == "/" ]; then
 			ebegin "Updating global fontcache"
-			fc-cache -s
+			fc-cache -fs
 			eend $?
 		fi
 	fi
+}
 
+font_pkg_postrm() {
+	# unreadable font files = fontconfig segfaults
+	find "${ROOT}"usr/share/fonts/ -type f '!' -perm 0644 -print0 \
+		| xargs -0 chmod -v 0644 2>/dev/null
+
+	if has_version '>=media-libs/fontconfig-2.4'; then
+		if [ ${ROOT} == "/" ]; then
+			ebegin "Updating global fontcache"
+			fc-cache -fs
+			eend $?
+		fi
+	fi
 }
 
 EXPORT_FUNCTIONS src_install pkg_setup pkg_postinst pkg_postrm
