@@ -40,6 +40,11 @@ src_install() {
 	fi	    
 	dodoc ChangeLog NEWS README
 	dodoc Emacs.ap
-	font_xfont_config
-	font_xft_config
+	for suffix in ${FONT_SUFFIX}; do
+		set_FONTDIR ${suffix}
+		font_xfont_config
+		font_xft_config
+		font_fontconfig
+		font_fontpath_dir_config
+	done
 }
