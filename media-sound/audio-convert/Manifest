@@ -1,0 +1,8 @@
+DIST audio-convert-0.3.1.1.tar.gz 19041 RMD160 829c89240b93770f84b73a62958666fa515d2ed2 SHA1 ba5a8c8ccc5b44632adad47c367909c92aa8c9cb SHA256 bb07c248b6797fb5c024c23f784ea3a86696d696d528c5cc325e794a74c5ec97
+EBUILD audio-convert-0.3.1.1.ebuild 775 RMD160 e95c274f92fc7af478f5e1e11e8175bac8b67028 SHA1 7fd4ddc476aff6a3fd0f34aeeb685b7fe615d088 SHA256 7ae2d36fb69648b3742d972c26ab6960f29bb7afc973b963189ceb392b5d0d39
+MD5 be528f5fa6ef2a82a4c57792b81b0342 audio-convert-0.3.1.1.ebuild 775
+RMD160 e95c274f92fc7af478f5e1e11e8175bac8b67028 audio-convert-0.3.1.1.ebuild 775
+SHA256 7ae2d36fb69648b3742d972c26ab6960f29bb7afc973b963189ceb392b5d0d39 audio-convert-0.3.1.1.ebuild 775
+MD5 a6c5e1d17c6714e9260379e46ac57f13 files/digest-audio-convert-0.3.1.1 262
+RMD160 a62b5eba7f95a7caae6c8bc098f2eb85a7cc46a0 files/digest-audio-convert-0.3.1.1 262
+SHA256 ab28f9c2e24c3f14602ad2dc97c3efd46a9def00b663d0881b3f8434c6eea669 files/digest-audio-convert-0.3.1.1 262

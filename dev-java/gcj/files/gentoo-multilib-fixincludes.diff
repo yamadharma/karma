@@ -1,0 +1,28 @@
+--- fixincludes/fixincl.x	2007-07-26 00:51:47.000000000 +0100
++++ fixincludes/fixincl.x	2007-08-08 00:39:26.000000000 +0100
+@@ -6349,7 +6349,7 @@
+  *  content bypass pattern - skip fix if pattern found
+  */
+ tSCC zStdio_Stdarg_HBypass0[] =
+-       "include.*(stdarg.h|machine/ansi.h)";
++       "include.*(stdarg.h|machine/ansi.h)|gentoo-multilib";
+ 
+ #define    STDIO_STDARG_H_TEST_CT  1
+ static tTestDesc aStdio_Stdarg_HTests[] = {
+--- fixincludes/inclhack.def	2007-07-26 00:51:47.000000000 +0100
++++ fixincludes/inclhack.def	2007-08-08 00:18:06.129542000 +0100
+@@ -3457,12 +3457,12 @@
+ /*
+  *  Arrange for stdio.h to use stdarg.h to define __gnuc_va_list.
+  *  On 4BSD-derived systems, stdio.h defers to machine/ansi.h; that's
+- *  OK too.
++ *  OK too.  Gentoo multilib uses a wrapper for stdio.h; skip it.
+  */
+ fix = {
+     hackname = stdio_stdarg_h;
+     files    = stdio.h;
+-    bypass   = "include.*(stdarg\.h|machine/ansi\.h)";
++    bypass   = "include.*(stdarg\.h|machine/ansi\.h)|gentoo-multilib";
+     /*
+      * On Solaris 10, this fix is unncessary; <stdio.h> includes
+      * <iso/stdio_iso.h>, which includes <sys/va_list.h>.

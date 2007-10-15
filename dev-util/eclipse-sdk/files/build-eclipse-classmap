@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# set defaults
+ECLIPSE_VER="${1}"
+JAVA_PKG_DB_TOOL="${JAVA_PKG_DB_TOOL:="${JAVA_HOME}/bin/gcj-dbtool"}"
+DB_FILE="/usr/lib/eclipse-${ECLIPSE_VER}/eclipse.gcjdb"
+
+# functions
+die() {
+	echo "ERROR: ${@}"
+	exit 1
+}
+
+add_lib() {
+	echo "register: ${2}"
+	${JAVA_PKG_DB_TOOL} -a ${DB_FILE} ${1} ${2} \
+		|| die "failed to register library"
+}
+
+reg_classpath() {
+	local jar to
+	for jar in $(find /usr/lib/eclipse-${ECLIPSE_VER}/ -type f -name *.jar)
+	do
+		to="$(dirname ${jar})/lib$(basename ${jar}).so"
+		[[ ( -f "${jar}" ) && ( ".jar" == "${jar: -4:4}" ) && ( -f "${to}" ) ]] \
+			&& add_lib "${jar}" "${to}"
+	done
+}
+
+# errors
+if [[ ! -x "${JAVA_PKG_DB_TOOL}" ]] ; then
+	die "Java database tool unusable!"
+fi
+
+if [[ ! -d "$(dirname ${DB_FILE})" ]] ; then
+	die "Path to database file missing?!"
+fi
+
+if [ ".gcjdb" != "${DB_FILE: -6:6}" ] ; then
+	die "Given file has unknown format?!"
+fi
+
+# start
+echo "create database (${DB_FILE})"
+rm -f "${DB_FILE}"
+${JAVA_PKG_DB_TOOL} -n "${DB_FILE}"
+
+# register native libraries
+reg_classpath
+
+echo "... done!"
+exit 0

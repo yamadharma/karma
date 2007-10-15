@@ -4,7 +4,7 @@ DESCRIPTION="GUI for xneur based on GTK"
 HOMEPAGE="http://www.xneur.ru/" 
 SRC_URI="http://dists.xneur.ru/release-${PV}/tgz/${P}.tar.bz2" 
 
-IUSE=""
+IUSE="nls"
 SLOT="0"
 
 KEYWORDS="x86 amd64" 
@@ -13,11 +13,12 @@ RDEPEND="x11-apps/xneur
 DEPEND="${RDEPEND}"
 
 src_compile() { 
-	econf || die "configure failed"
+	econf $(use_enable nls) || die "configure failed"
 	emake || die "emake failed" 
 } 
 
 src_install() { 
 	make install DESTDIR=${D} || die "emake install failed" 
+	make_desktop_entry "${PN}" "${PN}" ${PN}.png "GTK;Gnome;Utility;TrayIcon"
 }
 

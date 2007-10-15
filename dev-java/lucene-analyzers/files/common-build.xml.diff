@@ -1,0 +1,15 @@
+--- common-build.xml.orig	2007-09-29 12:59:44.000000000 +0200
++++ common-build.xml	2007-09-29 13:03:16.000000000 +0200
+@@ -254,6 +254,12 @@
+                      value="${javac.source}"/>
+           <attribute name="X-Compile-Target-JDK" 
+                      value="${javac.target}"/>
++          <attribute name="Export-Package" value="org.apache.lucene.analysis.br,org.apache.lucene.analysis.cjk,org.apache.lucene.analysis.cn,org.apache.lucene.analysis.cz,org.apache.lucene.analysis.de,org.apache.lucene.analysis.el,org.apache.lucene.analysis.fr,org.apache.lucene.analysis.nl,org.apache.lucene.analysis.ru"/>
++          <attribute name="Bundle-Version" value="1.9.1.v200706181610"/>
++          <attribute name="Bundle-SymbolicName" value="org.apache.lucene.analysis"/>
++          <attribute name="Bundle-Name" value="Apache Lucene Analysis"/>
++          <attribute name="Bundle-Localization" value="plugin"/>
++          <attribute name="Bundle-Vendor" value="Apache Software Foundation"/>
+           <manifest-attributes/>
+         </manifest>
+         <metainf dir="${common.dir}">
