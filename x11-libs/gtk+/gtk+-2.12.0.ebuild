@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/gtk+/gtk+-2.10.14.ebuild,v 1.6 2007/08/28 11:27:03 nixnut Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/gtk+/gtk+-2.12.0.ebuild,v 1.3 2007/09/22 23:51:35 leio Exp $
 
 inherit gnome.org flag-o-matic eutils autotools virtualx
 
@@ -9,28 +9,30 @@ HOMEPAGE="http://www.gtk.org/"
 
 LICENSE="LGPL-2"
 SLOT="2"
-KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sh sparc x86 ~x86-fbsd"
-IUSE="debug doc jpeg macmenu tiff xinerama"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc x86 ~x86-fbsd"
+IUSE="cups debug doc jpeg macmenu tiff xinerama"
 
 RDEPEND="x11-libs/libXrender
 	x11-libs/libX11
 	x11-libs/libXi
 	x11-libs/libXt
 	x11-libs/libXext
-	x11-libs/libXcursor
 	x11-libs/libXrandr
+	x11-libs/libXcursor
 	x11-libs/libXfixes
+	x11-libs/libXcomposite
+	x11-libs/libXdamage
 	xinerama? ( x11-libs/libXinerama )
-	>=dev-libs/glib-2.12.1
-	>=x11-libs/pango-1.12.0
+	>=dev-libs/glib-2.13.5
+	>=x11-libs/pango-1.17.3
 	>=dev-libs/atk-1.10.1
 	>=x11-libs/cairo-1.2.0
 	media-libs/fontconfig
 	x11-misc/shared-mime-info
 	>=media-libs/libpng-1.2.1
+	cups? ( net-print/cups )
 	jpeg? ( >=media-libs/jpeg-6b-r2 )
 	tiff? ( >=media-libs/tiff-3.5.7 )"
-
 DEPEND="${RDEPEND}
 	sys-devel/autoconf
 	>=dev-util/pkgconfig-0.9
@@ -38,9 +40,10 @@ DEPEND="${RDEPEND}
 	x11-proto/xextproto
 	x11-proto/xproto
 	x11-proto/inputproto
+	x11-proto/damageproto
 	xinerama? ( x11-proto/xineramaproto )
 	doc? (
-			>=dev-util/gtk-doc-1.4
+			>=dev-util/gtk-doc-1.6
 			~app-text/docbook-xml-dtd-4.1.2
 		 )"
 
@@ -59,20 +62,17 @@ set_gtk2_confdir() {
 
 src_unpack() {
 	unpack ${A}
-	cd "${S}"
-
-	# Optionalize xinerama support
-	epatch "${FILESDIR}/${PN}-2.8.10-xinerama.patch"
-
-	# Make gtk-update-icon-cache check subdirs in it's update check
-	epatch "${FILESDIR}"/${PN}-2.10.11-update-icon-subdirs.patch
+	cd ${S}
 
 	# use an arch-specific config directory so that 32bit and 64bit versions
 	# dont clash on multilib systems
 	has_multilib_profile && epatch "${FILESDIR}/${PN}-2.8.0-multilib.patch"
 
-	# Revert DND change that makes mozilla products DND broken
-	EPATCH_OPTS="-R" epatch "${FILESDIR}/${PN}-2.10.7-mozilla-dnd-fix.patch"
+	# http://bugzilla.gnome.org/show_bug.cgi?id=476342
+	epatch "${FILESDIR}"/${P}-icon-cache-speedup.patch
+
+	# http://bugzilla.gnome.org/show_bug.cgi?id=478173
+	epatch "${FILESDIR}/${PN}-2.12.0-libtracker_so.patch"
 
 	if use macmenu; then
 		epatch "${FILESDIR}"/${PN}-2.10-gtkmenubar.diff
@@ -88,8 +88,7 @@ src_unpack() {
 	# if you remove this, you should manually run elibtoolize
 	export WANT_AUTOMAKE=1.7
 	cp aclocal.m4 old_macros.m4
-	AT_M4DIR="."
-	eautoreconf
+	AT_M4DIR="." eautoreconf
 
 	epunt_cxx
 }
@@ -117,7 +116,7 @@ src_test() {
 }
 
 src_install() {
-	make DESTDIR="${D}" install || die "Installation failed"
+	einstall || die "Installation failed"
 
 	set_gtk2_confdir
 	dodir ${GTK2_CONFDIR}
@@ -131,6 +130,10 @@ src_install() {
 	echo "GDK_USE_XFT=1" > ${D}/etc/env.d/50gtk2
 
 	dodoc AUTHORS ChangeLog* HACKING NEWS* README*
+
+	# This has to be removed, because it's multilib specific; generated in
+	# postinst
+	rm ${D}/etc/gtk-2.0/gtk.immodules
 }
 
 pkg_postinst() {
