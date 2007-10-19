@@ -23,7 +23,8 @@ src_unpack() {
 }
 
 src_compile() {
-	eant jar-core $(use_doc javadocs)
+#	eant jar-core $(use_doc javadocs)
+	eant jar-core
 }
 
 src_install() {
