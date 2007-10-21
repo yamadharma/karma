@@ -2,6 +2,29 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/kcontrol/ChangeLog,v 1.81 2007/01/18 16:13:53 flameeyes Exp $
 
+  20 Oct 2007; <roderick_greening@hotmail.com> ++:
+  Rev bump.
+
+  29 Aug 2007; <roderick_greening@hotmail.com> kcontrol-3.5.7-r1.ebuild:
+  Cleanup some [tab] spacing
+
+  24 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  kcontrol-3.5.7-r1.ebuild:
+  A few more QA fixes.
+
+  13 Aug 2007; <roderick_greening@hotmail.com>
+  -files/kcontrol-3.5.7-screensaver-path.patch, -kcontrol-3.5.7.ebuild,
+  kcontrol-3.5.7-r1.ebuild:
+  Stabilization update
+
+  28 Jul 2007; <roderick_greening@hotmail.com> kcontrol-3.5.7-r1.ebuild:
+  Removed XDG patch from -r1 (already in updated patchset).
+
+  28 Jul 2007; <roderick_greening@hotmail.com>
+  +files/kcontrol-3.5.7-screensaver-path.patch, kcontrol-3.5.7.ebuild,
+  kcontrol-3.5.7-r1.ebuild:
+  Updated: Add XDG path for screensavers, closes bug 168540.
+
   28 Jul 2007; <roderick_greening@hotmail.com> ++:
   Rev bump from portage: FontConfig compatibility fix, KDE bug 146637.
 

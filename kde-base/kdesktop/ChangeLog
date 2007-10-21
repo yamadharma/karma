@@ -2,6 +2,29 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/kdesktop/ChangeLog,v 1.79 2007/01/18 00:25:18 carlo Exp $
 
+  20 Oct 2007; <roderick_greening@hotmail.com> ++:
+  Rev bump.
+
+  24 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  kdesktop-3.5.7.ebuild:
+  Some minor QA fixes.
+
+  22 Aug 2007; <roderick_greening@hotmail.com> +metadata.xml:
+  missing metadata.xml
+
+  13 Aug 2007; <roderick_greening@hotmail.com> kdesktop-3.5.7.ebuild:
+  Stabilization update
+
+  23 Jul 2007; <roderick_greening@hotmail.com>
+  files/kdesktop-transparency-0.1.patch:
+  fix last commit - patch fails to apply
+
+  23 Jul 2007; <roderick_greening@hotmail.com>
+  +files/kdesktop-transparency-0.1.patch,
+  -files/kdesktop-3.5.5-seli-xinerama.patch, kdesktop-3.5.7.ebuild:
+  Added transparency patch as per KDE-Look
+  http://kde-look.org/content/show.php/show.php?content=59864
+
   28 Jun 2007; <roderick_greening@hotmail.com> Manifest:
   Fix manifest
 

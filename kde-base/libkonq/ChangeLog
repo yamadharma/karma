@@ -2,6 +2,24 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/libkonq/ChangeLog,v 1.65 2007/01/16 21:52:13 flameeyes Exp $
 
+  20 Oct 2007; <roderick_greening@hotmail.com> ++:
+  Rev bump.
+
+  27 Aug 2007; <roderick_greening@hotmail.com>
+  -files/kdebase-3.5.5-libkonq-tooltip.patch,
+  +files/kdebase-3.5.7-libkonq-tooltip.patch, libkonq-3.5.7.ebuild:
+  Updated tooltip patch - minor cleanup
+
+  24 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  ChangeLog:
+  Removed executable bit on patches.
+
+  22 Aug 2007; <roderick_greening@hotmail.com> +metadata.xml:
+  missing metadata.xml
+
+  13 Aug 2007; <roderick_greening@hotmail.com> libkonq-3.5.7.ebuild:
+  Stabilization update
+
   28 Jun 2007; <roderick_greening@hotmail.com> -libkonq-3.5.6.ebuild,
   libkonq-3.5.7.ebuild:
   Attempt to fix false pos check when greater than ver (3.5).

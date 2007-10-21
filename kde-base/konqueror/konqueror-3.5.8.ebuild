@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/konqueror/konqueror-3.5.7-r2.ebuild,v 1.7 2007/08/11 16:49:56 armin76 Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/konqueror/konqueror-3.5.8.ebuild,v 1.1 2007/10/19 23:16:09 philantrop Exp $
 
 KMNAME=kdebase
 # Note: we need >=kdelibs-3.3.2-r1, but we don't want 3.3.3!
@@ -9,10 +9,13 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils
 
 SRC_URI="${SRC_URI}
-	mirror://gentoo/kdebase-3.5-patchset-06.tar.bz2"
+	mirror://gentoo/kdebase-3.5-patchset-06.tar.bz2
+	pertty? (
+		http://distfiles.gentoo-xeffects.org/pertty/$KMNAME-3.5.5-$PN-sidebar-tng.patch.bz2
+	)"
 
 DESCRIPTION="KDE: Web browser, file manager, ..."
-KEYWORDS="alpha amd64 ia64 ppc ppc64 sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~ia64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 IUSE="branding java kdehiddenvisibility pertty"
 
 DEPEND="
@@ -32,10 +35,10 @@ KMEXTRACTONLY=kdesktop/KDesktopIface.h
 if use pertty;
 then
 	PATCHES="${PATCHES}
-			 $FILESDIR/$KMNAME-3.5.6-$PN-execute_feedback.patch
-			 $FILESDIR/$KMNAME-3.5.5-$PN-homepage-newtab.patch
-			 $FILESDIR/$KMNAME-3.5.5-$PN-rubberband.patch
-			 $FILESDIR/$KMNAME-3.5.5-$PN-sidebar-tng.patch"
+			 ${FILESDIR}/$KMNAME-3.5.6-$PN-execute_feedback.patch
+			 ${FILESDIR}/$KMNAME-3.5.5-$PN-homepage-newtab.patch
+			 ${FILESDIR}/$KMNAME-3.5.5-$PN-rubberband.patch
+			 ${DISTDIR}/$KMNAME-3.5.5-$PN-sidebar-tng.patch.bz2"
 fi
 
 pkg_preinst() {
@@ -66,7 +69,7 @@ src_install() {
 	if use branding ; then
 		dodir ${PREFIX}/share/services/searchproviders
 		insinto ${PREFIX}/share/services/searchproviders
-		doins ${WORKDIR}/patches/*.desktop
+		doins "${WORKDIR}/patches/*.desktop"
 	fi
 }
 
@@ -81,13 +84,13 @@ pkg_postinst() {
 		elog "- gp           Gentoo Package searching"
 		echo
 		elog "You'll have to activate them in 'Configure Konqueror...'."
-		echo
-		elog "If you can't open new ${PN} windows and get something like"
-		elog "'WARNING: Outdated database found' when starting ${PN} in a console, run"
-		elog "kbuildsycoca as the user you're running KDE under."
-		elog "This is NOT a bug."
-		echo
 	fi
+	echo
+	elog "If you can't open new ${PN} windows and get something like"
+	elog "'WARNING: Outdated database found' when starting ${PN} in a console, run"
+	elog "kbuildsycoca as the user you're running KDE under."
+	elog "This is NOT a bug."
+	echo
 	ewarn "Do NOT report bugs to Gentoo's bugzilla"
 	einfo "Please report all bugs to roderick.greening@gmail.com"
 	einfo "Or, you may post them to http://forums.gentoo-xeffects.org"

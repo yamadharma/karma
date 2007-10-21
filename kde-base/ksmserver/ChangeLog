@@ -2,6 +2,22 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/ksmserver/ChangeLog,v 1.59 2007/02/05 12:09:35 flameeyes Exp $
 
+  20 Oct 2007; <roderick_greening@hotmail.com> ++:
+  Rev bump.
+
+  24 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  ksmserver-3.5.7.ebuild:
+  Removed extra final line.
+
+  22 Aug 2007; <roderick_greening@hotmail.com> +metadata.xml:
+  missing metadata.xml
+
+  13 Aug 2007; <roderick_greening@hotmail.com> Manifest:
+  Fix Manifest
+
+  13 Aug 2007; <roderick_greening@hotmail.com> ksmserver-3.5.7.ebuild:
+  Stabilization update
+
   28 Jun 2007; <roderick_greening@hotmail.com> -ksmserver-3.5.6.ebuild:
   Remove 3.5.6 builds - migrate to 3.5.7
 

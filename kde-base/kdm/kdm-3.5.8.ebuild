@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/kdm/kdm-3.5.7.ebuild,v 1.8 2007/08/11 16:31:24 armin76 Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/kdm/kdm-3.5.8.ebuild,v 1.1 2007/10/19 22:50:05 philantrop Exp $
 
 KMNAME=kdebase
 MAXKDEVER=$PV
@@ -8,10 +8,13 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils
 
 SRC_URI="${SRC_URI}
-	mirror://gentoo/kdebase-3.5-patchset-04.tar.bz2"
+	mirror://gentoo/kdebase-3.5-patchset-04.tar.bz2
+	pertty? (
+		http://distfiles.gentoo-xeffects.org/pertty/kdm-make_it_cool.diff.bz2
+	)"
 
 DESCRIPTION="KDE login manager, similar to xdm and gdm"
-KEYWORDS="alpha amd64 ia64 ppc ppc64 sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~ia64 ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 IUSE="elibc_glibc kdehiddenvisibility pam pertty"
 
 KMEXTRA="kdmlib/"
@@ -29,10 +32,11 @@ RDEPEND="${DEPEND}
 	x11-apps/xmessage"
 PDEPEND="$(deprange $PV $MAXKDEVER kde-base/kdesktop)"
 
-PATCHES="${FILESDIR}/${P}-bsd-shutdown.patch"
+PATCHES="${FILESDIR}/${PN}-3.5.7-bsd-shutdown.patch"
 
 if use pertty; then
-	PATCHES="${FILESDIR}/kdm-make_it_cool.diff"
+	PATCHES="${PATCHES}
+			 ${DISTDIR}/kdm-make_it_cool.diff.bz2"
 fi
 
 src_compile() {
@@ -51,11 +55,11 @@ src_compile() {
 
 src_install() {
 	kde-meta_src_install
-	cd ${S}/kdm && make DESTDIR=${D} GENKDMCONF_FLAGS="--no-old --no-backup --no-in-notice" install
+	cd "${S}/kdm" && make DESTDIR="${D}" GENKDMCONF_FLAGS="--no-old --no-backup --no-in-notice" install
 
 	# Customize the kdmrc configuration
 	sed -i -e "s:#SessionsDirs=:SessionsDirs=/usr/share/xsessions\n#SessionsDirs=:" \
-		${D}/${KDEDIR}/share/config/kdm/kdmrc || die
+		"${D}/${KDEDIR}/share/config/kdm/kdmrc" || die
 }
 
 pkg_postinst() {

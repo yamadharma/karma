@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/kdelibs/kdelibs-3.5.7-r2.ebuild,v 1.8 2007/08/11 14:55:50 armin76 Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/kdelibs/kdelibs-3.5.8.ebuild,v 1.1 2007/10/19 22:27:24 philantrop Exp $
 
 inherit kde flag-o-matic eutils multilib
 set-kdedir 3.5
@@ -8,13 +8,13 @@ set-kdedir 3.5
 DESCRIPTION="KDE libraries needed by all KDE programs."
 HOMEPAGE="http://www.kde.org/"
 SRC_URI="mirror://kde/stable/${PV}/src/${P}.tar.bz2
-	mirror://gentoo/kdelibs-3.5-patchset-10.tar.bz2
-	mirror://gentoo/${PN}-3.5.7-seli-xinerama.patch.bz2"
+	mirror://gentoo/kdelibs-3.5-patchset-11.tar.bz2
+	mirror://gentoo/${P}-seli-xinerama.patch.bz2"
 
 LICENSE="GPL-2 LGPL-2"
 SLOT="3.5"
-KEYWORDS="alpha amd64 ~hppa ia64 ppc ppc64 sparc x86 ~x86-fbsd"
-IUSE="acl alsa arts branding cups doc jpeg2k kerberos legacyssl utempter openexr pertty spell tiff 
+KEYWORDS="~alpha amd64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
+IUSE="acl alsa arts branding cups doc jpeg2k kerberos legacyssl utempter openexr pertty spell tiff
 avahi kernel_linux fam lua kdehiddenvisibility"
 
 # Added aspell-en as dependency to work around bug 131512.
@@ -127,7 +127,7 @@ src_unpack() {
 
 	# Xinerama patch from Lubos Lunak.
 	# http://ktown.kde.org/~seli/xinerama/
-	epatch "${DISTDIR}/${PN}-3.5.7-seli-xinerama.patch.bz2"
+	epatch "${WORKDIR}/${P}-seli-xinerama.patch"
 }
 
 src_compile() {

@@ -1,0 +1,513 @@
+diff -Naur knetworkmanager-0.1/knetworkmanager/src/cryptowidget.ui knetworkmanager-0.1-mlenk/knetworkmanager/src/cryptowidget.ui
+--- knetworkmanager-0.1/knetworkmanager/src/cryptowidget.ui	2006-09-27 10:02:59.000000000 +0200
++++ knetworkmanager-0.1-mlenk/knetworkmanager/src/cryptowidget.ui	2007-06-05 13:43:51.000000000 +0200
+@@ -8,10 +8,13 @@
+         <rect>
+             <x>0</x>
+             <y>0</y>
+-            <width>545</width>
+-            <height>276</height>
++            <width>785</width>
++            <height>420</height>
+         </rect>
+     </property>
++    <property name="caption">
++        <string>CryptoWidget</string>
++    </property>
+     <grid>
+         <property name="name">
+             <cstring>unnamed</cstring>
+@@ -338,61 +341,55 @@
+                                             <cstring>EAPurlCA</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLineEdit" row="3" column="4" rowspan="2" colspan="1">
++                                    <widget class="KURLRequester" row="0" column="4">
+                                         <property name="name">
+-                                            <cstring>EAPleditPrivatePassword</cstring>
++                                            <cstring>EAPurlClient</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLineEdit" row="2" column="1" rowspan="1" colspan="2">
++                                    <widget class="KURLRequester" row="2" column="4">
+                                         <property name="name">
+-                                            <cstring>EAPleditPassword</cstring>
++                                            <cstring>EAPurlPrivate</cstring>
+                                         </property>
+-                                        <property name="echoMode">
+-                                            <enum>Normal</enum>
++                                    </widget>
++                                    <widget class="KURLRequester" row="1" column="4">
++                                        <property name="name">
++                                            <cstring>EAPurlCA</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLabel" row="0" column="0">
++                                    <widget class="QLabel" row="2" column="3">
+                                         <property name="name">
+-                                            <cstring>lblVersion_2_2</cstring>
++                                            <cstring>lblVersion_2_4_2</cstring>
+                                         </property>
+                                         <property name="text">
+-                                            <string>EAP &amp;Method</string>
++                                            <string>Private Key File:</string>
+                                         </property>
+                                         <property name="buddy" stdset="0">
+-                                            <cstring>EAPcomboMethod</cstring>
+-                                        </property>
+-                                    </widget>
+-                                    <widget class="QLineEdit" row="1" column="1" rowspan="1" colspan="2">
+-                                        <property name="name">
+-                                            <cstring>EAPleditIdentity</cstring>
+-                                        </property>
+-                                        <property name="echoMode">
+-                                            <enum>Normal</enum>
++                                            <cstring>EAPurlPrivate</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLabel" row="1" column="0">
++                                    <widget class="QLabel" row="0" column="3">
+                                         <property name="name">
+-                                            <cstring>lblVersion_2_3</cstring>
++                                            <cstring>lblVersion_2_2_2</cstring>
+                                         </property>
+                                         <property name="text">
+-                                            <string>Identity:</string>
++                                            <string>Client Certificate File:</string>
+                                         </property>
+                                         <property name="buddy" stdset="0">
+-                                            <cstring>EAPleditIdentity</cstring>
++                                            <cstring>EAPurlClient</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLabel" row="3" column="3" rowspan="2" colspan="1">
++                                    <widget class="QLabel" row="5" column="0">
+                                         <property name="name">
+-                                            <cstring>lblVersion_2_4_2_2</cstring>
++                                            <cstring>lblVersion_2</cstring>
+                                         </property>
+                                         <property name="text">
+-                                            <string>Private Key Password:</string>
++                                            <string>WPA &amp;version:</string>
+                                         </property>
+                                         <property name="buddy" stdset="0">
+-                                            <cstring>EAPleditPrivatePassword</cstring>
++                                            <cstring>EAPrbWPA1</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QRadioButton" row="4" column="1" rowspan="2" colspan="1">
++                                    <widget class="QRadioButton" row="5" column="1">
+                                         <property name="name">
+                                             <cstring>EAPrbWPA1</cstring>
+                                         </property>
+@@ -417,34 +414,26 @@
+                                             <number>-1</number>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLineEdit" row="3" column="1" rowspan="1" colspan="2">
++                                    <widget class="QRadioButton" row="5" column="2">
+                                         <property name="name">
+-                                            <cstring>EAPleditAnonIdentity</cstring>
+-                                        </property>
+-                                        <property name="echoMode">
+-                                            <enum>Normal</enum>
++                                            <cstring>EAPrbWPA2</cstring>
+                                         </property>
+-                                    </widget>
+-                                    <widget class="QLabel" row="4" column="0" rowspan="2" colspan="1">
+-                                        <property name="name">
+-                                            <cstring>lblVersion_2</cstring>
++                                        <property name="sizePolicy">
++                                            <sizepolicy>
++                                                <hsizetype>3</hsizetype>
++                                                <vsizetype>5</vsizetype>
++                                                <horstretch>0</horstretch>
++                                                <verstretch>0</verstretch>
++                                            </sizepolicy>
+                                         </property>
+                                         <property name="text">
+-                                            <string>WPA &amp;version:</string>
+-                                        </property>
+-                                        <property name="buddy" stdset="0">
+-                                            <cstring>EAPrbWPA1</cstring>
+-                                        </property>
+-                                    </widget>
+-                                    <widget class="QLabel" row="0" column="3">
+-                                        <property name="name">
+-                                            <cstring>lblVersion_2_2_2</cstring>
++                                            <string>WPA &amp;2</string>
+                                         </property>
+-                                        <property name="text">
+-                                            <string>Client Certificate File:</string>
++                                        <property name="accel">
++                                            <string>Alt+2</string>
+                                         </property>
+-                                        <property name="buddy" stdset="0">
+-                                            <cstring>EAPurlClient</cstring>
++                                        <property name="buttonGroupId">
++                                            <number>-1</number>
+                                         </property>
+                                     </widget>
+                                     <widget class="QCheckBox" row="5" column="4">
+@@ -458,39 +447,39 @@
+                                             <string></string>
+                                         </property>
+                                     </widget>
+-                                    <widget class="KURLRequester" row="0" column="4">
++                                    <widget class="QLineEdit" row="3" column="4">
+                                         <property name="name">
+-                                            <cstring>EAPurlClient</cstring>
++                                            <cstring>EAPleditPrivatePassword</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="KURLRequester" row="2" column="4">
++                                    <widget class="QLabel" row="4" column="0">
+                                         <property name="name">
+-                                            <cstring>EAPurlPrivate</cstring>
++                                            <cstring>lblVersion_2_3_3</cstring>
++                                        </property>
++                                        <property name="text">
++                                            <string>Anonymous Identity:</string>
++                                        </property>
++                                        <property name="buddy" stdset="0">
++                                            <cstring>EAPleditAnonIdentity</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QRadioButton" row="4" column="2" rowspan="2" colspan="1">
++                                    <widget class="QLineEdit" row="4" column="1" rowspan="1" colspan="2">
+                                         <property name="name">
+-                                            <cstring>EAPrbWPA2</cstring>
+-                                        </property>
+-                                        <property name="sizePolicy">
+-                                            <sizepolicy>
+-                                                <hsizetype>3</hsizetype>
+-                                                <vsizetype>5</vsizetype>
+-                                                <horstretch>0</horstretch>
+-                                                <verstretch>0</verstretch>
+-                                            </sizepolicy>
++                                            <cstring>EAPleditAnonIdentity</cstring>
+                                         </property>
+-                                        <property name="text">
+-                                            <string>WPA &amp;2</string>
++                                        <property name="echoMode">
++                                            <enum>Normal</enum>
+                                         </property>
+-                                        <property name="accel">
+-                                            <string>Alt+2</string>
++                                    </widget>
++                                    <widget class="QLineEdit" row="3" column="1" rowspan="1" colspan="2">
++                                        <property name="name">
++                                            <cstring>EAPleditPassword</cstring>
+                                         </property>
+-                                        <property name="buttonGroupId">
+-                                            <number>-1</number>
++                                        <property name="echoMode">
++                                            <enum>Normal</enum>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLabel" row="2" column="0">
++                                    <widget class="QLabel" row="3" column="0">
+                                         <property name="name">
+                                             <cstring>lblVersion_2_4</cstring>
+                                         </property>
+@@ -501,15 +490,23 @@
+                                             <cstring>EAPleditPassword</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLabel" row="3" column="0">
++                                    <widget class="QLineEdit" row="2" column="1" rowspan="1" colspan="2">
+                                         <property name="name">
+-                                            <cstring>lblVersion_2_3_3</cstring>
++                                            <cstring>EAPleditIdentity</cstring>
++                                        </property>
++                                        <property name="echoMode">
++                                            <enum>Normal</enum>
++                                        </property>
++                                    </widget>
++                                    <widget class="QLabel" row="2" column="0">
++                                        <property name="name">
++                                            <cstring>lblVersion_2_3</cstring>
+                                         </property>
+                                         <property name="text">
+-                                            <string>Anonymous Identity:</string>
++                                            <string>Identity:</string>
+                                         </property>
+                                         <property name="buddy" stdset="0">
+-                                            <cstring>EAPleditAnonIdentity</cstring>
++                                            <cstring>EAPleditIdentity</cstring>
+                                         </property>
+                                     </widget>
+                                     <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="2">
+@@ -540,20 +537,70 @@
+                                             </sizepolicy>
+                                         </property>
+                                     </widget>
+-                                    <widget class="QLabel" row="2" column="3">
++                                    <widget class="QComboBox" row="1" column="1" rowspan="1" colspan="2">
++                                        <item>
++                                            <property name="text">
++                                                <string>AUTO</string>
++                                            </property>
++                                        </item>
++                                        <item>
++                                            <property name="text">
++                                                <string>TKIP</string>
++                                            </property>
++                                        </item>
++                                        <item>
++                                            <property name="text">
++                                                <string>CCMP-AES</string>
++                                            </property>
++                                        </item>
++                                        <item>
++                                            <property name="text">
++                                                <string>Dynamic WEP</string>
++                                            </property>
++                                        </item>
+                                         <property name="name">
+-                                            <cstring>lblVersion_2_4_2</cstring>
++                                            <cstring>EAPcomboKeyType</cstring>
++                                        </property>
++                                        <property name="sizePolicy">
++                                            <sizepolicy>
++                                                <hsizetype>3</hsizetype>
++                                                <vsizetype>0</vsizetype>
++                                                <horstretch>0</horstretch>
++                                                <verstretch>0</verstretch>
++                                            </sizepolicy>
++                                        </property>
++                                    </widget>
++                                    <widget class="QLabel" row="0" column="0">
++                                        <property name="name">
++                                            <cstring>lblVersion_2_2</cstring>
+                                         </property>
+                                         <property name="text">
+-                                            <string>Private Key File:</string>
++                                            <string>EAP &amp;Method</string>
+                                         </property>
+                                         <property name="buddy" stdset="0">
+-                                            <cstring>EAPurlPrivate</cstring>
++                                            <cstring>EAPcomboMethod</cstring>
+                                         </property>
+                                     </widget>
+-                                    <widget class="KURLRequester" row="1" column="4">
++                                    <widget class="QLabel" row="1" column="0">
+                                         <property name="name">
+-                                            <cstring>EAPurlCA</cstring>
++                                            <cstring>lblVersion_2_2_3</cstring>
++                                        </property>
++                                        <property name="text">
++                                            <string>&amp;Key Type</string>
++                                        </property>
++                                        <property name="buddy" stdset="0">
++                                            <cstring>EAPcomboMethod</cstring>
++                                        </property>
++                                    </widget>
++                                    <widget class="QLabel" row="3" column="3">
++                                        <property name="name">
++                                            <cstring>lblVersion_2_4_2_2</cstring>
++                                        </property>
++                                        <property name="text">
++                                            <string>Private Key Password:</string>
++                                        </property>
++                                        <property name="buddy" stdset="0">
++                                            <cstring>EAPleditPrivatePassword</cstring>
+                                         </property>
+                                     </widget>
+                                 </grid>
+diff -Naur knetworkmanager-0.1/knetworkmanager/src/knetworkmanager-dialogfab.cpp knetworkmanager-0.1-mlenk/knetworkmanager/src/knetworkmanager-dialogfab.cpp
+--- knetworkmanager-0.1/knetworkmanager/src/knetworkmanager-dialogfab.cpp	2006-09-27 10:02:59.000000000 +0200
++++ knetworkmanager-0.1-mlenk/knetworkmanager/src/knetworkmanager-dialogfab.cpp	2007-06-05 13:35:44.000000000 +0200
+@@ -442,6 +442,7 @@
+ 	if (!on) {
+ 		enc->setDefaults ();
+ 		cryptoWidget->EAPcomboMethod->setCurrentItem (0);
++		cryptoWidget->EAPcomboKeyType->setCurrentItem (0);
+ 		cryptoWidget->EAPrbWPA1->setChecked (true);
+ 	}
+ }
+@@ -488,6 +489,33 @@
+ }
+ 
+ void
++WirelessDialog::EAPcomboKeyType_activated (int id)
++{
++	KeyType keytype = KEY_AUTO;
++	EncryptionWPAEnterprise* enc = (EncryptionWPAEnterprise*) _encryptionMap [_id_wpa_wpa2enterprise]; 
++
++	switch (id) {
++		case 0:
++			keytype = KEY_AUTO;
++			break;
++		case 1:
++			keytype = KEY_TKIP;
++			break;
++		case 2:
++			keytype = KEY_CCMP;
++			break;
++		case 3:
++			keytype = KEY_WEP104;
++			break;
++		default:
++			keytype = KEY_AUTO;
++	}
++	
++	enc->setKeytype (keytype);
++}
++
++
++void
+ WirelessDialog::EAPleditIdentity_textChanged (const QString & identity)
+ {
+ 	EncryptionWPAEnterprise* enc = (EncryptionWPAEnterprise*) _encryptionMap [_id_wpa_wpa2enterprise]; 	
+@@ -588,6 +616,8 @@
+ 		 this,                                  SLOT   (EAPrbWPA2_toggled (bool)));
+ 	connect (cryptoWidget->EAPcomboMethod,          SIGNAL (activated (int)),
+ 		 this,                                  SLOT   (EAPcomboMethod_activated (int)));
++connect (cryptoWidget->EAPcomboKeyType,                 SIGNAL (activated (int)),
++		 this,                                  SLOT   (EAPcomboKeyType_activated (int)));
+ 	connect (cryptoWidget->EAPleditIdentity,        SIGNAL (textChanged (const QString &)),
+ 		 this,                                  SLOT   (EAPleditIdentity_textChanged (const QString &)));
+ 	connect (cryptoWidget->EAPleditPassword,        SIGNAL (textChanged (const QString &)),
+diff -Naur knetworkmanager-0.1/knetworkmanager/src/knetworkmanager-dialogfab.h knetworkmanager-0.1-mlenk/knetworkmanager/src/knetworkmanager-dialogfab.h
+--- knetworkmanager-0.1/knetworkmanager/src/knetworkmanager-dialogfab.h	2006-09-27 10:02:59.000000000 +0200
++++ knetworkmanager-0.1-mlenk/knetworkmanager/src/knetworkmanager-dialogfab.h	2007-06-05 13:35:26.000000000 +0200
+@@ -64,6 +64,7 @@
+ 	  void EAPrbWPA1_toggled (bool);
+ 	  void EAPrbWPA2_toggled (bool);
+ 	  void EAPcomboMethod_activated (int);
++	  void EAPcomboKeyType_activated (int);
+ 	  void EAPleditIdentity_textChanged (const QString &);
+ 	  void EAPleditPassword_textChanged (const QString &);
+ 	  void EAPleditAnonIdentity_textChanged (const QString &);
+diff -Naur knetworkmanager-0.1/knetworkmanager/src/knetworkmanager-encryption.cpp knetworkmanager-0.1-mlenk/knetworkmanager/src/knetworkmanager-encryption.cpp
+--- knetworkmanager-0.1/knetworkmanager/src/knetworkmanager-encryption.cpp	2006-09-27 10:02:59.000000000 +0200
++++ knetworkmanager-0.1-mlenk/knetworkmanager/src/knetworkmanager-encryption.cpp	2007-06-05 13:36:17.000000000 +0200
+@@ -591,8 +591,6 @@
+ 	DBusMessageIter iter;
+ 	bool status = false;
+ 
+-	int keyType = NM_AUTH_TYPE_WPA_PSK_AUTO;
+-
+ 	if (!msg || !essid || !isValid( essid ) )
+ 		return false;
+ 
+@@ -606,10 +604,10 @@
+ 	kdDebug () << "method: " << _method << " identity: " << _identity << " password: " << _secret[IdPasswordKey] <<
+ 		      " anon ident: " << _anonIdentity << " cert priv passwd: "  << _secret[CertPrivatePasswordKey]  <<
+ 		      " cert priv: " << _certPrivate << " cert client: " << _certClient << " cert CA: " << _certCA   <<
+-		      " version: " << _version << endl;
++		      " version: " << _version << " keytype: " << _keytype << endl;
+ 
+ 	dbus_message_iter_init_append (msg, &iter);
+-	status = nmu_security_serialize_wpa_eap_with_cipher (&iter, _method, keyType, _identity.utf8(),
++	status = nmu_security_serialize_wpa_eap_with_cipher (&iter, _method, _keytype, _identity.utf8(),
+ 							     _secret[IdPasswordKey].utf8(), _anonIdentity.utf8(),
+ 							     _secret[CertPrivatePasswordKey].utf8(),
+ 							     _certPrivate.utf8(), _certClient.utf8(), _certCA.utf8(),
+@@ -654,6 +652,7 @@
+ 	setCertCA (certCA);
+ 	setVersion ((WPAVersion) version);
+ 	setWeCipher (we_cipher);
++	setKeytype ((KeyType) keyType);
+ 	SecretMap map;
+ 	map.insert( IdPasswordKey, identityPassword );
+ 	map.insert( CertPrivatePasswordKey, certPrivatePassword );
+@@ -678,6 +677,7 @@
+ 	setProtocol (WPA_EAP);
+ 	setVersion  (WPA1);
+ 	setMethod   (EAP_PEAP);
++	setKeytype  (KEY_AUTO);
+ 	setIdentity ("");
+ 	setAnonIdentity ("");
+ 	setCertPrivate ("");
+@@ -807,6 +807,20 @@
+ 	return _method;
+ }
+ 
++void
++EncryptionWPAEnterprise::setKeytype (KeyType keytype)
++{
++	kdDebug() << k_funcinfo << " " << keytype <<  endl;
++	_keytype = keytype;
++}
++
++KeyType
++EncryptionWPAEnterprise::getKeytype (void)
++{
++	kdDebug() << k_funcinfo << endl;
++	return _keytype;
++}
++
+ EncryptionWPAEnterprise::EncryptionWPAEnterprise ()
+ {
+ 	kdDebug() << k_funcinfo << endl;
+@@ -849,6 +863,16 @@
+ 	else
+ 		cfg->writeEntry( "WPAVersion", "WPA2" );
+ 
++	if ( KEY_AUTO == _keytype )
++		cfg->writeEntry( "KeyType", "AUTO" );
++	else if (KEY_TKIP ==  _keytype )
++		cfg->writeEntry( "KeyType", "TKIP" );
++	else if (KEY_CCMP ==  _keytype )
++		cfg->writeEntry( "KeyType", "CCMP" );
++	else if (KEY_WEP104 ==  _keytype )
++		cfg->writeEntry( "KeyType", "Dynamic WEP" );
++
++
+ 	cfg->writeEntry ( "Cipher", _we_cipher );
+ 	_dirty = false;
+ }
+@@ -881,6 +905,17 @@
+ 		_method = EAP_TTLS;
+ 	}
+ 
++	QString keytype = cfg->readEntry( "KeyType" );
++	if ( "AUTO" == keytype ) {
++		setKeytype (KEY_AUTO);
++	} else if ( "TKIP" == keytype ) {
++		setKeytype (KEY_TKIP);
++	} else if ( "CCMP" == keytype ) {
++		setKeytype (KEY_CCMP);
++	} else if ( "Dynamic WEP" == keytype ) {
++		setKeytype (KEY_WEP104);
++	}
++
+ 	_identity = cfg->readEntry( "Identity" );
+ 	_anonIdentity = cfg->readEntry( "AnonIdentity" );
+ 	_certPrivate = cfg->readEntry( "CertPrivate" );
+diff -Naur knetworkmanager-0.1/knetworkmanager/src/knetworkmanager-encryption.h knetworkmanager-0.1-mlenk/knetworkmanager/src/knetworkmanager-encryption.h
+--- knetworkmanager-0.1/knetworkmanager/src/knetworkmanager-encryption.h	2006-09-27 10:02:59.000000000 +0200
++++ knetworkmanager-0.1-mlenk/knetworkmanager/src/knetworkmanager-encryption.h	2007-06-05 13:15:38.000000000 +0200
+@@ -187,6 +187,13 @@
+ 	EAP_TTLS = NM_EAP_METHOD_TTLS
+ };
+ 
++enum KeyType {
++	KEY_AUTO = NM_AUTH_TYPE_WPA_PSK_AUTO,
++	KEY_TKIP = IW_AUTH_CIPHER_TKIP,
++	KEY_CCMP = IW_AUTH_CIPHER_CCMP,
++	KEY_WEP104 = IW_AUTH_CIPHER_WEP104
++};
++
+ class EncryptionWPAEnterprise : public Encryption
+ {
+ 	public:
+@@ -215,6 +222,8 @@
+ 	  WPAVersion   getVersion (void);
+ 	  void         setMethod (EAPMethod);
+ 	  EAPMethod    getMethod (void);
++	  void         setKeytype (KeyType);
++	  KeyType      getKeytype (void);
+ 
+ 	  virtual void persist( KConfigBase *, bool withKey = true ) const;
+ 	  virtual void restore( KConfigBase *, double version, bool withKey = false);
+@@ -233,6 +242,7 @@
+ 	  WPAProtocol _protocol;
+ 	  WPAVersion  _version;
+ 	  EAPMethod   _method;
++	  KeyType     _keytype;
+ };
+ 
+ #endif /* KNETWORKMANAGER_ENCRYPTION_H */

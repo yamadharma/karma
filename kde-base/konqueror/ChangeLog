@@ -2,6 +2,35 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/konqueror/ChangeLog,v 1.73 2007/01/16 21:00:03 flameeyes Exp $
 
+  20 Oct 2007; <roderick_greening@hotmail.com> ++:
+  Rev bump.
+
+  01 Oct 2007; <roderick_greening@hotmail.com>
+  +files/konqueror-3.5.7-185603-spoofing.diff, ++:
+  Bumped to match portage
+
+  24 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  ChangeLog:
+  Removed the executable bits of patch files.
+
+  22 Aug 2007; <roderick_greening@hotmail.com>
+  -files/kdebase-3.5.5-konqueror-sidebar-tng.patch,
+  -files/konqueror-3.5.7-location.patch, konqueror-3.5.7-r2.ebuild:
+  Moved sidebar patch to distfiles for size constraints
+
+  22 Aug 2007; <roderick_greening@hotmail.com> +metadata.xml:
+  missing metadata.xml
+
+  13 Aug 2007; <roderick_greening@hotmail.com> Manifest:
+  Fix Manifest
+
+  13 Aug 2007; <roderick_greening@hotmail.com> konqueror-3.5.7-r2.ebuild:
+  Stabilization update
+
+  01 Aug 2007; <roderick_greening@hotmail.com> -konqueror-3.5.7.ebuild,
+  -konqueror-3.5.7-r1.ebuild, konqueror-3.5.7-r2.ebuild:
+  Cleanup. Fix branding .desktop entries.
+
   28 Jul 2007; <roderick_greening@hotmail.com> ++:
   Rev bump in portage: Make Gentoo specific web shortcuts optional.
 
