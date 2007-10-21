@@ -21,14 +21,14 @@ KMNODOCS=true
 DEPEND="dbus? ( sys-apps/dbus )
 		hal? ( sys-apps/hal )"
 
-if use pertty; then
-	PATCHES="$FILESDIR/$KMNAME-3.5.6-$PN-shadowfade.patch"
-fi
-
 src_compile() {
 	myconf="${myconf}
 		$(use_enable hal)
 		$(use_enable dbus)"
+
+	if use pertty; then
+		epatch "${FILESDIR}/$KMNAME-${PV}-${PN}-shadowfade.patch"
+	fi
 
 	kde-meta_src_compile
 }
