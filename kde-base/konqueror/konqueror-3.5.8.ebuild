@@ -36,7 +36,7 @@ if use pertty;
 then
 	PATCHES="${PATCHES}
 			 ${FILESDIR}/$KMNAME-3.5.6-$PN-execute_feedback.patch
-			 ${FILESDIR}/$KMNAME-3.5.5-$PN-homepage-newtab.patch
+			 ${FILESDIR}/$KMNAME-3.5.8-$PN-homepage-newtab.patch
 			 ${FILESDIR}/$KMNAME-3.5.5-$PN-rubberband.patch
 			 ${DISTDIR}/$KMNAME-3.5.5-$PN-sidebar-tng.patch.bz2"
 fi

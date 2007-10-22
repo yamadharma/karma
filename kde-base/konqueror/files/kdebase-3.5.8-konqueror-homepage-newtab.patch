@@ -1,0 +1,25 @@
+diff -purN kdebase-3.5.8.orig/konqueror/konq_mainwindow.cc kdebase-3.5.8/konqueror/konq_mainwindow.cc
+--- kdebase-3.5.8.orig/konqueror/konq_mainwindow.cc	2007-10-20 09:23:24.000000000 -0500
++++ kdebase-3.5.8/konqueror/konq_mainwindow.cc	2007-10-20 09:21:16.000000000 -0500
+@@ -2550,12 +2550,20 @@ void KonqMainWindow::slotSplitViewVertic
+ 
+ void KonqMainWindow::slotAddTab()
+ {
++  KConfig *config = KGlobal::config();
++  KConfigGroupSaver cs( config, QString::fromLatin1("FMSettings") );
++  bool openAfterCurrentPage = config->readBoolEntry( "OpenAfterCurrentPage", false );
++  bool newTabsHomeURL = config->readBoolEntry( "NewTabsHomeURL", false );
+   KonqView* newView = m_pViewManager->addTab(QString("text/html"), // this is what about:blank will use anyway
+                                              QString::null,
+                                              false,
+                                              KonqSettings::openAfterCurrentPage());
+   if (newView == 0L) return;
+-  openURL( newView, KURL("about:blank"),QString::null);
++  if ( newTabsHomeURL )
++      openURL( newView, KURL( KonqMisc::konqFilteredURL( this, KonqFMSettings::settings()->homeURL() ) ),QString::null);
++  else
++      openURL( newView, KURL("about:blank"),QString::null);
++
+   m_pViewManager->showTab( newView );
+   focusLocationBar();
+   m_pWorkingTab = 0L;
