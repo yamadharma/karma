@@ -26,6 +26,10 @@ AUX kdebase-3.5.6-konqueror-execute_feedback.patch 1945 RMD160 bf91d1c2ca78d77a5
 MD5 ed09e774dc9cb915514d852e52ce3cf0 files/kdebase-3.5.6-konqueror-execute_feedback.patch 1945
 RMD160 bf91d1c2ca78d77a5d2174e97e413f36c96e9e02 files/kdebase-3.5.6-konqueror-execute_feedback.patch 1945
 SHA256 58dd02d28be963890c1af37426608d219b8600f6ad23978f1afc20d94c619b11 files/kdebase-3.5.6-konqueror-execute_feedback.patch 1945
+AUX kdebase-3.5.8-konqueror-homepage-newtab.patch 1351 RMD160 5d84519d0bb1594075ab2b1f2f92c3fe2e9de00a SHA1 73252bd84a433eb2ba6530174f91de6337abcc53 SHA256 0b6c8c1e7aef40674a61159da7512de5ca70bde5b1be64f6d97540c65ff85957
+MD5 80c8efd7fa200d920d0917ea64c80fe8 files/kdebase-3.5.8-konqueror-homepage-newtab.patch 1351
+RMD160 5d84519d0bb1594075ab2b1f2f92c3fe2e9de00a files/kdebase-3.5.8-konqueror-homepage-newtab.patch 1351
+SHA256 0b6c8c1e7aef40674a61159da7512de5ca70bde5b1be64f6d97540c65ff85957 files/kdebase-3.5.8-konqueror-homepage-newtab.patch 1351
 AUX konqueror-3.5.7-185603-spoofing.diff 1901 RMD160 bb59c1e78e5709d72b123c5b3b5a538fc09f564e SHA1 3868392701ebe9fce14567a1f52d458d00f31287 SHA256 70a5022b38aa93616032c02518b66a9b938f17aa42c14a9b1de71d0ee73d1e72
 MD5 e15d6b5580c5a20ab935f8e553d113e0 files/konqueror-3.5.7-185603-spoofing.diff 1901
 RMD160 bb59c1e78e5709d72b123c5b3b5a538fc09f564e files/konqueror-3.5.7-185603-spoofing.diff 1901
@@ -42,10 +46,10 @@ EBUILD konqueror-3.5.7-r3.ebuild 3220 RMD160 db4ede5bada44c76efeca2c9bd5a91dcdb4
 MD5 62ff1f9c3fb8e0e07b3fb7fdc6879a30 konqueror-3.5.7-r3.ebuild 3220
 RMD160 db4ede5bada44c76efeca2c9bd5a91dcdb498c72 konqueror-3.5.7-r3.ebuild 3220
 SHA256 275e20ff2c704418f4abf18079f565c92dd99d978e8642ef1c2929be80b504a7 konqueror-3.5.7-r3.ebuild 3220
-EBUILD konqueror-3.5.8.ebuild 3190 RMD160 b9886a105cec2afa2d6f0b29dc9258dc0e9496df SHA1 6eb16c55eeb11d97a2f0aafeedcf6989b565377c SHA256 cfb1240c0e18322bf9d8a6e561b8c1b2cca6394574053c66f811fa749121797f
-MD5 3b940ce9b15dd24ba492d0ec396a0bfa konqueror-3.5.8.ebuild 3190
-RMD160 b9886a105cec2afa2d6f0b29dc9258dc0e9496df konqueror-3.5.8.ebuild 3190
-SHA256 cfb1240c0e18322bf9d8a6e561b8c1b2cca6394574053c66f811fa749121797f konqueror-3.5.8.ebuild 3190
+EBUILD konqueror-3.5.8.ebuild 3190 RMD160 f7c25f46db289ae2872ee0743dd4a7e26c865ce9 SHA1 b51eaab318489e7ca5cc5e621f9f5c5de40983f3 SHA256 ea124c7da36ac8a311a3acaac09d8eabbcaf82c2d25444cd6941556c18362b40
+MD5 75eca4d538e51c120b9cd6dc59edffbf konqueror-3.5.8.ebuild 3190
+RMD160 f7c25f46db289ae2872ee0743dd4a7e26c865ce9 konqueror-3.5.8.ebuild 3190
+SHA256 ea124c7da36ac8a311a3acaac09d8eabbcaf82c2d25444cd6941556c18362b40 konqueror-3.5.8.ebuild 3190
 MISC ChangeLog 11858 RMD160 faf5f4aadeb0dea6ba4406d5a270eb406aecd789 SHA1 a8d130336cce3455b03dce6e4d6d2676bdb84b64 SHA256 2cda4b2cfaf0ce3cb0f802178ada1fae98d8f46b3e6049fc226925d6c6183911
 MD5 8db69ce1610c6a5577404550fb41ae9b ChangeLog 11858
 RMD160 faf5f4aadeb0dea6ba4406d5a270eb406aecd789 ChangeLog 11858
