@@ -2,6 +2,7 @@ DIST karma-server-2.6.18-r1.tar.bz2 1788062 RMD160 cbf816ca22e538a1bb9f1c46296b1
 DIST karma-server-2.6.18-r2.tar.bz2 991191 RMD160 530b5efa32c9fa5250a5abcf3493220c1637af5f SHA1 b79563b3019bbfbc1fe9994a4753ac4c6fe02262 SHA256 42a2068aab73a889f3c6f48afe73eff41e9172abe00cea0caf5ffa75cc5a7a4f
 DIST karma-server-2.6.18.tar.bz2 3833582 RMD160 0297e6bfbc4474ea20d8ffda033fb3c3c92cea4a SHA1 f2b1081f24eb983d5e57491a98c13793f7337868 SHA256 a01d36bdb0bb082a6aa8e0ed52bb97a0325422fedfdd090eb40036b4dacfff45
 DIST karma-server-2.6.20-r1.tar.bz2 1464629 RMD160 3e75b6a0e849dc5db3ed866c2bea70bb96716eac SHA1 73556d02463386da47bf57ddf06d7d3afddcedca SHA256 30e4c5e3c3a2c97ce0b8bcb46e4bfbeb37e46dcd8cf1d52aeb76e4c53272f490
+DIST karma-server-2.6.20-r2.tar.bz2 1098941 RMD160 bf15f98a3edc3ba5c659456cc18a16edaef88955 SHA1 d1e3d0330c073b75558fdba20e521186ab310a9a SHA256 3b6e52125483a57ebe8023db18873cbfc5d442dc0c3a91d6f5585c61d6b5311c
 DIST karma-server-2.6.20.tar.bz2 1534593 RMD160 05ac5115fa5cff5b3ec169a2f15d7a84f017757a SHA1 66a403dd284ce6b0d0292b6406611656e78a1bb3 SHA256 9b2f2181a33f6feace254cfaea9b2718694a2585db8c6898a457bff4eb5d2a31
 DIST karma-server-2.6.21.tar.bz2 2004993 RMD160 d9818d286f990efc611ad10edcbd773f741d582b SHA1 56f62e50945b3bc8b559a8782056604e41646a12 SHA256 b0e99e1a8cbc929d5ddce232682b38d3607cac28d5f885574e4dd69ff03150ec
 DIST linux-2.6.18.tar.bz2 41863580 RMD160 f92283f956880676bfb1f1d5288325461e4e02e7 SHA1 178f7d5bb3af0978d42b37651b8753323c7129c2 SHA256 c95280ff6c5d2a17788f7cc582d23ae8a9a7ba3f202ec6e4238eaadfce7c163d
@@ -23,6 +24,10 @@ EBUILD karma_server-sources-2.6.20-r1.ebuild 667 RMD160 5423de5263140bd0d6bfb1de
 MD5 a7ebe6cf69b1803b931b8e2544f66cbf karma_server-sources-2.6.20-r1.ebuild 667
 RMD160 5423de5263140bd0d6bfb1decc9dbde20a357de0 karma_server-sources-2.6.20-r1.ebuild 667
 SHA256 3e53f92972a60c19fdbabda3e970f7582816f11f7373e3965ffaee2522c25f13 karma_server-sources-2.6.20-r1.ebuild 667
+EBUILD karma_server-sources-2.6.20-r2.ebuild 667 RMD160 5423de5263140bd0d6bfb1decc9dbde20a357de0 SHA1 c31130195f3f348c26f4579f1aec1a5d89e28087 SHA256 3e53f92972a60c19fdbabda3e970f7582816f11f7373e3965ffaee2522c25f13
+MD5 a7ebe6cf69b1803b931b8e2544f66cbf karma_server-sources-2.6.20-r2.ebuild 667
+RMD160 5423de5263140bd0d6bfb1decc9dbde20a357de0 karma_server-sources-2.6.20-r2.ebuild 667
+SHA256 3e53f92972a60c19fdbabda3e970f7582816f11f7373e3965ffaee2522c25f13 karma_server-sources-2.6.20-r2.ebuild 667
 EBUILD karma_server-sources-2.6.20.ebuild 669 RMD160 df9bd8fd2e670f733217200f99f16c4918f6b156 SHA1 045ae0aa89314d76571c45ba6face54be96e09a1 SHA256 5e453b79753142ded3815762608019677dfd2ed33a712b351da74d8acc182714
 MD5 ba6ff6b0d536c91708d28637b92d2b55 karma_server-sources-2.6.20.ebuild 669
 RMD160 df9bd8fd2e670f733217200f99f16c4918f6b156 karma_server-sources-2.6.20.ebuild 669
@@ -46,6 +51,9 @@ SHA256 b1afb2397f0ff96399a092e46ded0c00f7d12365551f1e6a99805ffe08ecae68 files/di
 MD5 1f358f9b4457e3fc03c90818ff284915 files/digest-karma_server-sources-2.6.20-r1 521
 RMD160 84d7f8f9241c8819f6408e464ede9bc4441810c5 files/digest-karma_server-sources-2.6.20-r1 521
 SHA256 9c066fc308959a06d5bae1c85da941cdcca697bc95c307230499fab9a15d1fe3 files/digest-karma_server-sources-2.6.20-r1 521
+MD5 ac054184a637d4ebb592f4b7c2fe7041 files/digest-karma_server-sources-2.6.20-r2 521
+RMD160 d780d22428ddc5d0f87803efa5aa57bb0bc82e4c files/digest-karma_server-sources-2.6.20-r2 521
+SHA256 9027cfafb9cc8ba4603075eb80c3583dc3ae0b6083e6974e1352bdf4a063d9fd files/digest-karma_server-sources-2.6.20-r2 521
 MD5 2fa956876bc1d951c6c897bb593eba83 files/digest-karma_server-sources-2.6.21 512
 RMD160 2250dbf58e0ee51e581f2975bede84f1477763ef files/digest-karma_server-sources-2.6.21 512
 SHA256 8669b9e5ecaa624c2fdc1f64eec7e002c131e89f47cb80e1db2eec0c6a0c5101 files/digest-karma_server-sources-2.6.21 512
