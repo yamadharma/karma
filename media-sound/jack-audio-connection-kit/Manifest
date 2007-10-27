@@ -25,6 +25,10 @@ EBUILD jack-audio-connection-kit-0.103.1_pre20070901.ebuild 3966 RMD160 d70ab49b
 MD5 1fddc0aa84c122e384f99209e7b504e0 jack-audio-connection-kit-0.103.1_pre20070901.ebuild 3966
 RMD160 d70ab49ba9399da4854c2cb8bd1cb67b263fb34d jack-audio-connection-kit-0.103.1_pre20070901.ebuild 3966
 SHA256 2fb6a637821bb8d1d1e7f45e2a491b9e765499d196c17464cd3b874302fb1734 jack-audio-connection-kit-0.103.1_pre20070901.ebuild 3966
+EBUILD jack-audio-connection-kit-0.103.1_pre20071027.ebuild 3966 RMD160 d70ab49ba9399da4854c2cb8bd1cb67b263fb34d SHA1 0c14feadf1be862b6c1065f849ced0fce6805735 SHA256 2fb6a637821bb8d1d1e7f45e2a491b9e765499d196c17464cd3b874302fb1734
+MD5 1fddc0aa84c122e384f99209e7b504e0 jack-audio-connection-kit-0.103.1_pre20071027.ebuild 3966
+RMD160 d70ab49ba9399da4854c2cb8bd1cb67b263fb34d jack-audio-connection-kit-0.103.1_pre20071027.ebuild 3966
+SHA256 2fb6a637821bb8d1d1e7f45e2a491b9e765499d196c17464cd3b874302fb1734 jack-audio-connection-kit-0.103.1_pre20071027.ebuild 3966
 MD5 d4cd7d3422088e73cfc4e04d9a6e4f03 files/digest-jack-audio-connection-kit-0.102.20 542
 RMD160 288111a271e06c3e793559c8ca6a3d969075a840 files/digest-jack-audio-connection-kit-0.102.20 542
 SHA256 e14bf6568186b6ee43117d12f54d961ca4b89a5c93a93070b73b1d90f9c81675 files/digest-jack-audio-connection-kit-0.102.20 542
@@ -34,3 +38,6 @@ SHA256 c221dc9d486a375300a4d387a3f6f0434c6bf5f245bd49abf954c49c3d07a937 files/di
 MD5 62938eb71e7f04fd0551666306d30893 files/digest-jack-audio-connection-kit-0.103.1_pre20070901 238
 RMD160 fd8aa7e25901860ee2267a100376b48fb13d621a files/digest-jack-audio-connection-kit-0.103.1_pre20070901 238
 SHA256 b5d48e4874c7884c99a4536c84d8ba32a419f73e616a47d50e424eab7f2c69b8 files/digest-jack-audio-connection-kit-0.103.1_pre20070901 238
+MD5 62938eb71e7f04fd0551666306d30893 files/digest-jack-audio-connection-kit-0.103.1_pre20071027 238
+RMD160 fd8aa7e25901860ee2267a100376b48fb13d621a files/digest-jack-audio-connection-kit-0.103.1_pre20071027 238
+SHA256 b5d48e4874c7884c99a4536c84d8ba32a419f73e616a47d50e424eab7f2c69b8 files/digest-jack-audio-connection-kit-0.103.1_pre20071027 238
