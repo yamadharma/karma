@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit gnustep
+inherit gnustep-2
 
 S=${WORKDIR}/MplayerGS
 
@@ -21,8 +21,6 @@ IUSE="${IUSE}"
 DEPEND="${GS_DEPEND}"
 RDEPEND="${GS_RDEPEND}
 	media-video/mplayer"
-
-egnustep_install_domain "System"
 
 src_unpack ()
 {
