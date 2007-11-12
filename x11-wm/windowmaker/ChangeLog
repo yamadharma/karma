@@ -1,6 +1,113 @@
 # ChangeLog for x11-wm/windowmaker
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/x11-wm/windowmaker/ChangeLog,v 1.65 2006/01/31 16:08:13 metalgod Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/x11-wm/windowmaker/ChangeLog,v 1.88 2007/10/03 14:19:26 armin76 Exp $
+
+  03 Oct 2007; Raúl Porcel <armin76@gentoo.org>
+  windowmaker-0.92.0-r4.ebuild:
+  Re-add ~sparc wrt #189372
+
+  21 Sep 2007; Bernard Cafarelli <voyageur@gentoo.org>
+  windowmaker-0.92.0-r4.ebuild:
+  Temporary removal of ~sparc keyword, until gnustep-make-2.0 is available for
+  this arch
+
+  21 Sep 2007; Bernard Cafarelli <voyageur@gentoo.org>
+  windowmaker-0.92.0-r4.ebuild:
+  Only do egnustep_env when USE=gnustep is set, bug #193111
+
+  17 Sep 2007; Fabian Groffen <grobian@gentoo.org>
+  windowmaker-0.92.0-r4.ebuild:
+  Take egnustep_env out of the loop so that we don't get a rediculously long
+  LDFLAGS with many times the same paths
+
+  11 Sep 2007; Bernard Cafarelli <voyageur@gentoo.org>
+  +files/0.92.0/windowmaker-0.92.0-configure.patch:
+  Add missing patch, bug #192104
+
+*windowmaker-0.92.0-r4 (10 Sep 2007)
+
+  10 Sep 2007; Bernard Cafarelli <voyageur@gentoo.org>
+  +windowmaker-0.92.0-r4.ebuild:
+  Ebuild cleanup, includes:
+  * themes path in some default menus (bug #187092)
+  * locale path fixed (bug #103698)
+  * WPrefs.app in GNUstep System domain (bug #170467)
+  * uses new GNUstep eclasses
+  * internal ebuild cleanups
+
+  02 Aug 2007; Roy Marples <uberlord@gentoo.org>
+  windowmaker-0.91.0-r1.ebuild, windowmaker-0.92.0-r3.ebuild:
+  Keyworded ~x86-fbsd, #157553 thanks to Marc Kowarsky.
+
+  22 Jul 2007; Donnie Berkholz <dberkholz@gentoo.org>;
+  windowmaker-0.91.0-r1.ebuild, windowmaker-0.92.0-r3.ebuild:
+  Drop virtual/x11 references.
+
+  10 Apr 2007; Jeroen Roovers <jer@gentoo.org> windowmaker-0.92.0-r3.ebuild:
+  Stable for HPPA (bug #173537).
+
+  07 Apr 2007; Fabian Groffen <grobian@gentoo.org>
+  windowmaker-0.91.0-r1.ebuild, windowmaker-0.92.0-r3.ebuild:
+  Add x11-libs/libXt dependency, bug #173705, thanks to Ron Lockwood-Childs
+
+  20 Mar 2007; Michael Sterrett <mr_bones_@gentoo.org>
+  -files/0.80.2/wlist.patch,
+  -files/0.80.2/windowmaker-0.80.2-r1-gentoo.patch,
+  -files/0.80.2/gtk2flickerfix.patch, -files/0.80.2/wmfpo.patch,
+  -files/0.80.2/trance.patch.WM-0.80.2.diff,
+  -files/0.80.2/xinerama.patch.bz2, -windowmaker-0.80.2-r4.ebuild:
+  remove old crufty version
+
+  21 Feb 2007; Markus Ullmann <jokey@gentoo.org> ChangeLog:
+  Redigest for Manifest2
+
+  04 Jan 2007; Diego Pettenò <flameeyes@gentoo.org>
+  windowmaker-0.92.0-r3.ebuild:
+  Get rid of comment that triggers as false positive.
+
+  26 Dec 2006; Tom Gall <tgall@gentoo.org>
+  windowmaker-0.92.0-r3.ebuild:
+  stable on ppc64
+
+  20 Aug 2006; Luis Medinas <metalgod@gentoo.org>
+  windowmaker-0.92.0-r3.ebuild:
+  Added ~ppc64 keyword requested by Kugelfang.
+
+  18 Aug 2006; Luis Medinas <metalgod@gentoo.org>
+  windowmaker-0.92.0-r3.ebuild:
+  Stable on mips. Bug #130839.
+
+  24 Apr 2006; Gustavo Zacarias <gustavoz@gentoo.org>
+  windowmaker-0.92.0-r3.ebuild:
+  Stable on sparc wrt #130839
+
+  23 Apr 2006; Thomas Cort <tcort@gentoo.org> windowmaker-0.92.0-r3.ebuild:
+  Stable on alpha wrt Bug #130839.
+
+  22 Apr 2006; Tobias Scherbaum <dertobi123@gentoo.org>
+  windowmaker-0.92.0-r3.ebuild:
+  ppc stable, bug #130839
+
+  22 Apr 2006; Luis Medinas <metalgod@gentoo.org>
+  windowmaker-0.92.0-r3.ebuild:
+  Stable on amd64. Bug #130839.
+
+  22 Apr 2006; Chris Gianelloni <wolf31o2@gentoo.org>
+  windowmaker-0.92.0-r3.ebuild:
+  Stable on x86 wrt bug #130839.
+
+  06 Apr 2006; Luis Medinas <metalgod@gentoo.org>
+  windowmaker-0.80.2-r2.ebuild, windowmaker-0.80.2-r4.ebuild,
+  windowmaker-0.91.0-r1.ebuild, windowmaker-0.92.0-r1.ebuild,
+  windowmaker-0.92.0-r2.ebuild, windowmaker-0.92.0-r3.ebuild:
+  Update Homepage thanks to Alexander Skwar <askwar@digitalprojects.com> on
+  bug #128428.
+
+  05 Apr 2006; Luis Medinas <metalgod@gentoo.org>
+  windowmaker-0.91.0-r1.ebuild, -windowmaker-0.91.0-r7.ebuild,
+  windowmaker-0.92.0-r1.ebuild, windowmaker-0.92.0-r2.ebuild,
+  windowmaker-0.92.0-r3.ebuild:
+  More X modular love.
 
 *windowmaker-0.92.0-r3 (31 Jan 2006)
 
