@@ -1,14 +1,16 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-wm/windowmaker/windowmaker-0.92.0-r4.ebuild,v 1.5 2007/10/03 14:19:26 armin76 Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-wm/windowmaker/windowmaker-0.92.0-r5.ebuild,v 1.1 2007/11/13 10:22:31 grobian Exp $
 
 inherit autotools eutils gnustep-base flag-o-matic
 
+PATCHVER=1
 S=${WORKDIR}/${P/windowm/WindowM}
 
 DESCRIPTION="The fast and light GNUstep window manager"
 SRC_URI="ftp://ftp.windowmaker.info/pub/source/release/${P/windowm/WindowM}.tar.gz
-	http://www.windowmaker.info/pub/source/release/WindowMaker-extra-0.1.tar.gz"
+	http://www.windowmaker.info/pub/source/release/WindowMaker-extra-0.1.tar.gz
+	http://www.gentoo.org/~grobian/distfiles/${P}-patchset-${PATCHVER}.tar.bz2"
 HOMEPAGE="http://www.windowmaker.info/"
 
 IUSE="gif gnustep jpeg nls png tiff modelock xinerama"
@@ -26,7 +28,7 @@ RDEPEND="${DEPEND}
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~alpha ~amd64 ~hppa ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~hppa ~mips ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 
 src_unpack() {
 	is-flag -fstack-protector && filter-flags -fstack-protector \
@@ -36,13 +38,51 @@ src_unpack() {
 
 	unpack ${A}
 	cd "${S}"
-	epatch ${FILESDIR}/${PV/0.92/0.91}/singleclick-shadeormaxopts-0.9x.patch2
-	epatch ${FILESDIR}/${PV/0.92/0.91}/wlist-0.9x.patch
-	epatch ${FILESDIR}/${PV}/${P}-configure.patch
-	epatch ${FILESDIR}/${PV}/${P}-gcc41.patch
-	epatch ${FILESDIR}/${PV}/${P}-fullscreen.patch
-	epatch ${FILESDIR}/${PV}/${P}-qtdialogsfix.patch
-	
+	local psd="${WORKDIR}"/${P}-patchset-${PATCHVER}
+
+	epatch "${psd}"/WindowMaker-0.92.0-cvs20060123.patch
+	epatch "${psd}"/WindowMaker-0.92.0-cvs-gcc41.patch
+	epatch "${FILESDIR}"/${PV/0.92/0.91}/wlist-0.9x.patch
+	epatch "${FILESDIR}"/${PV}/${P}-gif-before-ungif.patch
+
+	# Patches from altlinux
+	epatch "${psd}"/WindowMaker-0.91.0-alt-sowings.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-session.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-restartscrpt.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-menutrans.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-titlebar.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-clipnotext.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-mmx.patch
+	epatch "${psd}"/WindowMaker-0.80.2-cvs-alt-textfield.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-focus.patch
+
+	# New features (cool!)
+	epatch "${FILESDIR}"/${PV/0.92/0.91}/singleclick-shadeormaxopts-0.9x.patch2
+	epatch "${psd}"/WindowMaker-0.91.0-alt-dockhotkeys.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-vlaad-trance.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-vlaad-newbuttons.patch
+	epatch "${psd}"/WindowMaker-0.91.0-alt-adialog.patch
+	epatch "${psd}"/WindowMaker-0.91.0-hmepas-minimizeall.patch
+	epatch "${psd}"/WindowMaker-0.91.0-hmepas-swmenu_rclick.patch
+	epatch "${psd}"/WindowMaker-0.91.0-sga-moving-add.patch
+	epatch "${psd}"/WindowMaker-0.91.0-peter-newappicon.patch
+	epatch "${psd}"/WindowMaker-0.91.0-peter-mouse-placement.patch
+	epatch "${psd}"/WindowMaker-0.91.0-peter-appicon-bouncer2.patch
+	epatch "${psd}"/WindowMaker-0.91.0-sga-swpanel-customization.patch
+	epatch "${psd}"/WindowMaker-0.92.0-alt-newpo.patch
+
+	# Add UK localisation
+	cp "${psd}"/WindowMaker-uk.po po/uk.po
+	cp "${psd}"/WPrefs-uk.po WPrefs.app/po/uk.po
+
+	# Add newbuttons resources
+	cp "${psd}"/WindowMaker-newbuttons.nextstyle.tiff \
+		WPrefs.app/tiff/nextstyle.tiff
+	cp "${psd}"/WindowMaker-newbuttons.oldstyle.tiff \
+		WPrefs.app/tiff/oldstyle.tiff
+	cp "${psd}"/WindowMaker-newbuttons.nextstyle.xpm \
+		WPrefs.app/xpm/nextstyle.xpm
+
 	epatch ${FILESDIR}/${PV}/WindowMaker.in.patch
 
 	# Fix some paths
@@ -77,14 +117,23 @@ src_compile() {
 
 	if use gnustep ; then
 		egnustep_env
+		# Gentoo installs everything in System, make sure configure honors that
+		export GNUSTEP_LOCAL_ROOT=${GNUSTEP_SYSTEM_ROOT}
 		myconf="${myconf} --with-gnustepdir=${GNUSTEP_SYSTEM_ROOT}"
 	fi
 
 	if use nls; then
 		[ -z "$LINGUAS" ] && export LINGUAS="`ls po/*.po | sed 's:po/\(.*\)\.po$:\1:'`"
+		append-ldflags -lgettextlib
 	else
 		myconf="${myconf} --disable-locale"
 	fi
+
+	# enable new features, need to be done via defines
+	append-flags -DBOUNCE_APP -DNEWAPPICON -DVIRTUAL_DESKTOP
+
+	# Solaris has inet_aton, but it's hidden in -lresolv
+	[[ ${CHOST} == *-solaris* ]] && append-ldflags -lresolv
 
 	# default settings with $myconf appended
 	econf \
@@ -116,7 +165,7 @@ src_install() {
 	newdoc README README.extra
 
 	# create wmaker session shell script
-	echo "#!/bin/bash" > wmaker
+	echo "#!/usr/bin/env bash" > wmaker
 	echo "/usr/bin/wmaker" >> wmaker
 	exeinto /etc/X11/Sessions/
 	doexe wmaker
