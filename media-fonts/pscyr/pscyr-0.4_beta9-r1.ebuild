@@ -56,8 +56,6 @@ pkg_postinst() {
 
 pkg_postrm() {
 	
-	latex-package_pkg_setup
-	
 	einfo "Removing pk fonts..."
     
 	rm -f $VARTEXFONTS/pk/modeless/public/pscyr/*
