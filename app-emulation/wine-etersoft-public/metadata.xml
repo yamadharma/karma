@@ -3,8 +3,44 @@
 <pkgmetadata>
 <herd>wine</herd>
 <longdescription>
-Wine is an Open Source implementation of the Windows API on top of X and Unix.
+This build is a LGPL-part of WINE@Etersoft product prepared for
+using commercial programs.
+WINE Is Not Emulator. Wine is an Open Source implementation of the Windows
+API on top of X and Unix.  Think of Wine as a compatibility layer for
+running Windows programs. Wine does not require Microsoft Windows,
+as it is a completely free alternative implementation of the Windows
+API consisting of 100 percent LGPL code, however Wine can optionally
+use native Windows DLLs if they are available. Wine provides both a
+development toolkit for porting Windows source code to Unix as well as
+a program loader, allowing many unmodified Windows programs to run on
+x86-based Unixes, including Linux, FreeBSD, and Solaris.
 
-Think of Wine as a compatibility layer for running Windows programs. Wine does not require Microsoft Windows, as it is a completely free alternative implementation of the Windows API consisting of 100% non-Microsoft code, however Wine can optionally use native Windows DLLs if they are available. Wine provides both a development toolkit for porting Windows source code to Unix as well as a program loader, allowing many unmodified Windows programs to run on x86-based Unixes, including Linux, FreeBSD, and Solaris.
+It is still alpha level code; don't expect everything to work.
+Check http://winehq.org.ru or http://winehq.org if you experience some problems.
+Bug tracker: http://bugs.etersoft.ru
+
+You can obtain commercial support of the product from Etersoft company:
+wine@etersoft.ru
+</longdescription> 
+<longdescription lang="ru">
+Данная сборка является свободной частью продукта WINE@Etersoft,
+предназначенного для исполнения коммерческих Windows-программ.
+WINE Не Является Эмулятором. Это альтернативная реализация API Windows
+3.x и Win32. Wine предоставляет как инструментарий разработки (Winelib)
+для переноса унаследованных исходных кодов из среды Windows в среду
+Unix, так и программный загрузчик, позволяющий исполнять двоичный код, разработанный
+для Windows 3.1/95/NT, в среде разных вариантов
+Unix на платформе Intel. Wine не требует наличия Microsoft Windows,
+поскольку это полностью альтернативная реализация, состоящая из полностью
+свободного кода.
+
+WINE всё ещё находится в стадии разработки, поэтому
+не ожидайте, что всё будет работать.
+
+Обращайтесь за дополнительной информацией на сайт http://winehq.org.ru
+Система регистрации ошибок: http://bugs.etersoft.ru
+
+При необходимости вы можете получить коммерческую поддержку данного продукта
+в компании Etersoft или у её партнёров: wine@etersoft.ru
 </longdescription> 
 </pkgmetadata>

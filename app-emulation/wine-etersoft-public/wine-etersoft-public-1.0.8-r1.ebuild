@@ -7,7 +7,7 @@ DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 # FIXME: any better way?
 # WINEVER=20071012
-WINEVER=20071026
+WINEVER=20071109
 # WINENUMVERSION=${WINENUMVERSION:-1.0}
 WINENUMVERSION=${PV}
 SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft-$WINENUMVERSION/sources/tarball/wine-$WINEVER.tar.bz2
@@ -69,13 +69,17 @@ src_unpack() {
 	patch -p0 <etersoft/wine-etersoft.patch
 	#epatch etersoft/wine-etersoft.patch
 	#epatch "${FILESDIR}"/wineprefixcreate.in.patch
+
 	sed -i '/^UPDATE_DESKTOP_DATABASE/s:=.*:=true:' tools/Makefile.in
+	epatch "${FILESDIR}"/wine-gentoo-no-ssp.patch #66002
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
+
 	#Do not pack private part now
 	#cp ${DISTDIR}/wine-etersoft-1.0.local.tgz ${WORKDIR}
 	#cd "${WORKDIR}"
 	#mkdir "${WORKDIR}"/private
 	#tar -xzf wine-etersoft-1.0.local.tgz -C "${WORKDIR}"/private
+	autoconf
 }
 
 config_cache() {
@@ -117,8 +121,9 @@ src_compile() {
 	econf \
 		CC=$(tc-getCC) \
 		--sysconfdir=/etc/wine \
-		--enable-opengl \
-		--with-x \
+		$(use_with opengl) \
+		$(use_with X x) \
+		$(use_with ncurses curses) \
 		$(use_enable debug trace) \
 		$(use_enable debug) \
 		|| die "configure failed"
@@ -132,9 +137,12 @@ src_install() {
 	make DESTDIR="${D}" install || die
 
 	make -C etersoft install prefix=${D}/usr initdir=${D}/etc/init.d sysconfdir=${D}/etc
+	
+	rm -f ${D}/etc/init.d/*
+	newinitd ${FILESDIR}/wine.init wine
 }
 
 pkg_postinst() {
-	einfo "~/.wine/config is now deprecated.  For configuration either use"
-	einfo "winecfg or regedit HKCU\\Software\\Wine"
+	elog "~/.wine/config is now deprecated.  For configuration either use"
+	elog "winecfg or regedit HKCU\\Software\\Wine"
 }
