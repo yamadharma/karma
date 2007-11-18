@@ -27,7 +27,7 @@ RDEPEND=">=dev-perl/gtk2-perl-1.140-r1
 	adf? ( media-gfx/sane-frontends )
 	doc? ( dev-perl/Gtk2-Ex-PodViewer )
 	djvu? ( app-text/djvu )
-	gocr? ( >=app-text/gocr )
+	gocr? ( app-text/gocr )
 	tesseract? ( app-text/tesseract )
 	unpaper? ( media-gfx/unpaper )"
 	
