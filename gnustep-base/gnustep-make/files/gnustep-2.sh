@@ -8,6 +8,15 @@ case $- in
 		return
 	;;
 esac
+
+if [ -e /etc/GNUstep/GNUstep.conf ]
+    then
+    . /etc/GNUstep/GNUstep.conf
+else
+    GNUSTEP_SYSTEM_ROOT="/usr/GNUstep/System"
+fi
+
+. $GNUSTEP_SYSTEM_ROOT/Library/Makefiles/GNUstep.sh
 	
 GNUSTEP_SYSTEM_TOOLS=/usr/GNUstep/System/Tools
 
