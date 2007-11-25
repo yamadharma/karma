@@ -19,7 +19,7 @@ DEPEND="gnustep-libs/etoile-ui
 	gnustep-libs/rsskit"
 RDEPEND="${DEPEND}"
 
-src_compile() {
-	egnustep_env
-	egnustep_make etoile=yes || die "compilation failed"
-}
+#src_compile() {
+#	egnustep_env
+#	egnustep_make etoile=yes || die "compilation failed"
+#}

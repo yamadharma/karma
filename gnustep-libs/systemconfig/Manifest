@@ -11,6 +11,10 @@ EBUILD systemconfig-0.1.1_pre1962.ebuild 462 RMD160 a00361870abbc3e73aaa5d87a478
 MD5 e3ff7dd64c311450d9430976a5201a4b systemconfig-0.1.1_pre1962.ebuild 462
 RMD160 a00361870abbc3e73aaa5d87a4785b1c7270b438 systemconfig-0.1.1_pre1962.ebuild 462
 SHA256 7f088650e0bc724cfb97c8e98eed691918df323ef9bf8735f71229dd2a7db150 systemconfig-0.1.1_pre1962.ebuild 462
+EBUILD systemconfig-0.2.1_pre2632.ebuild 463 RMD160 01e1ffc56843e086b18dcc5daa587eb761be093b SHA1 db7f98b18abc8d53075b04f6e44d987ccf570d87 SHA256 46d7977301b375b04fbe793e4b2fad8a18bdf682e0d60152d95ce44bb974cbcc
+MD5 6ffbdb2930466d77f418a0650c05bbd6 systemconfig-0.2.1_pre2632.ebuild 463
+RMD160 01e1ffc56843e086b18dcc5daa587eb761be093b systemconfig-0.2.1_pre2632.ebuild 463
+SHA256 46d7977301b375b04fbe793e4b2fad8a18bdf682e0d60152d95ce44bb974cbcc systemconfig-0.2.1_pre2632.ebuild 463
 EBUILD systemconfig-0.2.ebuild 465 RMD160 0d5c332d34664209ffe6450e81de7f9cac9bd6d5 SHA1 801019f3d7e91b8ffcb5721390a8c9ee63ba8d67 SHA256 dc3636ef2f10e83c3989191243073cd7657300830e2ee58555d20fd1f21802b0
 MD5 ec5a106e1ab041bddde51bc43b60091b systemconfig-0.2.ebuild 465
 RMD160 0d5c332d34664209ffe6450e81de7f9cac9bd6d5 systemconfig-0.2.ebuild 465
@@ -27,3 +31,6 @@ SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/di
 MD5 e0efd0a9e9ebd05c477186c5bb8baefd files/digest-systemconfig-0.2 238
 RMD160 dbce15cea54ac568477cd44329e0c3e1fd7e7f3a files/digest-systemconfig-0.2 238
 SHA256 3de3234af9600e4e5eec8ca30d5e689a7c94494725b415d3f9d326451cc99393 files/digest-systemconfig-0.2 238
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-systemconfig-0.2.1_pre2632 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-systemconfig-0.2.1_pre2632 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-systemconfig-0.2.1_pre2632 0

@@ -15,7 +15,7 @@ LICENSE="LGPL-2.1"
 IUSE="jpeg gif png cups gsnd"
 
 DEPEND="${GNUSTEP_CORE_DEPEND}
-	>=gnustep-base/gnustep-base-1.14.0
+	>=gnustep-base/gnustep-base-1.15.1
 	x11-libs/libXt
 	>=media-libs/tiff-3
 	jpeg? ( >=media-libs/jpeg-6b )

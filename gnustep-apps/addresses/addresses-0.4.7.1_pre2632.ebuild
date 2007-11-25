@@ -4,9 +4,9 @@
 
 inherit etoile-svn
 
-S1=${S}/Frameworks/XWindowServerKit
+S1=${S}/Services/User/AddressManager
 
-DESCRIPTION="XWindowServerKit provides access to x window system."
+DESCRIPTION="Addresses is a Apple Addressbook work alike (standalone and for GNUMail)"
 HOMEPAGE="http://www.etoile-project.org"
 #SRC_URI=""
 LICENSE="GPL-2"
@@ -14,6 +14,7 @@ KEYWORDS="~ppc x86 amd64"
 SLOT="0"
 
 IUSE=""
-DEPEND="${GS_DEPEND}"
-RDEPEND="${GS_RDEPEND}"
-
+DEPEND="${GS_DEPEND}
+	gnustep-libs/addresseskit"
+RDEPEND="${GS_RDEPEND}
+	gnustep-libs/addresseskit"

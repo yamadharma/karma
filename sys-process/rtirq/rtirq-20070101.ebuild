@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="x86 amd64 ppc"
 IUSE=""
 
-DEPEND="sys-process/schedutils
+DEPEND="|| ( >=sys-apps/util-linux-2.13 sys-process/schedutils )
 		sys-apps/sysvinit"
 
 src_unpack(){

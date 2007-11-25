@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnustep-base/gnustep-back-art/gnustep-back-art-0.12.0.ebuild,v 1.2 2007/08/22 16:20:17 voyageur Exp $
+# $Header: /var/cvsroot/gentoo-x86/gnustep-base/gnustep-back-art/gnustep-back-art-0.12.0.ebuild,v 1.8 2007/11/16 14:58:34 beandog Exp $
 
 inherit gnustep-base
 
@@ -10,7 +10,7 @@ DESCRIPTION="libart_lgpl back-end component for the GNUstep GUI Library"
 
 HOMEPAGE="http://www.gnustep.org"
 SRC_URI="ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-back-${PV}.tar.gz"
-KEYWORDS="amd64 x86"
+KEYWORDS="~alpha amd64 ~ppc ~sparc x86"
 SLOT="0"
 LICENSE="LGPL-2.1"
 
@@ -33,7 +33,9 @@ DEPEND="${GNUSTEP_CORE_DEPEND}
 	>=media-libs/freetype-2.1.9
 	>=media-libs/libart_lgpl-2.3
 	>=gnustep-base/mknfonts-0.5-r1
-	media-fonts/dejavu"
+	media-fonts/dejavu
+	!gnustep-base/gnustep-back-cairo
+	!gnustep-base/gnustep-back-xlib"
 RDEPEND="${DEPEND}"
 
 src_compile() {
@@ -66,10 +68,13 @@ src_install() {
 
 	mkdir -p "${D}/${GNUSTEP_SYSTEM_LIBRARY}/Fonts"
 	cp -pPR Fonts/*.nfont "${D}/${GNUSTEP_SYSTEM_LIBRARY}/Fonts"
-	
-#	dosym \
-#		"${GNUSTEP_SYSTEM_LIBRARY}/Bundles/libgnustep-art-012.bundle" \
-#		"${GNUSTEP_SYSTEM_LIBRARY}/Bundles/libgnustep-art.bundle"
-	
 }
 
+gnustep_config_script() {
+	echo "echo ' * setting normal font to DejaVuSans'"
+	echo "defaults write NSGlobalDomain NSFont DejaVuSans"
+	echo "echo ' * setting bold font to DejaVuSans-Bold'"
+	echo "defaults write NSGlobalDomain NSBoldFont DejaVuSans-Bold"
+	echo "echo ' * setting fixed font to DejaVuSansMono'"
+	echo "defaults write NSGlobalDomain NSUserFixedPitchFont DejaVuSansMono"
+}
