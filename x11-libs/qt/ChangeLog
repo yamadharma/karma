@@ -2,6 +2,27 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Oct 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  qt-3.3.8-r3.ebuild, qt-3.3.8-r4.ebuild:
+  Some QA fixes.
+
+  01 Oct 2007; <roderick_greening@hotmail.com>
+  +files/qt-3.3.8-unicode-off-by-one.patch, ++:
+  Updated ebuild to match portage - added patch for unicode
+
+  29 Aug 2007; <roderick_greening@hotmail.com> -qt-3.3.8-r2.ebuild:
+  Removed old ebuild:
+
+  21 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  qt-3.3.8-r2.ebuild, qt-3.3.8-r3.ebuild:
+  Reverted keywords for qt to prevent kde QA errors.
+  Some minor QA fixes.
+
+  21 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  metadata.xml, qt-3.3.8-r2.ebuild, qt-3.3.8-r3.ebuild:
+  Dropped keywords for all the arches we don't support.
+  Updated metadata.xml
+
   03 Aug 2007; <roderick_greening@hotmail.com>
   +files/qt-3.3.8-seli-xinerama-qt-copy-fixed.patch,
   +files/qt-copy-immodule-fixup.patch, qt-3.3.8-r3.ebuild:
