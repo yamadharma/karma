@@ -5,15 +5,16 @@
 inherit eutils java-pkg-2 java-ant-2
 
 S="${WORKDIR}"
-DMF="R-${PV}-200706251500"
+MY_PV="${PV/_pre/M}"
+DMF="S-${MY_PV}-200711012000"
 
 DESCRIPTION="GTK based SWT Library"
 HOMEPAGE="http://www.eclipse.org/swt/"
-SRC_URI="x86? ( http://download.eclipse.org/downloads/drops/${DMF/.0}/${P/.0}-gtk-linux-x86.zip )
-		amd64? ( http://download.eclipse.org/downloads/drops/${DMF/.0}/${P/.0}-gtk-linux-x86_64.zip )
-		ppc? ( http://download.eclipse.org/downloads/drops/${DMF/.0}/${P/.0}-gtk-linux-ppc.zip )"
+SRC_URI="x86? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-x86.zip )
+		amd64? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-x86_64.zip )
+		ppc? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-ppc.zip )"
 
-SLOT="3.3"
+SLOT="3.4"
 LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
 KEYWORDS="amd64 ~ppc x86"
 IUSE="cairo firefox gnome opengl seamonkey xulrunner"
@@ -79,6 +80,7 @@ src_compile() {
 	
 	# set awt library path
 	AWT_LIB_PATH="$(java-config --jdk-home)/jre/lib/${jvmarch}"
+	echo ${AWT_LIB_PATH}
 	[[ $(java-pkg_get-vm-vendor) == "ibm" ]] \
 		&& AWT_LIB_PATH="$(java-config --jdk-home)/jre/bin"
 	[[ ! -f ${AWT_LIB_PATH}/libjawt.so ]] \

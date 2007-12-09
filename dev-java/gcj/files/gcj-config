@@ -35,7 +35,11 @@ if [[ ${#} -eq 0 ]] ; then
 else
 	case ${1} in
 		--gcj)
-echo "$(sed -n -r -e "s:current=\"(.*)\":\1:p" ${CONFFILE})/gcj"
+if [[ ${CBUILD} != ${CHOST} ]]; then
+	echo "$(sed -n -r -e "s:current=\"(.*)\":\1:p" ${CONFFILE})/${CHOST}-gcj"
+else
+	echo "$(sed -n -r -e "s:current=\"(.*)\":\1:p" ${CONFFILE})/gcj"
+fi
 ;;
 		--dbtool)
 echo "$(sed -n -r -e "s:current=\"(.*)\":\1:p" ${CONFFILE})/gcj-dbtool"
