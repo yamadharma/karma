@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils fetch-tools scons-ccache flag-o-matic
+inherit eutils fetch-tools scons-ccache
 
 DESCRIPTION="multi-track hard disk recording software"
 HOMEPAGE="http://ardour.org/"
@@ -12,7 +12,7 @@ RESTRICT="nomirror"
 LICENSE="GPL-2"
 SLOT="1"
 KEYWORDS="x86 amd64"
-IUSE="nls debug sse altivec vst sys-libs fftw"
+IUSE="nls debug sse altivec vst sys-libs"
 
 RDEPEND=">=media-libs/liblrdf-0.4.0
 	>=media-libs/raptor-1.2.0
@@ -36,8 +36,7 @@ RDEPEND=">=media-libs/liblrdf-0.4.0
 		>=x11-libs/pango-1.4 
 		>=dev-cpp/libgnomecanvasmm-2.12.0
 		>=media-libs/libsndfile-1.0.16
-		>=media-libs/libsoundtouch-1.0 )
-	fftw? ( =sci-libs/fftw-3* )"
+		>=media-libs/libsoundtouch-1.0 )"
 
 	# sys-libs/gdbm # no longer needed?!
 
@@ -75,10 +74,6 @@ pkg_setup(){
 		fi
 		epause 3s
 	fi
-}
-
-ardour_use_enable() {
-	use ${2} && echo "${1}=1" || echo "${1}=0"
 }
 
 src_unpack(){
@@ -121,18 +116,9 @@ src_compile() {
 	#cd ${S}/libs/sigc++2/
 	#chmod a+x autogen.sh && ./autogen.sh || die "autogen failed"
 #	econf || die "configure failed"
-
+	
 	# Required for scons to "see" intermediate install location
 	mkdir -p ${D}
-
-	local FPU_OPTIMIZATION=$((use altivec || use sse) && echo 1 || echo 0)
-	cd "${S}"
-
-	tc-export CC CXX
-
-	# Avoid compiling x86 asm when building on amd64 without using sse
-	# bug #186798
-	use amd64 && append-flags "-DUSE_X86_64_ASM"
 	
 	local myconf=""
 	! use altivec; myconf="${myconf} ALTIVEC=$?"
@@ -141,7 +127,6 @@ src_compile() {
 	! use vst; myconf="${myconf} VST=$?" 
 	! use sys-libs; myconf="${myconf} SYSLIBS=$?"
 	! use sse; myconf="${myconf} USE_SSE_EVERYWHERE=$? BUILD_SSE_OPTIMIZATIONS=$?"
-	myconf="${myconf} $(ardour_use_enable FFT_ANALYSIS fftw)"
 	# static settings
 	myconf="${myconf} PREFIX=/usr KSI=0" # NLS=0"
 	einfo "${myconf}"
@@ -169,8 +154,6 @@ src_install() {
 	for i in `find -iname 'CVS'`;do rm -rf ${i};done
 	cd - &>/dev/null
 	dodoc  DOCUMENTATION/*
-	
-	make_desktop_entry ardour2 Ardour2 ardour_icon_mac.png AudioVideo
 }
 
 agree_vst() {
@@ -190,23 +173,3 @@ agree_vst() {
 		return 1
 	fi
 }
-
-pkg_postinst() {
-	ewarn "---------------- WARNING -------------------"
-	ewarn ""
-	ewarn "Do not use Ardour 2.0 to open the only copy of sessions created with Ardour 0.99."
-	ewarn "Ardour 2.0 saves the session file in a new format that Ardour 0.99 will"
-	ewarn "not understand."
-	ewarn ""
-	ewarn "MAKE BACKUPS OF THE SESSION FILES."
-	ewarn ""
-	ewarn "The simplest way to address this is to make a copy of the session file itself"
-	ewarn "(e.g mysession/mysession.ardour) and make that file unreadable using chmod(1)."
-	ewarn ""
-	ewarn "---------------- WARNING -------------------"
-	ewarn ""
-	ewarn "If you use KDE 3.5, be sure to uncheck 'Apply colors to non-KDE applications' in"
-	ewarn "the colors configuration module if you want to be able to actually see various"
-	ewarn "texts in Ardour 2."
-}
-
