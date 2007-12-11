@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-MY_P="${PN}-${PV/_pre/-pre}"
+MY_P="${PN}-${PV}"
 S="${WORKDIR}/${MY_P}"
 
 DESCRIPTION="Libs required by ksqirrel"
@@ -11,19 +11,11 @@ SRC_URI="mirror://sourceforge/ksquirrel/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86 amd64"
+KEYWORDS="amd64 x86"
 IUSE="djvu camera jng jpeg jpeg2k kdeenablefinal mng png svg tiff truetype wmf"
 
-#IUSE="gif openexr dxf"
-#DEPEND="gif? ( ??-??/libungif )
-#	openexr? ( 
-#		??-??/libImath
-#		??-??/libIHalf
-#		??-??/libIlmImf
-#		??-??/libIex
-#		)
-#	dxf? ( ??-??/vec2web )"
-DEPEND="djvu? ( app-text/djvu )
+DEPEND="<=kde-base/kdelibs-4
+	djvu? ( app-text/djvu )
 	jng? (
 		media-libs/jpeg
 		media-libs/libmng

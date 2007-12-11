@@ -1,0 +1,14 @@
+diff -ru fortran-20071120.p1.old/spkg-install fortran-20071120.p1/spkg-install
+--- fortran-20071120.p1.old/spkg-install	2007-12-08 22:41:53.000000000 -0500
++++ fortran-20071120.p1/spkg-install	2007-12-08 23:02:43.000000000 -0500
+@@ -85,7 +85,9 @@
+ if not name:
+     error("You must install gfortran, g95 or g77 system-wide or specify a fortran via the SAGE_FORTRAN environment variable.")
+ 
+-os.system('ln -sf "%s" "%s"/bin/sage_fortran.bin'%(name, target))
++escaped_name = name.replace('/','\/');
++
++os.system('sed -i s/sage_fortran.bin/"%s"/ "%s"/bin/sage_fortran'%(escaped_name,target))
+ 
+ 
+ 
