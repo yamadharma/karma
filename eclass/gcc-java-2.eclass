@@ -225,6 +225,7 @@ gcj_src_compile() {
 	gcc_do_filter_flags
 	# work around gcc PR33992
 	replace-flags -O? -O1
+	! is-flagq -O1 && append-flags -O1
 
 	export PATH="${PATH}:${JAVA_HOME}/bin"
 	gcj_do_configure

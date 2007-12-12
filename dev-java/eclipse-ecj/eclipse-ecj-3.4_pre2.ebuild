@@ -51,13 +51,14 @@ src_compile() {
 
 	cd ${S}/bootstrap
 	if use gcj; then
-		if ! [[ $(gcj-config --version) =~ ^4.3 ]]; then
+#		if ! [[ $(gcj-config --version) =~ ^4.3 ]]; then
 			for f in $(find org/ -name '*.java'); do
+				echo ${javac} ${f}
 				${javac} ${f} || die "${MY_PN} bootstrap failed!"
 			done
-		else
-			${javac} $(find org/ -name '*.java') || die "${MY_PN} bootstrap failed!"
-		fi
+#		else
+#			${javac} $(find org/ -name '*.java') || die "${MY_PN} bootstrap failed!"
+#		fi
 	else
 		${javac} $(find org/ -name '*.java') || die "${MY_PN} bootstrap failed!"
 	fi

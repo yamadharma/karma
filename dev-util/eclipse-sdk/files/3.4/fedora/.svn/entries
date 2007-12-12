@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="5427"
+   name=""
+   committed-date="2007-09-28T19:03:21.589924Z"
+   url="http://overlays.gentoo.org/svn/proj/java/gcj-overlay/dev-util/eclipse-sdk/files/3.4/fedora"
+   last-author="geki"
+   kind="dir"
+   uuid="fe387f86-7aec-0310-8f44-a148a97195aa"
+   repos="http://overlays.gentoo.org/svn/proj/java"
+   revision="5804"/>
+<entry
+   committed-rev="5427"
+   name="eclipse-pde.build-add-package-build.patch"
+   text-time="2007-10-01T11:23:51.000000Z"
+   committed-date="2007-09-28T19:03:21.589924Z"
+   checksum="b0c594dc3922f3e97ca4891361e5f269"
+   last-author="geki"
+   kind="file"
+   prop-time="2007-10-01T11:23:50.000000Z"/>
+<entry
+   committed-rev="5427"
+   name="eclipse-fileinitializer.patch"
+   text-time="2007-10-01T11:23:51.000000Z"
+   committed-date="2007-09-28T19:03:21.589924Z"
+   checksum="51cc46a8ead5788fc33f03d4495f3850"
+   last-author="geki"
+   kind="file"
+   prop-time="2007-10-01T11:23:51.000000Z"/>
+<entry
+   committed-rev="5427"
+   name="eclipse-libupdatebuild2.patch"
+   text-time="2007-10-01T11:23:51.000000Z"
+   committed-date="2007-09-28T19:03:21.589924Z"
+   checksum="a3b25a9944e2f01f27bb63e5d879502e"
+   last-author="geki"
+   kind="file"
+   prop-time="2007-10-01T11:23:51.000000Z"/>
+</wc-entries>
