@@ -1,0 +1,15 @@
+--- src/com/ibm/icu/charset/CharsetICU.java.orig	2007-04-27 11:41:48.000000000 +0200
++++ src/com/ibm/icu/charset/CharsetICU.java	2007-11-15 09:55:39.000000000 +0100
+@@ -225,5 +225,12 @@
+         }
+         return Charset.forName(charsetName);
+     }
++
++    public final int compareTo(Object o) {
++        if (o instanceof CharsetICU) {
++            return this.javaCanonicalName.compareTo(((CharsetICU) o).javaCanonicalName);
++	}
++        return -1;
++    }
+ }
+ 
