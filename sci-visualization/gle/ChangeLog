@@ -1,6 +1,10 @@
 # ChangeLog for sci-visualization/gle
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  26 Nov 2007; Sébastien Fabbro <bicatali@gentoo.org> metadata.xml,
+  gle-4.0.12.ebuild:
+  Ebuild cleaning
 
 *gle-4.0.12 (21 Nov 2006)
 
