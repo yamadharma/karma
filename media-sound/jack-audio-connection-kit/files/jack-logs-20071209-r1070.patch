@@ -1,0 +1,1877 @@
+diff --git a/drivers/alsa-midi/alsa_rawmidi.c b/drivers/alsa-midi/alsa_rawmidi.c
+--- a/drivers/alsa-midi/alsa_rawmidi.c
++++ b/drivers/alsa-midi/alsa_rawmidi.c
+@@ -218,7 +218,7 @@ int stream_init(midi_stream_t *s, alsa_r
+ 	s->name = name;
+ 	if (pipe(s->wake_pipe)==-1) {
+ 		s->wake_pipe[0] = -1;
+-		error_log("pipe() in stream_init(%s) failed: %s\n", name, strerror(errno));
++		error_log("pipe() in stream_init(%s) failed: %s", name, strerror(errno));
+ 		return -errno;
+ 	}
+ 	s->jack.new_ports = jack_ringbuffer_create(sizeof(midi_port_t*)*MAX_PORTS);
+@@ -256,7 +256,7 @@ alsa_midi_t* alsa_rawmidi_new(jack_clien
+ 		goto fail_0;
+ 	midi->client = jack;
+ 	if (pipe(midi->scan.wake_pipe)==-1) {
+-		error_log("pipe() in alsa_midi_new failed: %s\n", strerror(errno));
++		error_log("pipe() in alsa_midi_new failed: %s", strerror(errno));
+ 		goto fail_1;
+ 	}
+ 
+@@ -526,7 +526,7 @@ static inline
+ static inline
+ void alsa_error(const char *func, int err)
+ {
+-	error_log("%s() failed\n", snd_strerror(err));
++	error_log("%s() failed", snd_strerror(err));
+ }
+ 
+ typedef struct {
+@@ -555,14 +555,14 @@ void scan_cycle(alsa_rawmidi_t *midi)
+ 	scan_t scan;
+ 	midi_port_t **ports;
+ 
+-	//debug_log("scan: cleanup\n");
++	//debug_log("scan: cleanup");
+ 	scan_cleanup(midi);
+ 
+ 	scan.midi = midi;
+ 	scan.iterator = &midi->scan.ports;
+ 	snd_rawmidi_info_alloca(&scan.info);
+ 
+-	//debug_log("scan: rescan\n");
++	//debug_log("scan: rescan");
+ 	while ((err = snd_card_next(&card))>=0 && card>=0) {
+ 		char name[32];
+ 		snprintf(name, sizeof(name), "hw:%d", card);
+@@ -665,7 +665,7 @@ midi_port_t** scan_port_add(scan_t *scan
+ 
+ 	port->next = *list;
+ 	*list = port;
+-	error_log("scan: added port %s %s\n", port->dev, port->name);
++	error_log("scan: added port %s %s", port->dev, port->name);
+ 	return &port->next;
+ }
+ 
+@@ -689,7 +689,7 @@ midi_port_t** scan_port_open(alsa_rawmid
+ 	port->state = PORT_ADDED_TO_JACK;
+ 	jack_ringbuffer_write(str->jack.new_ports, (char*) &port, sizeof(port));
+ 
+-	error_log("scan: opened port %s %s\n", port->dev, port->name);
++	error_log("scan: opened port %s %s", port->dev, port->name);
+ 	return &port->next;
+ 
+  fail_2:
+@@ -698,7 +698,7 @@ midi_port_t** scan_port_open(alsa_rawmid
+ 	midi_port_close(midi, port);
+  fail_0:
+  	*list = port->next;
+-	error_log("scan: can't open port %s %s\n", port->dev, port->name);
++	error_log("scan: can't open port %s %s", port->dev, port->name);
+  	free(port);
+ 	return list;
+ }
+@@ -708,7 +708,7 @@ midi_port_t** scan_port_del(alsa_rawmidi
+ {
+ 	midi_port_t *port = *list;
+ 	if (port->state == PORT_REMOVED_FROM_JACK) {
+-		error_log("scan: deleted port %s %s\n", port->dev, port->name);
++		error_log("scan: deleted port %s %s", port->dev, port->name);
+ 		*list = port->next;
+ 		if (port->id.id[2] )
+ 			(midi->out.port_close)(midi, port);
+@@ -718,7 +718,7 @@ midi_port_t** scan_port_del(alsa_rawmidi
+ 		free(port);
+ 		return list;
+ 	} else {
+-		//debug_log("can't delete port %s, wrong state: %d\n", port->name, (int)port->state);
++		//debug_log("can't delete port %s, wrong state: %d", port->name, (int)port->state);
+ 		return &port->next;
+ 	}
+ }
+@@ -732,7 +732,7 @@ void* scan_thread(void *arg)
+ 	wakeup.events = POLLIN|POLLERR|POLLNVAL;
+ 	while (midi->keep_walking) {
+ 		int res;
+-		//error_log("scanning....\n");
++		//error_log("scanning....");
+ 		scan_cycle(midi);
+ 		res = poll(&wakeup, 1, 2000);
+ 		if (res>0) {
+@@ -778,7 +778,7 @@ void jack_process(midi_stream_t *str, ja
+ 	if (proc.frame_time + proc.nframes < cur_frames) {
+ 		int periods_lost = (cur_frames - proc.frame_time) / proc.nframes;
+ 		proc.frame_time += periods_lost * proc.nframes;
+-		debug_log("xrun detected: %d periods lost\n", periods_lost);
++		debug_log("xrun detected: %d periods lost", periods_lost);
+ 	}
+ 
+ 	// process existing ports
+@@ -804,7 +804,7 @@ void jack_process(midi_stream_t *str, ja
+ 		++w;
+ 	}
+ 	if (str->jack.nports != w)
+-		debug_log("jack_%s: nports %d -> %d\n", str->name, str->jack.nports, w);
++		debug_log("jack_%s: nports %d -> %d", str->name, str->jack.nports, w);
+ 	str->jack.nports = w;
+ 
+ 	jack_add_ports(str); // it makes no sense to add them earlier since they have no data yet
+@@ -830,7 +830,7 @@ void *midi_thread(void *arg)
+ 	pfds[0].events = POLLIN|POLLERR|POLLNVAL;
+ 	npfds = 1;
+ 
+-	//debug_log("midi_thread(%s): enter\n", str->name);
++	//debug_log("midi_thread(%s): enter", str->name);
+ 
+ 	while (midi->keep_walking) {
+ 		int poll_timeout;
+@@ -852,13 +852,13 @@ void *midi_thread(void *arg)
+ 			clock_nanosleep(CLOCK_MONOTONIC, 0, &ts, NULL);
+ 		}
+ 		int res = poll((struct pollfd*)&pfds, npfds, poll_timeout);
+-		//debug_log("midi_thread(%s): poll exit: %d\n", str->name, res);
++		//debug_log("midi_thread(%s): poll exit: %d", str->name, res);
+ 		if (!midi->keep_walking)
+ 			break;
+ 		if (res < 0) {
+ 			if (errno == EINTR)
+ 				continue;
+-			error_log("midi_thread(%s) poll failed: %s\n", str->name, strerror(errno));
++			error_log("midi_thread(%s) poll failed: %s", str->name, strerror(errno));
+ 			break;
+ 		}
+ 
+@@ -875,7 +875,7 @@ void *midi_thread(void *arg)
+ 			midi_port_t *port;
+ 			jack_ringbuffer_read(str->midi.new_ports, (char*)&port, sizeof(port));
+ 			str->midi.ports[str->midi.nports++] = port;
+-			debug_log("midi_thread(%s): added port %s\n", str->name, port->name);
++			debug_log("midi_thread(%s): added port %s", str->name, port->name);
+ 		}
+ 
+ //		if (res == 0)
+@@ -903,10 +903,10 @@ void *midi_thread(void *arg)
+ 			++wp;
+ 		}
+ 		if (str->midi.nports != wp)
+-			debug_log("midi_%s: nports %d -> %d\n", str->name, str->midi.nports, wp);
++			debug_log("midi_%s: nports %d -> %d", str->name, str->midi.nports, wp);
+ 		str->midi.nports = wp;
+ 		if (npfds != w)
+-			debug_log("midi_%s: npfds %d -> %d\n", str->name, npfds, w);
++			debug_log("midi_%s: npfds %d -> %d", str->name, npfds, w);
+ 		npfds = w;
+ 
+ 		/*
+@@ -915,16 +915,16 @@ void *midi_thread(void *arg)
+ 		 * So, zero timeout will not cause busy-looping.
+ 		 */
+ 		if (proc.next_time < proc.cur_time) {
+-			debug_log("%s: late: next_time = %d, cur_time = %d\n", str->name, (int)proc.next_time, (int)proc.cur_time);
++			debug_log("%s: late: next_time = %d, cur_time = %d", str->name, (int)proc.next_time, (int)proc.cur_time);
+ 			wait_nsec = 0; // we are late
+ 		} else if (proc.next_time != NFRAMES_INF) {
+ 			jack_time_t wait_frames = proc.next_time - proc.cur_time;
+ 			jack_nframes_t rate = jack_get_sample_rate(midi->client);
+ 			wait_nsec = (wait_frames * (1000*1000*1000)) / rate;
+-			debug_log("midi_%s: timeout = %d\n", str->name, (int)wait_frames);
++			debug_log("midi_%s: timeout = %d", str->name, (int)wait_frames);
+ 		} else
+ 			wait_nsec = 1000*1000*1000;
+-		//debug_log("midi_thread(%s): wait_nsec = %lld\n", str->name, wait_nsec);
++		//debug_log("midi_thread(%s): wait_nsec = %lld", str->name, wait_nsec);
+ 	}
+ 	return NULL;
+ }
+@@ -937,17 +937,17 @@ int midi_is_ready(process_midi_t *proc)
+ 		unsigned short revents = 0;
+ 		int res = snd_rawmidi_poll_descriptors_revents(port->rawmidi, proc->rpfds, port->npfds, &revents);
+ 		if (res) {
+-			error_log("snd_rawmidi_poll_descriptors_revents failed on port %s with: %s\n", port->name, snd_strerror(res));
++			error_log("snd_rawmidi_poll_descriptors_revents failed on port %s with: %s", port->name, snd_strerror(res));
+ 			return 0;
+ 		}
+ 
+ 		if (revents & ~proc->mode) {
+-			debug_log("midi: port %s failed\n", port->name);
++			debug_log("midi: port %s failed", port->name);
+ 			return 0;
+ 		}
+ 		if (revents & proc->mode) {
+ 			port->is_ready = 1;
+-			debug_log("midi: is_ready %s\n", port->name);
++			debug_log("midi: is_ready %s", port->name);
+ 		}
+ 	}
+ 	return 1;
+@@ -960,7 +960,7 @@ int midi_update_pfds(process_midi_t *pro
+ 	if (port->npfds == 0) {
+ 		port->npfds = snd_rawmidi_poll_descriptors_count(port->rawmidi);
+ 		if (port->npfds > proc->max_pfds) {
+-			debug_log("midi: not enough pfds for port %s\n", port->name);
++			debug_log("midi: not enough pfds for port %s", port->name);
+ 			return 0;
+ 		}
+ 		snd_rawmidi_poll_descriptors(port->rawmidi, proc->wpfds, port->npfds);
+@@ -1021,7 +1021,7 @@ void do_jack_input(process_jack_t *p)
+ 			int avail = todo < vec[i].len ? todo : vec[i].len;
+ 			int done = midi_unpack_buf(&port->unpack, (unsigned char*)vec[i].buf, avail, p->buffer, time);
+ 			if (done != avail) {
+-				debug_log("jack_in: buffer overflow in port %s\n", port->base.name);
++				debug_log("jack_in: buffer overflow in port %s", port->base.name);
+ 				break;
+ 			}
+ 			todo -= done;
+@@ -1048,14 +1048,14 @@ int do_midi_input(process_midi_t *proc)
+ 		if (jack_ringbuffer_write_space(port->base.event_ring) < sizeof(event_head_t) || vec[0].len < 1) {
+ 			port->overruns++;
+ 			if (port->base.npfds)
+-				debug_log("midi_in: internal overflow on %s\n", port->base.name);
++				debug_log("midi_in: internal overflow on %s", port->base.name);
+ 			// remove from poll to prevent busy-looping
+ 			port->base.npfds = 0;
+ 			return 1;
+ 		}
+ 		res = snd_rawmidi_read(port->base.rawmidi, vec[0].buf, vec[0].len);
+ 		if (res < 0 && res != -EWOULDBLOCK) {
+-			error_log("midi_in: reading from port %s failed: %s\n", port->base.name, snd_strerror(res));
++			error_log("midi_in: reading from port %s failed: %s", port->base.name, snd_strerror(res));
+ 			return 0;
+ 		} else if (res > 0) {
+ 			event_head_t event;
+@@ -1063,7 +1063,7 @@ int do_midi_input(process_midi_t *proc)
+ 			event.size = res;
+ 			event.overruns = port->overruns;
+ 			port->overruns = 0;
+-			debug_log("midi_in: read %d bytes at %d\n", (int)event.size, (int)event.time);
++			debug_log("midi_in: read %d bytes at %d", (int)event.size, (int)event.time);
+ 			jack_ringbuffer_write_advance(port->base.data_ring, event.size);
+ 			jack_ringbuffer_write(port->base.event_ring, (char*)&event, sizeof(event));
+ 		}
+@@ -1101,7 +1101,7 @@ void do_jack_output(process_jack_t *proc
+ 	int nevents = jack_midi_get_event_count(proc->buffer);
+ 	int i;
+ 	if (nevents)
+-		debug_log("jack_out: %d events in %s\n", nevents, port->base.name);
++		debug_log("jack_out: %d events in %s", nevents, port->base.name);
+ 	for (i=0; i<nevents; ++i) {
+ 		jack_midi_event_t event;
+ 		event_head_t hdr;
+@@ -1109,7 +1109,7 @@ void do_jack_output(process_jack_t *proc
+ 		jack_midi_event_get(&event, proc->buffer, i);
+ 
+ 		if (jack_ringbuffer_write_space(port->base.data_ring) < event.size || jack_ringbuffer_write_space(port->base.event_ring) < sizeof(hdr)) {
+-			debug_log("jack_out: output buffer overflow on %s\n", port->base.name);
++			debug_log("jack_out: output buffer overflow on %s", port->base.name);
+ 			break;
+ 		}
+ 
+@@ -1120,7 +1120,7 @@ void do_jack_output(process_jack_t *proc
+ 		hdr.time = proc->frame_time + event.time + proc->nframes;
+ 		hdr.size = event.size;
+ 		jack_ringbuffer_write(port->base.event_ring, (char*)&hdr, sizeof(hdr));
+-		debug_log("jack_out: sent %d-byte event at %ld\n", (int)event.size, (long)event.time);
++		debug_log("jack_out: sent %d-byte event at %ld", (int)event.size, (long)event.time);
+ 	}
+ }
+ 
+@@ -1141,16 +1141,16 @@ int do_midi_output(process_midi_t *proc)
+ 			port->next_event.size = 0;
+ 			break;
+ 		} else
+-			debug_log("midi_out: at %ld got %d bytes for %ld\n", (long)proc->cur_time, (int)port->next_event.size, (long)port->next_event.time);
++			debug_log("midi_out: at %ld got %d bytes for %ld", (long)proc->cur_time, (int)port->next_event.size, (long)port->next_event.time);
+ 	}
+ 	
+ 	if (port->todo)
+-		debug_log("midi_out: todo = %d at %ld\n", (int)port->todo, (long)proc->cur_time);
++		debug_log("midi_out: todo = %d at %ld", (int)port->todo, (long)proc->cur_time);
+ 
+ 	// calc next wakeup time
+ 	if (!port->todo && port->next_event.time && port->next_event.time < proc->next_time) {
+ 		proc->next_time = port->next_event.time;
+-		debug_log("midi_out: next_time = %ld\n", (long)proc->next_time);
++		debug_log("midi_out: next_time = %ld", (long)proc->next_time);
+ 	}
+ 
+ 	if (port->todo && port->base.is_ready) {
+@@ -1167,15 +1167,15 @@ int do_midi_output(process_midi_t *proc)
+ 		res = snd_rawmidi_write(port->base.rawmidi, vec[0].buf, size);
+ 		if (res > 0) {
+ 			jack_ringbuffer_read_advance(port->base.data_ring, res);
+-			debug_log("midi_out: written %d bytes to %s\n", res, port->base.name);
++			debug_log("midi_out: written %d bytes to %s", res, port->base.name);
+ 			port->todo -= res;
+ 			worked = 1;
+ 		} else if (res == -EWOULDBLOCK) {
+ 			port->base.is_ready = 0;
+-			debug_log("midi_out: -EWOULDBLOCK on %s\n", port->base.name);
++			debug_log("midi_out: -EWOULDBLOCK on %s", port->base.name);
+ 			return 1;
+ 		} else {
+-			error_log("midi_out: writing to port %s failed: %s\n", port->base.name, snd_strerror(res));
++			error_log("midi_out: writing to port %s failed: %s", port->base.name, snd_strerror(res));
+ 			return 0;
+ 		}
+ 		snd_rawmidi_drain(port->base.rawmidi);
+@@ -1188,7 +1188,7 @@ int do_midi_output(process_midi_t *proc)
+ 	if (!port->todo) {
+ 		int i;
+ 		if (worked)
+-			debug_log("midi_out: relaxing on %s\n", port->base.name);
++			debug_log("midi_out: relaxing on %s", port->base.name);
+ 		for (i=0; i<port->base.npfds; ++i)
+ 			proc->wpfds[i].events &= ~POLLOUT;
+ 	} else {
+diff --git a/drivers/alsa/alsa_driver.c b/drivers/alsa/alsa_driver.c
+--- a/drivers/alsa/alsa_driver.c
++++ b/drivers/alsa/alsa_driver.c
+@@ -115,7 +115,7 @@ alsa_driver_check_card_type (alsa_driver
+ 		char tmp[5];
+ 		strncpy(tmp,strstr(driver->alsa_name_playback,"hw"),4);
+ 		tmp[4]='\0';
+-		printf("control device %s\n",tmp);
++		jack_info("control device %s",tmp);
+ 		ctl_name = strdup(tmp);
+ 	} else {
+ 		ctl_name = strdup(driver->alsa_name_playback);
+@@ -243,21 +243,21 @@ alsa_driver_setup_io_function_pointers (
+ 
+ 		switch (driver->dither) {
+ 			case Rectangular:
+-			printf("Rectangular dithering at 16 bits\n");
++			jack_info("Rectangular dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_rect_d16_sSs:
+ 				sample_move_dither_rect_d16_sS;
+ 			break;
+ 
+ 			case Triangular:
+-			printf("Triangular dithering at 16 bits\n");
++			jack_info("Triangular dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_tri_d16_sSs:
+ 				sample_move_dither_tri_d16_sS;
+ 			break;
+ 
+ 			case Shaped:
+-			printf("Noise-shaped dithering at 16 bits\n");
++			jack_info("Noise-shaped dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_shaped_d16_sSs:
+ 				sample_move_dither_shaped_d16_sS;
+@@ -279,21 +279,21 @@ alsa_driver_setup_io_function_pointers (
+ 
+ 		switch (driver->dither) {
+ 			case Rectangular:
+-			printf("Rectangular dithering at 16 bits\n");
++			jack_info("Rectangular dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_rect_d24_sSs:
+ 				sample_move_dither_rect_d24_sS;
+ 			break;
+ 
+ 			case Triangular:
+-			printf("Triangular dithering at 16 bits\n");
++			jack_info("Triangular dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_tri_d24_sSs:
+ 				sample_move_dither_tri_d24_sS;
+ 			break;
+ 
+ 			case Shaped:
+-			printf("Noise-shaped dithering at 16 bits\n");
++			jack_info("Noise-shaped dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_shaped_d24_sSs:
+ 				sample_move_dither_shaped_d24_sS;
+@@ -315,21 +315,21 @@ alsa_driver_setup_io_function_pointers (
+ 		
+ 		switch (driver->dither) {
+ 			case Rectangular:
+-			printf("Rectangular dithering at 16 bits\n");
++			jack_info("Rectangular dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_rect_d32u24_sSs:
+ 				sample_move_dither_rect_d32u24_sS;
+ 			break;
+ 
+ 			case Triangular:
+-			printf("Triangular dithering at 16 bits\n");
++			jack_info("Triangular dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_tri_d32u24_sSs:
+ 				sample_move_dither_tri_d32u24_sS;
+ 			break;
+ 
+ 			case Shaped:
+-			printf("Noise-shaped dithering at 16 bits\n");
++			jack_info("Noise-shaped dithering at 16 bits");
+ 			driver->write_via_copy = driver->quirk_bswap?
+ 				sample_move_dither_shaped_d32u24_sSs:
+ 				sample_move_dither_shaped_d32u24_sS;
+@@ -436,7 +436,7 @@ alsa_driver_configure_stream (alsa_drive
+ 			} else {
+ 				driver->quirk_bswap = 0;
+ 			}
+-			jack_error ("ALSA: final selected sample format for %s: %s", stream_name, formats[format].Name);
++			jack_info ("ALSA: final selected sample format for %s: %s", stream_name, formats[format].Name);
+ 			break;
+ 		}
+ 	} 
+@@ -514,7 +514,7 @@ alsa_driver_configure_stream (alsa_drive
+ 			    stream_name);
+ 		return -1;
+ 	}
+-	jack_error ("ALSA: use %d periods for %s", *nperiodsp, stream_name);
++	jack_info ("ALSA: use %d periods for %s", *nperiodsp, stream_name);
+ 	
+ 	if (!jack_power_of_two(driver->frames_per_cycle)) {
+ 		jack_error("JACK: frames must be a power of two "
+@@ -567,7 +567,7 @@ alsa_driver_configure_stream (alsa_drive
+ 	}
+ 
+ #if 0
+-	fprintf (stderr, "set silence size to %lu * %lu = %lu\n",
++	jack_info ("set silence size to %lu * %lu = %lu",
+ 		 driver->frames_per_cycle, *nperiodsp,
+ 		 driver->frames_per_cycle * *nperiodsp);
+ 
+@@ -621,8 +621,8 @@ alsa_driver_set_parameters (alsa_driver_
+ 	driver->frames_per_cycle = frames_per_cycle;
+ 	driver->user_nperiods = user_nperiods;
+ 
+-	fprintf (stderr, "configuring for %" PRIu32 "Hz, period = %"
+-		 PRIu32 " frames (%.1f ms), buffer = %" PRIu32 " periods\n",
++	jack_info ("configuring for %" PRIu32 "Hz, period = %"
++		 PRIu32 " frames (%.1f ms), buffer = %" PRIu32 " periods",
+ 		 rate, frames_per_cycle, (((float)frames_per_cycle / (float) rate) * 1000.0f), user_nperiods);
+ 	
+ 	if (driver->capture_handle) {
+@@ -1299,7 +1299,7 @@ alsa_driver_wait (alsa_driver_t *driver,
+ 		if (poll_result < 0) {
+ 
+ 			if (errno == EINTR) {
+-				printf ("poll interrupt\n");
++				jack_info ("poll interrupt");
+ 				// this happens mostly when run
+ 				// under gdb, or when exiting due to a signal
+ 				if (under_gdb) {
+@@ -1329,8 +1329,8 @@ alsa_driver_wait (alsa_driver_t *driver,
+ 		}
+ 
+ #ifdef DEBUG_WAKEUP
+-		fprintf (stderr, "%" PRIu64 ": checked %d fds, %" PRIu64
+-			 " usecs since poll entered\n", poll_ret, nfds,
++		jack_info ("%" PRIu64 ": checked %d fds, %" PRIu64
++			 " usecs since poll entered", poll_ret, nfds,
+ 			 poll_ret - poll_enter);
+ #endif
+ 
+@@ -1368,8 +1368,8 @@ alsa_driver_wait (alsa_driver_t *driver,
+ 			if (revents & POLLOUT) {
+ 				need_playback = 0;
+ #ifdef DEBUG_WAKEUP
+-				fprintf (stderr, "%" PRIu64
+-					 " playback stream ready\n",
++				jack_info ("%" PRIu64
++					 " playback stream ready",
+ 					 poll_ret);
+ #endif
+ 			}
+@@ -1391,8 +1391,8 @@ alsa_driver_wait (alsa_driver_t *driver,
+ 			if (revents & POLLIN) {
+ 				need_capture = 0;
+ #ifdef DEBUG_WAKEUP
+-				fprintf (stderr, "%" PRIu64
+-					 " capture stream ready\n",
++				jack_info ("%" PRIu64
++					 " capture stream ready",
+ 					 poll_ret);
+ #endif
+ 			}
+@@ -1449,8 +1449,8 @@ alsa_driver_wait (alsa_driver_t *driver,
+ 	avail = capture_avail < playback_avail ? capture_avail : playback_avail;
+ 
+ #ifdef DEBUG_WAKEUP
+-	fprintf (stderr, "wakeup complete, avail = %lu, pavail = %lu "
+-		 "cavail = %lu\n",
++	jack_info ("wakeup complete, avail = %lu, pavail = %lu "
++		 "cavail = %lu",
+ 		 avail, playback_avail, capture_avail);
+ #endif
+ 
+@@ -1600,7 +1600,7 @@ alsa_driver_read (alsa_driver_t *driver,
+ 		if ((err = snd_pcm_mmap_commit (driver->capture_handle,
+ 				offset, contiguous)) < 0) {
+ 			jack_error ("ALSA: could not complete read of %"
+-				PRIu32 " frames: error = %d\n", contiguous, err);
++				PRIu32 " frames: error = %d", contiguous, err);
+ 			return -1;
+ 		}
+ 
+@@ -2011,8 +2011,8 @@ alsa_driver_new (char *name, char *playb
+ 
+ 	alsa_driver_t *driver;
+ 
+-	printf ("creating alsa driver ... %s|%s|%" PRIu32 "|%" PRIu32
+-		"|%" PRIu32"|%" PRIu32"|%" PRIu32 "|%s|%s|%s|%s\n",
++	jack_info ("creating alsa driver ... %s|%s|%" PRIu32 "|%" PRIu32
++		"|%" PRIu32"|%" PRIu32"|%" PRIu32 "|%s|%s|%s|%s",
+ 		playing ? playback_alsa_device : "-",
+ 		capturing ? capture_alsa_device : "-", 
+ 		frames_per_cycle, user_nperiods, rate,
+@@ -2343,7 +2343,7 @@ dither_opt (char c, DitherAlgorithm* dit
+ 		break;
+ 		
+ 	default:
+-		fprintf (stderr, "ALSA driver: illegal dithering mode %c\n", c);
++		jack_error ("ALSA driver: illegal dithering mode %c", c);
+ 		return -1;
+ 	}
+ 	return 0;
+@@ -2600,7 +2600,7 @@ driver_initialize (jack_client_t *client
+ 
+ 		case 'r':
+ 		        srate = param->value.ui;
+-			fprintf (stderr, "apparent rate = %d\n", srate);
++			jack_info ("apparent rate = %d", srate);
+ 		        break;
+ 			
+ 		case 'p':
+diff --git a/drivers/alsa/hammerfall.c b/drivers/alsa/hammerfall.c
+--- a/drivers/alsa/hammerfall.c
++++ b/drivers/alsa/hammerfall.c
+@@ -109,7 +109,7 @@ hammerfall_check_sync (hammerfall_t *h, 
+ 	int val;
+ 	snd_ctl_elem_id_t *ctl_id;
+ 	
+-	printf ("check sync\n");
++	jack_info ("check sync");
+ 
+ 	snd_ctl_elem_id_alloca (&ctl_id);
+ 	snd_ctl_elem_value_get_id (ctl, ctl_id);
+diff --git a/drivers/alsa/usx2y.c b/drivers/alsa/usx2y.c
+--- a/drivers/alsa/usx2y.c
++++ b/drivers/alsa/usx2y.c
+@@ -122,7 +122,7 @@ usx2y_driver_get_channel_addresses_playb
+ 	if (dbg_offset < (sizeof(dbg_buffer) - 256))
+ 		dbg_offset += sprintf(dbg_buffer + dbg_offset, "avail %li@%p\n", *playback_avail, driver->playback_addr[0]);
+ 	else {
+-		printf(dbg_buffer);
++		jack_info_multiline(dbg_buffer);
+ 		return -1;
+ 	}
+ #endif
+@@ -196,7 +196,7 @@ usx2y_driver_get_channel_addresses_captu
+ 	if (dbg_offset < (sizeof(dbg_buffer) - 256))
+ 		dbg_offset += sprintf(dbg_buffer + dbg_offset, "avail %li@%p\n", *capture_avail, driver->capture_addr[0]);
+ 	else {
+-		printf(dbg_buffer);
++		jack_info_multiline(dbg_buffer);
+ 		return -1;
+ 	}
+ #endif
+@@ -391,7 +391,7 @@ usx2y_driver_null_cycle (alsa_driver_t* 
+ 	int chn;
+ 
+ 	VERBOSE(driver->engine,
+-		"usx2y_driver_null_cycle (%p, %i)\n", driver, nframes);
++		"usx2y_driver_null_cycle (%p, %i)", driver, nframes);
+ 
+ 	if (driver->capture_handle) {
+ 		nf = nframes;
+@@ -675,8 +675,8 @@ jack_alsa_usx2y_hw_new (alsa_driver_t *d
+ 			hw->private = h;
+ 			/* Set our own operational function pointers. */
+ 			usx2y_driver_setup(driver);
+-			printf("ALSA/USX2Y: EXPERIMENTAL hwdep pcm device %s"
+-				" (aka \"rawusb\")\n", driver->alsa_name_playback);
++			jack_info("ALSA/USX2Y: EXPERIMENTAL hwdep pcm device %s"
++				" (aka \"rawusb\")", driver->alsa_name_playback);
+ 		}
+ 	}
+ 
+diff --git a/drivers/coreaudio/coreaudio_driver.c b/drivers/coreaudio/coreaudio_driver.c
+--- a/drivers/coreaudio/coreaudio_driver.c
++++ b/drivers/coreaudio/coreaudio_driver.c
+@@ -272,8 +272,8 @@ static OSStatus display_device_names()
+ 		err = AudioDeviceGetProperty(devices[i], 0, false, kAudioDevicePropertyDeviceName, &size, device_name);
+ 		if (err != noErr) 
+ 			return err; 
+-		printf("ICI\n");
+-		printf("Device name = \'%s\', internal_name = \'%s\' (to be used as -d parameter)\n", device_name, internal_name); 
++		jack_info("ICI");
++		jack_info("Device name = \'%s\', internal_name = \'%s\' (to be used as -d parameter)", device_name, internal_name); 
+ 	}
+ 	
+ 	return noErr;
+@@ -627,7 +627,7 @@ static jack_driver_t *coreaudio_driver_n
+     jack_driver_init((jack_driver_t *) driver);
+ 
+     if (!jack_power_of_two(nframes)) {
+-		fprintf(stderr, "CA: -p must be a power of two.\n");
++		jack_error("CA: -p must be a power of two.");
+ 		goto error;
+     }
+ 
+diff --git a/drivers/dummy/dummy_driver.c b/drivers/dummy/dummy_driver.c
+--- a/drivers/dummy/dummy_driver.c
++++ b/drivers/dummy/dummy_driver.c
+@@ -50,7 +50,7 @@ FakeVideoSync( dummy_driver_t *driver )
+         jack_position_t *position = &driver->engine->control->current_time;
+ 
+         if ( period >= VIDEO_SYNC_PERIOD ) {
+-                printf("JACK driver period size too large for simple video sync emulation. Halting.\n");
++                jack_error("JACK driver period size too large for simple video sync emulation. Halting.");
+                 exit(0);
+         }
+ 
+@@ -87,7 +87,7 @@ dummy_driver_wait (dummy_driver_t *drive
+ 			    > (PRETEND_BUFFER_SIZE * 1000000LL
+ 			       / driver->sample_rate)) {
+ 			/* xrun */
+-			fprintf(stderr,"**** dummy: xrun of %ju usec\n",
++			jack_error("**** dummy: xrun of %ju usec",
+ 				(uintmax_t)now - driver->next_time);
+ 			driver->next_time = now + driver->wait_time;
+ 		} else {
+@@ -267,8 +267,8 @@ dummy_driver_new (jack_client_t * client
+ {
+ 	dummy_driver_t * driver;
+ 
+-	printf ("creating dummy driver ... %s|%" PRIu32 "|%" PRIu32
+-		"|%lu|%u|%u\n", name, sample_rate, period_size, wait_time,
++	jack_info ("creating dummy driver ... %s|%" PRIu32 "|%" PRIu32
++		"|%lu|%u|%u", name, sample_rate, period_size, wait_time,
+ 		capture_ports, playback_ports);
+ 
+ 	driver = (dummy_driver_t *) calloc (1, sizeof (dummy_driver_t));
+diff --git a/drivers/oss/oss_driver.c b/drivers/oss/oss_driver.c
+--- a/drivers/oss/oss_driver.c
++++ b/drivers/oss/oss_driver.c
+@@ -599,14 +599,14 @@ static int oss_driver_start (oss_driver_
+ 			jack_error(
+ 				"OSS: failed to set samplerate for %s: %s@%i, errno=%d", 
+ 				indev, __FILE__, __LINE__, errno);
+-		printf("oss_driver: %s : 0x%x/%i/%i (%i)\n", indev, 
++		jack_info("oss_driver: %s : 0x%x/%i/%i (%i)", indev, 
+ 			format, channels, samplerate, get_fragment(infd));
+ 		
+ 		period_size = get_fragment(infd) / samplesize / channels;
+ 		if (period_size != driver->period_size && 
+ 			!driver->ignorehwbuf)
+ 		{
+-			printf("oss_driver: period size update: %u\n",
++			jack_info("oss_driver: period size update: %u",
+ 				period_size);
+ 			driver->period_size = period_size;
+ 			driver->period_usecs = 
+@@ -634,7 +634,7 @@ static int oss_driver_start (oss_driver_
+ 			jack_error(
+ 				"OSS: failed to set samplerate for %s: %s@%i, errno=%d", 
+ 				outdev, __FILE__, __LINE__, errno);
+-		printf("oss_driver: %s : 0x%x/%i/%i (%i)\n", outdev, 
++		jack_info("oss_driver: %s : 0x%x/%i/%i (%i)", outdev, 
+ 			format, channels, samplerate, 
+ 			get_fragment(outfd));
+ 
+@@ -642,7 +642,7 @@ static int oss_driver_start (oss_driver_
+ 		if (period_size != driver->period_size &&
+ 			!driver->ignorehwbuf)
+ 		{
+-			printf("oss_driver: period size update: %u\n",
++			jack_indo("oss_driver: period size update: %u",
+ 				period_size);
+ 			driver->period_size = period_size;
+ 			driver->period_usecs = 
+@@ -691,7 +691,7 @@ static int oss_driver_start (oss_driver_
+ 		driver->outdevbuf = NULL;
+ 	}
+ 
+-	printf("oss_driver: indevbuf %zd B, outdevbuf %zd B\n",
++	jack_info("oss_driver: indevbuf %zd B, outdevbuf %zd B",
+ 		driver->indevbufsize, driver->outdevbufsize);
+ 
+ 	pthread_mutex_init(&driver->mutex_in, NULL);
+@@ -907,7 +907,7 @@ static int oss_driver_bufsize (oss_drive
+ 
+ 	set_period_size(driver, nframes);
+ 	driver->engine->set_buffer_size(driver->engine, driver->period_size);
+-	printf("oss_driver: period size update: %u\n", nframes);
++	jack_info("oss_driver: period size update: %u", nframes);
+ 
+ 	oss_driver_start(driver);
+ 
+@@ -1102,7 +1102,7 @@ jack_driver_desc_t * driver_get_descript
+ 	desc = (jack_driver_desc_t *) calloc(1, sizeof(jack_driver_desc_t));
+ 	if (desc == NULL)
+ 	{
+-		printf("oss_driver: calloc() failed: %s@%i, errno=%d\n",
++		jack_error("oss_driver: calloc() failed: %s@%i, errno=%d",
+ 			__FILE__, __LINE__, errno);
+ 		return NULL;
+ 	}
+@@ -1112,7 +1112,7 @@ jack_driver_desc_t * driver_get_descript
+ 	params = calloc(desc->nparams, sizeof(jack_driver_param_desc_t));
+ 	if (params == NULL)
+ 	{
+-		printf("oss_driver: calloc() failed: %s@%i, errno=%d\n",
++		jack_error("oss_driver: calloc() failed: %s@%i, errno=%d",
+ 			__FILE__, __LINE__, errno);
+ 		return NULL;
+ 	}
+diff --git a/drivers/portaudio/portaudio_driver.c b/drivers/portaudio/portaudio_driver.c
+--- a/drivers/portaudio/portaudio_driver.c
++++ b/drivers/portaudio/portaudio_driver.c
+@@ -332,9 +332,9 @@ portaudio_driver_set_parameters (portaud
+ 
+ 		// JOQ: this driver is dead.  How do we terminate it?
+ 		Pa_Terminate();
+-		fprintf(stderr, "Unable to set portaudio parameters\n"); 
+-		fprintf(stderr, "Error number: %d\n", err);
+-		fprintf(stderr, "Error message: %s\n", Pa_GetErrorText(err));
++		jack_error("Unable to set portaudio parameters");
++		jack_error("Error number: %d", err);
++		jack_error("Error message: %s", Pa_GetErrorText(err));
+ 		return EIO;
+ 	}
+ }
+@@ -345,8 +345,8 @@ portaudio_driver_reset_parameters (porta
+ 				   jack_nframes_t rate)
+ {
+ 	if (!jack_power_of_two(nframes)) {
+-		fprintf (stderr, "PA: frames must be a power of two "
+-			 "(64, 512, 1024, ...)\n");
++		jack_error("PA: frames must be a power of two "
++			 "(64, 512, 1024, ...)");
+ 		return EINVAL;
+ 	}
+ 
+@@ -541,7 +541,7 @@ portaudio_driver_new (char *name,
+ 	jack_driver_init ((jack_driver_t *) driver);
+ 
+ 	if (!jack_power_of_two(frames_per_cycle)) {
+-		fprintf (stderr, "PA: -p must be a power of two.\n");
++		jack_error ("PA: -p must be a power of two.");
+ 		goto error;
+ 	}
+ 
+@@ -653,9 +653,9 @@ error:
+ error:
+ 
+ 	Pa_Terminate();
+-	fprintf(stderr, "An error occured while using the portaudio stream\n"); 
+-	fprintf(stderr, "Error number: %d\n", err);
+-	fprintf(stderr, "Error message: %s\n", Pa_GetErrorText(err));
++	jack_error("An error occured while using the portaudio stream");
++	jack_error("Error number: %d", err);
++	jack_error("Error message: %s", Pa_GetErrorText(err));
+ 	free(driver);
+ 	return NULL;
+ }
+diff --git a/jack/internal.h b/jack/internal.h
+--- a/jack/internal.h
++++ b/jack/internal.h
+@@ -36,6 +36,8 @@
+ 
+ /* Needed by <sysdeps/time.h> */
+ extern void jack_error (const char *fmt, ...);
++
++extern void jack_info (const char *fmt, ...);
+ 
+ #include <jack/jack.h>
+ #include <jack/types.h>
+diff --git a/jack/jack.h b/jack/jack.h
+--- a/jack/jack.h
++++ b/jack/jack.h
+@@ -856,6 +856,21 @@ extern void (*jack_error_callback)(const
+  */
+ void jack_set_error_function (void (*func)(const char *));
+ 
++/**
++ * Display JACK info message.
++ *
++ * Set via jack_set_info_function(), otherwise a JACK-provided
++ * default will print @a msg (plus a newline) to stdout.
++ *
++ * @param msg info message text (no newline at end).
++ */
++extern void (*jack_info_callback)(const char *msg);
++
++/**
++ * Set the @ref jack_info_callback for info message display.
++ */
++void jack_set_info_function (void (*func)(const char *));
++
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/jackd/clientengine.c b/jackd/clientengine.c
+--- a/jackd/clientengine.c
++++ b/jackd/clientengine.c
+@@ -87,7 +87,7 @@ static void
+ static void
+ jack_zombify_client (jack_engine_t *engine, jack_client_internal_t *client)
+ {
+-	VERBOSE (engine, "removing client \"%s\" from the processing chain\n",
++	VERBOSE (engine, "removing client \"%s\" from the processing chain",
+ 		 client->control->name);
+ 
+ 	/* caller must hold the client_lock */
+@@ -109,7 +109,7 @@ jack_remove_client (jack_engine_t *engin
+ 
+ 	/* caller must hold the client_lock */
+ 
+-	VERBOSE (engine, "removing client \"%s\"\n", client->control->name);
++	VERBOSE (engine, "removing client \"%s\"", client->control->name);
+ 
+ 	/* if its not already a zombie, make it so */
+ 
+@@ -187,7 +187,7 @@ jack_remove_clients (jack_engine_t* engi
+ 			if (client->error >= JACK_ERROR_WITH_SOCKETS) {
+ 				VERBOSE (engine, "removing failed "
+ 					 "client %s state = %s errors"
+-					 " = %d\n", 
++					 " = %d", 
+ 					 client->control->name,
+ 					 jack_client_state_name (client),
+ 					 client->error);
+@@ -197,7 +197,7 @@ jack_remove_clients (jack_engine_t* engi
+ 			} else {
+ 				VERBOSE (engine, "client failure: "
+ 					 "client %s state = %s errors"
+-					 " = %d\n", 
++					 " = %d", 
+ 					 client->control->name,
+ 					 jack_client_state_name (client),
+ 					 client->error);
+@@ -527,7 +527,7 @@ setup_client (jack_engine_t *engine, Cli
+ 	}
+ 
+ 	VERBOSE (engine, "new client: %s, id = %" PRIu32
+-		 " type %d @ %p fd = %d\n", 
++		 " type %d @ %p fd = %d", 
+ 		 client->control->name, client->control->id, 
+ 		 type, client->control, client_fd);
+ 
+@@ -568,7 +568,7 @@ setup_client (jack_engine_t *engine, Cli
+ 
+ 				/* failed: clean up client data */
+ 				VERBOSE (engine,
+-					 "%s jack_initialize() failed!\n",
++					 "%s jack_initialize() failed!",
+ 					 client->control->name);
+ 				jack_lock_graph (engine);
+ 				jack_remove_client (engine, client);
+@@ -628,7 +628,7 @@ handle_unload_client (jack_engine_t *eng
+ 	jack_lock_graph (engine);
+ 
+ 	if ((client = jack_client_internal_by_id (engine, id))) {
+-		VERBOSE (engine, "unloading client \"%s\"\n",
++		VERBOSE (engine, "unloading client \"%s\"",
+ 			 client->control->name);
+ 		jack_remove_client (engine, client);
+ 		status = 0;
+@@ -824,7 +824,7 @@ jack_client_disconnect (jack_engine_t *e
+ 
+         if (client) {
+ 		VERBOSE (engine, "removing disconnected client %s state = "
+-			 "%s errors = %d\n", client->control->name,
++			 "%s errors = %d", client->control->name,
+ 			 jack_client_state_name (client),
+ 			 client->error);
+ 		jack_remove_client(engine, client);
+@@ -906,7 +906,7 @@ jack_intclient_load_request (jack_engine
+ 	jack_status_t status = 0;
+ 
+ 	VERBOSE (engine, "load internal client %s from %s, init `%s', "
+-		 "options: 0x%x\n", req->x.intclient.name,
++		 "options: 0x%x", req->x.intclient.name,
+ 		 req->x.intclient.path, req->x.intclient.init,
+ 		 req->x.intclient.options);
+ 
+@@ -917,7 +917,7 @@ jack_intclient_load_request (jack_engine
+ 	if (client == NULL) {
+ 		status |= JackFailure;	/* just making sure */
+ 		req->x.intclient.id = 0;
+-		VERBOSE (engine, "load failed, status = 0x%x\n", status);
++		VERBOSE (engine, "load failed, status = 0x%x", status);
+ 	} else {
+ 		req->x.intclient.id = client->control->id;
+ 	}
+@@ -955,7 +955,7 @@ jack_intclient_unload_request (jack_engi
+ 			handle_unload_client (engine, req->x.intclient.id);
+ 		pthread_mutex_lock (&engine->request_lock);
+ 	} else {
+-		VERBOSE (engine, "invalid unload request\n");
++		VERBOSE (engine, "invalid unload request");
+ 		req->status = JackFailure;
+ 	}
+ }
+diff --git a/jackd/engine.c b/jackd/engine.c
+--- a/jackd/engine.c
++++ b/jackd/engine.c
+@@ -510,7 +510,7 @@ jack_driver_buffer_size (jack_engine_t *
+ 	jack_event_t event;
+ 	JSList *node;
+ 
+-	VERBOSE (engine, "new buffer size %" PRIu32 "\n", nframes);
++	VERBOSE (engine, "new buffer size %" PRIu32, nframes);
+ 
+ 	engine->control->buffer_size = nframes;
+ 	if (engine->driver)
+@@ -709,7 +709,7 @@ jack_process_external(jack_engine_t *eng
+ 			 " waiting on %d for %" PRIu64
+ 			 " usecs, status = %d sig = %" PRIu64
+ 			 " awa = %" PRIu64 " fin = %" PRIu64
+-			 " dur=%" PRIu64 "\n",
++			 " dur=%" PRIu64,
+ 			 now,
+ 			 client->subgraph_wait_fd,
+ 			 now - then,
+@@ -808,7 +808,7 @@ jack_calc_cpu_load(jack_engine_t *engine
+ 	engine->rolling_client_usecs[engine->rolling_client_usecs_index++] = 
+ 		cycle_end - engine->control->current_time.usecs;
+ 
+-	//printf ("cycle_end - engine->control->current_time.usecs %ld\n",
++	//jack_info ("cycle_end - engine->control->current_time.usecs %ld",
+ 	//	(long) (cycle_end - engine->control->current_time.usecs));
+ 
+ 	if (engine->rolling_client_usecs_index >= JACK_ENGINE_ROLLING_COUNT) {
+@@ -847,7 +847,7 @@ jack_calc_cpu_load(jack_engine_t *engine
+ 			+ (engine->control->cpu_load * 0.5f);
+ 
+ 		VERBOSE (engine, "load = %.4f max usecs: %.3f, "
+-			 "spare = %.3f\n", engine->control->cpu_load,
++			 "spare = %.3f", engine->control->cpu_load,
+ 			 max_usecs, engine->spare_usecs);
+ 	}
+ 
+@@ -880,7 +880,7 @@ jack_engine_post_process (jack_engine_t 
+ 			    ctl->timed_out++) {
+ 				VERBOSE(engine, "client %s error: awake_at = %"
+ 					 PRIu64
+-					 " state = %d timed_out = %d\n",
++					 " state = %d timed_out = %d",
+ 					 ctl->name,
+ 					 ctl->awake_at,
+ 					 ctl->state,
+@@ -1077,14 +1077,14 @@ static int check_capabilities (jack_engi
+ 
+ 	if (caps == NULL) {
+ 		VERBOSE (engine, "check: could not allocate capability"
+-			 " working storage\n");
++			 " working storage");
+ 		return 0;
+ 	}
+ 	pid = getpid ();
+ 	cap_clear (caps);
+ 	if (capgetp (pid, caps)) {
+ 		VERBOSE (engine, "check: could not get capabilities "
+-			 "for process %d\n", pid);
++			 "for process %d", pid);
+ 		return 0;
+ 	}
+ 	/* check that we are able to give capabilites to other processes */
+@@ -1123,13 +1123,13 @@ static int give_capabilities (jack_engin
+ 
+ 	if (caps == NULL) {
+ 		VERBOSE (engine, "give: could not allocate capability"
+-			 " working storage\n");
++			 " working storage");
+ 		return -1;
+ 	}
+ 	cap_clear(caps);
+ 	if (capgetp (pid, caps)) {
+ 		VERBOSE (engine, "give: could not get current "
+-			 "capabilities for process %d\n", pid);
++			 "capabilities for process %d", pid);
+ 		cap_clear(caps);
+ 	}
+ 	cap_set_flag(caps, CAP_EFFECTIVE, caps_size, cap_list , CAP_SET);
+@@ -1156,11 +1156,11 @@ jack_set_client_capabilities (jack_engin
+ 
+ 	if ((ret = give_capabilities (engine, cap_pid)) != 0) {
+ 		jack_error ("could not give capabilities to "
+-			    "process %d\n",
++			    "process %d",
+ 			    cap_pid);
+ 	} else {
+ 		VERBOSE (engine, "gave capabilities to"
+-			 " process %d\n",
++			 " process %d",
+ 			 cap_pid);
+ 	}
+ 
+@@ -1667,7 +1667,7 @@ jack_engine_new (int realtime, int rtpri
+ 			&jack_builtin_port_types[i],
+ 			sizeof (jack_port_type_info_t));
+ 
+-		VERBOSE (engine, "registered builtin port type %s\n",
++		VERBOSE (engine, "registered builtin port type %s",
+ 			 engine->control->port_types[i].type_name);
+ 
+ 		/* the port type id is index into port_types array */
+@@ -1725,7 +1725,7 @@ jack_engine_new (int realtime, int rtpri
+ 	jack_set_clock_source (clock_source);
+ 	engine->control->clock_source = clock_source;
+ 
+-	VERBOSE (engine, "clock source = %s\n", jack_clock_source_name (clock_source));
++	VERBOSE (engine, "clock source = %s", jack_clock_source_name (clock_source));
+ 
+ 	engine->control->frame_timer.frames = frame_time_offset;
+ 	engine->control->frame_timer.reset_pending = 0;
+@@ -1759,20 +1759,20 @@ jack_engine_new (int realtime, int rtpri
+ #ifdef USE_CAPABILITIES
+ 	if (uid == 0 || euid == 0) {
+ 		VERBOSE (engine, "running with uid=%d and euid=%d, "
+-			 "will not try to use capabilites\n",
++			 "will not try to use capabilites",
+ 			 uid, euid);
+ 	} else {
+ 		/* only try to use capabilities if not running as root */
+ 		engine->control->has_capabilities = check_capabilities (engine);
+ 		if (engine->control->has_capabilities == 0) {
+ 			VERBOSE (engine, "required capabilities not "
+-				 "available\n");
++				 "available");
+ 		}
+ 		if (engine->verbose) {
+ 			size_t size;
+ 			cap_t cap = cap_init();
+ 			capgetp(0, cap);
+-			VERBOSE (engine, "capabilities: %s\n",
++			VERBOSE (engine, "capabilities: %s",
+ 				 cap_to_text(cap, &size));
+ 		}
+ 	}
+@@ -1847,7 +1847,7 @@ jack_engine_freewheel (void *arg)
+ {
+ 	jack_engine_t* engine = (jack_engine_t *) arg;
+ 
+-	VERBOSE (engine, "freewheel thread starting ...\n");
++	VERBOSE (engine, "freewheel thread starting ...");
+ 
+ 	/* we should not be running SCHED_FIFO, so we don't 
+ 	   have to do anything about scheduling.
+@@ -1867,7 +1867,7 @@ jack_engine_freewheel (void *arg)
+ 		jack_unlock_graph (engine);
+ 	}
+ 
+-	VERBOSE (engine, "freewheel came to an end, naturally\n");
++	VERBOSE (engine, "freewheel came to an end, naturally");
+ 	return 0;
+ }
+ 
+@@ -1924,7 +1924,7 @@ jack_stop_freewheeling (jack_engine_t* e
+ 	}
+ 
+ 	if (!engine->freewheeling) {
+-		VERBOSE (engine, "stop freewheel when not freewheeling\n");
++		VERBOSE (engine, "stop freewheel when not freewheeling");
+ 		return 0;
+ 	}
+ 
+@@ -1933,9 +1933,9 @@ jack_stop_freewheeling (jack_engine_t* e
+ 	*/
+ 
+ 	engine->freewheeling = 0;
+-	VERBOSE (engine, "freewheeling stopped, waiting for thread\n");
++	VERBOSE (engine, "freewheeling stopped, waiting for thread");
+ 	pthread_join (engine->freewheel_thread, &ftstatus);
+-	VERBOSE (engine, "freewheel thread has returned\n");
++	VERBOSE (engine, "freewheel thread has returned");
+ 
+ 	/* tell everyone we've stopped */
+ 
+@@ -2023,7 +2023,7 @@ jack_run_one_cycle (jack_engine_t *engin
+ 			if (client->control->type == ClientExternal) {
+ 				if (kill (client->control->pid, 0)) {
+ 					VERBOSE(engine,
+-						"client %s has died/exited\n",
++						"client %s has died/exited",
+ 						client->control->name);
+ 					client->error++;
+ 				}
+@@ -2109,7 +2109,7 @@ jack_run_cycle (jack_engine_t *engine, j
+ 		if (nframes != b_size) { 
+ 			VERBOSE (engine, 
+ 				"late driver wakeup: nframes to process = %"
+-				PRIu32 ".\n", nframes);
++				PRIu32 ".", nframes);
+ 		}
+ 	}
+ 
+@@ -2132,7 +2132,7 @@ jack_engine_delete (jack_engine_t *engin
+ 	if (engine == NULL)
+ 		return;
+ 
+-	VERBOSE (engine, "starting server engine shutdown\n");
++	VERBOSE (engine, "starting server engine shutdown");
+ 
+ 	engine->control->engine_ok = 0;	/* tell clients we're going away */
+ 
+@@ -2149,23 +2149,23 @@ jack_engine_delete (jack_engine_t *engin
+ 	if (engine->driver) {
+ 		jack_driver_t* driver = engine->driver;
+ 
+-		VERBOSE (engine, "stopping driver\n");
++		VERBOSE (engine, "stopping driver");
+ 		driver->stop (driver);
+-		// VERBOSE (engine, "detaching driver\n");
++		// VERBOSE (engine, "detaching driver");
+ 		// driver->detach (driver, engine);
+-		VERBOSE (engine, "unloading driver\n");
++		VERBOSE (engine, "unloading driver");
+ 		jack_driver_unload (driver);
+ 		engine->driver = NULL;
+ 	}
+ 
+-	VERBOSE (engine, "freeing shared port segments\n");
++	VERBOSE (engine, "freeing shared port segments");
+ 	for (i = 0; i < engine->control->n_port_types; ++i) {
+ 		jack_release_shm (&engine->port_segment[i]);
+ 		jack_destroy_shm (&engine->port_segment[i]);
+ 	}
+ 
+ 	/* stop the other engine threads */
+-	VERBOSE (engine, "stopping server thread\n");
++	VERBOSE (engine, "stopping server thread");
+ 
+ #if JACK_USE_MACH_THREADS 
+ 	// MacOSX pthread_cancel still not implemented correctly in Darwin
+@@ -2183,26 +2183,25 @@ jack_engine_delete (jack_engine_t *engin
+ 	 * drivers already contain a similar mechanism.
+ 	 */	
+ 	if (engine->control->real_time && engine->watchdog_thread) {
+-		VERBOSE (engine, "stopping watchdog thread\n");
++		VERBOSE (engine, "stopping watchdog thread");
+ 		pthread_cancel (engine->watchdog_thread);
+ 		pthread_join (engine->watchdog_thread, NULL);
+ 	}
+ #endif
+ 
+-	VERBOSE (engine, "last xrun delay: %.3f usecs\n",
++	VERBOSE (engine, "last xrun delay: %.3f usecs",
+ 		engine->control->xrun_delayed_usecs);
+-	VERBOSE (engine, "max delay reported by backend: %.3f usecs\n",
++	VERBOSE (engine, "max delay reported by backend: %.3f usecs",
+ 		engine->control->max_delayed_usecs);
+ 
+ 	/* free engine control shm segment */
+ 	engine->control = NULL;
+-	VERBOSE (engine, "freeing engine shared memory\n");
++	VERBOSE (engine, "freeing engine shared memory");
+ 	jack_release_shm (&engine->control_shm);
+ 	jack_destroy_shm (&engine->control_shm);
+ 
+-	VERBOSE (engine, "max usecs: %.3f, ", engine->max_usecs);
++	VERBOSE (engine, "max usecs: %.3f, engine deleted", engine->max_usecs);
+ 
+-	VERBOSE (engine, "engine deleted\n");
+ 	free (engine);
+ 
+ 	jack_messagebuffer_exit();
+@@ -2398,7 +2397,7 @@ jack_rechain_graph (jack_engine_t *engin
+ 
+ 	subgraph_client = 0;
+ 
+-	VERBOSE(engine, "++ jack_rechain_graph():\n");
++	VERBOSE(engine, "++ jack_rechain_graph():");
+ 
+ 	event.type = GraphReordered;
+ 
+@@ -2444,7 +2443,7 @@ jack_rechain_graph (jack_engine_t *engin
+ 						jack_get_fifo_fd (engine, n);
+ 					VERBOSE (engine, "client %s: wait_fd="
+ 						 "%d, execution_order="
+-						 "%lu.\n", 
++						 "%lu.", 
+ 						 subgraph_client->
+ 						 control->name,
+ 						 subgraph_client->
+@@ -2454,7 +2453,7 @@ jack_rechain_graph (jack_engine_t *engin
+ 
+ 				VERBOSE (engine, "client %s: internal "
+ 					 "client, execution_order="
+-					 "%lu.\n", 
++					 "%lu.", 
+ 					 client->control->name, n);
+ 
+ 				/* this does the right thing for
+@@ -2480,7 +2479,7 @@ jack_rechain_graph (jack_engine_t *engin
+ 						jack_get_fifo_fd (engine, n);
+ 					VERBOSE (engine, "client %s: "
+ 						 "start_fd=%d, execution"
+-						 "_order=%lu.\n",
++						 "_order=%lu.",
+ 						 subgraph_client->
+ 						 control->name,
+ 						 subgraph_client->
+@@ -2498,7 +2497,7 @@ jack_rechain_graph (jack_engine_t *engin
+ 					VERBOSE (engine, "client %s: in"
+ 						 " subgraph after %s, "
+ 						 "execution_order="
+-						 "%lu.\n",
++						 "%lu.",
+ 						 client->control->name,
+ 						 subgraph_client->
+ 						 control->name, n);
+@@ -2530,12 +2529,12 @@ jack_rechain_graph (jack_engine_t *engin
+ 		subgraph_client->subgraph_wait_fd =
+ 			jack_get_fifo_fd (engine, n);
+ 		VERBOSE (engine, "client %s: wait_fd=%d, "
+-			 "execution_order=%lu (last client).\n", 
++			 "execution_order=%lu (last client).", 
+ 			 subgraph_client->control->name,
+ 			 subgraph_client->subgraph_wait_fd, n);
+ 	}
+ 
+-	VERBOSE (engine, "-- jack_rechain_graph()\n");
++	VERBOSE (engine, "-- jack_rechain_graph()");
+ 
+ 	return err;
+ }
+@@ -2573,7 +2572,7 @@ jack_get_port_total_latency (jack_engine
+ 	}
+ 
+ #ifdef DEBUG_TOTAL_LATENCY_COMPUTATION
+-	fprintf (stderr, "\n%sFor port %s (%s)\n", prefix, port->shared->name, (toward_port ? "toward" : "away"));
++	jack_info ("%sFor port %s (%s)", prefix, port->shared->name, (toward_port ? "toward" : "away"));
+ #endif
+ 	
+ 	for (node = port->connections; node; node = jack_slist_next (node)) {
+@@ -2590,7 +2589,7 @@ jack_get_port_total_latency (jack_engine
+ 		     (connection->destination->shared == port->shared))) {
+ 
+ #ifdef DEBUG_TOTAL_LATENCY_COMPUTATION
+-			fprintf (stderr, "%s\tskip connection %s->%s\n",
++			jack_info ("%s\tskip connection %s->%s",
+ 				 prefix,
+ 				 connection->source->shared->name,
+ 				 connection->destination->shared->name);
+@@ -2600,7 +2599,7 @@ jack_get_port_total_latency (jack_engine
+ 		}
+ 
+ #ifdef DEBUG_TOTAL_LATENCY_COMPUTATION
+-		fprintf (stderr, "%s\tconnection %s->%s ... ", 
++		jack_info ("%s\tconnection %s->%s ... ", 
+ 			 prefix,
+ 			 connection->source->shared->name,
+ 			 connection->destination->shared->name);
+@@ -2647,7 +2646,7 @@ jack_get_port_total_latency (jack_engine
+ 	}
+ 
+ #ifdef DEBUG_TOTAL_LATENCY_COMPUTATION
+-	fprintf (stderr, "%s\treturn %lu + %lu = %lu\n", prefix, latency, max_latency, latency + max_latency);
++	jack_info ("%s\treturn %lu + %lu = %lu", prefix, latency, max_latency, latency + max_latency);
+ #endif	
+ 
+ 	return latency + max_latency;
+@@ -2782,7 +2781,7 @@ jack_check_acyclic (jack_engine_t *engin
+ 	int stuck;
+ 	int unsortedclients = 0;
+ 
+-	VERBOSE (engine, "checking for graph become acyclic\n");
++	VERBOSE (engine, "checking for graph become acyclic");
+ 
+ 	for (srcnode = engine->clients; srcnode;
+ 	     srcnode = jack_slist_next (srcnode)) {
+@@ -2823,10 +2822,10 @@ jack_check_acyclic (jack_engine_t *engin
+ 	
+ 	if (stuck) {
+ 
+-		VERBOSE (engine, "graph is still cyclic\n" );
++		VERBOSE (engine, "graph is still cyclic" );
+ 	} else {
+ 
+-		VERBOSE (engine, "graph has become acyclic\n");
++		VERBOSE (engine, "graph has become acyclic");
+ 
+ 		/* turn feedback connections around in sortfeeds */
+ 		for (srcnode = engine->clients; srcnode;
+@@ -2852,7 +2851,7 @@ jack_check_acyclic (jack_engine_t *engin
+ 				
+ 						VERBOSE (engine,
+ 						"reversing connection from "
+-						"%s to %s\n",
++						"%s to %s",
+ 						conn->srcclient->control->name,
+ 						conn->dstclient->control->name);
+ 						conn->dir = 1;
+@@ -2874,7 +2873,7 @@ jack_check_acyclic (jack_engine_t *engin
+ }
+ 
+ /**
+- * Dumps current engine configuration to stderr.
++ * Dumps current engine configuration.
+  */
+ void jack_dump_configuration(jack_engine_t *engine, int take_lock)
+ {
+@@ -2885,7 +2884,7 @@ void jack_dump_configuration(jack_engine
+ 	jack_connection_internal_t* connection;
+ 	int n, m, o;
+ 	
+-	fprintf(stderr, "engine.c: <-- dump begins -->\n");
++	jack_info ("engine.c: <-- dump begins -->");
+ 
+ 	if (take_lock) {
+ 		jack_lock_graph (engine);
+@@ -2896,8 +2895,8 @@ void jack_dump_configuration(jack_engine
+ 	        client = (jack_client_internal_t *) clientnode->data;
+ 		ctl = client->control;
+ 
+-		fprintf (stderr, "client #%d: %s (type: %d, process? %s,"
+-			 " start=%d wait=%d\n",
++		jack_info ("client #%d: %s (type: %d, process? %s,"
++			 " start=%d wait=%d",
+ 			 ++n,
+ 			 ctl->name,
+ 			 ctl->type,
+@@ -2909,7 +2908,7 @@ void jack_dump_configuration(jack_engine
+ 		    portnode = jack_slist_next (portnode)) {
+ 		        port = (jack_port_internal_t *) portnode->data;
+ 
+-			fprintf(stderr, "\t port #%d: %s\n", ++m,
++			jack_info("\t port #%d: %s", ++m,
+ 				port->shared->name);
+ 
+ 			for(o = 0, connectionnode = port->connections; 
+@@ -2919,7 +2918,7 @@ void jack_dump_configuration(jack_engine
+ 			        connection = (jack_connection_internal_t *)
+ 					connectionnode->data;
+ 	
+-				fprintf(stderr, "\t\t connection #%d: %s %s\n",
++				jack_info("\t\t connection #%d: %s %s",
+ 					++o,
+ 					(port->shared->flags
+ 					 & JackPortIsInput)? "<-": "->",
+@@ -2935,7 +2934,7 @@ void jack_dump_configuration(jack_engine
+ 	}
+ 
+ 	
+-	fprintf(stderr, "engine.c: <-- dump ends -->\n");
++	jack_info("engine.c: <-- dump ends -->");
+ }
+ 
+ static int 
+@@ -3049,7 +3048,7 @@ jack_port_do_connect (jack_engine_t *eng
+ 			   feedback */
+ 			
+ 			VERBOSE (engine,
+-				 "connect %s and %s (output)\n",
++				 "connect %s and %s (output)",
+ 				 srcport->shared->name,
+ 				 dstport->shared->name);
+ 
+@@ -3072,7 +3071,7 @@ jack_port_do_connect (jack_engine_t *eng
+ 				   this is a feedback connection */
+ 				
+ 				VERBOSE (engine,
+-					 "connect %s and %s (feedback)\n",
++					 "connect %s and %s (feedback)",
+ 					 srcport->shared->name,
+ 					 dstport->shared->name);
+ 				 
+@@ -3082,7 +3081,7 @@ jack_port_do_connect (jack_engine_t *eng
+ 				connection->dir = -1;
+ 				engine->feedbackcount++;
+ 				VERBOSE (engine,
+-					 "feedback count up to %d\n",
++					 "feedback count up to %d",
+ 					 engine->feedbackcount);
+ 
+ 			} else {
+@@ -3090,7 +3089,7 @@ jack_port_do_connect (jack_engine_t *eng
+ 				/* this is not a feedback connection */
+ 
+ 				VERBOSE (engine,
+-					 "connect %s and %s (forward)\n",
++					 "connect %s and %s (forward)",
+ 					 srcport->shared->name,
+ 					 dstport->shared->name);
+ 
+@@ -3105,7 +3104,7 @@ jack_port_do_connect (jack_engine_t *eng
+ 			/* this is a connection to self */
+ 
+ 			VERBOSE (engine,
+-				 "connect %s and %s (self)\n",
++				 "connect %s and %s (self)",
+ 				 srcport->shared->name,
+ 				 dstport->shared->name);
+ 			
+@@ -3160,7 +3159,7 @@ jack_port_disconnect_internal (jack_engi
+ 		if (connect->source == srcport &&
+ 		    connect->destination == dstport) {
+ 
+-			VERBOSE (engine, "DIS-connect %s and %s\n",
++			VERBOSE (engine, "DIS-connect %s and %s",
+ 				 srcport->shared->name,
+ 				 dstport->shared->name);
+ 			
+@@ -3225,7 +3224,7 @@ jack_port_disconnect_internal (jack_engi
+ 						(dst->sortfeeds, src);
+ 					engine->feedbackcount--;
+ 					VERBOSE (engine,
+-						 "feedback count down to %d\n",
++						 "feedback count down to %d",
+ 						 engine->feedbackcount);
+ 					
+ 				}
+@@ -3256,7 +3255,7 @@ jack_port_do_disconnect_all (jack_engine
+ 		return -1;
+ 	}
+ 
+-	VERBOSE (engine, "clear connections for %s\n",
++	VERBOSE (engine, "clear connections for %s",
+ 		 engine->internal_ports[port_id].shared->name);
+ 
+ 	jack_lock_graph (engine);
+@@ -3588,7 +3587,7 @@ next:
+ 	jack_port_registration_notify (engine, port_id, TRUE);
+ 	jack_unlock_graph (engine);
+ 
+-	VERBOSE (engine, "registered port %s, offset = %u\n",
++	VERBOSE (engine, "registered port %s, offset = %u",
+ 		 shared->name, (unsigned int)shared->offset);
+ 
+ 	req->x.port_info.port_id = port_id;
+diff --git a/jackd/jackd.c b/jackd/jackd.c
+--- a/jackd/jackd.c
++++ b/jackd/jackd.c
+@@ -148,14 +148,14 @@ jack_main (jack_driver_desc_t * driver_d
+ 				       temporary, verbose, client_timeout,
+ 				       port_max, getpid(), frame_time_offset, 
+ 				       nozombies, drivers)) == 0) {
+-		fprintf (stderr, "cannot create engine\n");
++		jack_error ("cannot create engine");
+ 		return -1;
+ 	}
+ 
+-	fprintf (stderr, "loading driver ..\n");
++	jack_info ("loading driver ..");
+ 	
+ 	if (jack_engine_load_driver (engine, driver_desc, driver_params)) {
+-		fprintf (stderr, "cannot load driver module %s\n",
++		jack_error ("cannot load driver module %s",
+ 			 driver_desc->name);
+ 		goto error;
+ 	}
+@@ -181,7 +181,7 @@ jack_main (jack_driver_desc_t * driver_d
+ 	}
+ 	
+ 	if (verbose) {
+-		fprintf (stderr, "%d waiting for signals\n", getpid());
++		jack_info ("%d waiting for signals", getpid());
+ 	}
+ 
+ 	waiting = TRUE;
+@@ -189,7 +189,7 @@ jack_main (jack_driver_desc_t * driver_d
+ 	while (waiting) {
+ 		sigwait (&signals, &sig);
+ 
+-		fprintf (stderr, "jack main caught signal %d\n", sig);
++		jack_info ("jack main caught signal %d", sig);
+ 		
+ 		switch (sig) {
+ 		case SIGUSR1:
+@@ -241,7 +241,7 @@ jack_drivers_get_descriptor (JSList * dr
+ 	sprintf (filename, "%s/%s", driver_dir, sofile);
+ 
+ 	if (verbose) {
+-		fprintf (stderr, "getting driver descriptor from %s\n", filename);
++		jack_info ("getting driver descriptor from %s", filename);
+ 	}
+ 
+ 	if ((dlhandle = dlopen (filename, RTLD_NOW|RTLD_GLOBAL)) == NULL) {
+@@ -254,7 +254,7 @@ jack_drivers_get_descriptor (JSList * dr
+ 		dlsym (dlhandle, "driver_get_descriptor");
+ 
+ 	if ((dlerr = dlerror ()) != NULL) {
+-		fprintf(stderr, "%s\n", dlerr);
++		jack_error("%s", dlerr);
+ 		dlclose (dlhandle);
+ 		free (filename);
+ 		return NULL;
+@@ -479,24 +479,23 @@ maybe_use_capabilities ()
+   	        char c = 1;
+ 
+ 	        if (write (PIPE_WRITE_FD, &c, 1) != 1) {
+-		        fprintf (stderr, "cannot write to jackstart sync "
+-				 "pipe %d (%s)\n", PIPE_WRITE_FD,
++		        jack_error ("cannot write to jackstart sync "
++				 "pipe %d (%s)", PIPE_WRITE_FD,
+ 				 strerror (errno));
+ 	        }
+ 
+ 		if (close(PIPE_WRITE_FD) != 0) {
+-			fprintf(stderr,
+-				"jackd: error on startup pipe close: %s\n",
+-				strerror (errno));
++			jack_error("jackd: error on startup pipe close: %s",
++				   strerror (errno));
+ 		} else {
+ 			/* wait for jackstart process to set our capabilities */
+ 			if (wait (&status) == -1) {
+-				fprintf (stderr, "jackd: wait for startup "
+-					 "process exit failed\n");
++				jack_error ("jackd: wait for startup "
++					    "process exit failed");
+ 			}
+ 			if (!WIFEXITED (status) || WEXITSTATUS (status)) {
+-				fprintf(stderr, "jackd: jackstart did not "
+-					"exit cleanly\n");
++				jack_error ("jackd: jackstart did not "
++					    "exit cleanly");
+ 				exit (1);
+ 			}
+ 		}
+@@ -627,8 +626,8 @@ main (int argc, char *argv[])
+ 			break;
+ 
+ 		default:
+-			fprintf (stderr, "Unknown option character %c\n",
+-				 optopt);
++			jack_error ("Unknown option character %c",
++				    optopt);
+ 			/*fallthru*/
+ 		case 'h':
+ 			usage (stdout);
+diff --git a/jackd/transengine.c b/jackd/transengine.c
+--- a/jackd/transengine.c
++++ b/jackd/transengine.c
+@@ -48,10 +48,10 @@ jack_sync_poll_new (jack_engine_t *engin
+ 	// JOQ: I don't like doing this here...
+ 	if (engine->control->transport_state == JackTransportRolling) {
+ 		engine->control->transport_state = JackTransportStarting;
+-		VERBOSE (engine, "force transport state to Starting\n");
++		VERBOSE (engine, "force transport state to Starting");
+ 	}
+ 
+-	VERBOSE (engine, "polling sync client %" PRIu32 "\n",
++	VERBOSE (engine, "polling sync client %" PRIu32,
+ 		 client->control->id);
+ }
+ 
+@@ -67,7 +67,7 @@ jack_sync_poll_deactivate (jack_engine_t
+ 		client->control->sync_new = 0;
+ 		engine->control->sync_remain--;
+ 		VERBOSE (engine, "sync poll interrupted for client %"
+-			 PRIu32 "\n", client->control->id);
++			 PRIu32, client->control->id);
+ 	}
+ 	client->control->active_slowsync = 0;
+ 	engine->control->sync_clients--;
+@@ -97,7 +97,7 @@ jack_sync_poll_stop (jack_engine_t *engi
+ 	assert (poll_count == engine->control->sync_remain);
+ 	VERBOSE (engine,
+ 		 "sync poll halted with %" PRIu32
+-		 " clients and %8.6f secs remaining\n",
++		 " clients and %8.6f secs remaining",
+ 		 engine->control->sync_remain,
+ 		 (double) (engine->control->sync_time_left / 1000000.0));
+ 	engine->control->sync_remain = 0;
+@@ -127,7 +127,7 @@ jack_sync_poll_start (jack_engine_t *eng
+ 	engine->control->sync_remain = sync_count;
+ 	engine->control->sync_time_left = engine->control->sync_timeout;
+ 	VERBOSE (engine, "transport Starting, sync poll of %" PRIu32
+-		 " clients for %8.6f secs\n", engine->control->sync_remain,
++		 " clients for %8.6f secs", engine->control->sync_remain,
+ 		 (double) (engine->control->sync_time_left / 1000000.0));
+ }
+ 
+@@ -147,7 +147,7 @@ jack_sync_timeout (jack_engine_t *engine
+ 	}
+ 
+ 	/* timed out */
+-	VERBOSE (engine, "transport sync timeout\n");
++	VERBOSE (engine, "transport sync timeout");
+ 	ectl->sync_time_left = 0;
+ 	return TRUE;
+ }
+@@ -182,7 +182,7 @@ jack_timebase_reset (jack_engine_t *engi
+ 		client->control->timebase_new = 0;
+ 		engine->timebase_client = NULL;
+ 		ectl->pending_time.valid = 0;
+-		VERBOSE (engine, "%s resigned as timebase master\n",
++		VERBOSE (engine, "%s resigned as timebase master",
+ 			 client->control->name);
+ 		ret = 0;
+ 	}  else
+@@ -206,7 +206,7 @@ jack_timebase_set (jack_engine_t *engine
+ 	client = jack_client_internal_by_id (engine, client_id);
+ 
+ 	if (client == NULL) {
+- 		VERBOSE (engine, " %" PRIu32 " no longer exists\n", client_id);
++ 		VERBOSE (engine, " %" PRIu32 " no longer exists", client_id);
+ 		jack_unlock_graph (engine);
+ 		return EINVAL;
+ 	}
+@@ -215,13 +215,13 @@ jack_timebase_set (jack_engine_t *engine
+ 
+ 		/* see if timebase master is someone else */
+ 		if (client != engine->timebase_client) {
+-			VERBOSE (engine, "conditional timebase for %s failed\n"
+-				 " %s is already the master\n",
+-				 client->control->name,
++			VERBOSE (engine, "conditional timebase for %s failed",
++				 client->control->name);
++			VERBOSE (engine, " %s is already the master",
+ 				 engine->timebase_client->control->name);
+ 			ret = EBUSY;
+ 		} else
+-			VERBOSE (engine, " %s was already timebase master:\n",
++			VERBOSE (engine, " %s was already timebase master:",
+ 				 client->control->name);
+ 
+ 	} else {
+@@ -234,7 +234,7 @@ jack_timebase_set (jack_engine_t *engine
+ 		client->control->is_timebase = 1;
+ 		if (client->control->active)
+ 			client->control->timebase_new = 1;
+-		VERBOSE (engine, "new timebase master: %s\n",
++		VERBOSE (engine, "new timebase master: %s",
+ 			 client->control->name);
+ 	}
+ 
+@@ -297,7 +297,7 @@ jack_transport_client_exit (jack_engine_
+ 			engine->timebase_client->control->is_timebase = 0;
+ 			engine->timebase_client->control->timebase_new = 0;
+ 			engine->timebase_client = NULL;
+-			VERBOSE (engine, "timebase master exit\n");
++			VERBOSE (engine, "timebase master exit");
+ 		}
+ 		engine->control->current_time.valid = 0;
+ 		engine->control->pending_time.valid = 0;
+@@ -410,7 +410,7 @@ jack_transport_cycle_end (jack_engine_t 
+ 		    (jack_sync_timeout(engine))) {
+ 			ectl->transport_state = JackTransportRolling;
+ 			VERBOSE (engine, "transport Rolling, %8.6f sec"
+-				 " left for poll\n",
++				 " left for poll",
+ 				 (double) (ectl->sync_time_left / 1000000.0));
+ 		}
+ 	}
+@@ -419,7 +419,7 @@ jack_transport_cycle_end (jack_engine_t 
+ 	cmd = ectl->transport_cmd;
+ 	if (cmd != ectl->previous_cmd) {
+ 		ectl->previous_cmd = cmd;
+-		VERBOSE (engine, "transport command: %s\n",
++		VERBOSE (engine, "transport command: %s",
+ 		       (cmd == TransportCommandStart? "START": "STOP"));
+ 	} else
+ 		cmd = TransportCommandNone;
+@@ -435,7 +435,7 @@ jack_transport_cycle_end (jack_engine_t 
+ 				jack_sync_poll_start(engine);
+ 			} else {
+ 				ectl->transport_state = JackTransportRolling;
+-				VERBOSE (engine, "transport Rolling\n");
++				VERBOSE (engine, "transport Rolling");
+ 			}
+ 		}
+ 		break;
+@@ -443,7 +443,7 @@ jack_transport_cycle_end (jack_engine_t 
+ 	case JackTransportStarting:
+ 		if (cmd == TransportCommandStop) {
+ 			ectl->transport_state = JackTransportStopped;
+-			VERBOSE (engine, "transport Stopped\n");
++			VERBOSE (engine, "transport Stopped");
+ 			if (ectl->sync_remain)
+ 				jack_sync_poll_stop(engine);
+ 		} else if (ectl->new_pos) {
+@@ -452,7 +452,7 @@ jack_transport_cycle_end (jack_engine_t 
+ 				jack_sync_poll_start(engine);
+ 			} else {
+ 				ectl->transport_state = JackTransportRolling;
+-				VERBOSE (engine, "transport Rolling\n");
++				VERBOSE (engine, "transport Rolling");
+ 			}
+ 		}
+ 		break;
+@@ -460,7 +460,7 @@ jack_transport_cycle_end (jack_engine_t 
+ 	case JackTransportRolling:
+ 		if (cmd == TransportCommandStop) {
+ 			ectl->transport_state = JackTransportStopped;
+-			VERBOSE (engine, "transport Stopped\n");
++			VERBOSE (engine, "transport Stopped");
+ 			if (ectl->sync_remain)
+ 				jack_sync_poll_stop(engine);
+ 		} else if (ectl->new_pos) {
+@@ -490,7 +490,7 @@ jack_transport_cycle_end (jack_engine_t 
+ 		jack_transport_copy_position(&ectl->request_time,
+ 					     &ectl->pending_time);
+ 		VERBOSE (engine, "new transport position: %" PRIu32
+-			 ", id=0x%" PRIx64 "\n", ectl->pending_time.frame,
++			 ", id=0x%" PRIx64, ectl->pending_time.frame,
+ 			 ectl->pending_time.unique_1);
+ 		ectl->prev_request = ectl->pending_time.unique_1;
+ 		ectl->pending_pos = 1;
+@@ -513,7 +513,7 @@ jack_transport_set_sync_timeout (jack_en
+ 				 jack_time_t usecs)
+ {
+ 	engine->control->sync_timeout = usecs;
+-	VERBOSE (engine, "new sync timeout: %8.6f secs\n",
++	VERBOSE (engine, "new sync timeout: %8.6f secs",
+ 		 (double) (usecs / 1000000.0));
+ 	return 0;
+ }
+diff --git a/libjack/client.c b/libjack/client.c
+--- a/libjack/client.c
++++ b/libjack/client.c
+@@ -86,12 +86,11 @@ init_cpu ()
+ {
+ 	cpu_type = ((have_3dnow() << 8) | have_sse());
+ 	if (ARCH_X86_HAVE_3DNOW(cpu_type))
+-		fprintf(stderr, "Enhanced3DNow! detected\n");
++		jack_info("Enhanced3DNow! detected");
+ 	if (ARCH_X86_HAVE_SSE2(cpu_type))
+-		fprintf(stderr, "SSE2 detected\n");
++		jack_info("SSE2 detected");
+ 	if ((!ARCH_X86_HAVE_3DNOW(cpu_type)) && (!ARCH_X86_HAVE_SSE2(cpu_type)))
+-		fprintf(stderr,
+-			"No supported SIMD instruction sets detected\n");
++		jack_info("No supported SIMD instruction sets detected");
+ 	jack_port_set_funcs();
+ }
+ 
+@@ -157,6 +156,14 @@ default_jack_error_callback (const char 
+ default_jack_error_callback (const char *desc)
+ {
+ 	fprintf(stderr, "%s\n", desc);
++	fflush(stderr);
++}
++
++void 
++default_jack_info_callback (const char *desc)
++{
++	fprintf(stdout, "%s\n", desc);
++	fflush(stdout);
+ }
+ 
+ void 
+@@ -165,6 +172,19 @@ silent_jack_error_callback (const char *
+ }
+ 
+ void (*jack_error_callback)(const char *desc) = &default_jack_error_callback;
++void (*jack_info_callback)(const char *desc) = &default_jack_info_callback;
++
++void 
++jack_info (const char *fmt, ...)
++{
++	va_list ap;
++	char buffer[300];
++
++	va_start (ap, fmt);
++	vsnprintf (buffer, sizeof(buffer), fmt, ap);
++	jack_info_callback (buffer);
++	va_end (ap);
++}
+ 
+ static int
+ oop_client_deliver_request (void *ptr, jack_request_t *req)
+@@ -487,7 +507,7 @@ server_connect (const char *server_name)
+ 	}
+ 
+ 	//JOQ: temporary debug message
+-	//fprintf (stderr, "DEBUG: connecting to `%s' server\n", server_name);
++	//jack_info ("DEBUG: connecting to `%s' server", server_name);
+ 
+ 	addr.sun_family = AF_UNIX;
+ 	snprintf (addr.sun_path, sizeof (addr.sun_path) - 1, "%s/jack_%d",
+@@ -2004,6 +2024,12 @@ jack_set_error_function (void (*func) (c
+ 	jack_error_callback = func;
+ }
+ 
++void
++jack_set_info_function (void (*func) (const char *))
++{
++	jack_info_callback = func;
++}
++
+ int 
+ jack_set_graph_order_callback (jack_client_t *client,
+ 			       JackGraphOrderCallback callback, void *arg)
+diff --git a/libjack/messagebuffer.c b/libjack/messagebuffer.c
+--- a/libjack/messagebuffer.c
++++ b/libjack/messagebuffer.c
+@@ -53,7 +53,7 @@ mb_flush()
+ {
+ 	/* called WITHOUT the mb_write_lock */
+ 	while (mb_outbuffer != mb_inbuffer) {
+-		fputs(mb_buffers[mb_outbuffer], stderr);
++		jack_info(mb_buffers[mb_outbuffer]);
+ 		mb_outbuffer = MB_NEXT(mb_outbuffer);
+ 	}
+ }
+@@ -110,10 +110,10 @@ jack_messagebuffer_exit ()
+ 	mb_flush();
+ 
+ 	if (mb_overruns)
+-		fprintf(stderr, "WARNING: %d message buffer overruns!\n",
++		jack_error("WARNING: %d message buffer overruns!",
+ 			mb_overruns);
+ 	else
+-		fprintf(stderr, "no message buffer overruns\n");
++		jack_info("no message buffer overruns");
+ 
+ 	pthread_mutex_destroy(&mb_write_lock);
+ 	pthread_cond_destroy(&mb_ready_cond);
+diff --git a/libjack/shm.c b/libjack/shm.c
+--- a/libjack/shm.c
++++ b/libjack/shm.c
+@@ -380,7 +380,7 @@ jack_register_server (const char *server
+ 
+ 	jack_set_server_prefix (server_name);
+ 
+-	fprintf (stderr, "JACK compiled with %s SHM support.\n", JACK_SHM_TYPE);
++	jack_info ("JACK compiled with %s SHM support.", JACK_SHM_TYPE);
+ 
+ 	if (jack_server_initialize_shm ())
+ 		return ENOMEM;
+diff --git a/libjack/simd.c b/libjack/simd.c
+--- a/libjack/simd.c
++++ b/libjack/simd.c
+@@ -298,7 +298,7 @@ x86_sse_add2f (float *dest, const float 
+ 
+ 	if (__builtin_expect(((long) src & 0xf) || ((long) dest & 0xf), 0))
+ 	{
+-		/*fprintf(stderr, "x86_sse_add2f(): non aligned pointers!\n");*/
++		/*jack_error("x86_sse_add2f(): non aligned pointers!");*/
+ 		si2 = 0;
+ 		goto sse_nonalign;
+ 	}
+diff --git a/libjack/transclient.c b/libjack/transclient.c
+--- a/libjack/transclient.c
++++ b/libjack/transclient.c
+@@ -247,7 +247,7 @@ jack_time_to_frames(const jack_client_t 
+ 
+ 	if (time.initialized) {
+ #if 0
+-		fprintf (stderr, "now = %Lu current wakeup = %Lu next = %Lu frames = %lu + %f => %lu\n", 
++		jack_info ("now = %Lu current wakeup = %Lu next = %Lu frames = %lu + %f => %lu", 
+ 			 now, time.current_wakeup, time.next_wakeup, time.frames,
+ 			 (double) (now - time.current_wakeup)/ 
+ 			 (time.next_wakeup - time.current_wakeup),
+diff --git a/libjack/unlock.c b/libjack/unlock.c
+--- a/libjack/unlock.c
++++ b/libjack/unlock.c
+@@ -65,7 +65,7 @@ cleanup_mlock ()
+ 	snprintf (path, sizeof(path), "/proc/%d/maps", getpid());
+ 
+ 	if ((map = fopen (path, "r")) == NULL) {
+-		fprintf (stderr, "can't open map file\n");
++		jack_error ("can't open map file");
+ 		return;
+ 	}
+ 
+@@ -117,7 +117,7 @@ cleanup_mlock ()
+ 		}
+ 		
+ 		if (unlock) {
+-			fprintf (stderr, "unlocking %s\n", path);
++			jack_info ("unlocking %s", path);
+ 			munlock ((char *) start, end - start);
+ 		}
+ 	}

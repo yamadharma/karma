@@ -1,0 +1,15 @@
+# ChangeLog for media-sound/jack-audio-connection-kit
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  16 Dec 2007; Thomas Kuther <gimpel@sonnenkinder.org>
+  jack-audio-connection-kit-9999.ebuild:
+  bumped nedko's jackdbus patches to 0.2
+
+  15 Dec 2007; Marc-Olivier Barre <mobarre@gmail.com> jack-audio-connection-kit-9999.ebuild:
+  Corrected an ebuild issue which prevented dbus/netjack use flags from
+  working right
+
+  15 Dec 2007; Marc-Olivier Barre <mobarre@gmail.com> ChangeLog:
+  Initial ChangeLog creation
+

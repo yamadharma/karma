@@ -152,23 +152,25 @@ bzr_fetch() {
 	addwrite "${EBZR_BRANCH_DIR}"
 
 	debug-print "${FUNCNAME}: EBZR_OPTIONS = ${EBZR_OPTIONS}"
+	
+	local repository="${EBZR_REPO_URI}${EBZR_BRANCH}"
 
 	if [[ ! -d ${EBZR_BRANCH_DIR} ]] ; then
 		# fetch branch
 		einfo "bzr branch start -->"
-		einfo "   repository: ${EBZR_REPO_URI}${EBZR_BRANCH}"
+		einfo "   repository: ${repository} => ${EBZR_BRANCH_DIR}"
 
-		${EBZR_FETCH_CMD} ${EBZR_OPTIONS} "${EBZR_REPO_URI}${EBZR_BRANCH}" ${EBZR_BRANCH_DIR} \
-			|| die "${EBZR}: can't branch from ${EBZR_REPO_URI}${EBZR_BRANCH}."
+		${EBZR_FETCH_CMD} ${EBZR_OPTIONS} "${repository}" "${EBZR_BRANCH_DIR}" \
+			|| die "${EBZR}: can't branch from ${repository}."
 
 	else
 		# update branch
 		einfo "bzr merge start -->"
-		einfo "   repository: ${EBZR_REPO_URI}${EBZR_BRANCH}"
+		einfo "   repository: ${repository}"
 
 		cd "${EBZR_BRANCH_DIR}"
-		${EBZR_UPDATE_CMD} ${EBZR_OPTIONS} "${EBZR_REPO_URI}${EBZR_BRANCH}" \
-			|| die "${EBZR}: can't merge from ${EBZR_REPO_URI}${EBZR_BRANCH}."
+		${EBZR_UPDATE_CMD} ${EBZR_OPTIONS} "${repository}" \
+			|| die "${EBZR}: can't merge from ${repository}."
 		${EBZR_DIFFSTAT_CMD}
 	fi
 
