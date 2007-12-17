@@ -2,10 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/sun-jdk/sun-jdk-1.5.0.05.ebuild,v 1.2 2005/10/10 16:23:12 betelgeuse Exp $
 
-inherit pax-utils eutils java-pkg-2 java-vm-2
+inherit pax-utils eutils java-pkg-2 java-vm-2 mercurial
 
 ALPHA=${PV#*_alpha}
 DATE="04_dec_2007"
+
+EHG_REPO_URI=http://hg.openjdk.java.net/jdk7/jdk7
 
 BASE_URL="http://www.java.net/download/${PN}/jdk7/promoted/b${ALPHA}/"
 srcfile="${PN}-7-ea-src-b${ALPHA}-${DATE}.zip"
@@ -14,7 +16,7 @@ amd64_plug="jdk-7-ea-plug-b${ALPHA}-linux-amd64-${DATE}.jar"
 
 DESCRIPTION="Open Source JDK"
 HOMEPAGE="https://openjdk.dev.java.net/"
-SRC_URI="${BASE_URL}/${srcfile}"
+#SRC_URI="${BASE_URL}/${srcfile}"
 #	x86? ( ${BASE_URL}/${x86_plug} )
 #	amd64? ( ${BASE_ULR}/${amd64_plug} )"
 SLOT="1.7"
@@ -58,6 +60,7 @@ RDEPEND="${COMMON_DEP}
 	doc? ( =dev-java/java-sdk-docs-1.6.0* )
 	"
 
+#S="${WORKDIR}/o"
 S="${WORKDIR}/o"
 
 JAVA_PROVIDE="jdbc-stdext jdbc-rowset"
@@ -68,8 +71,9 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ${srcfile}
-	mv ${PN} o || die #Argument list gets too long on amd64 without this
+	mercurial_src_unpack	
+#	unpack ${srcfile}
+#	mv ${PN} o || die #Argument list gets too long on amd64 without this
 	cd "${S}"
 	echo "Deleting bundled zlib"
 	rm -r j2se/src/share/native/java/util/zip/zlib-1.1.3 || die
