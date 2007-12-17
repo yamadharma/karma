@@ -1,6 +1,34 @@
 # ChangeLog for x11-wm/windowmaker
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/x11-wm/windowmaker/ChangeLog,v 1.89 2007/11/13 10:22:31 grobian Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-wm/windowmaker/ChangeLog,v 1.93 2007/12/08 23:18:54 voyageur Exp $
+
+  08 Dec 2007; Bernard Cafarelli <voyageur@gentoo.org>
+  -files/0.91.0/64bit+endian-fixes-0.9x.patch,
+  -files/0.91.0/maximize-fix-0.9x.patch, -files/0.91.0/menufocus.patch,
+  -windowmaker-0.91.0-r1.ebuild:
+  Dropping old version, please use 0.92.0-r*
+
+*windowmaker-0.92.0-r7 (22 Nov 2007)
+
+  22 Nov 2007; Harald van Dĳk <truedfx@gentoo.org>
+  -windowmaker-0.92.0-r6.ebuild, +windowmaker-0.92.0-r7.ebuild:
+  Get rid of gettextlib, so that fontconfig works (#199414)
+
+*windowmaker-0.92.0-r6 (21 Nov 2007)
+
+  21 Nov 2007; Fabian Groffen <grobian@gentoo.org>
+  -files/0.92.0/windowmaker-0.92.0-as-needed.patch,
+  +files/0.92.0/windowmaker-0.92.0-math_h.patch,
+  -windowmaker-0.92.0-r5.ebuild, +windowmaker-0.92.0-r6.ebuild:
+  Drop nowings patch that I accidentially enabled, this should make the
+  as-needed patch obsolete, and fix bug #199414. Retained Harald's math.h
+  fixes by splitting it off in a new patch.
+
+  18 Nov 2007; Harald van Dĳk <truedfx@gentoo.org>
+  +files/0.92.0/windowmaker-0.92.0-as-needed.patch,
+  windowmaker-0.92.0-r5.ebuild:
+  Fix building with --as-needed (#199520)
+  Add missing quotes in ebuild for repoman complaints
 
 *windowmaker-0.92.0-r5 (13 Nov 2007)
 
