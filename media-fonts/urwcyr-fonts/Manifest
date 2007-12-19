@@ -26,6 +26,10 @@ EBUILD urwcyr-fonts-1.0.7_pre43-r1.ebuild 2241 RMD160 292fa41bba2864dc3e4ef789b6
 MD5 493873fb74a99a0301920696a3366c42 urwcyr-fonts-1.0.7_pre43-r1.ebuild 2241
 RMD160 292fa41bba2864dc3e4ef789b67efe21d823689c urwcyr-fonts-1.0.7_pre43-r1.ebuild 2241
 SHA256 fc67248ba6bb1a51a025771aead62e711d93a87e677064d9933b921fa6e978d1 urwcyr-fonts-1.0.7_pre43-r1.ebuild 2241
+EBUILD urwcyr-fonts-1.0.7_pre43-r2.ebuild 586 RMD160 7babc89d1f1a9f686ae737edb83148ac82dafa44 SHA1 f604bd2aaf835bc7352d495243fabf2bdb7b4812 SHA256 144e2eb569ac27127b8ab3daed9b57fdd52a248908fb407f85c56ae8e1cca788
+MD5 46afcea25dba8344e714a5786a784c8a urwcyr-fonts-1.0.7_pre43-r2.ebuild 586
+RMD160 7babc89d1f1a9f686ae737edb83148ac82dafa44 urwcyr-fonts-1.0.7_pre43-r2.ebuild 586
+SHA256 144e2eb569ac27127b8ab3daed9b57fdd52a248908fb407f85c56ae8e1cca788 urwcyr-fonts-1.0.7_pre43-r2.ebuild 586
 EBUILD urwcyr-fonts-1.0.7_pre43.ebuild 1544 RMD160 1819c4db0a39725d3c07ffb5f610b861adc480c0 SHA1 f6df6738a85162599b0864d6a87cd7e60ee841a6 SHA256 55e894fe64ac732c11703eb40baccf1516b9e9821c6d1b76275a545e12dbc310
 MD5 85b2767a17d3ba6cd8c6f23553504cbe urwcyr-fonts-1.0.7_pre43.ebuild 1544
 RMD160 1819c4db0a39725d3c07ffb5f610b861adc480c0 urwcyr-fonts-1.0.7_pre43.ebuild 1544
@@ -42,3 +46,6 @@ SHA256 0995d41e4dcfe652374313e3e06c054fae76d0f610e77da756add44d826308b9 files/di
 MD5 4d9ecf9aeed89e9dc063d0c75c68af8e files/digest-urwcyr-fonts-1.0.7_pre43-r1 497
 RMD160 1c596d64f2a97db7db7c97d55fc9d020e6a0d8c5 files/digest-urwcyr-fonts-1.0.7_pre43-r1 497
 SHA256 0995d41e4dcfe652374313e3e06c054fae76d0f610e77da756add44d826308b9 files/digest-urwcyr-fonts-1.0.7_pre43-r1 497
+MD5 85889ead86a2bc89fb07ca11986a9b13 files/digest-urwcyr-fonts-1.0.7_pre43-r2 268
+RMD160 7d872f51b3756427291bbdc11780f258b345bd67 files/digest-urwcyr-fonts-1.0.7_pre43-r2 268
+SHA256 045d207f22afe2cdb5b6020cc203136901b6b59be9fadc3701450a14e7a0b7ea files/digest-urwcyr-fonts-1.0.7_pre43-r2 268
