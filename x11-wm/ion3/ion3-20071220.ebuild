@@ -7,7 +7,7 @@ inherit eutils flag-o-matic multilib
 MY_PV=${PV/_p/-}
 MY_PN=ion-3rc-${MY_PV}
 
-SCRIPTS_PV=20070713
+SCRIPTS_PV=20071123
 SCRIPTS_PN=ion3-scripts
 
 IONFLUX_PV=20070410
