@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/ksquirrel/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 x86"
 IUSE="djvu camera jng jpeg jpeg2k kdeenablefinal mng png svg tiff truetype wmf"
 
 DEPEND="<=kde-base/kdelibs-4
@@ -40,11 +40,11 @@ src_compile() {
 					$(use mng || echo '--disable-mng')
 					$(use svg || echo '--disable-svg')
 					$(use truetype || echo '--disable-ttf')
-					$(use wmf || echo '--disable-wmf')
-					$(use kdeenablefinal && '--enable-final')"
+					$(use wmf || echo '--disable-wmf')"
 #					$(use gif || echo --disable-gif)
 #					$(use openexr || echo '--disable-openexr')
 #					$(use dxf || echo '--disable-dxf)
+#					$(use kdeenablefinal && '--enable-final')
 	econf ${myconf} || die "econf faild"
 	emake || die "emake faild"
 }

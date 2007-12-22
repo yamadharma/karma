@@ -12,7 +12,7 @@ HOMEPAGE="http://ksquirrel.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
-KEYWORDS="x86 amd64"
+KEYWORDS="x86 ~amd64"
 IUSE="kipi"
 
 DEPEND="=media-libs/ksquirrel-libs-${PV}
