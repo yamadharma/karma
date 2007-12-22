@@ -1,12 +1,12 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-libs/gpm/gpm-1.20.1-r5.ebuild,v 1.12 2006/09/05 03:44:50 kumba Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-libs/gpm/gpm-1.20.1-r6.ebuild,v 1.7 2007/12/21 12:41:55 nixnut Exp $
 
 # emacs support disabled due to Bug 99533
 
 inherit eutils toolchain-funcs elisp-common
 
-PATCH_VER="1.4"
+PATCH_VER="1.5"
 DESCRIPTION="Console-based mouse driver"
 HOMEPAGE="http://linux.schottelius.org/gpm/"
 SRC_URI="ftp://arcana.linux.it/pub/gpm/${P}.tar.bz2
@@ -15,7 +15,7 @@ SRC_URI="ftp://arcana.linux.it/pub/gpm/${P}.tar.bz2
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="alpha amd64 arm hppa ia64 m68k mips ppc ppc64 s390 sh sparc x86"
+KEYWORDS="alpha amd64 ~arm hppa ia64 ~m68k ~mips ppc ~ppc64 ~s390 ~sh sparc x86"
 IUSE="selinux" # emacs"
 
 DEPEND="sys-libs/ncurses"
