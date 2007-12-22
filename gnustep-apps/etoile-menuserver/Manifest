@@ -7,6 +7,10 @@ EBUILD etoile-menuserver-0.2.1_pre2632.ebuild 427 RMD160 90eec5d9f9d9e4784ee027c
 MD5 b235b46fd1edbf5c422367242139e4d8 etoile-menuserver-0.2.1_pre2632.ebuild 427
 RMD160 90eec5d9f9d9e4784ee027c1d374c3273c01e2ab etoile-menuserver-0.2.1_pre2632.ebuild 427
 SHA256 68f48a4c9ee521253ca57eab19af0e1114d48ee1cab03f5f33130991c5284b95 etoile-menuserver-0.2.1_pre2632.ebuild 427
+EBUILD etoile-menuserver-0.2.1_pre2711.ebuild 427 RMD160 90eec5d9f9d9e4784ee027c1d374c3273c01e2ab SHA1 2898364d10d429896b18c1b68c47f43d259c1ff2 SHA256 68f48a4c9ee521253ca57eab19af0e1114d48ee1cab03f5f33130991c5284b95
+MD5 b235b46fd1edbf5c422367242139e4d8 etoile-menuserver-0.2.1_pre2711.ebuild 427
+RMD160 90eec5d9f9d9e4784ee027c1d374c3273c01e2ab etoile-menuserver-0.2.1_pre2711.ebuild 427
+SHA256 68f48a4c9ee521253ca57eab19af0e1114d48ee1cab03f5f33130991c5284b95 etoile-menuserver-0.2.1_pre2711.ebuild 427
 EBUILD etoile-menuserver-0.2.ebuild 484 RMD160 4ff834e71a1d028dc2735a18c70942ac460fa80b SHA1 f17ba6139d414587b9e98f5bd9de6f7fc1e2979d SHA256 e4d1454b0ee82c523f3ab90e54bf92c205e62107cacdff018aa6907ffe5ac296
 MD5 f1fb39a2c3f3fe3793394de68eca37f9 etoile-menuserver-0.2.ebuild 484
 RMD160 4ff834e71a1d028dc2735a18c70942ac460fa80b etoile-menuserver-0.2.ebuild 484
@@ -24,3 +28,6 @@ SHA256 3de3234af9600e4e5eec8ca30d5e689a7c94494725b415d3f9d326451cc99393 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-etoile-menuserver-0.2.1_pre2632 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-etoile-menuserver-0.2.1_pre2632 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-etoile-menuserver-0.2.1_pre2632 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-etoile-menuserver-0.2.1_pre2711 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-etoile-menuserver-0.2.1_pre2711 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-etoile-menuserver-0.2.1_pre2711 0

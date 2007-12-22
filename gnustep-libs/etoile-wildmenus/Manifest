@@ -7,6 +7,10 @@ EBUILD etoile-wildmenus-0.2.1_pre2632.ebuild 362 RMD160 61b69f05b4a0157e6b94d863
 MD5 2d8198d4d5cc3294728077c63af78042 etoile-wildmenus-0.2.1_pre2632.ebuild 362
 RMD160 61b69f05b4a0157e6b94d863bd4b28df954816c1 etoile-wildmenus-0.2.1_pre2632.ebuild 362
 SHA256 3cc6fc611268fe81738b33807c6b1ed461d3500f259b18d687a929dcd3b7a927 etoile-wildmenus-0.2.1_pre2632.ebuild 362
+EBUILD etoile-wildmenus-0.2.1_pre2711.ebuild 362 RMD160 61b69f05b4a0157e6b94d863bd4b28df954816c1 SHA1 71f13758d1c8b8cd8add3a9d5531d8bcdc5c6df6 SHA256 3cc6fc611268fe81738b33807c6b1ed461d3500f259b18d687a929dcd3b7a927
+MD5 2d8198d4d5cc3294728077c63af78042 etoile-wildmenus-0.2.1_pre2711.ebuild 362
+RMD160 61b69f05b4a0157e6b94d863bd4b28df954816c1 etoile-wildmenus-0.2.1_pre2711.ebuild 362
+SHA256 3cc6fc611268fe81738b33807c6b1ed461d3500f259b18d687a929dcd3b7a927 etoile-wildmenus-0.2.1_pre2711.ebuild 362
 EBUILD etoile-wildmenus-0.2.ebuild 463 RMD160 18147aac7cab508945ee66ca72e3fe2d0793f3ea SHA1 abb80dd79018eb727495b664d5ed8943bd259d7e SHA256 b37f49ef5b750236c51ade3f7cadc68accf577c7ba1018bd85ffb698b9de6056
 MD5 3470a3eced3b3e3fba583025b6af93a0 etoile-wildmenus-0.2.ebuild 463
 RMD160 18147aac7cab508945ee66ca72e3fe2d0793f3ea etoile-wildmenus-0.2.ebuild 463
@@ -20,3 +24,6 @@ SHA256 3de3234af9600e4e5eec8ca30d5e689a7c94494725b415d3f9d326451cc99393 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-etoile-wildmenus-0.2.1_pre2632 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-etoile-wildmenus-0.2.1_pre2632 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-etoile-wildmenus-0.2.1_pre2632 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-etoile-wildmenus-0.2.1_pre2711 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-etoile-wildmenus-0.2.1_pre2711 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-etoile-wildmenus-0.2.1_pre2711 0

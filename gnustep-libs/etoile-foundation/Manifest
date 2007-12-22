@@ -3,6 +3,10 @@ EBUILD etoile-foundation-0.2.1_pre2632.ebuild 447 RMD160 b5e176cdaa2d6893cea4862
 MD5 5c42ccf228a8432459d8925f6e7750a3 etoile-foundation-0.2.1_pre2632.ebuild 447
 RMD160 b5e176cdaa2d6893cea486258861e8a01b5fe522 etoile-foundation-0.2.1_pre2632.ebuild 447
 SHA256 aa1c07aa8eb08432e30554b13d21a9eda15bf66a4028675b9c2fb018e0804afc etoile-foundation-0.2.1_pre2632.ebuild 447
+EBUILD etoile-foundation-0.2.1_pre2711.ebuild 447 RMD160 b5e176cdaa2d6893cea486258861e8a01b5fe522 SHA1 6ae7afe1f0391b669b50e4fc8a29ff090fca69d0 SHA256 aa1c07aa8eb08432e30554b13d21a9eda15bf66a4028675b9c2fb018e0804afc
+MD5 5c42ccf228a8432459d8925f6e7750a3 etoile-foundation-0.2.1_pre2711.ebuild 447
+RMD160 b5e176cdaa2d6893cea486258861e8a01b5fe522 etoile-foundation-0.2.1_pre2711.ebuild 447
+SHA256 aa1c07aa8eb08432e30554b13d21a9eda15bf66a4028675b9c2fb018e0804afc etoile-foundation-0.2.1_pre2711.ebuild 447
 EBUILD etoile-foundation-0.2.ebuild 464 RMD160 626504a77130fa8b405b58361a835ed707fdc24a SHA1 cd03c2d406085cd3eae025ace94e922a0d2a4c3c SHA256 0f3aca7979bc23ae1cb7d9e961b2d8bd0121ad4ca658bd67447099f112b4968f
 MD5 b8c71246be5156d00e6e21d9417c4a25 etoile-foundation-0.2.ebuild 464
 RMD160 626504a77130fa8b405b58361a835ed707fdc24a etoile-foundation-0.2.ebuild 464
@@ -13,3 +17,6 @@ SHA256 3de3234af9600e4e5eec8ca30d5e689a7c94494725b415d3f9d326451cc99393 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-etoile-foundation-0.2.1_pre2632 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-etoile-foundation-0.2.1_pre2632 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-etoile-foundation-0.2.1_pre2632 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-etoile-foundation-0.2.1_pre2711 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-etoile-foundation-0.2.1_pre2711 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-etoile-foundation-0.2.1_pre2711 0

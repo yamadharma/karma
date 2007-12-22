@@ -5,7 +5,7 @@
 
 # This eclass sets the site-lisp directory for emacs-related packages.
 
-inherit gnustep-2 subversion
+inherit gnustep-2 subversion 
 
 ECLASS=etoile-svn
 INHERITED="$INHERITED $ECLASS"
@@ -23,6 +23,8 @@ HOMEPAGE="http://www.etoile-project.org"
 LICENSE="GPL-2"
 
 mydoc=""
+
+#FEATURES="${FEATURES} nostrip"
 
 #export PROJECT_DIR=${S1}
 

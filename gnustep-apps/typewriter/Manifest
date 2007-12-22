@@ -7,6 +7,10 @@ EBUILD typewriter-0.2.1_pre2632.ebuild 472 RMD160 32a71e3e00ec98dfc225bd9569bf67
 MD5 0d73115ce368ef0fde63ab23043adc70 typewriter-0.2.1_pre2632.ebuild 472
 RMD160 32a71e3e00ec98dfc225bd9569bf67582ee20a2b typewriter-0.2.1_pre2632.ebuild 472
 SHA256 1f6d0925a1dabcac72597e23a2bbcf5fba68bebb09a6bb00794ec272ce8fe032 typewriter-0.2.1_pre2632.ebuild 472
+EBUILD typewriter-0.2.1_pre2711.ebuild 472 RMD160 32a71e3e00ec98dfc225bd9569bf67582ee20a2b SHA1 2bf8cf6b72473c8de373a9dfef2b7fdbf2493792 SHA256 1f6d0925a1dabcac72597e23a2bbcf5fba68bebb09a6bb00794ec272ce8fe032
+MD5 0d73115ce368ef0fde63ab23043adc70 typewriter-0.2.1_pre2711.ebuild 472
+RMD160 32a71e3e00ec98dfc225bd9569bf67582ee20a2b typewriter-0.2.1_pre2711.ebuild 472
+SHA256 1f6d0925a1dabcac72597e23a2bbcf5fba68bebb09a6bb00794ec272ce8fe032 typewriter-0.2.1_pre2711.ebuild 472
 EBUILD typewriter-0.2.ebuild 489 RMD160 d37062b963470d8a562025732febe3e3c7081807 SHA1 f934d101dcae34821ece5cb534997acaabaa75c4 SHA256 681354724ac7b4717e3c76c16cfc98a40c5b6c0be0f375d4db7f0f8225aea562
 MD5 a40b4cb5d4a37940bc6f9e2910419d55 typewriter-0.2.ebuild 489
 RMD160 d37062b963470d8a562025732febe3e3c7081807 typewriter-0.2.ebuild 489
@@ -20,3 +24,6 @@ SHA256 3de3234af9600e4e5eec8ca30d5e689a7c94494725b415d3f9d326451cc99393 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-typewriter-0.2.1_pre2632 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-typewriter-0.2.1_pre2632 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-typewriter-0.2.1_pre2632 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-typewriter-0.2.1_pre2711 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-typewriter-0.2.1_pre2711 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-typewriter-0.2.1_pre2711 0

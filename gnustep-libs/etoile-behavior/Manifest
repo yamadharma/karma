@@ -3,6 +3,10 @@ EBUILD etoile-behavior-0.2.1_pre2632.ebuild 376 RMD160 b75007d48aa77f0a8b8bd5c38
 MD5 2abff87c66266c825688eec82999834c etoile-behavior-0.2.1_pre2632.ebuild 376
 RMD160 b75007d48aa77f0a8b8bd5c385dccfa33a921ab7 etoile-behavior-0.2.1_pre2632.ebuild 376
 SHA256 9dfdbe1bdd6047b1e92d1c140ba1174bb2541b6b5869e397ad7c48971f6013d2 etoile-behavior-0.2.1_pre2632.ebuild 376
+EBUILD etoile-behavior-0.2.1_pre2711.ebuild 376 RMD160 b75007d48aa77f0a8b8bd5c385dccfa33a921ab7 SHA1 acee7835fad3b366d135e71d0b4711fa763f798c SHA256 9dfdbe1bdd6047b1e92d1c140ba1174bb2541b6b5869e397ad7c48971f6013d2
+MD5 2abff87c66266c825688eec82999834c etoile-behavior-0.2.1_pre2711.ebuild 376
+RMD160 b75007d48aa77f0a8b8bd5c385dccfa33a921ab7 etoile-behavior-0.2.1_pre2711.ebuild 376
+SHA256 9dfdbe1bdd6047b1e92d1c140ba1174bb2541b6b5869e397ad7c48971f6013d2 etoile-behavior-0.2.1_pre2711.ebuild 376
 EBUILD etoile-behavior-0.2.ebuild 393 RMD160 400f42e2f2d774407828bfa3bde4ae92d316c5ec SHA1 12dcc2cfa15317e97692bcfb1b3aa955118c2baa SHA256 20b118da4ad4ab05d12c5cda59c5940e0eccbfed13e94d85286b305a2f5fa8be
 MD5 b9eda40cee53825768aa2814d87db226 etoile-behavior-0.2.ebuild 393
 RMD160 400f42e2f2d774407828bfa3bde4ae92d316c5ec etoile-behavior-0.2.ebuild 393
@@ -13,3 +17,6 @@ SHA256 3de3234af9600e4e5eec8ca30d5e689a7c94494725b415d3f9d326451cc99393 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-etoile-behavior-0.2.1_pre2632 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-etoile-behavior-0.2.1_pre2632 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-etoile-behavior-0.2.1_pre2632 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-etoile-behavior-0.2.1_pre2711 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-etoile-behavior-0.2.1_pre2711 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-etoile-behavior-0.2.1_pre2711 0
