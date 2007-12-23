@@ -5,24 +5,21 @@
 inherit eutils
 
 DESCRIPTION="FBReader (E-book reader for Linux PDAs and desktop)"
-HOMEPAGE="http://only.mawhrin.net/fbreader/"
-SRC_URI="http://only.mawhrin.net/fbreader/${PN}-sources-${PV}.tgz"
+HOMEPAGE="http://www.fbreader.org/"
+SRC_URI="http://www.fbreader.org/${PN}-sources-${PV}.tgz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86 amd64 ~arm"
+KEYWORDS="x86 amd64 ~arm ~ppc"
 
-IUSE="qt3 qt4"
-DEPEND="dev-libs/expat 
+IUSE="qt3 qt4 gtk kde debug"
+DEPEND="dev-libs/expat
 	app-arch/bzip2
-	cjk? ( >=app-i18n/enca-1.9 )
-	!cjk? ( >=app-i18n/enca-1.7 ) 
 	qt4? ( =x11-libs/qt-4* )
-	!qt4? (
-	    qt3? ( =x11-libs/qt-3* )
-	    !qt3? ( >=x11-libs/gtk+-2.4 )
-	)"
-RDEPEND="${DEPEND}"	
+	qt3? ( =x11-libs/qt-3* )
+	gtk? ( >=x11-libs/gtk+-2.4 )
+	"
+RDEPEND="${DEPEND}"
 
 src_compile () {
 	cd ${S}
@@ -60,9 +57,24 @@ src_compile () {
 	emake || die "emake failed"
 }
 
+
 src_install()
 {
 	emake DESTDIR=${D} install || die "install failed"
 	doicon ${D}/usr/share/FBReader/icons/FBReader.png
 	make_desktop_entry "FBReader" "FBReader" FBReader.png
+
+	if use kde ; then
+		cat > FBReader.desktop <<-EOF
+			[Desktop Entry]
+			Comment=FBReader (E-book reader for Linux PDAs and desktop)
+			Icon=FBReader
+			MimeType=text/fbreader
+			Patterns=*.fb2;
+			Type=MimeType
+		EOF
+		insinto /usr/share/mimelnk/text
+                doins FBReader.desktop
+		echo "MimeType=text/fbreader" >> ${D}/usr/share/applications/FBReader-fbreader.desktop
+	fi
 }
