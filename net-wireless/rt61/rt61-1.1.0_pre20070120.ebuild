@@ -23,7 +23,7 @@ LICENSE="GPL-2"
 
 #SRC_URI="mirror://sourceforge/rt2400/${MY_P}.tar.gz"
 
-KEYWORDS="-* amd64 x86"
+KEYWORDS="-* ~amd64 ~x86"
 IUSE="debug"
 DEPEND=""
 RDEPEND="net-wireless/wireless-tools
