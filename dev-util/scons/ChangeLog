@@ -1,6 +1,97 @@
 # ChangeLog for dev-util/scons
-# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/scons/ChangeLog,v 1.33 2006/02/09 00:35:58 tove Exp $
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-util/scons/ChangeLog,v 1.54 2007/09/26 18:38:56 ranger Exp $
+
+  26 Sep 2007; Brent Baude <ranger@gentoo.org> scons-0.97.ebuild:
+  Marking  scons-0.97 ppc64 for bug 189096
+
+  13 Sep 2007; Roy Marples <uberlord@gentoo.org> scons-0.97.ebuild:
+  Keyworded ~x86-fbsd, #191658.
+
+  12 Sep 2007; Christoph Mende <angelos@gentoo.org> scons-0.97.ebuild:
+  Stable on amd64 wrt bug #191658
+
+  08 Sep 2007; Jeroen Roovers <jer@gentoo.org> scons-0.97.ebuild:
+  Stable for HPPA (bug #191658).
+
+  08 Sep 2007; Tiziano Müller <dev-zero@gentoo.org> metadata.xml,
+  -scons-0.96.96.ebuild:
+  Assigning to python-herd, dropped old version.
+
+  01 Sep 2007; Christian Heim <phreak@gentoo.org> metadata.xml:
+  Removing twp from metadata due to his retirement (see #190561 for reference).
+
+  13 Aug 2007; Gustavo Zacarias <gustavoz@gentoo.org> scons-0.97.ebuild:
+  Stable on sparc
+
+  13 Aug 2007; Tobias Scherbaum <dertobi123@gentoo.org> scons-0.97.ebuild:
+  ppc. stable
+
+  25 Jul 2007; Raúl Porcel <armin76@gentoo.org> scons-0.97.ebuild:
+  alpha/ia64/x86 stable
+
+*scons-0.97 (06 Jun 2007)
+
+  06 Jun 2007; <twp@gentoo.org> +scons-0.97.ebuild:
+  Version bump.  Bug # 180323.
+
+*scons-0.96.96 (14 Apr 2007)
+
+  14 Apr 2007; Stefan Schweizer <genstef@gentoo.org> -scons-0.96.95.ebuild,
+  +scons-0.96.96.ebuild:
+  version bump
+
+  04 Apr 2007; Jeroen Roovers <jer@gentoo.org> scons-0.96.94.ebuild:
+  Stable for HPPA (bug #173281).
+
+*scons-0.96.95 (02 Mar 2007)
+
+  02 Mar 2007; <twp@gentoo.org> -scons-0.96.94.ebuild,
+  +scons-0.96.95.ebuild:
+  Version bump. Bug #168970.
+
+*scons-0.96.94 (01 Feb 2007)
+
+  01 Feb 2007; <twp@gentoo.org> -scons-0.96.91.ebuild,
+  -scons-0.96.92-r3.ebuild, -scons-0.96.93.ebuild, +scons-0.96.94.ebuild:
+  Version bump.  Bug #162333.  Remove old versions.
+
+  19 Jan 2007; Charlie Shepherd <masterdriverz@gentoo.org>
+  scons-0.96.1.ebuild, scons-0.96.91.ebuild, scons-0.96.92-r3.ebuild,
+  scons-0.96.93.ebuild:
+  QA: remove invalid RESTRICT="mirror"
+
+*scons-0.96.93 (07 Dec 2006)
+
+  07 Dec 2006; <twp@gentoo.org> +scons-0.96.93.ebuild:
+  Version bump.  Bug # 157405.
+
+*scons-0.96.92-r3 (09 Nov 2006)
+
+  09 Nov 2006; <twp@gentoo.org> -scons-0.96.92-r2.ebuild,
+  +scons-0.96.92-r3.ebuild:
+  Remove man pages installed in /usr/man.  Bug # 154410.
+
+*scons-0.96.92-r2 (07 Nov 2006)
+
+  07 Nov 2006; <twp@gentoo.org> -scons-0.96.92.ebuild,
+  -scons-0.96.92-r1.ebuild, +scons-0.96.92-r2.ebuild:
+  Move clean-up code to pkg_postinst. Remove old versions. Bug # 153915.
+  Thanks jakub.
+
+*scons-0.96.92-r1 (03 Nov 2006)
+
+  03 Nov 2006; <twp@gentoo.org> +scons-0.96.92-r1.ebuild:
+  Remove orphaned files from previous buggy builds. Bug # 153915. Thanks jakub!
+
+*scons-0.96.92 (23 Oct 2006)
+
+  23 Oct 2006; <twp@gentoo.org> -scons-0.96.90.ebuild, scons-0.96.91.ebuild,
+  +scons-0.96.92.ebuild:
+  Version bump and clean up .py[co] files. Bugs # 118022, # 132448, and # 144978.
+
+  26 May 2006; Diego Pettenò <flameeyes@gentoo.org> scons-0.96.1.ebuild:
+  Add ~x86-fbsd keyword.
 
   09 Jan 2006; Markus Rothe <corsair@gentoo.org> scons-0.96.1.ebuild,
   scons-0.96.90.ebuild, scons-0.96.91.ebuild:
