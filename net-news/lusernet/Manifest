@@ -1,7 +1,0 @@
-MD5 80699754a7e9adb6c02df33c8fa16fd6 metadata.xml 161
-MD5 b4fe7a4bc672887917f536389517e6bd lusernet-0.4.1.ebuild 772
-MD5 b4fe7a4bc672887917f536389517e6bd lusernet-0.4.2_pre1.ebuild 772
-MD5 676b85a1818500936f0157c37dc0a8b3 lusernet-0.4.2.ebuild 705
-MD5 f32b51ed26f3bceeef1f05d5bb328f79 files/digest-lusernet-0.4.1 65
-MD5 f71b23fd8b344cc292b91bd589fee04b files/digest-lusernet-0.4.2_pre1 69
-MD5 c94d09b29500c580e4d56e5bc7c04aee files/digest-lusernet-0.4.2 65
