@@ -1,3 +1,7 @@
+AUX octave-2.9.18-test-fix.patch 1241 RMD160 1cac3e4cd2cce480a184a8319ce0cb2d34503b2c SHA1 87905a77f3b9f63b56bd8c4ee8ae12e3a3c2ee4a SHA256 f72d643e3b9e143005dd450bb25a15ae87a41a0dcbbc34f3cced6da0f9980a3b
+MD5 83e1161d340833ebaac6d0fc256ac7a1 files/octave-2.9.18-test-fix.patch 1241
+RMD160 1cac3e4cd2cce480a184a8319ce0cb2d34503b2c files/octave-2.9.18-test-fix.patch 1241
+SHA256 f72d643e3b9e143005dd450bb25a15ae87a41a0dcbbc34f3cced6da0f9980a3b files/octave-2.9.18-test-fix.patch 1241
 DIST octave-3.0.0.tar.bz2 9821575 RMD160 02fc58b63210ec99cfcad9dc2cee2ad1b6d11326 SHA1 874b3d40db5d882e37614ffa6cdb9fdd71e173f8 SHA256 f2351eed4f6505993275947802a35ecbc9b7e587ebbb5ee7ba72d54280de4418
 EBUILD octave-3.0.0.ebuild 4104 RMD160 bda208d79eeae04738e23776acf3af6e7caa5547 SHA1 0900572d89aae13bddc3c6aa99788bac6e1bb290 SHA256 fb333ec3e9b45c6e5f7b5207b77d7fb220e06a183a9753f4deaae4fadd2caf0f
 MD5 44563321b214f2afc5c6454c8c88dfb3 octave-3.0.0.ebuild 4104
