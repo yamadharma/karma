@@ -27,14 +27,23 @@ src_unpack() {
 	unpack ${A}
 	cd ${S}
 	
+	src_setenv
+	
 	# Patch the lsp Makefile since GCL goes kaboom with newer BFDs
 	# from Portage, so we need to use the BFD distributed with GCL for
 	# things to compile and work.
 	sed -i -e 's/--enable-statsysbfd/--enable-locbfd --disable-statsysbfd/' Makefile.pamphlet || die 'Failed to patch the lsp Makefile!'
 	
-	sed -i -e "s/^#GCLVERSION=gcl-2.6.7/GCLVERSION=gcl-2.6.7/" \
+	# Dirty hack?
+	# Don't compile with gcl-2.6.8pre
+	sed -i -e "s/^#GCLVERSION=gcl-2.6.7$/GCLVERSION=gcl-2.6.7/" \
 		-e "s/^GCLVERSION=gcl-2.6.8pre/#GCLVERSION=gcl-2.6.8pre/" \
 		Makefile.pamphlet || die 'Failed to patch the lsp Makefile!'
+
+	sed -i -e "s/^#GCLVERSION=gcl-2.6.7$/GCLVERSION=gcl-2.6.7/" \
+		-e "s/^GCLVERSION=gcl-2.6.8pre/#GCLVERSION=gcl-2.6.8pre/" \
+		Makefile || die 'Failed to patch the Makefile!'
+
 
 	# Sandbox happiness, fix noweb
 	cd ${WORKDIR}
