@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/sci-mathematics/axiom/axiom-3.9-r1.ebuild,v 1.5 2007/07/22 06:57:09 dberkholz Exp $
 
-inherit eutils
+inherit eutils latex-package
 
 DESCRIPTION="Axiom is a general purpose Computer Algebra system"
 HOMEPAGE="http://axiom.axiom-developer.org/"
@@ -77,7 +77,7 @@ src_install() {
 	src_setenv
 
 	dodir /usr/bin
-	einstall INSTALL=${D}/opt/axiom COMMAND=${D}/usr/bin/axiom || die 'Failed to install Axiom!'
+	einstall DESTDIR=${D}/opt/axiom COMMAND=${D}/usr/bin/axiom || die 'Failed to install Axiom!'
 	sed -e '2d;3i AXIOM=/opt/axiom' -i ${D}/usr/bin/axiom ${D}/opt/axiom/mnt/linux/bin/axiom || die 'Failed to patch axiom runscript!'
 	cat <<- EOF > ${D}/usr/bin/AXIOMsys
 		#!/bin/sh -
@@ -96,4 +96,7 @@ src_install() {
 	sed -e 's/AXIOMsys/sman/g' ${D}/usr/bin/axiom > ${D}/usr/bin/sman
 	chmod +x ${D}/usr/bin/sman
 	chmod +x ${D}/usr/bin/AXIOMsys
+	
+	insinto ${TEXMF}/tex/latex/${PN}
+	doins ${D}/opt/axiom/bin/tex/axiom.sty
 }
