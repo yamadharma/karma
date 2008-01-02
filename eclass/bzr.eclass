@@ -33,6 +33,7 @@ EBZR_FETCH_CMD="bzr checkout"
 ## -- EBZR_UPDATE_CMD:  bzr update command
 #
 EBZR_UPDATE_CMD="bzr update"
+#EBZR_UPDATE_CMD="bzr pull"
 
 ## -- EBZR_DIFFSTAT_CMD: Command to get diffstat output
 #
@@ -169,8 +170,11 @@ bzr_fetch() {
 		einfo "   repository: ${repository}"
 
 		cd "${EBZR_BRANCH_DIR}"
-		${EBZR_UPDATE_CMD} ${EBZR_OPTIONS} "${repository}" \
+#		${EBZR_UPDATE_CMD} ${EBZR_OPTIONS} "${repository}" \
+#			|| die "${EBZR}: can't merge from ${repository}."
+		${EBZR_UPDATE_CMD} ${EBZR_OPTIONS} \
 			|| die "${EBZR}: can't merge from ${repository}."
+
 		${EBZR_DIFFSTAT_CMD}
 	fi
 
