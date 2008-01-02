@@ -32,7 +32,7 @@ EBZR_FETCH_CMD="bzr checkout"
 
 ## -- EBZR_UPDATE_CMD:  bzr update command
 #
-EBZR_UPDATE_CMD="bzr pull"
+EBZR_UPDATE_CMD="bzr update"
 
 ## -- EBZR_DIFFSTAT_CMD: Command to get diffstat output
 #

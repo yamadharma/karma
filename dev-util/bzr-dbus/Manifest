@@ -1,0 +1,7 @@
+EBUILD bzr-dbus-0.1_pre31.ebuild 696 RMD160 8afe0e4416f48a0fe74e3f964ffa15ac18b24a5f SHA1 aec7c6974b77ae5cc79ae4c67091a6317c4c7a6d SHA256 016ba95125f6e16c8c44b1909118ab91152ef986fc11fbadc70ae0f2fcf9c2f0
+MD5 5256dbec5b9465b81e2e62226ce42d38 bzr-dbus-0.1_pre31.ebuild 696
+RMD160 8afe0e4416f48a0fe74e3f964ffa15ac18b24a5f bzr-dbus-0.1_pre31.ebuild 696
+SHA256 016ba95125f6e16c8c44b1909118ab91152ef986fc11fbadc70ae0f2fcf9c2f0 bzr-dbus-0.1_pre31.ebuild 696
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-bzr-dbus-0.1_pre31 0
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-bzr-dbus-0.1_pre31 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-bzr-dbus-0.1_pre31 0
