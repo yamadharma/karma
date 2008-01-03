@@ -126,11 +126,27 @@
 # if not empty, `*.elc' files removed
 # for multi-instansed emacs installation
 
+# @ECLASS-VARIABLE: SITELISP
+# @DESCRIPTION:
+# Directory where packages install Emacs Lisp files.
+SITELISP=/usr/share/site-lisp/common/packages
+
+# Directory where packages install miscellaneous (not Lisp) files.
+SITEETC=/usr/share/emacs/etc
+
+# @ECLASS-VARIABLE: SITEFILE
+# @DESCRIPTION:
+# Name of package's site-init file.
+SITEFILE=50${PN}-gentoo.el
+
+EMACS=/usr/bin/emacs
+# The following works for Emacs versions 18--23, don't change it.
+EMACSFLAGS="-batch -q --no-site-file"
+
 ECLASS=elisp-common
 INHERITED="$INHERITED $ECLASS"
 
 SITELISPEMACS=/usr/share/emacs/site-lisp
-#SITELISP=/usr/share/emacs/site-lisp
 SITELISP=/usr/share/site-lisp/common/packages
 SITELISPROOT=/usr/share/site-lisp
 SITELISPDOC=/usr/share/site-lisp/doc
@@ -152,6 +168,7 @@ elisp-common_pkg_setup () {
     	    export SITELISPROOT=/usr/share/site-lisp
     	    export SITELISPDOC=/usr/share/site-lisp/doc
     	    export SITELISPEMACS=/usr/share/emacs/site-lisp
+            export SITEETC=/usr/share/site-lisp/common/etc    	    
     	    
     	    export HAS_ECF=1
 	    # Sandbox issues
@@ -162,6 +179,7 @@ elisp-common_pkg_setup () {
 	else    
             export SITELISP=/usr/share/emacs/site-lisp
             export SITELISPEMACS=/usr/share/emacs/site-lisp
+            export SITEETC=/usr/share/emacs/etc
 
 	    export HAS_ECF=
 	fi
