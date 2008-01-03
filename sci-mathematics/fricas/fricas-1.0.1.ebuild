@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/sci-mathematics/axiom/axiom-3.9-r1.ebuild,v 1.5 2007/07/22 06:57:09 dberkholz Exp $
 
-inherit eutils elisp-common latex-package
+inherit eutils multilib elisp-common latex-package
 
 MY_P=${P}-full
 
@@ -49,10 +49,13 @@ src_install() {
 	einstall || die
 
 	sed -e "s:${D}:/:g" -i ${D}/usr/bin/axiom || die 'Failed to patch axiom runscript!'
+	sed -e "s:axiom/target:fricas/target:g" -i ${D}/usr/bin/axiom || die 'Failed to patch axiom runscript!'
 	mv ${D}/usr/bin/axiom ${D}/usr/bin/${PN}
 
 	elisp-install axiom ${S}/contrib/emacs/*.el
 	
 	insinto ${TEXMF}/tex/latex/axiom
 	doins ${S}/src/scripts/tex/axiom.sty
+	
+	mv ${D}/usr/$(get_libdir)/axiom ${D}/usr/$(get_libdir)/fricas
 }
