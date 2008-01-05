@@ -29,14 +29,15 @@ src_unpack() {
 	cd ${S}/rte
 	clisp=`ls -d clisp* | tail -n 1`
 	rm -rf ${clisp} 
-	ln -snf ${WORKDIR}/clisp-${CLISP_PV} ${clisp}
+	mv -f ${WORKDIR}/clisp-${CLISP_PV} ${clisp}	
 }
 
 src_compile() {
+	LDFLAGS="" \
 	econf \
 	    `use_enable doc docs` \
 	    || die "Configure failed"
-	emake -j1 || die "Make failed"
+	make -j1 || die "Make failed"
 }
 
 
