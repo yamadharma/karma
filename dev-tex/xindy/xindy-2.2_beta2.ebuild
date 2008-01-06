@@ -13,10 +13,10 @@ SRC_URI="http://dev.atmarama.org/${PN}-${MY_PV}.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 
 IUSE="doc"
-DEPEND="virtual/tetex"
+DEPEND="virtual/latex-base"
 
 S=${WORKDIR}/${PN}-${MY_PV}
 

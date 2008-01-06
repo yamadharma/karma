@@ -6,7 +6,7 @@ inherit eutils multilib elisp-common latex-package
 
 MY_P=${P}-full
 
-DESCRIPTION="FriCAS Project FriCAS is a fork of Axiom"
+DESCRIPTION="FriCAS - an advanced computer algebra system. FriCAS is a fork of Axiom"
 HOMEPAGE="http://www.math.uni.wroc.pl/~hebisch/fricas.html
 	http://fricas.sf.net"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
