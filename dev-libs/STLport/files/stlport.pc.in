@@ -1,0 +1,13 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=@libdir@
+includedir=${prefix}/include/stlport
+
+Name: stlport
+Description: C++ STL library
+Version: @PV@
+Requires: 
+Libs: -L${libdir} -lstlport -lstlportg -lstlportstlg 
+Cflags: -I${includedir}
+
+

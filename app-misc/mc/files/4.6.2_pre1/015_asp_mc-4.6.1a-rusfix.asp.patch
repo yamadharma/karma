@@ -1,0 +1,13 @@
+--- mc-4.6.1a/src/util.c.rusfix	2005-11-24 12:26:09.000000000 +0200
++++ mc-4.6.1a/src/util.c	2005-11-24 14:18:33.000000000 +0200
+@@ -193,6 +193,10 @@ is_printable (int c)
+ #ifdef UTF8
+     if (SLsmg_Is_Unicode)
+ 	return iswprint (c);
++    else {
++	unsigned int cc = (unsigned int) c;
++	return (cc > 31 && cc != 127 && cc != 155);
++    }
+ #endif
+     c &= 0xff;
+ 

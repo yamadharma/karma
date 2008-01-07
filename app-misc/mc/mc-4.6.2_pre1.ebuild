@@ -4,16 +4,12 @@
 
 inherit flag-o-matic eutils
 
-
-MY_PV=2007-06-23-14
-MY_P=mc-${MY_PV}
+MY_P=${P/_pre/-pre}
 S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="GNU Midnight Commander cli-based file manager"
 HOMEPAGE="http://www.ibiblio.org/mc/"
-#SRC_URI="http://www.ibiblio.org/pub/Linux/utils/file/managers/${PN}/${P}.tar.gz"
-#SRC_URI="ftp://ftp.gnu.org/gnu/mc/${P}.tar.gz"
-SRC_URI="http://www.ibiblio.org/pub/Linux/utils/file/managers/${PN}/snapshots/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp.gnu.org/gnu/mc/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -26,6 +22,7 @@ RDEPEND=">=sys-fs/e2fsprogs-1.19
 	ncurses? ( >=sys-libs/ncurses-5.2-r5 )
 	slang? ( >=sys-libs/slang-2.0.5 )
 	=dev-libs/glib-2*
+	app-arch/lzma
 	pam? ( >=sys-libs/pam-0.72 )
 	gpm? ( >=sys-libs/gpm-1.19.3 )
 	samba? ( >=net-fs/samba-3.0.0 )
@@ -42,6 +39,7 @@ src_unpack() {
 	unpack ${A}
 
 	cd ${S}
+	
 	EPATCH_FORCE="yes" \
 	EPATCH_SUFFIX="patch" \
 	    epatch ${FILESDIR}/${PV}
@@ -49,6 +47,8 @@ src_unpack() {
 	#FIX for slang-2
 	sed -i -e "s:slang/slang.h:slang-2/slang.h:g"  acinclude.m4	    
 	sed -i -e "s:-lslang:-lslang-2:g"  acinclude.m4	    	
+	
+	chmod +x autogen.sh
 }
 
 src_compile() {
@@ -153,8 +153,8 @@ src_compile() {
 	    && myconf="${myconf} --with-samba --with-configdir=/etc/samba --with-codepagedir=/var/lib/samba/codepages --with-privatedir=/etc/samba/private" \
 	    || myconf="${myconf} --without-samba"
 
-#	./autogen.sh \
-	econf \
+#	econf \
+	./autogen.sh \
 	    --prefix=/usr \
 	    --datadir=/usr/share \
 	    --sysconfdir=/usr/share \

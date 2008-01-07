@@ -1,0 +1,12 @@
+diff -Nuarp mc-4.6.0.old/lib/mcserv.init mc-4.6.0/lib/mcserv.init
+--- mc-4.6.0.old/lib/mcserv.init	2002-08-26 05:46:17.000000000 +0200
++++ mc-4.6.0/lib/mcserv.init	2003-02-06 18:19:42.000000000 +0200
+@@ -8,7 +8,7 @@
+ #               Michele Marziani <marziani@fe.infn.it>
+ #		Preston Brown <pbrown@redhat.com>
+ #
+-# chkconfig: - 86 30
++# chkconfig: 2345 86 30
+ # description: The Midnight Commander server allows users on remote machines \
+ #	       to use the Midnight Commander file manager to manipulate their \
+ #	       files on the machine running the server. The server  \

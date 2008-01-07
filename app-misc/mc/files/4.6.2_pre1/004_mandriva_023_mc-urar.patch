@@ -1,0 +1,14 @@
+diff -Nur mc-4.5.52.orig/vfs/extfs/urar.in mc-4.5.52/vfs/extfs/urar.in
+--- mc-4.5.52.orig/vfs/extfs/urar.in	Sat Dec 16 23:52:58 2000
++++ mc-4.5.52/vfs/extfs/urar.in	Fri Mar 23 12:59:40 2001
+@@ -14,6 +14,10 @@
+ # ftp.elf.stuba.sk/pub/pc/pack
+ #
+ 
++if [ ! -x $UNRAR -a -x $RAR ]; then
++    UNRAR=$RAR
++fi
++
+ mcrarfs_list ()
+ {
+      $UNRAR v -c- "$1" | @AWK@ -v uid=${UID-0} '

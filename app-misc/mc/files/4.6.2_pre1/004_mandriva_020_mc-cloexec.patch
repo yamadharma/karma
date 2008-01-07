@@ -1,0 +1,18 @@
+--- mc-2006-11-14-16/src/subshell.c.desleak	2006-05-08 22:59:48.000000000 +0200
++++ mc-2006-11-14-16/src/subshell.c	2006-11-23 09:50:30.000000000 +0100
+@@ -1150,6 +1152,7 @@
+ #endif				/* I_FIND && I_PUSH */
+ #endif				/* __osf__ || __linux__ */
+ 
++    fcntl(pty_slave, F_SETFD, FD_CLOEXEC);
+     return pty_slave;
+ }
+ 
+@@ -1203,6 +1207,7 @@
+     }
+     if ((pty_slave = open (pty_name, O_RDWR)) == -1)
+ 	fprintf (stderr, "open (pty_name, O_RDWR): %s\r\n", pty_name);
++    fcntl(pty_slave, F_SETFD, FD_CLOEXEC);
+     return pty_slave;
+ }
+ 

@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/xapian/xapian-0.9.6.ebuild,v 1.3 2006/10/28 09:07:31 opfer Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-libs/xapian/xapian-0.9.9.ebuild,v 1.3 2007/07/12 02:25:34 mr_bones_ Exp $
 
 DESCRIPTION="Xapian Probabilistic Information Retrieval library"
 HOMEPAGE="http://www.xapian.org/"
@@ -8,7 +8,7 @@ SRC_URI="http://www.oligarchy.co.uk/xapian/${PV}/xapian-core-${PV}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="ppc x86 amd64"
+KEYWORDS="amd64 ~ppc x86"
 IUSE=""
 
 DEPEND="virtual/libc
@@ -22,7 +22,6 @@ RDEPEND="virtual/libc"
 
 S=${WORKDIR}/xapian-core-${PV}
 
-
 src_test() {
 	if has_version '<=dev-util/valgrind-2.3.0';
 	then
@@ -33,11 +32,10 @@ src_test() {
 	fi
 }
 
-
 src_install () {
 	emake -j1 DESTDIR="${D}" install || die
 
 	mv "${D}/usr/share/doc/xapian-core" "${D}/usr/share/doc/${PF}"
 
-	dodoc AUTHORS HACKING PLATFORMS README
+	dodoc AUTHORS HACKING PLATFORMS README NEWS
 }

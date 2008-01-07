@@ -30,7 +30,7 @@ RDEPEND="dev-libs/xerces-c
 	=dev-libs/libsigc++-2*
 	>=dev-libs/libpqxx-2.4.3
 	xapian? ( >=dev-libs/xapian-0.8.3 )
-	dev-libs/boost
+	>=dev-libs/boost-1.33.1
 	curl? ( net-misc/curl )
 	media-libs/imlib2
 	dev-db/stldb4
@@ -56,7 +56,7 @@ RDEPEND="dev-libs/xerces-c
 	beagle? ( app-misc/beagle )
 	perl? ( dev-lang/swig )
 	rpm? ( >=rpm-4.4.7 )
-	stlport ( dev-libs/STLport )
+	stlport? ( dev-libs/STLport )
 	X? ( virtual/x11 )"
 DEPEND="${RDEPEND}"
 
@@ -105,16 +105,16 @@ src_unpack() {
 	#epatch "${FILESDIR}/${PN}-1.1.98-gentoo2.patch"
 
 	#FIX IT!
-	disable_component "perl"
-	disable_component "apps/xml/CGITransform"
-	disable_component "plugins/context/external"
-	disable_component "noarch"
-	disable_component "plugins/fulltextindexers/clucene"
-	disable_component "plugins/context/sqlplus"
+#	disable_component "perl"
+#	disable_component "apps/xml/CGITransform"
+#	disable_component "plugins/context/external"
+#	disable_component "noarch"
+#	disable_component "plugins/fulltextindexers/clucene"
+#	disable_component "plugins/context/sqlplus"
 
-	for i in 'apps/xml/Makefile.in media/icons/Makefile.in media/xslt/Makefile.in'; do
-		sed -i 's@(prefix)/ferris@(prefix)/share/ferris@g' ${S}/$i
-	done
+#	for i in 'apps/xml/Makefile.in media/icons/Makefile.in media/xslt/Makefile.in'; do
+#		sed -i 's@(prefix)/ferris@(prefix)/share/ferris@g' ${S}/$i
+#	done
 
 	#find . -iname "*.in" -exec sed -i 's/$(LIBTOOL) --mode=install/$(LIBTOOL) -mode=install -inst-prefix=${DESTDIR}/g' "{}" \;
 
@@ -129,7 +129,12 @@ src_compile() {
 	myconf="`use_enable stlport` `use_with qt` `use_with X` `use_with ldap`
 	`use_with mysql` `use_with exif` `use_with curl` `use_with gphoto2`"
 
-	use stlport && myconf="${myconf} --with-stlport=/usr"
+	if ( use stlport ) 
+	then
+		myconf="${myconf} --with-stlport=/usr"
+		export STLPORT_CFLAGS=-I/usr/include/stlport
+		export STLPORT_LIBS=-L/usr/lib -lstlport
+	fi
 	myconf="${myconf} --with-sigcxx-2x=yes"
 
 	if ( use kde ); then
