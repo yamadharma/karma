@@ -414,6 +414,10 @@ AUX 4.6.2_pre1/004_mandriva_029_mc-vhdl-syntax.patch 4886 RMD160 2b08067ced71ae7
 MD5 b976a38491b8c12a4b43c774956ce518 files/4.6.2_pre1/004_mandriva_029_mc-vhdl-syntax.patch 4886
 RMD160 2b08067ced71ae7888acfb09a5775615f45a3cbb files/4.6.2_pre1/004_mandriva_029_mc-vhdl-syntax.patch 4886
 SHA256 b91c50c08805bba4459f301d11bbc426f029881b18dcbf770306345583204782 files/4.6.2_pre1/004_mandriva_029_mc-vhdl-syntax.patch 4886
+AUX 4.6.2_pre1/005_fedora_001_mc-extensions.patch 6255 RMD160 67cea07f80efab477bc5890c0c54c7679aeb60aa SHA1 9eff81398da5aad1a23d62cb1a21b06863169cf4 SHA256 4ed75a5ff9ca2ad34df63a9b0b315a44c2c3c84c16f6e9110b1e30c7827a11af
+MD5 2ee59414b13f43c17dbb0e9f9b7a7afe files/4.6.2_pre1/005_fedora_001_mc-extensions.patch 6255
+RMD160 67cea07f80efab477bc5890c0c54c7679aeb60aa files/4.6.2_pre1/005_fedora_001_mc-extensions.patch 6255
+SHA256 4ed75a5ff9ca2ad34df63a9b0b315a44c2c3c84c16f6e9110b1e30c7827a11af files/4.6.2_pre1/005_fedora_001_mc-extensions.patch 6255
 AUX 4.6.2_pre1/010_alt_mc-4.6.1-alt-forceexec.patch 1659 RMD160 a2234a8475d06956677d01d844b1bbc0443fc0b2 SHA1 c4c1299c13584cc3c1dda97ecee12699884f69c0 SHA256 19b07c51d84f9e83d0f22389f7d068fc8856b512408f511e2cfa45e617dc28d4
 MD5 345fbd48a199ada890e5143b583f2c80 files/4.6.2_pre1/010_alt_mc-4.6.1-alt-forceexec.patch 1659
 RMD160 a2234a8475d06956677d01d844b1bbc0443fc0b2 files/4.6.2_pre1/010_alt_mc-4.6.1-alt-forceexec.patch 1659
