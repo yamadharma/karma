@@ -113,7 +113,7 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 	# use xdg-open to view ps, pdf
-	epatch "${FILESDIR}"/${P}-xdg-utils.patch
+#	epatch "${FILESDIR}"/${P}-xdg-utils.patch
 	# remove rmaxima if neither cmucl nor sbcl
 	if [[ ${MAXIMA_LISP} != cmucl ]] || [[ ${MAXIMA_LISP} != sbcl ]]; then
 		sed -i \
