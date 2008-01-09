@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnustep-base/gnustep-gui/gnustep-gui-0.12.0.ebuild,v 1.3 2007/08/22 16:21:38 uberlord Exp $
+# $Header: /var/cvsroot/gentoo-x86/gnustep-base/gnustep-gui/gnustep-gui-0.13.1.ebuild,v 1.1 2008/01/09 12:22:58 voyageur Exp $
 
 inherit gnustep-base multilib
 
@@ -8,14 +8,14 @@ DESCRIPTION="Library of GUI classes written in Obj-C"
 HOMEPAGE="http://www.gnustep.org/"
 SRC_URI="ftp://ftp.gnustep.org/pub/gnustep/core/${P}.tar.gz"
 
-KEYWORDS="amd64 x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~ppc ~sparc x86 ~x86-fbsd"
 SLOT="0"
 LICENSE="LGPL-2.1"
 
 IUSE="jpeg gif png cups gsnd"
 
 DEPEND="${GNUSTEP_CORE_DEPEND}
-	>=gnustep-base/gnustep-base-1.14.0
+	>=gnustep-base/gnustep-base-1.15.1
 	x11-libs/libXt
 	>=media-libs/tiff-3
 	jpeg? ( >=media-libs/jpeg-6b )
@@ -35,7 +35,6 @@ src_compile() {
 	myconf="$myconf `use_enable png`"
 	myconf="$myconf `use_enable cups`"
 	# gsnd is disabled until portaudio-19 is unmasked in portage
-#	myconf="$myconf --disable-gsnd"
 	myconf="$myconf `use_enable gsnd`"
 
 	econf $myconf || die "configure failed"
@@ -47,4 +46,10 @@ src_install() {
 	gnustep-base_src_install || die
 
 	use gsnd && newinitd ${FILESDIR}/gsnd.initd gsnd
+}
+
+pkg_postinst() {
+	ewarn "The shared library version has changed in this release."
+	ewarn "You will need to recompile all Applications/Tools/etc in order"
+	ewarn "to use this library. Please run revdep-rebuild to do so"
 }
