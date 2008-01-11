@@ -4,9 +4,6 @@
 
 DESCRIPTION="A Flexible Indexing System"
 
-MY_PV=${PV/_beta2/-beta2}
-CLISP_PV=2.43
-
 HOMEPAGE="http://www.xindy.org/"
 SRC_URI="mirror://sourceforge/xindy/${P}.tar.gz"
 
@@ -15,16 +12,23 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 
 IUSE="doc"
-DEPEND="virtual/tex-base
-	dev-lisp/clisp"
-
+# IUSE="doc clisp"
+DEPEND="virtual/latex-base"
+#	clisp? ( dev-lisp/clisp )
 
 src_compile() {
 	local myconf
+	local clisp_dir
 
-	myconf="${myconf} --enable-external-clisp"
+#	if ( use clisp ) 
+#	then
+#	    clisp_dir=`clisp  --version | grep "Installation directory:" | sed 's/Installation directory: //'`
+#	    myconf="${myconf} --enable-external-clisp --enable-clisp-dir=${clisp_dir}"
+#	    
+#	fi
 	
-#	LDFLAGS="" \
+	
+	LDFLAGS="" \
 	econf \
 	    `use_enable doc docs` \
 	    ${myconf} \
