@@ -66,6 +66,10 @@ src_unpack() {
 	sed -i 's/\(.\/install.sh\)/#\1/' Makefile
 	# avoid strip
 	sed -i 's:$(INSTALL) -m 755 -s:$(INSTALL) -m 755:' Makefile Makefile.target
+
+	epatch ${FILESDIR}/${P}-ide-cd.patch
+	epatch ${FILESDIR}/${P}-block-qcow2.patch
+
 }
 
 src_compile() {
