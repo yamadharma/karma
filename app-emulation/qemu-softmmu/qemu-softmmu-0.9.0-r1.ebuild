@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/qemu-softmmu/qemu-softmmu-0.9.0-r1.ebuild,v 1.2 2007/11/13 00:06:21 lu_zero Exp $
+# $Header: /jun/app-emulation/qemu-softmmu/qemu-softmmu-0.9.0-r1.ebuild,v 1.3 2007/03/10 ??:??:?? Abo Junghichi Exp $
 
 inherit eutils flag-o-matic toolchain-funcs
 
@@ -10,9 +10,9 @@ SRC_URI="${HOMEPAGE}${P/-softmmu/}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
-KEYWORDS="-alpha amd64 ppc -sparc x86"
+KEYWORDS="-alpha amd64 ~ppc -sparc x86"
 IUSE="sdl kqemu alsa"  #qvm86 debug nptl qemu-fast nptlonly"
-RESTRICT="strip test"
+RESTRICT="nostrip test"
 
 DEPEND="virtual/libc
 	sdl? ( media-libs/libsdl )
@@ -38,21 +38,23 @@ QA_WX_LOAD="usr/share/qemu/openbios-sparc32"
 #	export TARGET_LIST
 #}
 
-#pkg_setup() {
-#	if [ "$(gcc-major-version)" == "4" ]; then
-#	eerror "qemu requires gcc-3 in order to build and work correctly"
-#	eerror "please compile it switching to gcc-3."
+pkg_setup() {
+	if [ "$(gcc-major-version)" != "4" ]; then
+	eerror "qemu requires gcc-4 in order to build and work correctly"
+	eerror "please compile it switching to gcc-4."
 #	eerror "We are aware that qemu can guess a gcc-3 but this feature"
 #	eerror "could be harmful."
-#	die "gcc 4 cannot build qemu"
-#	fi
-#}
+	die "You need gcc 4" #"gcc 3 cannot build qemu"
+	fi
+}
 
 #RUNTIME_PATH="/emul/gnemul/"
 src_unpack() {
 	unpack ${A}
 
 	cd ${S}
+	epatch "${FILESDIR}"/qemu-0.8.0-gcc4-hacks.patch
+	epatch "${FILESDIR}"/qemu-0.8.0-gcc4-opts.patch
 	# Alter target makefiles to accept CFLAGS set via flag-o.
 	sed -i 's/^\(C\|OP_C\|HELPER_C\)FLAGS=/\1FLAGS+=/' \
 		Makefile Makefile.target tests/Makefile
@@ -64,9 +66,6 @@ src_unpack() {
 	sed -i 's/\(.\/install.sh\)/#\1/' Makefile
 	# avoid strip
 	sed -i 's:$(INSTALL) -m 755 -s:$(INSTALL) -m 755:' Makefile Makefile.target
-
-	epatch ${FILESDIR}/${P}-ide-cd.patch
-	epatch ${FILESDIR}/${P}-block-qcow2.patch
 }
 
 src_compile() {

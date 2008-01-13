@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/qemu-softmmu/qemu-softmmu-0.9.0.ebuild,v 1.5 2007/05/16 21:34:09 lu_zero Exp $
+# $Header: $
 
 inherit eutils flag-o-matic toolchain-funcs
 
@@ -10,45 +10,27 @@ SRC_URI="${HOMEPAGE}${P/-softmmu/}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
-KEYWORDS="-alpha amd64 ppc -sparc x86"
-IUSE="sdl kqemu alsa"  #qvm86 debug nptl qemu-fast nptlonly"
-RESTRICT="nostrip test"
+KEYWORDS="-alpha ~amd64 ~ppc -sparc ~x86"
+IUSE="sdl kqemu gnutls alsa"
+RESTRICT="binchecks test"
 
 DEPEND="virtual/libc
+	sys-libs/zlib
 	sdl? ( media-libs/libsdl )
 	!<=app-emulation/qemu-0.7.0
 	kqemu? ( >=app-emulation/kqemu-1.3.0_pre10 )
+	gnutls? (
+		dev-util/pkgconfig
+		net-libs/gnutls
+	)
 	app-text/texi2html"
-RDEPEND="sdl? ( media-libs/libsdl )
-		 alsa? ( media-libs/alsa-lib )"
+RDEPEND="sys-libs/zlib
+	sdl? ( media-libs/libsdl )
+	gnutls? ( net-libs/gnutls )
+	alsa? ( media-libs/alsa-lib )"
 
 S="${WORKDIR}/${P/-softmmu/}"
 
-QA_TEXTRELS="usr/bin/qemu
-	usr/bin/qemu-system-sparc
-	usr/bin/qemu-system-arm
-	usr/bin/qemu-system-ppc
-	usr/bin/qemu-system-mips
-	usr/bin/qemu-system-x86_64"
-QA_EXECSTACK="usr/share/qemu/openbios-sparc32"
-QA_WX_LOAD="usr/share/qemu/openbios-sparc32"
-
-#set_target_list() {
-#	TARGET_LIST="i386-softmmu ppc-softmmu sparc-softmmu x86_64-softmmu arm-softmmu mips-softmmu"
-#	export TARGET_LIST
-#}
-
-#pkg_setup() {
-#	if [ "$(gcc-major-version)" == "4" ]; then
-#	eerror "qemu requires gcc-3 in order to build and work correctly"
-#	eerror "please compile it switching to gcc-3."
-#	eerror "We are aware that qemu can guess a gcc-3 but this feature"
-#	eerror "could be harmful."
-#	die "gcc 4 cannot build qemu"
-#	fi
-#}
-
-#RUNTIME_PATH="/emul/gnemul/"
 src_unpack() {
 	unpack ${A}
 
@@ -73,23 +55,26 @@ src_compile() {
 	# Switch off hardened tech
 	filter-flags -fpie -fstack-protector
 
-#	set_target_list
-
 	myconf="--disable-gcc-check"
+	if use alsa; then
+		myconf="$myconf --enable-alsa"
+	fi
+	if ! use gnutls; then
+		myconf="$myconf --disable-vnc-tls"
+	fi
+	if ! use kqemu; then
+		myconf="$myconf --disable-kqemu"
+	fi
 	if ! use sdl ; then
-		myconf="$myconf --disable-gfx-check"
+		myconf="$myconf --disable-sdl --disable-gfx-check"
 	fi
 	./configure \
 		--prefix=/usr \
-		--enable-slirp --enable-adlib \
+		--enable-adlib \
 		--cc=$(tc-getCC) \
 		--host-cc=$(tc-getCC) \
-		--kernel-path=${KV_DIR} \
 		--disable-linux-user \
 		--enable-system \
-		$(use_enable sdl)\
-		$(use_enable kqemu) \
-		$(use_enable alsa) \
 		${myconf} \
 		|| die "could not configure"
 
