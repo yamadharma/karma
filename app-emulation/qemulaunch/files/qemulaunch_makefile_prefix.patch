@@ -1,0 +1,11 @@
+--- qemulaunch.orig/Makefile	2007-02-14 20:19:19.000000000 +0100
++++ qemulaunch/Makefile	2007-02-14 20:22:36.000000000 +0100
+@@ -2,7 +2,7 @@
+ SHELL = /bin/sh
+ 
+ # Intall things to the following directories
+-PREFIX = /usr/local
++PREFIX = /usr
+ MANDIR = $(PREFIX)/share/man/man1
+ BINDIR = $(PREFIX)/bin
+ SHAREDIR = $(PREFIX)/share/qemu-launcher

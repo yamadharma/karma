@@ -1,0 +1,8 @@
+# ChangeLog for app-emulation/qemulaunch
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  09 Sep 2007; Wulf C. Krueger <philantrop@gentoo.org> +metadata.xml,
+  qemulaunch-9999.ebuild:
+  Corrected the dependencies.
+

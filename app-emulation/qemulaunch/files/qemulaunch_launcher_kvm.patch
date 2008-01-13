@@ -1,0 +1,35 @@
+--- qemulaunch.orig/qemu-launcher.pl	2007-02-14 20:23:24.000000000 +0100
++++ qemulaunch/qemu-launcher.pl	2007-02-14 20:31:10.000000000 +0100
+@@ -35,7 +35,7 @@
+ our $home_dir = $ENV{'HOME'};
+ our $data_dir = undef;
+ 
+-our $config_dir = $home_dir.'/.config';
++our $config_dir = $home_dir.'/qemu';
+ our $prefer_dir = $config_dir.'/qemu-launcher';
+ our $vmconf_dir = $prefer_dir.'/vmconfigs';
+ 
+@@ -118,12 +118,14 @@
+ 	'qemu-system-sparc64',
+ 	'qemu-system-mips',
+ 	'qemu-system-mipsel',
+-	'kvm'
++	'kvm',
++	'kvm-system-x86_64'
+ );
+ 
+ our %arch_by_emu = (
+ 	'qemu'                => 'x86',
+ 	'qemu-system-x86_64'  => 'x86_64',
++        'kvm-system-x86_64'   => 'x86_64',
+ 	'qemu-system-arm'     => 'arm',
+ 	'qemu-system-armeb'   => 'armeb',
+ 	'qemu-system-ppc'     => 'ppc',
+@@ -137,6 +139,7 @@
+ our %emu_by_arch = (
+ 	'x86'     => 'qemu',
+ 	'x86_64'  => 'qemu-system-x86_64',
++        'x86_64'  => 'kvm-system-x86_64',
+ 	'arm'     => 'qemu-system-arm',
+ 	'armeb'   => 'qemu-system-armeb',
+ 	'ppc'     => 'qemu-system-ppc',
