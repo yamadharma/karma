@@ -16,17 +16,17 @@ LICENSE=""
 SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE="doc"
-#RESTRICT="fetch"
+RESTRICT="fetch"
 
 DEPEND="app-arch/unzip"
 RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/${MY_PN}${PV}mrel-ri"
 
-#pkg_nofetch() {
-#	einfo "Visit http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdbc_rowset_tiger-1_0_1-mrel-ri-oth-JPR&SiteId=JCP&TransactionId=noreg"
-#	einfo "Accept the agreement, and download jdbc_rowset_tiger-1_0_1-mrel-ri.zip"
-#	einfo "Copy ${MY_P}.zip to ${DISTDIR}"
-#}
+pkg_nofetch() {
+	einfo "Visit http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdbc_rowset_tiger-1_0_1-mrel-ri-oth-JPR&SiteId=JCP&TransactionId=noreg"
+	einfo "Accept the agreement, and download jdbc_rowset_tiger-1_0_1-mrel-ri.zip"
+	einfo "Copy ${MY_P}.zip to ${DISTDIR}"
+}
 
 src_unpack() {
 	unpack ${A}
