@@ -91,6 +91,6 @@ src_compile() {
 		$(use_with cairo) \
 		$(use_enable doc db2html)
 
-	emake
+	emake SWIG=swig
 }
 
