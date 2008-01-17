@@ -23,6 +23,14 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core"
 
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+	rm -rf contrib
+	epatch ${FILESDIR}/common-build.xml.diff
+}
+
+
 src_compile() {
 	# regenerate javacc files just because we can
 	# put javacc.jar on ant's classpath here even when <javacc> task
@@ -33,7 +41,8 @@ src_compile() {
 	echo "gcp: ${gcp}"
 	ANT_TASKS="ant-nodeps javacc" eant \
 		-Djavacc.home=/usr/share/javacc/lib javacc
-	ANT_TASKS="none" eant -Dversion=${PV} -Dgentoo.classpath="${gcp}" jar-core jar-demo $(use_doc javadocs)
+#	ANT_TASKS="none" eant -Dversion=${PV} -Dgentoo.classpath="${gcp}" jar-core jar-demo $(use_doc javadocs)
+	ANT_TASKS="none" eant -Dversion=${PV} -Dgentoo.classpath="${gcp}" jar-core
 }
 
 src_test() {
@@ -45,11 +54,11 @@ src_test() {
 src_install() {
 	dodoc CHANGES.txt README.txt
 	java-pkg_newjar build/${PN}-core-${PV}.jar ${PN}-core.jar
-	java-pkg_newjar build/${PN}-demos-${PV}.jar ${PN}-demos.jar
+#	java-pkg_newjar build/${PN}-demos-${PV}.jar ${PN}-demos.jar
 
-	if use doc; then
-		dohtml -r docs/*
-		java-pkg_dojavadoc build/docs/api
-	fi
+#	if use doc; then
+#		dohtml -r docs/*
+#		java-pkg_dojavadoc build/docs/api
+#	fi
 	use source && java-pkg_dosrc src/java/org
 }

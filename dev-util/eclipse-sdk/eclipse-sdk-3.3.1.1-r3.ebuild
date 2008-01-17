@@ -1,4 +1,4 @@
-# Copyright 2007-2007 Gentoo Foundation
+# Copyright 2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -25,7 +25,8 @@
 # 1) Split patches so that there is one per file
 # 2) Use sed, better solution I would say.
 
-
+EAPI="1"
+JAVA_PKG_IUSE="doc"
 inherit java-pkg-2 java-ant-2 check-reqs
 
 DMF="R-${PV}-200710231652"
@@ -37,7 +38,7 @@ SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${MY_A}"
 
 SLOT="3.3"
 LICENSE="EPL-1.0"
-IUSE="doc"
+IUSE=""
 KEYWORDS="amd64 x86"
 
 S=${WORKDIR}
@@ -45,19 +46,18 @@ PATCHDIR="${FILESDIR}/${SLOT}"
 FEDORA="${PATCHDIR}/fedora"
 ECLIPSE_DIR="/usr/lib/eclipse-${SLOT}"
 
-CDEPEND=">=dev-java/ant-eclipse-ecj-3.3
+CDEPEND="=dev-java/ant-eclipse-ecj-3.3*
 	dev-java/ant-core
 	dev-java/ant-nodeps
 	=dev-java/junit-3*
-	=dev-java/junit-4*
+	dev-java/junit:4
 	>=dev-java/swt-${PV}
-	|| ( =dev-java/jsch-0.1.36-r1 =dev-java/jsch-0.1.34-r1 )
-	=dev-java/icu4j-3.6.1
-	=dev-java/commons-el-1.0-r2
-	=dev-java/commons-logging-1.1-r3
-	=dev-java/tomcat-servlet-api-5.5.25-r1
-	=dev-java/lucene-1.9.1*
-	=dev-java/lucene-analyzers-1.9.1*"
+	>=dev-java/jsch-0.1.36-r1
+	>=dev-java/icu4j-3.6.1
+	>=dev-java/commons-el-1.0-r2
+	>=dev-java/commons-logging-1.1-r4
+	>=dev-java/tomcat-servlet-api-5.5.25-r1:2.4
+	dev-java/lucene:1.9"
 
 RDEPEND=">=virtual/jre-1.5
 	${CDEPEND}"
@@ -77,8 +77,8 @@ pkg_setup() {
 	CHECKREQS_MEMORY="768"
 	check_reqs
 
-	eclipse_arch=${ARCH}
-	use amd64 && eclipse_arch="x86_64"
+	eclipseArch=${ARCH}
+	use amd64 && eclipseArch="x86_64"
 }
 
 src_unpack() {
@@ -103,29 +103,29 @@ src_unpack() {
 
 src_compile() {
 	# Figure out correct boot classpath
-	local bootclasspath=$(java-config --runtime)
-	einfo "Using bootclasspath ${bootclasspath}"
+	local bootClassPath=$(java-config --runtime)
+	einfo "Using boot classpath ${bootClassPath}"
 
 	java-pkg_force-compiler ecj-3.3
 
 	# system_jars will be used when compiling (javac)
 	# gentoo_jars will be used when building JSPs and other ant tasks (not javac)
 
-	local system_jars="$(java-pkg_getjars swt-3,icu4j-3.6,ant-core,jsch,ant-nodeps,junit-4,tomcat-servlet-api-2.4,lucene-1.9):$(java-pkg_getjars --build-only sun-j2me-bin)"
-	local gentoo_jars="$(java-pkg_getjars ant-core,icu4j-3.6,jsch,commons-logging,commons-el,tomcat-servlet-api-2.4)"
-	local options="-q -Dnobootstrap=true -Dlibsconfig=true -Dbootclasspath=${bootclasspath} -DinstallOs=linux \
-		-DinstallWs=gtk -DinstallArch=${eclipse_arch} -Djava5.home=$(java-config --jdk-home)"
+	local systemJars="$(java-pkg_getjars swt-3,icu4j,ant-core,jsch,ant-nodeps,junit-4,tomcat-servlet-api-2.4,lucene-1.9):$(java-pkg_getjars --build-only sun-j2me-bin)"
+	local gentooJars="$(java-pkg_getjars ant-core,icu4j,jsch,commons-logging,commons-el,tomcat-servlet-api-2.4)"
+	local options="-q -Dnobootstrap=true -Dlibsconfig=true -Dbootclasspath=${bootClassPath} -DinstallOs=linux \
+		-DinstallWs=gtk -DinstallArch=${eclipseArch} -Djava5.home=$(java-config --jdk-home)"
 
 	use doc && options="${options} -Dgentoo.javadoc=true"
 
-	ANT_OPTS=-Xmx1024M ANT_TASKS="ant-nodeps" eant ${options} -Dgentoo.classpath="${system_jars}" -Dgentoo.jars="${gentoo_jars//:/,}"
+	ANT_OPTS=-Xmx1024M ANT_TASKS="ant-nodeps" eant ${options} -Dgentoo.classpath="${systemJars}" -Dgentoo.jars="${gentooJars//:/,}"
 }
 
 src_install() {
 	dodir /usr/lib
 
-	[[ -f result/linux-gtk-${eclipse_arch}-sdk.tar.gz ]] || die "tar.gz bundle was not built properly!"
-	tar zxf "result/linux-gtk-${eclipse_arch}-sdk.tar.gz" -C "${D}/usr/lib" || die "Failed to extract the built package"
+	[[ -f result/linux-gtk-${eclipseArch}-sdk.tar.gz ]] || die "tar.gz bundle was not built properly!"
+	tar zxf "result/linux-gtk-${eclipseArch}-sdk.tar.gz" -C "${D}/usr/lib" || die "Failed to extract the built package"
 
 	mv "${D}/usr/lib/eclipse" "${D}/${ECLIPSE_DIR}"
 
@@ -136,20 +136,18 @@ src_install() {
 
 	# Install eclipse configuration file.	
 	cat > "${D}/${ECLIPSE_DIR}/eclipse.ini" <<-EOF
--showsplash
-org.eclipse.platform
--install /usr/lib/eclipse-3.3
--vmargs
--Djava.library.path=/usr/lib
--Xms128m
--Xmx256m
-EOF
+	-showsplash
+	org.eclipse.platform
+	-vmargs
+	-Djava.library.path=/usr/lib
+	-Xms128m
+	-Xmx256m
+	EOF
 
 	make_desktop_entry eclipse-${SLOT} "Eclipse ${PV}" "${ECLIPSE_DIR}/icon.xpm"
 
 	cd "${D}/${ECLIPSE_DIR}"
 	install-link-system-jars
-	register_eclipse_jars
 }
 
 pkg_postinst() {
@@ -183,7 +181,7 @@ install-link-system-jars() {
 	java-pkg_jarfrom ant-nodeps
 	popd > /dev/null
 
-	java-pkg_jarfrom icu4j-3.6
+	java-pkg_jarfrom icu4j
 	java-pkg_jarfrom jsch
 	java-pkg_jarfrom commons-el
 	java-pkg_jarfrom commons-logging
@@ -198,18 +196,6 @@ install-link-system-jars() {
 
 	pushd plugins/org.junit4*/ > /dev/null
 	java-pkg_jarfrom junit-4
-	popd > /dev/null
-}
-
-register_eclipse_jars() {
-	pushd "${D}" > /dev/null
-	dodir "/usr/share/${PN}-${SLOT}/lib"
-	while read line; do
-		local newfile="$(basename "$line")"
-		local file="/usr/share/${PN}-${SLOT}/lib/${newfile/_*/.jar}"
-		dosym "${line/./}" "${file}"
-		java-pkg_regjar "${file}"
-	done < <(find . -type f -name '*.jar')
 	popd > /dev/null
 }
 
@@ -251,6 +237,13 @@ patch-apply() {
 	sed -e "s:@eclipse_base@:${ECLIPSE_DIR}:g" -i templates/package-build/build.properties
 	popd > /dev/null
 
+	# Gentoo patch to support jsch-0.1.36 - ali_bush
+	# Already fixed in upstream svn.  Remove after next release?
+	
+	pushd "plugins/org.eclipse.jsch.ui" > /dev/null
+	epatch "${PATCHDIR}/eclipse-jsch-api-update.patch"
+	popd > /dev/null
+	
 	# Later we could produce a patch out of all these sed, but this is not the best solution
 	# since this would make a lot of patches (x86, x86_64...) and would be hard to revbump
 
@@ -271,7 +264,7 @@ patch-apply() {
 
 	sed -i '/plugins\/org\.eclipse\.tomcat"/{N;N;N;N;d;}' "features/org.eclipse.platform/build.xml"
 	sed -i '/org\.eclipse\.tomcat/{N;N;N;d;}' "plugins/org.eclipse.platform.source/build.xml"
-	sed -i '/<ant.*org\.eclipse\.tomcat/{N;N;d;}' "assemble.org.eclipse.sdk.linux.gtk.${eclipse_arch}.xml"
+	sed -i '/<ant.*org\.eclipse\.tomcat/{N;N;d;}' "assemble.org.eclipse.sdk.linux.gtk.${eclipseArch}.xml"
 
 	# This allows to compile osgi.util and osgi.service, and fixes IPluginDescriptor.class which is present compiled
 
@@ -304,16 +297,9 @@ patch-apply() {
 
 	sed -i -e "s/<copy.*com\.jcraft\.jsch.*\/>//" -e "s/<copy.*com\.ibm\.icu.*\/>//" -e "s/<copy.*org\.apache\.commons\.el_.*\/>//" \
 		-e "s/<copy.*org\.apache\.commons\.logging_.*\/>//" -e "s/<copy.*javax\.servlet\.jsp_.*\/>//" -e "s/<copy.*javax\.servlet_.*\/>//" \
-		-e "s/<copy.*org\.apache\.lucene_.*\/>//" "package.org.eclipse.sdk.linux.gtk.${eclipse_arch}.xml"
+		-e "s/<copy.*org\.apache\.lucene_.*\/>//" "package.org.eclipse.sdk.linux.gtk.${eclipseArch}.xml"
 
 	#  -e "s/<copy.*org\.apache\.lucene\.analysis_.*\/>//"
-
-	# Gentoo patch to support ~jsch-0.1.36 - ali_bush
-	# Already fixed in upstream svn.  Remove after next release?
-	pushd "plugins/org.eclipse.jsch.ui" > /dev/null
-	epatch "${PATCHDIR}/eclipse-jsch-api-update.patch"
-	popd > /dev/null
-
 }
 
 remove-bundled-stuff() {
