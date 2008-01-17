@@ -15,7 +15,8 @@ SRC_URI=""
 IUSE="doc gnome png python zlib cairo gnome-print"
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="x86 amd64"
+#KEYWORDS="x86 amd64"
+KEYWORDS=""
 
 RDEPEND=">=x11-libs/gtk+-2.6.0
 	>=dev-libs/glib-2.6.0
