@@ -3,30 +3,6 @@ DIST ksquirrel-libs-0.7.2.tar.bz2 1049022 RMD160 c7f7375199c712056901a62cc72c5a1
 DIST ksquirrel-libs-0.7.5.tar.bz2 1054578 RMD160 b6af4f5d73cd464eff9d2bcaf301e0955bde54eb SHA1 947e67c9821c2a19b00db148b634b8abdac7d600 SHA256 e18282f8ff0cbeebfce9546c6b474d3e7f43c3b3da9c5ae23071eb45864fe86d
 DIST ksquirrel-libs-0.8.0.tar.bz2 1072312 RMD160 acebe123cb8e939da18fdec4610e5551ba23e2c5 SHA1 36cdbb3644e533abdb2d1d93ad51ad39b3648885 SHA256 bc02597180b915addddc11d300aefa851b075f78117bd17a453f6654ead54735
 EBUILD ksquirrel-libs-0.7.1.ebuild 1742 RMD160 c1b64067ceebdf8db5b1fd95de05faf10edf1694 SHA1 7ee350f5afcdb6df4bd92bf8d3285bb3f7eea59f SHA256 3d16ead524c868b3e6fc400233764d639e3d0e1e78fc18a23ca7022d4dd8c181
-MD5 150b4a400d3645ecc31e07e115d8b12e ksquirrel-libs-0.7.1.ebuild 1742
-RMD160 c1b64067ceebdf8db5b1fd95de05faf10edf1694 ksquirrel-libs-0.7.1.ebuild 1742
-SHA256 3d16ead524c868b3e6fc400233764d639e3d0e1e78fc18a23ca7022d4dd8c181 ksquirrel-libs-0.7.1.ebuild 1742
 EBUILD ksquirrel-libs-0.7.2.ebuild 1742 RMD160 c1b64067ceebdf8db5b1fd95de05faf10edf1694 SHA1 7ee350f5afcdb6df4bd92bf8d3285bb3f7eea59f SHA256 3d16ead524c868b3e6fc400233764d639e3d0e1e78fc18a23ca7022d4dd8c181
-MD5 150b4a400d3645ecc31e07e115d8b12e ksquirrel-libs-0.7.2.ebuild 1742
-RMD160 c1b64067ceebdf8db5b1fd95de05faf10edf1694 ksquirrel-libs-0.7.2.ebuild 1742
-SHA256 3d16ead524c868b3e6fc400233764d639e3d0e1e78fc18a23ca7022d4dd8c181 ksquirrel-libs-0.7.2.ebuild 1742
 EBUILD ksquirrel-libs-0.7.5.ebuild 1742 RMD160 c1b64067ceebdf8db5b1fd95de05faf10edf1694 SHA1 7ee350f5afcdb6df4bd92bf8d3285bb3f7eea59f SHA256 3d16ead524c868b3e6fc400233764d639e3d0e1e78fc18a23ca7022d4dd8c181
-MD5 150b4a400d3645ecc31e07e115d8b12e ksquirrel-libs-0.7.5.ebuild 1742
-RMD160 c1b64067ceebdf8db5b1fd95de05faf10edf1694 ksquirrel-libs-0.7.5.ebuild 1742
-SHA256 3d16ead524c868b3e6fc400233764d639e3d0e1e78fc18a23ca7022d4dd8c181 ksquirrel-libs-0.7.5.ebuild 1742
-EBUILD ksquirrel-libs-0.8.0.ebuild 1581 RMD160 2317fe6ea951be220abe7e5ee6c00fe79ad3d1fd SHA1 1f4819c8670717e804fece57abce11f0c975fc93 SHA256 6a99c3d6e9f90164834308430d5f1111e58c3716ddac59f87898a9292eb0e976
-MD5 64b9eeda430660bf126d045c63e24255 ksquirrel-libs-0.8.0.ebuild 1581
-RMD160 2317fe6ea951be220abe7e5ee6c00fe79ad3d1fd ksquirrel-libs-0.8.0.ebuild 1581
-SHA256 6a99c3d6e9f90164834308430d5f1111e58c3716ddac59f87898a9292eb0e976 ksquirrel-libs-0.8.0.ebuild 1581
-MD5 b15604b6c4a78c816ffc474f9143f061 files/digest-ksquirrel-libs-0.7.1 265
-RMD160 a7a10490ca76fea46dd2cd1dc29af9fd9b563eab files/digest-ksquirrel-libs-0.7.1 265
-SHA256 a5e07d69cdc235ff418b782658042f2c244f2d220ebc67f63af67dc2c403d63b files/digest-ksquirrel-libs-0.7.1 265
-MD5 2cdbd7eafa76c5fbf779085113960f43 files/digest-ksquirrel-libs-0.7.2 268
-RMD160 0c5f05f5bf4e95e7a15a6156c9ba37492341c0dd files/digest-ksquirrel-libs-0.7.2 268
-SHA256 69f40626c86790cae1667265a97531c1fcb78111a7c9ad0fdfd19bef3314e162 files/digest-ksquirrel-libs-0.7.2 268
-MD5 15d0f21ee5af8d433899a8bab2dc5d0e files/digest-ksquirrel-libs-0.7.5 268
-RMD160 cb074e3e619c2ac51579c63b451f0f478627cb78 files/digest-ksquirrel-libs-0.7.5 268
-SHA256 a0455c03f6a11a5e4d6c1454fafba3b23476f1c92dd48406df979b8b34ab2c04 files/digest-ksquirrel-libs-0.7.5 268
-MD5 16dd252d23454c97700192feea310383 files/digest-ksquirrel-libs-0.8.0 268
-RMD160 e89b2c1a8dcb070921e3fb4ad26afa4dbb90ba67 files/digest-ksquirrel-libs-0.8.0 268
-SHA256 42b8b2b98140808b6220b78f7072c4f254da1b00faebb079fb23ffe48361d61c files/digest-ksquirrel-libs-0.8.0 268
+EBUILD ksquirrel-libs-0.8.0.ebuild 1583 RMD160 4829a793e3e889ec9ed7349b3c1c34f8ad3a47b8 SHA1 7aa503b9fb7e0f65c9a6f8ef8aac2b7a44648116 SHA256 4bbfae7f71487b1605096514eb35166029f30bb200f2dc06a0d8de6ce081a1d4

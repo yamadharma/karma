@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/gnustep-libs/imagekits/imagekits-0.6.ebuild,v 1.1 2004/09/24 01:06:30 fafhrd Exp $
 
-inherit gnustep
+inherit gnustep-2
 
 S=${WORKDIR}/${PN/imagek/ImageK}
 

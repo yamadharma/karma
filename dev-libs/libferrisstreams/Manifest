@@ -1,8 +1,0 @@
-DIST ferrisstreams-0.5.0.tar.bz2 348018 RMD160 343e6e56f8db87ac05c9cefa11c4f0d4f9099fa4 SHA1 7c8f64782780fc34f4cf91fa6773d96e3d29a146 SHA256 70db1363e7040c8945b57ea624acf8d6f75503141708e2c505922b9cd45d95d3
-EBUILD libferrisstreams-0.5.0-r1.ebuild 991 RMD160 9f5e215a0ddf7591289b4db0ee5fd4b7d35d1cda SHA1 7fef94f69d3f94be6875b1389683051599376fda SHA256 7160fcc7f70b2f786ef88400b62d6fd874fc1e35ba3957e6acbdce53dcedb86d
-MD5 6c5fda3fc598dad447bb7f64a6c94b59 libferrisstreams-0.5.0-r1.ebuild 991
-RMD160 9f5e215a0ddf7591289b4db0ee5fd4b7d35d1cda libferrisstreams-0.5.0-r1.ebuild 991
-SHA256 7160fcc7f70b2f786ef88400b62d6fd874fc1e35ba3957e6acbdce53dcedb86d libferrisstreams-0.5.0-r1.ebuild 991
-MD5 00b06295b8d124c546aa5089daf32c13 files/digest-libferrisstreams-0.5.0-r1 262
-RMD160 2f47151f646f6d1c558f36285e6f5889e0bec44e files/digest-libferrisstreams-0.5.0-r1 262
-SHA256 811238846975b82e6e3f87bfc795736ae36d27c2b588040b4637de8359162f86 files/digest-libferrisstreams-0.5.0-r1 262
