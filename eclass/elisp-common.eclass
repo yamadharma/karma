@@ -132,7 +132,7 @@
 SITELISP=/usr/share/site-lisp/common/packages
 
 # Directory where packages install miscellaneous (not Lisp) files.
-SITEETC=/usr/share/emacs/etc
+SITEETC=/usr/share/site-lisp/common/etc    	    
 
 # @ECLASS-VARIABLE: SITEFILE
 # @DESCRIPTION:
@@ -168,7 +168,7 @@ elisp-common_pkg_setup () {
     	    export SITELISPROOT=/usr/share/site-lisp
     	    export SITELISPDOC=/usr/share/site-lisp/doc
     	    export SITELISPEMACS=/usr/share/emacs/site-lisp
-            export SITEETC=/usr/share/site-lisp/common/etc    	    
+            export SITEETC=/usr/share/site-lisp/common/etc
     	    
     	    export HAS_ECF=1
 	    # Sandbox issues

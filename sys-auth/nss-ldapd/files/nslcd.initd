@@ -1,0 +1,22 @@
+#!/sbin/runscript
+# Copyright 1999-2008 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting nslcd"
+	eval start-stop-daemon --start --quiet --exec /usr/sbin/nslcd
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping nslcd"
+	start-stop-daemon --stop --signal 2 --quiet --exec /usr/sbin/nslcd
+	eend $?
+}
