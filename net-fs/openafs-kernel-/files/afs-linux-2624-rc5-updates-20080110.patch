@@ -1,0 +1,85 @@
+===================================================================
+RCS file: /cvs/openafs/acinclude.m4,v
+retrieving revision 1.218
+retrieving revision 1.219
+diff -u -r1.218 -r1.219
+--- openafs/acinclude.m4	2007/12/13 22:41:11	1.218
++++ openafs/acinclude.m4	2008/01/10 16:58:30	1.219
+@@ -659,6 +659,10 @@
+ 		  AC_DEFINE(FREEZER_H_EXISTS, 1, [define if you have linux/freezer.h])
+ 		 fi
+ 		 LINUX_REFRIGERATOR
++		 LINUX_KEY_TYPE_H_EXISTS
++		 if test "x$ac_cv_linux_key_type_h_exists" = "xyes" ; then
++		  AC_DEFINE(KEY_TYPE_H_EXISTS, 1, [define if you have linux/key-type.h])
++		 fi
+ 		 LINUX_LINUX_KEYRING_SUPPORT
+ 		 LINUX_KEY_ALLOC_NEEDS_STRUCT_TASK
+ 		 LINUX_DO_SYNC_READ
+===================================================================
+RCS file: /cvs/openafs/src/afs/LINUX/osi_groups.c,v
+retrieving revision 1.36
+retrieving revision 1.37
+diff -u -r1.36 -r1.37
+--- openafs/src/afs/LINUX/osi_groups.c	2007/08/22 19:37:12	1.36
++++ openafs/src/afs/LINUX/osi_groups.c	2008/01/10 16:58:33	1.37
+@@ -17,10 +17,13 @@
+ #include "afs/param.h"
+ #ifdef LINUX_KEYRING_SUPPORT
+ #include <linux/seq_file.h>
++#if KEY_TYPE_H_EXISTS
++#include <linux/key-type.h>
++#endif
+ #endif
+ 
+ RCSID
+-    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.36 2007/08/22 19:37:12 shadow Exp $");
++    ("$Header: /cvs/openafs/src/afs/LINUX/osi_groups.c,v 1.37 2008/01/10 16:58:33 shadow Exp $");
+ 
+ #include "afs/sysincludes.h"
+ #include "afsincludes.h"
+===================================================================
+RCS file: /cvs/openafs/src/cf/linux-test4.m4,v
+retrieving revision 1.62
+retrieving revision 1.63
+diff -u -r1.62 -r1.63
+--- openafs/src/cf/linux-test4.m4	2007/12/08 17:44:00	1.62
++++ openafs/src/cf/linux-test4.m4	2008/01/10 16:58:32	1.63
+@@ -728,11 +728,28 @@
+       ac_cv_linux_statfs_takes_dentry=no)])
+   AC_MSG_RESULT($ac_cv_linux_statfs_takes_dentry)])
+ 
++
++AC_DEFUN([LINUX_KEY_TYPE_H_EXISTS], [
++  AC_MSG_CHECKING([for linux/key-type.h existance])
++  AC_CACHE_VAL([ac_cv_linux_key_type_h_exists], [
++    AC_TRY_KBUILD(
++[#include <linux/key-type.h>],
++[return;],
++      ac_cv_linux_key_type_h_exists=yes,
++      ac_cv_linux_key_type_h_exists=no)])
++  AC_MSG_RESULT($ac_cv_linux_key_type_h_exists)
++  if test "x$ac_cv_linux_key_type_h_exists" = "xyes"; then
++    AC_DEFINE([KEY_TYPE_H_EXISTS], 1, [define if linux/key-type.h exists])
++  fi])
++
+ AC_DEFUN([LINUX_LINUX_KEYRING_SUPPORT], [
+   AC_MSG_CHECKING([for linux kernel keyring support])
+   AC_CACHE_VAL([ac_cv_linux_keyring_support], [
+     AC_TRY_KBUILD(
+ [#include <linux/rwsem.h>
++#ifdef KEY_TYPE_H_EXISTS
++#include <linux/key-type.h>
++#endif
+ #include <linux/key.h>
+ #include <linux/keyctl.h>],
+ [#ifdef CONFIG_KEYS
+@@ -769,7 +786,7 @@
+   AC_MSG_CHECKING([for linux do_sync_read()])
+   AC_CACHE_VAL([ac_cv_linux_do_sync_read], [
+     save_CPPFLAGS="$CPPFLAGS"
+-    CPPFLAGS="$CPPFLAGS -Werror-implicit-function-declaration"
++    EXTRA_FLAGS="$CPPFLAGS -Werror-implicit-function-declaration"
+     AC_TRY_KBUILD(
+ [#include <linux/fs.h>],
+ [do_sync_read(NULL, NULL, 0, NULL);],

@@ -35,7 +35,10 @@ src_unpack() {
 
 	EPATCH_SUFFIX="patch" epatch ${PATCHDIR}
 
-	use amd64 && epatch "${FILESDIR}"/openafs-linux-amd64-2.6.23.patch		
+#	epatch "${FILESDIR}"/afs-linux-2624-20071123.patch
+#	epatch "${FILESDIR}"/afs-linux-2624-rc5-updates-20080110.patch
+	
+	use amd64 && epatch "${FILESDIR}"/openafs-linux-amd64-2.6.23.patch
 
 	./regen.sh || die "Failed: regenerating configure script"
 }
