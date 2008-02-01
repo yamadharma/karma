@@ -25,7 +25,7 @@ HOMEPAGE="http://sourceforge.net/projects/clip-itk"
 #	doc? ( mirror://sourceforge/${PN}/clip-doc-en-html-${PV}.tgz 
 #	    linguas_ru? ( mirror://sourceforge/${PN}/clip-doc-ru-html-${PV}.tgz )
 #	)"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 LICENSE="GPL-2"
 IUSE="doc linguas_ru 
 mysql gd postgres oracle interbase odbc gtk2 ssl glade fcgi"
