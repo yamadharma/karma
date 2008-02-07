@@ -1,8 +1,0 @@
-DIST kxdocker-wizard-1.0.0.tar.bz2 725992 RMD160 e79f56f3d72e5d5960c2abb7437013d25341dff0 SHA1 8447cf10a774e025214ef3bf3c5f2822f2dd4b45 SHA256 f16207e43f0a86ef54ccba41a94cc9aaf879c6b5fcf64b4e6254fb15ebea2896
-EBUILD kxdocker-wizard-1.0.0.ebuild 507 RMD160 04c40d2bede8251b738f794d97165f9504fdaf4d SHA1 9bcffd47b9ac63068b2658bd4f73c54d08b430b7 SHA256 5cec3117783f3671cd4cbb10349f56665cc7f7cbcbdb494f395930f8e91933fd
-MD5 717e572e4e2ee15c34ec4820df16db26 kxdocker-wizard-1.0.0.ebuild 507
-RMD160 04c40d2bede8251b738f794d97165f9504fdaf4d kxdocker-wizard-1.0.0.ebuild 507
-SHA256 5cec3117783f3671cd4cbb10349f56665cc7f7cbcbdb494f395930f8e91933fd kxdocker-wizard-1.0.0.ebuild 507
-MD5 76ec15e5341375ca0e5f91e2f4cf9793 files/digest-kxdocker-wizard-1.0.0 268
-RMD160 bec585ca87ee661375b35e66cf51f055b68d186e files/digest-kxdocker-wizard-1.0.0 268
-SHA256 703f8ddea1f03169be5896c6d091887a15b056028bcb3f53d494ba93d2881d8a files/digest-kxdocker-wizard-1.0.0 268

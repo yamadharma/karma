@@ -30,6 +30,8 @@ SRC_URI="${KERNEL_URI} ${KARMA_PATCH_URI}"
 
 KEYWORDS="x86 amd64"
 
+DEPEND="${DEPEND} >=sys-devel/binutils-2.17"
+
 # Local Variables:
 # mode: sh
 # End:

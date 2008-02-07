@@ -1,8 +1,0 @@
-DIST kxdocker-taskmanager-1.0.2.tar.bz2 744367 RMD160 751c673e68df7c8f40624551bc5ca8ecfb2c5192 SHA1 dea5fd75abd3f53c142d4c509f3f086cf0b884c2 SHA256 6bb09591784af1681ca6a58a654d3b7b085d9927aec2ea57c00d81909ca821f6
-EBUILD kxdocker-taskmanager-1.0.2.ebuild 512 RMD160 2ef096ab85bb06453477957a8ea6ba4ee410e806 SHA1 d848589a87097d9ca713e26e62e14f1def02888e SHA256 84e89b9bce9b5ce53093ebc7d67716faf7c9b70e64356c2f50918c310299d962
-MD5 1dab7187f7d9425e3ba33b3137f4f69d kxdocker-taskmanager-1.0.2.ebuild 512
-RMD160 2ef096ab85bb06453477957a8ea6ba4ee410e806 kxdocker-taskmanager-1.0.2.ebuild 512
-SHA256 84e89b9bce9b5ce53093ebc7d67716faf7c9b70e64356c2f50918c310299d962 kxdocker-taskmanager-1.0.2.ebuild 512
-MD5 67d94f9133bad527fdec3d0033720e53 files/digest-kxdocker-taskmanager-1.0.2 283
-RMD160 803d715861dd70bede671ae374d2b4f57780ed15 files/digest-kxdocker-taskmanager-1.0.2 283
-SHA256 cb5c9e3304eabbbe9d4a36a008577199d3b6e1958331dbe2a7ecf5406e52232c files/digest-kxdocker-taskmanager-1.0.2 283

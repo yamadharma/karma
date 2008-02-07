@@ -1,8 +1,0 @@
-DIST kxdocker-gdate-1.0.0.tar.bz2 739251 RMD160 6dc68cfa795d06aaabe78627d38e7efc62006385 SHA1 8ee4b88e383554c88a44cf5a0f052b3f900f4cfe SHA256 2b094346a99162458c39e946dc5e9ad525ec4f60c5223ec1dce5a15fb205964e
-EBUILD kxdocker-gdate-1.0.0.ebuild 506 RMD160 ba7560f7c329e62eae6a6ea215154f54c95e295c SHA1 0f0b5d8a86783abba10ba8779a952a92c72f93c2 SHA256 968f7f89667651a42c66f22ebe5c4bd11a317a11e7e3ba28e47431aa1dd53fe8
-MD5 47d96b97d6a83ade943910277fe3701b kxdocker-gdate-1.0.0.ebuild 506
-RMD160 ba7560f7c329e62eae6a6ea215154f54c95e295c kxdocker-gdate-1.0.0.ebuild 506
-SHA256 968f7f89667651a42c66f22ebe5c4bd11a317a11e7e3ba28e47431aa1dd53fe8 kxdocker-gdate-1.0.0.ebuild 506
-MD5 cce61f58d31a036fa3387ae4dbcd6776 files/digest-kxdocker-gdate-1.0.0 265
-RMD160 bc69cd138516cc3beed6d68a3308dda5b82fb972 files/digest-kxdocker-gdate-1.0.0 265
-SHA256 834bc7c7e5edacf3ffc77ad5afe2aeed303be18a482b4cf990942d8eca2c53d4 files/digest-kxdocker-gdate-1.0.0 265

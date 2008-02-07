@@ -1,8 +1,0 @@
-DIST kxdocker-networker-1.0.0.tar.bz2 786607 RMD160 07fe6d2748912b5ff6b236d4239f8e7c82ebefff SHA1 c945bb3ee5df14e6a0853333af5a2ffd972739ae SHA256 5b9398912d9111c394ef24d0b0d6011e9d271ed75c07e40fc0ae2dfb988f3a6c
-EBUILD kxdocker-networker-1.0.0.ebuild 510 RMD160 7baf7818264bf6cf84e828dd332d94826cd6fb67 SHA1 98e67bd3ffa552bf7a7345363c2e9ba91b538b14 SHA256 0a9113416fc61340c68c1a34416ba330e67596dbb83fbb45797cbafe26fccbed
-MD5 74c8aaf1ae57501142529b5aedc69825 kxdocker-networker-1.0.0.ebuild 510
-RMD160 7baf7818264bf6cf84e828dd332d94826cd6fb67 kxdocker-networker-1.0.0.ebuild 510
-SHA256 0a9113416fc61340c68c1a34416ba330e67596dbb83fbb45797cbafe26fccbed kxdocker-networker-1.0.0.ebuild 510
-MD5 36a98ff00ee13a89e0050efbb7d6ccff files/digest-kxdocker-networker-1.0.0 277
-RMD160 0895815e87301559f947632c18225b0f04695868 files/digest-kxdocker-networker-1.0.0 277
-SHA256 e064cb6b26249040aa9b657c5930c91376dea0a8534ddb33e25eb0d2a20f4ffa files/digest-kxdocker-networker-1.0.0 277

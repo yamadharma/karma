@@ -1,8 +1,0 @@
-DIST kxdocker-thememanager-1.0.0.tar.bz2 750061 RMD160 a0769240492697764ac3683a17f1aebffc79f52f SHA1 bc46b1be64fe17a3ffd3c4cb83ca35e5490e7247 SHA256 2ddee5e8f5407befc214a8ffc530d8a87190edfd40d5200354d582c88346b245
-EBUILD kxdocker-thememanager-1.0.0.ebuild 513 RMD160 5d6b7cd04ce2fa66dd323d926dc40d35750b9e8a SHA1 ea36cef0abfc4fbebb8090e19a2b9fbf4961cdca SHA256 ecc4fa230c8fb789279a536a1d4ba6b3a8e8819256d0fee836d13f2fd42cef69
-MD5 56dd5fff98919149921a90df60b28d65 kxdocker-thememanager-1.0.0.ebuild 513
-RMD160 5d6b7cd04ce2fa66dd323d926dc40d35750b9e8a kxdocker-thememanager-1.0.0.ebuild 513
-SHA256 ecc4fa230c8fb789279a536a1d4ba6b3a8e8819256d0fee836d13f2fd42cef69 kxdocker-thememanager-1.0.0.ebuild 513
-MD5 7519b2746edb974df741dd88a6f5eab8 files/digest-kxdocker-thememanager-1.0.0 286
-RMD160 98885fc4f51ba760705acdc4769ef69b90865e55 files/digest-kxdocker-thememanager-1.0.0 286
-SHA256 00ba8446756140caa1d81d27ed2b1cb91c1e1d9d1eff1bf006fcd17449628c2d files/digest-kxdocker-thememanager-1.0.0 286

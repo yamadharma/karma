@@ -1,8 +1,0 @@
-DIST kxdocker-trayiconlogger-1.0.0.tar.bz2 755165 RMD160 75fd1817f09a15f07fb7bff35e69c61c07b6c1b5 SHA1 82c010d390098dfd0d536ab6e71485e0da296a22 SHA256 47531b893669d58fedbc70458dcaaa5912f548cca5e63ee9316ffdb7de8beec9
-EBUILD kxdocker-trayiconlogger-1.0.0-r1.ebuild 473 RMD160 051c642c1ef2834176c56a4acfbbab8bef2a33fc SHA1 71336dd3ea54f661d084dc1e3d3571482251875f SHA256 b3cd18ff4f3ba629de3915c8c67622e980673a156d789aa831fb291e4be23dc8
-MD5 e0f115f6c63977859f4cc31f5cdba7fa kxdocker-trayiconlogger-1.0.0-r1.ebuild 473
-RMD160 051c642c1ef2834176c56a4acfbbab8bef2a33fc kxdocker-trayiconlogger-1.0.0-r1.ebuild 473
-SHA256 b3cd18ff4f3ba629de3915c8c67622e980673a156d789aa831fb291e4be23dc8 kxdocker-trayiconlogger-1.0.0-r1.ebuild 473
-MD5 1951ce6e1feb79493ff3b0dd1dc7a7d0 files/digest-kxdocker-trayiconlogger-1.0.0-r1 292
-RMD160 4dddfb9be711963a09ecf68247967b089c2a909d files/digest-kxdocker-trayiconlogger-1.0.0-r1 292
-SHA256 32610e89067ef02ec8edc972969f5f7aa6b121b2f4ec914409a6f527869e39b5 files/digest-kxdocker-trayiconlogger-1.0.0-r1 292

@@ -1,8 +1,0 @@
-DIST kxdocker-resources-1.1.0.tar.bz2 6232141 RMD160 b1923c7c447f62e91b4a7baf180d482076a2fa49 SHA1 3b9b2980b8db5728e156564932d01d2489b858f1 SHA256 4d32c1431f925428cd9aac37c26b281efe54b23387a1d45c4d0f60fbc904769e
-EBUILD kxdocker-resources-1.1.0.ebuild 490 RMD160 23db643dfab0910daf4e2c693709d9ff44d3a2e8 SHA1 21904231e47c9fa14afcdedd288c00febe6c7e98 SHA256 662d9ff5174f585b3473646c13d45d07732d70bb0068839b683af7416c85d2e9
-MD5 1c6ab5e91cc40bc2c359280d1f40562d kxdocker-resources-1.1.0.ebuild 490
-RMD160 23db643dfab0910daf4e2c693709d9ff44d3a2e8 kxdocker-resources-1.1.0.ebuild 490
-SHA256 662d9ff5174f585b3473646c13d45d07732d70bb0068839b683af7416c85d2e9 kxdocker-resources-1.1.0.ebuild 490
-MD5 6dbf338e8446eee43e814d2b582e5d45 files/digest-kxdocker-resources-1.1.0 280
-RMD160 3bca9bb0c949ab76e4ebc7f57046a6407f78e8d2 files/digest-kxdocker-resources-1.1.0 280
-SHA256 335545f4b0c61a07e9266cfe219966b7e01a21b030efc19dfb6330fded83a65d files/digest-kxdocker-resources-1.1.0 280

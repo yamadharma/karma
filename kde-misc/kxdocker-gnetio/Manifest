@@ -1,8 +1,0 @@
-DIST kxdocker-gnetio-1.0.0.tar.bz2 799563 RMD160 0bca7283f3f6aa4b4ecf9a486834a9e6e35bb0b9 SHA1 075d6d4bea7cd27cb09bef2db13ec120ca6699c8 SHA256 a7de85bdd9d65edf76e106ea129836c40e766ad47fafddabdebf8c3a2de20e63
-EBUILD kxdocker-gnetio-1.0.0.ebuild 507 RMD160 c4b6195803eeaab3e1e130ee1d6ad99cdd6be029 SHA1 aa067f126186deae503b865eecca58d090aac202 SHA256 6837e94a6c99c721ed7129082beae35313bf7947894afce7518607c6f9f3ead9
-MD5 a23a65b0af7c542b68a173e18b55cef7 kxdocker-gnetio-1.0.0.ebuild 507
-RMD160 c4b6195803eeaab3e1e130ee1d6ad99cdd6be029 kxdocker-gnetio-1.0.0.ebuild 507
-SHA256 6837e94a6c99c721ed7129082beae35313bf7947894afce7518607c6f9f3ead9 kxdocker-gnetio-1.0.0.ebuild 507
-MD5 cd53bb502684de6e8eb0770bd8d24c8b files/digest-kxdocker-gnetio-1.0.0 268
-RMD160 08e74a0d4ae411ea1024ba0a64e7503a731d4a7c files/digest-kxdocker-gnetio-1.0.0 268
-SHA256 44cff26baec0212407b052307371be0a7ef6e011ea6604d8adc0616126491c9c files/digest-kxdocker-gnetio-1.0.0 268
