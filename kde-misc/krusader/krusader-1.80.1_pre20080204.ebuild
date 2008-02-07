@@ -3,12 +3,11 @@
 # $Header: $
 
 EAPI="1"
-NEED_KDE=":kde-4"
 
-inherit kde4-base subversion 
+inherit kde subversion 
 
 ESVN_OPTIONS="-r{${PV/*_pre}}"
-ESVN_REPO_URI="http://krusader.svn.sourceforge.net/svnroot/krusader/trunk/krusader_kde4"
+ESVN_REPO_URI="http://krusader.svn.sourceforge.net/svnroot/krusader/trunk/krusader_kde3"
 
 #S=${WORKDIR}/${ECVS_MODULE}
 
@@ -19,17 +18,16 @@ HOMEPAGE="http://krusader.sourceforge.net/"
 LICENSE="GPL-2"
 
 SLOT="0"
-#KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
-KEYWORDS=""
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
 IUSE="javascript kde"
 
-DEPEND="kde? ( || ( ( kde-base/libkonq:kde-4 kde-base/kdebase-kioslaves:kde-4 )
-			kde-base/kdebase:kde-4 ) )"
-#	!sparc? ( javascript? ( kde-base/kjsembed:kde-4 ) )"
+DEPEND="kde? ( || ( ( kde-base/libkonq:3.5 kde-base/kdebase-kioslaves:3.5 )
+			kde-base/kdebase:3.5 ) )
+	!sparc? ( javascript? ( kde-base/kjsembed:3.5 ) )"
 
 RDEPEND="${DEPEND}"
 
-#need-kde 3.4
+need-kde 3.4
 
 pkg_postinst() {
 	echo
@@ -65,7 +63,7 @@ pkg_postinst() {
 	echo
 }
 
-#src_compile() {
-#	local myconf="$(use_with kde konqueror) $(use_with javascript) --with-kiotar"
-#	kde_src_compile
-#}
+src_compile() {
+	local myconf="$(use_with kde konqueror) $(use_with javascript) --with-kiotar"
+	kde_src_compile
+}

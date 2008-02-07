@@ -2,15 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="1"
-NEED_KDE=":kde-4"
 
-inherit kde4-base subversion 
 
-ESVN_OPTIONS="-r{${PV/*_pre}}"
-ESVN_REPO_URI="http://krusader.svn.sourceforge.net/svnroot/krusader/trunk/krusader_kde4"
+ECVS_SERVER="krusader.cvs.sourceforge.net:/cvsroot/krusader"
+ECVS_MODULE="krusader_kde3"
+ECVS_AUTH="pserver"
+ECVS_OPTIONS="-D${PV/*_pre}"
 
-#S=${WORKDIR}/${ECVS_MODULE}
+inherit kde cvs
+
+S=${WORKDIR}/${ECVS_MODULE}
+
+#MY_P="${P/_/-}"
+#S="${WORKDIR}/${MY_P}"
 
 DESCRIPTION="An advanced twin-panel (commander-style) file-manager for KDE with many extras."
 HOMEPAGE="http://krusader.sourceforge.net/"
@@ -22,13 +26,13 @@ SLOT="0"
 KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
 IUSE="javascript kde"
 
-DEPEND="kde? ( || ( ( kde-base/libkonq:kde-4 kde-base/kdebase-kioslaves:kde-4 )
-			kde-base/kdebase:kde-4 ) )"
-#	!sparc? ( javascript? ( kde-base/kjsembed:kde-4 ) )"
+DEPEND="kde? ( || ( ( kde-base/libkonq kde-base/kdebase-kioslaves )
+			kde-base/kdebase ) )
+	!sparc? ( javascript? ( kde-base/kjsembed ) )"
 
 RDEPEND="${DEPEND}"
 
-#need-kde 3.4
+need-kde 3.4
 
 pkg_postinst() {
 	echo
@@ -64,7 +68,7 @@ pkg_postinst() {
 	echo
 }
 
-#src_compile() {
-#	local myconf="$(use_with kde konqueror) $(use_with javascript) --with-kiotar"
-#	kde_src_compile
-#}
+src_compile() {
+	local myconf="$(use_with kde konqueror) $(use_with javascript) --with-kiotar"
+	kde_src_compile
+}
