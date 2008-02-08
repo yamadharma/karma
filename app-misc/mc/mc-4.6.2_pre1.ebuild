@@ -22,7 +22,6 @@ RDEPEND=">=sys-fs/e2fsprogs-1.19
 	ncurses? ( >=sys-libs/ncurses-5.2-r5 )
 	slang? ( >=sys-libs/slang-2.0.5 )
 	=dev-libs/glib-2*
-	app-arch/lzma
 	pam? ( >=sys-libs/pam-0.72 )
 	gpm? ( >=sys-libs/gpm-1.19.3 )
 	samba? ( >=net-fs/samba-3.0.0 )
