@@ -1,5 +1,0 @@
-MD5 bb314758a38bda7b8827fd7638dc1ced MailScanner-4.21.ebuild 1994
-MD5 1cbcb5fe42141c3c7490070f9116abb8 files/digest-mailscanner-4.21 70
-MD5 1cbcb5fe42141c3c7490070f9116abb8 files/digest-MailScanner-4.21 70
-MD5 d7f5ee90870e2a7549a80756e8bf225d files/etc/version/0.1.6.4/exim/include/routers/amavis-ng.conf 223
-MD5 b4f606b4964c5b2619c0ea4d42f97c73 files/etc/version/0.1.6.4/exim/include/transports/amavis-ng.conf 335
