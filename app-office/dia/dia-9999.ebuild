@@ -67,8 +67,6 @@ src_unpack() {
 	# changed the patch to a sed to make it a bit more portable - AllanonJL
 	sed -i -e '/AM_CHECK_PYMOD/d' configure.in
 
-#	eautoreconf
-
 	echo "Running gettextize..."
 	glib-gettextize --copy --force
 
