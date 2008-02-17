@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="x86 amd64"
 IUSE=""
 
-DEPEND=">=dev-util/bzr-0.90_rc1
+DEPEND=">=dev-util/bzr-1.0_rc1
 	|| ( >=dev-lang/python-2.5 >=dev-python/pysqlite-2 )
 	dev-util/subversion"
 RDEPEND=""

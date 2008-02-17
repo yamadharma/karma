@@ -6,7 +6,7 @@ inherit distutils versionator
 
 DESCRIPTION="bzrtools is a useful collection of utilities for bzr."
 HOMEPAGE="http://bazaar-vcs.org/BzrTools"
-SRC_URI="http://panoramicfeedback.com/opensource/${P}.tar.gz"
+SRC_URI="https://launchpad.net/${PN}/stable/${PV}/+download/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

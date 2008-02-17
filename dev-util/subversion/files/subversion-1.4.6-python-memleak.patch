@@ -1,0 +1,15 @@
+--- trunk/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.c	2007/12/19 00:39:54	28543
++++ trunk/subversion/bindings/swig/python/libsvn_swig_py/swigutil_py.c	2007/12/19 01:10:36	28544
+@@ -780,8 +780,10 @@
+   PyObject *new_py_pool = svn_swig_NewPointerObj(new_pool, \
+     svn_swig_TypeQuery("apr_pool_t *"), application_py_pool, NULL); \
+   svn_##type##_t *new_value = dup(value, new_pool); \
+-  return svn_swig_NewPointerObjString(new_value, "svn_" #type "_t *", \
+-      new_py_pool); \
++  PyObject *obj = svn_swig_NewPointerObjString(new_value, "svn_" #type "_t *", \
++                                               new_py_pool); \
++  Py_XDECREF(new_py_pool); \
++  return obj; \
+ }
+ 
+ DECLARE_SWIG_CONSTRUCTOR(txdelta_window, svn_txdelta_window_dup)

@@ -1,10 +1,10 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/subversion/subversion-1.4.5.ebuild,v 1.4 2007/11/11 20:09:16 armin76 Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/subversion/subversion-1.4.6.ebuild,v 1.9 2008/01/29 20:56:46 jer Exp $
 
 inherit bash-completion depend.apache flag-o-matic elisp-common eutils java-pkg-opt-2 libtool multilib perl-module python
 
-KEYWORDS="alpha amd64 ~arm ~hppa ia64 ~mips ~ppc ~ppc64 sparc ~sparc-fbsd x86 ~x86-fbsd"
+KEYWORDS="alpha amd64 ~arm hppa ia64 ~mips ppc ppc64 ~s390 ~sh sparc ~sparc-fbsd x86 ~x86-fbsd"
 
 DESCRIPTION="A compelling replacement for CVS."
 HOMEPAGE="http://subversion.tigris.org/"
@@ -20,10 +20,10 @@ COMMONDEPEND=">=dev-libs/apr-util-1.2.8
 			doc? ( app-doc/doxygen )
 			emacs? ( virtual/emacs )
 			nls? ( sys-devel/gettext )
-			!nowebdav? ( >=net-misc/neon-0.26 )
-			ruby? ( >=dev-lang/ruby-1.8.2 )
-			perl? ( >=dev-lang/perl-5.8.8 )
-			python? ( >=dev-lang/python-2.0 )"
+			!nowebdav? ( >=net-misc/neon-0.26.4 )
+			ruby? ( >=dev-lang/ruby-1.8.2 dev-lang/swig )
+			perl? ( >=dev-lang/perl-5.8.8 dev-lang/swig )
+			python? ( >=dev-lang/python-2.0 dev-lang/swig )"
 
 RDEPEND="${COMMONDEPEND}
 		java? ( >=virtual/jre-1.4 )
@@ -37,7 +37,7 @@ want_apache
 
 S="${WORKDIR}"/${P/_rc/-rc}
 
-# Allow for custion repository locations.
+# Allow for custom repository locations.
 # This can't be in pkg_setup because the variable needs to be available to
 # pkg_config.
 : ${SVN_REPOS_LOC:=/var/svn}
@@ -84,12 +84,13 @@ src_unpack() {
 	sed -e 's/\(NEON_ALLOWED_LIST=.* 0.26.2\)"/\1 0.26.3 0.26.4"/' \
 		-i configure.in
 
-	sed -e "s:apr-config:$(apr_config):g" \
-		-e "s:apu-config:$(apu_config):g" \
+	sed -e "s:apr-config:apr-1-config:g" \
+		-e "s:apu-config:apu-1-config:g" \
 		-i build/ac-macros/{find_,}ap*
 
 	# needed for bzr-svn
-	epatch ${FILESDIR}/subversion-1.4.0-metze-python-bindings.patch
+	epatch "${FILESDIR}"/subversion-1.4.0-metze-python-bindings.patch
+	epatch "${FILESDIR}"/subversion-1.4.6-python-memleak.patch
 	# regenerate Makefile.in and friends
 	rm subversion/bindings/swig/proxy/*.swg
 	(cd subversion/bindings/swig && python "${FILESDIR}"/convert-typemaps-to-ifdef.py) || die "Could not convert typemaps to ifdef statements."
@@ -124,12 +125,12 @@ src_compile() {
 		myconf="${myconf} --with-neon=/usr"
 	fi
 
-	append-flags $(/usr/bin/$(apr_config) --cppflags)
+	append-flags $(/usr/bin/apr-1-config --cppflags)
 
 	econf ${myconf} \
-		--with-apr=/usr/bin/$(apr_config) \
-		--with-apr-util=/usr/bin/$(apu_config) \
-		$(use_with apache2 apxs ${APXS2}) \
+		--with-apr=/usr/bin/apr-1-config \
+		--with-apr-util=/usr/bin/apu-1-config \
+		$(use_with apache2 apxs ${APXS}) \
 		$(use_with berkdb berkeley-db) \
 		$(use_enable debug maintainer-mode) \
 		$(use_enable nls) \
@@ -154,7 +155,7 @@ src_compile() {
 	if use perl ; then
 		# Work around a buggy Makefile.PL, bug 64634
 		mkdir -p subversion/bindings/swig/perl/native/blib/arch/auto/SVN/{_Client,_Delta,_Fs,_Ra,_Repos,_Wc}
-		emake swig-pl || die "Compilation of ${PN} Perl bindings failed"
+		emake -j1 swig-pl || die "Compilation of ${PN} Perl bindings failed"
 	fi
 
 	if use ruby ; then
@@ -216,9 +217,9 @@ src_install () {
 
 	# Install apache2 module config
 	if use apache2 ; then
-		MOD="${APACHE2_MODULESDIR/${APACHE2_BASEDIR}\//}"
-		dodir "${APACHE2_MODULES_CONFDIR}"
-		cat <<EOF >"${D}/${APACHE2_MODULES_CONFDIR}"/47_mod_dav_svn.conf
+		MOD="${APACHE_MODULESDIR/${APACHE_BASEDIR}\//}"
+		dodir "${APACHE_MODULES_CONFDIR}"
+		cat <<EOF >"${D}/${APACHE_MODULES_CONFDIR}"/47_mod_dav_svn.conf
 <IfDefine SVN>
 	<IfModule !mod_dav_svn.c>
 		LoadModule dav_svn_module	${MOD}/mod_dav_svn.so
@@ -270,7 +271,7 @@ EOF
 	fi
 
 	# Install documentation
-	dodoc BUGS CHANGES COMMITTERS COPYING HACKING INSTALL README TRANSLATING
+	dodoc BUGS CHANGES COMMITTERS HACKING INSTALL README TRANSLATING
 	dodoc tools/xslt/svnindex.{css,xsl}
 	rm -fr tools/xslt
 

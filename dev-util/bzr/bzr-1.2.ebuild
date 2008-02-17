@@ -16,10 +16,11 @@ SLOT="0"
 KEYWORDS="amd64 ~ia64 ~ppc ~sparc x86 ~x86-fbsd"
 IUSE="curl doc emacs test"
 
-python_rdep="dev-python/celementtree
+python_rdep="|| ( >=dev-lang/python-2.5 dev-python/celementtree )
 	>=dev-python/paramiko-1.5
 	curl? ( dev-python/pycurl )"
 DEPEND=">=dev-lang/python-2.4
+	!=dev-python/pyrex-0.9.6.3
 	emacs? ( virtual/emacs )
 	test? (
 		$python_rdep
@@ -59,9 +60,17 @@ src_install() {
 		local dir
 		for	dir in `ls doc/en/`; do
 			if test -n "`ls doc/en/${dir}`"; then
-				docinto en/${dir}
-				dodoc doc/en/${dir}/*
-				rm -f "${D}"/usr/share/doc/${PF}/en/${dir}/Makefile
+				docinto en/"${dir}"
+				local f
+				for f in `ls doc/en/"${dir}"`; do
+					if test -d doc/en/"${dir}/${f}"; then
+						docinto en/"${dir}/${f}"
+						dodoc doc/en/"${dir}/${f}"/*
+						docinto en/"${dir}"
+					elif test "$f" != "Makefile"; then
+						dodoc doc/en/"${dir}/${f}"
+					fi
+				done
 			fi
 		done
 	fi
