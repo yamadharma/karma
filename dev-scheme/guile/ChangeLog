@@ -1,6 +1,88 @@
 # ChangeLog for dev-scheme/guile
-# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/ChangeLog,v 1.24 2007/07/29 14:00:21 hkbst Exp $
+# Copyright 2002-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/ChangeLog,v 1.41 2008/02/17 16:40:09 opfer Exp $
+
+  17 Feb 2008; Christian Faulhammer <opfer@gentoo.org>
+  guile-1.8.3-r2.ebuild, guile-1.8.3-r25.ebuild:
+  disable test if USE=regex is not set, fixes bug 164266, reported by zlin
+
+  17 Feb 2008; Christian Faulhammer <opfer@gentoo.org>
+  guile-1.8.3-r2.ebuild:
+  stable x86, bug 210465
+
+  17 Feb 2008; nixnut <nixnut@gentoo.org> guile-1.8.3-r2.ebuild:
+  Stable on ppc wrt bug 210465
+
+  17 Feb 2008; Marijn Schouten <hkBst@gentoo.org> guile-1.8.3-r2.ebuild:
+  dodir -> keepdir, or else emerging twice will not keep the directory as
+  needed for slib
+
+*guile-1.8.3-r2 (23 Jan 2008)
+
+  23 Jan 2008; Marijn Schouten <hkBst@gentoo.org> +guile-1.8.3-r2.ebuild:
+  fix bug 196639 for guile, and bug 206896 too
+
+  17 Dec 2007; Marijn Schouten <hkBst@gentoo.org> guile-1.8.3-r25.ebuild:
+  fix /-prefix install
+
+  14 Dec 2007; Jeroen Roovers <jer@gentoo.org> guile-1.8.2.ebuild:
+  Stable for HPPA (bug #178360).
+
+  13 Dec 2007; Raúl Porcel <armin76@gentoo.org> guile-1.8.2.ebuild:
+  ia64 stable wrt #178360
+
+  11 Dec 2007; nixnut <nixnut@gentoo.org> guile-1.8.2.ebuild:
+  Stable on ppc wrt bug 178360
+
+*guile-1.8.3-r25 (07 Dec 2007)
+
+  07 Dec 2007; Marijn Schouten <hkBst@gentoo.org> +guile-1.8.3-r25.ebuild:
+  add guile that installs to prefix=/ for einit
+
+  13 Nov 2007; Samuli Suominen <drac@gentoo.org> guile-1.8.2.ebuild:
+  amd64 stable wrt #182995
+
+*guile-1.8.3-r1 (18 Oct 2007)
+
+  18 Oct 2007; Marijn Schouten <hkBst@gentoo.org> +files/fix-reader-cr.diff,
+  +guile-1.8.3-r1.ebuild:
+  fix reader regression
+
+*guile-1.8.3 (17 Oct 2007)
+
+  17 Oct 2007; Marijn Schouten <hkBst@gentoo.org> +guile-1.8.3.ebuild:
+  Add bugfix release 1.8.3:
+  - New modules (see the manual for details)
+
+   - `(srfi srfi-35)'
+   - `(srfi srfi-37)'
+
+  - Bugs fixed
+
+   - The `(ice-9 slib)' module now works as expected
+   - Expressions like "(set! 'x #t)" no longer yield a crash
+   - Warnings about duplicate bindings now go to stderr
+   - A memory leak in `make-socket-address' was fixed
+   - Alignment issues (e.g., on SPARC) in network routines were fixed
+   - A threading issue that showed up at least on NetBSD was fixed
+   - Build problems on Solaris and IRIX fixed
+
+  - Implementation improvements
+
+   - The reader is now faster, which reduces startup time
+   - Procedures returned by `record-accessor' and `record-modifier' are faster
+
+  15 Oct 2007; Markus Rothe <corsair@gentoo.org> guile-1.8.2.ebuild:
+  Stable on ppc64
+
+  05 Oct 2007; Raúl Porcel <armin76@gentoo.org> guile-1.8.2.ebuild:
+  alpha stable wrt #182995, thanks to Tobias Klausmann for testing
+
+  02 Oct 2007; Ferris McCormick <fmccor@gentoo.org> guile-1.8.2.ebuild:
+  Sparc stable --- part of Bug #182995 --- with USE='nls regex deprecated'.
+
+  02 Oct 2007; Christian Faulhammer <opfer@gentoo.org> guile-1.8.2.ebuild:
+  stable x86, bug 182995
 
 *guile-1.8.2 (29 Jul 2007)
 
