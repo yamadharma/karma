@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="x86 amd64"
 IUSE=""
 
-DEPEND=">=dev-util/bzr-0.92_rc1"
+DEPEND=">=dev-util/bzr-0.92"
 RDEPEND=""
 
 S="${WORKDIR}"/${P}
