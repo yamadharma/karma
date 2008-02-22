@@ -1,13 +1,12 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/xen/xen-3.2.0.ebuild,v 1.1 2008/02/08 22:19:23 marineam Exp $
 
 inherit mount-boot flag-o-matic
 
 DESCRIPTION="The Xen virtual machine monitor"
 HOMEPAGE="http://www.xensource.com/xen/xen/"
-SRC_URI="http://bits.xensource.com/oss-xen/release/${PV}/src.tgz/xen-${PV}-src.tgz"
-S="${WORKDIR}/xen-${PV}-src"
+SRC_URI="mirror://gentoo/xen-${PV}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -16,8 +15,7 @@ IUSE="debug custom-cflags pae"
 
 RDEPEND="|| ( sys-boot/grub
 		sys-boot/grub-static )
-	 || ( >=sys-kernel/karma_server-sources-2.6.18
-	    >=sys-kernel/xen-sources-2.6.18 )"
+	 || ( >=sys-kernel/xen-sources-2.6.18 sys-kernel/karma_server-sources )"
 PDEPEND="~app-emulation/xen-tools-${PV}"
 
 RESTRICT="test"
@@ -27,7 +25,9 @@ QA_WX_LOAD="boot/xen-syms-${PV}"
 
 pkg_setup() {
 	if [[ -z ${XEN_TARGET_ARCH} ]]; then
-		if use x86; then
+		if use x86 && use amd64; then
+			die "Confusion! Both x86 and amd64 are set in your use flags!"
+		elif use x86; then
 			export XEN_TARGET_ARCH="x86_32"
 		elif use amd64; then
 			export XEN_TARGET_ARCH="x86_64"
@@ -60,6 +60,7 @@ src_compile() {
 
 	if use custom-cflags; then
 		filter-flags -fPIE -fstack-protector
+		replace-flags -O3 -O2
 	else
 		unset CFLAGS
 	fi
@@ -77,11 +78,9 @@ src_install() {
 }
 
 pkg_postinst() {
-	elog "Please visit the Xen and Gentoo wiki:"
-	elog "http://gentoo-wiki.com/HOWTO_Xen_and_Gentoo"
-
-	echo
-	elog "Note: xen tools have been moved to app-emulation/xen-tools"
+	elog "Official Xen Guide and the unoffical wiki page:"
+	elog " http://www.gentoo.org/doc/en/xen-guide.xml"
+	elog " http://gentoo-wiki.com/HOWTO_Xen_and_Gentoo"
 
 	if use pae; then
 		echo
