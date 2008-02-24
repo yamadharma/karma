@@ -10,7 +10,7 @@ DESCRIPTION="The GNU Compiler for the Java(tm) Programming Language"
 HOMEPAGE="http://gcc.gnu.org/java/"
 
 LICENSE="GPL-2 LGPL-2.1"
-KEYWORDS="amd64 ~ppc x86"
+KEYWORDS="amd64 ~ppc ~ppc64 x86"
 SLOT="4.3"
 
 RDEPEND="virtual/libc

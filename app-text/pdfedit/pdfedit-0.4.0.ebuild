@@ -8,7 +8,8 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="amd64 x86"
+#KEYWORDS="amd64 x86"
+KEYWORDS=""
 
 #IUSE="qt4"
 #RDEPEND="!qt4? ( =x11-libs/qt-3* )

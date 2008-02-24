@@ -6,7 +6,7 @@ inherit eutils java-utils-2
 
 MY_PN="ecj"
 MY_PV="${PV/_pre/M}"
-DMF="S-${MY_PV}-200709210919"
+DMF="S-${MY_PV}-200802071530"
 S="${WORKDIR}"
 
 DESCRIPTION="Eclipse Compiler for Java"
@@ -36,7 +36,7 @@ src_unpack() {
 		org/eclipse/jdt/internal/compiler/apt/
 
 	# gcj feature
-	epatch ${FILESDIR}/${PN}-gcj.patch
+	epatch ${FILESDIR}/${PN}-gcj-${PV/_*}.patch
 }
 
 src_compile() {

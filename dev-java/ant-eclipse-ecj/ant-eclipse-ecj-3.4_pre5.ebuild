@@ -6,7 +6,7 @@ inherit java-pkg-2
 
 MY_PN="ecj"
 MY_PV="${PV/_pre/M}"
-DMF="S-${MY_PV}-200709210919"
+DMF="S-${MY_PV}-200802071530"
 S="${WORKDIR}"
 
 DESCRIPTION="Ant Compiler Adapter for Eclipse Java Compiler"

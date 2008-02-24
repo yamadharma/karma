@@ -13,7 +13,7 @@ SRC_URI=""
 
 LICENSE="GPL-2"
 IUSE="nsplugin"
-KEYWORDS="amd64 ~ppc x86"
+KEYWORDS="amd64 ~ppc ~ppc64 x86"
 SLOT="4.3"
 
 RDEPEND="~dev-java/gcj-${PV}
