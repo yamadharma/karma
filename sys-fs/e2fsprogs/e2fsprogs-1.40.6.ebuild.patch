@@ -1,0 +1,12 @@
+--- e2fsprogs-1.40.6.ebuild	2008-02-21 01:37:25.000000000 +0300
++++ e2fsprogs-1.40.6-r1.ebuild	2008-03-02 21:19:42.276445774 +0300
+@@ -30,6 +30,9 @@ src_unpack() {
+ 	epatch "${FILESDIR}"/${PN}-1.40.5-libintl.patch #122368
+ 	epatch "${FILESDIR}"/${PN}-1.40-fbsd.patch
+ 
++	# Add extents support:
++	EPATCH_OPTS="-p1" epatch "${FILESDIR}"/e2fsprogs-1.40.6-extents.patch
++
+ 	# kernel headers use the same defines as e2fsprogs and can cause issues #48829
+ 	sed -i \
+ 		-e 's:CONFIG_JBD_DEBUG:__CONFIG_JBD_DEBUG__E2FS:g' \

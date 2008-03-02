@@ -20,10 +20,12 @@ RDEPEND="app-shells/bash
 	media-sound/lame
 	media-sound/vorbis-tools
 	media-libs/libid3tag
-	|| ( media-sound/mppenc media-sound/musepack-tools )
+	media-sound/musepack-tools
 	media-libs/flac
 	media-libs/faac
 	media-libs/faad2"
+
+# 	|| ( media-sound/mppenc media-sound/musepack-tools )
 
 src_install() {
     dobin audio-convert
