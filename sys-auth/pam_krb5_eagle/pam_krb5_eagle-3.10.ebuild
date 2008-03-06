@@ -14,6 +14,7 @@ SRC_URI="http://archives.eyrie.org/software/kerberos/${MY_P}.tar.gz"
 LICENSE="as-is"
 KEYWORDS="x86 amd64"
 IUSE=""
+SLOT="0"
 
 DEPEND="virtual/krb5
 	>=sys-libs/pam-0.78-r2"
