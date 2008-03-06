@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE services SYSTEM "services.dtd">
+<services>
+  <custom-language tag="zh-TW" name="Chinese (Taiwan)"/>
+
+  <service nick="Google" name="google">
+    <group>
+      <language to="*" tag="en"/>
+      <language to="en,de" tag="fr"/>
+      <language to="en,fr" tag="de"/>
+      <language to="en" tag="it"/>
+      <language to="en" tag="pt"/>
+      <language to="en" tag="es"/>
+      <language to="en" tag="pt"/>
+      <language to="en" tag="ru"/>
+      <language to="en" tag="zh"/>
+      <language to="en" tag="zh-TW"/>
+      <language to="en" tag="ja"/>
+      <language to="en" tag="ko"/>
+      <language to="en" tag="ar"/>
+      <text-translation url="http://www.google.com/translate_t?text=${text:escape}&amp;langpair=${from}|${to}&amp;ie=utf8&amp;oe=utf8">
+	<pre-marker text="id=result_box"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/div&gt;"/>
+      </text-translation>
+      <web-page-translation url="http://www.google.com/translate_c?u=${url:escape}&amp;langpair=${from}|${to}"/>
+    </group>
+  </service>
+
+  <service nick="FreeTranslation" name="freetranslation" max-chunk-len="600">
+    <group>
+      <language to="en" tag="nl" service-tag="dutch"/>
+      <language to="*" tag="en" service-tag="english"/>
+      <language to="en" tag="fr" service-tag="french"/>
+      <language to="en" tag="de" service-tag="german"/>
+      <language to="en" tag="it" service-tag="italian"/>
+      <language tag="no" service-tag="norwegian"/>
+      <language to="en" tag="pt" service-tag="portuguese"/>
+      <language to="en" tag="es" service-tag="spanish"/>
+      <text-translation url="http://ets.freetranslation.com/?sequence=core&amp;srctext=${text:escape}&amp;language=${from}/${to}&amp;charset=utf-8"/>
+      <web-page-translation url="http://fets5.freetranslation.com/?sequence=core&amp;url=${url:escape}&amp;language=${from}/${to}"/>
+    </group>
+    <group>
+      <language tag="zh" service-tag="simplifiedchinese"/>
+      <language tag="zh-TW" service-tag="traditionalchinese"/>
+      <language to="*" tag="en" service-tag="english"/>
+      <language to="en" tag="ru" service-tag="russian"/>
+      <text-translation url="http://ets6.freetranslation.com/?sequence=core&amp;srctext=${text:escape}&amp;language=${from}/${to}&amp;charset=utf-8"/>
+    </group>
+    <group>
+      <language to="*" tag="en" service-tag="english"/>
+      <language to="en" tag="ja" service-tag="japanese"/>
+      <text-translation url="http://tets9.freetranslation.com/?sequence=core&amp;srctext=${text:escape}&amp;language=${from}/${to}&amp;charset=utf-8"/>
+    </group>
+  </service>
+
+  <service nick="Pereklad" name="pereklad">
+    <group>
+      <language to="*" tag="ru" service-tag="Rus"/>
+      <language to="*" tag="uk" service-tag="Ukr"/>
+      <text-translation 
+    	    url="http://pereklad.online.ua/"
+	    post="TranFrom=${from}&amp;TranTo=${to}&amp;SrcTxt=${text:charset=CP1251,escape}">
+	<pre-marker text="id=&quot;DstTxt&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+    </group>
+    <group>
+      <language to="*" tag="en" service-tag="Eng"/>
+      <language to="*" tag="de" service-tag="Ger"/>
+      <language to="*" tag="fr" service-tag="Fra"/>
+      <text-translation 
+    	    url="http://pereklad.online.ua/"
+	    post="TranFrom=${from}&amp;TranTo=${to}&amp;SrcTxt=${text:charset=ISO-8859-1,escape}"
+	    response-charset="ISO-8859-1">
+	<pre-marker text="id=&quot;DstTxt&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+    </group>
+    <group>
+      <language to="en,de,fr" tag="ru" service-tag="Rus"/>
+      <language to="en,de,fr" tag="uk" service-tag="Ukr"/>
+      <language to="" tag="en" service-tag="Eng"/>
+      <language to="" tag="de" service-tag="Ger"/>
+      <language to="" tag="fr" service-tag="Fra"/>
+      <text-translation 
+    	    url="http://pereklad.online.ua/"
+	    post="TranFrom=${from}&amp;TranTo=${to}&amp;SrcTxt=${text:charset=CP1251,escape}"
+	    response-charset="ISO-8859-1">
+	<pre-marker text="id=&quot;DstTxt&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+    </group>
+    <group>
+      <language to="" tag="ru" service-tag="Rus"/>
+      <language to="" tag="uk" service-tag="Ukr"/>
+      <language to="ru,uk" tag="en" service-tag="Eng"/>
+      <language to="ru,uk" tag="de" service-tag="Ger"/>
+      <language to="ru,uk" tag="fr" service-tag="Fra"/>
+      <text-translation 
+    	    url="http://pereklad.online.ua/"
+	    post="TranFrom=${from}&amp;TranTo=${to}&amp;SrcTxt=${text:charset=ISO-8859-1,escape}">
+	<pre-marker text="id=&quot;DstTxt&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+    </group>
+    <group>
+      <language to="" tag="ru" service-tag="Rus"/>
+      <language to="" tag="uk" service-tag="Ukr"/>
+      <language to="ru,uk" tag="lv" service-tag="Lat"/>
+      <text-translation 
+    	    url="http://pereklad.online.ua/"
+	    post="TranFrom=${from}&amp;TranTo=${to}&amp;SrcTxt=${text:charset=ISO-8859-4,escape}">
+	<pre-marker text="id=&quot;DstTxt&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+    </group>
+    <group>
+      <language to="*" tag="lv" service-tag="Lat"/>
+      <language to="" tag="en" service-tag="Eng"/>
+      <language to="" tag="de" service-tag="Ger"/>
+      <language to="" tag="fr" service-tag="Fra"/>
+      <text-translation 
+    	    url="http://pereklad.online.ua/"
+	    post="TranFrom=${from}&amp;TranTo=${to}&amp;SrcTxt=${text:charset=ISO-8859-4,escape}"
+	    response-charset="ISO-8859-1">
+	<pre-marker text="id=&quot;DstTxt&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+    </group>
+    <group>
+      <language to="" tag="lv" service-tag="Lat"/>
+      <language to="lv" tag="ru" service-tag="Rus"/>
+      <language to="lv" tag="uk" service-tag="Ukr"/>
+      <text-translation 
+    	    url="http://pereklad.online.ua/"
+	    post="TranFrom=${from}&amp;TranTo=${to}&amp;SrcTxt=${text:charset=CP1251,escape}"
+	    response-charset="ISO-8859-4">
+	<pre-marker text="id=&quot;DstTxt&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+    </group>
+    <group>
+      <language to="" tag="lv" service-tag="Lat"/>
+      <language to="lv" tag="en" service-tag="Eng"/>
+      <language to="lv" tag="de" service-tag="Ger"/>
+      <language to="lv" tag="fr" service-tag="Fra"/>
+      <text-translation 
+    	    url="http://pereklad.online.ua/"
+	    post="TranFrom=${from}&amp;TranTo=${to}&amp;SrcTxt=${text:charset=ISO-8859-1,escape}"
+	    response-charset="ISO-8859-4">
+	<pre-marker text="id=&quot;DstTxt&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+    </group>
+  </service>
+
+  <service nick="Promt" name="promt">
+    <group>
+      <language to="" tag="ru" service-tag="r"/>
+      <language to="ru,de,fr,es" tag="en" service-tag="e"/>
+      <language to="ru,en,fr,es" tag="de" service-tag="g"/>
+      <language to="ru,en,de,es" tag="fr" service-tag="f"/>
+      <language to="ru,en" tag="it" service-tag="i"/>
+      <language to="ru,en,de,fr" tag="es" service-tag="s"/>
+      <language to="en" tag="pt" service-tag="p"/>
+      <text-translation 
+    	    url="http://www.translate.ru/text.asp"
+    	    post="lang=en&amp;transliterate=ON&amp;direction=${from}${to}&amp;source=${text:charset=ISO8859-1,entities,escape}&amp;status=translate">
+	<pre-marker text="id=&quot;r_text&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/span&gt;"/>
+      </text-translation>
+    </group>
+    <group>
+      <language to="*" tag="ru" service-tag="r"/>
+      <language to="" tag="de" service-tag="g"/>
+      <language to="" tag="fr" service-tag="f"/>
+      <language to="" tag="it" service-tag="i"/>
+      <language to="" tag="es" service-tag="s"/>
+      <text-translation url="http://www.translate.ru/text.asp?lang=ru&amp;transliterate=ON&amp;direction=r${to}&amp;source=${text:charset=CP1251,escape}&amp;status=translate">
+	<pre-marker text="id=&quot;r_text&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/span&gt;"/>
+      </text-translation>
+    </group>
+  </service>
+
+  <service nick="SYSTRAN" name="systran">
+    <group>
+      <language to="en" tag="ar"/>
+      <language to="en" tag="zh"/>
+      <language to="en" tag="zh-TW" service-tag="zt"/>
+      <language to="en,fr" tag="nl"/>
+      <language to="*" tag="en"/>
+      <language to="nl,en,de,it,pt,es" tag="fr"/>
+      <language to="en,fr" tag="de"/>
+      <language to="en,fr" tag="it"/>
+      <language to="en" tag="ja"/>
+      <language to="en" tag="ko"/>
+      <language to="en,fr" tag="pt"/>
+      <language to="en" tag="ru"/>
+      <language to="en,fr" tag="es"/>
+      <language to="en" tag="sv"/>
+      <http-header value="http://www.systransoft.com/" name="Referer"/>
+      <text-translation url="http://www.systranbox.com/systran/box?systran_charset=utf-8&amp;ttype=text&amp;systran_text=${text:escape}&amp;systran_lp=${from}_${to}">
+	<pre-marker text="&lt;textarea name=&quot;translation&quot;"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&lt;/textarea&gt;"/>
+      </text-translation>
+      <web-page-translation url="http://www.systranbox.com/systran/box?systran_id=SystranSoft-en&amp;systran_url=${url:escape}&amp;systran_lp=${from}_${to}&amp;systran_f=${time}"/>
+    </group>
+  </service>
+
+  <service nick="Babel Fish" name="babelfish">
+    <group>
+      <language to="en" tag="zh"/>
+      <language to="en" tag="zh-TW" service-tag="zt"/>
+      <language to="*" tag="en"/>
+      <language to="en,fr" tag="nl"/>
+      <language to="en,de,el,it,pt,nl,es" tag="fr"/>
+      <language to="en,fr" tag="de"/>
+      <language to="en,fr" tag="el"/>
+      <language to="en,fr" tag="it"/>
+      <language to="en" tag="ja"/>
+      <language to="en" tag="ko"/>
+      <language to="en,fr" tag="pt"/>
+      <language to="en" tag="ru"/>
+      <language to="en,fr" tag="es"/>
+      <text-translation url="http://babelfish.altavista.com/babelfish/tr?urltext=${text:escape}&amp;lp=${from}_${to}&amp;enc=utf8">
+	<pre-marker text="&lt;form action=&quot;http://www.altavista.com/web/results"/>
+	<pre-marker text="px;&gt;"/>
+	<post-marker text="&lt;/div&gt;"/>
+      </text-translation>
+      <web-page-translation url="http://babelfish.altavista.com/babelfish/trurl_load?url=${url:escape}&amp;lp=${from}_${to}&amp;enc=utf8"/>
+    </group>
+  </service>
+
+  <service nick="Kataku" name="kataku">
+    <group>
+      <language to="*" tag="en"/>
+      <language to="*" tag="id" service-tag="in"/>
+      <text-translation url="http://www.toggletext.com/kataku_trial.php" post="input_text=${text:charset=ISO8859-1,escape}&amp;langset_text=${from}_${to}">
+	<pre-marker text="Translation:"/>
+	<pre-marker text="&lt;pre"/>
+	<pre-marker text="&gt;"/>
+	<post-marker text="&#10;&lt;/pre&gt;"/>
+      </text-translation>
+      <web-page-translation url="http://www.toggletext.com/kataku_webpage_translate.php?input=${url:escape}&amp;langset=${from}_${to}"/>
+    </group>
+  </service>
+</services>

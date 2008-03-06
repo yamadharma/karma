@@ -1,0 +1,19 @@
+AUX gnome-translate-ds-eel.patch 942 RMD160 00d326aeff0f648b0b3792e5ecbea5714dda03ef SHA1 8805c2a6bd4c902a2d9939fbb3f2471a30a2a490 SHA256 c5a71a376217951d53c288d02a99c76c566a67d0efa7cf7247a3f43f9661ef59
+MD5 a83f0298a65bd36d08e29cdb483e19bf files/gnome-translate-ds-eel.patch 942
+RMD160 00d326aeff0f648b0b3792e5ecbea5714dda03ef files/gnome-translate-ds-eel.patch 942
+SHA256 c5a71a376217951d53c288d02a99c76c566a67d0efa7cf7247a3f43f9661ef59 files/gnome-translate-ds-eel.patch 942
+DIST gnome-translate-0.99.tar.gz 298179 RMD160 9607f9741c3c01fa115117f1023e65ad4bb379c2 SHA1 2031a1202016d926d660aa8ad46bea7f9e4ec1ff SHA256 2ae1f8e16777c28c5a9c902e0a16de724bf08ebace0a425a0c15e686e4cfaac2
+EBUILD gnome-translate-0.99-r1.ebuild 647 RMD160 f4be3054225c1fd6b51dd8a2908abbf1f440eb02 SHA1 0a49a3bfe785b621aa8ab994811bd2e3c3cc19b7 SHA256 f4d239b923d808e7e4ea1dd5ccbd0a29459b3bef1bd2c7fa1b9c441c68327805
+MD5 c0a63f9087d9c1bea4709d846ad7a85c gnome-translate-0.99-r1.ebuild 647
+RMD160 f4be3054225c1fd6b51dd8a2908abbf1f440eb02 gnome-translate-0.99-r1.ebuild 647
+SHA256 f4d239b923d808e7e4ea1dd5ccbd0a29459b3bef1bd2c7fa1b9c441c68327805 gnome-translate-0.99-r1.ebuild 647
+EBUILD gnome-translate-0.99.ebuild 540 RMD160 0c3a8bc98b451a04b4bcef703fb2f46269ea5e33 SHA1 45b353599ef9c5a30ec50538398a6195adea75b9 SHA256 a61d61e2bb933799cf5f4f7d0bbbaefc812cc84a042239bfc24cb0f94a7ee6c8
+MD5 4ab4919e2d86dc2267cdec3a0c59b2a2 gnome-translate-0.99.ebuild 540
+RMD160 0c3a8bc98b451a04b4bcef703fb2f46269ea5e33 gnome-translate-0.99.ebuild 540
+SHA256 a61d61e2bb933799cf5f4f7d0bbbaefc812cc84a042239bfc24cb0f94a7ee6c8 gnome-translate-0.99.ebuild 540
+MD5 90dc546fb4bfc300f5b21b5175181e1b files/digest-gnome-translate-0.99 262
+RMD160 f6efe15f974c71a107eee2fece97797fc801dffe files/digest-gnome-translate-0.99 262
+SHA256 f6c77193d0761ea6fda3db515f224bd87a162798a96444af483978f5035aad5e files/digest-gnome-translate-0.99 262
+MD5 90dc546fb4bfc300f5b21b5175181e1b files/digest-gnome-translate-0.99-r1 262
+RMD160 f6efe15f974c71a107eee2fece97797fc801dffe files/digest-gnome-translate-0.99-r1 262
+SHA256 f6c77193d0761ea6fda3db515f224bd87a162798a96444af483978f5035aad5e files/digest-gnome-translate-0.99-r1 262

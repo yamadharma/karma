@@ -5,7 +5,7 @@
 inherit eutils
 
 DESCRIPTION="LibRCD is Russian Encoding Detection Library"
-SRC_URI="http://dside.dyndns.org/rusxmms/librcd-${PV}.tar.bz2"
+SRC_URI="http://dside.dyndns.org/files/rusxmms/librcd-${PV}.tar.bz2"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="x86 amd64"

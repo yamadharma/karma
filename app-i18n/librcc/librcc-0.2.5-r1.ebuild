@@ -5,11 +5,12 @@
 inherit eutils
 
 DESCRIPTION="LibRCC is Russian Encoding Conversion Library"
-SRC_URI="http://dside.dyndns.org/rusxmms/librcc-${PV}.tar.bz2"
+SRC_URI="http://dside.dyndns.org/files/rusxmms/librcc-${PV}.tar.bz2"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="x86 amd64"
-DEPEND="app-i18n/librcd 
+DEPEND="app-i18n/librcd
+	app-i18n/libguess 
 	dev-libs/libxml2 
 	sys-libs/db 
 	app-i18n/enca 

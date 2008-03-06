@@ -1,0 +1,93 @@
+diff -dPNur libtranslate-0.99-new/src/modules/translate-generic-parser.c libtranslate-0.99-new-uk/src/modules/translate-generic-parser.c
+--- libtranslate-0.99-new/src/modules/translate-generic-parser.c	2005-01-17 17:46:24.000000000 +0100
++++ libtranslate-0.99-new-uk/src/modules/translate-generic-parser.c	2007-06-27 22:40:04.000000000 +0200
+@@ -726,6 +726,7 @@
+ {
+   const char *url;
+   const char *post;
++  const char *charset;
+   const char *content_type;
+ 
+   g_return_if_fail(info != NULL);
+@@ -740,6 +741,7 @@
+ 					   "url", REQUIRED, &url,
+ 					   "post", OPTIONAL, &post,
+ 					   "content-type", OPTIONAL, &content_type,
++					   "response-charset", OPTIONAL, &charset,
+ 					   NULL);
+ 
+   if (! *err)
+@@ -748,6 +750,7 @@
+       (*location)->url = g_strdup(url);
+       (*location)->post = g_strdup(post);
+       (*location)->content_type = g_strdup(content_type ? content_type : "application/x-www-form-urlencoded");
++      (*location)->response_charset = g_strdup(charset);
+     }
+ }
+ 
+@@ -759,6 +762,7 @@
+   g_free(location->url);
+   g_free(location->post);
+   g_free(location->content_type);
++  g_free(location->response_charset);
+   g_slist_foreach(location->http_headers, (GFunc) translate_generic_http_header_free, NULL);
+   g_slist_free(location->http_headers);
+   g_free(location);
+diff -dPNur libtranslate-0.99-new/src/modules/translate-generic-parser.h libtranslate-0.99-new-uk/src/modules/translate-generic-parser.h
+--- libtranslate-0.99-new/src/modules/translate-generic-parser.h	2005-01-17 17:46:30.000000000 +0100
++++ libtranslate-0.99-new-uk/src/modules/translate-generic-parser.h	2007-06-27 22:34:13.000000000 +0200
+@@ -51,6 +51,7 @@
+   char		*url;
+   char		*post;
+   char		*content_type;
++  char		*response_charset;
+   GSList	*http_headers;
+ } TranslateGenericLocation;
+ 
+diff -dPNur libtranslate-0.99-new/src/modules/translate-generic-service.c libtranslate-0.99-new-uk/src/modules/translate-generic-service.c
+--- libtranslate-0.99-new/src/modules/translate-generic-service.c	2007-06-27 17:23:55.000000000 +0200
++++ libtranslate-0.99-new-uk/src/modules/translate-generic-service.c	2007-06-27 22:40:29.000000000 +0200
+@@ -129,6 +129,7 @@
+ static char *translate_generic_service_get (const char *uri,
+ 					    const char *post,
+ 					    const char *post_content_type,
++					    const char *response_charset,
+ 					    const GSList *headers,
+ 					    TransferFlags flags,
+ 					    GTimeVal *deadline,
+@@ -407,6 +408,7 @@
+ translate_generic_service_get (const char *uri,
+ 			       const char *post,
+ 			       const char *post_content_type,
++			       const char *response_charset,
+ 			       const GSList *headers,
+ 			       TransferFlags flags,
+ 			       GTimeVal *deadline,
+@@ -550,9 +552,9 @@
+ 	    }
+ 	}
+ 
+-      if (charset)
++      if ((charset)||(response_charset))
+ 	{
+-	  response = g_convert(message->response.body, message->response.length, "UTF-8", charset, NULL, NULL, err);
++	  response = g_convert(message->response.body, message->response.length, "UTF-8", response_charset?response_charset:charset, NULL, NULL, err);
+ 	  g_free(charset);
+ 	}
+       else
+@@ -941,6 +943,7 @@
+   response = translate_generic_service_get(url,
+ 					   post,
+ 					   group->text_location->content_type,
++					   group->text_location->response_charset,
+ 					   headers,
+ 					   TRANSFER_FOLLOW_REFRESH | TRANSFER_CONVERT,
+ 					   deadline,
+@@ -1339,6 +1342,7 @@
+   response = translate_generic_service_get(translation_url,
+ 					   post,
+ 					   group->web_page_location->content_type,
++					   group->web_page_location->response_charset,
+ 					   headers,
+ 					   0,
+ 					   NULL,

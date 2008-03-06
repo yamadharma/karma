@@ -1,0 +1,17 @@
+diff -dPNur libtranslate-0.99/src/modules/translate-generic-service.c libtranslate-0.99-new/src/modules/translate-generic-service.c
+--- libtranslate-0.99/src/modules/translate-generic-service.c	2007-06-27 17:26:10.000000000 +0200
++++ libtranslate-0.99-new/src/modules/translate-generic-service.c	2007-06-27 17:23:55.000000000 +0200
+@@ -1042,6 +1042,13 @@
+ 
+       g_free(response);
+     }
++    
++    if ((!answer)&&(!*err)) {
++	    g_set_error(err,
++			TRANSLATE_GENERIC_SERVICE_ERROR,
++			TRANSLATE_GENERIC_SERVICE_ERROR_PARSE,
++			_("empty server response"));
++    }
+ 
+   return answer ? g_string_free(answer, FALSE) : NULL;
+ }

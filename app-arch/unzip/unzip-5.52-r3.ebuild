@@ -13,18 +13,23 @@ SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86"
 IUSE="rcc"
 
-DEPEND="rcc? ( app-i18n/librcc )"
+DEPEND="rcc? (app-i18n/librcc)"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	use rcc && ( epatch ${FILESDIR}/${PN}-ds-rcc.patch || die )
+	use rcc && ( epatch ${FILESDIR}/${PN}-ds-lazyrcc.patch || die )
 	use rcc && ( epatch ${FILESDIR}/${PN}-ds-unixenc.patch || die )
+
+	ld_opts=""
+#	use rcc && ld_opts="-lrcc"
+	use rcc && ld_opts="-ldl"
+	use rcc && cc_opts="-DRCC_LAZY=1"
 
 	sed -i \
 		-e "s:-O3:${CFLAGS}:" \
-		-e "s:CC=gcc :CC=$(tc-getCC) :" \
-		-e "s:LD=gcc :LD=\"$(tc-getCC) -lrcc\" :" \
+		-e "s:CC=gcc :CC=\"$(tc-getCC) ${cc_opts}\" :" \
+		-e "s:LD=gcc :LD=\"$(tc-getCC) ${ld_opts}\" :" \
 		-e "s:-O :${CFLAGS} :" \
 		-e "s:LF2 = -s:LF2 = :" \
 		unix/Makefile \

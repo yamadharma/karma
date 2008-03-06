@@ -5,7 +5,7 @@ diff -dPNur unzip-5.51/dsrecode.h unzip-5.51-new/dsrecode.h
 +#include <librcc.h>
 +
 +static rcc_class_default_charset default_oem[] = {
-+    { "ru", "CP866" },
++    { "ru", "IBM866" },
 +    { NULL, NULL }
 +};
 +

@@ -10,21 +10,14 @@ SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="amd64 x86"
 
-#IUSE="qt4"
-#RDEPEND="!qt4? ( =x11-libs/qt-3* )
-#	qt4? ( =x11-libs/qt-4* )"
-
+IUSE=""
 RDEPEND="=x11-libs/qt-3*"
-
 DEPEND="${RDEPEND}
 	dev-libs/boost"
 
-src_compile() {
-	local myconf
-#	use qt4 && myconf="${myconf} --disable-qt3 --with-qmake=/usr/bin/qmake"
-	
-	econf ${myconf} || die "econf failed"
-	emake || die "emake failed"
+src_compile(){
+	econf || die "econf failed"
+	emake src || die "emake failed"
 }
 
 src_install() {

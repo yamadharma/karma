@@ -1,0 +1,27 @@
+diff -dPNur libtranslate-0.99/src/modules/translate-generic-service.c libtranslate-0.99-new/src/modules/translate-generic-service.c
+--- libtranslate-0.99/src/modules/translate-generic-service.c	2007-06-27 17:26:10.000000000 +0200
++++ libtranslate-0.99-new/src/modules/translate-generic-service.c	2007-06-27 17:23:55.000000000 +0200
+@@ -1238,7 +1245,22 @@
+     {
+       if (modifier_value)
+ 	g_warning(_("%s: value specified for \"escape\" modifier"), warning_prefix);
+-      modified = soup_uri_encode(value, NULL);
++      modified = soup_uri_encode(value, "&");
++    }
++  else if (! strcmp(modifier_name, "entities"))
++    {
++      int i;
++      char *ptr;
++      
++      modified = g_malloc(strlen(value)*6 + 1);
++      for (i=0,ptr=modified;value[i];i++) {
++        if ((unsigned char)(value[i])<160) *(ptr++)=value[i];
++	else {
++	    sprintf(ptr, "&#%u;", (unsigned char)(value[i]));
++	    ptr+=6;
++	}
++      }
++      *ptr = 0;
+     }
+   else if (! strcmp(modifier_name, "charset"))
+     {
