@@ -1,0 +1,186 @@
+Index: gtk+-2/gtksecentry.c
+===================================================================
+--- gtk+-2/gtksecentry.c	(revision 180)
++++ gtk+-2/gtksecentry.c	(working copy)
+@@ -40,7 +40,6 @@
+ #include <gtk/gtk.h>
+ 
+ #include "gtksecentry.h"
+-#include "memory.h"
+ 
+ #ifndef _
+ #  include <libintl.h>
+@@ -256,98 +255,6 @@
+ 
+ static GtkWidgetClass *parent_class = NULL;
+ 
+-gboolean g_use_secure_mem = FALSE;
+-
+-#  define g_sec_new(type, count)	  \
+-      ((type *) g_sec_malloc ((unsigned) sizeof (type) * (count)))
+-
+-#define WITH_SECURE_MEM(EXP)	do { \
+-					gboolean tmp = g_use_secure_mem; \
+-					g_use_secure_mem = TRUE; \
+-					EXP; \
+-					g_use_secure_mem = tmp; \
+-				} while(0)
+-
+-
+-gpointer
+-g_malloc(gulong size)
+-{
+-    gpointer p;
+-
+-    if (size == 0)
+-	return NULL;
+-
+-    if (g_use_secure_mem)
+-	p = (gpointer) secmem_malloc(size);
+-    else
+-	p = (gpointer) malloc(size);
+-    if (!p)
+-	g_error("could not allocate %ld bytes", size);
+-
+-    return p;
+-}
+-
+-gpointer
+-g_malloc0(gulong size)
+-{
+-    gpointer p;
+-
+-    if (size == 0)
+-	return NULL;
+-
+-    if (g_use_secure_mem) {
+-	p = (gpointer) secmem_malloc(size);
+-	if (p)
+-	    memset(p, 0, size);
+-    } else
+-	p = (gpointer) calloc(size, 1);
+-    if (!p)
+-	g_error("could not allocate %ld bytes", size);
+-
+-    return p;
+-}
+-
+-gpointer
+-g_realloc(gpointer mem, gulong size)
+-{
+-    gpointer p;
+-
+-    if (size == 0) {
+-	g_free(mem);
+-
+-	return NULL;
+-    }
+-
+-    if (!mem) {
+-	if (g_use_secure_mem)
+-	    p = (gpointer) secmem_malloc(size);
+-	else
+-	    p = (gpointer) malloc(size);
+-    } else {
+-	if (g_use_secure_mem) {
+-	    g_assert(m_is_secure(mem));
+-	    p = (gpointer) secmem_realloc(mem, size);
+-	} else
+-	    p = (gpointer) realloc(mem, size);
+-    }
+-
+-    if (!p)
+-	g_error("could not reallocate %lu bytes", (gulong) size);
+-
+-    return p;
+-}
+-
+-void
+-g_free(gpointer mem)
+-{
+-    if (mem) {
+-	if (m_is_secure(mem))
+-	    secmem_free(mem);
+-	else
+-	    free(mem);
+-    }
+-}
+-
+ GType
+ gtk_secure_entry_get_type(void)
+ {
+@@ -802,7 +709,7 @@
+     GTK_WIDGET_SET_FLAGS(entry, GTK_CAN_FOCUS);
+ 
+     entry->text_size = MIN_SIZE;
+-    WITH_SECURE_MEM(entry->text = g_malloc(entry->text_size));
++    entry->text = g_malloc(entry->text_size);
+     entry->text[0] = '\0';
+ 
+     entry->invisible_char = '*';
+@@ -848,7 +755,7 @@
+     entry->text_size = 0;
+ 
+     if (entry->text)
+-	WITH_SECURE_MEM(g_free(entry->text));
++	g_free(entry->text);
+     entry->text = NULL;
+ 
+     G_OBJECT_CLASS(parent_class)->finalize(object);
+@@ -1438,7 +1345,7 @@
+ 
+     g_object_ref(editable);
+ 
+-    WITH_SECURE_MEM(text = g_new(gchar, new_text_length + 1));
++    text = g_new(gchar, new_text_length + 1);
+ 
+     text[new_text_length] = '\0';
+     strncpy(text, new_text, new_text_length);
+@@ -1446,7 +1353,7 @@
+     g_signal_emit_by_name(editable, "insert_text", text, new_text_length,
+ 			  position);
+ 
+-    WITH_SECURE_MEM(g_free(text));
++    g_free(text);
+ 
+     g_object_unref(editable);
+ }
+@@ -1642,8 +1549,7 @@
+ 	    }
+ 	}
+ 
+-	WITH_SECURE_MEM(entry->text =
+-			g_realloc(entry->text, entry->text_size));
++	entry->text = g_realloc(entry->text, entry->text_size);
+     }
+ 
+     _index = g_utf8_offset_to_pointer(entry->text, *position) - entry->text;
+Index: gtk+-2/pinentry-gtk-2.c
+===================================================================
+--- gtk+-2/pinentry-gtk-2.c	(revision 180)
++++ gtk+-2/pinentry-gtk-2.c	(working copy)
+@@ -39,6 +39,7 @@
+ 
+ #include "gtksecentry.h"
+ #include "pinentry.h"
++#include "memory.h"
+ 
+ #ifdef FALLBACK_CURSES
+ #include "pinentry-curses.h"
+@@ -474,7 +475,15 @@
+ main (int argc, char *argv[])
+ {
+   pinentry_init (PGMNAME);
+-    
++
++  GMemVTable mem_vtable = {
++    secmem_malloc,
++    secmem_realloc,
++    secmem_free
++  };
++
++  g_mem_set_vtable (&mem_vtable);
++  
+ #ifdef FALLBACK_CURSES
+   if (pinentry_have_display (argc, argv))
+     gtk_init (&argc, &argv);
