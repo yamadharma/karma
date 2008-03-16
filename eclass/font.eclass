@@ -23,6 +23,8 @@ FONT_PN="${PN}" # Last part of $FONTDIR
 
 FONTDIR="/usr/share/fonts/${FONT_PN}" # this is where the fonts are installed
 
+FONT_CONF=( "" )  # Array, which element(s) is(are) path(s) of fontconfig-2.4 file(s) to install
+
 DOCS="" # Docs to install
 
 IUSE="X gnustep"
@@ -117,15 +119,15 @@ font_xft_config() {
 }
 
 font_fontconfig() {
-
 	local conffile
-	if has_version '>=media-libs/fontconfig-2.4'; then
-		insinto /etc/fonts/conf.avail/
-		for conffile in "${FONT_CONF}"; do
-			[[ -e  "${FILESDIR}/${conffile}" ]] && doins "${FILESDIR}/${conffile}"
-		done
+	if [[ -n ${FONT_CONF[@]} ]]; then
+		if has_version '>=media-libs/fontconfig-2.4'; then
+			insinto /etc/fonts/conf.avail/
+			for conffile in "${FONT_CONF[@]}"; do
+				[[ -e  ${conffile} ]] && doins ${conffile}
+			done
+		fi
 	fi
-
 }
 
 font_fontpath_dir_config() {
@@ -173,6 +175,7 @@ font_make_nfont() {
 	fi
 }	
 
+# "
 #
 # Public inheritable functions
 #
