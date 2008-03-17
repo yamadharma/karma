@@ -28,9 +28,7 @@ UNIPATCH_STRICTORDER="yes"
 
 SRC_URI="${KERNEL_URI} ${KARMA_PATCH_URI}"
 
-KEYWORDS="~x86 ~amd64"
-
-DEPEND="${DEPEND} >=sys-devel/binutils-2.17"
+KEYWORDS="x86 amd64"
 
 # Local Variables:
 # mode: sh
