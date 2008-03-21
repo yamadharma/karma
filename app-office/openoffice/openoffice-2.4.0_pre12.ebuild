@@ -30,7 +30,7 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
 RESTRICT="binchecks mirror splitdebug"
 
 #OOSRC="mirror://openoffice/stable/${PV/_*}/OOo_${PV/_*}_src"
@@ -43,7 +43,7 @@ SRC_URI="${GOSRC}/${PATCHLEVEL}/${SRC}-core.tar.bz2
 		${GOSRC}/${PATCHLEVEL}/cli_types_bridgetest.dll )
 	odk? ( ${GOSRC}/${PATCHLEVEL}/${SRC}-sdk_oo.tar.bz2
 		http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll )
-	${GOSRC}/${PATCHLEVEL}/ooo-build-${SRC}.tar.gz
+	${GOSRC}/${PATCHLEVEL}/ooo-build-2.4.0.3.2.tar.gz
 	${GOSRC}/SRC680/libwps-0.1.2.tar.gz
 	${GOSRC}/SRC680/libwpg-0.1.2.tar.gz
 	${GOSRC}/SRC680/writerfilter.2008-02-29.tar.bz2
@@ -52,6 +52,8 @@ SRC_URI="${GOSRC}/${PATCHLEVEL}/${SRC}-core.tar.bz2
 	${GOSRC}/SRC680/extras-2.tar.bz2
 	${GOSRC}/SRC680/biblio.tar.bz2
 	http://geki.ath.cx/hacks/ooo30-chart2-images.tar.bz2"
+
+#	${GOSRC}/${PATCHLEVEL}/ooo-build-${SRC}.tar.gz
 
 NSS_DEP=">=dev-libs/nspr-4.6.2
 	>=dev-libs/nss-3.11-r1"

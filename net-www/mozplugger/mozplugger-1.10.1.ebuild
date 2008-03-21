@@ -17,10 +17,10 @@ IUSE="firefox"
 DEPEND=""
 RDEPEND="${DEPEND}
 	!sparc? (
-		firefox? ( www-client/mozilla-firefox )
-		firefox? ( www-client/seamonkey )
+		firefox? ( =www-client/mozilla-firefox-2* )
+		!firefox? ( =www-client/seamonkey-1* )
 	)
-	sparc? ( www-client/mozilla-firefox )"
+	sparc? ( =www-client/mozilla-firefox-2* )"
 
 src_compile()
 {
