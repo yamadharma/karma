@@ -23,7 +23,7 @@ done
 MILE="${PV/*_pre/m}"
 PATCHLEVEL="OOH680"
 SRC="ooh680-${MILE}"
-S="${WORKDIR}/ooo-build"
+S="${WORKDIR}/ooo-build-2.4.0.3.2"
 
 DESCRIPTION="OpenOffice.org, unstable 2.x development sources."
 HOMEPAGE="http://go-oo.org"
@@ -212,7 +212,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ooo-build-${SRC}.tar.gz
+	unpack ooo-build-2.4.0.3.2.tar.gz
 
 	cd ${S}
 	epatch ${FILESDIR}/config.diff
