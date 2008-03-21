@@ -1,0 +1,86 @@
+--- sc/source/filter/excel/xechart.cxx.orig	2008-02-22 22:49:06.000000000 +0100
++++ sc/source/filter/excel/xechart.cxx	2008-02-23 11:44:47.000000000 +0100
+@@ -52,7 +52,7 @@
+ #include <com/sun/star/chart2/CurveStyle.hpp>
+ #include <com/sun/star/chart2/DataPointGeometry3D.hpp>
+ #include <com/sun/star/chart2/DataPointLabel.hpp>
+-#include <com/sun/star/chart2/ErrorBarStyle.hpp>
++#include <com/sun/star/chart/ErrorBarStyle.hpp>
+ #include <com/sun/star/chart2/StackingDirection.hpp>
+ #include <com/sun/star/chart2/TickmarkStyle.hpp>
+ #include <com/sun/star/chart/DataLabelPlacement.hpp>
+@@ -1357,26 +1357,26 @@
+ 
+ bool XclExpChSerErrorBar::Convert( const ScfPropertySet& rPropSet )
+ {
+-    namespace cssc = ::com::sun::star::chart2;
+-    cssc::ErrorBarStyle eBarStyle;
++    namespace cssc = ::com::sun::star::chart;
++    sal_Int32 eBarStyle;
+     bool bOk = rPropSet.GetProperty( eBarStyle, EXC_CHPROP_ERRORBARSTYLE );
+     if( bOk )
+     {
+         switch( eBarStyle )
+         {
+-            case cssc::ErrorBarStyle_ABSOLUTE:
++            case cssc::ErrorBarStyle::ABSOLUTE:
+                 maData.mnSourceType = EXC_CHSERERR_FIXED;
+                 rPropSet.GetProperty( maData.mfValue, EXC_CHPROP_POSITIVEERROR );
+             break;
+-            case cssc::ErrorBarStyle_RELATIVE:
++            case cssc::ErrorBarStyle::RELATIVE:
+                 maData.mnSourceType = EXC_CHSERERR_PERCENT;
+                 rPropSet.GetProperty( maData.mfValue, EXC_CHPROP_POSITIVEERROR );
+             break;
+-            case cssc::ErrorBarStyle_STANDARD_DEVIATION:
++            case cssc::ErrorBarStyle::STANDARD_DEVIATION:
+                 maData.mnSourceType = EXC_CHSERERR_STDDEV;
+                 rPropSet.GetProperty( maData.mfValue, EXC_CHPROP_WEIGHT );
+             break;
+-            case cssc::ErrorBarStyle_STANDARD_ERROR:
++            case cssc::ErrorBarStyle::STANDARD_ERROR:
+                 maData.mnSourceType = EXC_CHSERERR_STDERR;
+             break;
+             default:
+--- sc/source/filter/excel/xichart.cxx.orig	2008-02-23 11:47:13.000000000 +0100
++++ sc/source/filter/excel/xichart.cxx	2008-02-23 11:48:06.000000000 +0100
+@@ -58,7 +58,7 @@
+ #include <com/sun/star/chart2/CurveStyle.hpp>
+ #include <com/sun/star/chart2/DataPointGeometry3D.hpp>
+ #include <com/sun/star/chart2/DataPointLabel.hpp>
+-#include <com/sun/star/chart2/ErrorBarStyle.hpp>
++#include <com/sun/star/chart/ErrorBarStyle.hpp>
+ #include <com/sun/star/chart2/StackingDirection.hpp>
+ #include <com/sun/star/chart2/TickmarkStyle.hpp>
+ #include <com/sun/star/chart/DataLabelPlacement.hpp>
+@@ -1357,25 +1357,25 @@
+     aBarProp.SetBoolProperty( EXC_CHPROP_SHOWNEGATIVEERROR, bNegBar );
+ 
+     // type of displayed error
+-    namespace cssc = ::com::sun::star::chart2;
++    namespace cssc = ::com::sun::star::chart;
+     switch( maData.mnSourceType )
+     {
+         case EXC_CHSERERR_PERCENT:
+-            aBarProp.SetProperty( EXC_CHPROP_ERRORBARSTYLE, cssc::ErrorBarStyle_RELATIVE );
++            aBarProp.SetProperty( EXC_CHPROP_ERRORBARSTYLE, cssc::ErrorBarStyle::RELATIVE );
+             aBarProp.SetProperty( EXC_CHPROP_POSITIVEERROR, maData.mfValue );
+             aBarProp.SetProperty( EXC_CHPROP_NEGATIVEERROR, maData.mfValue );
+         break;
+         case EXC_CHSERERR_FIXED:
+-            aBarProp.SetProperty( EXC_CHPROP_ERRORBARSTYLE, cssc::ErrorBarStyle_ABSOLUTE );
++            aBarProp.SetProperty( EXC_CHPROP_ERRORBARSTYLE, cssc::ErrorBarStyle::ABSOLUTE );
+             aBarProp.SetProperty( EXC_CHPROP_POSITIVEERROR, maData.mfValue );
+             aBarProp.SetProperty( EXC_CHPROP_NEGATIVEERROR, maData.mfValue );
+         break;
+         case EXC_CHSERERR_STDDEV:
+-            aBarProp.SetProperty( EXC_CHPROP_ERRORBARSTYLE, cssc::ErrorBarStyle_STANDARD_DEVIATION );
++            aBarProp.SetProperty( EXC_CHPROP_ERRORBARSTYLE, cssc::ErrorBarStyle::STANDARD_DEVIATION );
+             aBarProp.SetProperty( EXC_CHPROP_WEIGHT, maData.mfValue );
+         break;
+         case EXC_CHSERERR_STDERR:
+-            aBarProp.SetProperty( EXC_CHPROP_ERRORBARSTYLE, cssc::ErrorBarStyle_STANDARD_ERROR );
++            aBarProp.SetProperty( EXC_CHPROP_ERRORBARSTYLE, cssc::ErrorBarStyle::STANDARD_ERROR );
+         break;
+         default:
+             xErrorBar.clear();

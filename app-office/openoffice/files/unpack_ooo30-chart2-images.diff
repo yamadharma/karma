@@ -1,0 +1,10 @@
+--- bin/unpack.orig	2008-01-25 15:57:12.000000000 +0100
++++ bin/unpack	2008-01-25 16:03:12.000000000 +0100
+@@ -570,3 +570,7 @@
+ echo "Copying lpsolve directory into the tree"
+ $GNUCP -Rf $TOOLSDIR/scratch/lpsolve $OOBUILDDIR/ || exit 1
+ 
++echo "Update default images for OOo 3.0 Chart2 features"
++cd $OOBUILDDIR
++rm -v default_images/chart2/res/indi*.png
++($OOO_DECOMPRESS_CMD $SRCDIR/ooo30-chart2-images.tar.bz2 | $GNUTAR xf - ) || exit 1

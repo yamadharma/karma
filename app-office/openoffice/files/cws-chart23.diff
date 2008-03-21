@@ -1,0 +1,262 @@
+--- chart2/source/controller/itemsetwrapper/CharacterPropertyItemConverter.cxx	2007-07-25 10:40:27.000000000 +0200
++++ chart2/source/controller/itemsetwrapper/CharacterPropertyItemConverter.cxx	2008-03-11 14:03:52.000000000 +0100
+@@ -75,7 +75,9 @@
+     static ::comphelper::ItemPropertyMapType aCharacterPropertyMap(
+         ::comphelper::MakeItemPropertyMap
+         IPM_MAP_ENTRY( EE_CHAR_COLOR, "CharColor", 0 )
+-        IPM_MAP_ENTRY( EE_CHAR_LANGUAGE, "CharLocale", 0 )
++        IPM_MAP_ENTRY( EE_CHAR_LANGUAGE, "CharLocale", MID_LANG_LOCALE )
++        IPM_MAP_ENTRY( EE_CHAR_LANGUAGE_CJK, "CharLocaleAsian", MID_LANG_LOCALE )
++        IPM_MAP_ENTRY( EE_CHAR_LANGUAGE_CTL, "CharLocaleComplex", MID_LANG_LOCALE )
+ //         IPM_MAP_ENTRY( EE_CHAR_FONTHEIGHT, "CharHeight", 0 )
+ //         IPM_MAP_ENTRY( EE_CHAR_ITALIC, "CharPosture", 0 )
+ //         IPM_MAP_ENTRY( EE_CHAR_WEIGHT, "CharWeight", 0 )
+@@ -87,9 +89,6 @@
+         IPM_MAP_ENTRY( EE_CHAR_OUTLINE, "CharContoured", 0 )
+         IPM_MAP_ENTRY( EE_CHAR_EMPHASISMARK, "CharEmphasis", 0 )
+ 
+-        IPM_MAP_ENTRY( EE_CHAR_LANGUAGE_CJK, "CharLocaleAsian", 0 )
+-        IPM_MAP_ENTRY( EE_CHAR_LANGUAGE_CTL, "CharLocaleComplex", 0 )
+-
+ //         IPM_MAP_ENTRY( EE_CHAR_FONTHEIGHT_CJK, "CharHeightAsian", 0 )
+ //         IPM_MAP_ENTRY( EE_CHAR_FONTHEIGHT_CTL, "CharHeightComplex", 0 )
+ //         IPM_MAP_ENTRY( EE_CHAR_WEIGHT_CJK, "CharWeightAsian", 0 )
+--- chart2/source/controller/main/ChartController_Position.cxx	2007-07-25 10:43:23.000000000 +0200
++++ chart2/source/controller/main/ChartController_Position.cxx	2008-02-22 13:22:12.000000000 +0100
+@@ -124,7 +124,7 @@
+ 
+         //prepare and open dialog
+         SdrView* pSdrView = m_pDrawViewWrapper;
+-        bool bResizePossible=true;
++        bool bResizePossible = m_aSelection.isResizeableObjectSelected();
+ 
+         ::vos::OGuard aGuard( Application::GetSolarMutex());
+         SvxAbstractDialogFactory * pFact = SvxAbstractDialogFactory::Create();
+--- chart2/source/controller/main/ChartController_Window.cxx	2008-02-18 16:58:27.000000000 +0100
++++ chart2/source/controller/main/ChartController_Window.cxx	2008-02-24 23:54:37.000000000 +0100
+@@ -681,6 +681,7 @@
+ 
+ void ChartController::execute_MouseButtonUp( const MouseEvent& rMEvt )
+ {
++    ControllerLockGuard aCLGuard( m_aModel->getModel());
+     m_bWaitingForMouseUp = false;
+     bool bNotifySelectionChange = false;
+     {
+@@ -707,14 +708,13 @@
+             DragMethod_Base* pChartDragMethod = dynamic_cast< DragMethod_Base* >(pDragMethod);
+             if( pChartDragMethod )
+             {
+-                ControllerLockGuard aCLGuard( m_aModel->getModel());
+                 UndoGuard aUndoGuard( pChartDragMethod->getUndoDescription(),
+                         m_xUndoManager, m_aModel->getModel() );
+ 
+                 if( pDrawViewWrapper->EndDragObj(false) )
+                 {
+-                    aUndoGuard.commitAction();
+                     bDraggingDone = true;
++                    aUndoGuard.commitAction();
+                 }
+             }
+ 
+--- chart2/source/controller/main/PositionAndSizeHelper.cxx	2007-11-23 12:55:28.000000000 +0100
++++ chart2/source/controller/main/PositionAndSizeHelper.cxx	2008-02-22 12:51:54.000000000 +0100
+@@ -84,11 +84,11 @@
+     {
+         //@todo decide wether x is primary or secondary
+         chart2::RelativePosition aRelativePosition;
+-        aRelativePosition.Anchor = drawing::Alignment_TOP;
++        aRelativePosition.Anchor = drawing::Alignment_CENTER;
+         //the anchor point at the title object is top/middle
+         Point aPos = aObjectRect.TopLeft();
+         aRelativePosition.Primary = (double(aPos.X())+double(aObjectRect.getWidth())/2.0)/double(aPageRect.getWidth());
+-        aRelativePosition.Secondary = double(aPos.Y())/double(aPageRect.getHeight());
++        aRelativePosition.Secondary = (double(aPos.Y())+double(aObjectRect.getHeight())/2.0)/double(aPageRect.getHeight());
+         xObjectProp->setPropertyValue( C2U( "RelativePosition" ), uno::makeAny(aRelativePosition) );
+     }
+     else if( OBJECTTYPE_DATA_CURVE_EQUATION==eObjectType )
+--- chart2/source/tools/CharacterProperties.cxx	2007-09-18 17:07:35.000000000 +0200
++++ chart2/source/tools/CharacterProperties.cxx	2008-03-11 14:03:52.000000000 +0100
+@@ -58,6 +58,17 @@
+ 
+ #include <comphelper/InlineContainer.hxx>
+ 
++// header for struct SvtLinguConfig
++#ifndef _SVTOOLS_LINGUCFG_HXX_
++#include <svtools/lingucfg.hxx>
++#endif
++#ifndef INCLUDED_I18NPOOL_MSLANGID_HXX
++#include <i18npool/mslangid.hxx>
++#endif
++#ifndef _SV_OUTDEV_HXX
++#include <vcl/outdev.hxx>
++#endif
++
+ using namespace ::com::sun::star;
+ 
+ using ::com::sun::star::beans::Property;
+@@ -455,13 +466,23 @@
+ {
+     const float fDefaultFontHeight = 13.0;
+ 
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_NAME, C2U( "Albany" ));
+-    //todo correct font default:
+-    //see static Font OutputDevice::GetDefaultFont( USHORT nType, LanguageType eLang, ULONG nFlags, const OutputDevice* pOutDev = NULL );
+-    //or  SvxFontItem ... (old chart source/core/chtmodel.cxx :Font aCJKFont )
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_FAMILY, awt::FontFamily::SWISS );
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_CHAR_SET, awt::CharSet::DONTKNOW );//use DONTKNOW instead of SYSTEM to avoid assertion issue 50249
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_PITCH, awt::FontPitch::VARIABLE );
++    SvtLinguConfig aLinguConfig;
++    lang::Locale aDefaultLocale( C2U( "en" ), C2U( "US" ), OUString() );
++    aLinguConfig.GetProperty(C2U("DefaultLocale")) >>= aDefaultLocale;
++    lang::Locale aDefaultLocale_CJK;
++    aLinguConfig.GetProperty(C2U("DefaultLocale_CJK")) >>= aDefaultLocale_CJK;
++    lang::Locale aDefaultLocale_CTL;
++    aLinguConfig.GetProperty(C2U("DefaultLocale_CTL")) >>= aDefaultLocale_CTL;
++
++    Font aFont = OutputDevice::GetDefaultFont( DEFAULTFONT_LATIN_SPREADSHEET, MsLangId::convertLocaleToLanguage( aDefaultLocale ), DEFAULTFONT_FLAGS_ONLYONE, 0 );   
++    Font aFontCJK = OutputDevice::GetDefaultFont( DEFAULTFONT_CJK_SPREADSHEET, MsLangId::convertLocaleToLanguage( aDefaultLocale_CJK ), DEFAULTFONT_FLAGS_ONLYONE, 0 );
++    Font aFontCTL = OutputDevice::GetDefaultFont( DEFAULTFONT_CTL_SPREADSHEET, MsLangId::convertLocaleToLanguage( aDefaultLocale_CTL ), DEFAULTFONT_FLAGS_ONLYONE, 0 );
++
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_NAME, OUString( aFont.GetName() ) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_STYLE_NAME, OUString(aFont.GetStyleName()) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_FAMILY, sal_Int32(aFont.GetFamily()) );//awt::FontFamily::SWISS
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_CHAR_SET, sal_Int32(aFont.GetCharSet()) );//use awt::CharSet::DONTKNOW instead of SYSTEM to avoid assertion issue 50249
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FONT_PITCH, sal_Int32(aFont.GetPitch()) );//awt::FontPitch::VARIABLE
+     ::chart::PropertyHelper::setPropertyValueDefault< sal_Int32 >( rOutMap, PROP_CHAR_COLOR, -1 ); //automatic color (COL_AUTO)
+     ::chart::PropertyHelper::setPropertyValueDefault< sal_Int16 >( rOutMap, PROP_CHAR_ESCAPEMENT, 0 );
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_CHAR_HEIGHT, fDefaultFontHeight );
+@@ -483,7 +504,7 @@
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_WORD_MODE, false );
+ //     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_FLASH, false );
+ 
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_LOCALE, lang::Locale( C2U( "US" ), C2U( "en" ), OUString())); // todo correct default
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_LOCALE, aDefaultLocale );
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_SHADOWED, false );
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_CONTOURED, false );
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_RELIEF, text::FontRelief::NONE );
+@@ -499,29 +520,23 @@
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_CHAR_HEIGHT, fDefaultFontHeight );
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_WEIGHT, awt::FontWeight::NORMAL );
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_POSTURE, awt::FontSlant_NONE );
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_LOCALE, lang::Locale( C2U( "US" ), C2U( "en" ), OUString())); //todo correct default
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_FONT_NAME, C2U( "Andale Sans UI" ));
+-
+-    //todo correct font default:
+-    //see static Font OutputDevice::GetDefaultFont( USHORT nType, LanguageType eLang, ULONG nFlags, const OutputDevice* pOutDev = NULL );
+-    //or  SvxFontItem ... (old chart source/core/chtmodel.cxx :Font aCJKFont )
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_FONT_FAMILY, awt::FontFamily::SWISS ); //todo correct default
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_CHAR_SET, awt::CharSet::DONTKNOW );    //use DONTKNOW instead of SYSTEM to avoid assertion issue 50249
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_FONT_PITCH, awt::FontPitch::VARIABLE );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_LOCALE, aDefaultLocale_CJK );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_FONT_NAME, OUString( aFontCJK.GetName() ) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_FONT_STYLE_NAME, OUString(aFontCJK.GetStyleName()) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_FONT_FAMILY, sal_Int32(aFontCJK.GetFamily()) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_CHAR_SET, sal_Int32(aFontCJK.GetCharSet()) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_ASIAN_FONT_PITCH, sal_Int32(aFontCJK.GetPitch()) );
+ 
+     // Complex Text Layout (com.sun.star.style.CharacterPropertiesComplex)
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_CHAR_HEIGHT, fDefaultFontHeight );
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_WEIGHT, awt::FontWeight::NORMAL );
+     ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_POSTURE, awt::FontSlant_NONE );
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_LOCALE, lang::Locale( C2U( "US" ), C2U( "en" ), OUString())); //todo correct default
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_FONT_NAME, C2U( "Tahoma" )); //todo correct default
+-
+-    //todo correct font default:
+-    //see static Font OutputDevice::GetDefaultFont( USHORT nType, LanguageType eLang, ULONG nFlags, const OutputDevice* pOutDev = NULL );
+-    //or  SvxFontItem ... (old chart source/core/chtmodel.cxx :Font aCJKFont )
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_FONT_FAMILY, awt::FontFamily::SWISS );//todo correct default
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_CHAR_SET, awt::CharSet::DONTKNOW );//use DONTKNOW instead of SYSTEM to avoid assertion issue 50249
+-    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_FONT_PITCH, awt::FontPitch::VARIABLE );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_LOCALE, aDefaultLocale_CTL );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_FONT_NAME, OUString( aFontCTL.GetName() ) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_FONT_STYLE_NAME, OUString(aFontCTL.GetStyleName()) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_FONT_FAMILY, sal_Int32(aFontCTL.GetFamily()) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_CHAR_SET, sal_Int32(aFontCTL.GetCharSet()) );
++    ::chart::PropertyHelper::setPropertyValueDefault( rOutMap, PROP_CHAR_COMPLEX_FONT_PITCH, sal_Int32(aFontCTL.GetPitch()) );
+ }
+ 
+ bool CharacterProperties::IsCharacterPropertyHandle( sal_Int32 nHandle )
+--- chart2/source/tools/makefile.mk	2007-11-23 13:09:03.000000000 +0100
++++ chart2/source/tools/makefile.mk	2008-03-11 14:03:52.000000000 +0100
+@@ -154,15 +154,16 @@
+ 				$(COMPHELPERLIB)	\
+ 				$(SALLIB)			\
+ 				$(TOOLSLIB)			\
++				$(SVLLIB)		    \
++				$(VCLLIB)           \
++                $(I18NISOLANGLIB)   \
+ 				$(BASEGFXLIB) 		\
+ 				$(UNOTOOLSLIB)
+ 
+ #				$(SVLIB)			\
+-#				$(SVLLIB)			\
+ #				$(SVTOOLLIB)		\
+ #				$(SVXLIB)			\
+ #				$(TKLIB)			\
+-#				$(VCLLIB)           \
+ #			    $(SFXLIB)
+ 
+ #--------exports
+--- chart2/source/view/main/PropertyMapper.cxx	2007-11-23 13:13:06.000000000 +0100
++++ chart2/source/view/main/PropertyMapper.cxx	2008-03-06 17:40:45.000000000 +0100
+@@ -216,15 +216,15 @@
+         ( C2U( "CharFontCharSetAsian" ),    C2U("CharFontCharSetAsian") )
+         ( C2U( "CharFontCharSetComplex" ),  C2U("CharFontCharSetComplex") )
+         ( C2U( "CharFontName" ),            C2U("CharFontName") )
++        ( C2U( "CharFontNameAsian" ),       C2U("CharFontNameAsian") )
++        ( C2U( "CharFontNameComplex" ),     C2U("CharFontNameComplex") )
+         ( C2U( "CharFontPitch" ),           C2U("CharFontPitch") )
+         ( C2U( "CharFontPitchAsian" ),      C2U("CharFontPitchAsian") )
+         ( C2U( "CharFontPitchComplex" ),    C2U("CharFontPitchComplex") )
+         ( C2U( "CharFontStyleName" ),       C2U("CharFontStyleName") )
+-        ( C2U( "CharFontStyleNameComplex" ),C2U("CharFontNameComplex") )
+-        ( C2U( "CharFontStyleNameComplex" ),C2U("CharFontStyleNameComplex") )
+-        ( C2U( "CharFontStyleNameAsian" ),  C2U("CharFontNameAsian") )
+         ( C2U( "CharFontStyleNameAsian" ),  C2U("CharFontStyleNameAsian") )
+-
++        ( C2U( "CharFontStyleNameComplex" ),C2U("CharFontStyleNameComplex") )
++        
+         ( C2U( "CharHeight" ),              C2U("CharHeight") )
+         ( C2U( "CharHeightAsian" ),         C2U("CharHeightAsian") )
+         ( C2U( "CharHeightComplex" ),       C2U("CharHeightComplex") )
+--- svx/source/dialog/transfrm.cxx	2007-07-18 12:53:04.000000000 +0200
++++ svx/source/dialog/transfrm.cxx	2008-02-29 15:43:25.000000000 +0100
+@@ -780,7 +780,8 @@
+     mnProtectSizeState( STATE_NOCHECK ),
+     mbPageDisabled   ( FALSE ),
+     mbProtectDisabled( false ),
+-    mbSizeDisabled( false )
++    mbSizeDisabled( false ),
++    mbAdjustDisabled( true )
+ {
+ 	FreeResource();
+ 
+@@ -878,6 +879,7 @@
+ 
+ 		if((pObj->GetObjInventor() == SdrInventor) && (OBJ_TEXT == eKind || OBJ_TITLETEXT == eKind || OBJ_OUTLINETEXT == eKind) && ((SdrTextObj*)pObj)->HasText())
+ 		{
++			mbAdjustDisabled = false;
+ 			maFlAdjust.Enable();
+ 			maTsbAutoGrowWidth.Enable();
+ 			maTsbAutoGrowHeight.Enable();
+@@ -1227,6 +1229,10 @@
+ 	maFlProtect.Enable( !mbProtectDisabled );
+ 	maTsbSizeProtect.Enable( !mbProtectDisabled && !bPosProtect );
+ 
++	maFlAdjust.Enable( !mbSizeDisabled && !bSizeProtect && !mbAdjustDisabled );
++	maTsbAutoGrowWidth.Enable( !mbSizeDisabled && !bSizeProtect && !mbAdjustDisabled );
++	maTsbAutoGrowHeight.Enable( !mbSizeDisabled && !bSizeProtect && !mbAdjustDisabled );
++
+ 	maCtlSize.Invalidate();
+ 	maCtlPos.Invalidate();
+ 
+--- svx/source/dialog/transfrm.hxx	2007-07-18 12:53:19.000000000 +0200
++++ svx/source/dialog/transfrm.hxx	2008-02-29 15:43:25.000000000 +0100
+@@ -146,6 +146,7 @@
+ 	bool				mbPageDisabled;
+ 	bool				mbProtectDisabled;
+ 	bool				mbSizeDisabled;
++	bool				mbAdjustDisabled;
+ 
+ 	// frome size
+ 	// #i75273#
