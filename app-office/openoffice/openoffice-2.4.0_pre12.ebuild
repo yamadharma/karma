@@ -30,7 +30,8 @@ HOMEPAGE="http://go-oo.org"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
+# KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS=""
 RESTRICT="binchecks mirror splitdebug"
 
 #OOSRC="mirror://openoffice/stable/${PV/_*}/OOo_${PV/_*}_src"

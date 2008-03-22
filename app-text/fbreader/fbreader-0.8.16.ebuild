@@ -10,7 +10,8 @@ SRC_URI="http://www.fbreader.org/${PN}-sources-${PV}.tgz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86 amd64 ~arm ~ppc"
+# KEYWORDS="x86 amd64 ~arm ~ppc"
+KEYWORDS=""
 
 IUSE="qt3 qt4 gtk kde debug"
 DEPEND="dev-libs/expat
