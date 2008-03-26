@@ -1,0 +1,33 @@
+#!/sbin/runscript
+# Copyright 1999-2006 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+daemon="OSSIM Framework Daemon"	
+exec="/usr/sbin/ossim-framework"
+name="ossim-framework"
+
+opts="start stop restart"
+
+depend() {
+	need net
+	after mysql postgresql
+}
+
+start() {
+	ebegin "Starting $daemon"
+	start-stop-daemon --start --quiet --nicelevel 19 --chuid ossim --exec ${exec} -- -d ${OSSIM_FRAMEWORK_OPTS}
+	eend $?
+}
+
+stop() { 
+	ebegin "Stopping $daemon"
+	start-stop-daemon --stop --quiet --oknodo --name ${name}
+	eend $?
+}
+
+restart() {
+	svc_stop
+	svc_start
+}
+

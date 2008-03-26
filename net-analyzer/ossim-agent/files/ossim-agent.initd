@@ -1,0 +1,32 @@
+#!/sbin/runscript
+# Copyright 1999-2006 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+daemon="OSSIM agent"	
+exec="/usr/sbin/ossim-agent"
+name="ossim-agent"
+
+opts="start stop restart"
+
+depend() {
+	need net
+	after mysql postgresql ossim-server
+}
+
+start() {
+	ebegin "Starting $daemon"
+	start-stop-daemon --start --quiet --exec ${exec} -- -d ${OSSIM_AGENT_OPTS}
+	eend $?
+}
+
+stop() { 
+        ebegin "Stopping $daemon"
+        start-stop-daemon --stop --quiet --oknodo --name ${name}
+        eend $?
+}
+
+restart() {
+   svc_stop
+   svc_start
+}
