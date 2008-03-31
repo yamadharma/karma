@@ -31,9 +31,9 @@ RDEPEND="${RDEPEND}
 	nessus? ( >=net-analyzer/nessus-2.0.12 )
 	nmap? ( >=net-analyzer/nmap-3.70 )
 	ntop? ( >=net-analyzer/ntop-2.2.93 )
-	mysql? ( =my/ossim-db-${PV}
+	mysql? ( =net-analyzer/ossim-db-${PV}
 		>=dev-python/mysql-python-1.0.0 )
-	postgres? ( =my/ossim-db-${PV}
+	postgres? ( =net-analyzer/ossim-db-${PV}
 		>=dev-python/pypgsql-2.4 )
 	>net-analyzer/rrdtool-1.2"
 
