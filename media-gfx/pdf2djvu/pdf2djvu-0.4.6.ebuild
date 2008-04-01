@@ -4,7 +4,7 @@
 
 inherit eutils
 
-MY_P=${P/-/_}a
+MY_P=${P/-/_}
 
 DESCRIPTION="PDF to DjVu converter"
 HOMEPAGE="http://code.google.com/p/pdf2djvu"
