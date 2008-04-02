@@ -1,6 +1,33 @@
 # ChangeLog for net-fs/openafs-kernel
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/ChangeLog,v 1.96 2008/02/22 14:46:20 stefaan Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/ChangeLog,v 1.101 2008/03/31 21:47:13 stefaan Exp $
+
+*openafs-kernel-1.4.7_pre2 (31 Mar 2008)
+
+  31 Mar 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  +openafs-kernel-1.4.7_pre2.ebuild:
+  Version bump to 1.4.7_pre2
+
+*openafs-kernel-1.5.34 (25 Mar 2008)
+*openafs-kernel-1.4.7_pre1 (25 Mar 2008)
+
+  25 Mar 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  +openafs-kernel-1.4.7_pre1.ebuild, +openafs-kernel-1.5.34.ebuild:
+  Version bumps to 1.4.7_pre1 and 1.5.34, also addressing bug #207882
+
+*openafs-kernel-1.5.33 (20 Mar 2008)
+
+  20 Mar 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  +openafs-kernel-1.5.33.ebuild:
+  Version bump to 1.5.33
+
+  26 Feb 2008; Christian Faulhammer <opfer@gentoo.org>
+  openafs-kernel-1.4.6_p20080222.ebuild:
+  quote variable
+
+  26 Feb 2008; Christian Faulhammer <opfer@gentoo.org>
+  openafs-kernel-1.4.6_p20080222.ebuild:
+  stable x86, bug 211367
 
 *openafs-kernel-1.4.6_p20080222 (22 Feb 2008)
 

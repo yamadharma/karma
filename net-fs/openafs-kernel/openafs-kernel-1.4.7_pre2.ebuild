@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/openafs-kernel-1.4.7_pre1.ebuild,v 1.1 2008/03/25 11:22:07 stefaan Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/openafs-kernel-1.4.7_pre2.ebuild,v 1.1 2008/03/31 21:47:13 stefaan Exp $
 
 inherit eutils linux-mod versionator toolchain-funcs
 
@@ -36,7 +36,7 @@ src_unpack() {
 
 	EPATCH_SUFFIX="patch" epatch ${PATCHDIR}
 	
-	use amd64 && epatch "${FILESDIR}"/openafs-linux-amd64-2.6.23.patch	
+	use amd64 && epatch "${FILESDIR}"/openafs-linux-amd64-2.6.23.patch
 
 	./regen.sh || die "Failed: regenerating configure script"
 }
