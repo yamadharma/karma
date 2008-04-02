@@ -14,15 +14,15 @@ SRC_URI="mirror://sourceforge/${MY_PN}/${MY_P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="x86 amd64"
-IUSE="mysql nagios nessus nmap ntop postgres fpdf"
+IUSE="mysql nagios nessus nmap ntop postgres pdf"
 
 need_php
 want_apache
 # 
 RDEPEND="${RDEPEND}
 	>=dev-php/adodb-4.64
-	fpdf? ( >=dev-php/fpdf-1.53 )
-	>=my/phpgacl-3.3.6
+	pdf? ( >=dev-php/fpdf-1.53 )
+	>=dev-php/phpgacl-3.3.6
 	|| ( >=dev-php4/jpgraph-1.5.2 >=dev-php5/jpgraph-2.0 )
 	>dev-python/py-rrdtool-0.2.1
 	>=dev-python/adodb-py-2.00

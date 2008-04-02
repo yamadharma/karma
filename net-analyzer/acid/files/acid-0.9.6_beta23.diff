@@ -1,0 +1,11 @@
+--- acid_conf.php	2006-11-16 15:48:04.000000000 +0300
++++ acid_conf.php	2006-11-16 15:17:06.000000000 +0300
+@@ -9,7 +9,7 @@
+  *        $foo = "c:\tmp"    [OK]
+  *        $foo = "c:\tmp\"   [WRONG]
+  */
+-$DBlib_path = "";
++$DBlib_path = "/usr/share/php/adodb";
+ 
+ /* The type of underlying alert database
+  * 
