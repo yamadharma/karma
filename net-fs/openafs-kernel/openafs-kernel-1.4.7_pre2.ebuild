@@ -16,7 +16,7 @@ SRC_URI="http://openafs.org/dl/candidate/${MY_PV}/${MY_P}-src.tar.bz2
 
 LICENSE="IBM openafs-krb5 openafs-krb5-a APSL-2 sun-rpc"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
 PATCHDIR=${WORKDIR}/gentoo/patches/$(get_version_component_range 1-2)
@@ -36,7 +36,7 @@ src_unpack() {
 
 	EPATCH_SUFFIX="patch" epatch ${PATCHDIR}
 	
-	use amd64 && epatch "${FILESDIR}"/openafs-linux-amd64-2.6.23.patch
+	use amd64 && epatch "${FILESDIR}"/openafs-linux-amd64-2.6.23.patch	
 
 	./regen.sh || die "Failed: regenerating configure script"
 }
