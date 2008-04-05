@@ -28,6 +28,6 @@ src_unpack() {
 
 src_install() {
 	python_version
-	insinto /usr/lib/python${PYVER}/site-packages/bzrlib/plugins/push-and-update
+	insinto /usr/lib/python${PYVER}/site-packages/bzrlib/plugins/push_and_update
 	doins *.py
 }
