@@ -4,11 +4,11 @@
 
 inherit eutils
 
-MY_P=${PN}_${PV}-2
+MY_P=${PN}_${PV}
 
 DESCRIPTION="ECLiPt FTP mirroring tool"
 HOMEPAGE="http://apt-mirror.sf.net"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -18,7 +18,7 @@ IUSE=""
 src_unpack ()
 {
 	unpack ${A}
-	epatch ${FILESDIR}/apt-mirror_0.4.4-5ubuntu1.diff.gz
+	epatch ${FILESDIR}/${PN}_${PV}-1~dapper1.diff.gz
 }
 
 src_compile() {
