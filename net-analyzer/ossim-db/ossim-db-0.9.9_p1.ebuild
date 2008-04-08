@@ -38,11 +38,16 @@ src_install() {
 	insinto /usr/share/${PN}
 	if ! use eventdb-only; then
 		doins db/*.sql || die 'Unable to copy ossim db files.'
+		doins db/*.sql.bz2 || die 'Unable to copy ossim db files.'
 	fi
 	if ! use ossimdb-only; then
 		doins contrib/{acid,snort}/*.sql \
 			|| die 'Unable to copy event db files.'
 	fi
+	
+	insinto /usr/share/${PN}/plugins
+	doins db/plugins/*
+	
 	use doc && dodoc doc/ossim_db_structure.txt
 }
 
@@ -80,8 +85,9 @@ CREATE DATABASE ossim_acl;
 		cat ${share_sql}/ossim_config.sql \
 			${share_sql}/ossim_data.sql \
 			${share_sql}/snort_nessus.sql \
-			${share_sql}/realsecure.sql \
 			>> $tmp_sql
+# FIXME where is realsecure.sql ?    
+#			${share_sql}/realsecure.sql \			
 		eval "${cmd_fill_db}" || die "Error executing '${cmd_fill_db}'."
 	fi
 	if ! built_with_use ${PN} ossimdb-only; then
