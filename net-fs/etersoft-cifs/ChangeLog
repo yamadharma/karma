@@ -1,0 +1,11 @@
+# ChangeLog for sys-fs/etersoft-cifs
+# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  04 Feb 2008; JohnRDoe63 <johnrdoe63@cregion.ru> :
+  adding a new ver
+
+*etersoft-cifs-1.48a (07 Aug 2007)
+
+  07 Aug 2007; JohnRDoe63 <johnrdoe63@cregion.ru> :
+  Initial import

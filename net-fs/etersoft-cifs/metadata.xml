@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>etersoft-cifs</herd>
+  <maintainer>
+    <email>johnrdoe63@cregion.ru</email>
+    <name>JohnRDoe63</name>
+  </maintainer>
+<longdescription>
+This package allows you to use shared 1С directories for connection of information catalogues which are on windows servers.
+</longdescription> 
+</pkgmetadata>
