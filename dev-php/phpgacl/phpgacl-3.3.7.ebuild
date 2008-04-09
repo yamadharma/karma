@@ -22,7 +22,7 @@ pkg_setup() {
 }
 
 src_install() {
-	P_DIR="/usr/share/${PN}"
+	P_DIR="/usr/share/php/${PN}"
 	PREFIX="/usr/share"
 	
 	insinto ${P_DIR}

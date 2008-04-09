@@ -6,7 +6,7 @@ inherit eutils flag-o-matic multilib
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 
-WINEVER=20080404
+WINEVER=20080321
 WINENUMVERSION="1.0.9"
 SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/$WINENUMVERSION/sources/tarball/wine-$WINEVER.tar.bz2
 	 ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/$WINENUMVERSION/sources/tarball/wine-etersoft-public-$WINEVER.tar.bz2"

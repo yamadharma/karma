@@ -35,7 +35,7 @@ pkg_setup()
 
 src_install() {
 	cd "${S}"
-	insinto /usr/share/${PN}
+	insinto /usr/share/${PN}/db
 	if ! use eventdb-only; then
 		doins db/*.sql || die 'Unable to copy ossim db files.'
 		doins db/*.sql.bz2 || die 'Unable to copy ossim db files.'
@@ -45,7 +45,7 @@ src_install() {
 			|| die 'Unable to copy event db files.'
 	fi
 	
-	insinto /usr/share/${PN}/plugins
+	insinto /usr/share/${PN}/db/plugins
 	doins db/plugins/*
 	
 	use doc && dodoc doc/ossim_db_structure.txt
@@ -67,7 +67,7 @@ pkg_config() {
 	else
 		local cmd_fill_db="psql -U postgres -f $tmp_sql template1"
 	fi
-	local share_sql="${ROOT}/usr/share/${PN}"
+	local share_sql="${ROOT}/usr/share/${PN}/db"
 	if ! built_with_use ${PN} eventdb-only; then
 		einfo 'Creating ossim database...'
 		if built_with_use ${PN} mysql; then

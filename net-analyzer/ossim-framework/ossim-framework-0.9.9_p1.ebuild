@@ -44,6 +44,8 @@ MY_VARDIR="/var/lib/ossim"
 MY_CONFDIR='/etc/ossim/framework'
 MY_HTTP_GROUP='root'
 
+PHP_LIB_NAME="ossim"
+
 pkg_setup() {
 	enewgroup ossim || die 'Cannot create ossim group.'
 	enewuser ossim -1 -1 /etc/ossim ossim || die 'Cannot create ossim user.'
