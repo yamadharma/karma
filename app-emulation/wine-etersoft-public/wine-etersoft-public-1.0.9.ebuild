@@ -136,7 +136,7 @@ src_install() {
 	cp "${FILESDIR}"/*.ttf ${D}/usr/share/wine/fonts/
 	
 	rm -f ${D}/etc/init.d/*
-	newinitd ${FILESDIR}/wine.init wine
+	newinitd ${FILESDIR}/wine.initd wine
 }
 
 pkg_postinst() {
