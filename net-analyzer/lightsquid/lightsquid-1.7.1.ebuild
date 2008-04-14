@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils
+inherit eutils 
 
 DESCRIPTION="LightSquid - lite log analizer for squid proxy, inspirated by sarg."
 HOMEPAGE="http://lightsquid.sf.net"
@@ -12,14 +12,14 @@ S=${WORKDIR}/${P/_/-}
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="x86 amd64"
 IUSE=""
 
 DEPEND="media-libs/gd"
 RDEPEND="${DEPEND}
 	dev-perl/GD"
 
-HTMLDIR=/srv/localhost/www
+HTMLDIR=/var/www/localhost/htdocs
 
 src_unpack () 
 {
