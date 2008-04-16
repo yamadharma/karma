@@ -2,15 +2,22 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils toolchain-funcs
+inherit eutils toolchain-funcs subversion
+
+# ESVN_PROJECT=wengophone
+
+ESVN_OPTIONS="-r{${PV/*_pre}}"
+# ESVN_REPO_URI="https://dev.openwengo.org/svn/openwengo/wengophone-ng/branches/wengophone-2.2"
+ESVN_REPO_URI="https://dev.openwengo.org/svn/openwengo/wengophone-ng/trunk"
 
 DESCRIPTION="Wengophone NG is a VoIP client featuring the SIP protcol"
 HOMEPAGE="http://dev.openwengo.com"
-SRC_URI="http://download.wengo.com/nightlybuilds/universal/sources/openwengo/${PV}/${P}-source.zip"
+# SRC_URI="http://download.wengo.com/nightlybuilds/universal/sources/openwengo/${PV}/${P}-source.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+# KEYWORDS="amd64 x86"
+KEYWORDS=""
 IUSE="alsa debug oss portaudio xv"
 
 RDEPEND=">=dev-libs/boost-1.34
@@ -32,13 +39,8 @@ RDEPEND=">=dev-libs/boost-1.34
 DEPEND="${RDEPEND}
 	>=dev-util/cmake-2.4.4"
 
-S=${WORKDIR}/${P}
+# S=${WORKDIR}/${P}
 
-#src_unpack() {
-#	unpack ${A}
-#	cd ${S} || die
-#	epatch ${FILESDIR}/wengophone-2.1-qt-4.3.diff
-#}
 
 src_compile() {
 
