@@ -34,11 +34,12 @@ DEPEND="${RDEPEND}
 
 S=${WORKDIR}/${P}
 
-#src_unpack() {
-#	unpack ${A}
-#	cd ${S} || die
+src_unpack() {
+	unpack ${A}
+	cd ${S} || die
 #	epatch ${FILESDIR}/wengophone-2.1-qt-4.3.diff
-#}
+	sed -i -e "s:/usr/local/include:/usr/include/libavcodec:" owbuild/FindFFMPEG.cmake
+}
 
 src_compile() {
 
