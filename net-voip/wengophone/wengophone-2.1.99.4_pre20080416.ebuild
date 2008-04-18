@@ -43,6 +43,7 @@ DEPEND="${RDEPEND}
 
 
 src_compile() {
+	sed -i -e "s:/usr/local/include:/usr/include/libavcodec:" owbuild/FindFFMPEG.cmake
 
 	local mycmakeflags
 

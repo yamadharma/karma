@@ -10,8 +10,7 @@ SRC_URI="http://download.wengo.com/nightlybuilds/universal/sources/openwengo/${P
 
 LICENSE="GPL-2"
 SLOT="0"
-#KEYWORDS="amd64 x86"
-KEYWORDS=""
+KEYWORDS="amd64 x86"
 IUSE="alsa debug oss portaudio xv"
 
 RDEPEND=">=dev-libs/boost-1.34
@@ -33,12 +32,12 @@ RDEPEND=">=dev-libs/boost-1.34
 DEPEND="${RDEPEND}
 	>=dev-util/cmake-2.4.4"
 
-S=${WORKDIR}/${P}
+S=${WORKDIR}/${P}-source
 
 src_unpack() {
 	unpack ${A}
 	cd ${S} || die
-#	epatch ${FILESDIR}/wengophone-2.1-qt-4.3.diff
+	epatch ${FILESDIR}/wengophone-2.1-qt-4.3.diff
 	sed -i -e "s:/usr/local/include:/usr/include/libavcodec:" owbuild/FindFFMPEG.cmake
 }
 
