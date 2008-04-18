@@ -39,10 +39,13 @@ src_unpack() {
 	cd ${S} || die
 	epatch ${FILESDIR}/wengophone-2.1-qt-4.3.diff
 	sed -i -e "s:/usr/local/include:/usr/include/libavcodec:" owbuild/FindFFMPEG.cmake
+	
+	sed -i -e "s:<swscale.h>:<libswscale/swscale.h>:g" libs/pixertool/include/pixertool/ffmpeg-pixertool.h
+	sed -i -e "s:<swscale.h>:<libswscale/swscale.h>:g" libs/pixertool/src/pixertool.cpp
+	sed -i -e "s:<swscale.h>:<libswscale/swscale.h>:g" libs/pixertool/src/ffmpeg/ffmpeg-pixertool.c
 }
 
 src_compile() {
-
 	local mycmakeflags
 
 	if use debug; then
