@@ -1,7 +1,7 @@
 #!/sbin/runscript
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/nfs-utils/files/nfs.initd,v 1.5 2007/05/12 11:27:06 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/nfs-utils/files/nfs.initd,v 1.12 2008/04/20 00:52:24 vapier Exp $
 
 opts="reload"
 
@@ -16,15 +16,15 @@ exportfs=/usr/sbin/exportfs
 smnotify=/usr/sbin/sm-notify
 
 depend() {
-	local myneed="" myuse=""
-	local nfs_mounts=$(awk '!/^[[:space:]]*#/ && $3=="nfs4" { print $0 }' /etc/fstab)
-	if [ -n "${nfs_mounts}" ] ; then
-		myneed="rpc.idmapd rpc.gssd"
-	else
-		myuse="rpc.idmapd rpc.gssd"
+	local myneed=""
+	if [ -e /etc/exports ] ; then
+		if awk '!/^[[:space:]]*#/ && $2 ~ /sec=/ { exit 0 } END { exit 1 }' /etc/exports ; then
+			myneed="${myneed} rpc.svcgssd"
+		fi
 	fi
-	use ypbind net dns rpc.rquotad ${myuse}
+	type -t config 2>/dev/null 1>&2 && config /etc/exports
 	need portmap rpc.statd ${myneed}
+	use ypbind net dns rpc.rquotad rpc.idmapd rpc.svcgssd
 	after quota
 }
 
@@ -44,7 +44,7 @@ waitfor_exportfs() {
 mount_nfsd() {
 	# Make sure nfs support is loaded in the kernel #64709
 	if [ -e /proc/modules ] && ! grep -qs nfsd /proc/filesystems ; then
-		modprobe nfsd &> /dev/null
+		modprobe -q nfsd
 	fi
 
 	# This is the new "kernel 2.6 way" to handle the exports file
@@ -91,13 +91,13 @@ stop() {
 	# Don't check NFSSERVER variable since it might have changed,
 	# instead use --oknodo to smooth things over
 	ebegin "Stopping NFS mountd"
-	start-stop-daemon --stop --quiet --oknodo --exec ${mountd}
+	start-stop-daemon --stop --oknodo --exec ${mountd}
 	eend $?
 	ret=$((ret + $?))
 
 	# nfsd sets its process name to [nfsd] so don't look for $nfsd
 	ebegin "Stopping NFS daemon"
-	start-stop-daemon --stop --quiet --oknodo --name nfsd --user root --signal 2
+	start-stop-daemon --stop --oknodo --name nfsd --user root --signal 2
 	eend $?
 	ret=$((ret + $?))
 

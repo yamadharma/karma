@@ -1,6 +1,6 @@
 # Copyright 2003-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/nip2/nip2-7.12.5.ebuild,v 1.1 2007/12/10 15:53:32 maekke Exp $
+# $Header: $
 
 inherit fdo-mime
 

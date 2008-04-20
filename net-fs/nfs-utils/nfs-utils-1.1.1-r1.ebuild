@@ -1,16 +1,18 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/nfs-utils/nfs-utils-1.1.0.ebuild,v 1.3 2007/05/19 04:40:56 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/nfs-utils/nfs-utils-1.1.1-r1.ebuild,v 1.1 2008/04/20 01:02:00 vapier Exp $
 
 inherit eutils flag-o-matic multilib
 
 DESCRIPTION="NFS client and server daemons"
 HOMEPAGE="http://nfs.sourceforge.net/"
-SRC_URI="mirror://sourceforge/nfs/${P}.tar.gz"
+SRC_URI="mirror://sourceforge/nfs/${P}.tar.gz
+	http://www.citi.umich.edu/projects/nfsv4/linux/nfs-utils-patches/1.1.1-1/nfs-utils-1.1.1-001-xlog_segfault_fix.dif
+	http://www.citi.umich.edu/projects/nfsv4/linux/nfs-utils-patches/1.1.1-1/nfs-utils-1.1.1-002-svcgssd_pass_down_principal_name.dif"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86"
 IUSE="nonfsv4 tcpd kerberos"
 
 # kth-krb doesn't provide the right include
@@ -22,11 +24,11 @@ RDEPEND="tcpd? ( sys-apps/tcp-wrappers )
 	!nonfsv4? (
 		>=dev-libs/libevent-1.0b
 		>=net-libs/libnfsidmap-0.16
-	)
-	kerberos? (
-		net-libs/librpcsecgss
-		>=app-crypt/libgssapi-0.11
-		virtual/krb5
+		kerberos? (
+			net-libs/librpcsecgss
+			net-libs/libgssglue
+			virtual/krb5
+		)
 	)"
 # util-linux dep is to prevent man-page collision
 DEPEND="${RDEPEND}
@@ -35,11 +37,14 @@ DEPEND="${RDEPEND}
 src_unpack() {
 	unpack ${P}.tar.gz
 	cd "${S}"
-	#epatch "${DISTDIR}"/nfs-utils-${PV}-CITI_NFS4_ALL-1.dif
+	epatch "${DISTDIR}"/nfs-utils-1.1.1-001-xlog_segfault_fix.dif "${DISTDIR}"/nfs-utils-1.1.1-002-svcgssd_pass_down_principal_name.dif
+	sed -i \
+		-e 's:libgssapi >= 0\.11:libgssglue >= 0.1:' \
+		-e 's:-lgssapi:-lgssglue:' \
+		configure #191746
 }
 
 src_compile() {
-	append-ldflags `pkg-config libgssapi --libs`
 	econf \
 		--mandir=/usr/share/man \
 		--with-statedir=/var/lib/nfs \
@@ -48,9 +53,8 @@ src_compile() {
 		--enable-secure-statd \
 		$(use_with tcpd tcp-wrappers) \
 		$(use_enable !nonfsv4 nfsv4) \
-		$(use_enable kerberos gss) \
+		$(use !nonfsv4 && use_enable kerberos gss) \
 		|| die "Configure failed"
-
 	emake || die "Failed to compile"
 }
 
@@ -75,8 +79,10 @@ src_install() {
 	doins "${FILESDIR}"/exports
 
 	local f list=""
-	use !nonfsv4 && list="${list} rpc.idmapd"
-	use kerberos && list="${list} rpc.gssd"
+	if use !nonfsv4 ; then
+		list="${list} rpc.idmapd"
+		use kerberos && list="${list} rpc.gssd rpc.svcgssd"
+	fi
 	for f in nfs nfsmount rpc.statd ${list} ; do
 		newinitd "${FILESDIR}"/${f}.initd ${f} || die "doinitd ${f}"
 	done
