@@ -1,0 +1,187 @@
+diff -Nurwd mc-4.6.2~pre1.orig/vfs/fish.c mc-4.6.2~pre1/vfs/fish.c
+--- mc-4.6.2~pre1.orig/vfs/fish.c	2008-02-27 20:08:15.000000000 +0100
++++ mc-4.6.2~pre1/vfs/fish.c	2008-02-27 20:07:51.000000000 +0100
+@@ -364,15 +364,15 @@
+     dir->timestamp.tv_sec += fish_directory_timeout;
+     quoted_path = name_quote (remote_path, 0);
+     fish_command (me, super, NONE,
+-	    "#LIST /%s\n"
+-	    "ls -lLan /%s 2>/dev/null | grep '^[^cbt]' | (\n"
++	    "#LIST \"/%s\"\n"
++	    "ls -lQLan \"/%s\" 2>/dev/null | grep '^[^cbt]' | (\n"
+ 	      "while read p l u g s m d y n; do\n"
+-	        "echo \"P$p $u.$g\nS$s\nd$m $d $y\n:$n\n\"\n"
++	        "echo \"P$p $u.$g\nS$s\nd$m $d $y\n:$n\n\" | sed 's#\\\"##g' \n"
+ 	      "done\n"
+ 	    ")\n"
+-	    "ls -lan /%s 2>/dev/null | grep '^[cb]' | (\n"
++	    "ls -Qlan \"/%s\" 2>/dev/null | grep '^[cb]' | (\n"
+ 	      "while read p l u g a i m d y n; do\n"
+-	        "echo \"P$p $u.$g\nE$a$i\nd$m $d $y\n:$n\n\"\n"
++	        "echo \"P$p $u.$g\nE$a$i\nd$m $d $y\n:$n\n\" | sed 's#\\\"##g' \n"
+ 	      "done\n"
+ 	    ")\n"
+ 	    "echo '### 200'\n",
+@@ -516,16 +516,16 @@
+      *	instead of stderr. It makes impossible the use of "head || dd"
+      *	algorithm for file appending case, therefore just "dd" is used for it.
+      */
+-
++	name = unescape_string(name);
+     print_vfs_message(_("fish: store %s: sending command..."), name );
+-    quoted_name = name_quote (name, 0);
++    quoted_name = unescape_string (name_quote (name, 0));
+ 
+     /* FIXME: File size is limited to ULONG_MAX */
+     if (!fh->u.fish.append)
+ 	n = fish_command (me, super, WAIT_REPLY,
+-		 "#STOR %lu /%s\n"
++		 "#STOR %lu \"/%s\"\n"
+ 		 "echo '### 001'\n"
+-		 "file=/%s\n"
++		 "file=\"/%s\"\n"
+                  "res=`exec 3>&1\n"
+ 		 "(\n"
+ 		   "head -c %lu -q - || echo DD >&3\n"
+@@ -547,10 +547,10 @@
+ 		 (unsigned long) s.st_size);
+     else
+ 	n = fish_command (me, super, WAIT_REPLY,
+-		 "#STOR %lu /%s\n"
++		 "#STOR %lu \"/%s\"\n"
+ 		 "echo '### 001'\n"
+ 		 "{\n"
+-			"file=/%s\n"
++			"file=\"/%s\"\n"
+ 			"rest=%lu\n"
+ 			"while [ $rest -gt 0 ]\n"
+ 			"do\n"
+@@ -616,7 +616,7 @@
+ 	return 0;
+     quoted_name = name_quote (name, 0);
+     g_free (name);
+-    name = quoted_name;
++    name = unescape_string(quoted_name);
+     fh->u.fish.append = 0;
+ 
+     /*
+@@ -626,15 +626,15 @@
+      * standard output (i.e. over the network).
+      */
+     offset = fish_command (me, FH_SUPER, WANT_STRING,
+-		"#RETR /%s\n"
+-		"if dd if=/%s of=/dev/null bs=1 count=1 2>/dev/null ;\n"
++		"#RETR \"/%s\"\n"
++		"if dd if=\"/%s\" of=/dev/null bs=1 count=1 2>/dev/null ;\n"
+ 		"then\n"
+-		"ls -ln /%s 2>/dev/null | (\n"
++		"ls -ln \"/%s\" 2>/dev/null | (\n"
+ 		  "read p l u g s r\n"
+ 		  "echo \"$s\"\n"
+ 		")\n"
+ 		"echo '### 100'\n"
+-		"cat /%s\n"
++		"cat \"//%s\"\n"
+ 		"echo '### 200'\n"
+ 		"else\n"
+ 		"echo '### 500'\n" 
+@@ -754,6 +754,7 @@
+ 	return -1; \
+     } \
+     rpath = name_quote (crpath, 0); \
++    rpath = unescape_string(rpath); \
+     g_free (mpath);
+ 
+ #define POSTFIX(flags) \
+@@ -764,7 +765,7 @@
+ fish_chmod (struct vfs_class *me, const char *path, int mode)
+ {
+     PREFIX
+-    g_snprintf(buf, sizeof(buf), "#CHMOD %4.4o /%s\n"
++    g_snprintf(buf, sizeof(buf), "#CHMOD %4.4o \"/%s\"\n"
+ 				 "chmod %4.4o \"/%s\" 2>/dev/null\n"
+ 				 "echo '### 000'\n", 
+ 	    mode & 07777, rpath,
+@@ -799,11 +800,11 @@
+ }
+ 
+ #define XTEST if (bucket1 != bucket2) { ERRNOR (EXDEV, -1); }
+-FISH_OP(rename, XTEST, "#RENAME /%s /%s\n"
+-		       "mv /%s /%s 2>/dev/null\n"
++FISH_OP(rename, XTEST, "#RENAME \"/%s\" \"/%s\"\n"
++		       "mv \"/%s\" \"/%s\" 2>/dev/null\n"
+ 		       "echo '### 000'" )
+-FISH_OP(link,   XTEST, "#LINK /%s /%s\n"
+-		       "ln /%s /%s 2>/dev/null\n"
++FISH_OP(link,   XTEST, "#LINK \"/%s\" \"/%s\"\n"
++		       "ln \"/%s\" \"/%s\" 2>/dev/null\n"
+ 		       "echo '### 000'" )
+ 
+ static int fish_symlink (struct vfs_class *me, const char *setto, const char *path)
+@@ -812,8 +813,8 @@
+     PREFIX
+     qsetto = name_quote (setto, 0);
+     g_snprintf(buf, sizeof(buf),
+-            "#SYMLINK %s /%s\n"
+-	    "ln -s %s /%s 2>/dev/null\n"
++            "#SYMLINK \"%s\" \"/%s\"\n"
++	    "ln -s \"%s\" \"/%s\" 2>/dev/null\n"
+ 	    "echo '### 000'\n",
+ 	    qsetto, rpath, qsetto, rpath);
+     g_free (qsetto);
+@@ -838,16 +839,16 @@
+     {
+ 	PREFIX
+ 	g_snprintf (buf, sizeof(buf),
+-    	    "#CHOWN /%s /%s\n"
+-	    "chown %s /%s 2>/dev/null\n"
++    	    "#CHOWN /%s \"/%s\"\n"
++	    "chown %s \"/%s\" 2>/dev/null\n"
+ 	    "echo '### 000'\n", 
+ 	    sowner, rpath,
+ 	    sowner, rpath);
+ 	fish_send_command (me, super, buf, OPT_FLUSH); 
+ 	/* FIXME: what should we report if chgrp succeeds but chown fails? */
+ 	g_snprintf (buf, sizeof(buf),
+-            "#CHGRP /%s /%s\n"
+-	    "chgrp %s /%s 2>/dev/null\n"
++            "#CHGRP /%s \"/%s\"\n"
++	    "chgrp %s \"/%s\" 2>/dev/null\n"
+ 	    "echo '### 000'\n", 
+ 	    sgroup, rpath,
+ 	    sgroup, rpath);
+@@ -860,8 +861,8 @@
+ {
+     PREFIX
+     g_snprintf(buf, sizeof(buf),
+-            "#DELE /%s\n"
+-	    "rm -f /%s 2>/dev/null\n"
++            "#DELE \"/%s\"\n"
++	    "rm -f \"/%s\" 2>/dev/null\n"
+ 	    "echo '### 000'\n",
+ 	    rpath, rpath);
+     POSTFIX(OPT_FLUSH);
+@@ -872,10 +873,9 @@
+     PREFIX
+ 
+     (void) mode;
+-
+     g_snprintf(buf, sizeof(buf),
+-            "#MKD /%s\n"
+-	    "mkdir /%s 2>/dev/null\n"
++            "#MKD \"/%s\"\n"
++	    "mkdir \"/%s\" 2>/dev/null\n"
+ 	    "echo '### 000'\n",
+ 	    rpath, rpath);
+     POSTFIX(OPT_FLUSH);
+@@ -885,8 +885,8 @@
+ {
+     PREFIX
+     g_snprintf(buf, sizeof(buf),
+-            "#RMD /%s\n"
+-	    "rmdir /%s 2>/dev/null\n"
++            "#RMD \"/%s\"\n"
++	    "rmdir \"/%s\" 2>/dev/null\n"
+ 	    "echo '### 000'\n",
+ 	    rpath, rpath);
+     POSTFIX(OPT_FLUSH);

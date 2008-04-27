@@ -1,0 +1,11 @@
+--- mc-4.6.0-4.6.1-pre4.orig/po/it.po
++++ mc-4.6.0-4.6.1-pre4/po/it.po
+@@ -2097,7 +2097,7 @@
+ 
+ #: src/filegui.c:524
+ msgid "A&ppend"
+-msgstr "Atta&cca"
++msgstr "atta&Cca"
+ 
+ #: src/filegui.c:527
+ msgid "Overwrite this target?"

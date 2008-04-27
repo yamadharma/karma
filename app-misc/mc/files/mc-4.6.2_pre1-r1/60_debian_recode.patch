@@ -1,0 +1,1506 @@
+diff -Nurwd mc-4.6.2~pre1.orig/edit/editcmd.c mc-4.6.2~pre1/edit/editcmd.c
+--- mc-4.6.2~pre1.orig/edit/editcmd.c	2008-02-13 21:01:43.000000000 +0100
++++ mc-4.6.2~pre1/edit/editcmd.c	2008-02-13 21:02:16.000000000 +0100
+@@ -3321,7 +3321,7 @@
+ edit_select_codepage_cmd (WEdit *edit)
+ {
+ #ifdef HAVE_CHARSET
+-    do_select_codepage ();
++    do_select_codepage (_(" Choose codepage "));
+     edit->force = REDRAW_COMPLETELY;
+     edit_refresh_cmd (edit);
+ #endif
+diff -Nurwd mc-4.6.2~pre1.orig/edit/Makefile.in mc-4.6.2~pre1/edit/Makefile.in
+--- mc-4.6.2~pre1.orig/edit/Makefile.in	2007-09-11 16:33:38.000000000 +0200
++++ mc-4.6.2~pre1/edit/Makefile.in	2008-02-13 21:01:06.000000000 +0100
+@@ -14,6 +14,8 @@
+ 
+ @SET_MAKE@
+ 
++SOURCES = $(libedit_a_SOURCES)
++
+ srcdir = @srcdir@
+ top_srcdir = @top_srcdir@
+ VPATH = @srcdir@
+diff -Nurwd mc-4.6.2~pre1.orig/src/boxes.c mc-4.6.2~pre1/src/boxes.c
+--- mc-4.6.2~pre1.orig/src/boxes.c	2008-02-13 21:01:43.000000000 +0100
++++ mc-4.6.2~pre1/src/boxes.c	2008-02-13 21:01:06.000000000 +0100
+@@ -52,6 +52,7 @@
+ #ifdef HAVE_CHARSET
+ #include "charsets.h"
+ #include "selcodepage.h"
++#include "recode.h"
+ #endif
+ 
+ #ifdef USE_NETCODE
+@@ -454,8 +455,8 @@
+     }
+ }
+ 
+-#define DISPY 11
+-#define DISPX 46
++#define DISPY 13
++#define DISPX 35
+ 
+ 
+ #ifndef HAVE_CHARSET
+@@ -551,23 +552,58 @@
+ 
+ 
+ static int new_display_codepage;
++static int new_ftp_codepage;
+ 
+-static WLabel *cplabel;
+ static WCheck *inpcheck;
+ 
++static WButton *cpbutton;
++static WButton *cpbutton_ftp;
++
+ static int
+ sel_charset_button (int action)
+ {
+     const char *cpname;
+     char buf[64];
+-    new_display_codepage = select_charset (new_display_codepage, 1);
++    new_display_codepage = select_charset (new_display_codepage, 1, _(" Choose input codepage "));
+     cpname = (new_display_codepage < 0)
+ 	? _("Other 8 bit")
+ 	: codepages[new_display_codepage].name;
+ 
+     /* avoid strange bug with label repainting */
+-    g_snprintf (buf, sizeof (buf), "%-27s", cpname);
+-    label_set_text (cplabel, buf);
++    sprintf( buf, "%s", cpname );
++    button_set_text (cpbutton, buf);
++
++    if(new_display_codepage<0)  new_ftp_codepage=-1;
++    cpname = (new_ftp_codepage < 0)
++             ? _("Other 8 bit")
++             : codepages[ new_ftp_codepage ].name;
++    sprintf( buf, "%s", cpname );
++    button_set_text (cpbutton_ftp, buf);
++
++    return 0;
++}
++
++static int sel_charset_button_ftp(int action) {
++  char *cpname, buf[64];
++  if(new_display_codepage>0) {
++    new_ftp_codepage = select_charset(new_ftp_codepage, 0, _(" Choose default FTP codepage "));
++    cpname = (new_display_codepage < 0)
++             ? _("Other 8 bit")
++             : codepages[ new_display_codepage ].name;
++    sprintf( buf, "%s", cpname );
++    button_set_text( cpbutton, buf );
++    cpname = (new_ftp_codepage < 0)
++             ? _("Other 8 bit")
++             : codepages[ new_ftp_codepage ].name;
++    sprintf( buf, "%s", cpname );
++    button_set_text( cpbutton_ftp, buf );
++  }
++  else {
++    message( 1, _(" Warning "),
++                _("To use this feature select your codepage in\n"
++                  "Setup / Display Bits dialog!\n"
++                 "Do not forget to save options." ));
++  }
+     return 0;
+ }
+ 
+@@ -589,9 +625,6 @@
+     cpname = (new_display_codepage < 0)
+ 	? _("Other 8 bit")
+ 	: codepages[new_display_codepage].name;
+-    cplabel = label_new (4, 4, cpname);
+-    add_widget (dbits_dlg, cplabel);
+-
+     add_widget (dbits_dlg,
+ 		button_new (DISPY - 3, DISPX / 2 + 3, B_CANCEL,
+ 			    NORMAL_BUTTON, _("&Cancel"), 0));
+@@ -600,13 +633,30 @@
+ 			    0));
+ 
+     inpcheck =
+-	check_new (6, 4, !use_8th_bit_as_meta, _("F&ull 8 bits input"));
++	check_new (8, 4, !use_8th_bit_as_meta, _("F&ull 8 bits input"));
+     add_widget (dbits_dlg, inpcheck);
+ 
+-    cpname = _("&Select");
+-    add_widget (dbits_dlg,
+-		button_new (4, DISPX - 8 - mbstrlen (cpname), B_USER,
+-			    NORMAL_BUTTON, cpname, sel_charset_button));
++
++    add_widget( dbits_dlg, label_new( 5, 4, _("FTP default codepage:")));
++    if(n_codepages>0) {
++      cpname = (new_display_codepage < 0)
++               ? _("Other 8 bit")
++               : codepages[ new_display_codepage ].name;
++    }
++    else cpname= _("Other 8 bit");
++    cpbutton=button_new(4, 5, B_USER,
++                       NORMAL_BUTTON, cpname, sel_charset_button);
++
++    if(n_codepages>0) {
++      cpname = (new_ftp_codepage < 0)
++               ? _("Other 8 bit")
++               : codepages[ new_ftp_codepage ].name;
++    }
++    else cpname= _("Other 8 bit");
++    cpbutton_ftp=button_new(6, 5, B_USER,
++                            NORMAL_BUTTON, cpname, sel_charset_button_ftp);
++    add_widget( dbits_dlg, cpbutton_ftp);
++    add_widget (dbits_dlg, cpbutton);
+ 
+     return dbits_dlg;
+ }
+@@ -616,6 +666,7 @@
+ {
+     Dlg_head *dbits_dlg;
+     new_display_codepage = display_codepage;
++    new_ftp_codepage = ftp_codepage;
+ 
+     application_keypad_mode ();
+     dbits_dlg = init_disp_bits_box ();
+@@ -636,6 +687,17 @@
+ 				   && display_codepage != 1) ? 128 : 160;
+ #endif
+ 	use_8th_bit_as_meta = !(inpcheck->state & C_BOOL);
++
++        ftp_codepage=new_ftp_codepage;
++        if(display_codepage<=0) {
++          panel_reset_codepage(left_panel);
++          paint_dir(left_panel);
++          display_mini_info(left_panel);
++          panel_reset_codepage(right_panel);
++          paint_dir(right_panel);
++          display_mini_info(right_panel);
++        }
++
+     }
+     destroy_dlg (dbits_dlg);
+     repaint_screen ();
+diff -Nurwd mc-4.6.2~pre1.orig/src/charsets.c mc-4.6.2~pre1/src/charsets.c
+--- mc-4.6.2~pre1.orig/src/charsets.c	2005-05-27 05:35:15.000000000 +0200
++++ mc-4.6.2~pre1/src/charsets.c	2008-02-13 21:01:06.000000000 +0100
+@@ -121,8 +121,6 @@
+     }
+ }
+ 
+-#define OTHER_8BIT "Other_8_bit"
+-
+ const char *
+ get_codepage_id (int n)
+ {
+@@ -141,7 +139,7 @@
+     return -1;
+ }
+ 
+-static char
++char
+ translate_character (iconv_t cd, char c)
+ {
+     char outbuf[4], *obuf;
+diff -Nurwd mc-4.6.2~pre1.orig/src/charsets.h mc-4.6.2~pre1/src/charsets.h
+--- mc-4.6.2~pre1.orig/src/charsets.h	2004-12-03 20:17:47.000000000 +0100
++++ mc-4.6.2~pre1/src/charsets.h	2008-02-13 21:01:06.000000000 +0100
+@@ -6,6 +6,7 @@
+ #define UNKNCHAR '\001'
+ 
+ #define CHARSETS_INDEX "mc.charsets"
++#define OTHER_8BIT "Other_8_bit"
+ 
+ extern int n_codepages;
+ 
+@@ -19,6 +20,10 @@
+ 
+ extern struct codepage_desc *codepages;
+ 
++#include <iconv.h>
++extern char translate_character(iconv_t cd, char c);
++extern char errbuf[255];
++
+ const char *get_codepage_id (int n);
+ int get_codepage_index (const char *id);
+ int load_codepages_list (void);
+diff -Nurwd mc-4.6.2~pre1.orig/src/cmd.c mc-4.6.2~pre1/src/cmd.c
+--- mc-4.6.2~pre1.orig/src/cmd.c	2007-05-02 14:01:13.000000000 +0200
++++ mc-4.6.2~pre1/src/cmd.c	2008-02-13 21:01:06.000000000 +0100
+@@ -70,6 +70,10 @@
+ #   include "../edit/edit.h"
+ #endif
+ 
++#ifdef HAVE_CHARSET
++#include "recode.h"
++#endif
++
+ /* If set and you don't have subshell support,then C-o will give you a shell */
+ int output_starts_shell = 0;
+ 
+@@ -347,6 +351,9 @@
+ mkdir_cmd (void)
+ {
+     char *dir, *absdir;
++#ifdef HAVE_CHARSET
++    char *recoded_dir;
++#endif
+ 
+     dir =
+ 	input_expand_dialog (_("Create a new Directory"),
+@@ -356,8 +363,16 @@
+ 
+     if (dir[0] == '/' || dir[0] == '~')
+ 	absdir = g_strdup (dir);
+-    else
++    else {
++#ifdef HAVE_CHARSET
++        recoded_dir=g_strdup(dir);
++        my_translate_string(dir,strlen(dir), recoded_dir,current_panel->tr_table_input);
++        absdir = concat_dir_and_file (current_panel->cwd, recoded_dir);
++        g_free(recoded_dir);
++#else
+ 	absdir = concat_dir_and_file (current_panel->cwd, dir);
++#endif
++    }
+ 
+     save_cwds_stat ();
+     if (my_mkdir (absdir, 0777) == 0) {
+diff -Nurwd mc-4.6.2~pre1.orig/src/file.c mc-4.6.2~pre1/src/file.c
+--- mc-4.6.2~pre1.orig/src/file.c	2008-02-13 21:01:43.000000000 +0100
++++ mc-4.6.2~pre1/src/file.c	2008-02-13 21:01:06.000000000 +0100
+@@ -73,6 +73,9 @@
+ #include "../vfs/vfs-impl.h"
+ 
+ /* }}} */
++#ifdef HAVE_CHARSET
++#include "recode.h"
++#endif
+ 
+ /* Hack: the vfs code should not rely on this */
+ #define WITH_FULL_PATHS 1
+@@ -917,7 +920,11 @@
+ 	}
+ 	/* Dive into subdir if exists */
+ 	if (toplevel && ctx->dive_into_subdirs) {
++#ifdef HAVE_CHARSET
++            dest_dir = concat_dir_and_recoded_fname(d, x_basename (s), ctx);
++#else
+ 	    dest_dir = concat_dir_and_file (d, x_basename (s));
++#endif
+ 	} else {
+ 	    dest_dir = g_strdup (d);
+ 	    goto dont_mkdir;
+@@ -967,7 +974,11 @@
+ 
+ 	(*ctx->stat_func) (path, &buf);
+ 	if (S_ISDIR (buf.st_mode)) {
++#ifdef HAVE_CHARSET
++            mdpath = concat_dir_and_recoded_fname(dest_dir, next->d_name, ctx);
++#else
+ 	    mdpath = concat_dir_and_file (dest_dir, next->d_name);
++#endif
+ 	    /*
+ 	     * From here, we just intend to recursively copy subdirs, not
+ 	     * the double functionality of copying different when the target
+@@ -978,7 +989,11 @@
+ 				parent_dirs, progress_count, progress_bytes);
+ 	    g_free (mdpath);
+ 	} else {
++#ifdef HAVE_CHARSET
++            dest_file=concat_dir_and_recoded_fname(dest_dir, x_basename(path),ctx);
++#else
+ 	    dest_file = concat_dir_and_file (dest_dir, x_basename (path));
++#endif
+ 	    return_status = copy_file_file (ctx, path, dest_file, 1,
+ 					    progress_count, progress_bytes, 0);
+ 	    g_free (dest_file);
+@@ -1168,7 +1183,12 @@
+ 	destdir = g_strdup (d);
+ 	move_over = 1;
+     } else
++#ifdef HAVE_CHARSET
++        destdir = concat_dir_and_recoded_fname(d, x_basename (s), ctx);
++#else
+ 	destdir = concat_dir_and_file (d, x_basename (s));
++#endif
++
+ 
+     if (sbuf.st_dev == dbuf.st_dev && sbuf.st_ino == dbuf.st_ino) {
+ 	int msize = COLS - 36;
+@@ -1873,7 +1893,12 @@
+ 	    if (temp == NULL) {
+ 		value = transform_error;
+ 	    } else {
++#ifdef HAVE_CHARSET
++                char *temp2 = concat_dir_and_recoded_fname (dest, temp, ctx);
++#else
+ 		char *temp2 = concat_dir_and_file (dest, temp);
++#endif
++
+ 		g_free (dest);
+ 		dest = temp2;
+ 		temp = NULL;
+@@ -1967,7 +1992,12 @@
+ 		if (temp == NULL)
+ 		    value = transform_error;
+ 		else {
++#ifdef HAVE_CHARSET
++                    char *temp2 = concat_dir_and_recoded_fname(dest, temp, ctx);
++#else
+ 		    char *temp2 = concat_dir_and_file (dest, temp);
++#endif
++
+ 
+ 		    switch (operation) {
+ 		    case OP_COPY:
+diff -Nurwd mc-4.6.2~pre1.orig/src/filegui.c mc-4.6.2~pre1/src/filegui.c
+--- mc-4.6.2~pre1.orig/src/filegui.c	2008-02-13 21:01:43.000000000 +0100
++++ mc-4.6.2~pre1/src/filegui.c	2008-02-13 21:01:06.000000000 +0100
+@@ -67,6 +67,10 @@
+ #include "util.h"               /* strip_password() */
+ #include "tty.h"
+ 
++#ifdef HAVE_CHARSET
++#include "recode.h"
++#endif
++
+ /* }}} */
+ 
+ /* Hack: the vfs code should not rely on this */
+@@ -721,57 +725,79 @@
+     }
+ }
+ 
++#ifdef HAVE_CHARSET
++#define FMDY 15
++#else
+ #define FMDY 13
++#endif
++
+ #define	FMD_XLEN 64
+ extern int fmd_xlen;
+ static QuickWidget fmd_widgets[] = {
+ 
+-#define	FMCB0  FMDC
+-#define	FMCB12 0
+-#define	FMCB11 1
+-    /* follow symlinks and preserve Attributes must be the first */
+-    {quick_checkbox, 3, 64, 8, FMDY, N_("preserve &Attributes"), 9, 0,
+-     0 /* &op_preserve */ , 0, NULL},
+-    {quick_checkbox, 3, 64, 7, FMDY, N_("follow &Links"), 7, 0,
+-     0 /* &file_mask_op_follow_links */ , 0, NULL},
+-    {quick_label, 3, 64, 5, FMDY, N_("to:"), 0, 0, 0, 0, NULL},
+-    {quick_checkbox, 37, 64, 4, FMDY, N_("&Using shell patterns"), 0, 0,
+-     0 /* &source_easy_patterns */ , 0, NULL},
+-    {quick_input, 3, 64, 3, FMDY, "", 58,
+-     0, 0, 0, "input-def"},
+-#define FMDI1 4
+-#define FMDI2 5
+-#define FMDC 3
+-    {quick_input, 3, 64, 6, FMDY, "", 58, 0,
+-     0, 0, "input2"},
+-#define FMDI0 6
+-    {quick_label, 3, 64, 2, FMDY, "", 0, 0, 0, 0, NULL},
+-#define	FMBRGT 7
+-    {quick_button, 42, 64, 9, FMDY, N_("&Cancel"), 0, B_CANCEL, 0, 0,
+-     NULL},
+-#undef SKIP
++#ifdef HAVE_CHARSET
++ #define Y_OK 12
++#else 
++ #define Y_OK 9
++#endif
++
+ #ifdef WITH_BACKGROUND
+-# define SKIP 5
+-# define FMCB21 11
+-# define FMCB22 10
+-# define FMBLFT 9
+-# define FMBMID 8
+-    {quick_button, 25, 64, 9, FMDY, N_("&Background"), 0, B_USER, 0, 0,
+-     NULL},
+-#else				/* WITH_BACKGROUND */
+-# define SKIP 4
+-# define FMCB21 10
+-# define FMCB22 9
+-# define FMBLFT 8
+-# undef  FMBMID
++ #define ADD 0
++#else
++ #define ADD -1
+ #endif
+-    {quick_button, 14, 64, 9, FMDY, N_("&OK"), 0, B_ENTER, 0, 0, NULL},
+-    {quick_checkbox, 42, 64, 8, FMDY, N_("&Stable Symlinks"), 0, 0,
+-     0 /* &file_mask_stable_symlinks */ , 0, NULL},
+-    {quick_checkbox, 31, 64, 7, FMDY, N_("&Dive into subdir if exists"), 0,
+-     0,
+-     0 /* &dive_into_subdirs */ , 0, NULL},
+-    NULL_QuickWidget
++
++   #define FM_STAB_SYM         0
++  #define FM_DIVE_INTO_SUBDIR 1
++  #define FM_PRES_ATTR        2
++  #define FM_FOLLOW_LINKS     3
++  #define FM_DST_INPUT        4
++  #define FM_DST_TITLE        5
++  #define FM_USING_SHELL_PATT 6
++  #define FM_SRC_INPUT        7
++  #define FM_SRC_TITLE        8
++  #define FM_CANCEL           9
++#ifdef WITH_BACKGROUND
++  #define FM_BKGND            10
++#endif
++  #define FM_OK               11+ADD
++#ifdef HAVE_CHARSET
++  #define FM_TO_CODEPAGE      12+ADD
++  #define FM_FROM_CODEPAGE    13+ADD
++  #define FM_RECODE_TITLE     14+ADD
++  #define FM_RECODE_ARROW     15+ADD
++#endif // HAVE_CHARSET
++
++
++#ifdef HAVE_CHARSET
++ #define SKIP             10
++ #define B_FROM B_USER+1
++ #define B_TO   B_USER+2
++#else
++ #define SKIP             10
++#endif
++
++    {quick_checkbox, 42,64, 8, FMDY, N_("&Stable Symlinks"),0,0,0,0,"stab-sym"},
++    {quick_checkbox, 31,64, 7, FMDY, N_("&Dive into subdir if exists"),0,0,0,0,"dive"},
++    {quick_checkbox, 3, 64, 8, FMDY, N_("preserve &Attributes"),9,0,0,0,"preserve"},
++    {quick_checkbox, 3, 64, 7, FMDY, N_("follow &Links"),7,0,0,0,"follow"},
++    {quick_input,    3, 64, 6, FMDY, "", 58, 0, 0, 0, "input2"},
++    {quick_label,    3, 64, 5, FMDY, N_("to:"), 0, 0, 0, 0, "to"},
++    {quick_checkbox, 37,64, 4, FMDY, N_("&Using shell patterns"),0,0, 0,0,"us-sh"},
++    {quick_input,    3, 64, 3, FMDY, "", 58, 0, 0, 0, "input-def"},
++    {quick_label,    3, 64, 2, FMDY, "", 0, 0, 0, 0, "ql"},
++    {quick_button,   42,64, Y_OK, FMDY, N_("&Cancel"), 0, B_CANCEL, 0,0, "cancel"},
++#ifdef WITH_BACKGROUND
++    {quick_button,   25,64, Y_OK, FMDY, N_("&Background"), 0, B_USER, 0,0, "back"},
++#endif
++    {quick_button,   14,64, Y_OK, FMDY, N_("&OK"), 0, B_ENTER, 0, 0, "ok"},
++#ifdef HAVE_CHARSET
++    {quick_button,   46,64, 10, FMDY,"to codepage", 0, B_TO, 0, 0, "ql"},
++    {quick_button,   25,64, 10, FMDY, "from codepage", 0, B_FROM, 0, 0, "ql"},
++    {quick_label,    3, 64, 10, FMDY, N_("Recode file names:"), 0, 0, 0, 0, "ql"},
++    {quick_label,    42,64, 10, FMDY, "->", 0, 0, 0, 0, "ql"},
++#endif
++    {0}
+ };
+ 
+ static int
+@@ -805,48 +831,48 @@
+ 	if (fmd_widgets[i].text[0] != '\0')
+ 	    fmd_widgets[i].text = _(fmd_widgets[i].text);
+ 
+-    len = mbstrlen (fmd_widgets[FMCB11].text)
+-	+ mbstrlen (fmd_widgets[FMCB21].text) + 15;
++    len = mbstrlen (fmd_widgets[FM_FOLLOW_LINKS].text)
++	+ mbstrlen (fmd_widgets[FM_DIVE_INTO_SUBDIR].text) + 15;
+     fmd_xlen = max (fmd_xlen, len);
+ 
+-    len = mbstrlen (fmd_widgets[FMCB12].text)
+-	+ mbstrlen (fmd_widgets[FMCB22].text) + 15;
++    len = mbstrlen (fmd_widgets[FM_PRES_ATTR].text)
++	+ mbstrlen (fmd_widgets[FM_STAB_SYM].text) + 15;
+     fmd_xlen = max (fmd_xlen, len);
+ 
+-    len = mbstrlen (fmd_widgets[FMBRGT].text)
+-	+ mbstrlen (fmd_widgets[FMBLFT].text) + 11;
++    len = mbstrlen (fmd_widgets[FM_CANCEL].text)
++	+ mbstrlen (fmd_widgets[FM_OK].text) + 11;
+ 
+-#ifdef FMBMID
+-    len += mbstrlen (fmd_widgets[FMBMID].text) + 6;
++#ifdef FM_BKGND
++    len += mbstrlen (fmd_widgets[FM_BKGND].text) + 6;
+ #endif
+ 
+     fmd_xlen = max (fmd_xlen, len + 4);
+ 
+     len = (fmd_xlen - (len + 6)) / 2;
+-    i = fmd_widgets[FMBLFT].relative_x = len + 3;
+-    i += mbstrlen (fmd_widgets[FMBLFT].text) + 8;
++    i = fmd_widgets[FM_OK].relative_x = len + 3;
++    i += mbstrlen (fmd_widgets[FM_OK].text) + 8;
+ 
+-#ifdef FMBMID
+-    fmd_widgets[FMBMID].relative_x = i;
+-    i += mbstrlen (fmd_widgets[FMBMID].text) + 6;
++#ifdef FM_BKGND
++    fmd_widgets[FM_BKGND].relative_x = i;
++     i += mbstrlen (fmd_widgets[FM_BKGND].text) + 6;
+ #endif
+ 
+-    fmd_widgets[FMBRGT].relative_x = i;
++    fmd_widgets[FM_CANCEL].relative_x = i;
+ 
+ #define	chkbox_xpos(i) \
+ 	fmd_widgets [i].relative_x = fmd_xlen - mbstrlen (fmd_widgets [i].text) - 6
+ 
+-    chkbox_xpos (FMCB0);
+-    chkbox_xpos (FMCB21);
+-    chkbox_xpos (FMCB22);
++    chkbox_xpos (FM_USING_SHELL_PATT);
++    chkbox_xpos (FM_DIVE_INTO_SUBDIR);
++    chkbox_xpos (FM_STAB_SYM);
+ 
+     if (fmd_xlen != FMD_XLEN) {
+ 	i = sizeof (fmd_widgets) / sizeof (fmd_widgets[0]) - 1;
+ 	while (i--)
+ 	    fmd_widgets[i].x_divisions = fmd_xlen;
+ 
+-	fmd_widgets[FMDI1].hotkey_pos =
+-	    fmd_widgets[FMDI2].hotkey_pos = fmd_xlen - 6;
++	fmd_widgets[FM_SRC_INPUT].hotkey_pos =
++	    fmd_widgets[FM_DST_INPUT].hotkey_pos = fmd_xlen - 6;
+     }
+ #undef chkbox_xpos
+ 
+@@ -866,6 +892,9 @@
+     int val;
+     QuickDialog Quick_input;
+     char *def_text;
++#ifdef HAVE_CHARSET
++    char *errmsg;
++#endif
+     g_return_val_if_fail (ctx != NULL, NULL);
+ 
+     def_text = g_strdup(def_text_orig);
+@@ -883,10 +912,11 @@
+ 
+     /* Set up the result pointers */
+ 
+-    fmd_widgets[FMCB12].result = &ctx->op_preserve;
+-    fmd_widgets[FMCB11].result = &ctx->follow_links;
+-    fmd_widgets[FMCB22].result = &ctx->stable_symlinks;
+-    fmd_widgets[FMCB21].result = &ctx->dive_into_subdirs;
++    fmd_widgets[FM_PRES_ATTR].result = &ctx->op_preserve;
++    fmd_widgets[FM_FOLLOW_LINKS].result = &ctx->follow_links;
++    fmd_widgets[FM_STAB_SYM].result = &ctx->stable_symlinks;
++    fmd_widgets[FM_DIVE_INTO_SUBDIR].result = &ctx->dive_into_subdirs;
++
+ 
+     /* filter out a possible password from def_text */
+     def_text_secure = strip_password (g_strdup (def_text), 1);
+@@ -894,8 +924,9 @@
+     /* Create the dialog */
+ 
+     ctx->stable_symlinks = 0;
+-    fmd_widgets[FMDC].result = &source_easy_patterns;
+-    fmd_widgets[FMDI1].text = easy_patterns ? "*" : "^\\(.*\\)$";
++    fmd_widgets[FM_USING_SHELL_PATT].result = &source_easy_patterns;
++    fmd_widgets[FM_SRC_INPUT].text = easy_patterns ? "*" : "^\\(.*\\)$";
++ 
+     Quick_input.xlen = fmd_xlen;
+     Quick_input.xpos = -1;
+     Quick_input.title = op_names[operation];
+@@ -903,19 +934,37 @@
+     Quick_input.ylen = FMDY;
+     Quick_input.i18n = 1;
+     Quick_input.widgets = fmd_widgets;
+-    fmd_widgets[FMDI0].text = text;
+-    fmd_widgets[FMDI2].text = def_text_secure;
+-    fmd_widgets[FMDI2].str_result = &dest_dir;
+-    fmd_widgets[FMDI1].str_result = &source_mask;
++    fmd_widgets[FM_SRC_TITLE].text = text;
++    fmd_widgets[FM_DST_INPUT].text = def_text_secure;
++    fmd_widgets[FM_DST_INPUT].str_result = &dest_dir;
++    fmd_widgets[FM_SRC_INPUT].str_result = &source_mask;
+ 
+     *do_background = 0;
++
++#ifdef HAVE_CHARSET
++    ctx->from_codepage=current_panel->src_codepage;
++    ctx->to_codepage=left_panel->src_codepage;
++    if (left_panel) {
++        ctx->to_codepage=left_panel->src_codepage;
++        if( (current_panel==left_panel) && right_panel ) ctx->to_codepage=right_panel->src_codepage;
++    }
++#endif
++
+   ask_file_mask:
+ 
++#ifdef HAVE_CHARSET
++    if(operation!=OP_COPY && operation!=OP_MOVE) {
++      ctx->from_codepage=-1;
++      ctx->to_codepage=-1;
++    }
++    fmd_widgets[FM_FROM_CODEPAGE].text=get_codepage_id(ctx->from_codepage);
++    fmd_widgets[FM_TO_CODEPAGE].text=get_codepage_id(ctx->to_codepage);
++#endif
++
+     if ((val = quick_dialog_skip (&Quick_input, SKIP)) == B_CANCEL) {
+ 	g_free (def_text_secure);
+ 	return 0;
+     }
+-    g_free (def_text_secure);
+ 
+     if (ctx->follow_links)
+ 	ctx->stat_func = mc_stat;
+@@ -937,6 +986,7 @@
+     orig_mask = source_mask;
+     if (!dest_dir || !*dest_dir) {
+ 	g_free (source_mask);
++    g_free (def_text_secure);
+         g_free(def_text);
+ 	return dest_dir;
+     }
+@@ -991,6 +1041,48 @@
+     }
+     if (val == B_USER)
+ 	*do_background = 1;
++#ifdef HAVE_CHARSET
++    if(val == B_FROM) {
++      if(operation==OP_COPY || operation==OP_MOVE) {
++        if(display_codepage<=0) {
++          message( 1, _(" Warning "),
++                      _("To use this feature select your codepage in\n"
++                        "Setup / Display Bits dialog!\n"
++                        "Do not forget to save options." ));
++          goto ask_file_mask;
++        }
++        ctx->from_codepage=select_charset(ctx->from_codepage,0,
++                            _(" Choose \"FROM\" codepage for COPY/MOVE operaion "));
++      }
++      else
++        message(1,"Warning",_("Recoding works only with COPY or MOVE operation"));
++      goto ask_file_mask;
++    }
++    if(val == B_TO) {
++      if(operation==OP_COPY || operation==OP_MOVE) {
++        if(display_codepage<=0) {
++          message( 1, _(" Warning "),
++                      _("To use this feature select your codepage in\n"
++                        "Setup / Display Bits dialog!\n"
++                        "Do not forget to save options." ));
++          goto ask_file_mask;
++        }
++        ctx->to_codepage=select_charset(ctx->to_codepage,0,
++                            _(" Choose \"TO\" codepage for COPY/MOVE operaion "));
++      }
++      else
++        message(1,"Warning",_("Recoding works only with COPY or MOVE operation"));
++      goto ask_file_mask;
++    }
++
++    errmsg=my_init_tt(ctx->to_codepage,ctx->from_codepage,ctx->tr_table);
++    if(errmsg) {
++      my_reset_tt(ctx->tr_table,256);
++      message( 1, MSG_ERROR, "%s", errmsg);
++    }
++#endif
++
++    g_free(def_text_secure);
+     g_free(def_text);
+     return dest_dir;
+ }
+diff -Nurwd mc-4.6.2~pre1.orig/src/fileopctx.c mc-4.6.2~pre1/src/fileopctx.c
+--- mc-4.6.2~pre1.orig/src/fileopctx.c	2005-05-27 05:35:15.000000000 +0200
++++ mc-4.6.2~pre1/src/fileopctx.c	2008-02-13 21:01:06.000000000 +0100
+@@ -25,8 +25,12 @@
+ #include <unistd.h>
+ 
+ #include "global.h"
+-#include "fileopctx.h"
+ 
++#ifdef HAVE_CHARSET
++#include "recode.h"
++#endif
++
++#include "fileopctx.h"
+ 
+ /**
+  * file_op_context_new:
+@@ -53,6 +57,12 @@
+     ctx->umask_kill = 0777777;
+     ctx->erase_at_end = TRUE;
+ 
++#ifdef HAVE_CHARSET
++    ctx->from_codepage=-1;
++    ctx->to_codepage=-1;
++    my_reset_tt(ctx->tr_table,256);
++#endif
++
+     return ctx;
+ }
+ 
+diff -Nurwd mc-4.6.2~pre1.orig/src/fileopctx.h mc-4.6.2~pre1/src/fileopctx.h
+--- mc-4.6.2~pre1.orig/src/fileopctx.h	2004-10-06 20:06:26.000000000 +0200
++++ mc-4.6.2~pre1/src/fileopctx.h	2008-02-13 21:01:06.000000000 +0100
+@@ -108,6 +108,14 @@
+ 	/* User interface data goes here */
+ 
+ 	void *ui;
++
++#ifdef HAVE_CHARSET
++       /* Recode data */
++       int from_codepage, to_codepage;
++       unsigned char tr_table[256];
++       unsigned char recode_buf[MC_MAXPATHLEN];
++#endif
++
+ } FileOpContext;
+ 
+ 
+diff -Nurwd mc-4.6.2~pre1.orig/src/main.c mc-4.6.2~pre1/src/main.c
+--- mc-4.6.2~pre1.orig/src/main.c	2008-02-13 21:01:43.000000000 +0100
++++ mc-4.6.2~pre1/src/main.c	2008-02-13 21:01:06.000000000 +0100
+@@ -81,6 +81,7 @@
+ 
+ #ifdef	HAVE_CHARSET
+ #include "charsets.h"
++#include "recode.h"
+ #endif				/* HAVE_CHARSET */
+ 
+ #ifdef USE_VFS
+@@ -97,6 +98,7 @@
+ /* The structures for the panels */
+ WPanel *left_panel = NULL;
+ WPanel *right_panel = NULL;
++WPanel* ret_panel=NULL;
+ 
+ /* The pointer to the tree */
+ WTree *the_tree = NULL;
+@@ -586,6 +588,7 @@
+     }
+     directory = *new_dir ? new_dir : home_dir;
+ 
++    ret_panel=panel;
+     if (mc_chdir (directory) == -1) {
+ 	strcpy (panel->cwd, olddir);
+ 	g_free (olddir);
+@@ -804,6 +807,10 @@
+     {' ', N_("&Quick view     C-x q"), 'Q', quick_view_cmd},
+     {' ', N_("&Info           C-x i"), 'I', info_cmd},
+     {' ', N_("&Tree"), 'T', tree_cmd},
++#ifdef HAVE_CHARSET
++    {' ', "", ' ', 0},
++    {' ', N_("Panel &codepage"), 'C', fnc_l_cmd},
++#endif
+     {' ', "", ' ', 0},
+     {' ', N_("&Sort order..."), 'S', sort_cmd},
+     {' ', "", ' ', 0},
+@@ -828,6 +835,10 @@
+     {' ', N_("&Quick view     C-x q"), 'Q', quick_view_cmd},
+     {' ', N_("&Info           C-x i"), 'I', info_cmd},
+     {' ', N_("&Tree"), 'T', tree_cmd},
++#ifdef HAVE_CHARSET
++    {' ', "", ' ', 0},
++    {' ', N_("Panel &codepage"), 'C', fnc_r_cmd},
++#endif
+     {' ', "", ' ', 0},
+     {' ', N_("&Sort order..."), 'S', sort_cmd},
+     {' ', "", ' ', 0},
+diff -Nurwd mc-4.6.2~pre1.orig/src/Makefile.am mc-4.6.2~pre1/src/Makefile.am
+--- mc-4.6.2~pre1.orig/src/Makefile.am	2006-02-04 12:13:30.000000000 +0100
++++ mc-4.6.2~pre1/src/Makefile.am	2008-02-13 21:01:06.000000000 +0100
+@@ -41,7 +41,8 @@
+ mc_LDADD = $(EDITLIB) $(SLANGLIB) $(VFSLIB) \
+ 	$(INTLLIBS) $(GLIB_LIBS) $(MCLIBS) $(LIBICONV)
+ 
+-CHARSET_SRC = charsets.c charsets.h selcodepage.c selcodepage.h
++CHARSET_SRC = charsets.c charsets.h selcodepage.c selcodepage.h	\
++	 recode.c recode.h
+ 
+ SRCS =	achown.c achown.h background.c background.h boxes.c boxes.h	\
+ 	chmod.c chmod.h chown.c chown.h cmd.c cmd.h color.c color.h	\
+@@ -58,8 +59,8 @@
+ 	menu.c menu.h mountlist.c mountlist.h mouse.c mouse.h myslang.h	\
+ 	option.c option.h panel.h panelize.c panelize.h poptalloca.h	\
+ 	popt.c poptconfig.c popt.h popthelp.c poptint.h poptparse.c	\
+-	profile.c profile.h regex.c rxvt.c screen.c setup.c setup.h	\
+-	slint.c	subshell.c subshell.h textconf.c textconf.h		\
++	profile.c profile.h regex.c rxvt.c screen.c screen.h setup.c	\
++	setup.h slint.c	subshell.c subshell.h textconf.c textconf.h		\
+ 	tree.c tree.h treestore.c treestore.h tty.c tty.h user.c user.h	\
+ 	util.c util.h utilunix.c view.c view.h vfsdummy.h widget.c	\
+ 	widget.h win.c win.h wtools.c wtools.h unixcompat.h		\
+diff -Nurwd mc-4.6.2~pre1.orig/src/Makefile.in mc-4.6.2~pre1/src/Makefile.in
+--- mc-4.6.2~pre1.orig/src/Makefile.in	2007-09-11 16:33:39.000000000 +0200
++++ mc-4.6.2~pre1/src/Makefile.in	2008-02-13 21:01:06.000000000 +0100
+@@ -95,12 +95,12 @@
+ 	mountlist.c mountlist.h mouse.c mouse.h myslang.h option.c \
+ 	option.h panel.h panelize.c panelize.h poptalloca.h popt.c \
+ 	poptconfig.c popt.h popthelp.c poptint.h poptparse.c profile.c \
+-	profile.h regex.c rxvt.c screen.c setup.c setup.h slint.c \
++	profile.h regex.c rxvt.c screen.c screen.h setup.c setup.h slint.c \
+ 	subshell.c subshell.h textconf.c textconf.h tree.c tree.h \
+ 	treestore.c treestore.h tty.c tty.h user.c user.h util.c \
+ 	util.h utilunix.c view.c view.h vfsdummy.h widget.c widget.h \
+ 	win.c win.h wtools.c wtools.h unixcompat.h x11conn.h x11conn.c \
+-	ecs.h ecs.c charsets.c charsets.h selcodepage.c selcodepage.h
++	ecs.h ecs.c charsets.c charsets.h selcodepage.c selcodepage.h recode.c recode.h
+ am__objects_1 = achown.$(OBJEXT) background.$(OBJEXT) boxes.$(OBJEXT) \
+ 	chmod.$(OBJEXT) chown.$(OBJEXT) cmd.$(OBJEXT) color.$(OBJEXT) \
+ 	command.$(OBJEXT) complete.$(OBJEXT) cons.handler.$(OBJEXT) \
+@@ -120,7 +120,7 @@
+ 	tty.$(OBJEXT) user.$(OBJEXT) util.$(OBJEXT) utilunix.$(OBJEXT) \
+ 	view.$(OBJEXT) widget.$(OBJEXT) win.$(OBJEXT) wtools.$(OBJEXT) \
+ 	x11conn.$(OBJEXT) ecs.$(OBJEXT)
+-am__objects_2 = charsets.$(OBJEXT) selcodepage.$(OBJEXT)
++am__objects_2 = charsets.$(OBJEXT) selcodepage.$(OBJEXT) recode.$(OBJEXT)
+ @CHARSET_FALSE@am_mc_OBJECTS = $(am__objects_1)
+ @CHARSET_TRUE@am_mc_OBJECTS = $(am__objects_1) $(am__objects_2)
+ mc_OBJECTS = $(am_mc_OBJECTS)
+@@ -329,7 +329,8 @@
+ mc_LDADD = $(EDITLIB) $(SLANGLIB) $(VFSLIB) \
+ 	$(INTLLIBS) $(GLIB_LIBS) $(MCLIBS) $(LIBICONV)
+ 
+-CHARSET_SRC = charsets.c charsets.h selcodepage.c selcodepage.h
++CHARSET_SRC = charsets.c charsets.h selcodepage.c selcodepage.h		\
++	recode.c recode.h
+ SRCS = achown.c achown.h background.c background.h boxes.c boxes.h	\
+ 	chmod.c chmod.h chown.c chown.h cmd.c cmd.h color.c color.h	\
+ 	command.c command.h complete.c complete.h cons.handler.c	\
+@@ -345,7 +346,7 @@
+ 	menu.c menu.h mountlist.c mountlist.h mouse.c mouse.h myslang.h	\
+ 	option.c option.h panel.h panelize.c panelize.h poptalloca.h	\
+ 	popt.c poptconfig.c popt.h popthelp.c poptint.h poptparse.c	\
+-	profile.c profile.h regex.c rxvt.c screen.c setup.c setup.h	\
++	profile.c profile.h regex.c rxvt.c screen.c screen.h setup.c setup.h	\
+ 	slint.c	subshell.c subshell.h textconf.c textconf.h		\
+ 	tree.c tree.h treestore.c treestore.h tty.c tty.h user.c user.h	\
+ 	util.c util.h utilunix.c view.c view.h vfsdummy.h widget.c	\
+diff -Nurwd mc-4.6.2~pre1.orig/src/panel.h mc-4.6.2~pre1/src/panel.h
+--- mc-4.6.2~pre1.orig/src/panel.h	2004-12-03 20:17:47.000000000 +0100
++++ mc-4.6.2~pre1/src/panel.h	2008-02-13 21:01:06.000000000 +0100
+@@ -71,6 +71,19 @@
+ 
+     int      searching;
+     char     search_buffer [256];
++
++#ifdef HAVE_CHARSET
++    int src_codepage;
++    unsigned char tr_table[256], tr_table_input[256];
++#endif
++
++#ifdef USE_VFS
++ #ifdef HAVE_CHARSET
++    int ret_codepage;
++ #endif
++    int  is_return;
++    char retdir[MC_MAXPATHLEN];
++#endif
+ } WPanel;
+ 
+ WPanel *panel_new (const char *panel_name);
+@@ -96,6 +109,7 @@
+ extern WPanel *left_panel;
+ extern WPanel *right_panel;
+ extern WPanel *current_panel;
++extern WPanel* ret_panel;
+ 
+ void try_to_select (WPanel *panel, const char *name);
+ 
+diff -Nurwd mc-4.6.2~pre1.orig/src/recode.c mc-4.6.2~pre1/src/recode.c
+--- mc-4.6.2~pre1.orig/src/recode.c	1970-01-01 00:00:00.000000000 +0000
++++ mc-4.6.2~pre1/src/recode.c	2008-02-13 21:01:06.000000000 +0100
+@@ -0,0 +1,153 @@
++#include "recode.h"
++#ifdef HAVE_CHARSET
++
++char *lang;
++char lang_codepage_name[256];
++int lang_codepage;
++
++int ftp_codepage=-1;
++
++// recode buffer for displaying file names
++unsigned char recode_buf[MC_MAXPATHLEN];
++
++WPanel* recode_panel;
++
++//--- get codepage from $LANG
++void get_locale_codepage() {
++  char* a;
++  char* b;
++  int len;
++
++  lang=getenv("LANG");
++  if(!lang) {
++    strncpy(lang_codepage_name,OTHER_8BIT, sizeof(OTHER_8BIT)); 
++    lang_codepage=-1;
++    return;
++  }
++
++  a=strchr(lang,'.');
++  if(!a) {
++    strncpy(lang_codepage_name,OTHER_8BIT, sizeof(OTHER_8BIT)); 
++    lang_codepage=-1;
++    return;
++  }
++  ++a;
++
++  b=strchr(lang,'@');
++  if(!b) b=lang+strlen(lang);
++
++  len=b-a;
++  if(len>=sizeof(lang_codepage_name)) len=sizeof(lang_codepage_name)-1;
++
++  memcpy(lang_codepage_name,a, len);
++  lang_codepage_name[len]='\0';
++  lang_codepage=get_codepage_index(lang_codepage_name);
++  if(lang_codepage<0) strncpy(lang_codepage_name,OTHER_8BIT, sizeof(OTHER_8BIT));
++}
++
++//--- reset translation table
++void  my_reset_tt(unsigned char *table,int n) {
++  int i;
++  for(i=0;i<n;i++) table[i]=i;
++}
++
++//--- reset panel codepage
++void panel_reset_codepage(WPanel *p) {
++  p->src_codepage=-1;
++  my_reset_tt(p->tr_table,256);
++  my_reset_tt(p->tr_table_input,256);
++}
++
++//--- Initialize translation table 
++//    i need this function because init_translation_table from
++//    charsets.c fills only fixed translation tables conv_displ and conv_input
++//---   
++char* my_init_tt( int from, int to, unsigned char *table) {
++ int i;
++ iconv_t cd;
++ char *cpfrom, *cpto;
++
++ if(from < 0 || to < 0 || from == to) {
++   my_reset_tt(table,256);
++   return NULL;
++ }
++ my_reset_tt(table,128);
++ cpfrom=codepages[from ].id;
++ cpto=codepages[to].id;
++ cd=iconv_open(cpfrom, cpto);
++ if(cd==(iconv_t)-1) {
++   snprintf(errbuf, 255, _("Cannot translate from %s to %s"), cpfrom, cpto);
++   return errbuf;
++ }
++ for(i=128; i<=255; ++i) table[i] = translate_character(cd, i);
++ iconv_close(cd);
++ return NULL;
++}
++
++//--- Translate string from one codepage to another
++void my_translate_string(unsigned char *s1,int l1, unsigned char *s2, unsigned char *table) {
++  int i=0;
++  if(!s1) return;
++  while(i<l1) {
++    s2[i]=table[s1[i]];
++    i++;
++   }
++  s2[i]=0;
++}
++
++//--- Recode filename and concat in to dir
++char* concat_dir_and_recoded_fname(const char *dir, const char *fname, FileOpContext *ctx) {
++    int i = strlen (dir);
++    
++    my_translate_string((unsigned char*)fname,strlen(fname),ctx->recode_buf,ctx->tr_table);
++    if (dir [i-1] == PATH_SEP)
++        return  g_strconcat (dir, ctx->recode_buf, NULL);
++    else
++        return  g_strconcat (dir, PATH_SEP_STR, ctx->recode_buf, NULL);
++  return 0;
++}
++
++
++//--- Internal handler for "Panel codepage"
++static void fnc_cmd(WPanel *p) {
++  char *errmsg;
++  if(display_codepage > 0) {
++    p->src_codepage=select_charset(p->src_codepage, 0, _(" Choose panel codepage "));
++    errmsg=my_init_tt(display_codepage,p->src_codepage,p->tr_table);
++    if(errmsg) {
++      panel_reset_codepage(p);
++      message( 1, MSG_ERROR, "%s", errmsg);
++    }
++    errmsg=my_init_tt(p->src_codepage,display_codepage,p->tr_table_input);
++    if (errmsg) {
++      panel_reset_codepage(p);
++      message( 1, MSG_ERROR, "%s", errmsg );
++     }
++    paint_dir(p);
++    show_dir(p);
++    display_mini_info(p);
++  }
++  else {
++    message( 1, _(" Warning "),
++                _("To use this feature select your codepage in\n"
++                  "Setup / Display Bits dialog!\n"
++                  "Do not forget to save options." ));
++  }
++}
++
++//--- Menu handlers for "Panel codepage" for left and right panel menu
++
++void fnc_l_cmd() {
++  fnc_cmd(left_panel);
++}
++
++void fnc_r_cmd() {
++  fnc_cmd(right_panel);
++}
++
++//--- screen handler for "Panel codepage"
++void fnc_c_cmd(WPanel *panel) {
++  fnc_cmd(current_panel);
++}
++
++#endif //HAVE_CHARSET
+diff -Nurwd mc-4.6.2~pre1.orig/src/recode.h mc-4.6.2~pre1/src/recode.h
+--- mc-4.6.2~pre1.orig/src/recode.h	1970-01-01 00:00:00.000000000 +0000
++++ mc-4.6.2~pre1/src/recode.h	2008-02-13 21:01:06.000000000 +0100
+@@ -0,0 +1,48 @@
++#ifndef __RECODE_H__
++#define __RECODE_H__
++#include <config.h>
++#ifdef HAVE_CHARSET
++
++#include <stdio.h>
++#include <locale.h>
++#include <iconv.h>
++
++#include "global.h"
++#include "wtools.h"
++#include "panel.h"
++#include "charsets.h"
++#include "selcodepage.h"
++#include "screen.h"
++#include "main.h"
++#include "fileopctx.h"
++    
++extern char *lang;
++extern char lang_codepage_name[256];
++extern int lang_codepage;
++
++extern int ftp_codepage;
++
++// recode buffer for displaying file names
++extern unsigned char recode_buf[MC_MAXPATHLEN];
++extern WPanel* recode_panel;
++
++//--- get codepage from $LANG
++extern void get_locale_codepage();
++
++//--- reset translation table
++extern void  my_reset_tt(unsigned char *table,int n);
++//--- reset panel codepage
++extern void panel_reset_codepage(WPanel *p);
++//--- Initialize translation table
++extern char* my_init_tt( int from, int to, unsigned char *table);
++//--- Translate string from one codepage to another
++extern void my_translate_string(unsigned char *s1,int l1, unsigned char *s2, unsigned char *table);
++//--- Recode filename and concat in to dir
++extern char* concat_dir_and_recoded_fname(const char *dir, const char *fname, FileOpContext *ctx);
++//--- handlers for "Panel codepage"
++extern void fnc_l_cmd();
++extern void fnc_r_cmd();
++extern void fnc_c_cmd(WPanel *panel);
++
++#endif // HAVE_CHARSET
++#endif //__RECODE_H__
+diff -Nurwd mc-4.6.2~pre1.orig/src/screen.c mc-4.6.2~pre1/src/screen.c
+--- mc-4.6.2~pre1.orig/src/screen.c	2008-02-13 21:01:43.000000000 +0100
++++ mc-4.6.2~pre1/src/screen.c	2008-02-13 21:01:06.000000000 +0100
+@@ -50,6 +50,10 @@
+ #include "main.h"		/* the_menubar */
+ #include "unixcompat.h"
+ 
++#ifdef HAVE_CHARSET
++#include "recode.h"
++#endif
++
+ #define ELEMENTS(arr) ( sizeof(arr) / sizeof((arr)[0]) )
+ 
+ #define J_LEFT 		1
+@@ -172,6 +176,7 @@
+ string_file_name (file_entry *fe, int len)
+ {
+     size_t i;
++    char* filename;    
+ 
+ #ifdef UTF8
+     static char buffer [BUF_SMALL * 4];
+@@ -184,6 +189,13 @@
+     static char buffer [BUF_SMALL];
+ #endif
+ 
++#ifdef HAVE_CHARSET
++    my_translate_string(fe->fname,fe->fnamelen, recode_buf, recode_panel->tr_table);
++    filename= recode_buf;
++#else
++    filename=fe->fname;
++#endif
++
+ #ifdef UTF8
+     if (SLsmg_Is_Unicode)
+ 	for (i = 0; i < sizeof (buffer) - 1; i++) {
+@@ -214,7 +226,7 @@
+ 	for (i = 0; i < sizeof(buffer) - 1; i++) {
+ 	    char c;
+ 
+-	    c = fe->fname[i];
++	    c = filename[i];
+ 
+ 	    if (!c) break;
+ 
+@@ -721,6 +733,10 @@
+     int    second_column = 0;
+     int	   width, offset;
+ 
++#ifdef HAVE_CHARSET
++    recode_panel=panel;
++#endif
++
+     offset = 0;
+     if (!isstatus && panel->split){
+ 
+@@ -760,7 +776,7 @@
+     }
+ }
+ 
+-static void
++void
+ display_mini_info (WPanel *panel)
+ {
+     if (!show_mini_info)
+@@ -830,7 +846,7 @@
+     return;
+ }
+ 
+-static void
++void
+ paint_dir (WPanel *panel)
+ {
+     int i;
+@@ -868,7 +884,7 @@
+ #endif				/* !HAVE_SLANG */
+ }
+ 
+-static void
++void
+ show_dir (WPanel *panel)
+ {
+     char *tmp;
+@@ -897,8 +913,15 @@
+     tmp = g_malloc (panel->widget.cols + 1);
+     tmp[panel->widget.cols] = '\0';
+ 
++#ifdef HAVE_CHARSET
++     my_translate_string(panel->cwd,strlen(panel->cwd),recode_buf, panel->tr_table);
++     trim (strip_home_and_password (recode_buf), tmp,
++     min (max (panel->widget.cols - 7, 0), panel->widget.cols) );
++ #else
+     trim (strip_home_and_password (panel->cwd), tmp,
+ 	 max (panel->widget.cols - 9, 0));
++#endif
++
+     addstr (tmp);
+     g_free (tmp);
+ 
+@@ -1111,6 +1134,17 @@
+     mc_get_current_wd (panel->cwd, sizeof (panel->cwd) - 2);
+     strcpy (panel->lwd, ".");
+ 
++#ifdef HAVE_CHARSET
++    panel_reset_codepage(panel);
++#endif
++
++#ifdef USE_VFS
++    panel->is_return=0;
++ #ifdef HAVE_CHARSET
++    panel->ret_codepage=-1;
++ #endif
++#endif
++
+     panel->hist_name = g_strconcat ("Dir Hist ", panel_name, (char *) NULL);
+     panel->dir_history = history_get (panel->hist_name);
+     directory_history_add (panel, panel->cwd);
+@@ -2311,7 +2345,12 @@
+     { XCTRL('n'), move_down },		/* C-n like emacs */
+     { XCTRL('s'), start_search },	/* C-s like emacs */
+     { ALT('s'),   start_search },	/* M-s not like emacs */
++#ifndef HAVE_CHARSET
+     { XCTRL('t'), mark_file },
++#endif
++#ifdef HAVE_CHARSET
++    { XCTRL('t'), mark_file },		/* was 'fnc_c_cmd' */
++#endif
+     { ALT('o'),   chdir_other_panel },
+     { ALT('i'),   sync_other_panel },
+     { ALT('l'),   chdir_to_readlink },
+diff -Nurwd mc-4.6.2~pre1.orig/src/screen.h mc-4.6.2~pre1/src/screen.h
+--- mc-4.6.2~pre1.orig/src/screen.h	1970-01-01 00:00:00.000000000 +0000
++++ mc-4.6.2~pre1/src/screen.h	2008-02-13 21:01:06.000000000 +0100
+@@ -0,0 +1,11 @@
++#ifndef __SCREEN_H__
++#define __SCREEN_H__
++#include <config.h>
++
++#include "global.h"
++
++extern void paint_dir (WPanel *panel);
++extern void display_mini_info (WPanel *panel);
++extern void show_dir(WPanel *panel);
++#endif //__SCREEN_H__
++
+diff -Nurwd mc-4.6.2~pre1.orig/src/selcodepage.c mc-4.6.2~pre1/src/selcodepage.c
+--- mc-4.6.2~pre1.orig/src/selcodepage.c	2005-05-27 05:35:15.000000000 +0200
++++ mc-4.6.2~pre1/src/selcodepage.c	2008-02-13 21:01:06.000000000 +0100
+@@ -45,14 +45,16 @@
+ }
+ 
+ int
+-select_charset (int current_charset, int seldisplay)
++select_charset (int current_charset, int seldisplay, const char *title)
+ {
++    int new_charset;
++
+     int i, menu_lines = n_codepages + 1;
+     char buffer[255];
+ 
+     /* Create listbox */
+     Listbox *listbox = create_listbox_window (ENTRY_LEN + 2, menu_lines,
+-					      _(" Choose input codepage "),
++                                              title,
+ 					      "[Codepages Translation]");
+ 
+     if (!seldisplay)
+@@ -82,20 +84,26 @@
+ 
+     i = run_listbox (listbox);
+ 
+-    return (seldisplay) ? ((i >= n_codepages) ? -1 : i)
+-	: (i - 1);
++    if(i==-1)
++      i = (seldisplay)
++          ? ((current_charset < 0) ? n_codepages : current_charset)
++          : (current_charset + 1);
++
++    new_charset =(seldisplay) ? ( (i >= n_codepages) ? -1 : i ) : ( i-1 );
++    new_charset = (new_charset==-2) ? current_charset:new_charset;
++    return new_charset;
+ }
+ 
+ /* Helper functions for codepages support */
+ 
+ 
+ int
+-do_select_codepage (void)
++do_select_codepage (const char *title)
+ {
+     const char *errmsg;
+ 
+     if (display_codepage > 0) {
+-	source_codepage = select_charset (source_codepage, 0);
++	source_codepage = select_charset (source_codepage, 0, title);
+ 	errmsg =
+ 	    init_translation_table (source_codepage, display_codepage);
+ 	if (errmsg) {
+diff -Nurwd mc-4.6.2~pre1.orig/src/selcodepage.h mc-4.6.2~pre1/src/selcodepage.h
+--- mc-4.6.2~pre1.orig/src/selcodepage.h	2005-06-14 15:14:49.000000000 +0200
++++ mc-4.6.2~pre1/src/selcodepage.h	2008-02-13 21:01:06.000000000 +0100
+@@ -2,8 +2,8 @@
+ #define MC_SELCODEPAGE_H
+ 
+ #ifdef HAVE_CHARSET
+-int select_charset (int current_charset, int seldisplay);
+-int do_select_codepage (void);
++int select_charset (int current_charset, int seldisplay, const char *title);
++int do_select_codepage (const char *title);
+ #endif				/* HAVE_CHARSET */
+ 
+ #endif
+diff -Nurwd mc-4.6.2~pre1.orig/src/setup.c mc-4.6.2~pre1/src/setup.c
+--- mc-4.6.2~pre1.orig/src/setup.c	2006-02-23 16:32:18.000000000 +0100
++++ mc-4.6.2~pre1/src/setup.c	2008-02-13 21:01:06.000000000 +0100
+@@ -48,6 +48,8 @@
+ 
+ #ifdef HAVE_CHARSET
+ #include "charsets.h"
++#include"recode.h"
++#include "wtools.h"
+ #endif
+ 
+ #ifdef USE_NETCODE
+@@ -269,6 +271,11 @@
+     g_snprintf (buffer, sizeof (buffer), "%d", panel->user_mini_status);
+     save_string (section, "user_mini_status", buffer,
+ 			       profile_name);
++
++#ifdef HAVE_CHARSET
++    // save panel codepage
++    save_string(section, "panel_display_codepage", get_codepage_id(panel->src_codepage), profile_name);
++#endif
+ }
+ 
+ void
+@@ -371,6 +378,7 @@
+ #ifdef HAVE_CHARSET
+     save_string( "Misc", "display_codepage",
+     		 get_codepage_id( display_codepage ), profile_name );
++    save_string( "Misc", "ftp_codepage", get_codepage_id(ftp_codepage), profile_name);
+ #endif /* HAVE_CHARSET */
+ 
+     g_free (profile);
+@@ -420,6 +428,31 @@
+     panel->user_mini_status =
+ 	load_int (section, "user_mini_status", 0);
+ 
++#ifdef HAVE_CHARSET
++//--- Loading panel codepage
++    panel_reset_codepage(panel);
++    if(load_codepages_list()>0) {
++      char cpname[128];
++      char *errmsg;
++
++
++      if(display_codepage>=0) {
++        load_string(section, "panel_display_codepage", "", cpname, sizeof(cpname));
++        if(cpname[0]!='\0') panel->src_codepage = get_codepage_index(cpname);
++      }
++
++      errmsg=my_init_tt(display_codepage,panel->src_codepage,panel->tr_table);
++      if(errmsg) {
++        panel_reset_codepage(panel);
++        message( 1, MSG_ERROR, "%s", errmsg );
++       }
++      errmsg=my_init_tt(panel->src_codepage,display_codepage,panel->tr_table_input);
++      if(errmsg) {
++        panel_reset_codepage(panel);
++        message( 1, MSG_ERROR, "%s", errmsg );
++      }
++    }
++#endif
+ }
+ 
+ static void
+@@ -569,10 +602,16 @@
+ #ifdef HAVE_CHARSET
+     if ( load_codepages_list() > 0 ) {
+ 	char cpname[128];
+-	load_string( "Misc", "display_codepage", "",
+-		     cpname, sizeof(cpname) );
+-	if ( cpname[0] != '\0' )
+-	    display_codepage = get_codepage_index( cpname );
++      get_locale_codepage();
++      load_string("Misc", "display_codepage", "", cpname, sizeof(cpname));
++      if(cpname[0] != '\0')  display_codepage=get_codepage_index(cpname);
++      else display_codepage=lang_codepage;
++
++      ftp_codepage=-1;
++      if(display_codepage >= 0) {
++        load_string( "Misc", "ftp_codepage", "", cpname, sizeof(cpname));
++        if(cpname[0] != '\0')  ftp_codepage=get_codepage_index(cpname);
++      }
+     }
+ 
+     init_translation_table( source_codepage, display_codepage );
+diff -Nurwd mc-4.6.2~pre1.orig/src/view.c mc-4.6.2~pre1/src/view.c
+--- mc-4.6.2~pre1.orig/src/view.c	2008-02-13 21:01:43.000000000 +0100
++++ mc-4.6.2~pre1/src/view.c	2008-02-13 21:01:06.000000000 +0100
+@@ -3232,7 +3232,7 @@
+ 
+ #ifdef HAVE_CHARSET
+     case XCTRL ('t'):
+-	do_select_codepage ();
++	do_select_codepage (_(" Choose codepage "));
+ 	view->dirty++;
+ 	view_update (view);
+ 	return MSG_HANDLED;
+diff -Nurwd mc-4.6.2~pre1.orig/vfs/vfs.c mc-4.6.2~pre1/vfs/vfs.c
+--- mc-4.6.2~pre1.orig/vfs/vfs.c	2008-02-13 21:01:43.000000000 +0100
++++ mc-4.6.2~pre1/vfs/vfs.c	2008-02-13 21:01:06.000000000 +0100
+@@ -53,6 +53,11 @@
+ #include "smbfs.h"
+ #include "local.h"
+ 
++#include "../src/panel.h"
++#ifdef HAVE_CHARSET
++#include "../src/recode.h"
++#endif
++
+ /* They keep track of the current directory */
+ static struct vfs_class *current_vfs;
+ static char *current_dir;
+@@ -685,8 +690,66 @@
+     vfsid old_vfsid;
+     int result;
+ 
++#ifdef HAVE_CHARSET
++    char* errmsg;
++#endif
++    WPanel* p=ret_panel;
++
+     new_dir = vfs_canon (path);
+     new_vfs = vfs_get_class (new_dir);
++    old_vfsid = vfs_getid (current_vfs, current_dir);
++    old_vfs = current_vfs;
++
++    if(p) {
++
++      // Change from localfs to ftpfs
++      ret_panel=NULL;
++      if(    (strcmp(old_vfs->name,"localfs")==0) &&
++            (strcmp(new_vfs->name,"ftpfs")==0)){
++        p->is_return=1;
++        strncpy(p->retdir,current_dir, MC_MAXPATHLEN);
++#ifdef HAVE_CHARSET
++       p->ret_codepage=p->src_codepage;
++        p->src_codepage=ftp_codepage;
++        errmsg=my_init_tt(display_codepage,p->src_codepage,p->tr_table);
++        if(errmsg) {
++          panel_reset_codepage(p);
++          message( 1, MSG_ERROR, "%s", errmsg );
++        }
++        errmsg=my_init_tt(p->src_codepage,display_codepage,p->tr_table_input);
++       if(errmsg) {
++          panel_reset_codepage(p);
++          message( 1, MSG_ERROR, "%s", errmsg );
++        }
++#endif
++      }
++
++      // Change from ftpfs to localfs
++      if(    (strcmp(old_vfs->name,"ftpfs")==0) &&
++            (strcmp(new_vfs->name,"localfs")==0) &&
++             p->is_return){
++        p->is_return=0;
++       g_free(new_dir);
++       new_dir = vfs_canon (p->retdir);
++        new_vfs = vfs_get_class (new_dir);
++#ifdef HAVE_CHARSET
++        p->src_codepage=p->ret_codepage;
++        errmsg=my_init_tt(display_codepage,p->src_codepage,p->tr_table);
++        if(errmsg) {
++          panel_reset_codepage(p);
++          message( 1, MSG_ERROR, "%s", errmsg );
++        }
++        errmsg=my_init_tt(p->src_codepage,display_codepage,p->tr_table_input);
++        if(errmsg) {
++          panel_reset_codepage(p);
++          message( 1, MSG_ERROR, "%s", errmsg );
++        }
++#endif
++      }
++    }
++
++
++
+     if (!new_vfs->chdir) {
+     	g_free (new_dir);
+ 	return -1;
+@@ -700,9 +763,6 @@
+ 	return -1;
+     }
+ 
+-    old_vfsid = vfs_getid (current_vfs, current_dir);
+-    old_vfs = current_vfs;
+-
+     /* Actually change directory */
+     g_free (current_dir);
+     current_dir = new_dir;

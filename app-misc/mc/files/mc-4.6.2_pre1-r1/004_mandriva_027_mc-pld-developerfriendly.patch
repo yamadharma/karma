@@ -1,0 +1,69 @@
+diff -urN mc-2006-02-24-22.org/syntax/cvs-userlist.syntax mc-2006-02-24-22/syntax/cvs-userlist.syntax
+--- mc-2006-02-24-22.org/syntax/cvs-userlist.syntax	1970-01-01 01:00:00.000000000 +0100
++++ mc-2006-02-24-22/syntax/cvs-userlist.syntax	2006-02-28 17:37:11.801898000 +0100
+@@ -0,0 +1,20 @@
++wholechars abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-
++
++context default
++	keyword : yellow black
++# people
++	keyword whole linestart ac-admin black white
++	keyword whole linestart ra-admin black white
++	keyword whole linestart nest-admin black white
++	keyword whole linestart cvsadmin black white
++	keyword whole linestart distfilesadmin black white
++# machines (hm... people vs machines... like in the Matrix ;))
++	keyword wholeleft linestart builder gray white
++	keyword wholeleft linestart buildlogs gray white
++	keyword wholeleft linestart cia gray white
++	keyword wholeleft linestart distfiles gray white
++
++context exclusive : : cyan
++	keyword , yellow black
++	
++
+diff -urN mc-2006-02-24-22.org/syntax/Makefile.am mc-2006-02-24-22/syntax/Makefile.am
+--- mc-2006-02-24-22.org/syntax/Makefile.am	2006-01-30 18:01:58.000000000 +0100
++++ mc-2006-02-24-22/syntax/Makefile.am	2006-02-28 17:38:02.617073750 +0100
+@@ -7,7 +7,8 @@
+ 	changelog.syntax	\
+ 	cs.syntax		\
+ 	css.syntax		\
++	cvs-userlist.syntax	\
+	d.syntax		\
+ 	diff.syntax		\
+ 	dos.syntax		\
+ 	eiffel.syntax		\
+@@ -28,6 +29,7 @@
+ 	pascal.syntax		\
+ 	perl.syntax		\
+ 	php.syntax		\
++	pld-update-todo.syntax	\
+ 	po.syntax		\
+ 	povray.syntax		\
+ 	python.syntax		\
+diff -urN mc-2006-02-24-22.org/syntax/pld-update-todo.syntax mc-2006-02-24-22/syntax/pld-update-todo.syntax
+--- mc-2006-02-24-22.org/syntax/pld-update-todo.syntax	1970-01-01 01:00:00.000000000 +0100
++++ mc-2006-02-24-22/syntax/pld-update-todo.syntax	2006-02-28 17:37:11.805898250 +0100
+@@ -0,0 +1,5 @@
++context default
++	keyword wholeleft	[OLD]\s*\s	brightred
++	keyword wholeleft	[NEW]\s*\n	green
++	keyword wholeright	(*)	white black
++
+diff -urN mc-2006-02-24-22.org/syntax/Syntax mc-2006-02-24-22/syntax/Syntax
+--- mc-2006-02-24-22.org/syntax/Syntax	2005-10-31 22:15:34.000000000 +0100
++++ mc-2006-02-24-22/syntax/Syntax	2006-02-28 17:37:11.805898250 +0100
+@@ -145,5 +145,11 @@
+ file Don_t_match_me Mail\sfolder ^From\s
+ include mail.syntax
+ 
++file PLD-update-TODO PLD\sTODO
++include pld-update-todo.syntax
++
++file users CVS\suser\slist
++include cvs-userlist.syntax
++
+ file .\* unknown
+ include unknown.syntax
+

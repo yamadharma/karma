@@ -1,0 +1,166 @@
+diff -u -w -r1.141 util.c
+--- ./src/util.c	25 Sep 2007 15:33:37 -0000	1.141
++++ ./src/util.c	27 Feb 2008 15:38:13 -0000
+@@ -1525,3 +1525,58 @@
+     return (sep != NULL) ? sep + 1 : result;
+ }
+ 
++/* Unescape paths or other strings for e.g the internal cd  */
++char *
++unescape_string ( const char * in ) {
++	char * local = NULL;
++	int i = 0;
++	int j = 20;
++	int k = 0;
++
++	local = g_malloc(j);
++	
++	for (i=0;i<=strlen(in);i++) {
++		if (i-k+1 >= j ) {
++			j = j + 20;
++			local = g_realloc(local,j);
++		}
++		if ( (strchr(" \t*|;<>~#()?[]{}&",in[i])) && ( strchr("\\",in[i-1])) ) {
++			k++;
++			local[i-k] = in[i];
++		} else {
++			local[i-k] = in[i];
++		}
++	}
++	local[i-k] = '\0';
++	
++	return local;
++}
++
++/* To be compatible with the general posix command lines we have to escape *
++ * strings for the command line											   */
++char *
++escape_string ( const char * in ) {
++	char * local = NULL;
++	int i = 0;
++	int j = 20;
++	int k = 0;
++
++	local = g_malloc(j);
++
++	for (i=0;i<strlen(in);i++) {
++		if (i+k+1 >= j ) { //If 20 chars is too low for the path
++			j = j + 20;
++			local = g_realloc(local,j);
++		}
++		if ( (strchr(" \t*|;<>~#()?[]{}&",in[i])) && (! strchr("\\",in[i-1])) ) {
++			local[i+k] = 92; // Ascii for "\"
++			k = k+1;
++			local[i+k] = in[i];
++		} else {
++			local[i+k] = in[i];
++		}
++	}
++	local[i+k] = '\0';
++
++	return local;
++}
+diff -u -w -r1.78 util.h
+--- ./src/util.h	3 Feb 2006 17:04:17 -0000	1.78
++++ ./src/util.h	27 Feb 2008 15:38:13 -0000
+@@ -14,6 +14,8 @@
+ extern const char *cstrcasestr (const char *haystack, const char *needle);
+ extern const char *cstrstr (const char *haystack, const char *needle);
+ 
++char *unescape_string ( const char * in );
++char *escape_string ( const char * in );
+ void str_replace(char *s, char from, char to);
+ int  is_printable (int c);
+ void msglen (const char *text, /*@out@*/ int *lines, /*@out@*/ int *columns);
+diff -u -w -r1.61 complete.c
+--- ./src/complete.c	25 Sep 2007 15:33:36 -0000	1.61
++++ ./src/complete.c	27 Feb 2008 15:38:14 -0000
+@@ -40,6 +40,7 @@
+ #include "wtools.h"
+ #include "complete.h"
+ #include "main.h"
++#include "util.h"
+ #include "key.h"		/* XCTRL and ALT macros */
+ 
+ typedef char *CompletionFunction (char *, int);
+@@ -911,6 +912,7 @@
+ static int
+ complete_engine (WInput *in, int what_to_do)
+ {
++    char *complete = NULL;
+     if (in->completions && in->point != end)
+     	free_completions (in);
+     if (!in->completions){
+@@ -924,7 +926,8 @@
+     }
+     if (in->completions){
+     	if (what_to_do & DO_INSERTION || ((what_to_do & DO_QUERY) && !in->completions[1])) {
+-    	    if (insert_text (in, in->completions [0], strlen (in->completions [0]))){
++    	    complete = escape_string(in->completions [0]);
++    	    if (insert_text (in, complete, strlen (complete))){
+     	        if (in->completions [1])
+     	    	    beep ();
+ 		else
+@@ -940,9 +943,11 @@
+     	    Dlg_head *query_dlg;
+     	    WListbox *query_list;
+     	    
+-    	    for (p=in->completions + 1; *p; count++, p++)
++    	    for (p=in->completions + 1; *p; count++, p++) {
++    	    *p = escape_string(*p);
+     	    	if ((i = strlen (*p)) > maxlen)
+     	    	    maxlen = i;
++			}
+     	    start_x = in->widget.x;
+     	    start_y = in->widget.y;
+     	    if (start_y - 2 >= count) {
+diff -u -w -r1.34 command.c
+--- ./src/command.c	26 Sep 2007 10:22:25 -0000	1.34
++++ ./src/command.c	27 Feb 2008 15:38:15 -0000
+@@ -64,6 +64,7 @@
+     const char *t;
+ 
+     /* Tilde expansion */
++    path = unescape_string(path);
+     path_tilde = tilde_expand (path);
+ 
+     /* Leave space for further expansion */
+diff -u -w -r1.151 file.c
+--- ./src/file.c	25 Sep 2007 15:33:36 -0000	1.151
++++ ./src/file.c	5 Mar 2008 09:15:47 -0000
+@@ -63,6 +63,7 @@
+ #include "widget.h"
+ #include "wtools.h"
+ #include "background.h"		/* we_are_background */
++#include "util.h"
+ 
+ /* Needed for current_panel, other_panel and WTree */
+ #include "dir.h"
+@@ -791,7 +807,7 @@
+ 	    }
+ 	}
+ 
+-	if (!appending) {
++	if (!appending && ctx->preserve) {
+ 	    while (mc_chmod (dst_path, (src_mode & ctx->umask_kill))) {
+ 		temp_status = file_error (
+ 			_(" Cannot chmod target file \"%s\" \n %s "), dst_path);
+@@ -1872,6 +1890,8 @@
+ 		dest = temp2;
+ 		temp = NULL;
+ 
++		source_with_path = unescape_string(source_with_path);
++		dest = unescape_string(dest);
+ 		switch (operation) {
+ 		case OP_COPY:
+ 		    /*
+@@ -1963,6 +1983,9 @@
+ 		else {
+ 		    char *temp2 = concat_dir_and_file (dest, temp);
+ 
++			source_with_path = unescape_string(source_with_path);
++			temp2 = unescape_string(temp2);
++			
+ 		    switch (operation) {
+ 		    case OP_COPY:
+ 			/*

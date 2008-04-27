@@ -1,0 +1,24 @@
+diff -urN mc-2006-02-24-22.org/acinclude.m4 mc-2006-02-24-22/acinclude.m4
+--- mc-2006-02-24-22.org/acinclude.m4	2006-02-28 17:39:56.356182000 +0100
++++ mc-2006-02-24-22/acinclude.m4	2006-02-28 17:42:26.541568000 +0100
+@@ -146,7 +146,7 @@
+     dnl FIXME: network checks should probably be in their own macro.
+     AC_SEARCH_LIBS(socket, [xnet bsd socket inet], [have_socket=yes])
+     if test x$have_socket = xyes; then
+-      AC_SEARCH_LIBS(gethostbyname, [bsd socket inet netinet])
++      AC_SEARCH_LIBS(gethostbyname, [bsd socket inet netinet nsl])
+       AC_CHECK_MEMBERS([struct linger.l_linger], , , [
+ #include <sys/types.h>
+ #include <sys/socket.h>
+diff -urN mc-2006-02-24-22.org/configure.ac mc-2006-02-24-22/configure.ac
+--- mc-2006-02-24-22.org/configure.ac	2006-02-24 23:36:32.000000000 +0100
++++ mc-2006-02-24-22/configure.ac	2006-02-28 17:43:17.424748000 +0100
+@@ -304,8 +304,6 @@
+ dnl
+ dnl Network related functions
+ dnl
+-
+-AC_SEARCH_LIBS([socket], [socket])
+ AC_SEARCH_LIBS([gethostbyname], [nsl])
+ 
+ dnl

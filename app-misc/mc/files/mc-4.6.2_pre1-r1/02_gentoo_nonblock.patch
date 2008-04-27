@@ -1,0 +1,12 @@
+diff -ur mc-4.6.2-pre1.orig/src/cons.saver.c mc-4.6.2-pre1/src/cons.saver.c
+--- mc-4.6.2-pre1.orig/src/cons.saver.c	2006-02-21 16:02:11.000000000 +0200
++++ mc-4.6.2-pre1/src/cons.saver.c	2008-04-27 08:50:40.000000000 +0300
+@@ -142,7 +142,7 @@
+ 
+   if (seteuid (uid) < 0)
+     die ();
+-  console_fd = open (tty_name, O_RDONLY);
++  console_fd = open (tty_name, O_RDONLY | O_NONBLOCK);
+   if (console_fd < 0)
+     die ();
+   if (fstat (console_fd, &st) < 0 || ! S_ISCHR (st.st_mode))
