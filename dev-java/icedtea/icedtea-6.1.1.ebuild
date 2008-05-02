@@ -32,18 +32,18 @@ RDEPEND=">=net-print/cups-1.2.12
 	>=media-libs/jpeg-6b
 	>=media-libs/libpng-1.2
 	>=media-libs/giflib-4.1.6"
-DEPEND=">=virtual/jdk-1.6
+DEPEND=">=app-arch/zip-2.32
 	>=app-arch/unzip-5.52
-	>=app-arch/zip-2.32
+	>=virtual/jdk-1.6
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0
 	${RDEPEND}"
 
 pkg_setup() {
-	if [ ${ARCH} != x86 -a ${ARCH} != amd64 ]; then
+	if [ ${ARCH} != x86 -a ${ARCH} != amd64 -a ${ARCH} != sparc ]; then
 		local zero_err
-		ewarn "Building on a non-x86-based"
+		ewarn "Building on a non-x86/sparc-based"
 		ewarn "architecture requires using the zero"
 		ewarn "assembler port, which requires libffi from gcc."
 		if ! use zero; then
@@ -78,17 +78,17 @@ src_compile() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
 	# lovely configure.ac --- horribly broken checks
-	local myconf="--with-openjdk-src-zip="${DISTDIR}/${openjdk}" \
-		--with-parallel-jobs="$(grep -s -c ^processor /proc/cpuinfo)" \
-		--with-openjdk-home="$(java-config --jdk-home)" \
+	local myconf="--with-openjdk-src-zip=${DISTDIR}/${openjdk} \
+		--with-parallel-jobs=$(grep -s -c ^processor /proc/cpuinfo) \
+		--with-openjdk-home=$(java-config --jdk-home) \
 		--with-openjdk"
-	use nsplugin || myconf="${myconf} --disable-gcjwebplugin"
-	use doc || myconf="${myconf} --disable-docs"
 	use debug && myconf="${myconf} --enable-fast-build"
+	use doc || myconf="${myconf} --disable-docs"
+	use nsplugin || myconf="${myconf} --disable-gcjwebplugin"
 	use zero && myconf="${myconf} --enable-zero"
-	econf ${myconf} || die "configure failed"
 
-	make || die "make failed"
+	econf ${myconf} || die "configure failed"
+	emake -j1 || die "make failed"
 }
 
 src_install() {
