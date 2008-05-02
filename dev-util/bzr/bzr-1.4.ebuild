@@ -83,7 +83,7 @@ src_install() {
 	fi
 	insinto /usr/share/zsh/site-functions
 	doins contrib/zsh/_bzr
-	dobashcompletion contrib/bash/bzr
+	dobashcompletion contrib/bash/bzr.simple bzr
 }
 
 pkg_postinst() {
