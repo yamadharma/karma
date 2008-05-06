@@ -28,7 +28,7 @@ UNIPATCH_STRICTORDER="yes"
 
 SRC_URI="${KERNEL_URI} ${KARMA_PATCH_URI}"
 	
-KEYWORDS="x86 amd64"
+KEYWORDS="x86 ~amd64"
 
 # Local Variables:
 # mode: sh

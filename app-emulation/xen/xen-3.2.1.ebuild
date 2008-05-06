@@ -1,12 +1,12 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/xen/xen-3.2.0.ebuild,v 1.1 2008/02/08 22:19:23 marineam Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/xen/xen-3.2.1.ebuild,v 1.1 2008/05/04 18:59:13 rbu Exp $
 
 inherit mount-boot flag-o-matic
 
 DESCRIPTION="The Xen virtual machine monitor"
-HOMEPAGE="http://www.xensource.com/xen/xen/"
-SRC_URI="mirror://gentoo/xen-${PV}.tar.bz2"
+HOMEPAGE="http://xen.org/"
+SRC_URI="http://bits.xensource.com/oss-xen/release/${PV}/xen-${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -15,7 +15,7 @@ IUSE="debug custom-cflags pae"
 
 RDEPEND="|| ( sys-boot/grub
 		sys-boot/grub-static )
-	 || ( >=sys-kernel/xen-sources-2.6.18 sys-kernel/karma_server-sources )"
+		|| ( >=sys-kernel/xen-sources-2.6.18 sys-kernel/karma_server-sources )"
 PDEPEND="~app-emulation/xen-tools-${PV}"
 
 RESTRICT="test"
