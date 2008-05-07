@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-shells/bash/bash-3.2_p17-r1.ebuild,v 1.3 2007/12/28 19:15:17 cardoe Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-shells/bash/bash-3.2_p39.ebuild,v 1.2 2008/05/06 19:06:34 vapier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib elisp-common
 
@@ -35,6 +35,9 @@ KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc
 IUSE="afs bashlogger nls plugins vanilla"
 
 DEPEND=">=sys-libs/ncurses-5.2-r2"
+RDEPEND="${DEPEND}
+	!<sys-apps/portage-2.1.4_rc1
+	!<sys-apps/paludis-0.26.0_alpha5"
 
 S=${WORKDIR}/${MY_P}
 
@@ -62,9 +65,11 @@ src_unpack() {
 	cd ../..
 
 	if ! use vanilla ; then
+		epatch "${FILESDIR}"/autoconf-mktime-2.59.patch #220040
 		epatch "${FILESDIR}"/${PN}-3.1-gentoo.patch
 		epatch "${FILESDIR}"/${PN}-3.2-loadables.patch
 		epatch "${FILESDIR}"/${PN}-3.2-parallel-build.patch #189671
+		epatch "${FILESDIR}"/${PN}-3.2-ldflags-for-build.patch #211947
 
 		# Fix process substitution on BSD.
 		epatch "${FILESDIR}"/${PN}-3.2-process-subst.patch
@@ -105,6 +110,12 @@ src_compile() {
 	# Force linking with system curses ... the bundled termcap lib
 	# sucks bad compared to ncurses
 	myconf="${myconf} --with-curses"
+
+	# Default path is to use /usr/local/..... regardless.  This little
+	# magic will set the default path to /usr/..... and keep us from
+	# worrying about the rest of the path getting out of sync with the
+	# ebuild code.
+	eval $(echo export $(ac_default_prefix=/usr; eval echo $(grep DEBUGGER_START_FILE= configure)))
 
 	use plugins && append-ldflags -Wl,-rpath,/usr/$(get_libdir)/bash
 	econf \
