@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/sun-jdk/sun-jdk-1.5.0.05.ebuild,v 1.2 2005/10/10 16:23:12 betelgeuse Exp $
 
@@ -8,13 +8,13 @@ MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 ALPHA=${PV#*_alpha}
-DATE="04_dec_2007"
+DATE="24_apr_2008"
 MY_RPV=${MY_PV%.*}
 
 
 BASE_URL="http://download.java.net/jdk7/binaries/"
 x86file="jdk-7-ea-bin-b${ALPHA}-linux-i586-${DATE}.bin"
-amd64file="jdk-7-ea-bin-b${ALPHA}-linux-amd64-${DATE}.bin"
+amd64file="jdk-7-ea-bin-b${ALPHA}-linux-x64-${DATE}.bin"
 
 S="${WORKDIR}/jdk${MY_RPV}"
 DESCRIPTION="Sun's Java Development Kit"
@@ -23,7 +23,6 @@ SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
 SLOT="1.7"
 LICENSE="sun-prerelease-jdk7"
 KEYWORDS="amd64 x86"
-#RESTRICT="nostrip fetch"
 RESTRICT="nostrip"
 IUSE="X alsa doc nsplugin examples"
 
@@ -48,16 +47,6 @@ QA_TEXTRELS_x86="opt/${P}/jre/lib/i386/server/libjvm.so
 	opt/${P}/jre/lib/i386/client/libjvm.so
 	opt/${P}/jre/lib/i386/motif21/libmawt.so
 	opt/${P}/jre/lib/i386/libdeploy.so"
-
-#pkg_nofetch() {
-#	einfo "Please download:"
-#	einfo "${A} from ${BASE_URL}${A}"
-#	einfo "Then place it in ${DISTDIR}"
-#	einfo "tip: wget ${BASE_URL}${A} -O ${DISTDIR}/${A}"
-#
-#	ewarn "By downloading and installing, you are agreeing to the terms"
-#	ewarn "of Sun's prerelease license."
-#}
 
 src_unpack() {
 	# Do a little voodoo to extract the distfile

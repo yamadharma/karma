@@ -1,20 +1,31 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/libdrm/libdrm-2.3.0.ebuild,v 1.2 2007/03/10 14:53:17 vapier Exp $
-
-# Must be before x-modular eclass is inherited
-#SNAPSHOT="yes"
+# $Header: $
 
 inherit x-modular
 
-DESCRIPTION="X.Org libdrm library"
-HOMEPAGE="http://dri.freedesktop.org/"
-SRC_URI="http://dri.freedesktop.org/libdrm/${P}.tar.gz"
+EGIT_REPO_URI="git://anongit.freedesktop.org/git/mesa/drm"
 
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86 ~x86-fbsd"
+DESCRIPTION="nouveau X.Org libdrm library"
+HOMEPAGE="http://nouveau.freedesktop.org"
+# KEYWORDS="x86 amd64"
+KEYWORDS=""
 
-RDEPEND=""
-DEPEND="${RDEPEND}"
+src_compile() {
+	x-modular_src_compile
+
+	cd ${S}/tests
+	emake dristat || die "Making test apps failed"
+	emake drmstat || die "Making test apps failed"
+}
+
+src_install() {
+	x-modular_src_install
+
+	cd ${S}/tests/.libs
+	dobin dristat
+	dobin drmstat
+}
 
 pkg_preinst() {
 	x-modular_pkg_preinst
