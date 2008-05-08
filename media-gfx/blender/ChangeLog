@@ -1,6 +1,23 @@
 # ChangeLog for media-gfx/blender
 # Copyright 2002-2008 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/blender/ChangeLog,v 1.134 2008/04/27 12:24:08 maekke Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/blender/ChangeLog,v 1.137 2008/05/08 14:47:24 opfer Exp $
+
+  08 May 2008; Christian Faulhammer <opfer@gentoo.org>
+  blender-2.43-r2.ebuild:
+  stable x86, security bug 219008
+
+*blender-2.45-r4 (07 May 2008)
+*blender-2.43-r2 (07 May 2008)
+
+  07 May 2008; Markus Meier <maekke@gentoo.org>
+  +files/blender-2.45-cve-2008-1103-1.patch,
+  +files/blender-2.45-cve-2008-1103-2.patch, -blender-2.43-r1.ebuild,
+  +blender-2.43-r2.ebuild, -blender-2.45-r2.ebuild, blender-2.45-r3.ebuild,
+  +blender-2.45-r4.ebuild:
+  security bump, add CVE-2008-1103 patches from fedora, security bug #219008
+
+  01 May 2008; Markus Meier <maekke@gentoo.org> blender-2.45-r3.ebuild:
+  apply ffmpeg patch, bug #219935
 
   27 Apr 2008; Markus Meier <maekke@gentoo.org> -blender-2.45.ebuild,
   -blender-2.45-r1.ebuild:

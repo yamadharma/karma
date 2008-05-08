@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/blender/blender-2.45-r1.ebuild,v 1.2 2008/04/12 10:22:13 dev-zero Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-gfx/blender/blender-2.45-r4.ebuild,v 1.1 2008/05/07 21:07:25 maekke Exp $
 
 inherit multilib flag-o-matic eutils python
 
@@ -12,10 +12,11 @@ SRC_URI="http://download.blender.org/source/${P}.tar.gz"
 
 SLOT="0"
 LICENSE="|| ( GPL-2 BL )"
-KEYWORDS="amd64 ~ppc ~ppc64 ~sparc x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
 RDEPEND=">=dev-libs/openssl-0.9.6
-	ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20080326 )
+	ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20070616-r1
+			media-libs/x264 )
 	jpeg? ( media-libs/jpeg )
 	media-libs/tiff
 	>=dev-lang/python-2.4
@@ -59,7 +60,10 @@ src_unpack() {
 	epatch "${FILESDIR}"/blender-2.44-scriptsdir.patch
 	epatch "${FILESDIR}"/blender-2.44-swscale.patch
 	epatch "${FILESDIR}"/${P}-missing_includes.patch
-	epatch "${FILESDIR}"/${P}-ffmpeg.patch
+	epatch "${FILESDIR}"/${P}-cve-2008-1102.patch
+	epatch "${FILESDIR}"/${P}-cve-2008-1103-1.patch
+	epatch "${FILESDIR}"/${P}-cve-2008-1103-2.patch
+	epatch "${FILESDIR}"/${P}-ffmpeg.patch		
 
 	if use ffmpeg ; then
 		cd "${S}"/extern
