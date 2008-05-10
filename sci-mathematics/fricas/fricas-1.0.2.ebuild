@@ -32,7 +32,7 @@ RDEPEND="${DEPEND}
 	virtual/latex-base
 	"	
 
-S="${WORKDIR}/${MY_P}"
+# S="${WORKDIR}/${MY_P}"
 
 src_compile() {
 	local myconf
@@ -52,7 +52,7 @@ src_install() {
 	sed -e "s:axiom/target:fricas/target:g" -i ${D}/usr/bin/axiom || die 'Failed to patch axiom runscript!'
 	mv ${D}/usr/bin/axiom ${D}/usr/bin/${PN}
 
-	elisp-install axiom ${S}/contrib/emacs/*.el
+#	elisp-install axiom ${S}/contrib/emacs/*.el
 	
 	insinto ${TEXMF}/tex/latex/axiom
 	doins ${S}/src/scripts/tex/axiom.sty

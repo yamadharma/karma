@@ -42,7 +42,7 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/${P}.patch
+	epatch "${FILESDIR}"/${PF}.patch
 }
 
 src_compile() {
