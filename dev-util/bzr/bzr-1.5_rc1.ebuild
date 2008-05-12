@@ -42,6 +42,8 @@ src_unpack() {
 	epatch "${FILESDIR}"/${PN}-0.90-tests-fix_root.patch
 	# Fix permission errors when run under directories with setgid set.
 	epatch "${FILESDIR}"/${PN}-0.90-tests-sgid.patch
+	# Fix bzr+http with pycurl.
+	epatch "${FILESDIR}"/${PN}-1.4_rc2-bzrplushttp-pycurl.patch
 }
 
 src_compile() {

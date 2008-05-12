@@ -1,0 +1,10 @@
+--- ./bzrlib/transport/http/_pycurl.py.old	2008-04-22 13:22:47.000000000 -0700
++++ ./bzrlib/transport/http/_pycurl.py	2008-04-22 13:24:32.000000000 -0700
+@@ -113,6 +113,7 @@
+             if 'https' not in supported:
+                 raise errors.DependencyNotPresent('pycurl', 'no https support')
+         self.cabundle = ca_bundle.get_ca_path()
++        self._remote_is_at_least_1_2 = True
+ 
+     def _get_curl(self):
+         connection = self._get_connection()

@@ -6,7 +6,7 @@ inherit bzr distutils
 
 DESCRIPTION="Plugin that provides integration between bzr and D-Bus."
 HOMEPAGE="https://launchpad.net/bzr-dbus"
-EBZR_REPO_URI="lp:///~bzr/bzr-dbus/"
+EBZR_REPO_URI="lp:bzr-dbus"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -18,16 +18,6 @@ RDEPEND="dev-python/dbus-python
 	dev-python/pygobject"
 S="${WORKDIR}"/${P}
 
-pkg_setup() {
-	export EBZR_REVISION=`echo "${PV}" | sed -e 's:^.\+_pre\(.*\)$:\1:g' `
-}
-
 src_unpack() {
 	bzr_src_unpack
-}
-
-src_install() {
-	distutils_src_install
-	insinto /usr/share/dbus-1/services
-	doins org.bazaarvcs.plugins.dbus.Broadcast.service
 }
