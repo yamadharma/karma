@@ -1,0 +1,53 @@
+diff -Naur librpcsecgss-0.18-old/configure.in librpcsecgss-0.18-pkgconfig/configure.in
+--- configure.in	2008-05-03 11:51:32.000000000 +0000
++++ configure.in	2008-05-03 12:28:59.000000000 +0000
+@@ -12,10 +12,13 @@
+ AC_PROG_RANLIB
+ 
+ # Checks for libraries.
+-PKG_CHECK_MODULES([GSSGLUE], [libgssglue >= 0.1], [],
+-  [AC_MSG_ERROR([Unable to locate information required to use libgssglue.
+-  If you have pkgconfig installed, you might try setting environment
+-  variable PKG_CONFIG_PATH to /usr/local/lib/pkgconfig])])
++PKG_CHECK_MODULES([GSSGLUE], [libgssglue >= 0.1],
++  [echo GSSGLUE found; cp librpcsecgss.pc.in.gssglue librpcsecgss.pc.in],
++  [PKG_CHECK_MODULES([GSSGLUE], [heimdal-gssapi],
++    [echo HEIMDAL found; cp librpcsecgss.pc.in.heimdal librpcsecgss.pc.in],
++    [AC_MSG_ERROR([Unable to locate information required to use libgssglue.
++    If you have pkgconfig installed, you might try setting environment
++    variable PKG_CONFIG_PATH to /usr/local/lib/pkgconfig])])])
+ 
+ # Checks for header files.
+ AC_HEADER_STDC
+diff -Naur librpcsecgss-0.18-old/librpcsecgss.pc.in.gssglue librpcsecgss-0.18-pkgconfig/librpcsecgss.pc.in.gssglue
+--- librpcsecgss.pc.in.gssglue	1970-01-01 00:00:00.000000000 +0000
++++ librpcsecgss.pc.in.gssglue	2008-05-03 12:00:51.000000000 +0000
+@@ -0,0 +1,12 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
++Name: librpcsecgss
++Description: Library that implements rpcsec_gss interface.
++Requires: libgssglue
++Version: @PACKAGE_VERSION@
++Libs: -L@libdir@ -lrpcsecgss
++Cflags: -I@includedir@/rpcsecgss
++
+diff -Naur librpcsecgss-0.18-old/librpcsecgss.pc.in.heimdal librpcsecgss-0.18-pkgconfig/librpcsecgss.pc.in.heimdal
+--- librpcsecgss.pc.in.heimdal	1970-01-01 00:00:00.000000000 +0000
++++ librpcsecgss.pc.in.heimdal	2008-05-03 12:00:43.000000000 +0000
+@@ -0,0 +1,12 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
++Name: librpcsecgss
++Description: Library that implements rpcsec_gss interface.
++Requires: heimdal-gssapi
++Version: @PACKAGE_VERSION@
++Libs: -L@libdir@ -lrpcsecgss
++Cflags: -I@includedir@/rpcsecgss
++

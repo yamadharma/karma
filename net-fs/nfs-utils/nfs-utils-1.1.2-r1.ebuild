@@ -1,14 +1,12 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/nfs-utils/nfs-utils-1.1.1-r1.ebuild,v 1.1 2008/04/20 01:02:00 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/nfs-utils/nfs-utils-1.1.2-r1.ebuild,v 1.1 2008/05/04 09:53:33 vapier Exp $
 
-inherit eutils flag-o-matic multilib
+inherit eutils flag-o-matic multilib autotools
 
 DESCRIPTION="NFS client and server daemons"
 HOMEPAGE="http://nfs.sourceforge.net/"
-SRC_URI="mirror://sourceforge/nfs/${P}.tar.gz
-	http://www.citi.umich.edu/projects/nfsv4/linux/nfs-utils-patches/1.1.1-1/nfs-utils-1.1.1-001-xlog_segfault_fix.dif
-	http://www.citi.umich.edu/projects/nfsv4/linux/nfs-utils-patches/1.1.1-1/nfs-utils-1.1.1-002-svcgssd_pass_down_principal_name.dif"
+SRC_URI="mirror://sourceforge/nfs/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -26,8 +24,13 @@ RDEPEND="tcpd? ( sys-apps/tcp-wrappers )
 		>=net-libs/libnfsidmap-0.16
 		kerberos? (
 			net-libs/librpcsecgss
-			net-libs/libgssglue
-			virtual/krb5
+			|| (
+				(
+					net-libs/libgssglue
+					app-crypt/mit-krb5
+				)
+				>=app-crypt/heimdal-1.0
+			)
 		)
 	)"
 # util-linux dep is to prevent man-page collision
@@ -35,16 +38,24 @@ DEPEND="${RDEPEND}
 	>=sys-apps/util-linux-2.12r-r7"
 
 src_unpack() {
-	unpack ${P}.tar.gz
+	unpack ${A}
 	cd "${S}"
-	epatch "${DISTDIR}"/nfs-utils-1.1.1-001-xlog_segfault_fix.dif "${DISTDIR}"/nfs-utils-1.1.1-002-svcgssd_pass_down_principal_name.dif
-	sed -i \
-		-e 's:libgssapi >= 0\.11:libgssglue >= 0.1:' \
-		-e 's:-lgssapi:-lgssglue:' \
-		configure #191746
+	epatch "${FILESDIR}"/${P}-rpcgen-ioctl.patch
+	epatch "${FILESDIR}"/${P}-mount-eacces.patch #219729
+
+ 	epatch "${FILESDIR}"/${P}-pkgconfig_ac.patch
+ 	epatch "${FILESDIR}"/${P}-no_libgssapi.patch
+ 	eautoreconf
 }
 
 src_compile() {
+	local myconf
+	if use nonfsv4; then
+		myconf="--disable-gss"
+	else
+		myconf="$(use_enable kerberos gss)"
+	fi
+
 	econf \
 		--mandir=/usr/share/man \
 		--with-statedir=/var/lib/nfs \
@@ -53,7 +64,7 @@ src_compile() {
 		--enable-secure-statd \
 		$(use_with tcpd tcp-wrappers) \
 		$(use_enable !nonfsv4 nfsv4) \
-		$(use !nonfsv4 && use_enable kerberos gss) \
+		${myconf} \
 		|| die "Configure failed"
 	emake || die "Failed to compile"
 }
