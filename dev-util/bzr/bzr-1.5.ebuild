@@ -9,7 +9,7 @@ S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Bazaar is a next generation distributed version control system."
 HOMEPAGE="http://bazaar-vcs.org/"
-SRC_URI="http://bazaar-vcs.org/releases/src/${MY_P}.tar.gz"
+SRC_URI="https://launchpad.net/bzr/${PV}/${PV}/+download/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
