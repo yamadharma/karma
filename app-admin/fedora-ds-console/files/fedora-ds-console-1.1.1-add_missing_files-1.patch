@@ -1,0 +1,197 @@
+Submitted By: Mario Fetka (mario-fetka at gmx dot at)
+Date: 2008-01-19
+Initial Package Version: 1.1.1
+Origin: me
+Upstream Status: unknown
+Description: add missing files
+ 
+diff -Naur fedora-ds-console-1.1.1.orig/src/com/netscape/admin/dirserv/task/Export.java src/com/netscape/admin/dirserv/task/Export.java
+--- fedora-ds-console-1.1.1.orig/src/com/netscape/admin/dirserv/task/Export.java	1970-01-01 00:00:00.000000000 +0000
++++ src/com/netscape/admin/dirserv/task/Export.java	2005-07-18 00:56:17.000000000 +0000
+@@ -0,0 +1,95 @@
++/** BEGIN COPYRIGHT BLOCK
++ * Copyright (C) 2001 Sun Microsystems, Inc. Used by permission.
++ * Copyright (C) 2005 Red Hat, Inc.
++ * All rights reserved.
++ * 
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation version 2 of the License.
++ * 
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ * 
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++ * END COPYRIGHT BLOCK **/
++
++package com.netscape.admin.dirserv.task;
++
++import java.util.Hashtable;
++import java.awt.Component;
++import javax.swing.JFrame;
++import com.netscape.management.client.IPage;
++import com.netscape.management.client.console.ConsoleInfo;
++import com.netscape.admin.dirserv.panel.BackupPanel;
++import com.netscape.admin.dirserv.DSUtil;
++import com.netscape.admin.dirserv.IDSModel;
++import com.netscape.admin.dirserv.ExportImportProgressDialog;
++
++/**
++ *	Netscape Directory Server 4.0 task for exporting a database to LDIF.
++ *
++ * @author  rweltman
++ * @version %I%, %G%
++ * @date	 	9/15/97
++ * @see     com.netscape.admin.dirserv.DSAdmin
++ * @see     com.netscape.admin.dirserv.task.CGIReportTask
++ */
++public class Export extends CGITask {
++	/**
++	 *	Constructor for the Export Directory Task
++	 */
++	public Export( ConsoleInfo info ) {
++		_consoleInfo = info;
++		_sCmd = "Tasks/Operation/Export";
++		_section = "Export";
++		setName(DSUtil._resource.getString(_section,"title"));
++	}
++
++	/**
++	 * Export to LDIF
++	 *
++	 * @param filename Full path of file to export to.
++	 * @param subtree A subtree to export
++	 * @return true if the export succeeded.
++	 */
++    public boolean exec( String filename, String subtree, Component comp ) {
++		String sAdminURL = _consoleInfo.getAdminURL();
++
++		String fullCmd = sAdminURL + _consoleInfo.get( "ServerInstance" ) +
++			"/" + _sCmd;
++		Hashtable args = new Hashtable();
++		args.put("filename", filename);
++		if ( subtree != null ) {
++			args.put("subtree", subtree);
++		}
++		IDSModel model =
++			(IDSModel)_consoleInfo.get( "dsresmodel" );
++		CGIThread task = new CGIThread( fullCmd, args, model, _section );
++		String title = _resource.getString("dirtask", _section+"-title");
++		JFrame frame = model.getFrame();
++		ExportImportProgressDialog dlg =
++			new ExportImportProgressDialog(
++				frame, task, title,
++				false, comp );
++		task.addEntryChangeListener( dlg );
++		dlg.setModal( true );
++		/* Let the dialog run the thread */
++		dlg.setVisible( true );
++		showResultDialog( task );
++		return task.getStatus();
++	}
++
++	/**
++	 * Export to LDIF
++	 *
++	 * @param filename Full path of file to export to.
++	 * @return true if the export succeeded.
++	 */
++    public boolean exec( String filename, Component comp ) {
++		return exec( filename, null, comp );
++	}
++}
+diff -Naur fedora-ds-console-1.1.1.orig/src/com/netscape/admin/dirserv/task/Import.java src/com/netscape/admin/dirserv/task/Import.java
+--- fedora-ds-console-1.1.1.orig/src/com/netscape/admin/dirserv/task/Import.java	1970-01-01 00:00:00.000000000 +0000
++++ src/com/netscape/admin/dirserv/task/Import.java	2005-07-18 00:56:17.000000000 +0000
+@@ -0,0 +1,87 @@
++/** BEGIN COPYRIGHT BLOCK
++ * Copyright (C) 2001 Sun Microsystems, Inc. Used by permission.
++ * Copyright (C) 2005 Red Hat, Inc.
++ * All rights reserved.
++ * 
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation version 2 of the License.
++ * 
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ * 
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++ * END COPYRIGHT BLOCK **/
++
++package com.netscape.admin.dirserv.task;
++
++import java.util.Hashtable;
++import java.awt.Component;
++import javax.swing.JFrame;
++import com.netscape.management.client.IPage;
++import com.netscape.management.client.console.ConsoleInfo;
++import com.netscape.admin.dirserv.panel.BackupPanel;
++import com.netscape.admin.dirserv.DSUtil;
++import com.netscape.admin.dirserv.IDSModel;
++import com.netscape.admin.dirserv.ExportImportProgressDialog;
++
++/**
++ *	Netscape Admin Server 4.0 task for importing an LDIF file.
++ *
++ * @author  rweltman
++ * @version %I%, %G%
++ * @date	03/09/98
++ * @see     com.netscape.admin.dirserv.DSAdmin
++ * @see     com.netscape.admin.dirserv.task.CGIReportTask
++ */
++public class Import extends CGITask {
++	/**
++	 *	Constructor for the Import Directory Task
++	 */
++	public Import( ConsoleInfo info ) {
++		_consoleInfo = info;
++		_sCmd = "Tasks/Operation/Import";
++		_section = "Import";
++		setName(DSUtil._resource.getString(_section,"title"));
++	}
++
++	/**
++	 * Import from LDIF
++	 *
++	 * @param filename Full path of file to import.
++	 * @return true if the import succeeded.
++	 */
++    public boolean exec( String filename, boolean saveConfig,
++						 Component comp ) {
++		String sAdminURL = _consoleInfo.getAdminURL();
++		String fullCmd = sAdminURL + _consoleInfo.get( "ServerInstance" ) +
++			"/" + _sCmd;
++		Hashtable args = new Hashtable();
++		args.put("filename", filename);
++		args.put("saveconfig", saveConfig ? "true" : "false");
++		IDSModel model =
++			(IDSModel)_consoleInfo.get( "dsresmodel" );
++		CGIThread task = new CGIThread( fullCmd, args, model, _section );
++		String title = _resource.getString("dirtask", _section+"-title");
++		JFrame frame = model.getFrame();
++		ExportImportProgressDialog dlg =
++			new ExportImportProgressDialog(
++				frame, task, title,
++				false, comp );
++		/* Allow disposing of the dialog from the system menu. This will
++		   not cancel the action, but if import hangs (because it's out
++		   of disk space), you can continue using the console. */
++		dlg.setDefaultCloseOperation( dlg.DISPOSE_ON_CLOSE );
++		task.addEntryChangeListener( dlg );
++		dlg.setModal( true );
++		/* Let the dialog run the thread */
++		dlg.setVisible( true );
++		showResultDialog( task );
++		return task.getStatus();
++	}
++}
++

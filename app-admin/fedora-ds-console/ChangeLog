@@ -1,0 +1,36 @@
+# ChangeLog for app-admin/fedora-ds-console
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  19 Jan 2008; Mario Fetka <mario-fetka@gmx.at>
+  +files/fedora-ds-console-1.1.1-add_missing_files-1.patch,
+  fedora-ds-console-1.1.1.ebuild:
+  add missing files patch
+
+  19 Jan 2008; Mario Fetka <mario-fetka@gmx.at>
+  fedora-ds-console-1.1.1.ebuild:
+  correct oversight
+
+  19 Jan 2008; Mario Fetka <mario-fetka@gmx.at> ++, ++,
+  -fedora-ds-console-1.1.0_pre20071111.ebuild:
+  Initial 1.1 FDS
+
+  11 Nov 2007; Mario Fetka <mario-fetka@gmx.at> ++, ++,
+  -fedora-ds-console-1.1.0_pre20071017.ebuild:
+  bump
+
+  17 Oct 2007; Mario Fetka <mario-fetka@gmx.at> ++, ++,
+  -fedora-ds-console-1.1.0_pre20071014.ebuild:
+  Bump to latest snapshot
+
+  14 Oct 2007; Mario Fetka <mario-fetka@gmx.at> ++, ++,
+  -fedora-ds-console-1.1.0_pre20071009.ebuild:
+  Bump to latest snapshot
+
+  09 Oct 2007; Mario Fetka <mario-fetka@gmx.at> ++, ++,
+  -fedora-ds-console-1.1.0_pre20071006.ebuild:
+  Bump to snapshot 20071009
+
+  07 Oct 2007; Mario Fetka <mario-fetka@gmx.at> +metadata.xml:
+  first version
+
