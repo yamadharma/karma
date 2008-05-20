@@ -9,8 +9,9 @@ inherit autotools check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 
 
 IUSE="binfilter cups dbus debug eds firefox gnome gstreamer gtk kde ldap mono odk pam seamonkey webdav xulrunner"
 
-MY_PV="2.4.0.5"
+MY_PV="2.4.0.10"
 PATCHLEVEL="OOH680"
+MST="OOH680_m12"
 SRC="OOo_${PV}_src"
 S="${WORKDIR}/ooo"
 S_OLD="${WORKDIR}/ooo-build-${MY_PV}"
@@ -319,7 +320,7 @@ src_compile() {
 		--with-num-cpus="${JOBS}" \
 		--without-binsuffix \
 		--with-installed-ooo-dirname="openoffice" \
-		--with-tag=OOH680_m12 \
+		--with-tag="${MST}" \
 		${GTKFLAG} \
 		`use_enable mono` \
 		`use_enable kde` \
@@ -358,6 +359,8 @@ src_install() {
 	# record java libraries
 	use java && java-pkg_regjar "${D}"/usr/$(get_libdir)/openoffice/program/classes/*.jar
 
+	# trying to work around javaldx problems on start
+	cp ${S}/build/${MST}/solver/*/*/lib/sunjavapluginrc ${D}/usr/$(get_libdir)/openoffice/program/ || die "Java config not found!"
 }
 
 pkg_postinst() {
