@@ -1,0 +1,27 @@
+Submitted By: Mario Fetka (mario-fetka at gmx dot at)
+Date: 2007-08-20
+Initial Package Version: 1.2.8
+Origin: me
+Upstream Status: unknown
+Description: This patch adds support for mozldap (its a hack)
+ 
+diff -Naur apr-util-1.2.8.orig/build/apu-conf.m4 apr-util-1.2.8/build/apu-conf.m4
+--- apr-util-1.2.8.orig/build/apu-conf.m4	2007-08-20 18:22:08.000000000 +0000
++++ apr-util-1.2.8/build/apu-conf.m4	2007-08-20 19:44:42.000000000 +0000
+@@ -296,6 +296,7 @@
+     LIBLDAP="$withval"
+     if test "$LIBLDAP" = "yes"; then
+ dnl The iPlanet C SDK 5.0 is as yet untested... 
++      APU_FIND_LDAPLIB("ldap60", "-lnspr4 -lplc4 -lplds4 -lldif60 -lnss3 -lprldap60 -lssl3 -lssldap60")
+       APU_FIND_LDAPLIB("ldap50", "-lnspr4 -lplc4 -lplds4 -liutil50 -llber50 -lldif50 -lnss3 -lprldap50 -lssl3 -lssldap50")
+       APU_FIND_LDAPLIB("ldapssl41", "-lnspr3 -lplc3 -lplds3")
+       APU_FIND_LDAPLIB("ldapssl40")
+@@ -315,7 +316,7 @@
+     fi
+ 
+     test ${apu_has_ldap} != "1" && AC_MSG_ERROR(could not find an LDAP library)
+-    AC_CHECK_LIB(lber, ber_init)
++    AC_CHECK_LIB(ldap60, ber_init)
+ 
+     AC_CHECK_HEADERS(lber.h, lber_h=["#include <lber.h>"])
+ 

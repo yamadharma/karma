@@ -1,0 +1,11 @@
+# ChangeLog for dev-libs/apr-util
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  19 Jan 2008; Mario Fetka <mario-fetka@gmx.at>
+  +files/apr-util-ebuild-1.2.10-mozldap.patch, +apr-util-1.2.12-r100.ebuild:
+  Bump
+
+  05 Oct 2007; Mario Fetka <mario-fetka@gmx.at> +metadata.xml:
+  add mozldap support
+

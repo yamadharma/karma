@@ -1,0 +1,55 @@
+--- apr-util-1.2.10.ebuild	2007-12-11 11:35:55.000000000 +0100
++++ apr-util-1.2.10-r99.ebuild	2007-10-05 23:15:07.000000000 +0200
+@@ -15,8 +15,8 @@
+ 
+ LICENSE="Apache-2.0"
+ SLOT="1"
+-KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 s390 sh sparc ~sparc-fbsd x86 ~x86-fbsd"
+-IUSE="berkdb doc gdbm ldap mysql postgres sqlite sqlite3"
++KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86 ~x86-fbsd"
++IUSE="berkdb doc gdbm ldap mozldap mysql postgres sqlite sqlite3"
+ RESTRICT="test"
+ 
+ DEPEND="dev-libs/expat
+@@ -25,14 +25,28 @@
+ 	doc? ( app-doc/doxygen )
+ 	gdbm? ( sys-libs/gdbm )
+ 	ldap? ( =net-nds/openldap-2* )
++	mozldap? ( =dev-libs/mozldap-6*
++		   =dev-libs/nspr-4*
++		   =dev-libs/nss-3* )
+ 	mysql? ( =virtual/mysql-5* )
+ 	postgres? ( dev-db/libpq )
+ 	sqlite? ( =dev-db/sqlite-2* )
+ 	sqlite3? ( =dev-db/sqlite-3* )"
+ 
++pkg_setup() {
++        if use ldap && use mozldap ; then
++                eerror "you cant activate ldap & mozldap at the same time "
++                eerror "plz deactivate \"dev-libs/apr-util -ldap mozldap\" one in"
++                eerror "\"etc/portage/package.use\" ;p"
++                die "ldap and mozldap USE conflict"
++        fi
++}
++
+ src_unpack() {
+ 	unpack ${A}
+ 	cd "${S}"
++	
++	epatch "${FILESDIR}"/"${P}"-mozldap60-2.patch
+ 
+ 	if use mysql ; then
+ 		cp "${DISTDIR}"/apr_dbd_mysql-r${DBD_MYSQL}.c \
+@@ -48,6 +62,12 @@
+ 
+ 	use ldap && myconf="${myconf} --with-ldap"
+ 
++	use mozldap && myconf="${myconf} --with-ldap \
++					 --with-ldap-include=/usr/include/mozldap/ \
++					 --with-ldap-lib=/usr/$(get_libdir)/mozldap/ \
++					 --with-nss-lib=/usr/$(get_libdir)/nss/ \
++					 --with-nspr-lib=/usr/$(get_libdir)/nspr"
++
+ 	if use berkdb; then
+ 		dbver="$(db_findver sys-libs/db)" || die "Unable to find db version"
+ 		dbver="$(db_ver_to_slot "$dbver")"

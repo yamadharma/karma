@@ -1,0 +1,31 @@
+# ChangeLog for app-text/pdfsam
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  21 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
+  remove useless inherit
+
+  20 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
+  move to right desktop categorie
+
+  20 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
+  add Build version number
+
+  20 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
+  add Build version number
+
+  20 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
+  correct name of desktop_entry
+
+  20 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
+  correct typo
+
+  20 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
+  add console support
+
+  20 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
+  correct typo
+
+  20 Oct 2007; Mario Fetka <mario-fetka@gmx.at> +metadata.xml:
+  initial pdfsam import
+

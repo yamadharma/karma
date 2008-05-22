@@ -2,26 +2,43 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils
+inherit eutils multilib autotools
 
-DESCRIPTION="Secure PIN handling using NSS crypto"
-HOMEPAGE="http://www.mozilla.org/projects/security/pki"
-SRC_URI="ftp://ftp.mozilla.org/pub/mozilla.org/directory/svrcore/releases/4.0.4/src/${P}.tar.bz2"
+DESCRIPTION="Mozilla LDAP C SDK"
+HOMEPAGE="http://wiki.mozilla.org/LDAP_C_SDK"
+SRC_URI="http://ftp.mozilla.org/pub/mozilla.org/directory/svrcore/releases/${PV}/src/${P}.tar.bz2"
 
 LICENSE="MPL-1.1 GPL-2 LGPL-2.1"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
-IUSE=""
+KEYWORDS="amd64 x86"
+IUSE="ipv6 debug"
 
-DEPEND="dev-libs/nspr
-	dev-libs/nss"
+DEPEND=">=dev-libs/nss-3.11
+	>=dev-libs/nspr-4.6"
 
-RDEPEND="${DEPEND}"
+src_unpack() {
+	unpack ${A}
+	epatch ${FILESDIR}/${P}-gentoo.patch
+	cd ${S}
+	eautoreconf
+}
 
-#src_compile() {
-#}
+src_compile() {
+	if use amd64 ; then
+		myconf="${myconf} --enable-64bit"
+	else
+		myconf=""
+	fi
+
+	econf $(use_enable debug) ${myconf} || die "econf failed"
+	emake || die "emake failed"
+}
 
 src_install () {
-	einstall || die
-	dodoc INSTALL* NEWS README TODO ChangeLog
+	emake DESTDIR=${D} install || die "emake failed"
+	
+	# cope with libraries being in /usr/lib/svrcore
+        dodir /etc/env.d
+        echo "LDPATH=/usr/$(get_libdir)/svrcore" > ${D}/etc/env.d/08svrcore
+
 }

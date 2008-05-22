@@ -1,0 +1,11 @@
+diff -uNr adminutil.pc.in.orig adminutil.pc.in
+--- adminutil.pc.in.orig	2007-08-08 21:08:26.000000000 +0200
++++ adminutil.pc.in	2007-08-08 21:08:37.000000000 +0200
+@@ -6,6 +6,6 @@
+ Name: @PACKAGE_NAME@
+ Description: Utility library for directory server administration
+ Version: @PACKAGE_VERSION@
+-Requires: nspr, nss, svrcore, mozldap, icu
++Requires: nspr, nss, svrcore, mozldap
+ Libs: -ladmsslutil -ladminutil
+ Cflags: -I${includedir}/admsslutil -I${includedir}/adminutil
