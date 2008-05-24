@@ -1,0 +1,9 @@
+#!/bin/sh
+# Wrapper file for execute glest without in of same directory of 
+# glest.ini file
+#
+# Author: Michel Filipe <michel@milk-it.net>
+# Date: 2008-05-08
+
+cd /usr/share/games/glest
+./glest
