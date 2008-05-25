@@ -51,11 +51,12 @@ src_unpack() {
 	cd ${S}
 	
 #	epatch ${FILESDIR}/gigi-sconspatch.patch
-	sed "s|'ln -s ' + lib_dir + '/'|'ln -s '|g" -i SConstruct
+#	sed "s|'ln -s ' + lib_dir + '/'|'ln -s '|g" -i SConstruct
 }
 
 src_compile() {
-	export LIBPATH=/usr/$(get_libdir)/
+#	export LIBPATH=/usr/$(get_libdir)/
+	scons configure
 	vscons libdir=/usr/$(get_libdir)/ build_sdl_driver=$(bool_use sdl) \
 		build_ogre_driver=$(bool_use ogre) \
 		build_ogre_ois_plugin=$(bool_use ois) \
@@ -73,7 +74,9 @@ src_compile() {
 
 
 src_install() {
-	scons prefix="${D}"/usr/ pkgconfigdir="${D}"/usr/lib/pkgconfig install || die
+	scons prefix="${D}"/usr/ \
+	    pkgconfigdir="${D}"/usr/lib/pkgconfig \
+	    install || die
 
 	#is this really necessary?
 	for dir in GiGi GiGiNet GiGiSDL; do
