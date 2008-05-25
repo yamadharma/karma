@@ -31,14 +31,16 @@ DEPEND="dev-util/scons
 
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${P}/FreeOrion"
+# S="${WORKDIR}/${P}/FreeOrion"
 
 src_unpack() {
 	subversion_src_unpack
 	
-	cd ${S}
+	cd ${S}/FreeOrion
 
-	epatch "${FILESDIR}"/freeorion.config.patch || die "epatch failed"
+#	epatch "${FILESDIR}"/freeorion.config.patch || die "epatch failed"
+	epatch "${FILESDIR}"/freeorion-Directories.patch || die "epatch failed"
+
 	if ! use fmod; then
 		sed '/# FMOD/,/# GraphViz/d' -i SConstruct
 		sed "s:'client/human/HumanClientAppSoundFMOD.cpp',:#:" -i SConscript
@@ -47,6 +49,7 @@ src_unpack() {
 }
 
 src_compile() {
+	cd ${S}/FreeOrion
 	export PKG_CONFIG_PATH="${D}/usr/lib/pkgconfig:${PKG_CONFIG_PATH}"
 
 	mv GG/SConstruct GG/SConstruct.old
@@ -58,6 +61,7 @@ src_compile() {
 }
 
 src_install() {
+	cd ${S}/FreeOrion
 	scons install prefix="${D}/usr" datadir="${D}/usr/share/games/freeorion" with_gg="${D}/usr/lib" \
 				  bindir="${D}/usr/games/bin" with_gg_libdir="/usr/lib" \
 				  with_gg_include="/usr/include/GG" pkgconfigdir="${D}/usr/lib/pkgconfig" \
