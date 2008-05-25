@@ -50,12 +50,11 @@ src_unpack() {
 	
 	cd ${S}
 	
-#	epatch ${FILESDIR}/gigi-sconspatch.patch
-#	sed "s|'ln -s ' + lib_dir + '/'|'ln -s '|g" -i SConstruct
+	epatch ${FILESDIR}/gigi-sconspatch.patch
+	sed "s|'ln -s ' + lib_dir + '/'|'ln -s '|g" -i SConstruct
 }
 
 src_compile() {
-#	export LIBPATH=/usr/$(get_libdir)/
 	scons configure
 	vscons libdir=/usr/$(get_libdir)/ build_sdl_driver=$(bool_use sdl) \
 		build_ogre_driver=$(bool_use ogre) \
@@ -63,23 +62,14 @@ src_compile() {
 		|| die
 }
 
-# dies ^^ here with:
-# KeyError: 'LIBPATH':
-#   File "/var/tmp/portage/games-strategy/gigi-0.7.0/work/GG-0.7.0/SConstruct", line 636:
-#     CreateGiGiPCFile(['GiGi.pc'], ['GiGi.pc.in'], env)
-#   File "/var/tmp/portage/games-strategy/gigi-0.7.0/work/GG-0.7.0/build_support.py", line 91:
-#     for path in env['LIBPATH']:
-#   File "//usr/lib64/scons-0.97/SCons/Environment.py", line 309:
-#     return self._dict[key]
-
-
 src_install() {
 	scons prefix="${D}"/usr/ \
-	    pkgconfigdir="${D}"/usr/lib/pkgconfig \
+	    libdir="${D}"/usr/$(get_libdir)/ \
+	    pkgconfigdir="${D}"/usr/$(get_libdir)/pkgconfig \
 	    install || die
 
 	#is this really necessary?
 	for dir in GiGi GiGiNet GiGiSDL; do
-		sed "s_${D}_/_g" -i ${D}/usr/lib/pkgconfig/${dir}.pc
+		sed "s_${D}_/_g" -i ${D}/usr/$(get_libdir)/pkgconfig/${dir}.pc
 	done
 }
