@@ -1,0 +1,48 @@
+#!/sbin/runscript 
+# Copyright 2006 Andreas Bulling 
+# Distributed under the terms of the GNU General Public License v2 
+ 
+opts="${opts} reload status" 
+
+client=/usr/bin/greylist 
+daemon=/usr/sbin/greylistd 
+rundir=/var/run/greylistd 
+datadir=/var/lib/greylistd 
+pidfile=$rundir/pid 
+socket=$rundir/socket 
+user=greylistd 
+ 
+depend() { 
+        need exim 
+} 
+ 
+start() { 
+        ebegin "Starting greylisting daemon" 
+        start-stop-daemon --start --background \
+             --chuid "$user" \
+             --pidfile "$pidfile" --make-pidfile \
+             --exec "$daemon"
+ 
+         eend ${?}
+}
+ 
+stop() {
+         ebegin  "Stopping greylisting daemon" 
+ 
+         start-stop-daemon --stop --pidfile "$pidfile" && 
+             rm -f "$pidfile" 
+ 
+         eend ${?} 
+} 
+ 
+reload() { 
+         ebegin "Reloading greylisting daemon configuration" 
+ 
+         "$client" reload 
+ 
+         eend ${?} 
+} 
+ 
+status() { 
+         "$client" stats 
+}
