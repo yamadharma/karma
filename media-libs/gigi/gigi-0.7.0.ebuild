@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit multilib
+inherit multilib eutils
 
 MY_PN=GG
 MY_P=${MY_PN}-${PV}
@@ -45,9 +45,17 @@ vscons() {
 	scons "$@"
 }
 
+src_unpack() {
+	unpack ${A}
+	
+	cd ${S}
+	
+#	epatch ${FILESDIR}/gigi-sconspatch.patch
+	sed "s|'ln -s ' + lib_dir + '/'|'ln -s '|g" -i SConstruct
+}
+
 src_compile() {
-#	sed "s|'ln -s ' + lib_dir + '/'|'ln -s '|g" -i SConstruct
-#	LIBPATH=/usr/$(get_libdir)/
+	export LIBPATH=/usr/$(get_libdir)/
 	vscons libdir=/usr/$(get_libdir)/ build_sdl_driver=$(bool_use sdl) \
 		build_ogre_driver=$(bool_use ogre) \
 		build_ogre_ois_plugin=$(bool_use ois) \
