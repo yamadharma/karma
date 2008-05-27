@@ -52,6 +52,9 @@ src_install () {
 	
 	# init.d + conf.d files
 	newinitd ${FILESDIR}/greylistd-init ${PN}
+
+	sed -i -e "s:exim4:exim:g" program/greylistd-setup-exim4
+	dosbin program/greylistd-setup-exim4
 }
 
 pkg_postinst() {
