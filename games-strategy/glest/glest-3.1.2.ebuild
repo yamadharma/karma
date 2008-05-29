@@ -39,6 +39,7 @@ src_unpack() {
 	cd "${SOURCE_PATH}"
 
 	epatch "${FILESDIR}/${P}-screen.patch"
+	epatch "${FILESDIR}/${P}-home.patch"	
 }
 
 src_compile() {
