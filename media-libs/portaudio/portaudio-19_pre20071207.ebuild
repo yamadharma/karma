@@ -16,7 +16,7 @@ SRC_URI="http://www.portaudio.com/archives/${MY_P}.tar.gz"
 LICENSE="as-is"
 SLOT="18"
 KEYWORDS="amd64 x86"
-IUSE="alsa debug oss jack"
+IUSE="alsa +cxx debug jack oss"
 
 DEPEND="alsa? ( media-libs/alsa-lib )
 	jack? ( >=media-sound/jack-audio-connection-kit-0.100.0 )"
@@ -32,7 +32,7 @@ src_compile() {
 		$(use_with jack)\
 		$(use_with oss)\
 		$(use_with debug debug-output)\
-		--enable-cxx\
+		$(use_enable cxx) \
 		|| die "econf failed"
 
 	emake || die "emake failed"

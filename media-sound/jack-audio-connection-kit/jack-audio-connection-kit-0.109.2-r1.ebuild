@@ -61,6 +61,8 @@ src_unpack() {
 	cd ${S}
 
 	epatch ${FILESDIR}/${PN}-transport.patch
+	epatch "${FILESDIR}/${PN}-0.103.0-riceitdown.patch"
+	epatch "${FILESDIR}/${PN}-0.103.0-ppc64fix.patch"
 
 	# jack transport patch from Torben Hohn
 	epatch "${FILESDIR}/jack-transport-start-at-zero-fix.diff"
