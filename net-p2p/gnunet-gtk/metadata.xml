@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>net-p2p</herd>
+<maintainer>
+  <email>ycarus@zugaina.org</email>
+  <description>This ebuild come from http://gentoo.zugaina.org/</description>
+</maintainer>
+    <longdescription lang="en">Graphical front end for GNUnet.</longdescription>
+    <longdescription lang="fr">Interface graphique pour GNUnet.</longdescription>
+</pkgmetadata>
