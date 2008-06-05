@@ -4,10 +4,10 @@
 # Nonofficial ebuild by Ycarus. For new version look here : http://gentoo.zugaina.org/
 # This ebuild is a small modification of the official gnunet-gtk ebuild
 
-inherit eutils autotools
+inherit eutils qt4 flag-o-matic multilib
 
 MY_PV=${PV/_pre/pre}
-DESCRIPTION="Graphical front end for GNUnet."
+DESCRIPTION="Qt Graphical front end for GNUnet."
 HOMEPAGE="http://gnunet.org/"
 SRC_URI="http://gnunet.org/download/${PN}-${MY_PV}.tar.bz2"
 
@@ -16,23 +16,23 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE=""
 
-DEPEND=">=x11-libs/gtk+-2.6.0
-	>=net-p2p/gnunet-${PV}
-	>=gnome-base/libglade-2.0"
+DEPEND="x11-libs/qt:4
+	>=net-p2p/gnunet-${PV}"
 
 S=${WORKDIR}/${PN}-${MY_PV}
 
-src_unpack() {
-        unpack ${A}
-        cd "${S}"
-        AT_M4DIR="${S}/m4" eautoreconf
-}
-
 src_compile() {
-	econf --with-gnunet=/usr || die "econf failed"
+	append-flags -I/usr/include/qt4
+	append-ldflags -L/usr/$(get_libdir)/qt4
+	
+	econf --with-gnunet=/usr \
+	    --with-qt \
+	|| die "econf failed"
 	emake || die "emake failed"
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "emake install failed"
+	emake INSTALL_ROOT="${D}" install || die "emake install failed"
+	
+	dodoc ChangeLog INSTALL NEWS README TODO AUTHORS
 }

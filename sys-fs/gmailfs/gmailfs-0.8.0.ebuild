@@ -15,16 +15,15 @@ SLOT="0"
 IUSE=""
 
 RDEPEND=">=dev-lang/python-2.3
-	>=sys-fs/fuse-python-0.1
 	>=sys-fs/fuse-1.3
 	>=net-libs/libgmail-0.1.3.3
-	sys-fs/fuse-python"
+	dev-python/fuse-python"
 
-src_unpack() {
-	unpack ${A}
-	cd ${WORKDIR}
-	epatch ${FILESDIR}/gentoo.patch || die "patching failed"
-}
+# src_unpack() {
+#	unpack ${A}
+#	cd ${WORKDIR}
+#	epatch ${FILESDIR}/gentoo.patch || die "patching failed"
+#}
 
 src_install() {
 	dobin ${WORKDIR}/${P}/gmailfs.py || die "Can't dobin"
