@@ -25,7 +25,7 @@ S=${WORKDIR}/${PN}-${MY_PV}
 src_unpack() {
         unpack ${A}
         cd "${S}"
-        sed -i -e "s:themedir=\$(datadir):themedir=\$DESTDIR\$(datadir):g" pixmaps/icons/Makefile.am
+        sed -i -e "s:themedir=\$(datadir):themedir=\$(DESTDIR)/\$(datadir):g" pixmaps/icons/Makefile.am
         AT_M4DIR="${S}/m4" eautoreconf
 }
 
