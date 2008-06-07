@@ -2,14 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.91-r1.ebuild,v 1.1 2007/10/05 12:49:10 hawking Exp $
 
-inherit distutils bash-completion elisp-common eutils
+inherit distutils bash-completion elisp-common eutils versionator
 
-MY_P=${P/_rc/rc}
+#MY_PV=${PV/_rc/rc}
+MY_RV=${PV/_/}
+MY_PV=${PV/_beta/b}
+MY_P="${PN}-${MY_PV}"
+SERIES=$(get_version_component_range 1-2)
 S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Bazaar is a next generation distributed version control system."
 HOMEPAGE="http://bazaar-vcs.org/"
-SRC_URI="https://launchpad.net/bzr/${PV}/${PV}/+download/${MY_P}.tar.gz"
+SRC_URI="http://launchpad.net/bzr/${SERIES}/${MY_RV}/+download/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -42,8 +46,6 @@ src_unpack() {
 	epatch "${FILESDIR}"/${PN}-0.90-tests-fix_root.patch
 	# Fix permission errors when run under directories with setgid set.
 	epatch "${FILESDIR}"/${PN}-0.90-tests-sgid.patch
-	# Fix bzr+http with pycurl.
-	epatch "${FILESDIR}"/${PN}-1.4_rc2-bzrplushttp-pycurl.patch
 }
 
 src_compile() {

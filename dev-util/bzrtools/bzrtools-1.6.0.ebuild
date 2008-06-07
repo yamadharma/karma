@@ -14,7 +14,7 @@ KEYWORDS="amd64 ~ppc ~sparc x86"
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.4
-	>=dev-util/bzr-$(get_version_component_range 1-2)_rc1"
+	>=dev-util/bzr-$(get_version_component_range 1-2)_beta1"
 
 DOCS="CREDITS NEWS NEWS.Shelf README README.Shelf TODO TODO.Shelf"
 
