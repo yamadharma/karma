@@ -18,7 +18,7 @@ DEPEND="
 			x11-libs/libICE
 			x11-libs/libXext
 			x11-libs/libSM
-			iontruetype? ( x11-libs/libXft )
+			x11-libs/libXft 
 		)
 		virtual/x11
 	)
