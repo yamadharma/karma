@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<layman>
+  <overlay
+       name="karma" 
+       src="lp:~yamadharma/karma-gentoo-overlay/karma"
+       type="bzr"
+       status  = "unofficial">
+
+     <link>  </link>
+
+     <description> 
+     </description> 
+  </overlay>
+  <overlay
+       name="karma-profiles"
+       src="lp:~yamadharma/karma-gentoo-overlay/profiles"
+       type="bzr"
+       status  = "unofficial">
+
+     <link> </link>
+
+     <description>
+     </description>
+   </overlay>
+</layman>
