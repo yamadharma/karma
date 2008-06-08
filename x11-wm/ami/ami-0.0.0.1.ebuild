@@ -1,8 +1,8 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit bzr distutils
+inherit bzr distutils multilib
 
 DESCRIPTION="A tiling tabbed window manager designed with keyboard users in mind"
 HOMEPAGE="https://launchpad.net/ami"
@@ -44,6 +44,7 @@ src_compile() {
 	local myconf=""
 
 	make \
+		LIBDIR=/usr/$(get_libdir) \
 		DOCDIR=/usr/share/doc/${PF} || die
 }
 
@@ -52,6 +53,7 @@ src_install() {
 	emake \
 		DESTDIR=${D} \
 		DOCDIR=/usr/share/doc/${PF} \
+		LIBDIR=/usr/$(get_libdir) \
 	install || die
 
 	echo -e "#!/bin/sh\n/usr/bin/ami" > ${T}/ami
