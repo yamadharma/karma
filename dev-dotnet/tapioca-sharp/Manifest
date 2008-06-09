@@ -1,14 +1,2 @@
 EBUILD tapioca-sharp-0.13.3_pre1355.ebuild 1075 RMD160 ec40cf5b96830e5756bc5b05c726b0fdb2fd129b SHA1 9a9dd4aa77f24cd18f5d27772713fa277fc8c0b4 SHA256 0fdfed012b817184a113f6bf2d5f5fd0222a34a64cad22b70c40f48acdd8280c
-MD5 345b38cb6e5cf9f33f3e01f1ccd520f1 tapioca-sharp-0.13.3_pre1355.ebuild 1075
-RMD160 ec40cf5b96830e5756bc5b05c726b0fdb2fd129b tapioca-sharp-0.13.3_pre1355.ebuild 1075
-SHA256 0fdfed012b817184a113f6bf2d5f5fd0222a34a64cad22b70c40f48acdd8280c tapioca-sharp-0.13.3_pre1355.ebuild 1075
 EBUILD tapioca-sharp-0.13.3_pre1598.ebuild 1075 RMD160 ec40cf5b96830e5756bc5b05c726b0fdb2fd129b SHA1 9a9dd4aa77f24cd18f5d27772713fa277fc8c0b4 SHA256 0fdfed012b817184a113f6bf2d5f5fd0222a34a64cad22b70c40f48acdd8280c
-MD5 345b38cb6e5cf9f33f3e01f1ccd520f1 tapioca-sharp-0.13.3_pre1598.ebuild 1075
-RMD160 ec40cf5b96830e5756bc5b05c726b0fdb2fd129b tapioca-sharp-0.13.3_pre1598.ebuild 1075
-SHA256 0fdfed012b817184a113f6bf2d5f5fd0222a34a64cad22b70c40f48acdd8280c tapioca-sharp-0.13.3_pre1598.ebuild 1075
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-tapioca-sharp-0.13.3_pre1355 0
-RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-tapioca-sharp-0.13.3_pre1355 0
-SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-tapioca-sharp-0.13.3_pre1355 0
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-tapioca-sharp-0.13.3_pre1598 0
-RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-tapioca-sharp-0.13.3_pre1598 0
-SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-tapioca-sharp-0.13.3_pre1598 0
