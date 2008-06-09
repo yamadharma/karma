@@ -1,0 +1,20 @@
+# ChangeLog for dev-dotnet/ndesk-dbus
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/skel.ChangeLog,v 1.2 2006/02/22 02:08:04 hd_brummy Exp $
+
+  06 Jul 2007; Santiago M. Mola <coldwind@gentoo.org>
+  ndesk-dbus-0.4.2.ebuild, ndesk-dbus-0.5.2.ebuild:
+  multilib fixes
+
+  02 Jul 2007; Santiago M. Mola <coldwind@gentoo.org>
+  ndesk-dbus-0.4.2.ebuild, ndesk-dbus-0.5.2.ebuild:
+  Fix die stupidity, thanks to Juan Francisco Cantero Hurtado
+
+  06 Jun 2007; Santiago M. Mola <gentoo@coldwind.org>
+  ndesk-dbus-0.4.2.ebuild, ndesk-dbus-0.5.2.ebuild:
+  Fix path in ndesk-dbus-glib.pc
+
+  04 Jun 2007; Santiago M. Mola <gentoo@coldwind.org>
+  +ndesk-dbus-0.4.2.ebuild, +ndesk-dbus-0.5.2.ebuild:
+  Initial commit wrt bug
+
