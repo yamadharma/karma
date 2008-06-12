@@ -1,8 +1,10 @@
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# Author: Michel Filipe <michel@milk-it.net>
-# Date: 2008-05-08
+# $Header: $
 
-inherit eutils games
+WX_GTK_VER="2.6"
+
+inherit eutils wxwidgets games
 
 L_URI="http://www.glest.org/files/contrib/translations"
 DESCRIPTION="Cross-platform 3D realtime strategy game"
@@ -32,6 +34,10 @@ DEPEND="media-libs/libvorbis
 	x11-libs/libX11
 	x11-libs/libXt"
 
+# I add block to ati-drivers version below 8.493, because these
+# versions has segfaults when running the glest.
+RDEPEND="!<x11-drivers/ati-drivers-8.493"
+
 SOURCE_PATH="${WORKDIR}"/"${PN}"-source-"${PV}"
 
 src_unpack() {
@@ -39,7 +45,7 @@ src_unpack() {
 	cd "${SOURCE_PATH}"
 
 	epatch "${FILESDIR}/${P}-screen.patch"
-	epatch "${FILESDIR}/${P}-home.patch"	
+	epatch "${FILESDIR}/${P}-home.patch"
 }
 
 src_compile() {
@@ -53,18 +59,12 @@ src_compile() {
 }
 
 src_install() {
-	# Install the wrapper file
-	cd "${FILESDIR}"
-	newgamesbin glest-3.1.2-launcher glest || die "newgamesbin glest failed"
-
 	cd "${SOURCE_PATH}"
-	if [ -e glest_editor ]; then
-	    dogamesbin glest_editor || die "dogamesbin glest_editor failed"
-	fi
+	dogamesbin glest || die "dogamesbin glest failed"
+	dogamesbin glest_editor || die "dogamesbin glest_editor failed"
 
 	insinto "${GAMES_DATADIR}"/${PN}
 	doins glest.ini || die "doins glest.ini failed"
-	doins glest || die "dobin glest failed"
 
 	dodoc README.linux || die "dodoc README.linux failed"
 
@@ -72,13 +72,9 @@ src_install() {
 	doins servers.ini || die "doins servers.ini failed"
 	doins glest_irc.url || die "doins glest_irc.url failed"
 	doins glest_web.url || die "doins glest_web.url failed"
-	doins -r data maps scenarios screens techs tilesets || die "doins data failed"
+	doins -r data maps scenarios techs tilesets || die "doins data failed"
 	dodoc docs/readme.txt || die "dodoc docs/readme.txt failed"
 	
-	# This is necessary, because the glest binary needs of glest.log for execute
-	touch glest.log
-	doins glest.log || die "doins glest.log failed"
-
 	newicon techs/magitech/factions/magic/units/archmage/images/archmage.bmp \
 		${PN}.bmp
 	make_desktop_entry glest Glest /usr/share/pixmaps/${PN}.bmp
@@ -93,16 +89,14 @@ src_install() {
 	use linguas_pt_BR && dolang brazilian_${PV}.lng
 
 	prepgamesdirs
-
-	fperms g+w "${GAMES_DATADIR}/${PN}/glest.log" || die "chmod glest.log failed"
-
-	# Add the execute permission to glest binary
-	fperms g+x "${GAMES_DATADIR}"/"${PN}"/glest || die "chmod glest binary failed"
 }
 
 pkg_postinst() {
 	elog "Fix the sound problem using the alsa driver in OpenAl. More"
 	elog "informations at"
 	elog "http://supertux.lethargik.org/wiki/OpenAL_Configuration"
+	echo
+	elog "If you want play multiplayer glest use the official"
+	elog "binaries."
 	echo
 }
