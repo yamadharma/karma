@@ -1,26 +1,24 @@
-# Copyright 2008 Andrew John Hughes
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+EAPI=1
 
 inherit autotools pax-utils java-vm-2 java-pkg-2
 
-icedtea="${PN}${PV/./-}"
-openjdk="openjdk-6-src-b09-11_apr_2008.tar.gz"
-S="${WORKDIR}/${icedtea}"
+icedtea="37c853f39fe3"
+openjdk="openjdk-6-src-b10_30_may_2008.tar.gz"
 
 DESCRIPTION="Free Software build environment for OpenJDK using GNU Classpath plugs"
 HOMEPAGE="http://icedtea.classpath.org/wiki/Main_Page"
-SRC_URI="http://icedtea.classpath.org/download/source/${icedtea}.tar.gz
-	 http://download.java.net/openjdk/jdk6/promoted/b09/${openjdk}"
-
-IUSE="nsplugin debug doc examples zero"
+SRC_URI="http://icedtea.classpath.org/hg/icedtea6/archive/${icedtea}.tar.bz2
+	 http://download.java.net/openjdk/jdk6/promoted/b10/${openjdk}"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="6"
-KEYWORDS="amd64 ~ppc ~ppc64 x86"
+KEYWORDS="x86 amd64"
+IUSE="debug doc examples nsplugin zero"
 
-# base packages shoud not be added
-# so hopefully we get sec-fixed versions and new enough
-# : patch, sed, zlib
 RDEPEND=">=net-print/cups-1.2.12
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/openmotif-2.3.0
@@ -34,18 +32,19 @@ RDEPEND=">=net-print/cups-1.2.12
 	>=media-libs/giflib-4.1.6"
 DEPEND=">=app-arch/zip-2.32
 	>=app-arch/unzip-5.52
-	>=virtual/jdk-1.6
+	>=virtual/jdk-1.5
+	dev-java/eclipse-ecj:3.3
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0
 	${RDEPEND}"
+S="${WORKDIR}/${PN}${SLOT}-${icedtea}"
 
 pkg_setup() {
 	if [ ${ARCH} != x86 -a ${ARCH} != amd64 -a ${ARCH} != sparc ]; then
-		local zero_err
-		ewarn "Building on a non-x86/sparc-based"
-		ewarn "architecture requires using the zero"
-		ewarn "assembler port, which requires libffi from gcc."
+		local zero_err=
+		ewarn "Building on a non-x86/sparc-based architecture requires"
+		ewarn "the zero assembler port, which requires libffi from gcc."
 		if ! use zero; then
 			eerror "USE [zero] not set!"
 			zero_err=1
@@ -63,31 +62,27 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ${icedtea}.tar.gz
+	unpack ${icedtea}.tar.bz2
 	cd "${S}"
-
-	epatch "${FILESDIR}/docs.diff"
-	epatch "${FILESDIR}/parallel_jobs.diff"
-	epatch "${FILESDIR}/openjdk-md5sum.diff"
-	epatch "${FILESDIR}/bootstrap_fix-heapsize-so-we-get-happy-please-thanks.diff"
-
+	epatch "${FILESDIR}/bootstrap_fix-heapsize.diff"
 	eautoreconf
 }
 
 src_compile() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
-	# lovely configure.ac --- horribly broken checks
-	local myconf="--with-openjdk-src-zip=${DISTDIR}/${openjdk} \
+	# alternative: ${MAKEOPTS/-j}
+	# -- no need for echo|sed magic, even '-j X' does fine with bash-3
+	econf --with-openjdk-src-zip=${DISTDIR}/${openjdk} \
 		--with-parallel-jobs=$(grep -s -c ^processor /proc/cpuinfo) \
-		--with-openjdk-home=$(java-config --jdk-home) \
-		--with-openjdk"
-	use debug && myconf="${myconf} --enable-fast-build"
-	use doc || myconf="${myconf} --disable-docs"
-	use nsplugin || myconf="${myconf} --disable-gcjwebplugin"
-	use zero && myconf="${myconf} --enable-zero"
-
-	econf ${myconf} || die "configure failed"
+		--with-gcj-home=$(java-config --jdk-home) \
+		--with-libgcj-jar=$(java-config --jdk-home)/jre/lib/rt.jar \
+		--with-ecj-jar=$(java-pkg_getjars eclipse-ecj-3.3) --with-ecj=ecj-3.3 \
+		$(use_enable !debug optimizations) \
+		$(use_enable doc docs) \
+		$(use_enable nsplugin gcjwebplugin) \
+		$(use_enable zero) \
+		|| die "configure failed"
 	emake -j1 || die "make failed"
 }
 
