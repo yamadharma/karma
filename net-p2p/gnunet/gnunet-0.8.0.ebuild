@@ -83,13 +83,18 @@ src_compile() {
 
 src_install() {
 	emake DESTDIR="${D}" -j1 install || die "make install failed"
+
+	#cd ${S}/contrib
+	#emake DESTDIR="${D}" -j1 install || die "make install contrib failed"
+	#cd ${S}
+	
 	dodoc AUTHORS ChangeLog INSTALL NEWS PLATFORMS README README.fr UPDATING
 	insinto /etc
 	newins contrib/gnunet.root gnunet.conf
 	docinto contrib
 	dodoc contrib/*
 	newinitd "${FILESDIR}"/${PN}.initd gnunet
-	dodir /var/lib/gnunet
+	keepdir /var/lib/gnunet
 	chown gnunetd:gnunetd "${D}"/var/lib/gnunet
 }
 
