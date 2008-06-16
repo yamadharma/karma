@@ -1,0 +1,8 @@
+#!/bin/sh
+
+old_v=2711
+new_v=3197
+
+find . -name "*_pre${old_v}.ebuild" -execdir sh -c 'bzr mv "$@" `echo "$@" | sed "s:2711:3197:g"`' sh {} +
+
+
