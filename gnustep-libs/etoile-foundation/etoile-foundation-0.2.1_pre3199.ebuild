@@ -13,3 +13,14 @@ HOMEPAGE="http://www.etoile-project.org/etoile/mediawiki/index.php?title=EtoileF
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="amd64 x86"
+
+src_unpack() {
+	subversion_src_unpack
+	
+	if ( use amd64 )
+	then
+		cd ${S1}
+		sed -i -e "s:@CFLAGS@:@CFLAGS@ -fPIC -DPIC:" UUID/Makefile.in
+	fi
+}
+

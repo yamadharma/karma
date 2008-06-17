@@ -20,13 +20,24 @@ RDEPEND="${DEPEND}"
 
 src_unpack() {
 	subversion_src_unpack 
-	cd ${S}
-
+	cd ${S1}
+	
 	# Path case problem
 	ln -s iovm IoVM
+
+	# FIXME! Dirty hack
+	sed -i -e "/^inline.*IOBOOL.*/d" iovm/IoState_inline.h
+	
 }
 
-#src_compile() {
-#	egnustep_env
-#	egnustep_make steptalk=yes || die "compilation failed"
-#}
+src_compile() {
+	egnustep_env
+
+	cd ${S1}
+	export PROJECT_DIR=${S1}
+
+	egnustep_make steptalk=yes || die "compilation failed"
+}
+
+
+
