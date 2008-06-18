@@ -1,0 +1,26 @@
+--- bin/build-ooo	2008-04-04 13:48:00.000000000 +0400
++++ tmp/build-ooo	2008-04-04 13:37:10.000000000 +0400
+@@ -29,6 +29,23 @@ if test "z`uname -s`" == "zSunOS"; then
+     fi
+ fi
+ 
++# jrd63 fix setup
++WRKDIR="${TOOLSDIR}/infra"
++
++	mkdir -p $OOBUILDDIR/solver/680/unxlngi6.pro/pck
++	cp ${WRKDIR}/files/extra_templates_*.zip $OOBUILDDIR/solver/680/unxlngi6.pro/pck/
++	cd $OOBUILDDIR; rm -rf extras/source/autotext/lang/ru/* ; tar xjf ${WRKDIR}/files/extras_ru.tar.bz2
++        ${TOOLSDIR}/bin/enable-dict ru_RU ${WRKDIR}/files/dict_ru_RU.tar.bz2  $OOBUILDDIR
++
++        mkdir -p $OOBUILDDIR/mdbtools/download/
++        mkdir -p $OOBUILDDIR/libwpd/download/
++        mkdir -p $OOBUILDDIR/libsvg/download/
++        cp ${WRKDIR}/files/mdbtools*.tar.gz $OOBUILDDIR/mdbtools/download/
++        cp ${WRKDIR}/files/libwpd*.tar.gz   $OOBUILDDIR/libwpd/download/
++        cp ${WRKDIR}/files/libsvg*.tar.gz   $OOBUILDDIR/libsvg/download/
++        cp ${WRKDIR}/res/infra/about.bmp    $OOBUILDDIR/default_images/introabout/
++
++
+ # configure
+ 
+ #  main configure
