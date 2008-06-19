@@ -61,6 +61,7 @@ src_unpack() {
 
 src_compile() {
 	# Keep the package from doing silly things
+	addwrite /var/cache/fonts
 	export LDCONFIG=:
 	export CC=$(tc-getCC)
 	export STRIP=:

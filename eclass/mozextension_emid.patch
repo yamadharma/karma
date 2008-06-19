@@ -1,0 +1,19 @@
+--- /usr/portage/eclass/mozextension.eclass	2007-03-12 17:35:40.000000000 +0530
++++ mozextension.eclass	2007-06-29 22:29:36.000000000 +0530
+@@ -47,8 +47,14 @@
+ 
+ 	x="${1}"
+ 	cd ${x}
+-	# determine id for extension
+-	emid=$(sed -n -e '/<\?em:id>\?/!d; s/.*\([\"{].*[}\"]\).*/\1/; s/\"//g; p; q' ${x}/install.rdf) || die "failed to determine extension id"
++	# Determine install.rdf type & determine id for extension
++	if grep -e 'xmlns:NC' ${x}/install.rdf; then
++		emid=$(sed -n -e '/<\?em:id>\?/!d; s/.*\([\"{].*[}\"]\).*/\1/; s/\"//g; p; q' ${x}/install.rdf) \
++		|| die "failed to determine extension id"
++	else
++		emid=$(tr -d "\n" < ${x}/install.rdf | sed -ne 's|<em:targetApplication>.*</em:targetApplication>||g; s|.*<em:id>\(.*\)</em:id>.*|\1|;p;q') \
++		|| die "failed to determine extension id"
++	fi
+ 	insinto "${MOZILLA_FIVE_HOME}"/extensions/${emid}
+ 	doins -r "${x}"/* || die "failed to copy extension"
+ }

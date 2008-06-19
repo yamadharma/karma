@@ -15,7 +15,7 @@ LICENSE="GPL-2"
 SLOT="2"
 
 KEYWORDS="x86 amd64"
-IUSE=" bzip2 corba curl firebird gtk kde mysql odbc opengl pcre pdf
+IUSE="bzip2 corba curl firebird gtk kde mysql odbc opengl pcre pdf
     postgres qt3 sdl smtp sqlite sqlite3 svg v4l xml zlib"
 
 DEPEND="
