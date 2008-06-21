@@ -18,7 +18,8 @@ IUSE=""
 
 DEPEND=">=x11-libs/gtk+-2.6.0
 	>=net-p2p/gnunet-${PV}
-	>=gnome-base/libglade-2.0"
+	>=gnome-base/libglade-2.0
+	x11-libs/libgksu"
 
 S=${WORKDIR}/${PN}-${MY_PV}
 

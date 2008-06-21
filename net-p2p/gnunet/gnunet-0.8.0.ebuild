@@ -22,11 +22,15 @@ SLOT="0"
 DEPEND=">=dev-libs/libgcrypt-1.2.0
 	>=media-libs/libextractor-0.5.18a
 	>=dev-libs/gmp-4.0.0
+	>=net-libs/libmicrohttpd-0.3.1
+	net-libs/libesmtp
+	net-libs/adns
 	gnome-base/libglade
 	sys-libs/zlib
 	net-misc/curl
 	gtk? ( >=x11-libs/gtk+-2.6.10 )
 	sys-apps/sed
+	x11-libs/libnotify
 	>=dev-scheme/guile-1.8.0
 	ncurses? ( sys-libs/ncurses )
 	mysql? ( >=virtual/mysql-4.0 )

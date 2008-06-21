@@ -9,7 +9,7 @@ inherit autotools check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 
 
 IUSE="binfilter cups dbus debug eds firefox gnome gstreamer gtk kde ldap mono odk opengl pam seamonkey xulrunner"
 
-MY_PV="2.4.1.5"
+MY_PV="2.4.1.6"
 PATCHLEVEL="OOH680"
 SRC="OOo_${PV}_src"
 MST="OOH680_m17"
@@ -205,6 +205,13 @@ pkg_setup() {
 		else
 			die "USE flag [xulrunner] set but not found!"
 		fi
+	fi
+
+	# Check python
+	if ! built_with_use dev-lang/python threads
+	then
+	    eerror "Python needs to be built with threads."
+	    die
 	fi
 
 	java-pkg-opt-2_pkg_setup

@@ -25,14 +25,15 @@ src_compile() {
 	append-flags -I/usr/include/qt4
 	append-ldflags -L/usr/$(get_libdir)/qt4
 	
+	QTDIR=/usr \
 	econf --with-gnunet=/usr \
-	    --with-qt \
+	    --with-extractor \
 	|| die "econf failed"
 	emake || die "emake failed"
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
+	emake INSTALL_ROOT="${D}" DESTDIR="${D}" install || die "emake install failed"
 	
 	dodoc ChangeLog INSTALL NEWS README TODO AUTHORS
 }
