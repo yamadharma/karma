@@ -1,18 +1,18 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bazaar/bazaar-1.4.2-r1.ebuild,v 1.1 2006/07/21 20:02:46 arj Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bazaar/bazaar-1.4.2-r1.ebuild,v 1.6 2008/01/01 20:31:53 betelgeuse Exp $
 
 inherit eutils
 
 S="${WORKDIR}/${P}/src/=build"
-DESCRIPTION="Bazaar is a user-interface branch of tla"
+DESCRIPTION="Bazaar is a user-interface branch of tla (GNU Arch)."
 SRC_URI="http://bazaar.canonical.com/releases/src/bazaar_${PV}.tar.gz
 	http://dev.gentoo.org/~arj/baz.1.4.gz"
-HOMEPAGE="http://bazaar.canonical.com/"
+HOMEPAGE="http://bazaar-vcs.org/Baz1x"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="x86 amd64 ~ppc"
+KEYWORDS="amd64 ~ppc x86"
 IUSE=""
 
 DIR="thelove@canonical.com---dists--bazaar--1.4"
@@ -20,6 +20,7 @@ DIR="thelove@canonical.com---dists--bazaar--1.4"
 DEPEND="sys-apps/coreutils
 	sys-apps/diffutils
 	sys-devel/patch
+	sys-devel/gettext
 	sys-apps/findutils
 	sys-apps/gawk
 	app-arch/tar
@@ -39,9 +40,9 @@ src_unpack() {
 	# baz annotate does the same thing as this binary
 	rm -rf src/baz/annotate
 
-	epatch ${FILESDIR}/baz-gpgme-fix.patch
-	epatch ${FILESDIR}/neon-0.24-fix.patch
-	epatch ${FILESDIR}/neon-0.26-fix.patch
+	epatch "${FILESDIR}/baz-gpgme-fix.patch"
+	epatch "${FILESDIR}/neon-0.24-fix.patch"
+	epatch "${FILESDIR}/neon-0.26-fix.patch"
 }
 
 src_compile() {
@@ -56,11 +57,11 @@ src_install () {
 	make install prefix="${D}/usr" \
 		|| die "make install failed"
 
-	cd ${WORKDIR}/${P}/
-	dodoc =ARCH-USERS-README
-	cd ${WORKDIR}/${P}/src
-	dodoc COPYING
-	dodoc baz/=THANKS
-	cd ${WORKDIR}
-	doman baz.1
+	cd "${WORKDIR}/${P}/src" || die
+	dodoc "COPYING" "baz/=THANKS" || die
+}
+
+pkg_postinst() {
+	einfo 'This package installs the "baz" utility. If you are looking for'
+	einfo 'the "bzr" utility, use "emerge bzr".'
 }
