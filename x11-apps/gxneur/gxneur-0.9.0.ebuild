@@ -8,7 +8,7 @@ IUSE="nls"
 SLOT="0"
 
 KEYWORDS="x86 amd64" 
-RDEPEND="x11-apps/xneur
+RDEPEND=">=x11-apps/xneur-${PV}
 	 >=x11-libs/gtk+-2.0.0"
 DEPEND="${RDEPEND}"
 
