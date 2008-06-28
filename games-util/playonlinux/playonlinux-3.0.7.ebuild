@@ -15,13 +15,13 @@ KEYWORDS="-* x86 amd64"
 IUSE=""
 
 DEPEND=""
-RDEPEND="dev-python/wxpython:2.8
-		app-arch/unzip
-		app-arch/cabextract
-		x11-terms/xterm
-		app-emulation/wine
-		media-gfx/imagemagick
-		app-arch/lzma-utils"
+RDEPEND="|| ( app-emulation/wine-etersoft-public app-emulation/wine )
+	dev-python/wxpython:2.8
+	app-arch/unzip
+	app-arch/cabextract
+	x11-terms/xterm
+	media-gfx/imagemagick
+	app-arch/lzma-utils"
 
 S=${WORKDIR}/${PN}
 

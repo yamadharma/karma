@@ -76,6 +76,7 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 	
+	mkdir ${S}/etersoft
 	mv ${WORKDIR}/etersoft/* ${S}/etersoft/
 
 	cd "${S}"
