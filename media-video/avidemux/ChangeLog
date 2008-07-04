@@ -1,0 +1,89 @@
+# ChangeLog for media-video/avidemux
+# Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
+
+  24 May 2008; Ben de Groot <yngwin@gentoo.org>; -avidemux-9999-r1.ebuild,
+  avidemux-9999-r2.ebuild:
+  Removing old ebuild. Commented out gcc-4.3 patches as they seem to have been
+  applied upstream.
+
+  19 Apr 2008; Ben de Groot <yngwin@gentoo.org>; avidemux-9999-r2.ebuild:
+  Adjust qt-4 dep to current portage reality. Setting USE flag defaults.
+
+  13 Apr 2008; Ben de Groot <yngwin@gentoo.org>; avidemux-9999-r2.ebuild:
+  Fix encode/lame snafu. This one should work as intended.
+
+  12 Apr 2008; Ben de Groot <yngwin@gentoo.org>;
+  +files/avidemux-2.4.1-gcc43-missing-asm-naming.patch,
+  +avidemux-9999-r2.ebuild, +files/avidemux-9999-gcc43-includes.patch:
+  Bringing ebuild more into sync with in-portage one. Adding gcc-4.3 patches.
+
+  08 Apr 2008; Ben de Groot <yngwin@gentoo.org>; -avidemux-9999.ebuild,
+  avidemux-9999-r1.ebuild:
+  Remove old version. Adjust x264 dep.
+
+  25 Mar 2008; Ben de Groot <yngwin@gentoo.org>; avidemux-9999-r1.ebuild:
+  Changing x264 dep to x264 || x264-svn.
+
+  22 Feb 2008; Ben de Groot <yngwin@gentoo.org>;
+  +files/avidemux-2.4-i18n.patch, +avidemux-9999-r1.ebuild:
+  Cleaned up the ebuild a bit, adjusting dependancies and configure options to 
+  reflect reality :)
+
+  13 Dec 2007; Ben de Groot (yngwin) <ben@berkano.net>;
+  +files/avidemux_2.4_branch-libdca.patch, avidemux-9999.ebuild,
+  -files/libdca.patch:
+  Updated libdca patch.
+
+  01 Dec 2007; Ben de Groot (yngwin) <ben@berkano.net>;
+  -avidemux-2.4.0_pre3.ebuild, avidemux-9999.ebuild, +files/libdca.patch:
+  Some improvements incorporated from ebuild in portage.
+  Removing 2.4.0_pre3 ebuild, as this is now in portage tree.
+
+  26 Nov 2007; Ben de Groot (yngwin) <ben@berkano.net>;
+  avidemux-2.4.0_pre3.ebuild, avidemux-9999.ebuild:
+  Minor edits in ebuilds.
+
+  17 Nov 2007; Ben de Groot (yngwin) <ben@berkano.net>;
+  -avidemux-2.4.0_pre2.ebuild, -avidemux-2.4.0_pre2-r1.ebuild,
+  +avidemux-9999.ebuild, -avidemux-24000-r1.ebuild,
+  -avidemux-24000-r2.ebuild, -files/dts-internal.patch,
+  -files/remove-auto-deps.patch:
+  Remove old versions and rename 24000-r2 to 9999.
+
+  12 Nov 2007; Ben de Groot (yngwin) <ben@berkano.net>;
+  +avidemux-2.4.0_pre3.ebuild:
+  Version bump. We still use libdts as preview3 seems not to want to work with 
+  libdca.
+
+  08 Oct 2007; Ben de Groot (yngwin) <ben@berkano.net>;
+  +avidemux-24000-r2.ebuild:
+  Adding new ebuild, working towards normal useflag behaviour.
+
+  08 Jul 2007; Ben de Groot (yngwin) <ben@berkano.net>;
+  +avidemux-2.4.0_pre2-r1.ebuild:
+  Adding an alternative ebuild for 2.4_preview2 with the traditional configure 
+  routine, in order to comply more closely to Gentoo policies.
+
+  04 Jul 2007; Ben de Groot; +avidemux-2.4.0_pre2.ebuild:
+  Adding ebuild for 2.4_preview2.
+
+  21 Jun 2007; Ben de Groot; avidemux-24000-r1.ebuild:
+  The cmake based ebuild seems to be working well now, so let's move it to
+  "testing". The configuration is still based on autodetect, so disabling
+  useflags while having the corresponding dep installed does not work.
+
+  12 Jun 2007; Ben de Groot; avidemux-24000-r1.ebuild:
+  Adding dts support to the cmake ebuild, which should now work according to 
+  upstream.
+
+  10 Jun 2007; Ben de Groot; +avidemux-24000-r1.ebuild:
+  Adding experimental cmake version for 2.4 branch.
+
+  23 May 2007; Ben de Groot; avidemux-24000.ebuild:
+  Updating the ebuild so that the qt4 gui builds, removing dts useflag as it
+  doesn't build libdca support due to missing dts_internal.h include file.
+  Adding debug and extrafilters useflags.
+
+  22 May 2007; Ben de Groot; +avidemux-24000.ebuild:
+  Adding 2.4-branch subversion ebuild. Still needs testing.
+

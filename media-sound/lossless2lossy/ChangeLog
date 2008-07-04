@@ -1,0 +1,6 @@
+# ChangeLog for media-sound/lossless2lossy
+# Copyright 2006-2007 Berkano Overlay; distributed under the GPL version 2
+
+  07 Apr 2007; torstenvdb; lossless2lossy-1.21.ebuild:
+  Adding ~sparc keyword.
+
