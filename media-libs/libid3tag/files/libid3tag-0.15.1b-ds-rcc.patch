@@ -1,0 +1,300 @@
+diff -dPNur libid3tag-0.15.1b/configure.ac libid3tag-0.15.1b-ds/configure.ac
+--- libid3tag-0.15.1b/configure.ac	2004-01-24 00:22:46.000000000 +0100
++++ libid3tag-0.15.1b-ds/configure.ac	2008-04-12 21:36:35.000000000 +0200
+@@ -145,6 +145,22 @@
+ *** environment variable to specify its installed location, e.g. -L<dir>.])
+ ])
+ 
++
++AC_CHECK_LIB(rcc, rccInit,[
++    AC_CHECK_HEADERS(librcc.h,[
++	LIBRCC_LIBS="-lrcc"
++	LIBRCC_INCLUDES="-DHAVE_LIBRCC"
++    ],[
++	LIBRCC_LIBS=""
++	LIBRCC_INCLUDES=""
++])],[
++    LIBRCC_LIBS=""
++    LIBRCC_INCLUDES=""
++])
++AC_SUBST(LIBRCC_LIBS)
++AC_SUBST(LIBRCC_INCLUDES)
++
++
+ dnl handle --enable and --disable options
+ 
+ AC_CACHE_SAVE
+diff -dPNur libid3tag-0.15.1b/latin1.c libid3tag-0.15.1b-ds/latin1.c
+--- libid3tag-0.15.1b/latin1.c	2004-01-23 10:41:32.000000000 +0100
++++ libid3tag-0.15.1b-ds/latin1.c	2008-04-12 21:36:35.000000000 +0200
+@@ -31,6 +31,9 @@
+ # include "latin1.h"
+ # include "ucs4.h"
+ 
++# include "utf8.h"
++# include "rccpatch.h"
++
+ /*
+  * NAME:	latin1->length()
+  * DESCRIPTION:	return the number of ucs4 chars represented by a latin1 string
+@@ -172,6 +175,11 @@
+   id3_length_t size = 0;
+   id3_latin1_t latin1[1], *out;
+ 
++/*
++    Theoretically, we should add here a code for converting ucs4 to 
++    recoded latin1 string. However, using non-standard latin1 tags
++    in ID3v.2 tags is completely idiotic. So, I'll not do that.
++*/
+   while (*ucs4) {
+     switch (id3_latin1_encodechar(out = latin1, *ucs4++)) {
+     case 1: size += id3_latin1_put(ptr, *out++);
+@@ -193,6 +201,7 @@
+ {
+   id3_byte_t const *end;
+   id3_latin1_t *latin1ptr, *latin1;
++  id3_utf8_t *utf8;
+   id3_ucs4_t *ucs4;
+ 
+   end = *ptr + length;
+@@ -207,6 +216,19 @@
+ 
+   *latin1ptr = 0;
+ 
++
++  utf8 = rccPatchLatin2UTF(latin1);
++  if (utf8) {
++    ucs4 = malloc((id3_utf8_length(utf8) + 1) * sizeof(*ucs4));
++    if (ucs4)
++	id3_utf8_decode(utf8, ucs4);
++    free(utf8);
++    free(latin1);
++    
++    
++    return ucs4;
++  }
++
+   ucs4 = malloc((id3_latin1_length(latin1) + 1) * sizeof(*ucs4));
+   if (ucs4)
+     id3_latin1_decode(latin1, ucs4);
+diff -dPNur libid3tag-0.15.1b/Makefile.am libid3tag-0.15.1b-ds/Makefile.am
+--- libid3tag-0.15.1b/Makefile.am	2004-02-17 03:11:28.000000000 +0100
++++ libid3tag-0.15.1b-ds/Makefile.am	2008-04-12 21:36:35.000000000 +0200
+@@ -81,6 +81,7 @@
+ libid3tag_la_SOURCES =	version.c ucs4.c latin1.c utf16.c utf8.c  \
+ 			parse.c render.c field.c frametype.c compat.c  \
+ 			genre.c frame.c crc.c util.c tag.c file.c  \
++			rccpatch.c rccpatch.h \
+ 			version.h ucs4.h latin1.h utf16.h utf8.h  \
+ 			parse.h render.h field.h frametype.h compat.h  \
+ 			genre.h frame.h crc.h util.h tag.h file.h  \
+@@ -90,7 +91,8 @@
+ 			frametype.gperf compat.gperf genre.dat.in  \
+ 			debug.c debug.h
+ 
+-libid3tag_la_LDFLAGS =	-version-info $(version_info)
++INCLUDES = @LIBRCC_INCLUDES@
++libid3tag_la_LDFLAGS =	-version-info $(version_info) @LIBRCC_LIBS@
+ 
+ BUILT_SOURCES =		frametype.c compat.c genre.dat
+ 
+diff -dPNur libid3tag-0.15.1b/rccpatch.c libid3tag-0.15.1b-ds/rccpatch.c
+--- libid3tag-0.15.1b/rccpatch.c	1970-01-01 01:00:00.000000000 +0100
++++ libid3tag-0.15.1b-ds/rccpatch.c	2008-04-12 21:36:35.000000000 +0200
+@@ -0,0 +1,96 @@
++#include <stdlib.h>
++#include "rccpatch.h"
++
++#ifdef HAVE_LIBRCC
++# include <librcc.h>
++#endif /* HAVE_LIBRCC */
++
++
++#ifdef HAVE_LIBRCC
++# define ID3_CLASS 0
++# define ID3V2_CLASS 1
++# define UTF_CLASS 2
++# define OUT_CLASS 3
++static rcc_class classes[] = {
++    { "id3", RCC_CLASS_STANDARD, NULL, NULL, "ID3 Encoding", 0 },
++    { "id3v2", RCC_CLASS_STANDARD, "id3", NULL, "ID3 v.2 Encoding", 0 },
++    { "utf", RCC_CLASS_KNOWN, "UTF-8", NULL, "Unicode Encoding", 0},
++    { "out", RCC_CLASS_TRANSLATE_LOCALE, "LC_CTYPE", NULL, "Output Encoding", 0 },
++    { NULL, RCC_CLASS_STANDARD, NULL, NULL, NULL, 0 }
++};
++
++static int rcc_initialized = 0;
++
++static rcc_context ctx = NULL;
++#endif /* HAVE_LIBRCC */
++
++
++void rccPatchFree() {
++#ifdef HAVE_LIBRCC
++    if (rcc_initialized) {
++       rccFree();
++       rcc_initialized = 0;
++    }
++#endif /* HAVE_LIBRCC */
++}
++
++void rccPatchInit() {
++#ifdef HAVE_LIBRCC
++    if (rcc_initialized) return;
++    rccInit();
++    rccInitDefaultContext(NULL, 0, 0, classes, 0);
++    rccLoad(NULL, "xmms");
++    rccInitDb4(NULL, NULL, 0);
++    rcc_initialized = 1;
++#endif /* HAVE_LIBRCC */
++}
++
++void rccPatchSetContext(void *newctx) {
++#ifdef HAVE_LIBRCC
++    if (newctx) {
++	ctx = (rcc_context)newctx;
++	rcc_initialized = 1;
++    }
++#endif /* HAVE_LIBRCC */
++}
++
++static void rccPatchTryInit() {
++#ifdef HAVE_LIBRCC
++    if (!rcc_initialized) {
++	rccPatchInit();
++	if (rcc_initialized) atexit(rccPatchFree);	
++    }
++#endif /* HAVE_LIBRCC */
++}
++
++
++id3_utf8_t *rccPatchLatin2UTF(id3_latin1_t *str) {
++#ifdef HAVE_LIBRCC
++    rccPatchTryInit();
++
++    return rccRecode(ctx, ID3_CLASS, UTF_CLASS, str);
++#else
++    return  NULL;
++#endif /* HAVE_LIBRCC */
++}
++
++id3_latin1_t *rccPatchUTF2Latin(id3_utf8_t *str) {
++#ifdef HAVE_LIBRCC
++    rccPatchTryInit();
++
++    return rccRecode(ctx, UTF_CLASS, ID3_CLASS, str);
++#else
++    return  NULL;
++#endif /* HAVE_LIBRCC */
++}
++
++id3_latin1_t *rccPatchUTF2Out(id3_utf8_t *str) {
++#ifdef HAVE_LIBRCC
++    rccPatchTryInit();
++
++    return rccRecode(ctx, UTF_CLASS, OUT_CLASS, str);
++#else
++    return  NULL;
++#endif /* HAVE_LIBRCC */
++}
++
+diff -dPNur libid3tag-0.15.1b/rccpatch.h libid3tag-0.15.1b-ds/rccpatch.h
+--- libid3tag-0.15.1b/rccpatch.h	1970-01-01 01:00:00.000000000 +0100
++++ libid3tag-0.15.1b-ds/rccpatch.h	2008-04-12 21:36:35.000000000 +0200
+@@ -0,0 +1,15 @@
++#ifndef _RCC_PATCH_H
++#define _RCC_PATCH_H
++
++#include "id3tag.h"
++
++void rccPatchFree();
++void rccPatchInit();
++void rccPatchSetContext(void *newctx);
++
++id3_utf8_t *rccPatchLatin2UTF(id3_latin1_t *str);
++id3_latin1_t *rccPatchUTF2Latin(id3_utf8_t *str);
++id3_latin1_t *rccPatchUTF2Out(id3_utf8_t *str);
++
++
++#endif /* _RCC_PATCH_H */
+diff -dPNur libid3tag-0.15.1b/tag.c libid3tag-0.15.1b-ds/tag.c
+--- libid3tag-0.15.1b/tag.c	2004-02-17 03:04:10.000000000 +0100
++++ libid3tag-0.15.1b-ds/tag.c	2008-04-12 21:37:12.000000000 +0200
+@@ -45,6 +45,9 @@
+ # include "field.h"
+ # include "util.h"
+ 
++# include "utf8.h"
++# include "rccpatch.h"
++
+ /*
+  * NAME:	tag->new()
+  * DESCRIPTION:	allocate and return a new, empty tag
+@@ -335,6 +338,8 @@
+ {
+   struct id3_frame *frame;
+   id3_ucs4_t ucs4[31];
++  
++  id3_utf8_t *utf8;
+ 
+   if (text) {
+     trim(text);
+@@ -350,9 +355,15 @@
+ 				ID3_FIELD_TEXTENCODING_ISO_8859_1) == -1)
+     goto fail;
+ 
+-  if (text)
++  if (text) {
++    utf8 = rccPatchLatin2UTF(text);
++    if (utf8) {
++	if (strlen(utf8) > 30) utf8[30] = 0;
++	id3_utf8_decode(utf8, ucs4);
++	free(utf8);
++    } else
+     id3_latin1_decode(text, ucs4);
+-  else
++  } else
+     id3_ucs4_putnumber(ucs4, number);
+ 
+   if (strcmp(id, ID3_FRAME_COMMENT) == 0) {
+diff -dPNur libid3tag-0.15.1b/ucs4.c libid3tag-0.15.1b-ds/ucs4.c
+--- libid3tag-0.15.1b/ucs4.c	2004-01-23 10:41:32.000000000 +0100
++++ libid3tag-0.15.1b-ds/ucs4.c	2008-04-12 21:36:35.000000000 +0200
+@@ -33,6 +33,9 @@
+ # include "utf16.h"
+ # include "utf8.h"
+ 
++# include <string.h>
++# include "rccpatch.h"
++
+ id3_ucs4_t const id3_ucs4_empty[] = { 0 };
+ 
+ /*
+@@ -125,6 +128,27 @@
+ {
+   id3_latin1_t *latin1;
+ 
++
++  id3_latin1_t *ltmp;
++  id3_utf8_t *utf8;
++
++  utf8 = malloc(id3_ucs4_utf8size(ucs4) * sizeof(*utf8));
++  if (utf8) {
++    id3_utf8_encode(utf8, ucs4);
++    ltmp = rccPatchUTF2Out(utf8);
++    free(utf8);
++    
++    if (ltmp) {
++	latin1 = malloc((1+strlen(ltmp))*sizeof(char));
++	if (latin1) {
++	    memcpy(latin1, ltmp, (1+strlen(ltmp)));
++	    free(ltmp);
++	    return release(latin1);
++	}
++	free(ltmp);
++    }
++  }
++
+   latin1 = malloc(id3_ucs4_latin1size(ucs4) * sizeof(*latin1));
+   if (latin1)
+     id3_latin1_encode(latin1, ucs4);
