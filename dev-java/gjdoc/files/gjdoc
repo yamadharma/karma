@@ -1,7 +1,0 @@
-#!/bin/sh
-
-if [[ -x /usr/bin/gjdoc-native ]] ; then
-	/usr/bin/gjdoc-native ${1+"${@}"}
-else
-	$(java-config --java) -cp "$(java-config --classpath=gjdoc,antlr):$CLASSPATH" gnu.classpath.tools.gjdoc.Main ${1+"${@}"}
-fi
