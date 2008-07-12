@@ -154,6 +154,8 @@ src_install() {
 	newinitd ${FILESDIR}/wine.initd wine
 	
 	keepdir /var/lib/wine
+	fperms g+w /var/lib/wine
+	fowners root:wineadmin /var/lib/wine
 }
 
 pkg_postinst() {
@@ -161,6 +163,5 @@ pkg_postinst() {
 	elog "winecfg or regedit HKCU\\Software\\Wine"
 	elog ""
 	elog "Use wine for initial user enviroment or wine --update."
-	
-	chown root:wineadmin /var/lib/wine
+
 }
