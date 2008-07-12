@@ -7,7 +7,8 @@ inherit java-pkg-2 java-ant-2 eutils
 DESCRIPTION="Java based SVG toolkit"
 HOMEPAGE="http://xml.apache.org/batik/"
 # SRC_URI="http://apache.rediska.ru/xmlgraphics/batik/${PN}-src-${PV/_/}.zip"
-SRC_URI="mirror://apache/xml/batik/${PN}-src-${PV/_/}.zip"
+# SRC_URI="mirror://apache/xml/batik/${PN}-src-${PV/_/}.zip"
+SRC_URI="http://www.sai.msu.su/apache/xmlgraphics/batik/${PN}-src-${PV/_/}.zip"
 
 LICENSE="Apache-2.0"
 SLOT="1.6"

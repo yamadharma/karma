@@ -71,6 +71,8 @@ pkg_setup() {
 		eerror "You must build media-libs/alsa-lib with USE=midi"
 		die "please re-emerge media-libs/alsa-lib with USE=midi"
 	fi
+	
+	enewgroup "wineadmin"
 }
 
 src_unpack() {
@@ -150,6 +152,8 @@ src_install() {
 	
 	rm -f ${D}/etc/init.d/*
 	newinitd ${FILESDIR}/wine.initd wine
+	
+	keepdir /var/lib/wine
 }
 
 pkg_postinst() {
@@ -157,4 +161,6 @@ pkg_postinst() {
 	elog "winecfg or regedit HKCU\\Software\\Wine"
 	elog ""
 	elog "Use wine for initial user enviroment or wine --update."
+	
+	chown root:wineadmin /var/lib/wine
 }
