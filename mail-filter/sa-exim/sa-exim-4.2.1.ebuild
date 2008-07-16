@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils
+inherit eutils flag-o-matic
 
 IUSE=""
 
@@ -20,6 +20,7 @@ RDEPEND=">=mail-mta/exim-4.20
 
 src_compile () 
 {
+	append-flags -fPIC -DPIC
 	emake SACONF=/etc/exim/sa-exim.conf || die
 }
 
