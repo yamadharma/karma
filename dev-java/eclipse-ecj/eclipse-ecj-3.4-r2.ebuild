@@ -15,7 +15,7 @@ SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${MY_PN}src-
 IUSE="gcj java6"
 
 LICENSE="EPL-1.0"
-KEYWORDS="amd64 ~ia64 ~ppc ~ppc64 x86 ~x86-fbsd"
+KEYWORDS="amd64 ~ia64 ~ppc ~ppc64 ~x86 x86-fbsd"
 SLOT="3.4"
 
 CDEPEND=">=app-admin/eselect-ecj-0.2
@@ -56,7 +56,7 @@ src_compile() {
 	local javac_opts javac java jar
 
 	if use gcj ; then
-		local gccbin="$(gcc-config -B $(ls -r /etc/env.d/gcc/${CHOST}-* | head -1) || die)"
+		local gccbin="$(gcc-config -B $(ls -1r /etc/env.d/gcc/${CHOST}-* | head -1) || die)"
 		local gcj="${gccbin}/gcj"
 		javac="${gcj} -C"
 		jar="${gccbin}/gjar"
@@ -87,14 +87,15 @@ src_compile() {
 
 	if use gcj ; then
 		einfo "Building native ${MY_PN} binary ..."
-		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -o ${MY_PN}-${SLOT} \
+		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -o native_${MY_PN}-${SLOT} \
 			--main=org.eclipse.jdt.internal.compiler.batch.Main ${MY_PN}.jar || die
 	fi
 }
 
 src_install() {
 	if use gcj ; then
-		dobin ${MY_PN}-${SLOT} || die
+		dobin native_${MY_PN}-${SLOT}
+		newbin "${FILESDIR}/ecj-${SLOT}" ${MY_PN}-${SLOT}
 
 		# Don't complain when doing dojar below.
 		JAVA_PKG_WANT_SOURCE=1.4

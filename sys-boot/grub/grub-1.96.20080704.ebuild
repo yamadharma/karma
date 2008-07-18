@@ -22,8 +22,8 @@ SRC_URI="mirror://debian/pool/main/g/${MY_PN}/${MY_P}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86 amd64"
-# KEYWORDS=""
+# KEYWORDS="x86 amd64"
+KEYWORDS=""
 IUSE="static custom-cflags"
 
 DEPEND=">=sys-libs/ncurses-5.2-r5
