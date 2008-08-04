@@ -1,8 +1,11 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: 
 
-inherit eutils
+WANT_AUTOCONF="latest"
+WANT_AUTOMAKE="latest"
+
+inherit eutils autotools
 
 MY_P=${P/_/}
 S=${WORKDIR}/${MY_P}
@@ -20,8 +23,7 @@ RDEPEND="sys-libs/zlib
 	 rcc? ( app-i18n/librcc )"
 
 DEPEND="${RDEPEND}
-	sys-devel/autoconf
-	sys-devel/libtool"
+	doc? ( app-doc/doxygen )"
 
 src_unpack() {
 	unpack ${A}
@@ -32,19 +34,24 @@ src_unpack() {
 	epatch "${FILESDIR}"/${P}-autoconf259.patch
 	epatch "${FILESDIR}"/${P}-doxyinput.patch
 	epatch "${FILESDIR}"/${P}-unicode16.patch
+	epatch "${FILESDIR}"/${P}-gcc-4.3.patch
 
 	# Security fix for bug 189610.
 	epatch "${FILESDIR}"/${P}-security.patch
 
 	use rcc && ( epatch ${FILESDIR}/id3lib-ds-rcc.patch || die )
 
-	export WANT_AUTOMAKE=1.6
-	export WANT_AUTOCONF=2.5
+	AT_M4DIR="${S}/m4" eautoreconf
+}
 
-	libtoolize --force --copy || die
-	aclocal || die
-	automake || die
-	autoconf || die
+src_compile() {
+	econf || die "econf failed."
+	emake || die "emake failed."
+
+	if use doc; then
+		cd doc/
+		doxygen Doxyfile || die "doxygen failed"
+	fi
 }
 
 src_install() {
@@ -56,6 +63,7 @@ src_install() {
 
 	# some example programs to be placed in docs dir.
 	if use doc; then
+		dohtml -r doc
 		cp -a examples ${D}/usr/share/doc/${PF}/examples
 		cd ${D}/usr/share/doc/${PF}/examples
 		make distclean
