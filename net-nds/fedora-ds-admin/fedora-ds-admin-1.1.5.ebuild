@@ -1,10 +1,13 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils multilib
+WANT_AUTOCONF="latest"
+WANT_AUTOMAKE="latest"
 
-DESCRIPTION="Fedora Directory Server (base)"
+inherit eutils multilib autotools
+
+DESCRIPTION="Fedora Directory Server (admin)"
 HOMEPAGE="http://directory.fedora.redhat.com/"
 SRC_URI="http://directory.fedoraproject.org/sources/${P}.tar.bz2"
 
@@ -26,10 +29,15 @@ DEPEND=">=dev-libs/nss-3.11.4
         dev-libs/openssl
         sys-apps/tcp-wrappers
         sys-libs/pam
-        sys-libs/zlib"
+        sys-libs/zlib
+	!net-nds/fedora-ds"
 
 src_unpack() {
         unpack ${A}
+	cd ${S}
+	sed -e "s!SUBDIRS!# SUBDIRS!g" -i Makefile.am
+	rm -rf mod_*
+	eautoreconf
 }
 
 src_compile() {
@@ -46,6 +54,7 @@ src_compile() {
         econf $(use_enable debug) \
               ${myconf} \
               --with-fhs \
+	      --with-httpd=/usr/sbin/apache2 \
 	      || die "econf failed"
         emake || die "emake failed"
 
@@ -60,21 +69,15 @@ src_compile() {
 
 src_install () {
         emake DESTDIR=${D} install || die "emake failed"
+		
+	# remove redhat style init script.
+	# we are on gentoo apache is build with mozldap 
+	# no LD_PRELOAD required
+        rm -rf ${D}/etc/rc.d
+        rm -rf ${D}/etc/default
 	
-	# install not installed header
-	insinto /usr/include/dirsrv
-	doins ldap/servers/slapd/slapi-plugin.h
-
-	# make sure perl scripts have a proper shebang 
-	dosed 's|#{{PERL-EXEC}}|#!/usr/bin/perl|' /usr/share/dirsrv/script-templates/template-*.pl
-
-	# remove redhat style init script and install gentoo style
-	rm -rf ${D}/etc/rc.d
-	newinitd ${FILESDIR}/dirsrv.initd dirsrv
-	newconfd ${FILESDIR}/dirsrv.confd dirsrv
-
-        # cope with libraries being in /usr/lib/dirsrv
-        dodir /etc/env.d
-        echo "LDPATH=/usr/$(get_libdir)/dirsrv" > ${D}/etc/env.d/08dirsrv
-
+	# for now remove the *-ds-admin and no apacha restart
+	# the sources must be patched to invoke init.d/apache2
+	# or a script that handles the restart 
+	rm -rf ${D}/usr/sbin/*-ds-admin	
 }

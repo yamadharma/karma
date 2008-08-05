@@ -2,6 +2,13 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 Jul 2008; Mario Fetka <mario.fetka@gmail.com> files/dirsrv.initd,
+  fedora-ds-base-1.1.0.ebuild, +fedora-ds-base-1.1.1.ebuild:
+  repoman cleanup & new init script with spawn process check
+
+  20 Jun 2008; Mario Fetka <mario-fetka@gmx.at> fedora-ds-base-1.1.0.ebuild:
+  gcc 4.3 hack
+
   19 Jan 2008; Mario Fetka <mario-fetka@gmx.at> ++, ++,
   -fedora-ds-base-1.1.0_pre20071111.ebuild:
   Initial 1.1 FDS

@@ -1,6 +1,27 @@
 # ChangeLog for app-text/pdfsam
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  31 Jul 2008; Mario Fetka <mario.fetka@gmail.com> pdfsam-1.3.0e_p1.ebuild,
+  pdfsam-1.4.0e.ebuild:
+  correct desktop files
+
+  31 Jul 2008; Mario Fetka <mario.fetka@gmail.com> pdfsam-1.3.0e_p1.ebuild,
+  pdfsam-1.4.0e.ebuild:
+  Repoman Cleanups
+
+  31 Jul 2008; Mario Fetka <mario.fetka@gmail.com> pdfsam-1.3.0e_p1.ebuild,
+  pdfsam-1.4.0e.ebuild:
+  Correct license
+
+  31 Jul 2008; Mario Fetka <mario.fetka@gmail.com> pdfsam-1.4.0e.ebuild:
+  Finish javadoc
+
+  31 Jul 2008; Mario Fetka <mario.fetka@gmail.com> pdfsam-1.4.0e.ebuild:
+  enable javadoc
+
+  30 Jul 2008; Mario Fetka <mario.fetka@gmail.com> +pdfsam-1.4.0e.ebuild:
+  Bump no javadoc
 
   21 Oct 2007; Mario Fetka <mario-fetka@gmx.at> pdfsam-1.3.0e_p1.ebuild:
   remove useless inherit

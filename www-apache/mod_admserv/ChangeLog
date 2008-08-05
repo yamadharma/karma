@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Jul 2008; Mario Fetka <mario-fetka@gmx.at> +mod_admserv-1.1.5.ebuild:
+  Bump
+
   21 May 2008; Mario Fetka <mario-fetka@gmx.at> +mod_admserv-1.1.4.ebuild:
   bump
 

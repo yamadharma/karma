@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Aug 2008; Mario Fetka <mario.fetka@gmail.com>
+  fedora-admin-console-1.1.1.ebuild:
+  repoman cleanup & create versioned symlinks
+
   19 Jan 2008; Mario Fetka <mario-fetka@gmx.at> ++, ++,
   -fedora-admin-console-1.1.0_pre20071111.ebuild:
   Initial 1.1 FDS

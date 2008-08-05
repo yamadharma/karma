@@ -2,6 +2,14 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 Jul 2008; Mario Fetka <mario.fetka@gmail.com>
+  mod_restartd-1.1.5.ebuild:
+  repoman cleanup
+
+  30 Jul 2008; Mario Fetka <mario.fetka@gmail.com>
+  +mod_restartd-1.1.5.ebuild:
+  Bump
+
   21 May 2008; Mario Fetka <mario-fetka@gmx.at> +mod_restartd-1.1.4.ebuild:
   bump
 

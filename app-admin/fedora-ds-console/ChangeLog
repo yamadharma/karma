@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Aug 2008; Mario Fetka <mario.fetka@gmail.com>
+  fedora-ds-console-1.1.1.ebuild:
+  repoman cleanup & create versioned symlinks
+
   19 Jan 2008; Mario Fetka <mario-fetka@gmx.at>
   +files/fedora-ds-console-1.1.1-add_missing_files-1.patch,
   fedora-ds-console-1.1.1.ebuild:

@@ -44,12 +44,14 @@ start() {
    eend 0
    for instance in $FDSINSTANCES ; do
       ebegin "Starting Instance $instance"
-      start-stop-daemon --start --quiet \
-      --pidfile $piddir/slapd-$instance.pid \
+      start-stop-daemon --start --quiet -m \
+      --pidfile $piddir/slapd-$instance.startpid \
       --exec $exec -- -D $instbase/slapd-$instance \
       -i $piddir/slapd-$instance.pid -w $piddir/slapd-$instance.startpid 
       eend $?
    done
+   sleep 5
+   status || return 1
 }
 
 
@@ -82,7 +84,7 @@ status() {
    for instance in $INSTANCES; do
       if [ -e $piddir/slapd-$instance.pid ]; then
          pid=$(cat $piddir/slapd-$instance.pid)
-         if [ $(echo "$pids" | grep -c $pid) -ge 1 ]; then
+         if [ $(echo "$pid" | grep -c $pid) -ge 1 ]; then
             einfo "$prog $instance (pid $pid) is running..."
          else
             ewarn "$prog $instance dead but pid file exists"

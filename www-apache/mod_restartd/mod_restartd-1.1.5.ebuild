@@ -25,12 +25,6 @@ DOCFILES="COPYING README"
 
 need_apache2
 
-src_unpack() {
-        unpack ${A}
-        cd ${S}
-        epatch ${FILESDIR}/${PN}-1.0-prefix-config-1.patch
-}
-
 src_compile() {
 	econf --with-apxs=${APXS} \
 	|| die "econf failed"

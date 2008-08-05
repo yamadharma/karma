@@ -2,6 +2,13 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  27 Jun 2008; Mario Fetka <mario-fetka@gmx.at> ChangeLog:
+  Bump
+
+  27 Jun 2008; Mario Fetka <mario-fetka@gmx.at>
+  +fedora-ds-admin-1.1.5.ebuild:
+  Bump
+
   21 May 2008; Mario Fetka <mario-fetka@gmx.at>
   +fedora-ds-admin-1.1.4.ebuild:
   bump

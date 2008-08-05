@@ -9,7 +9,9 @@ inherit autotools check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 
 
 IUSE="binfilter cups dbus debug eds firefox gnome gstreamer gtk kde ldap mono odk opengl pam seamonkey xulrunner"
 
-MY_PV="2.4.1.6"
+infra_PV=${PV}-1
+
+MY_PV="2.4.1.8"
 PATCHLEVEL="OOH680"
 SRC="OOo_${PV}_src"
 MST="OOH680_m17"
@@ -30,7 +32,7 @@ SRC_URI="mirror://openoffice/stable/${PV}/${SRC}_core.tar.bz2
 	http://download.go-oo.org/SRC680/libwpg-0.1.2.tar.gz
 	http://download.go-oo.org/SRC680/oox.2008-02-29.tar.bz2
 	http://download.go-oo.org/SRC680/writerfilter.2008-02-29.tar.bz2
-	http://download.i-rs.ru/pub/openoffice/${PV}/ru/infra-ooo-files_${PV}.tar.gz"
+	http://download.i-rs.ru/pub/openoffice/${infra_PV}/ru/infra-ooo-files_${PV}.tar.gz"
 
 LANGS1="af ar as_IN be_BY bg bn br bs ca cs cy da de dz el en_GB en_ZA eo es et fa fi fr ga gl gu_IN he hi_IN hr hu it ja km ko ku lt lv mk ml_IN mr_IN nb ne nl nn nr ns or_IN pa_IN pl pt pt_BR ru rw sh sk sl sr ss st sv sw_TZ ta_IN te_IN tg th ti_ER tn tr ts uk ur_IN ve vi xh zh_CN zh_TW zu"
 LANGS="${LANGS1} en en_US"
@@ -242,9 +244,9 @@ src_unpack() {
 	cp -f infra/bin/* bin/
 	cp -fr infra/patches/* patches/
 	cp infra/sdf/ru/* src/sdf/
-	epatch "${FILESDIR}/gentoo-${PV}.diff"
-	epatch "${FILESDIR}/ooo-env_log.diff"
-	epatch "${FILESDIR}/${PV}/infra-build.patch"
+	epatch "${FILESDIR}/gentoo-${PV}.diff" || die
+	epatch "${FILESDIR}/ooo-env_log.diff" || die
+	epatch "${FILESDIR}/${PV}/infra-build.patch" || die
 
 	#Use flag checks
 	if use java ; then

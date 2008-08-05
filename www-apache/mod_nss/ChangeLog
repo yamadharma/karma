@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Jul 2008; Mario Fetka <mario.fetka@gmail.com> +mod_nss-1.0.8.ebuild:
+  Bump
+
   29 Mar 2008; Mario Fetka <mario-fetka@gmx.at> mod_nss-1.0.7.ebuild:
   Correct Bug
 
