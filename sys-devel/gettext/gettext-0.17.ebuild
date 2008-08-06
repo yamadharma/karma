@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-devel/gettext/gettext-0.17.ebuild,v 1.6 2007/12/16 11:13:14 armin76 Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-devel/gettext/gettext-0.17.ebuild,v 1.12 2008/07/02 20:39:13 the_paya Exp $
 
 inherit flag-o-matic eutils multilib toolchain-funcs mono libtool elisp-common
 
@@ -10,11 +10,14 @@ SRC_URI="mirror://gnu/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-3 LGPL-2"
 SLOT="0"
-KEYWORDS="alpha amd64 ~arm ~hppa ia64 ~m68k ~mips ppc ~ppc64 ~s390 ~sh sparc ~sparc-fbsd x86 ~x86-fbsd"
-IUSE="emacs nls doc nocxx"
+KEYWORDS="alpha amd64 arm hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc ~sparc-fbsd x86 ~x86-fbsd"
+IUSE="acl doc emacs nls nocxx openmp"
 
 DEPEND="virtual/libiconv
-	dev-libs/expat"
+	dev-libs/libxml2
+	sys-libs/ncurses
+	dev-libs/expat
+	acl? ( kernel_linux? ( sys-apps/acl ) )"
 PDEPEND="emacs? ( app-emacs/po-mode )"
 
 src_unpack() {
@@ -33,11 +36,14 @@ src_unpack() {
 		-e '2iexit 77' \
 		autoconf-lib-link/tests/rpath-3*[ef] || die "sed tests"
 
-	# sanity check for Bug 105304
-	if [[ -z ${USERLAND} ]] ; then
-		eerror "You just hit Bug 105304, please post your 'emerge info' here:"
-		eerror "http://bugs.gentoo.org/105304"
-		die "Aborting to prevent screwing your system"
+	# until upstream pulls a new gnulib/acl, we have to hack around it
+	if ! use acl ; then
+		eval export ac_cv_func_acl{,delete_def_file,extended_file,free,from_{mode,text},{g,s}et_{fd,file}}=no
+		export ac_cv_header_acl_libacl_h=no
+		export ac_cv_header_sys_acl_h=no
+		export ac_cv_search_acl_get_file=no
+		export gl_cv_func_working_acl_get_file=no
+		sed -i -e 's:use_acl=1:use_acl=0:' gettext-tools/configure
 	fi
 }
 
@@ -51,18 +57,23 @@ src_compile() {
 	fi
 	use nocxx && export CXX=$(tc-getCC)
 
-	# Emacs support is now in a separate package, so configure --without-emacs
+	# --without-emacs: Emacs support is now in a separate package
+	# --with-included-glib: glib depends on us so avoid circular deps
+	# --with-included-libcroco: libcroco depends on glib which ... ^^^
 	econf \
 		--docdir="/usr/share/doc/${PF}" \
 		--without-emacs \
 		--disable-java \
+		--with-included-glib \
+		--with-included-libcroco \
+		$(use_enable openmp) \
 		${myconf} \
 		|| die
 	emake || die
 }
 
 src_install() {
-	make install DESTDIR="${D}" || die "install failed"
+	emake install DESTDIR="${D}" || die "install failed"
 	use nls || rm -r "${D}"/usr/share/locale
 	dosym msgfmt /usr/bin/gmsgfmt #43435
 	dobin gettext-tools/misc/gettextize || die "gettextize"
@@ -100,8 +111,5 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	ewarn "Any package that linked against the previous version"
-	ewarn "of gettext will have to be rebuilt."
-	ewarn "Please 'emerge gentoolkit' and run:"
-	ewarn "revdep-rebuild --library libintl.so.7"
+	preserve_old_lib_notify /{,usr/}$(get_libdir)/libintl$(get_libname 7)
 }
