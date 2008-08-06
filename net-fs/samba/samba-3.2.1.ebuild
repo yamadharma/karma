@@ -121,6 +121,7 @@ src_compile() {
 		--enable-socket-wrapper \
 		--enable-nss-wrapper \
 		--with-cifsmount=no \
+		--with-dnsupdate \
 		$(use_with acl acl-support) \
 		$(use_with async aio-support) \
 		$(use_with automount) \
