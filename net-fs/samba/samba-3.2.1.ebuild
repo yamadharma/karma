@@ -12,7 +12,7 @@ SRC_URI="mirror://samba/stable/${MY_P}.tar.gz
 	mirror://samba/${MY_P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 IUSE_LINGUAS="linguas_ja linguas_pl"
 IUSE="${IUSE_LINGUAS} acl ads async automount caps cups doc examples ipv6 kernel_linux ldap fam
 	pam quotas readline selinux swat syslog winbind"
@@ -60,6 +60,10 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 	cd "${S}/source"
+
+	epatch \
+		"${FILESDIR}/3.0.30-no-unnecessary-cups.patch" \
+		"${FILESDIR}/3.2.0-heimdal-configure.patch"
 
 	# Ok, agreed, this is ugly. But it avoids a patch we
 	# need for every samba version and we don't need autotools
@@ -222,6 +226,9 @@ src_install() {
 	keepdir /var/lib/samba/{netlogon,profiles}
 	keepdir /var/lib/samba/printers/{W32X86,WIN40,W32ALPHA,W32MIPS,W32PPC,X64,IA64,COLOR}
 	keepdir /usr/$(get_libdir)/samba/{rpc,idmap,auth}
+	
+	dodir /etc/env.d
+	echo "LDPATH=/usr/$(get_libdir)/samba" > ${D}/etc/env.d/90samba
 
 	# docs
 	dodoc "${FILESDIR}/README.gentoo"
