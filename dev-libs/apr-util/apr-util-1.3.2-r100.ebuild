@@ -1,51 +1,42 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/apr-util/apr-util-1.2.12.ebuild,v 1.1 2007/12/15 14:26:31 hollow Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-libs/apr-util/apr-util-1.3.2.ebuild,v 1.1 2008/06/23 18:06:30 hollow Exp $
 
-inherit autotools eutils flag-o-matic libtool db-use
+inherit eutils flag-o-matic libtool db-use autotools
 
 DESCRIPTION="Apache Portable Runtime Utility Library"
 HOMEPAGE="http://apr.apache.org/"
-SRC_URI="mirror://apache/apr/${P}.tar.gz
-	mirror://apache/apr/apr-${PV}.tar.gz"
+SRC_URI="mirror://apache/apr/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="1"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
-IUSE="berkdb doc gdbm ldap mozldap mysql postgres sqlite sqlite3"
+IUSE="berkdb doc freetds gdbm ldap mozldap mysql odbc postgres sqlite sqlite3"
 RESTRICT="test"
 
-DEPEND="dev-libs/expat
+RDEPEND="dev-libs/expat
 	>=dev-libs/apr-${PV}
 	berkdb? ( =sys-libs/db-4* )
-	doc? ( app-doc/doxygen )
+	freetds? ( dev-db/freetds )
 	gdbm? ( sys-libs/gdbm )
 	ldap? ( =net-nds/openldap-2* )
 	mozldap? ( =dev-libs/mozldap-6*
-		   =dev-libs/nspr-4*
-		   =dev-libs/nss-3* )
+		  =dev-libs/nspr-4*
+                  =dev-libs/nss-3* )
 	mysql? ( =virtual/mysql-5* )
-	postgres? ( dev-db/libpq )
+	odbc? ( dev-db/unixODBC )
+	postgres? ( virtual/postgresql-base )
 	sqlite? ( =dev-db/sqlite-2* )
 	sqlite3? ( =dev-db/sqlite-3* )"
-
-pkg_setup() {
-        if use ldap && use mozldap ; then
-                eerror "you cant activate ldap & mozldap at the same time "
-                eerror "plz deactivate \"dev-libs/apr-util -ldap mozldap\" one in"
-                eerror "\"etc/portage/package.use\" ;p"
-                die "ldap and mozldap USE conflict"
-        fi
-}
+DEPEND="${RDEPEND}
+	doc? ( app-doc/doxygen )"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	
-	epatch "${FILESDIR}"/"${PN}"-1.2.10-mozldap60-2.patch
 
-	./buildconf --with-apr=../apr-${PV} || die "buildconf failed"
-	elibtoolize || die "elibtoolize failed"
+	epatch "${FILESDIR}"/"${PN}"-1.2.10-mozldap60-2.patch
+	eautoconf
 }
 
 src_compile() {
@@ -72,8 +63,10 @@ src_compile() {
 	econf --datadir=/usr/share/apr-util-1 \
 		--with-apr=/usr \
 		--with-expat=/usr \
+		$(use_with freetds) \
 		$(use_with gdbm) \
 		$(use_with mysql) \
+		$(use_with odbc) \
 		$(use_with postgres pgsql) \
 		$(use_with sqlite sqlite2) \
 		$(use_with sqlite3) \

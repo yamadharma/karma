@@ -2,6 +2,16 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Jun 2008; Mario Fetka <mario-fetka@gmx.at> +apr-util-1.3.2-r100.ebuild:
+  Bump
+
+  11 Jun 2008; Mario Fetka <mario-fetka@gmx.at> -apr-util-1.2.12.patch, ++:
+  Move around
+
+  11 Jun 2008; Mario Fetka <mario-fetka@gmx.at> +apr-util-1.2.12.patch,
+  +apr-util-1.3.0-r100.ebuild:
+  Bump
+
   19 Jan 2008; Mario Fetka <mario-fetka@gmx.at>
   +files/apr-util-ebuild-1.2.10-mozldap.patch, +apr-util-1.2.12-r100.ebuild:
   Bump
