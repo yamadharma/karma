@@ -9,7 +9,7 @@ IUSE="${IUSE}"
 MY_P="systemimager-${PV}"
 S=${WORKDIR}/${MY_P}
 
-MKLIBS_VERSION=0.1.20
+MKLIBS_VERSION=0.1.26
 
 BC_VERSION=1.06
 CTCS_VERSION=1.3.0pre4
@@ -17,13 +17,13 @@ DISCOVER_DATA_VERSION=2.2006.10.29
 DISCOVER_VERSION=1.7.18ubuntu1
 #DISCOVER_PATCH_VERSION=2
 DOSFSTOOLS_VERSION=2.11
-E2FSPROGS_VERSION=1.38
+E2FSPROGS_VERSION=1.40.2
 GZIP_VERSION=1.3.5
 HFSUTILS_VERSION=3.2.6
 JFSUTILS_VERSION=1.1.7
-DEVMAPPER_VERSION=1.02.17
-LVM_VERSION=2.2.02.18
-MDADM_VERSION=2.2
+DEVMAPPER_VERSION=1.02.22
+LVM_VERSION=2.2.02.26
+MDADM_VERSION=2.6.4
 
 KEXEC_VERSION=20061214
 
@@ -35,9 +35,11 @@ PARTED_VERSION=1.6.25.1
 PDISK_VERSION=20000516
 RPM_VERSION=4.2
 RPM_SRPM_VERSION=${RPM_VERSION}-1
+POPT_VERSION=1.8
+
 RAIDTOOLS_VERSION=1.00.3
 REISERFSPROGS_VERSION=3.6.19
-TAR_VERSION=1.15.1
+TAR_VERSION=1.19
 UTIL_LINUX_VERSION=2.12r
 XFSPROGS_VERSION=2.7.3
 ZLIB_VERSION=1.2.3
@@ -49,16 +51,24 @@ COREUTILS_VERSION=6.4
 
 BITTORRENT_VERSION=4.4.0
 
-BUSYBOX_VERSION="1.1.1"
+BUSYBOX_VERSION=1.9.1
+CX_FREEZE_VERSION=3.0.3
+
+DHCLIENT_VERSION=2.0pl5
+
+UDEV_VERSION=108
+UDEV_DIFF_VERSION=0ubuntu4
 
 case $ARCH in
     x86) 
-    LINUX_VERSION=2.6.21
+    LINUX_VERSION=2.6.24.2
     ;;
     amd64)
-    LINUX_VERSION=2.6.21
+    LINUX_VERSION=2.6.24.2
     ;;
 esac    
+
+SI_URL=http://download.systemimager.org/pub/
 
 DESCRIPTION="System imager boot-i386. Software that automates Linux installs, software distribution, and production deployment."
 HOMEPAGE="http://www.systemimager.org/"
@@ -82,22 +92,28 @@ SRC_URI="mirror://sourceforge/systemimager/${MY_P}.tar.bz2
 
 	http://download.systemimager.org/pub/pdisk/pdisk.${PDISK_VERSION}.src.tar
 
-	http://download.systemimager.org/pub/coreutils/coreutils-${COREUTILS_VERSION}.tar.bz2
+	${SI_URL}/tar/tar-${TAR_VERSION}.tar.bz2
 
 	http://download.systemimager.org/pub/raidtools/raidtools-${RAIDTOOLS_VERSION}.tar.gz
 	http://download.systemimager.org/pub/reiserfsprogs/reiserfsprogs-${REISERFSPROGS_VERSION}.tar.gz
-	http://download.systemimager.org/pub/tar/tar-${TAR_VERSION}.tar.gz
+
 	http://download.systemimager.org/pub/util-linux/util-linux-${UTIL_LINUX_VERSION}.tar.bz2
 	http://download.systemimager.org/pub/xfsprogs/xfsprogs-${XFSPROGS_VERSION}.src.tar.gz
 	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/xfsprogs-${XFSPROGS_VERSION}.src.tar.gz
 	http://download.systemimager.org/pub/zlib/zlib-${ZLIB_VERSION}.tar.gz
 	http://download.systemimager.org/pub/module-init-tools/module-init-tools-${MODULE_INIT_TOOLS_VERSION}.tar.bz2
 	
+	${SI_URL}/kexec/kexec-tools-testing-${KEXEC_VERSION}.tar.bz2
+
 	http://download.systemimager.org/pub/bittorrent/BitTorrent-${BITTORRENT_VERSION}.tar.gz
 
 	http://download.systemimager.org/pub/busybox/busybox-${BUSYBOX_VERSION}.tar.bz2
-	
+	http://download.systemimager.org/pub/udev/udev_${UDEV_VERSION}.orig.tar.gz
 	http://download.systemimager.org/pub/linux/linux-${LINUX_VERSION}.tar.bz2"
+
+
+#	${SI_URL}/tar-${TAR_VERSION}.tar.gz
+#	http://download.systemimager.org/pub/coreutils/coreutils-${COREUTILS_VERSION}.tar.bz2
 
 #	http://download.systemimager.org/pub/discover/discover_${DISCOVER_VERSION}-${DISCOVER_PATCH_VERSION}.tar.gz
 
@@ -147,11 +163,14 @@ src_unpack ()
 #	cp ${DISTDIR}/rpm-${RPM_SRPM_VERSION}.src.rpm ${S}/src
 	cp ${DISTDIR}/raidtools-${RAIDTOOLS_VERSION}.tar.gz ${S}/src
 	cp ${DISTDIR}/reiserfsprogs-${REISERFSPROGS_VERSION}.tar.gz ${S}/src
-	cp ${DISTDIR}/tar-${TAR_VERSION}.tar.gz ${S}/src
+	cp ${DISTDIR}/tar-${TAR_VERSION}.tar.bz2 ${S}/src
 	cp ${DISTDIR}/util-linux-${UTIL_LINUX_VERSION}.tar.bz2 ${S}/src
 	cp ${DISTDIR}/xfsprogs-${XFSPROGS_VERSION}.src.tar.gz ${S}/src
 	cp ${DISTDIR}/zlib-${ZLIB_VERSION}.tar.gz ${S}/src
+	cp ${DISTDIR}/kexec-tools-testing-${KEXEC_VERSION}.tar.bz2 ${S}/src
+	
 	cp ${DISTDIR}/linux-${LINUX_VERSION}.tar.bz2 ${S}/src
+	
 
 	cp ${DISTDIR}/busybox-${BUSYBOX_VERSION}.tar.bz2 ${S}/initrd_source/src
 	
@@ -159,7 +178,11 @@ src_unpack ()
 	
 	cp ${DISTDIR}/module-init-tools-${MODULE_INIT_TOOLS_VERSION}.tar.bz2 ${S}/initrd_source/src
 
-	cp ${DISTDIR}/coreutils-${COREUTILS_VERSION}.tar.bz2 ${S}/initrd_source/src
+#	cp ${DISTDIR}/coreutils-${COREUTILS_VERSION}.tar.bz2 ${S}/initrd_source/src
+
+	cp ${DISTDIR}/udev_${UDEV_VERSION}.orig.tar.gz ${S}/initrd_source/src
+#	cp ${DISTDIR}/udev_${UDEV_VERSION}-${UDEV_DIFF_VERSION}.diff.gz ${S}/initrd_source/src
+	
 	
 	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:g" ${S}/initrd_source/initrd.rul 
 	sed -ie "s:mklibs -L:mklibs -L $(gcc-config -L) -L:g" ${S}/make.d/boel_binaries.inc
@@ -210,10 +233,11 @@ src_compile ()
 	make ${MAKEOPTS} kernel || die "Compiling error"    
 	
 	CFLAGS=-I${S}/src/linux-${LINUX_VERSION}/include \
-	    make ${MAKEOPTS} initrd || die "Compiling error"    
+	    make initrd || die "Compiling error"    
+#	make busybox
 	    
 	CFLAGS=-I${S}/src/linux-${LINUX_VERSION}/include \
-	    make ${MAKEOPTS} boel_binaries_tarball || die "Compiling error"    
+	    make boel_binaries_tarball || die "Compiling error"    
 }
 
 src_install () 

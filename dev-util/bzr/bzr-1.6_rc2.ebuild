@@ -4,9 +4,10 @@
 
 inherit distutils bash-completion elisp-common eutils versionator
 
-#MY_PV=${PV/_rc/rc}
 MY_RV=${PV/_/}
-MY_PV=${PV/_beta/b}
+MY_PV=${PV/_/}
+#MY_PV=${PV/_rc/rc}
+#MY_PV=${PV/_beta/b}
 MY_P="${PN}-${MY_PV}"
 SERIES=$(get_version_component_range 1-2)
 S=${WORKDIR}/${MY_P}
