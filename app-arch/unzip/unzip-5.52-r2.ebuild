@@ -22,7 +22,7 @@ src_unpack() {
 	use rcc && ( epatch ${FILESDIR}/${PN}-ds-unixenc.patch || die )
 
 	ld_opts=""
-#	use rcc && ld_opts="-lrcc"
+	use rcc && ld_opts="-lrcc"
 	use rcc && ld_opts="-ldl"
 	use rcc && cc_opts="-DRCC_LAZY=1"
 
