@@ -1,0 +1,49 @@
+--- gtk-kde4/src/form1.cpp~	2008-07-16 20:21:50.000000000 +0400
++++ gtk-kde4/src/form1.cpp	2008-07-16 21:01:48.000000000 +0400
+@@ -51,8 +51,16 @@
+ 		}
+ 	}
+ 	varstr=QDir::homePath().append("/.themes");
+-	hometh=varstr+"/qt4";
++	hometh=varstr+"/Qt4";
+ 	dirqt.setPath(hometh);
++
++	if ((dirqt.exists()==0) && (QDir("/usr/share/themes/Qt4").exists()))
++	{
++		QProcess * copy = new QProcess();
++		copy->execute(QString("cp"), QStringList()<<"-R"<<"/usr/share/themes/Qt4"<<"~/.themes/");
++		delete copy;
++	}
++
+ 	if(dirqt.exists())
+ 	{
+ 		comboBox->insertItem(0,"Use current KDE style");
+@@ -76,7 +84,7 @@
+ 		for (i=1; i!=filesel.size(); i++) 
+ 		{
+ 			filesel[i].remove("/gtk-2.0");
+-			if (filesel.at(i)!="qt4") comboBox->addItem(filesel.at(i));
++			if (filesel.at(i)!="Qt4") comboBox->addItem(filesel.at(i));
+ 		}
+ 	}
+ 	//icons finding
+@@ -198,7 +206,7 @@
+ 	menu->show();
+ 	//fix Oxy! ^
+ 	
+-	QDir::setCurrent(QDir::homePath().append("/.themes/qt4/gtk-2.0/"));
++	QDir::setCurrent(QDir::homePath().append("/.themes/Qt4/gtk-2.0/"));
+ 	wpix=QPixmap(widge->size());
+ 	wpix.fill(Qt::transparent);
+ 	bpix=QPixmap(widge->size());
+@@ -422,8 +430,8 @@
+ 		out<<"include \"/usr/share/themes/"<<comboBox->currentText()<<"/gtk-2.0/gtkrc\""<<endl;
+ 		out<<"include \""<<QDir::homePath()<<"/.themes/"<<comboBox->currentText()<<"/gtk-2.0/gtkrc\""<<endl;
+ 	}else{
+-		out<<"include \"/usr/share/themes/qt4/gtk-2.0/gtkrc\""<<endl;
+-		out<<"include \""<<QDir::homePath()<<"/.themes/qt4/gtk-2.0/gtkrc\""<<endl;
++		out<<"include \"/usr/share/themes/Qt4/gtk-2.0/gtkrc\""<<endl;
++		out<<"include \""<<QDir::homePath()<<"/.themes/Qt4/gtk-2.0/gtkrc\""<<endl;
+ 	}
+ 	out<<"style \"user-font\""<<endl;
+ 	out<<"{ "<<endl;
