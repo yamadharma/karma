@@ -18,7 +18,6 @@ IUSE="debug doc examples javascript nsplugin zero"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
-#KEYWORDS="amd64 ~ppc ~ppc64 x86"
 KEYWORDS=""
 
 RDEPEND=">=net-print/cups-1.2.12

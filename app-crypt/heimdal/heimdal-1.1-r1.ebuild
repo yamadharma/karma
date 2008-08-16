@@ -22,9 +22,8 @@ IUSE="ssl berkdb ipv6 ldap X"
 RDEPEND="ssl? ( dev-libs/openssl )
 	berkdb? ( sys-libs/db )
 	ldap? ( net-nds/openldap )
-	sys-libs/ss
-	sys-libs/com_err
 	sys-libs/cracklib
+	sys-libs/e2fsprogs-libs
 	!virtual/krb5"
 DEPEND="${RDEPEND}"
 PROVIDE="virtual/krb5"

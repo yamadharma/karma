@@ -1,0 +1,26 @@
+From d367818fc194b10e7469373834decb48a47b1208 Mon Sep 17 00:00:00 2001
+From: Bernd Steinhauser <gentoo@bernd-steinhauser.de>
+Date: Sat, 19 Apr 2008 00:35:00 +0200
+Subject: [PATCH] Add more headers to install routine.
+
+---
+ workspace/libs/plasma/CMakeLists.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/workspace/libs/plasma/CMakeLists.txt b/workspace/libs/plasma/CMakeLists.txt
+index 8cf3172..ea271eb 100644
+--- a/workspace/libs/plasma/CMakeLists.txt
++++ b/workspace/libs/plasma/CMakeLists.txt
+@@ -133,6 +133,9 @@ install(FILES
+ install(FILES
+     widgets/icon.h
+     widgets/webcontent.h
++	widgets/lineedit.h
++	widgets/pushbutton.h
++	widgets/widget.h
+     DESTINATION ${INCLUDE_INSTALL_DIR}/plasma/widgets)
+ 
+ #For future
+-- 
+1.5.4.5
+

@@ -1,0 +1,12 @@
+# ChangeLog for kde-base/kcmshell
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  20 Jul 2008; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  kcmshell-4.0.98.ebuild:
+  Adding the cvs line to the ebuild.
+
+  31 May 2008; Patrick Lauer ( bugs at dev.gentooexperimental.org )
+  ChangeLog:
+  Recovering Changelogs
+

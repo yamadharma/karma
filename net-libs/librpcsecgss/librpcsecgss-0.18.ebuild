@@ -13,17 +13,14 @@ SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86"
 IUSE=""
 
-RDEPEND="|| (
-	    net-libs/libgssglue
-	    >=app-crypt/heimdal-1.0
-	    )"
+RDEPEND="|| ( net-libs/libgssglue >=app-crypt/heimdal-1.0 )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/${P}-config_in.patch     
+	epatch "${FILESDIR}"/${P}-heimdal.patch
 	eautoreconf
 }
 
