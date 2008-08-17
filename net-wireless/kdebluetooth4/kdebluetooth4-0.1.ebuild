@@ -13,7 +13,7 @@ SRC_URI="mirror://sourceforge/kde-bluetooth/${P}.tar.bz2"
 
 SLOT="4.1"
 LICENSE="GPL-2"
-KEYWORDS="amd64 x86"
+KEYWORDS="x86 amd64"
 IUSE=""
 
 # Localisation will be added once we have a release.
@@ -25,6 +25,7 @@ DEPEND=">=dev-libs/openobex-1.3
 RDEPEND="${DEPEND}
 	|| ( ( kde-base/kdialog:${SLOT} kde-base/konqueror:${SLOT} )
 		kde-base/kdelibs:${SLOT} )
+	kde-base/solid
 	>=net-wireless/bluez-libs-3.11
 	>=net-wireless/bluez-utils-3.11"
 
