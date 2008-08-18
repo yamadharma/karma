@@ -20,7 +20,7 @@ DEPEND="${DEPEND}
 	xscreensaver? ( x11-misc/xscreensaver )"
 RDEPEND="${DEPEND}"
 
-ESVN_PATCHES="${FILESDIR}/${P}-xscreensaver.patch"
+PATCHES=("${FILESDIR}/${PN}-xscreensaver.patch")
 
 pkg_setup() {
 	if ! built_with_use kde-base/kscreensaver opengl ; then
