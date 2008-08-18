@@ -12,7 +12,8 @@ SRC_URI="mirror://samba/stable/${MY_P}.tar.gz
 	mirror://samba/${MY_P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
+# KEYWORDS="amd64 x86"
+KEYWORDS=""
 IUSE_LINGUAS="linguas_ja linguas_pl"
 IUSE="${IUSE_LINGUAS} acl ads async automount caps cups doc examples ipv6 kernel_linux ldap fam
 	pam quotas readline selinux swat syslog winbind"
