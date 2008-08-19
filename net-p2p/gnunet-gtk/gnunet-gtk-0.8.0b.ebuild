@@ -9,7 +9,7 @@ inherit eutils autotools
 MY_PV=${PV/_pre/pre}
 DESCRIPTION="Graphical front end for GNUnet."
 HOMEPAGE="http://gnunet.org/"
-SRC_URI="http://gnunet.org/download/${PN}-${MY_PV}.tar.bz2"
+SRC_URI="http://gnunet.org/download/${PN}-${MY_PV}.tar.gz"
 
 KEYWORDS="amd64 ~ppc64 x86"
 LICENSE="GPL-2"
