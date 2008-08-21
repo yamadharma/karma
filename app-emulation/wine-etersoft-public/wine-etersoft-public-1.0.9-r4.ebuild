@@ -19,7 +19,7 @@ SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarb
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86"
-IUSE="alsa arts cups dbus esd +gecko hal jack jpeg lcms ldap nas ncurses +opengl oss samba scanner xml +X"
+IUSE="alsa arts cups dbus esd gecko hal jack jpeg lcms ldap nas ncurses opengl oss samba scanner xml X"
 RESTRICT="nomirror"
 
 S="${WORKDIR}"/wine-$WINEVER/

@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/guile-1.8.4.ebuild,v 1.4 2008/04/13 14:46:39 maekke Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/guile-1.8.5.ebuild,v 1.2 2008/07/04 19:21:08 hkbst Exp $
 
 inherit eutils autotools flag-o-matic elisp-common
 
@@ -26,6 +26,15 @@ src_unpack() {
 	unpack ${A}; cd "${S}"
 
 	sed "s_sleep 999_sleep 1_" -i test-suite/tests/popen.test
+
+#	cp configure.in configure.in.old
+
+	#for libtool-2.2*, bug 212723
+	sed 's/AC_CONFIG_MACRO_DIR(\[m4\])/AC_CONFIG_MACRO_DIR(\[guile-config\])/' -i configure.in
+
+#	diff -u configure.in.old configure.in
+
+	eautoreconf
 }
 
 src_compile() {
@@ -56,7 +65,7 @@ src_compile() {
 src_install() {
 	einstall || die "install failed"
 
-	dodoc AUTHORS ChangeLog GUILE-VERSION HACKING NEWS README SNAPSHOTS THANKS
+	dodoc AUTHORS ChangeLog GUILE-VERSION HACKING NEWS README THANKS
 
 	# texmacs needs this, closing bug #23493
 	dodir /etc/env.d

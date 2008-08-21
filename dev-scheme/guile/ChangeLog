@@ -1,6 +1,84 @@
 # ChangeLog for dev-scheme/guile
 # Copyright 2002-2008 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/ChangeLog,v 1.52 2008/04/13 14:46:39 maekke Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/ChangeLog,v 1.61 2008/07/28 18:14:53 pchrist Exp $
+
+  28 Jul 2008; Panagiotis Christopoulos <pchrist@gentoo.org> metadata.xml:
+  Update metadata.xml to include USE flag descriptions. Entries taken from
+  profiles/use.local.desc
+
+  04 Jul 2008; Marijn Schouten <hkBst@gentoo.org> guile-1.8.5.ebuild:
+  fix bug 230754
+
+*guile-1.8.5 (07 May 2008)
+
+  07 May 2008; Marijn Schouten <hkBst@gentoo.org> +guile-1.8.5.ebuild:
+  bump:
+  - Infrastructure changes
+
+    - Guile repository switched from CVS to Git
+    - Add support for `pkg-config'
+
+  - New modules (see the manual for details)
+
+    - `(srfi srfi-88)'
+
+  - New features (see the manual for details)
+
+    - New `postfix' read option, for SRFI-88 keyword syntax
+    - Some I/O primitives have been inlined, which improves I/O performance
+    - New object-based traps infrastructure
+    - New support for working on Guile code from within Emacs
+
+  - Bugs fixed
+
+    - `scm_add_slot ()' no longer segfaults (fixes bug #22369)
+    - Fixed `(ice-9 match)' for patterns like `((_ ...) ...)'
+    - `(oop goops describe)' now properly provides the `describe' feature
+    - Fixed `args-fold' from `(srfi srfi-37)'
+    - `(srfi srfi-35)' is now visible through `cond-expand'
+    - Fixed type-checking for the second argument of `eval'
+    - Fixed type-checking for SRFI-1 `partition'
+    - Fixed `struct-ref' and `struct-set!' on "light structs"
+    - Honor struct field access rights in GOOPS
+    - Changed the storage strategy of source properties, which fixes
+      a deadlock
+    - Allow compilation of Guile-using programs in C99 mode with GCC 4.3
+      and later
+    - Fixed build issue for GNU/Linux on IA64
+    - Fixed build issues on NetBSD 1.6
+    - Fixed build issue on Solaris 2.10 x86_64
+    - Fixed build issue with DEC/Compaq/HP's compiler
+    - Fixed `scm_from_complex_double' build issue on FreeBSD
+    - Fixed `alloca' build issue on FreeBSD 6
+    - Removed use of non-portable makefile constructs
+    - Fixed shadowing of libc's <random.h> on Tru64, which broke compilation
+    - Make sure all tests honor `$TMPDIR'
+
+  - Changes to the distribution
+
+    - New FAQ
+
+  06 May 2008; Marijn Schouten <hkBst@gentoo.org> guile-1.8.4-r1.ebuild:
+  add new fix for libtool-2.2.4, thanks to Panagiotis Christopoulos
+  <pxrist@gmail.com>
+
+*guile-1.8.4-r1 (25 Apr 2008)
+
+  25 Apr 2008; Marijn Schouten <hkBst@gentoo.org> +files/gcc-4.3.patch,
+  +guile-1.8.4-r1.ebuild:
+  add fixes for libtool-2.2 bug 212723 and gcc-4.3, bug 214787
+
+  17 Apr 2008; nixnut <nixnut@gentoo.org> guile-1.8.4.ebuild:
+  Stable on ppc wrt bug 217410
+
+  15 Apr 2008; Jeroen Roovers <jer@gentoo.org> guile-1.8.4.ebuild:
+  Stable for HPPA (bug #217410).
+
+  14 Apr 2008; Markus Rothe <corsair@gentoo.org> guile-1.8.4.ebuild:
+  Stable on ppc64; bug #217410
+
+  14 Apr 2008; Raúl Porcel <armin76@gentoo.org> guile-1.8.4.ebuild:
+  alpha/ia64/sparc stable wrt #217410
 
   13 Apr 2008; Markus Meier <maekke@gentoo.org> guile-1.8.4.ebuild:
   amd64/x86 stable, bug #217410
