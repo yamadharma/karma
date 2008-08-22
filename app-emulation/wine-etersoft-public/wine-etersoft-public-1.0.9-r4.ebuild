@@ -128,7 +128,7 @@ src_compile() {
 		CC=$(tc-getCC) \
 		--sysconfdir=/etc/wine \
 		--enable-opengl \
-		--with-x \
+		$(use_with X x) \
 		$(use_enable debug trace) \
 		$(use_enable debug) \
 		|| die "configure failed"
