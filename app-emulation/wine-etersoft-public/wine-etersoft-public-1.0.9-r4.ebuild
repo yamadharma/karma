@@ -72,7 +72,7 @@ pkg_setup() {
 		die "please re-emerge media-libs/alsa-lib with USE=midi"
 	fi
 	
-	enewgroup "wineadmin"
+	enewgroup wineadmin
 }
 
 src_unpack() {

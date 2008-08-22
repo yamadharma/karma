@@ -20,7 +20,7 @@ DEPEND="${RDEPEND}
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/${P}-heimdal.patch
+	epatch "${FILESDIR}"/${P}-config_in.patch
 	eautoreconf
 }
 
