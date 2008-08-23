@@ -25,12 +25,10 @@ RDEPEND="tcpd? ( sys-apps/tcp-wrappers )
 		kerberos? (
 			net-libs/librpcsecgss
 			|| (
-				(
-					net-libs/libgssglue
-					app-crypt/mit-krb5
-				)
-				>=app-crypt/heimdal-1.0
+				net-libs/libgssglue
+				virtual/krb5
 			)
+			>=app-crypt/heimdal-1.2
 		)
 	)"
 # util-linux dep is to prevent man-page collision
@@ -41,11 +39,11 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	epatch "${FILESDIR}"/${P}-rpcgen-ioctl.patch
+	epatch "${FILESDIR}"/${P}-kerberos-ac.patch
+	epatch "${FILESDIR}"/${P}-pkgconfig_ac.patch
+	epatch "${FILESDIR}"/${P}-no_libgssapi.patch
 	epatch "${FILESDIR}"/${P}-mount-eacces.patch #219729
-
- 	epatch "${FILESDIR}"/${P}-pkgconfig_ac.patch
- 	epatch "${FILESDIR}"/${P}-no_libgssapi.patch
- 	eautoreconf
+	eautoreconf
 }
 
 src_compile() {
