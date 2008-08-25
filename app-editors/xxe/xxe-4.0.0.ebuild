@@ -6,16 +6,26 @@ MY_PV="${PV//./_}"
 MY_PV="${MY_PV/_p/p}"
 S="${WORKDIR}/${PN}-perso-${MY_PV}"
 
-ADDON_LIST="batik_imagetoolkit jimi_imagetoolkit jeuclid_imagetoolkit javadoc_format dav_vdrive ftp_vdrive zip_vdrive"
-ADDON_LIST="${ADDON_LIST} xxe_addon_config xxe_configuration_config xxe_gui_config xxe_spreadsheet_functions_config"
-ADDON_LIST="${ADDON_LIST} dita_dtd_config sample_customize_xxe sdocbook_config slides_config wxs_config"
-ADDON_LIST="${ADDON_LIST} xep_foprocessor"
-ADDON_LIST="${ADDON_LIST} fop_foprocessor fop1_foprocessor"
-ADDON_LIST="${ADDON_LIST} custom_docbook_config docbook5_plus_include"
+ADDON_LIST="batik_imagetoolkit jimi_imagetoolkit jeuclid_imagetoolkit"
+ADDON_LIST="${ADDON_LIST} dav_vdrive ftp_vdrive"
+ADDON_LIST="${ADDON_LIST} sample_customize_xxe"
+ADDON_LIST="${ADDON_LIST} xxe_config_pack"
+ADDON_LIST="${ADDON_LIST} dita_dtd_config mathml_config sdocbook_config slides_config wxs_config"
+ADDON_LIST="${ADDON_LIST} xep_foprocessor xfc_foprocessor fop1_foprocessor"
+
+# ADDON_LIST="${ADDON_LIST} javadoc_format zip_vdrive"
+# ADDON_LIST="${ADDON_LIST} xxe_addon_config xxe_configuration_config xxe_gui_config xxe_spreadsheet_functions_config"
+# ADDON_LIST="${ADDON_LIST} fop_foprocessor  wxs_config"
+# ADDON_LIST="${ADDON_LIST} custom_docbook_config docbook5_plus_include"
 
 # docbook5_config docbook5xi_config
 
-DESCRIPTION="The XMLmind XML Editor"
+LANGS="de es fr"
+
+for X in ${LANGS}
+do
+	IUSE="${IUSE} linguas_${X}"
+done
 
 for i in ${ADDON_LIST}
 do
@@ -26,6 +36,15 @@ SRC_URI="http://www.xmlmind.net/xmleditor/_download/${PN}-perso-${MY_PV}.tar.gz
 	doc? ( http://www.xmlmind.net/xmleditor/_download/${PN}-devdocs-${MY_PV}.tar.gz )
 	!minimal? ( ${SRC_URI_ADDON} )"
 
+for Y in ${LANGS1}  
+do
+	SRC_URI="${SRC_URI} linguas_${Y}? ( http://www.xmlmind.net/xmleditor/_download/${Y}_dictionary-${MY_PV}.zip )"
+done
+
+SRC_URI="${SRC_URI} linguas_de? ( http://www.xmlmind.net/xmleditor/_download/de-alt_dictionary-${MY_PV}.zip )"
+SRC_URI="${SRC_URI} linguas_fr? ( http://www.xmlmind.net/xmleditor/_download/fr_translation-${MY_PV}.zip )"
+
+DESCRIPTION="The XMLmind XML Editor"
 HOMEPAGE="http://www.xmlmind.com/xmleditor/index.html"
 IUSE="doc minimal"
 
