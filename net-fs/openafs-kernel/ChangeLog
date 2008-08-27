@@ -1,6 +1,33 @@
 # ChangeLog for net-fs/openafs-kernel
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/ChangeLog,v 1.102 2008/04/04 12:39:16 stefaan Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/ChangeLog,v 1.107 2008/05/04 13:40:15 maekke Exp $
+
+  04 May 2008; Markus Meier <maekke@gentoo.org>
+  openafs-kernel-1.4.6_p20080222.ebuild:
+  amd64 stable, bug #211367
+
+*openafs-kernel-1.4.7 (03 May 2008)
+
+  03 May 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  +openafs-kernel-1.4.7.ebuild:
+  Version bump to 1.4.7
+
+*openafs-kernel-1.4.7_pre3 (10 Apr 2008)
+
+  10 Apr 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  +openafs-kernel-1.4.7_pre3.ebuild:
+  Yet another version bump
+
+  06 Apr 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  files/STABLE14-linux-flush-compare-20080402,
+  files/STABLE14-linux-flush-unlock-20080402:
+  Adapt cvs-mangled patches, fixing bug #216465
+
+  04 Apr 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  -openafs-kernel-1.2.13.ebuild, -openafs-kernel-1.4.5.ebuild,
+  -openafs-kernel-1.4.7_pre1.ebuild, -openafs-kernel-1.4.7_pre2.ebuild,
+  -openafs-kernel-1.5.27.ebuild, -openafs-kernel-1.5.33.ebuild:
+  Remove lots of obsolete versions
 
   04 Apr 2008; Stefaan De Roeck <stefaan@gentoo.org>
   +files/STABLE14-linux-flush-compare-20080402,
