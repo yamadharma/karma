@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/openafs-kernel-1.5.34.ebuild,v 1.1 2008/03/25 11:22:07 stefaan Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/openafs-kernel-1.4.7.ebuild,v 1.1 2008/05/03 09:52:00 stefaan Exp $
 
 inherit eutils linux-mod versionator toolchain-funcs
 
@@ -10,30 +10,35 @@ MY_P=${MY_PN}-${PV}
 S=${WORKDIR}/${MY_P}
 DESCRIPTION="The OpenAFS distributed file system kernel module"
 HOMEPAGE="http://www.openafs.org/"
-SRC_URI="http://openafs.org/dl/${MY_PN}/${PV}/${MY_P}-src.tar.bz2
+SRC_URI="http://openafs.org/dl/${PV}/${MY_P}-src.tar.bz2
 	mirror://gentoo/${MY_PN}-gentoo-${PATCHVER}.tar.bz2"
 
 LICENSE="IBM openafs-krb5 openafs-krb5-a APSL-2 sun-rpc"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~ppc ~ppc64 x86"
+KEYWORDS="~alpha amd64 ~ppc ~ppc64 ~sparc x86"
 IUSE=""
 
 PATCHDIR=${WORKDIR}/gentoo/patches/$(get_version_component_range 1-2)
 
-CONFIG_CHECK="!DEBUG_RODATA"
-DEBUG_RODATA_ERROR="OpenAFS is incompatible with linux' CONFIG_DEBUG_RODATA option"
+CONFIG_CHECK="!DEBUG_RODATA ~!AFS_FS"
+ERROR_DEBUG_RODATA="OpenAFS is incompatible with linux' CONFIG_DEBUG_RODATA option"
+ERROR_AFS_FS="OpenAFS conflicts with the in-kernel AFS-support.  Make sure not to load both at the same time!"
 
 pkg_setup() {
 	linux-mod_pkg_setup
 }
 
-#src_unpack() {
-#	unpack ${A}; cd "${S}"
-#
-#	EPATCH_SUFFIX="patch" epatch ${PATCHDIR}
-#
-#	./regen.sh || die "Failed: regenerating configure script"
-#}
+src_unpack() {
+	unpack ${MY_P}-src.tar.bz2
+	unpack ${MY_PN}-gentoo-${PATCHVER}.tar.bz2
+	cd "${S}"
+
+	epatch ${FILESDIR}/STABLE14-linux-2626-support-20080608.patch || die
+	EPATCH_EXCLUDE="006_all_ppc64.patch" \
+	EPATCH_SUFFIX="patch" epatch ${PATCHDIR}
+
+	./regen.sh || die "Failed: regenerating configure script"
+}
 
 src_compile() {
 	ARCH="$(tc-arch-kernel)" econf --with-linux-kernel-headers=${KV_OUT_DIR} || die "Failed: econf"
@@ -46,7 +51,7 @@ src_install() {
 	[ -f ${MOD_SRCDIR}/libafs.${KV_OBJ} ] \
 			|| die "Couldn't find compiled kernel module"
 
-	MODULE_NAMES='libafs(fs/openafs:$MOD_SRCDIR) afspag(fs/openafs:$MOD_SRCDIR)'
+	MODULE_NAMES='libafs(fs/openafs:$MOD_SRCDIR)'
 
 	linux-mod_src_install
 }
