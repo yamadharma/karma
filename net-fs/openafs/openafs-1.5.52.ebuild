@@ -29,7 +29,7 @@ src_unpack() {
 
 	# Apply patches to apply chosen compiler settings, fix the hardcoded paths
 	# to be more FHS friendly, and the fix the incorrect typecasts for va_arg
-	EPATCH_SUFFIX="patch" epatch ${PATCHDIR}
+#	EPATCH_SUFFIX="patch" epatch ${PATCHDIR}
 
 	sed -i 's/^[ \t]*XCFLAGS.*//' src/cf/osconf.m4
 
