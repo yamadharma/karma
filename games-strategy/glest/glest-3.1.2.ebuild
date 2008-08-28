@@ -46,13 +46,14 @@ src_unpack() {
 
 	epatch "${FILESDIR}/${P}-screen.patch"
 	epatch "${FILESDIR}/${P}-home.patch"
+	epatch "${FILESDIR}/${P}-includes.patch"	
 }
 
 src_compile() {
 	cd "${SOURCE_PATH}"
 
-#	egamesconf \
-	econf \
+#	econf \
+	egamesconf \	
 		$(use_enable debug) \
 		|| die
 	jam || die "jam failed"
