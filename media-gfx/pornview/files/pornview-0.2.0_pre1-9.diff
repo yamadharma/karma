@@ -1,0 +1,215 @@
+--- pornview-0.2pre1.orig/src/browser.c
++++ pornview-0.2pre1/src/browser.c
+@@ -138,6 +138,7 @@
+     browser->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+     gtk_window_set_title (GTK_WINDOW (browser->window), "PornView");
+     gtk_widget_realize (browser->window);
++    gtk_widget_show (browser->window);
+ 
+     icon_pix =
+ 	gdk_pixmap_create_from_xpm_d (G_WINDOW (browser->window), &icon_mask,
+@@ -207,7 +208,7 @@
+ 			     NULL);
+ 
+     hpaned = gedo_hpaned_new ();
+-    gtk_container_add (GTK_CONTAINER (vbox), hpaned);
++    gtk_box_pack_start (GTK_BOX (vbox), hpaned, TRUE, TRUE, 0);
+     gtk_widget_show (hpaned);
+ 
+     vpaned = gedo_vpaned_new ();
+--- pornview-0.2pre1.orig/src/imageview.c
++++ pornview-0.2pre1/src/imageview.c
+@@ -348,13 +348,7 @@
+ 
+     if (iv->auto_zoom)
+     {
+-	if (gdk_pixbuf_get_width (iv->image) > width
+-	    || gdk_pixbuf_get_height (iv->image) > height)
+-	    fit = TRUE;
+-	else
+-	{
+-	    iv->x_scale = iv->y_scale = 100;
+-	}
++	fit = TRUE;
+     }
+     else if (iv->fit_to_frame)
+ 	fit = TRUE;
+--- pornview-0.2pre1.orig/src/main.c
++++ pornview-0.2pre1/src/main.c
+@@ -17,6 +17,7 @@
+ int
+ main (int argc, char *argv[])
+ {
++               char *startup_dir=0;
+ 
+ #ifdef ENABLE_NLS
+     setlocale (LC_ALL, "");
+@@ -33,6 +34,14 @@
+     gtk_init (&argc, &argv);
+ 
+     prefs_load_config ();
++        
++        if ((startup_dir = argv[1])) {
++               if (isdir (startup_dir) == TRUE) {
++                                 conf.startup_dir_mode = 2;
++                                 conf.startup_dir = g_strdup(startup_dir);  
++               }
++        }
++
+     plugin_init ();
+ 
+     browser_create ();
+--- pornview-0.2pre1.orig/src/thumbview.c
++++ pornview-0.2pre1/src/thumbview.c
+@@ -1690,11 +1690,14 @@
+ 
+     zalbum_freeze (thumbview->album);
+ 
+-    for (node = fl->list->next; node; node = node->next)
++    if (fl && fl->list)
+     {
+-	data = node->data;
+-	zalbum_add (ZALBUM (thumbview->album), (gchar *) data->file_name,
+-		    (gpointer) data->file_type, NULL);
++        for (node = fl->list->next; node; node = node->next)
++        {
++            data = node->data;
++            zalbum_add (ZALBUM (thumbview->album), (gchar *) data->file_name,
++                        (gpointer) data->file_type, NULL);
++        }
+     }
+ 
+     zalbum_thawn (thumbview->album);
+--- pornview-0.2pre1.orig/src/support/image_loader.c
++++ pornview-0.2pre1/src/support/image_loader.c
+@@ -81,7 +81,7 @@
+ image_loader_stop (ImageLoader * il)
+ {
+ #ifdef USE_GTK2
+-    GError *err;
++    GError *err = NULL;
+ #endif
+ 
+     if (!il)
+@@ -174,7 +174,7 @@
+     gint    c;
+ 
+ #ifdef USE_GTK2
+-    GError *err;
++    GError *err = NULL;
+ #endif
+ 
+     if (!il)
+@@ -241,7 +241,7 @@
+     int     b;
+ 
+ #ifdef USE_GTK2
+-    GError *err;
++    GError *err = NULL;
+ #endif
+ 
+     if (!il->loader || il->pixbuf)
+--- pornview-0.2pre1.orig/src/support/widgets/dirtree.c
++++ pornview-0.2pre1/src/support/widgets/dirtree.c
+@@ -482,7 +482,7 @@
+ 		g_strconcat (parent_node->path, "/", entry->d_name, NULL);
+ 
+ 	    has_link = islink (entry->d_name);
+-	    has_access = access (entry->d_name, X_OK);
++	    has_access = access (entry->d_name, X_OK | R_OK);
+ 
+ 	    file_name = entry->d_name;
+ 
+--- pornview-0.2pre1.orig/src/support/widgets/gtkxine.c
++++ pornview-0.2pre1/src/support/widgets/gtkxine.c
+@@ -519,7 +519,16 @@
+ 	return;
+     }
+ 
++    /*
++     * SRA: 2006/05/26
++     * Don't lock this here. The OpenGL video plugin creates another thread
++     * and uses XLockDisplay() from within it while initializing the plugin.
++     * If we lock the displsy here, then the plugin initialization will hang.
++     * Note that the xine thread doesn't get started until after this was
++     * unlocked anyway, so this is probably safe. If not, then we need a lock
++     * at a higher level anyway.
+     XLockDisplay (this->display);
++     */
+ 
+     this->screen = DefaultScreen (this->display);
+ 
+@@ -568,7 +577,11 @@
+     this->gc = XCreateGC (this->display, this->video_window,
+ 			  (GCForeground | GCBackground), &values);
+ 
++    /*
++     * SRA: 2006/05/26
++     * See above.
+     XUnlockDisplay (this->display);
++    */
+ 
+     /*
+      * create mouse cursors
+@@ -623,19 +636,19 @@
+     this->stream = NULL;
+ 
+     /*
+-     * stop event thread 
+-     */
+-    pthread_cancel (this->thread);
+-
+-    /*
+      * kill the drivers 
+      */
+     if (this->vo_driver != NULL)
+ 	xine_close_video_driver (this->xine, this->vo_driver);
+-    if (this->vo_driver != NULL)
++    if (this->ao_driver != NULL)
+ 	xine_close_audio_driver (this->xine, this->ao_driver);
+ 
+     /*
++     * stop event thread 
++     */
++    pthread_cancel (this->thread);
++
++    /*
+      * save configuration 
+      */
+     printf ("gtkxine: saving configuration...\n");
+@@ -1920,7 +1933,7 @@
+  *  This function was pinched from filter_yuy2tov12.c, part of
+  *  transcode, a linux video stream processing tool
+  *
+- *  Copyright (C) Thomas ŽÖstreich - June 2001
++ *  Copyright (C) Thomas ï¿½ï¿½streich - June 2001
+  *
+  *  Thanks Thomas
+  *      
+--- pornview-0.2pre1.orig/src/support/widgets/zlist.c
++++ pornview-0.2pre1/src/support/widgets/zlist.c
+@@ -634,7 +634,8 @@
+ 					   CELL_X_FROM_COL (list, j), area->y,
+ 					   list->cell_x_pad, area->height);
+ 
+-		cell = ZLIST_CELL_FROM_INDEX (list, idx);
++		if (idx < list->cell_count)
++		    cell = ZLIST_CELL_FROM_INDEX (list, idx);
+ 
+ 		cell_area.x = CELL_X_FROM_COL (list, j) + list->cell_x_pad;
+ 		cell_area.y = CELL_Y_FROM_ROW (list, i) + list->cell_y_pad;
+--- pornview-0.2pre1.orig/src/prefs_ui/prefs_win.c
++++ pornview-0.2pre1/src/prefs_ui/prefs_win.c
+@@ -317,9 +317,10 @@
+     g_return_if_fail (treeview);
+ 
+     selection = gtk_tree_view_get_selection (treeview);
+-    gtk_tree_selection_get_selected (selection, &model, &iter);
+-    gtk_tree_model_get (model, &iter,
++    if( gtk_tree_selection_get_selected (selection, &model, &iter) == TRUE ) {
++        gtk_tree_model_get (model, &iter,
+ 			COLUMN_PRIV_DATA, &priv, COLUMN_TERMINATOR);
++	}
+ 
+     g_return_if_fail (priv);
+     g_return_if_fail (priv->page);

@@ -65,10 +65,9 @@ src_unpack() {
 	# we do not want to built gtk support with USE=-gtk
 	if ! use gtk ; then
 		sed -i "s:AC_DEFINE_UNQUOTED..HAVE_GTK.*:true:" configure.ac
-		AT_M4DIR="${S}/m4" eautoreconf
 	fi
 
-	
+	AT_M4DIR="${S}/m4" eautoreconf	
 }
 
 src_compile() {
