@@ -1,5 +1,7 @@
 # Copyright 1999-2007 Gentoo Foundation 
 
+inherit eutils
+
 DESCRIPTION="GUI for xneur based on GTK" 
 HOMEPAGE="http://www.xneur.ru/" 
 SRC_URI="http://dists.xneur.ru/release-${PV}/tgz/${P}.tar.bz2" 
