@@ -52,8 +52,8 @@ src_unpack() {
 src_compile() {
 	cd "${SOURCE_PATH}"
 
-#	econf \
-	egamesconf \	
+	egamesconf \
+	econf \
 		$(use_enable debug) \
 		|| die
 	jam || die "jam failed"
