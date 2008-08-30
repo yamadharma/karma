@@ -52,7 +52,7 @@ src_unpack() {
 src_compile() {
 	cd "${SOURCE_PATH}"
 
-	egamesconf \
+#	egamesconf \
 	econf \
 		$(use_enable debug) \
 		|| die
