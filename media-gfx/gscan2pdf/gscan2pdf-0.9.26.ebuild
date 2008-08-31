@@ -20,6 +20,7 @@ RDEPEND=">=dev-perl/gtk2-perl-1.140-r1
 	dev-perl/PDF-API2
 	dev-perl/Gtk2-Ex-Simple-List
 	>=dev-perl/Locale-gettext-1.05
+	dev-perl/gtk2-imageview
 	media-gfx/imagemagick
 	media-gfx/sane-backends
 	media-libs/tiff
@@ -41,4 +42,5 @@ pkg_postinst() {
 	ewarn "because xdg-email doesn't support creating new emails"
 	ewarn "with attachments in Thunderbird."
 }
+
 
