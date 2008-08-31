@@ -16,7 +16,7 @@ IUSE="adf doc djvu gocr tesseract unpaper"
 DEPEND="dev-lang/perl"
 
 RDEPEND=">=dev-perl/gtk2-perl-1.140-r1	
-	dev-perl/config-general
+	>=dev-perl/config-general-2.40
 	dev-perl/PDF-API2
 	dev-perl/Gtk2-Ex-Simple-List
 	>=dev-perl/Locale-gettext-1.05
