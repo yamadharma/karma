@@ -51,12 +51,7 @@ start() {
 	pidfile="${pidfile:-/var/run/dhcp/dhcpd.pid}"
 
 	ebegin "Starting ${DHCPD_CHROOT:+chrooted }${SVCNAME}"
-#	start-stop-daemon --start --exec /usr/sbin/dhcpd \
-#		--pidfile "${DHCPD_CHROOT}/${pidfile}" \
-#		-- ${DHCPD_OPTS} -q -pf "${pidfile}" \
-#		-user dhcp -group dhcp \
-#		${DHCPD_CHROOT:+-chroot} ${DHCPD_CHROOT} ${DHCPD_IFACE}
-	/usr/sbin/dhcpd \
+	start-stop-daemon --start --exec /usr/sbin/dhcpd \
 		--pidfile "${DHCPD_CHROOT}/${pidfile}" \
 		-- ${DHCPD_OPTS} -q -pf "${pidfile}" \
 		-user dhcp -group dhcp \
