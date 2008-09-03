@@ -17,7 +17,7 @@ SRC_URI="ftp://ftp.isc.org/isc/dhcp/${MY_P}.tar.gz"
 LICENSE="isc-dhcp"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
-IUSE="doc minimal static selinux kernel_linux"
+IUSE="doc minimal static selinux kernel_linux ipv6"
 
 DEPEND="selinux? ( sec-policy/selinux-dhcp )
 	kernel_linux? ( sys-apps/net-tools )"
@@ -29,14 +29,16 @@ S="${WORKDIR}/${MY_P}"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch ${FILESDIR}/dhcp-4.0-dhclient-metric.patch
 	epatch ${FILESDIR}/dhcp-4.0-dhclient-ntp.patch
 	epatch ${FILESDIR}/dhcp-4.0-dhclient-stdin-conf.patch
 	epatch ${FILESDIR}/dhcp-4.0-no_isc_blurb.patch
 	epatch ${FILESDIR}/dhcp-4.0-paranoia.patch
+	epatch ${FILESDIR}/dhcp-4.0-dhclient-metric.patch	
 }
 
 src_compile() {
+	local myconf
+	
 	use static && append-ldflags -static
 
 	cat <<-END >> includes/site.h
@@ -68,7 +70,10 @@ src_compile() {
 	MANCAT = man
 	END
 
+	myconf="${myconf} `use_enable ipv6 dhcpv6`"
+	
 	./configure --includedir=/usr/include \
+		${myconf} \
 		|| die "configure failed"
 
 	# Remove server support from the Makefile
