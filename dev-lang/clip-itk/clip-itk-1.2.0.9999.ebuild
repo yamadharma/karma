@@ -10,8 +10,11 @@ ECVS_SERVER="clip-itk.cvs.sourceforge.net:/cvsroot/clip-itk"
 ECVS_USER="anonymous"
 ECVS_AUTH="pserver"
 ECVS_MODULE="clip-all"
-ECVS_CO_OPTS="-D ${PV/*_pre} -P"
-ECVS_UP_OPTS="-D ${PV/*_pre} -dP"
+#ECVS_CO_OPTS="-D ${PV/*_pre} -P"
+#ECVS_UP_OPTS="-D ${PV/*_pre} -dP"
+#ECVS_CO_OPTS="-d clip-prg -P"
+#ECVS_UP_OPTS="-d clip-prg -P"
+
 
 S=${WORKDIR}/${ECVS_MODULE}
 
@@ -25,8 +28,7 @@ HOMEPAGE="http://sourceforge.net/projects/clip-itk"
 #	doc? ( mirror://sourceforge/${PN}/clip-doc-en-html-${PV}.tgz 
 #	    linguas_ru? ( mirror://sourceforge/${PN}/clip-doc-ru-html-${PV}.tgz )
 #	)"
-# KEYWORDS="amd64 x86"
-KEYWORDS=""
+KEYWORDS="amd64 x86"
 LICENSE="GPL-2"
 IUSE="doc linguas_ru 
 mysql gd postgres oracle interbase odbc gtk2 ssl glade fcgi"
