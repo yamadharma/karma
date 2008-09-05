@@ -4,59 +4,59 @@
 
 inherit eutils games
 
-DESCRIPTION="Another Free Warlords clone"
+DESCRIPTION="Another Free Warlords II clone"
 HOMEPAGE="http://www.lordsawar.com/"
 SRC_URI="http://download.savannah.gnu.org/releases/lordsawar/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 ~ppc x86"
-IUSE="editor ggz nls sound"
+IUSE="editor ggz nls sound zip"
 
-RDEPEND=">=dev-cpp/gtkmm-2.4
-	>=dev-cpp/libglademm-2.4
+RDEPEND="media-libs/libsdl
 	media-libs/sdl-image
-	ggz? ( dev-games/libggz )
-	sound? ( media-libs/sdl-mixer )"
+	dev-cpp/gtkmm
+	sound? ( media-libs/sdl-mixer )
+	dev-cpp/libglademm
+	gzz? ( dev-games/libggz )
+	zip? ( app-arch/zip )"
 DEPEND="${RDEPEND}
-	nls? ( sys-devel/gettext )"
-
-#src_unpack() {
-#	unpack ${A}
-#	cd "${S}"
-#	sed -i \
-#		-e '/locale/s:$(datadir):/usr/share:' \
-#		-e '/locale/s:$(prefix):/usr:' \
-#		-e 's:$(localedir):/usr/share/locale:' \
-#		-e '/freelords.desktop/d' \
-#		$(find -name 'Makefile.in*') \
-#		|| die "sed failed"
-#}
+	nls? (sys-devel/gettext)"
 
 src_compile() {
+	if use zip ; then
+		ewarn "Ziping saved filegames is still experimental, if you experience \
+		some troubles turn zip useflag off."
+		ZIP="--enable-zipping"
+	else
+		ZIP="--disable-zipping"
+	fi
 	egamesconf \
 		--disable-dependency-tracking \
+		--disable-rpath \
 		--disable-sdltest \
 		--disable-winlibs \
-		$(use_enable editor) \
-		$(use_enable ggz) \
+		$(use_with sound) \
+		$(use_enable nls) \
+		$(use_enable gzz) \
 		$(use_with ggz ggz-server) \
 		$(use_with ggz ggz-client) \
-		$(use_enable nls) \
-		$(use_enable sound) \
-		|| die
+		$(use_enable editor) \
+		${ZIP} \
+		|| die "egamesconf failed"
 	emake || die "emake failed"
 }
-
 src_install() {
+	P_N="freelords"
 	emake DESTDIR="${D}" install || die "emake install failed"
-	rm -f "${D}"/usr/share/locale/locale.alias
-	doicon dat/various/${PN}.png
+	doicon dat/various/${P_N}.png
 	make_desktop_entry ${PN} FreeLords
 	if use editor ; then
-		doicon dat/various/${PN}_editor.png
-		make_desktop_entry ${PN}_editor "LordsAWar Editor" ${PN}_editor
+		doicon dat/various/${P_N}_editor.png
+		make_desktop_entry ${P_N}_editor "LordsAWar Editor" ${P_N}_editor.png
 	fi
-	dodoc AUTHORS ChangeLog HACKER NEWS README TODO doc/*.pdf
+	dodoc ChangeLog NEWS TODO doc/{Manual,README,Editor,Localization.HOWTO,lordsawarrc}
+	elog "see lordsawarrc /usr/share/doc/${PF} for example configuration"
 	prepgamesdirs
 }
+
