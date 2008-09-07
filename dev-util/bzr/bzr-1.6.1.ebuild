@@ -1,56 +1,54 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.91-r1.ebuild,v 1.1 2007/10/05 12:49:10 hawking Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-1.6.ebuild,v 1.1 2008/08/25 23:10:29 pva Exp $
+
+NEED_PYTHON=2.4
 
 inherit distutils bash-completion elisp-common eutils versionator
 
-MY_RV=${PV/_/}
-MY_PV=${PV/_/}
-#MY_PV=${PV/_rc/rc}
-#MY_PV=${PV/_beta/b}
-MY_P="${PN}-${MY_PV}"
+MY_PV=${PV/_rc/rc}
+MY_P=${PN}-${MY_PV}
 SERIES=$(get_version_component_range 1-2)
-S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Bazaar is a next generation distributed version control system."
 HOMEPAGE="http://bazaar-vcs.org/"
-SRC_URI="http://launchpad.net/bzr/${SERIES}/${MY_RV}/+download/${MY_P}.tar.gz"
+#SRC_URI="http://bazaar-vcs.org/releases/src/${MY_P}.tar.gz"
+SRC_URI="http://launchpad.net/bzr/${SERIES}/${MY_PV}/+download/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 ~ia64 ~ppc ~sparc x86 ~x86-fbsd"
-IUSE="curl doc emacs test"
+IUSE="curl emacs sftp test"
 
-python_rdep="|| ( >=dev-lang/python-2.5 dev-python/celementtree )
-	>=dev-python/paramiko-1.5
-	curl? ( dev-python/pycurl )"
-DEPEND=">=dev-lang/python-2.4
-	!=dev-python/pyrex-0.9.6.3
-	emacs? ( virtual/emacs )
+RDEPEND="|| ( dev-python/celementtree >=dev-lang/python-2.5 )
+	curl? ( dev-python/pycurl )
+	sftp? ( dev-python/paramiko )"
+
+DEPEND="emacs? ( virtual/emacs )
 	test? (
-		$python_rdep
+		$RDEPEND
 		dev-python/medusa
 	)"
-RDEPEND=">=dev-lang/python-2.4
-	$python_rdep"
 
+S="${WORKDIR}/${MY_P}"
 PYTHON_MODNAME="bzrlib"
-SITEFILE=71${PN}-gentoo.el
-
-DOCS="README NEWS doc/*.txt"
+SITEFILE=71bzr-gentoo.el
+DOCS="doc/*.txt"
 
 src_unpack() {
-	unpack ${A}
-	cd "${S}"
+	distutils_src_unpack
 
+	# Don't regenerate .c files from .pyx when pyrex is found.
+	epatch "${FILESDIR}/${PN}-0.92-no-pyrex.patch"
 	# Don't run lock permission tests when running as root
-	epatch "${FILESDIR}"/${PN}-0.90-tests-fix_root.patch
+	epatch "${FILESDIR}/${PN}-0.90-tests-fix_root.patch"
 	# Fix permission errors when run under directories with setgid set.
-	epatch "${FILESDIR}"/${PN}-0.90-tests-sgid.patch
+	epatch "${FILESDIR}/${PN}-0.90-tests-sgid.patch"
 }
 
 src_compile() {
 	distutils_src_compile
+
 	if use emacs; then
 		elisp-compile contrib/emacs/bzr-mode.el || die "Emacs modules failed!"
 	fi
@@ -58,42 +56,32 @@ src_compile() {
 
 src_install() {
 	distutils_src_install --install-data /usr/share
-	if use doc; then
-		docinto developers
-		dodoc doc/developers/*
-		# TODO (when they offer docs in more languages): support LINGUAS
-		local dir
-		for	dir in `ls doc/en/`; do
-			if test -n "`ls doc/en/${dir}`"; then
-				docinto en/"${dir}"
-				local f
-				for f in `ls doc/en/"${dir}"`; do
-					if test -d doc/en/"${dir}/${f}"; then
-						docinto en/"${dir}/${f}"
-						dodoc doc/en/"${dir}/${f}"/*
-						docinto en/"${dir}"
-					elif test "$f" != "Makefile"; then
-						dodoc doc/en/"${dir}/${f}"
-					fi
-				done
-			fi
-		done
-	fi
+
+	docinto developers
+	dodoc doc/developers/*
+	for doc in mini-tutorial tutorials user-{guide,reference}; do
+		docinto $doc
+		dodoc doc/en/$doc/*
+	done
+
 	if use emacs; then
 		elisp-install ${PN} contrib/emacs/*.el* || die "elisp-install failed"
 		elisp-site-file-install "${FILESDIR}/${SITEFILE}" || die "elisp-site-file-install failed"
+
 		# don't add automatically to the load-path, so the sitefile
 		# can do a conditional loading
 		touch "${D}${SITELISP}/${PN}/.nosearch"
 	fi
+
 	insinto /usr/share/zsh/site-functions
 	doins contrib/zsh/_bzr
-	dobashcompletion contrib/bash/bzr.simple bzr
+	dobashcompletion contrib/bash/bzr
 }
 
 pkg_postinst() {
 	distutils_pkg_postinst
 	bash-completion_pkg_postinst
+
 	if use emacs; then
 		elisp-site-regen
 		elog "If you are using a GNU Emacs version greater than 22.1, bzr support"
@@ -110,6 +98,9 @@ pkg_postrm() {
 }
 
 src_test() {
-	PYTHONPATH="build/lib*" "${python}" "${S}"/bzr --no-plugins selftest \
-		|| die "bzr selftest failed"
+	# Some tests expect the usual pyc compiling behaviour.
+	unset PYTHON_DONTCOMPILE
+	"${python}" bzr --no-plugins selftest || die "bzr selftest failed"
+	# Just to make sure we don't hit any errors on later stages.
+	export PYTHON_DONTCOMPILE=1
 }
