@@ -6,7 +6,7 @@ inherit eutils latex-package java-pkg-2 java-ant-2
 
 MY_PV=${PV//./}
 MY_PV=${MY_PV/_/}
-MY_P=${PN}${MY_PV}
+MY_P=${PN}${MY_PV}source
 
 DESCRIPTION="Writer2Latex (w2l) - converter from OpenDocument .odt format"
 HOMEPAGE="http://www.hj-gym.dk/~hj/writer2latex"
@@ -15,21 +15,21 @@ SRC_URI="http://www.hj-gym.dk/~hj/${PN}/${MY_P}.zip
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="x86 amd64"
+#KEYWORDS="x86 amd64"
 IUSE="doc examples"
 
 DEPEND="=virtual/jdk-1.4*
 	virtual/tetex"
 RDEPEND=">=virtual/jre-1.4"
 
-S=${WORKDIR}/${PN}05
+S=${WORKDIR}/${PN}09
 
-src_unpack(){
-	unpack ${A}
-	cd "${S}"
-	rm ${PN}.jar
-	sed -i -e "s:W2LPATH=.*:W2LPATH=/usr/lib/${PN}:" "${S}"/w2l || die "Sed failed"
-}
+#src_unpack(){
+#	unpack ${A}
+#	cd "${S}"
+#	rm ${PN}.jar
+#	sed -i -e "s:W2LPATH=.*:W2LPATH=/usr/lib/${PN}:" "${S}"/w2l || die "Sed failed"
+#}
 
 EANT_EXTRA_ARGS="-DOFFICE_HOME=/usr/lib/openoffice"
 EANT_BUILD_TARGET="all"
