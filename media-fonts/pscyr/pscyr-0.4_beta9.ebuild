@@ -15,7 +15,7 @@ HOMEPAGE="ftp://scon155.phys.msu.su/pub/russian/psfonts"
 SRC_URI="ftp://scon155.phys.msu.su/pub/russian/psfonts/0.4d-beta/${MY_P}-tex.tar.gz
 ftp://scon155.phys.msu.su/pub/russian/psfonts/0.4d-beta/${MY_P}-type1.tar.gz"
 
-DEPEND="app-text/tetex"
+DEPEND="app-text/tex-base"
 
 LICENSE="LPPL-1.2"
 SLOT="0"
