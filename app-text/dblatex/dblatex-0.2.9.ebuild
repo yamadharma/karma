@@ -9,7 +9,7 @@ KEYWORDS="x86 amd64"
 IUSE=""
 SLOT="0"
 LICENSE="GPL-2"
-DEPEND="virtual/tetex"
+DEPEND="virtual/latex-base"
 
 src_compile() {
 	python setup.py build || die "build failed"

@@ -46,7 +46,7 @@ DEPEND="
 	app-misc/run-mailcap
 	>=dev-lang/lua-5.1.1
 	doc? ( dev-tex/latex2html
-			virtual/tetex )"
+			virtual/tex-base )"
 
 S=${WORKDIR}/${MY_PN}
 
