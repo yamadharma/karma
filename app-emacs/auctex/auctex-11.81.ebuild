@@ -13,7 +13,7 @@ KEYWORDS="amd64 ~ppc ~ppc-macos ~ppc64 ~sparc x86"
 IUSE="preview-latex doc"
 
 DEPEND="virtual/emacs
-	virtual/tetex
+	virtual/latex-base
 	preview-latex? ( !dev-tex/preview-latex )"
 
 SITEFILE=50auctex-gentoo.el

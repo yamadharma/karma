@@ -19,7 +19,7 @@ KEYWORDS="x86 amd64"
 LICENSE="GPL-3"
 SLOT="0"
 
-DEPEND="virtual/tetex
+DEPEND="virtual/tex-base
 	dev-lang/perl"
 
 S="${WORKDIR}"

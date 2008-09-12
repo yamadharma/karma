@@ -19,7 +19,7 @@ KEYWORDS="x86 amd64"
 IUSE="doc examples"
 
 DEPEND="=virtual/jdk-1.4*
-	virtual/tetex"
+	virtual/latex-base"
 RDEPEND=">=virtual/jre-1.4"
 
 S=${WORKDIR}/${PN}05

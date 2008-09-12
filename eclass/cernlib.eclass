@@ -37,7 +37,7 @@ IUSE=""
 
 DEPEND="virtual/motif
 	virtual/lapack
-	virtual/tetex
+	virtual/tex-base
 	dev-lang/cfortran
 	x11-misc/imake
 	x11-misc/makedepend"

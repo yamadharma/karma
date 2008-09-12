@@ -25,7 +25,7 @@ KEYWORDS="x86 amd64"
 LICENSE="GPL-2,LGPL,LPPL-1.2"
 SLOT="0"
 
-DEPEND="virtual/tetex
+DEPEND="virtual/tex-base
 	dev-lang/perl"
 
 S="${WORKDIR}"

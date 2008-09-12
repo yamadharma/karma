@@ -22,7 +22,7 @@ RDEPEND=">=x11-libs/qt-4.3
 DEPEND="${RDEPEND}
 	>=dev-util/cmake-2.4.6
 	dev-util/pkgconfig
-	doc? ( virtual/tetex app-doc/doxygen )"
+	doc? ( virtual/tex-base app-doc/doxygen )"
 
 S="${WORKDIR}"/${MY_P/.1}
 BUILDDIR="${S}"/build

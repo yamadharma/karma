@@ -24,7 +24,7 @@ RDEPEND=">=dev-lang/tcl-8.4.5
 					>=dev-libs/dmalloc-4.8.2
 					>=dev-tcltk/tcl-debug-2.0 )"
 DEPEND="${RDEPEND}
-		doc? ( 	virtual/tetex
+		doc? ( 	virtual/tex-base
 				virtual/ghostscript
 				dev-tex/latex2html )"
 

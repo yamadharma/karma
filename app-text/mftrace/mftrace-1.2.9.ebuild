@@ -16,7 +16,7 @@ SLOT="1"
 DEPEND=">=dev-lang/python-2.2.2"
 
 RDEPEND="${DEPEND}
-	virtual/tetex
+	virtual/tex-base
 	>=app-text/t1utils-1.25
 	|| ( media-gfx/potrace >=media-gfx/autotrace-0.30 )
 	truetype? ( media-gfx/fontforge )"

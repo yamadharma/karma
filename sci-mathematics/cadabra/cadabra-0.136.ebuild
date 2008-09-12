@@ -17,7 +17,7 @@ DEPEND="sci-libs/modglue
 	sci-mathematics/lie
 	dev-libs/gmp
 	dev-libs/libpcre
-	doc? ( virtual/tetex )
+	doc? ( virtual/latex-base )
 	X? ( >=x11-libs/gtk+-2.0
 	    >=dev-cpp/gtkmm-2.4
 	    app-text/dvipng )"
