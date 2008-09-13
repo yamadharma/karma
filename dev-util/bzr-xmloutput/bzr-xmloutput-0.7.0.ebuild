@@ -9,7 +9,7 @@ SERIES=$(get_version_component_range 1-2)
 DESCRIPTION="A Bazaar plugin that provides a option to generate XML output for
 builtins commands."
 HOMEPAGE="http://bazaar-vcs.org/XMLOutput"
-SRC_URI="http://launchpad.net/${PN}/${SERIES}/${PV}/+download/${P}.tar.gz"
+SRC_URI="http://launchpad.net/${PN}/trunk/${SERIES}/+download/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

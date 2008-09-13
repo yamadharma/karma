@@ -31,8 +31,3 @@ RDEPEND="${DEPEND}
 	 )"
 
 S="${WORKDIR}/${MY_P}"
-
-src_unpack() {
-	distutils_src_unpack
-	epatch "${FILESDIR}"/${PN}-0.94.0-seahorse-dbus-check.patch
-}
