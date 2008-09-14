@@ -91,6 +91,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/${P}-bug-174720-1.patch
 	epatch "${FILESDIR}"/${P}-bug-214171.patch
 	epatch "${FILESDIR}"/${P}-perl-5.10.patch
+	epatch "${FILESDIR}"/${P}-perl-5.10-utf8-to-roff.patch
 	epatch "${FILESDIR}"/${P}-gtk-clist.patch
 	
 	eautoreconf

@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/virtualbox-ose-additions/virtualbox-ose-additions-1.6.6.ebuild,v 1.1 2008/09/06 19:20:28 jokey Exp $
+# $Header: $
 
 inherit eutils
 
@@ -13,7 +13,7 @@ SRC_URI="http://download.virtualbox.org/virtualbox/${PV}/${MY_P}.iso"
 
 LICENSE="PUEL"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 IUSE=""
 
 RDEPEND="!app-emulation/virtualbox-bin
@@ -30,6 +30,6 @@ src_unpack() {
 }
 
 src_install() {
-	insinto /opt/VirtualBox/additions
+	insinto /usr/share/${PN/-additions}
 	newins "${DISTDIR}"/${MY_P}.iso ${MY_PN}.iso
 }

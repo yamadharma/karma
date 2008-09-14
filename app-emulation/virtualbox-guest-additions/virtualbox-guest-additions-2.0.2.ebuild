@@ -7,8 +7,8 @@ inherit eutils linux-mod
 MY_P=VirtualBox-${PV}-OSE
 DESCRIPTION="VirtualBox kernel modules and user-space tools for Linux guests"
 HOMEPAGE="http://www.virtualbox.org/"
-#SRC_URI="http://download.virtualbox.org/virtualbox/${PV}/${MY_P}.tar.bz2"
-SRC_URI="http://distfiles.zugaina.org/${MY_P}.tar.bz2" 
+SRC_URI="http://download.virtualbox.org/virtualbox/${PV}/${MY_P}.tar.bz2"
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86"
@@ -21,6 +21,8 @@ RDEPEND="x11-libs/libXt
 			 x11-apps/xrandr
 			 x11-apps/xrefresh )"
 DEPEND="${RDEPEND}
+		>=dev-util/kbuild-0.1.4
+		>=dev-lang/yasm-0.6.2
 		sys-devel/bin86
 		sys-devel/dev86
 		sys-power/iasl
@@ -46,9 +48,12 @@ src_unpack() {
 		"${MY_P/-OSE/}"/src/VBox/Additions/linux/export_modules "${WORKDIR}/vbox-kmod.tar.gz"
 		unpack ./vbox-kmod.tar.gz
 
-		# Fix missing makefiles
+		# Remove shipped binaries (kBuild,yasm), see bug #232775
 		cd "${S}"
-		epatch "${FILESDIR}/${PN}-1.6.4-fix-missing-makefiles.patch"
+		rm -rf kBuild/bin tools
+
+		# Disable things unused or splitted into separate ebuilds 
+		cp "${FILESDIR}/${PN}-2.0.0-localconfig" LocalConfig.kmk
 }
 
 src_compile() {
@@ -65,7 +70,9 @@ src_compile() {
 
 		for each in	src/VBox/{Runtime,Additions/common} \
 		src/VBox/Additions/linux{sharefolders,daemon} ; do
-				MAKE="kmk" emake || die "kmk failed"
+				MAKE="kmk" emake TOOL_YASM_AS=yasm \
+				KBUILD_PATH="${S}/kBuild" \
+				|| die "kmk failed"
 		done
 }
 
@@ -76,21 +83,24 @@ src_install() {
 
 		# shared folders
 		insinto /sbin
-		newins mountvboxsf mount.vboxvfs
-		fperms 4755 /sbin/mount.vboxvfs
+		newins mountvboxsf mount.vboxsf
+		fperms 4755 /sbin/mount.vboxsf
 
 		# time synchronisation system service
 		insinto /usr/sbin
 		doins vboxadd-timesync
 		fperms 0755 /usr/sbin/vboxadd-timesync
 
-		newinitd "${FILESDIR}"/${P}.initd ${PN}
+		newinitd "${FILESDIR}"/${PN}.initd ${PN}
 
 		# VBoxClient user service and xrandr wrapper
 		if use X; then
 			insinto /usr/bin
+
 			doins VBoxClient
+			doins VBoxComtrol
 			fperms 4755 /usr/bin/VBoxClient
+			fperms 4755 /usr/bin/VBoxControl
 
 			dodir /etc/X11/xinit/xinitrc.d/
 			echo -e "#/bin/sh\n/usr/bin/VBoxClient" \
@@ -114,10 +124,14 @@ pkg_postinst() {
 			elog "use flag X is off, enable it to install the"
 			elog "X Window System input and video drivers"
 		fi
+		elog "Please add:"
+		elog "/etc/init.d/${PN}"
+		elog "to the default runlevel in order to load all"
+		elog "needed modules and services."
 		elog ""
 		elog "Warning:"
 		elog "this ebuild is only needed if you are running gentoo"
 		elog "inside a VirtualBox Virtual Machine, you don't need"
-		elog "it to run VirtualBox itself"
+		elog "it to run VirtualBox itself."
 		elog ""
 }
