@@ -1,0 +1,49 @@
+Index: jackd/transengine.c
+===================================================================
+--- jackd/transengine.c	(revision 1050)
++++ jackd/transengine.c	(working copy)
+@@ -395,6 +395,7 @@
+ {
+ 	jack_control_t *ectl = engine->control;
+ 	transport_command_t cmd;	/* latest transport command */
++	int dont_trans_advance = FALSE;
+ 
+ 	/* Promote pending_time to current_time.  Maintain the usecs,
+ 	 * frame_rate and frame values, clients may not set them. */
+@@ -409,6 +410,10 @@
+ 		if ((ectl->sync_remain == 0) ||
+ 		    (jack_sync_timeout(engine))) {
+ 			ectl->transport_state = JackTransportRolling;
++
++			// dont advance the transport this is a statechange not seen
++			// by the switch statement below
++			dont_trans_advance = TRUE;
+ 			VERBOSE (engine, "transport Rolling, %8.6f sec"
+ 				 " left for poll\n",
+ 				 (double) (ectl->sync_time_left / 1000000.0));
+@@ -468,7 +473,12 @@
+ 				ectl->transport_state = JackTransportStarting;
+ 				jack_sync_poll_start(engine);
+ 			}
++		} else if ( ! dont_trans_advance ) {
++		    // ok... no statechange happened go transport go...
++		    ectl->pending_time.frame =
++			ectl->current_time.frame + ectl->buffer_size;
+ 		}
++
+ 		break;
+ 
+ 	default:
+@@ -476,12 +486,6 @@
+ 			    ectl->transport_state);
+ 	}
+ 
+-	/* Update timebase, if needed. */
+-	if (ectl->transport_state == JackTransportRolling) {
+-		ectl->pending_time.frame =
+-			ectl->current_time.frame + ectl->buffer_size;
+-	} 
+-
+ 	/* See if an asynchronous position request arrived during the
+ 	 * last cycle.  The request_time could change during the
+ 	 * guarded copy.  If so, we use the newest request. */
