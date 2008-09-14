@@ -1,9 +1,71 @@
 # ChangeLog for media-sound/jack-audio-connection-kit
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  16 Dec 2007; Thomas Kuther <gimpel@sonnenkinder.org>
+  12 Aug 2008; Frieder Buerzele <evermind@tuxfamily.org>;
+  -jack-audio-connection-kit-0.100.7-r2.ebuild,
+  -jack-audio-connection-kit-0.100.7-r3.ebuild,
+  jack-audio-connection-kit-0.101.1.ebuild,
+  jack-audio-connection-kit-0.102.20.ebuild,
+  -jack-audio-connection-kit-0.103.0.ebuild,
+  +files/jack-audio-connection-kit-0.103.0-ppc64fix.patch,
+  +files/jack-audio-connection-kit-0.103.0-riceitdown.patch,
+  -jack-audio-connection-kit-0.109.0.ebuild,
+  -jack-audio-connection-kit-0.109.2.ebuild,
+  +jack-audio-connection-kit-0.109.2-r2.ebuild,
   jack-audio-connection-kit-9999.ebuild:
+  respin against portage -- deleted old ebuilds
+  using unipatch and 
+  http://download.tuxfamily.org/proaudio/distfiles/ for dbus-patches
+
+  23 Mar 2008; Marc-Olivier Barre <marco@marcochapeau.org> jack-audio-connection-kit-9999.ebuild:
+  * Reactivated dbus. jackpatches version 0.12.
+
+  12 Mar 2008; Marc-Olivier Barre <marco@marcochapeau.org> jack-audio-connection-kit-9999.ebuild:
+  * Removed dbus patch which will not work with SVN right now
+  * Remove netjack since it has been implemented as an inprocess client and will be shipped with jack 1.0
+
+  09 Mar 2008; Marc-Olivier Barre <marco@marcochapeau.org> jack-audio-connection-kit-9999.ebuild:
+  * Removed the log patch since it's been applied in SVN
+
+  05 Feb 2008; Marc-Olivier Barre <mobarre@gmail.com> >=jack-audio-connection-kit-0.109.0.ebuild:
+  * Bumped jackpatches to 0.9 : part of the driver control interface was not
+  working properly in 0.8.
+
+  02 Feb 2008; Marc-Olivier Barre <mobarre@gmail.com> >=jack-audio-connection-kit-0.109.0.ebuild:
+  * Bumped jackpatches to 0.8
+
+  31 Jan 2008; Frieder Buerzele <evermind@tuxfamily.org>;
+  +jack-audio-connection-kit-0.109.2.ebuild:
+  bump jack-audio-connection-kit-0.109.2
+
+  28 Jan 2008; Thomas Kuther <gimpel@sonnenkinder.org>
+  jack-audio-connection-kit-0.109.0.ebuild:
+  QA: run autoreconf in src_unpack()
+
+  21 Jan 2008;  Marc-Olivier Barre <mobarre@gmail.com> jack-audio-connection-kit-0.109.0.ebuild:
+  Bumped jackpatches to 0.7. we now use the puredbus patch for jack dbus
+  support.
+
+  21 Jan 2008;  Marc-Olivier Barre <mobarre@gmail.com> jack-audio-connection-kit-0.109.0.ebuild:
+  Bumped jackpatches to 0.7. we now use the puredbus patch for jack dbus
+  support.
+
+  20 Jan 2008; Marc-Olivier Barre <mobarre@gmail.com> jack-audio-connection-kit-0.109.0.ebuild:
+  Bumped jack to version 0.109.0
+
+  01 Jan 2008; Marc-Olivier Barre <mobarre@gmail.com> jack-audio-connection-kit-9999.ebuild:
+  Bumped jackpatches to 0.5
+
+  01 Jan 2008; Marc-Olivier Barre <mobarre@gmail.com> jack-audio-connection-kit-9999.ebuild:
+  * bumped to jackpatches-0.4
+  * deleted old patches in files/
+  * dbus USE flag only applies necesary dbus patches
+
+  25 Dec 2007; Marc-Olivier Barre <mobarre@gmail.com> jack-audio-connection-kit-9999.ebuild:
+  bumped nedko's jackdbus patches to 0.3
+
+  16 Dec 2007; Thomas Kuther <gimpel@sonnenkinder.org> jack-audio-connection-kit-9999.ebuild:
   bumped nedko's jackdbus patches to 0.2
 
   15 Dec 2007; Marc-Olivier Barre <mobarre@gmail.com> jack-audio-connection-kit-9999.ebuild:
@@ -12,4 +74,3 @@
 
   15 Dec 2007; Marc-Olivier Barre <mobarre@gmail.com> ChangeLog:
   Initial ChangeLog creation
-
