@@ -67,6 +67,7 @@ src_unpack() {
 	cd "${S}"
 	epatch "${FILESDIR}"/${P}-gentoo.patch
 	cat acinclude.m4.in acinclude.m4.ntop > acinclude.m4
+#	./autogen.sh --noconfig || die
 	eautoreconf
 	touch libtool.m4.in
 }

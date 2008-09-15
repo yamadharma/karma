@@ -17,7 +17,6 @@ src_unpack() {
 }
 
 src_compile() {
-    ./autogen.sh
     econf
     make
 }
