@@ -1,25 +1,25 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-im/sim/sim-0.9.4.3-r1.ebuild,v 1.7 2008/01/22 13:38:27 pva Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-im/sim/sim-0.9.4.3-r3.ebuild,v 1.2 2008/07/27 22:03:57 carlo Exp $
+
+EAPI=1
 
 inherit kde-functions eutils flag-o-matic
 
 DESCRIPTION="Simple Instant Messenger (with KDE support). ICQ/AIM/Jabber/MSN/Yahoo."
 HOMEPAGE="http://sim-im.org/"
-SRC_URI="http://download.berlios.de/sim-im/${P}.tar.bz2
+SRC_URI="mirror://berlios/sim-im/${P}.tar.bz2
 	http://dev.gentoo.org/~pva/${P}-r1919_1924.patch.bz2"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="amd64 ppc x86"
+KEYWORDS="amd64 ~ppc x86"
 IUSE="debug kde spell ssl"
-
-#RESTRICT="fetch"
 
 # kdebase-data provides the icon "licq.png"
 RDEPEND="kde? ( =kde-base/kdelibs-3.5*
 				|| ( =kde-base/kdebase-data-3.5* =kde-base/kdebase-3.5* ) )
-		 !kde? ( $(qt_min_version 3)
+		 !kde? ( x11-libs/qt:3
 				 spell? ( app-text/aspell ) )
 		 ssl? ( dev-libs/openssl )
 		 dev-libs/libxml2
@@ -31,17 +31,6 @@ DEPEND="${RDEPEND}
 	sys-devel/flex
 	app-arch/zip
 	x11-proto/scrnsaverproto"
-
-#pkg_nofetch() {
-#	einfo "${CATEGORY}/${P} contains icons and sounds with unclear licensing and thus"
-#	einfo "you have to download and it put into ${DISTDIR} by yourself."
-#	einfo "Download location:"
-#	echo
-#	einfo "${SRC_URI}"
-#	echo
-#	einfo "See http://archives.gentoo.org/gentoo-dev/msg_144003.xml for further"
-#	einfo "information."
-#}
 
 pkg_setup() {
 	if use kde; then
@@ -73,7 +62,9 @@ src_unpack() {
 	cd "${S}"
 
 	epatch "${FILESDIR}"/${P}-double-message-fix.patch
+	epatch "${FILESDIR}"/${P}-sslv23.patch
 	epatch ../${P}-r1919_1924.patch
+	epatch "${FILESDIR}"/${P}-old-protocol.patch
 	if use kde; then
 		set-kdedir 3
 	fi
