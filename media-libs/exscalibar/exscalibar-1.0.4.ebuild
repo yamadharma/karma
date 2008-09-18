@@ -12,7 +12,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 ~sparc x86"
 IUSE="mp3 vorbis fftw jack alsa doc"
-DEPEND="$(qt_min_version 3.2)
+DEPEND=">=x11-libs/qt-3.2
 	>=media-libs/libsndfile-1.0.0
 	mp3? ( >=media-libs/libmad-0.15 )
 	vorbis? ( >=media-libs/libvorbis-1.0.0 )

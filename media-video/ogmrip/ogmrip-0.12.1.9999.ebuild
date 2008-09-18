@@ -12,6 +12,7 @@ ESVN_BOOTSTRAP="NOCONFIGURE=1 ./autogen.sh"
 DESCRIPTION="Graphical frontend and libraries for ripping DVDs and encoding to AVI/OGM/MKV/MP4"
 HOMEPAGE="http://ogmrip.sourceforge.net/"
 # SRC_URI="mirror://sourceforge/ogmrip/${P}.tar.gz"
+SRC_URI=""
 
 LICENSE="LGPL-2.1"
 SLOT="0"
