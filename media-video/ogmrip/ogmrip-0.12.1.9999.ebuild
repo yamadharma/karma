@@ -17,7 +17,7 @@ SRC_URI=""
 LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="aac debug doc dts gtk hal libnotify matroska mp3 mp4 ogm png spell srt theora vorbis x264 xvid"
-KEYWORDS="amd64 ~ppc ~ppc64 x86"
+# KEYWORDS="amd64 ~ppc ~ppc64 x86"
 
 RDEPEND=">=dev-libs/glib-2.6
 	>=app-i18n/enca-1.0
