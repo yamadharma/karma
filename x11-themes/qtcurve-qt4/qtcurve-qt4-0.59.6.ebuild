@@ -16,7 +16,7 @@ KEYWORDS="~alpha ~amd64 ~hppa ~ppc64 ~sparc ~x86"
 IUSE="kde"
 
 DEPEND="|| ( x11-libs/qt-gui:4 <x11-libs/qt-4.4:4 )
-	kde? ( || ( >=kde-base/kwin:4.1 kde-base/kwin:kde-svn )
+	kde? ( || ( >=kde-base/kwin-4.1 kde-base/kwin:kde-svn )
 		x11-libs/qt-gui:4 )"
 # kde-4 support needs methods from qt-gui-4.4
 
