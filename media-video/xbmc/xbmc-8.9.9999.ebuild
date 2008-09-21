@@ -57,7 +57,21 @@ RDEPEND="app-arch/bzip2
 	x11-proto/xineramaproto
 	virtual/mysql
 	opengl? ( virtual/opengl )
-	>=media-libs/libmms-0.4"
+	>=media-libs/libmms-0.4
+	
+	media-video/ffmpeg
+	media-libs/libdvdcss
+	media-libs/a52dec
+	media-libs/libdca
+	media-libs/libdvdnav
+	media-libs/faad2
+	>=media-libs/libmad-0.15.1b
+	>=media-libs/libmpeg2-0.5.1
+	media-sound/alac_decoder
+	
+	>=media-libs/flac-1.2.1
+	
+	"
 DEPEND="${RDEPEND}"
 
 pkg_setup() {
@@ -72,7 +86,10 @@ pkg_setup() {
 
 src_unpack() {
 	subversion_src_unpack
-
+	
+	cd ${S}
+	epatch ${FILESDIR}/syslibs.patch
+	
 	eautoreconf
 }
 
