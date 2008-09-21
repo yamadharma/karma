@@ -9,7 +9,7 @@ DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 
 # WINEVER=20080505
-WINEVER=1.1.4
+WINEVER=1.1.5
 
 SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarball/wine-etersoft-common-${PV}.tar.bz2
 	mirror://sourceforge/wine/wine-${WINEVER}.tar.bz2
@@ -87,7 +87,6 @@ src_unpack() {
 	epatch "${FILESDIR}"/oem_charset-jrd63fix.patch
 	epatch "${FILESDIR}"/wine-gentoo-no-ssp.patch #66002
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
-	epatch "${FILESDIR}"/wine-${WINEVER}-install-fix.patch #237011
 
 #	autoconf
 }
