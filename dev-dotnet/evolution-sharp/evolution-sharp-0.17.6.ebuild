@@ -1,23 +1,22 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
-# Nonofficial ebuild by Ycarus. For new version look here : http://gentoo.zugaina.org/
-# This ebuild is a small modification of the official evolution-sharp ebuild
+# $Header: /var/cvsroot/gentoo-x86/dev-dotnet/evolution-sharp/evolution-sharp-0.17.4.ebuild,v 1.4 2008/07/28 15:49:12 armin76 Exp $
 
-inherit mono versionator eutils
+inherit mono gnome.org
 
 DESCRIPTION="Mono bindings for Evolution"
 HOMEPAGE="http://www.gnome.org/projects/beagle"
-SRC_URI="mirror://gnome/sources/${PN}/$(get_version_component_range 1-2)/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc x86"
+KEYWORDS="amd64 ppc x86"
 IUSE=""
 
-DEPEND=">=gnome-extra/evolution-data-server-1.8.1-r1
-	>=dev-lang/mono-1
-	>=dev-dotnet/gtk-sharp-2.4"
+RDEPEND=">=gnome-extra/evolution-data-server-1.8.1-r1
+	>=dev-dotnet/gtk-sharp-2.4
+	dev-lang/mono"
+DEPEND="${RDEPEND}
+	dev-util/pkgconfig"
 
 src_unpack() {
 	unpack ${A}

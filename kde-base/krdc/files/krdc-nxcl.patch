@@ -1,0 +1,16 @@
+--- a/krdc/nx/nxclientthread.cpp	2008-09-22 17:25:34.000000000 +0000
++++ b/krdc/nx/nxclientthread.cpp	2008-09-22 17:25:44.000000000 +0000
+@@ -187,13 +187,6 @@
+             p->probeProcess();
+         }
+ 
+-	if (!this->m_xid) {
+-	    this->m_xid = m_client.getXID();
+-
+-	    if (this->m_xid) 
+-	        emit hasXid(this->m_xid);
+-        }
+-
+         usleep (1000);
+     }
+ }

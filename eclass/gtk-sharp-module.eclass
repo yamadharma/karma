@@ -73,9 +73,8 @@ S=${WORKDIR}/${MY_P}
 # Since all interesting versions are hosted on the GNOME server anyway it's the
 # only one we support, for now.
 SRC_URI="mirror://gnome/sources/${my_tarball}/${PV%.*}/${MY_P}.tar.bz2
-		mirror://gentoo/${MY_P}-configurable.diff.gz
 		http://dev.gentoo.org/~ikelos/devoverlay-distfiles/${MY_P}-configurable.diff.gz"
-
+#		mirror://gentoo/${MY_P}-configurable.diff.gz
 
 ### Public functions.
 
