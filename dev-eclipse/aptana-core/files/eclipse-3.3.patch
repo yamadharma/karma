@@ -1,0 +1,24 @@
+diff -Naur plugins.orig/com.aptana.ide.core/src/com/aptana/ide/core/PlatformUtils.java plugins/com.aptana.ide.core/src/com/aptana/ide/core/PlatformUtils.java
+--- plugins.orig/com.aptana.ide.core/src/com/aptana/ide/core/PlatformUtils.java	2008-06-20 20:44:43.418641389 +0100
++++ plugins/com.aptana.ide.core/src/com/aptana/ide/core/PlatformUtils.java	2008-06-20 20:43:55.152295249 +0100
+@@ -268,7 +268,7 @@
+ 	{
+ 		if (Platform.OS_WIN32.equals(Platform.getOS()))
+ 		{
+-			final int[] handle = new int[1];
++			final long[] handle = new long[1];
+ 			if ( parentShell == null ) {
+ 				Display.getDefault().syncExec( new Runnable() {
+ 					public void run() {
+diff -Naur plugins.orig/com.aptana.ide.core/src/com/aptana/ide/internal/core/CoreNatives.java plugins/com.aptana.ide.core/src/com/aptana/ide/internal/core/CoreNatives.java
+--- plugins.orig/com.aptana.ide.core/src/com/aptana/ide/internal/core/CoreNatives.java	2008-06-20 20:44:09.199295334 +0100
++++ plugins/com.aptana.ide.core/src/com/aptana/ide/internal/core/CoreNatives.java	2008-06-20 20:44:55.386643596 +0100
+@@ -138,7 +138,7 @@
+ 	 * @param page
+ 	 * @return boolean
+ 	 */
+-	public static final native boolean SHObjectProperties(int/*long*/ handle, int type, String object, String page);
++	public static final native boolean SHObjectProperties(long handle, int type, String object, String page);
+ 
+ 	/**
+ 	 * 

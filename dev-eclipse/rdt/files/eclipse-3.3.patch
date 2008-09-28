@@ -1,0 +1,47 @@
+diff -Naur plugins.orig/org.rubypeople.rdt.debug.ui/src/org/rubypeople/rdt/internal/debug/ui/EvaluationContextManager.java plugins/org.rubypeople.rdt.debug.ui/src/org/rubypeople/rdt/internal/debug/ui/EvaluationContextManager.java
+--- plugins.orig/org.rubypeople.rdt.debug.ui/src/org/rubypeople/rdt/internal/debug/ui/EvaluationContextManager.java	2008-06-11 15:50:39.000000000 +0100
++++ plugins/org.rubypeople.rdt.debug.ui/src/org/rubypeople/rdt/internal/debug/ui/EvaluationContextManager.java	2008-06-15 13:15:24.479187345 +0100
+@@ -7,7 +7,8 @@
+ 
+ import org.eclipse.core.runtime.IAdaptable;
+ import org.eclipse.debug.internal.ui.contexts.DebugContextManager;
+-import org.eclipse.debug.internal.ui.contexts.provisional.IDebugContextListener;
++import org.eclipse.debug.ui.contexts.IDebugContextListener;
++import org.eclipse.debug.ui.contexts.DebugContextEvent;
+ import org.eclipse.jface.viewers.ISelection;
+ import org.eclipse.jface.viewers.IStructuredSelection;
+ import org.eclipse.ui.IWindowListener;
+@@ -101,7 +102,10 @@
+ 		return null;
+ 	}
+ 
+-	public void contextActivated(ISelection selection, IWorkbenchPart part) {
++ 	public void debugContextChanged(DebugContextEvent event) {
++		ISelection selection = event.getContext();
++		IWorkbenchPart part = event.getDebugContextProvider().getPart();
++		
+ 		if (part != null) {
+ 			IWorkbenchPage page = part.getSite().getPage();
+ 			if (selection instanceof IStructuredSelection) {
+@@ -125,9 +129,6 @@
+ 			removeContext(page);
+ 		}
+ 	}
+-
+-	public void contextChanged(ISelection selection, IWorkbenchPart part) {
+-	}
+ 	
+ 	/**
+ 	 * Sets the evaluation context for the given page, and notes that
+diff -Naur plugins.orig/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/search/RubySearchResultPage.java plugins/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/search/RubySearchResultPage.java
+--- plugins.orig/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/search/RubySearchResultPage.java	2008-06-11 15:49:29.000000000 +0100
++++ plugins/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/search/RubySearchResultPage.java	2008-06-15 13:14:52.719187265 +0100
+@@ -380,7 +380,7 @@
+ 		};
+ 	}
+ 	
+-	int getElementLimit() {
++	public Integer getElementLimit() {
+ 		return fElementLimit;
+ 	}
+ 

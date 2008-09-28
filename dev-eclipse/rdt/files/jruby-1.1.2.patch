@@ -1,0 +1,145 @@
+diff -Naur plugins.orig/org.rubypeople.rdt.core/src/org/rubypeople/rdt/internal/core/parser/RubyParser.java plugins/org.rubypeople.rdt.core/src/org/rubypeople/rdt/internal/core/parser/RubyParser.java
+--- plugins.orig/org.rubypeople.rdt.core/src/org/rubypeople/rdt/internal/core/parser/RubyParser.java	2008-06-15 12:30:17.709187196 +0100
++++ plugins/org.rubypeople.rdt.core/src/org/rubypeople/rdt/internal/core/parser/RubyParser.java	2008-06-15 12:23:29.866437539 +0100
+@@ -11,8 +11,8 @@
+ 
+ package org.rubypeople.rdt.internal.core.parser;
+ 
+-import java.io.Reader;
+-import java.io.StringReader;
++import java.io.InputStream;
++import java.io.StringBufferInputStream;
+ 
+ import org.eclipse.core.resources.IFile;
+ import org.eclipse.core.runtime.CoreException;
+@@ -50,7 +50,7 @@
+         this.pool = RubyParserPool.getInstance();
+ 	}
+     
+-	private RubyParserResult parse(String fileName, Reader content) {
++	private RubyParserResult parse(String fileName, InputStream content) {
+ 		if (fileName == null) {
+ 			fileName = "";
+ 		}
+@@ -108,7 +108,7 @@
+ 	public RubyParserResult parse(String fileName, String source) {
+ 		RubyParserResult ast = (RubyParserResult) cachedASTs.get(source);
+ 		if (ast != null) return ast;
+-		ast = parse(fileName, new StringReader(source));
++		ast = parse(fileName, new StringBufferInputStream(source));
+ 		if (ast == null) ast = new NullParserResult();
+ 		cachedASTs.put(source, ast);
+ 		return ast;
+diff -Naur plugins.orig/org.rubypeople.rdt.core/src/org/rubypeople/rdt/internal/core/util/PublicScanner.java plugins/org.rubypeople.rdt.core/src/org/rubypeople/rdt/internal/core/util/PublicScanner.java
+--- plugins.orig/org.rubypeople.rdt.core/src/org/rubypeople/rdt/internal/core/util/PublicScanner.java	2008-06-15 12:30:17.709187196 +0100
++++ plugins/org.rubypeople.rdt.core/src/org/rubypeople/rdt/internal/core/util/PublicScanner.java	2008-06-15 12:23:29.867437636 +0100
+@@ -1,7 +1,7 @@
+ package org.rubypeople.rdt.internal.core.util;
+ 
+ import java.io.IOException;
+-import java.io.StringReader;
++import java.io.StringBufferInputStream;
+ 
+ import org.jruby.common.NullWarnings;
+ import org.jruby.lexer.yacc.LexerSource;
+@@ -78,7 +78,7 @@
+ 		lexer.setState(LexState.EXPR_BEG);
+ 		parserSupport.initTopLocalVariables();
+ 		ParserConfiguration config = new ParserConfiguration(0, true, false);
+-		lexerSource = LexerSource.getSource("filename", new StringReader(new String(source)), null, config);
++		lexerSource = LexerSource.getSource("filename", new StringBufferInputStream(new String(source)), null, config);
+ 		lexer.setSource(lexerSource);		
+ 	}
+ 
+diff -Naur plugins.orig/org.rubypeople.rdt.refactoring/src/org/rubypeople/rdt/refactoring/core/formatsource/PreviewGeneratorImpl.java plugins/org.rubypeople.rdt.refactoring/src/org/rubypeople/rdt/refactoring/core/formatsource/PreviewGeneratorImpl.java
+--- plugins.orig/org.rubypeople.rdt.refactoring/src/org/rubypeople/rdt/refactoring/core/formatsource/PreviewGeneratorImpl.java	2008-06-11 15:50:42.000000000 +0100
++++ plugins/org.rubypeople.rdt.refactoring/src/org/rubypeople/rdt/refactoring/core/formatsource/PreviewGeneratorImpl.java	2008-06-15 12:32:14.079187190 +0100
+@@ -29,7 +29,7 @@
+ package org.rubypeople.rdt.refactoring.core.formatsource;
+ 
+ import java.io.PrintWriter;
+-import java.io.StringReader;
++import java.io.StringBufferInputStream;
+ import java.io.StringWriter;
+ 
+ import org.jruby.ast.visitor.rewriter.FormatHelper;
+@@ -58,7 +58,7 @@
+ 		parser.setWarnings(new NullWarnings());
+ 
+ 		ParserConfiguration parserConfig = new ParserConfiguration(1, true, false);
+-		LexerSource lexerSource = LexerSource.getSource("", new StringReader(source), null, parserConfig); //$NON-NLS-1$
++		LexerSource lexerSource = LexerSource.getSource("", new StringBufferInputStream(source), null, parserConfig); //$NON-NLS-1$
+ 		ReWriteVisitor visitor = factory.createReWriteVisitor();		
+ //		parserConfig.addPostProcessor(new DefaultCommentPlacer());
+ 		parser.parse(parserConfig, lexerSource).getAST().accept(visitor);
+diff -Naur plugins.orig/org.rubypeople.rdt.refactoring/src/org/rubypeople/rdt/refactoring/core/NodeProvider.java plugins/org.rubypeople.rdt.refactoring/src/org/rubypeople/rdt/refactoring/core/NodeProvider.java
+--- plugins.orig/org.rubypeople.rdt.refactoring/src/org/rubypeople/rdt/refactoring/core/NodeProvider.java	2008-06-11 15:50:44.000000000 +0100
++++ plugins/org.rubypeople.rdt.refactoring/src/org/rubypeople/rdt/refactoring/core/NodeProvider.java	2008-06-15 12:32:26.518187339 +0100
+@@ -28,7 +28,7 @@
+ 
+ package org.rubypeople.rdt.refactoring.core;
+ 
+-import java.io.StringReader;
++import java.io.StringBufferInputStream;
+ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collection;
+@@ -102,7 +102,7 @@
+ 		parser.setWarnings(new NullWarnings());
+ 		
+ 		ParserConfiguration parserConfig = new ParserConfiguration(1, true, false);
+-		LexerSource lexerSource = LexerSource.getSource(fileName, new StringReader(fileContent), null, parserConfig);		
++		LexerSource lexerSource = LexerSource.getSource(fileName, new StringBufferInputStream(fileContent), null, parserConfig);		
+ //		parserConfig.addPostProcessor(new DefaultCommentPlacer());
+ 		RubyParserResult result = parser.parse(parserConfig, lexerSource);
+ 		return (RootNode) result.getAST();
+diff -Naur plugins.orig/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/text/ruby/RubyTokenScanner.java plugins/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/text/ruby/RubyTokenScanner.java
+--- plugins.orig/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/text/ruby/RubyTokenScanner.java	2008-06-11 15:49:27.000000000 +0100
++++ plugins/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/text/ruby/RubyTokenScanner.java	2008-06-15 12:31:40.919187775 +0100
+@@ -1,7 +1,7 @@
+ package org.rubypeople.rdt.internal.ui.text.ruby;
+ 
+ import java.io.IOException;
+-import java.io.StringReader;
++import java.io.StringBufferInputStream;
+ 
+ import org.eclipse.core.runtime.Preferences;
+ import org.eclipse.jface.text.BadLocationException;
+@@ -244,10 +244,10 @@
+ 		ParserConfiguration config = new ParserConfiguration(0, true, false);
+ 		try {
+ 			fContents = document.get(offset, length);			
+-			lexerSource = LexerSource.getSource("filename", new StringReader(fContents), null, config);
++			lexerSource = LexerSource.getSource("filename", new StringBufferInputStream(fContents), null, config);
+ 			lexer.setSource(lexerSource);
+ 		} catch (BadLocationException e) {
+-			lexerSource = LexerSource.getSource("filename", new StringReader(""), null, config);
++			lexerSource = LexerSource.getSource("filename", new StringBufferInputStream(""), null, config);
+ 			lexer.setSource(lexerSource);
+ 		}
+ 		origOffset = offset;
+diff -Naur plugins.orig/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/text/RubyPartitionScanner.java plugins/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/text/RubyPartitionScanner.java
+--- plugins.orig/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/text/RubyPartitionScanner.java	2008-06-11 15:49:28.000000000 +0100
++++ plugins/org.rubypeople.rdt.ui/src/org/rubypeople/rdt/internal/ui/text/RubyPartitionScanner.java	2008-06-15 12:33:47.583187596 +0100
+@@ -1,7 +1,7 @@
+ package org.rubypeople.rdt.internal.ui.text;
+ 
+ import java.io.IOException;
+-import java.io.StringReader;
++import java.io.StringBufferInputStream;
+ import java.util.ArrayList;
+ import java.util.Iterator;
+ import java.util.List;
+@@ -112,10 +112,10 @@
+ 		ParserConfiguration config = new ParserConfiguration(0, true, false);
+ 		try {			
+ 			fContents = document.get(myOffset, length);			
+-			lexerSource = LexerSource.getSource("filename", new StringReader(fContents), null, config);
++			lexerSource = LexerSource.getSource("filename", new StringBufferInputStream(fContents), null, config);
+ 			lexer.setSource(lexerSource);
+ 		} catch (BadLocationException e) {
+-			lexerSource = LexerSource.getSource("filename", new StringReader(""), null, config);
++			lexerSource = LexerSource.getSource("filename", new StringBufferInputStream(""), null, config);
+ 			lexer.setSource(lexerSource);
+ 		}
+ 		origOffset = myOffset;
