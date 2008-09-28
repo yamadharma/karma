@@ -6,7 +6,8 @@ EAPI="1"
 
 
 NEED_KDE="4.2"
-inherit kde4svn
+inherit kde4svn eutils
+
 
 DESCRIPTION="KDE internationalization package"
 HOMEPAGE="http://www.kde.org/"
@@ -84,4 +85,11 @@ src_compile() {
 		fi
 	done
 	kde4overlay-base_src_compile
+}
+
+src_install() {
+	kde4overlay-base_src_compile
+	
+	# Remove collisions
+	
 }

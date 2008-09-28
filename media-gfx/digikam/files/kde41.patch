@@ -1,0 +1,65 @@
+--- digikam-0.10.0_pre20080714/utilities/imageeditor/editor/imagewindow.cpp~	2008-07-14 22:46:46.000000000 +0400
++++ digikam-0.10.0_pre20080714/utilities/imageeditor/editor/imagewindow.cpp	2008-07-14 22:47:12.000000000 +0400
+@@ -1373,8 +1373,8 @@
+     list.insert(i18n("LibExiv2"),                         KExiv2Iface::KExiv2::Exiv2Version());
+     list.insert(i18n("Exiv2 support XMP metadata"),       KExiv2Iface::KExiv2::supportXmp() ? 
+                                                           i18n("Yes") : i18n("No"));
+-    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
+-                                                          i18n("Yes") : i18n("No"));
++/*    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
++                                                          i18n("Yes") : i18n("No"));*/
+     list.insert(i18n("LibPNG"),                           QString(PNG_LIBPNG_VER_STRING));
+     list.insert(i18n("LibTIFF"),                          QString(TIFFLIB_VERSION_STR).replace('\n', ' '));
+     list.insert(i18n("LibJPEG"),                          QString::number(JPEG_LIB_VERSION));
+--- digikam-0.10.0_pre20080714/utilities/cameragui/cameraui.cpp~	2008-07-14 22:49:25.000000000 +0400
++++ digikam-0.10.0_pre20080714/utilities/cameragui/cameraui.cpp	2008-07-14 22:49:19.000000000 +0400
+@@ -2011,8 +2011,8 @@
+     list.insert(i18n("LibExiv2"),                         KExiv2Iface::KExiv2::Exiv2Version());
+     list.insert(i18n("Exiv2 support XMP metadata"),       KExiv2Iface::KExiv2::supportXmp() ? 
+                                                           i18n("Yes") : i18n("No"));
+-    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
+-                                                          i18n("Yes") : i18n("No"));
++/*    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
++                                                          i18n("Yes") : i18n("No"));*/
+     list.insert(i18n("LibPNG"),                           QString(PNG_LIBPNG_VER_STRING));
+     list.insert(i18n("LibTIFF"),                          QString(TIFFLIB_VERSION_STR).replace('\n', ' '));
+     list.insert(i18n("LibJPEG"),                          QString::number(JPEG_LIB_VERSION));
+--- digikam-0.10.0_pre20080714/utilities/lighttable/lighttablewindow.cpp~	2008-07-14 22:50:42.000000000 +0400
++++ digikam-0.10.0_pre20080714/utilities/lighttable/lighttablewindow.cpp	2008-07-14 22:50:49.000000000 +0400
+@@ -1633,8 +1633,8 @@
+     list.insert(i18n("LibExiv2"),                         KExiv2Iface::KExiv2::Exiv2Version());
+     list.insert(i18n("Exiv2 support XMP metadata"),       KExiv2Iface::KExiv2::supportXmp() ? 
+                                                           i18n("Yes") : i18n("No"));
+-    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
+-                                                          i18n("Yes") : i18n("No"));
++/*    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
++                                                          i18n("Yes") : i18n("No"));*/
+     list.insert(i18n("LibPNG"),                           QString(PNG_LIBPNG_VER_STRING));
+     list.insert(i18n("LibTIFF"),                          QString(TIFFLIB_VERSION_STR).replace('\n', ' '));
+     list.insert(i18n("LibJPEG"),                          QString::number(JPEG_LIB_VERSION));
+--- digikam-0.10.0_pre20080714/showfoto/showfoto.cpp~	2008-07-14 22:54:29.000000000 +0400
++++ digikam-0.10.0_pre20080714/showfoto/showfoto.cpp	2008-07-14 22:54:38.000000000 +0400
+@@ -1238,8 +1238,8 @@
+     list.insert(i18n("LibExiv2"),                         KExiv2Iface::KExiv2::Exiv2Version());
+     list.insert(i18n("Exiv2 support XMP metadata"),       KExiv2Iface::KExiv2::supportXmp() ? 
+                                                           i18n("Yes") : i18n("No"));
+-    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
+-                                                          i18n("Yes") : i18n("No"));
++/*    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
++                                                          i18n("Yes") : i18n("No"));*/
+     list.insert(i18n("LibPNG"),                           QString(PNG_LIBPNG_VER_STRING));
+     list.insert(i18n("LibTIFF"),                          QString(TIFFLIB_VERSION_STR).replace('\n', ' '));
+     list.insert(i18n("LibJPEG"),                          QString::number(JPEG_LIB_VERSION));
+--- digikam-0.10.0_pre20080714/digikam/digikamapp.cpp~	2008-07-14 23:08:47.000000000 +0400
++++ digikam-0.10.0_pre20080714/digikam/digikamapp.cpp	2008-07-14 23:08:54.000000000 +0400
+@@ -2054,8 +2054,8 @@
+     list.insert(i18n("LibExiv2"),                         KExiv2Iface::KExiv2::Exiv2Version());
+     list.insert(i18n("Exiv2 support XMP metadata"),       KExiv2Iface::KExiv2::supportXmp() ? 
+                                                           i18n("Yes") : i18n("No"));
+-    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
+-                                                          i18n("Yes") : i18n("No"));
++/*    list.insert(i18n("Exiv2 can write metadata to Tiff"), KExiv2Iface::KExiv2::supportTiffWritting() ? 
++                                                          i18n("Yes") : i18n("No"));*/
+     list.insert(i18n("LibPNG"),                           QString(PNG_LIBPNG_VER_STRING));
+     list.insert(i18n("LibTIFF"),                          QString(TIFFLIB_VERSION_STR).replace('\n', ' '));
+     list.insert(i18n("LibJPEG"),                          QString::number(JPEG_LIB_VERSION));
