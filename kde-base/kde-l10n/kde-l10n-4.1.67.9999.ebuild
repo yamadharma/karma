@@ -91,5 +91,5 @@ src_install() {
 	kde4overlay-base_src_compile
 	
 	# Remove collisions
-	
+	rm ${D}/usr/kde/${NEED_KDE}/share/locale/*/LC_MESSAGES/kplayer.mo
 }
