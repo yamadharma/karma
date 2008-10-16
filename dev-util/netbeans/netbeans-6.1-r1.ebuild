@@ -14,13 +14,15 @@ MY_PV=${PV}
 SRC_URI="http://dev.gentoo.org/~fordfrog/distfiles/${P}-bundled.tar.bz2"
 
 LICENSE="CDDL"
-KEYWORDS="amd64 ~x86 x86-fbsd"
-IUSE_NETBEANS_MODULES="apisupport cnd gsf harness ide identity j2ee java mobility nb php profiler ruby soa uml visualweb xml"
+KEYWORDS="amd64 x86 ~x86-fbsd"
+#IUSE_NETBEANS_MODULES="apisupport cnd gsf harness ide identity j2ee java mobility nb php profiler ruby soa uml visualweb xml"
 IUSE="+apisupport +cnd debug doc +gsf +harness +ide +identity +j2ee +java +mobility +nb +php +profiler +ruby +soa +uml +visualweb +xml linguas_de linguas_es linguas_ja linguas_pt_BR linguas_sq linguas_zh_CN"
 
-RDEPEND=">=virtual/jdk-1.5"
+RDEPEND=">=virtual/jdk-1.5
+	>=dev-java/ant-core-1.7.1_beta2"
 
-DEPEND="=virtual/jdk-1.5*"
+DEPEND="=virtual/jdk-1.5*
+	>=dev-java/ant-core-1.7.1_beta2"
 
 BUILDDESTINATION="${S}/nbbuild/netbeans"
 ENTERPRISE="5"
