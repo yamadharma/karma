@@ -25,6 +25,7 @@ RDEPEND=">=virtual/jre-1.5"
 S=${WORKDIR}/${PN}09
 
 OOO_EXTENSIONS="writer2latex writer2xhtml xhtml-config-sample" 
+OOO_EXTENSIONS_DA="writer2latex writer2xhtml writer2latex.xhtml-config-sample" 
 
 add_extension() {
   echo -n "Adding extension $1..."
@@ -128,7 +129,7 @@ pkg_postinst() {
 }
 
 pkg_prerm() {
-	for i in ${OOO_EXTENSIONS}
+	for i in ${OOO_EXTENSIONS_DA}
 	do
 		remove_extension org.openoffice.da.${i}.oxt
 	done
