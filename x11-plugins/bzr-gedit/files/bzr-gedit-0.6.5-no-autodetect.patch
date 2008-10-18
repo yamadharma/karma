@@ -1,0 +1,28 @@
+--- ./setup.py.old	2008-08-10 21:51:50.000000000 -0700
++++ ./setup.py	2008-08-10 21:52:46.000000000 -0700
+@@ -9,25 +9,7 @@
+     print "use -system to install system wide (/usr/lib/gedit-2/plugins)"
+     sys.exit()
+ 
+-missing = {}
+ if sys.argv[1] == 'install':
+-    try:
+-        print "testing bzr"
+-        import bzrlib
+-    except:
+-        missing['bzrlib'] = "Missing bzr."
+-
+-    try:
+-        print "testing gtk"
+-        import gtk
+-    except:
+-        missing['gtk'] = "Missing pygtk."
+-
+-    if len(missing) != 0:
+-        print "Can't install. Required files missing:"
+-        for miss in missing:
+-            print missing[miss]
+-    else:
+         from os.path import exists, expanduser
+         if sys.argv[2][0:10] == '-location=':
+             destdir =  sys.argv[2][10:]
