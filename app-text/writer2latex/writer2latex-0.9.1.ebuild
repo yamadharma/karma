@@ -79,7 +79,7 @@ EANT_BUILD_TARGET="all"
 src_install() {
 
 	java-pkg_jarinto /usr/lib/${PN}
-	java-pkg_dojar "${S}/target/$(get_libdir)/${PN}.jar"
+	java-pkg_dojar "${S}/target/lib/${PN}.jar"
 
 	cd ${S}/source/distro
 

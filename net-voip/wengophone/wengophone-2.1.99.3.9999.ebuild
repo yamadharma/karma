@@ -6,7 +6,7 @@ inherit eutils toolchain-funcs subversion
 
 # ESVN_PROJECT=wengophone
 
-ESVN_OPTIONS="-r{${PV/*_pre}}"
+#ESVN_OPTIONS="-r{${PV/*_pre}}"
 # ESVN_REPO_URI="https://dev.openwengo.org/svn/openwengo/wengophone-ng/branches/wengophone-2.2"
 ESVN_REPO_URI="https://dev.openwengo.org/svn/openwengo/wengophone-ng/trunk"
 
@@ -16,8 +16,7 @@ HOMEPAGE="http://dev.openwengo.com"
 
 LICENSE="GPL-2"
 SLOT="0"
-# KEYWORDS="amd64 x86"
-KEYWORDS=""
+KEYWORDS="amd64 x86"
 IUSE="alsa debug oss portaudio xv"
 
 RDEPEND=">=dev-libs/boost-1.34

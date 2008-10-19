@@ -32,9 +32,9 @@ S=${WORKDIR}/${P}
 
 SCRIPTS_DIRS="keybindings scripts statusbar statusd styles"
 
-#pkg_setup() {
-#	export EBZR_REVISION=`echo "${PV}" | sed -e 's:^.\+_pre\(.*\)$:\1:g' `
-#}
+pkg_setup() {
+	export EBZR_REVISION=`echo "${PV}" | sed -e 's:^.\+_pre\(.*\)$:\1:g' `
+}
 
 src_unpack() {
 	bzr_src_unpack
