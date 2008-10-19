@@ -66,6 +66,12 @@ pkg_setup() {
 	fi
 }
 
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+	epatch ${FILESDIR}/5.9.0/*
+}
+
 src_compile() {
 	export FC=${FORTRANC}
 	export F77=${FORTRANC}
