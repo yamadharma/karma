@@ -19,7 +19,6 @@ S=${WORKDIR}
 RDEPEND=">=app-office/openoffice-3"
 
 OOO_EXTENSIONS=dict_ru_RU
-OOO_EXTENSIONS_ID=org.openoffice.ro.dictionaries.ru
 
 src_unpack() {
 	cp ${DISTDIR}/dict_ru_RU-${PV}.oxt ${S}/dict_ru_RU.oxt

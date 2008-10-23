@@ -9,8 +9,6 @@ inherit eutils multilib
 
 # list of extentions
 # OOO_EXTENSIONS="" 
-# list of extentions identifier (Openoffice view)
-# OOO_EXTENSIONS_ID=""
 
 add_extension() {
   echo -n "Adding extension $1..."
@@ -58,11 +56,10 @@ openoffice-ext_pkg_postinst() {
 }
 
 openoffice-ext_pkg_prerm() {
-	for i in ${OOO_EXTENSIONS_ID}
+	for i in ${OOO_EXTENSIONS}
 	do
-		remove_extension ${i}
+		remove_extension ${i}.oxt
 	done
 }
 
 EXPORT_FUNCTIONS src_install pkg_postinst pkg_prerm
-
