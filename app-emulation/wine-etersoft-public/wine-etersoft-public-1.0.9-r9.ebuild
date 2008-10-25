@@ -9,7 +9,7 @@ DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 
 # WINEVER=20080505
-WINEVER=1.1.6
+WINEVER=1.1.7
 
 SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarball/wine-etersoft-common-${PV}.tar.bz2
 	mirror://sourceforge/wine/wine-${WINEVER}.tar.bz2

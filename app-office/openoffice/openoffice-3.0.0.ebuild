@@ -297,8 +297,20 @@ src_unpack() {
 #	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/res/infra/intro.bmp    "${S}"/ooo_custom_images/nologo/introabout/
 #	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/res/infra/about.bmp    "${S}"/default_images/introabout/
 
-	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/bin/* "${S}"/bin/
+#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/bin/* "${S}"/bin/
 	cp -R -f "${WORKDIR}"/infra-ooo-files_${PV}/patches/* "${S}"/patches/
+	# Dirty hack
+	for i in infra test test/vba
+	do
+	    cp -f "${S}"/patches/$i/*.diff "${S}"/patches/hotfixes/
+	done    
+
+#	perl -i -pe 's:^(SUBDIRS.*):$1 infra test:g' "${S}"/patches/Makefile.am
+#	for i in infra test 
+#	do
+#	    cp "${S}"/patches/hotfixes/Makefile.* "${S}"/patches/$i/
+#	done    
+
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/ru/* "${S}"/src/sdf/
 
 #	mkdir ${S}/dictionaries
