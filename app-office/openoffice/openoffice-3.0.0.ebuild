@@ -300,7 +300,7 @@ src_unpack() {
 #	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/bin/* "${S}"/bin/
 	cp -R -f "${WORKDIR}"/infra-ooo-files_${PV}/patches/* "${S}"/patches/
 	# Dirty hack
-	for i in infra test test/vba
+	for i in infra test
 	do
 	    cp -f "${S}"/patches/$i/*.diff "${S}"/patches/hotfixes/
 	done    
