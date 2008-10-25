@@ -20,7 +20,9 @@ S=${WORKDIR}/${MY_P}
 
 src_unpack() {
 	unpack ${A}
+	cd ${S}
 	epatch ${FILESDIR}/${MY_P}-amd64.patch
+	epatch "${FILESDIR}"/libemf-1.0.3-gcc4.3.patch
 }
 
 
