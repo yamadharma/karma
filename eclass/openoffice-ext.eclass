@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -43,14 +43,14 @@ openoffice-ext_src_install() {
 	insinto /usr/$(get_libdir)/openoffice/share/extension/install
 	for i in ${OOO_EXTENSIONS}
 	do
-		doins ${i}.oxt
+		doins ${i}
 	done
 }
 
 openoffice-ext_pkg_postinst() {
 	for i in ${OOO_EXTENSIONS}
 	do
-		add_extension /usr/$(get_libdir)/openoffice/share/extension/install/${i}.oxt
+		add_extension /usr/$(get_libdir)/openoffice/share/extension/install/${i}
 	done
 
 }
@@ -58,7 +58,7 @@ openoffice-ext_pkg_postinst() {
 openoffice-ext_pkg_prerm() {
 	for i in ${OOO_EXTENSIONS}
 	do
-		remove_extension ${i}.oxt
+		remove_extension ${i}
 	done
 }
 
