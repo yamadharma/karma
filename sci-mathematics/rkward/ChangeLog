@@ -1,6 +1,54 @@
 # ChangeLog for sci-mathematics/rkward
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/rkward/ChangeLog,v 1.3 2007/04/27 10:01:52 bicatali Exp $
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/rkward/ChangeLog,v 1.13 2008/10/21 14:35:35 bicatali Exp $
+
+*rkward-0.5.0b (21 Oct 2008)
+
+  21 Oct 2008; Sébastien Fabbro <bicatali@gentoo.org> -rkward-0.4.9.ebuild,
+  +rkward-0.5.0b.ebuild:
+  Version bump, thanks Michel Lang for his ebuild, bug #209331
+
+  06 Sep 2008; Raúl Porcel <armin76@gentoo.org> rkward-0.4.9a.ebuild:
+  x86 stable wrt #236566
+
+  04 Sep 2008; Thomas Anderson <gentoofan23@gentoo.org>
+  rkward-0.4.9a.ebuild:
+  stable amd64, bug 236566
+
+*rkward-0.4.9a (23 Apr 2008)
+
+  23 Apr 2008; Markus Dittrich <markusle@gentoo.org> +rkward-0.4.9a.ebuild:
+  Version bump (fixes bug #199672).
+
+  24 Mar 2008; Sébastien Fabbro <bicatali@gentoo.org> rkward-0.4.9.ebuild:
+  stable amd64, bug #211873
+
+  01 Mar 2008; Christian Faulhammer <opfer@gentoo.org> rkward-0.4.9.ebuild:
+  stable x86, bug 211873
+
+*rkward-0.4.9 (16 Jan 2008)
+
+  16 Jan 2008; Sébastien Fabbro <bicatali@gentoo.org>
+  -rkward-0.4.7a.ebuild, -rkward-0.4.8.ebuild, +rkward-0.4.9.ebuild:
+  Version bump. Re-closing bug #199672
+
+*rkward-0.4.8a (20 Nov 2007)
+
+  20 Nov 2007; Markus Dittrich <markusle@gentoo.org> +rkward-0.4.8a.ebuild:
+  Version bump (see bug #199672).
+
+*rkward-0.4.8 (17 Oct 2007)
+
+  17 Oct 2007; Markus Dittrich <markusle@gentoo.org> rkward-0.4.7a.ebuild,
+  -rkward-0.4.7.ebuild, +rkward-0.4.8.ebuild:
+  Version bump and removed old versions (fixes bug #196114).
+
+*rkward-0.4.7a (01 Jun 2007)
+
+  01 Jun 2007; Sébastien Fabbro <bicatali@gentoo.org>
+  +rkward-0.4.7a.ebuild:
+  Version bump+small fix for R 2.5. 
+  Thanks Skander Morgenthaler <smorg@gmx.de> for reporting.
 
   27 Apr 2007; Sébastien Fabbro <bicatali@gentoo.org> rkward-0.4.7.ebuild:
   added a need-kde to bring kdelibs deps, thanks for Andre

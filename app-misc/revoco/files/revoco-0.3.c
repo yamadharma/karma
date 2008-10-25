@@ -57,7 +57,8 @@
 #define strneq(a,b,c)	(strncmp((a), (b), (c)) == 0)
 
 #define LOGITECH	0x046d
-#define MX_REVOLUTION	0xc525
+#define MX_REVOLUTION	0xc51a
+#define MX_REVOLUTION1	0xc525
 
 static void
 fatal(const char *fmt, ...)
@@ -87,7 +88,7 @@ open_dev(char *path)
 	{
 	    if (ioctl(fd, HIDIOCGDEVINFO, &dinfo) == 0)
 		if (dinfo.vendor == (short)LOGITECH)
-		    if (dinfo.product == (short)MX_REVOLUTION)
+		    if (dinfo.product == (short)MX_REVOLUTION || dinfo.product == (short)MX_REVOLUTION1)
 			return fd;
 	    close(fd);
 	}
@@ -328,8 +329,8 @@ trouble_shooting(void)
 	fd = open(path = "/dev/usb/hiddev0", O_RDWR);
 
     if (fd != -1)
-	fatal("No Logitech MX-Revolution (%04x:%04x) found.",
-						    LOGITECH, MX_REVOLUTION);
+	fatal("No Logitech MX-Revolution (%04x:%04x/%04x) found.",
+						    LOGITECH, MX_REVOLUTION, MX_REVOLUTION1);
 
     if (errno == EPERM || errno == EACCES)
 	fatal("No permission to access hiddev (%s-15)\n"
