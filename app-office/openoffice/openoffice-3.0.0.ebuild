@@ -261,8 +261,12 @@ src_unpack() {
 	unpack ooo-build-${MY_PV}.tar.gz
 	unpack infra-ooo-files_${PV}.tar.gz	
 	
+	
 	# Hackish workaround for overlong path problem, see bug #130837
 	mv "${S_OLD}" "${S}" || die
+
+	mkdir "${S}"/infra
+	cp -R -f infra-ooo-files_${PV}/* "${S}"/infra/
 
 	#Some fixes for our patchset
 	cd "${S}"
@@ -270,55 +274,35 @@ src_unpack() {
 	epatch "${FILESDIR}/ooo-env_log.diff"
 	cp -f "${FILESDIR}/nojavanostax.diff" "${S}/patches/dev300" || die
 	cp -f "${FILESDIR}/hunspell-one-dir-nocrash.diff" "${S}/patches/dev300" || die
+	
+	epatch ${FILESDIR}/gentoo-3.0.0_infra-build.patch
 
-	# Infra patches
-
-#	mkdir -p "${S}"/solver/680/unxlng${ARCH_VAR}6.pro/pck/
-#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/extra_templates_*.zip "${S}"/solver/680/unxlng${ARCH_VAR}6.pro/pck/
-
-#	cd "${S}"; rm -rf "extras/source/autotext/lang/ru/*" ; tar xjf "${WORKDIR}/infra-ooo-files_${PV}/files/extras_ru.tar.bz2"
-#	cd "${S}"; tar xjf "${WORKDIR}/infra-ooo-files_${PV}/files/oox.2008-02-29.tar.bz2"
-
-#	mkdir -p "${S}"/mdbtools/download/
-	mkdir -p "${S}"/libwps/download/
-	mkdir -p "${S}"/libwpg/download/
-	mkdir -p "${S}"/libwpd/download/
-	mkdir -p "${S}"/libsvg/download/
-#	mkdir -p "${S}"/default_images/sw/res/
-#	mkdir -p "${S}"/ooo_custom_images/nologo/introabout/
-#	mkdir -p "${S}"/default_images/introabout/
-#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/mdbtools*.tar.gz "${S}"/mdbtools/download/
-	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/libwps*.tar.gz   "${S}"/libwps/download/
-	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/libwpg*.tar.gz   "${S}"/libwpg/download/
-	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/libwpd*.tar.gz   "${S}"/libwpd/download/
-	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/libsvg*.tar.gz   "${S}"/libsvg/download/
-#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/infra-logo.png   "${S}"/default_images/sw/res/
-#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/go-oo-team.png   "${S}"/default_images/sw/res/
-#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/res/infra/intro.bmp    "${S}"/ooo_custom_images/nologo/introabout/
-#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/res/infra/about.bmp    "${S}"/default_images/introabout/
+	#{{{ Infra patches
 
 #	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/bin/* "${S}"/bin/
 	cp -R -f "${WORKDIR}"/infra-ooo-files_${PV}/patches/* "${S}"/patches/
+	rm "${S}"/patches/infra/connectivity-freebsd-libs.diff
+	rm "${S}"/patches/infra/extensions-disable-template-pack.diff
+	rm "${S}"/patches/infra/extensions-separate-java-based.diff
+	rm "${S}"/patches/infra/extensions-zemberek.diff
+	rm "${S}"/patches/infra/javainstaller2-discard-rpm-warnings.diff
+	rm "${S}"/patches/infra/reportbuilder-no-license-infra.diff
+	rm "${S}"/patches/infra/sdext-no-registration.diff
+	rm "${S}"/patches/infra/solaris-basebmp-disable-test.diff
+	rm "${S}"/patches/infra/svtools-print-numcopies-focus.diff
+	rm "${S}"/patches/infra/sw-add-landscape-page-style.diff
+	rm "${S}"/patches/infra/wikipublisher-no-license-infra.diff
 	# Dirty hack
-	for i in infra test
+	for i in infra # test
 	do
-	    cp -f "${S}"/patches/$i/*.diff "${S}"/patches/hotfixes/
+	    for j in "${S}"/patches/$i/*.diff
+	    do
+		cp -f ${j} "${S}"/patches/hotfixes/${i}-`basename ${j}`
+	    done
 	done    
 
-#	perl -i -pe 's:^(SUBDIRS.*):$1 infra test:g' "${S}"/patches/Makefile.am
-#	for i in infra test 
-#	do
-#	    cp "${S}"/patches/hotfixes/Makefile.* "${S}"/patches/$i/
-#	done    
-
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/ru/* "${S}"/src/sdf/
-
-#	mkdir ${S}/dictionaries
-#	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict ru_RU "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_ru_RU.tar.bz2  ${S}
-#	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict uk_UA "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_uk_UA.tar.bz2  ${S}
-#	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict de_DE "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_de_DE.tar.bz2  ${S}
-#	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict fr_FR "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_fr_FR.tar.bz2  ${S}
-
+	#}}}
 
 	#Use flag checks
 	if use java ; then
