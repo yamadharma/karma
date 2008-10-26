@@ -1,19 +1,19 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/virtualbox-bin/virtualbox-bin-2.0.2.ebuild,v 1.1 2008/09/15 19:52:56 jokey Exp $
 
 EAPI=1
 
 inherit eutils fdo-mime pax-utils
 
-MY_PV=${PV}-36488
+MY_PV=${PV}-38406
 MY_P=VirtualBox-${MY_PV}-Linux
 
 DESCRIPTION="Family of powerful x86 virtualization products for enterprise as well as home use"
 HOMEPAGE="http://www.virtualbox.org/"
-SRC_URI="amd64? ( http://download.virtualbox.org/virtualbox/${PV}/${MY_P}_amd64.run )
-	x86? ( http://download.virtualbox.org/virtualbox/${PV}/${MY_P}_x86.run )
-	sdk? ( http://download.virtualbox.org/virtualbox/${PV}/VirtualBoxSDK-${MY_PV}.zip )"
+SRC_URI="amd64? ( ${MY_P}_amd64.run )
+	x86? ( ${MY_P}_x86.run )
+	sdk? ( VirtualBoxSDK-${MY_PV}.zip )"
 
 LICENSE="PUEL"
 SLOT="0"
@@ -53,7 +53,24 @@ RDEPEND="!app-emulation/virtualbox-ose
 
 S=${WORKDIR}
 
-RESTRICT="primaryuri"
+RESTRICT="fetch"
+
+pkg_nofetch() {
+	# Fetch restriction added due licensing and problems downloading with
+	# wget, see http://www.virtualbox.org/ticket/2148
+	elog "Please download:"
+	elog ""
+	if use amd64 ; then
+		elog "http://download.virtualbox.org/virtualbox/${PV}/${MY_P}_amd64.run"
+	else
+		elog "http://download.virtualbox.org/virtualbox/${PV}/${MY_P}_x86.run"
+	fi
+	if use sdk; then
+		elog "http://download.virtualbox.org/virtualbox/${PV}/VirtualBoxSDK-${MY_PV}.zip"
+	fi
+	elog ""
+	elog "and then put file(s) in ${DISTDIR}"
+}
 
 pkg_setup() {
 	# The VBoxSDL frontend needs media-libs/libsdl compiled
@@ -65,8 +82,6 @@ pkg_setup() {
 			die "media-libs/libsdl should be compiled with the \"X\" USE flag."
 		fi
 	fi
-
-	check_license
 }
 
 src_unpack() {
@@ -86,7 +101,7 @@ src_install() {
 
 	if ! use headless ; then
 		newicon VBox.png virtualbox.png
-		newmenu "${FILESDIR}"/${PN}.desktop virtualbox.desktop
+		newmenu "${FILESDIR}"/${PN}.desktop ${PN}.desktop
 	fi
 
 	insinto /opt/VirtualBox
@@ -105,6 +120,7 @@ src_install() {
 		doins vboxwebsrv
 		fowners root:vboxusers /opt/VirtualBox/vboxwebsrv
 		fperms 0750 /opt/VirtualBox/vboxwebsrv
+		dosym /opt/VirtualBox/VBox.sh /usr/bin/vboxwebsrv
 		newinitd "${FILESDIR}"/vboxwebsrv-initd vboxwebsrv
 		newconfd "${FILESDIR}"/vboxwebsrv-confd vboxwebsrv
 	fi
@@ -151,7 +167,7 @@ src_install() {
 	fi
 
 	exeinto /opt/VirtualBox
-	newexe "${FILESDIR}/${PN}-2.0.0-wrapper" "VBox.sh" || die
+	newexe "${FILESDIR}/${PN}-2-wrapper" "VBox.sh" || die
 	fowners root:vboxusers /opt/VirtualBox/VBox.sh
 	fperms 0750 /opt/VirtualBox/VBox.sh
 	fowners root:vboxusers /opt/VirtualBox/VBoxAddIF.sh
