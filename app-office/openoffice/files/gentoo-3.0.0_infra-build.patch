@@ -6,16 +6,16 @@
  
 +WRKDIR="${TOOLSDIR}/infra"
 +
-+	mkdir -p $OOBUILDDIR/solver/680/unxlngi6.pro/pck
-+	cp ${WRKDIR}/files/extra_templates_*.zip $OOBUILDDIR/solver/680/unxlngi6.pro/pck/
++#	mkdir -p $OOBUILDDIR/solver/680/unxlngi6.pro/pck
++#	cp ${WRKDIR}/files/extra_templates_*.zip $OOBUILDDIR/solver/680/unxlngi6.pro/pck/
 +	cd $OOBUILDDIR; rm -rf extras/source/autotext/lang/ru/* ; tar xjf ${WRKDIR}/files/extras_ru.tar.bz2
 +        ${TOOLSDIR}/bin/enable-dict ru_RU ${WRKDIR}/files/dict_ru_RU.tar.bz2  $OOBUILDDIR
 +
 +        mkdir -p ${OOBUILDDIR}/mdbtools/download/
-+        mkdir -p $OOBUILDDIR/libwpd/download/
++#        mkdir -p $OOBUILDDIR/libwpd/download/
 +        mkdir -p $OOBUILDDIR/libsvg/download/
-+        cp ${WRKDIR}/files/mdbtools*.tar.gz $OOBUILDDIR/mdbtools/download/
-+        cp ${WRKDIR}/files/libwpd*.tar.gz   $OOBUILDDIR/libwpd/download/
++#	 cp ${WRKDIR}/files/mdbtools*.tar.gz $OOBUILDDIR/mdbtools/download/
++#        cp ${WRKDIR}/files/libwpd*.tar.gz   $OOBUILDDIR/libwpd/download/
 +        cp ${WRKDIR}/files/libsvg*.tar.gz   $OOBUILDDIR/libsvg/download/
 +        cp ${WRKDIR}/res/infra/about.bmp    $OOBUILDDIR/default_images/introabout/
 +
@@ -36,8 +36,8 @@
 +#	mkdir -p "${OOBUILDDIR}"/ooo_custom_images/nologo/introabout/
 +#	mkdir -p "${OOBUILDDIR}"/default_images/introabout/
 +#	cp -f "${WORKDIR}"/files/mdbtools*.tar.gz "${OOBUILDDIR}"/mdbtools/download/
-+	cp -f "${WRKDIR}"/files/libwps*.tar.gz   "${OOBUILDDIR}"/libwps/download/
-+	cp -f "${WRKDIR}"/files/libwpg*.tar.gz   "${OOBUILDDIR}"/libwpg/download/
++#	cp -f "${WRKDIR}"/files/libwps*.tar.gz   "${OOBUILDDIR}"/libwps/download/
++#	cp -f "${WRKDIR}"/files/libwpg*.tar.gz   "${OOBUILDDIR}"/libwpg/download/
 +	cp -f "${WRKDIR}"/files/libwpd*.tar.gz   "${OOBUILDDIR}"/libwpd/download/
 +	cp -f "${WRKDIR}"/files/libsvg*.tar.gz   "${OOBUILDDIR}"/libsvg/download/
 +#	cp -f "${WRKDIR}"/files/infra-logo.png   "${OOBUILDDIR}"/default_images/sw/res/

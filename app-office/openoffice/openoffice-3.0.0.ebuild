@@ -279,7 +279,7 @@ src_unpack() {
 
 	#{{{ Infra patches
 
-#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/bin/* "${S}"/bin/
+	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/bin/* "${S}"/bin/
 	cp -R -f "${WORKDIR}"/infra-ooo-files_${PV}/patches/* "${S}"/patches/
 	rm "${S}"/patches/infra/connectivity-freebsd-libs.diff
 	rm "${S}"/patches/infra/extensions-disable-template-pack.diff
