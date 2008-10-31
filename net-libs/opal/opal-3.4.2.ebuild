@@ -4,11 +4,14 @@
 
 EAPI="2"
 
-inherit eutils
+inherit eutils flag-o-matic
 
 DESCRIPTION="C++ class library normalising numerous telephony protocols"
 HOMEPAGE="http://www.ekiga.org"
-SRC_URI="http://www.ekiga.org/admin/downloads/latest/sources/ekiga_3.0.1/${P}.tar.gz"
+# SRC_URI="http://www.ekiga.org/admin/downloads/latest/sources/ekiga_3.0.1/${P}.tar.gz"
+SRC_URI="mirror://sourceforge/opalvoip/${P}.tar.bz2
+	doc? ( mirror://sourceforge/opalvoip/${P}-htmldoc.tar.gz )"
+
 
 LICENSE="MPL-1.0"
 SLOT="0"
@@ -33,11 +36,16 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# move files from ${P}-htmldoc.tar.gz
+	use doc && mv ../html .
+
 	epatch "${FILESDIR}"/${P}-lpcini.patch
 }
 
 src_compile() {
 	local makeopts
+
+	filter-ldflags -Wl,--as-needed --as-needed
 
 	# zrtp doesn't depend on net-libs/libzrtpcpp but on libzrtp from
 	# http://zfoneproject.com/ that is not in portage

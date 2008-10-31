@@ -8,7 +8,9 @@ inherit eutils
 
 DESCRIPTION="Network focused portable C++ class library providing high level functions"
 HOMEPAGE="http://www.ekiga.org/"
-SRC_URI="http://www.ekiga.org/admin/downloads/latest/sources/ekiga_3.0.1/${P}.tar.gz"
+# SRC_URI="http://www.ekiga.org/admin/downloads/latest/sources/ekiga_3.0.1/${P}.tar.gz"
+SRC_URI="mirror://sourceforge/opalvoip/${P}.tar.bz2
+	doc? ( mirror://sourceforge/opalvoip/${P}-htmldoc.tar.gz )"
 
 LICENSE="MPL-1.0"
 SLOT="0"
@@ -41,6 +43,9 @@ src_prepare() {
 		-e "s:-Os::" \
 		make/unix.mak \
 		|| die "Patching make/unix.mak failed"
+
+	# move files from ${P}-htmldoc.tar.gz
+	use doc && mv ../html .
 
 	# this patch fixes bugs: #145424 and #140358
 	epatch "${FILESDIR}"/${P}-asm.patch
@@ -94,9 +99,9 @@ src_install() {
 
 	emake ${makeopts} install || die "emake install failed"
 
-#	if use doc; then
-#		dohtml -r html/* || die "documentation installation failed"
-#	fi
+	if use doc; then
+		dohtml -r html/* || die "documentation installation failed"
+	fi
 
 	dodoc ReadMe.txt ReadMe_QOS.txt History.txt || die "documentation installation failed"
 }

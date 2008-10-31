@@ -80,7 +80,7 @@ src_unpack() {
 		|| die "Patching Makefile.in failed"
 
 	# fix ekiga-helper dbus service .in file
-	sed -i -e 's/@prefix@\/bin\/@PACKAGE_NAME@/@bindir@\/ekiga/'\
+	sed -i -e 's/@PACKAGE_NAME@/ekiga/'\
 		src/components/org.ekiga.Helper.service.in \
 		|| die "Patching src/components/org.ekiga.Helper.service.in failed"
 }
