@@ -1,0 +1,11 @@
+--- officecfg/registry/data/org/openoffice/Office/UI/DrawWindowState.xcu.orig	2007-05-22 13:17:25.000000000 +0400
++++ officecfg/registry/data/org/openoffice/Office/UI/DrawWindowState.xcu	2007-05-22 13:17:38.000000000 +0400
+@@ -253,7 +253,7 @@
+ 					<value>false</value>
+ 				</prop>
+ 				<prop oor:name="HideFromToolbarMenu" oor:type="xs:boolean">
+-					<value>true</value>
++					<value>false</value>
+ 				</prop>
+ 			</node>
+ 			<node oor:name="private:resource/toolbar/fontworkobjectbar" oor:op="replace">

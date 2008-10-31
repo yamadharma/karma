@@ -1,0 +1,409 @@
+=== modified file 'sc/inc/attarray.hxx'
+--- sc/inc/attarray.hxx	2008-08-31 07:10:05 +0000
++++ sc/inc/attarray.hxx	2008-08-31 07:12:44 +0000
+@@ -182,8 +182,6 @@
+ 							SCROW nStartRow, SCROW nEndRow ) const;
+ 	BOOL	IsAllEqual( const ScAttrArray& rOther, SCROW nStartRow, SCROW nEndRow ) const;
+ 
+-	BOOL	TestInsertCol( SCROW nStartRow, SCROW nEndRow) const;
+-	BOOL	TestInsertRow( SCSIZE nSize ) const;
+ 	void	InsertRow( SCROW nStartRow, SCSIZE nSize );
+ 	void	DeleteRow( SCROW nStartRow, SCSIZE nSize );
+ 	void	DeleteRange( SCSIZE nStartIndex, SCSIZE nEndIndex );
+
+=== modified file 'sc/inc/column.hxx'
+--- sc/inc/column.hxx	2008-08-31 07:10:05 +0000
++++ sc/inc/column.hxx	2008-08-31 07:12:44 +0000
+@@ -193,8 +193,6 @@
+ 									SCROW nEndRow = MAXROW ) const;
+ 	BOOL		IsAllAttrEqual( const ScColumn& rCol, SCROW nStartRow, SCROW nEndRow ) const;
+ 
+-	BOOL		TestInsertCol( SCROW nStartRow, SCROW nEndRow) const;
+-	BOOL		TestInsertRow( SCSIZE nSize ) const;
+ 	void		InsertRow( SCROW nStartRow, SCSIZE nSize );
+ 	void		DeleteRow( SCROW nStartRow, SCSIZE nSize );
+ 	void		DeleteRange( SCSIZE nStartIndex, SCSIZE nEndIndex, USHORT nDelFlag );
+
+=== modified file 'sc/source/core/data/attarray.cxx'
+--- sc/source/core/data/attarray.cxx	2008-08-31 07:10:05 +0000
++++ sc/source/core/data/attarray.cxx	2008-08-31 07:12:44 +0000
+@@ -2040,57 +2040,6 @@
+ 	return bEqual;
+ }
+ 
+-
+-BOOL ScAttrArray::TestInsertCol( SCROW nStartRow, SCROW nEndRow) const
+-{
+-	//	horizontal zusammengefasste duerfen nicht herausgeschoben werden
+-	//	(ob die ganze Zusammenfassung betroffen ist, ist hier nicht zu erkennen)
+-
+-	BOOL bTest = TRUE;
+-	if (!IsEmpty())
+-	{
+-		SCSIZE nIndex = 0;
+-		if ( nStartRow > 0 )
+-			Search( nStartRow, nIndex );
+-
+-		for ( ; nIndex < nCount; nIndex++ )
+-		{
+-			if ( ((const ScMergeFlagAttr&)pData[nIndex].pPattern->
+-						GetItem(ATTR_MERGE_FLAG)).IsHorOverlapped() )
+-			{
+-				bTest = FALSE;						// darf nicht herausgeschoben werden
+-				break;
+-			}
+-			if ( pData[nIndex].nRow >= nEndRow )	// Ende des Bereichs
+-				break;
+-		}
+-	}
+-	return bTest;
+-}
+-
+-
+-BOOL ScAttrArray::TestInsertRow( SCSIZE nSize ) const
+-{
+-	//	wenn die erste herausgeschobene Zeile vertikal ueberlappt ist,
+-	//	wuerde eine kaputte Zusammenfassung uebrigbleiben
+-
+-	if (pData)
+-	{
+-		//	MAXROW + 1 - nSize	= erste herausgeschobene Zeile
+-
+-		SCSIZE nFirstLost = nCount-1;
+-        while ( nFirstLost && pData[nFirstLost-1].nRow >= sal::static_int_cast<SCROW>(MAXROW + 1 - nSize) )
+-			--nFirstLost;
+-
+-		if ( ((const ScMergeFlagAttr&)pData[nFirstLost].pPattern->
+-							GetItem(ATTR_MERGE_FLAG)).IsVerOverlapped() )
+-			return FALSE;
+-	}
+-
+-	return TRUE;
+-}
+-
+-
+ void ScAttrArray::InsertRow( SCROW nStartRow, SCSIZE nSize )
+ {
+ 	if (!pData)
+
+=== modified file 'sc/source/core/data/column.cxx'
+--- sc/source/core/data/column.cxx	2008-08-31 07:10:05 +0000
++++ sc/source/core/data/column.cxx	2008-08-31 07:15:21 +0000
+@@ -1272,58 +1272,6 @@
+ }
+ 
+ 
+-BOOL ScColumn::TestInsertCol( SCROW nStartRow, SCROW nEndRow) const
+-{
+-	if (!IsEmpty())
+-	{
+-		BOOL bTest = TRUE;
+-		if (pItems)
+-			for (SCSIZE i=0; (i<nCount) && bTest; i++)
+-				bTest = (pItems[i].nRow < nStartRow) || (pItems[i].nRow > nEndRow)
+-						|| !CellVisible(pItems[i].pCell);
+-
+-		//	AttrArray testet nur zusammengefasste
+-
+-		if ((bTest) && (pAttrArray))
+-			bTest = pAttrArray->TestInsertCol(nStartRow, nEndRow);
+-
+-		//!		rausgeschobene Attribute bei Undo beruecksichtigen
+-
+-		return bTest;
+-	}
+-	else
+-		return TRUE;
+-}
+-
+-
+-BOOL ScColumn::TestInsertRow( SCSIZE nSize ) const
+-{
+-    //  AttrArray only looks for merged cells
+-
+-	if ( pItems && nCount )
+-        return ( nSize <= sal::static_int_cast<SCSIZE>(MAXROW) &&
+-                 pItems[nCount-1].nRow <= MAXROW-(SCROW)nSize && pAttrArray->TestInsertRow( nSize ) );
+-	else
+-		return pAttrArray->TestInsertRow( nSize );
+-
+-#if 0
+-	//!		rausgeschobene Attribute bei Undo beruecksichtigen
+-
+-	if ( nSize > static_cast<SCSIZE>(MAXROW) )
+-		return FALSE;
+-
+-	SCSIZE nVis = nCount;
+-	while ( nVis && !CellVisible(pItems[nVis-1].pCell) )
+-		--nVis;
+-
+-	if ( nVis )
+-		return ( pItems[nVis-1].nRow <= MAXROW-nSize );
+-	else
+-		return TRUE;
+-#endif
+-}
+-
+-
+ void ScColumn::InsertRow( SCROW nStartRow, SCSIZE nSize )
+ {
+ 	pAttrArray->InsertRow( nStartRow, nSize );
+
+=== modified file 'sc/source/core/data/table2.cxx'
+--- sc/source/core/data/table2.cxx	2008-08-31 07:10:05 +0000
++++ sc/source/core/data/table2.cxx	2008-08-31 07:12:46 +0000
+@@ -109,9 +109,6 @@
+ 	if ( nStartCol==0 && nEndCol==MAXCOL && pOutlineTable )
+ 		bTest = pOutlineTable->TestInsertRow(nSize);
+ 
+-	for (SCCOL i=nStartCol; (i<=nEndCol) && bTest; i++)
+-		bTest = aCol[i].TestInsertRow( nSize );
+-
+ 	return bTest;
+ }
+ 
+@@ -178,9 +175,6 @@
+ 	if ( nSize > static_cast<SCSIZE>(MAXCOL) )
+ 		bTest = FALSE;
+ 
+-	for (SCCOL i=MAXCOL; (i+static_cast<SCCOL>(nSize)>MAXCOL) && bTest; i--)
+-		bTest = aCol[i].TestInsertCol(nStartRow, nEndRow);
+-
+ 	return bTest;
+ }
+ 
+
+=== modified file 'sc/source/ui/docshell/docfunc.cxx'
+--- sc/source/ui/docshell/docfunc.cxx	2008-08-31 07:10:05 +0000
++++ sc/source/ui/docshell/docfunc.cxx	2008-08-31 07:12:46 +0000
+@@ -1,7 +1,7 @@
+ /*************************************************************************
+  *
+  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+- * 
++ *
+  * Copyright 2008 by Sun Microsystems, Inc.
+  *
+  * OpenOffice.org - a multi-platform office productivity suite
+@@ -58,6 +58,7 @@
+ #include <com/sun/star/script/ModuleType.hpp>
+ 
+ #include <list>
++#include <queue>
+ 
+ #include "docfunc.hxx"
+ 
+@@ -70,6 +71,7 @@
+ #include "detdata.hxx"
+ #include "detfunc.hxx"
+ #include "docpool.hxx"
++#include "dociter.hxx"
+ #include "docsh.hxx"
+ #include "drwlayer.hxx"
+ #include "editutil.hxx"
+@@ -1276,7 +1278,6 @@
+ 	if (eCmd==INS_CELLSRIGHT)
+ 		nMergeTestEndX = MAXCOL;
+ 
+-	BOOL bCanDo = TRUE;
+ 	BOOL bNeedRefresh = FALSE;
+ 
+ 	SCCOL nEditTestEndX = (eCmd==INS_INSCOLS) ? MAXCOL : nMergeTestEndX;
+@@ -1289,44 +1290,6 @@
+ 		return FALSE;
+ 	}
+ 
+-	if (pDoc->HasAttrib( nMergeTestStartX,nMergeTestStartY,nTab,
+-							nMergeTestEndX,nMergeTestEndY,nTab,
+-							HASATTR_MERGED | HASATTR_OVERLAPPED ))
+-	{
+-		if (eCmd==INS_CELLSRIGHT)
+-			bNeedRefresh = TRUE;
+-
+-		SCCOL nMergeStartX = nMergeTestStartX;
+-		SCROW nMergeStartY = nMergeTestStartY;
+-		SCCOL nMergeEndX   = nMergeTestEndX;
+-		SCROW nMergeEndY   = nMergeTestEndY;
+-
+-		pDoc->ExtendMerge( nMergeStartX, nMergeStartY, nMergeEndX, nMergeEndY, nTab );
+-		pDoc->ExtendOverlapped( nMergeStartX, nMergeStartY, nMergeEndX, nMergeEndY, nTab );
+-		if ( nMergeStartX != nMergeTestStartX || nMergeStartY != nMergeTestStartY ||
+-			 nMergeEndX   != nMergeTestEndX   || nMergeEndY   != nMergeTestEndY )
+-			bCanDo = FALSE;
+-
+-		//!		? nur Start testen ?
+-
+-		if (!bCanDo)
+-			if ( eCmd==INS_INSCOLS || eCmd==INS_INSROWS )
+-				if ( nMergeStartX == nMergeTestStartX && nMergeStartY == nMergeTestStartY )
+-				{
+-					bCanDo = TRUE;
+-//					bNeedRefresh = TRUE;
+-				}
+-	}
+-
+-	if (!bCanDo)
+-	{
+-		//!			auf Verschieben (Drag&Drop) zurueckfuehren !!!
+-		//	"Kann nicht in zusammengefasste Bereiche einfuegen"
+-		if (!bApi)
+-			rDocShell.ErrorMessage(STR_MSSG_INSERTCELLS_0);
+-		return FALSE;
+-	}
+-
+ 	//
+ 	//		ausfuehren
+ 	//
+@@ -1347,6 +1310,59 @@
+ 		pDoc->BeginDrawUndo();
+ 	}
+ 
++    // #i8302 : we unmerge overwhelming ranges, before insertion
++    // all the actions are put in the same ListAction
++    String aUndo = ScGlobal::GetRscString( STR_UNDO_RESIZEMATRIX );
++    if (bRecord)
++      rDocShell.GetUndoManager()->EnterListAction( aUndo, aUndo );
++
++	// Separation overwhelming ranges into two categories,
++	// in order to obtain a human-compliant behaviour when remerging
++    std::queue<ScRange> qGrowingRange;
++    std::queue<ScRange> qMovingRange;
++	if ( pDoc->HasAttrib( rRange, HASATTR_MERGED | HASATTR_OVERLAPPED ) )
++	{
++		SCCOL nCol = -1;
++		SCROW nRow1 = -1;
++		SCROW nRow2 = -1;
++		printf("Iterator from : %d, %d to %d, %d\n",
++			   nStartCol, nStartRow, nEndCol, nEndRow);
++
++		ScDocAttrIterator aIter( pDoc, nTab, nStartCol, nStartRow, nEndCol, nEndRow );
++		const ScPatternAttr* pPattern;
++		const ScMergeAttr* pMergeFlag;
++		const ScMergeFlagAttr* pMergeFlagAttr;
++		while ( ( pPattern = aIter.GetNext( nCol, nRow1, nRow2 ) ) != NULL )
++		{
++			printf("running on this Cell : %d, %d, %d", nCol, nRow1, nRow2);
++
++			pMergeFlag = (const ScMergeAttr*) &pPattern->GetItem(ATTR_MERGE);
++			pMergeFlagAttr = (const ScMergeFlagAttr*) &pPattern->GetItem(ATTR_MERGE_FLAG);
++			if ( (pMergeFlag && pMergeFlag->IsMerged()) ||
++				 (pMergeFlagAttr && pMergeFlagAttr->IsOverlapped()) )
++			{
++				ScRange rrRange (nCol, nRow1, nTab);
++				pDoc->ExtendOverlapped(rrRange);
++				pDoc->ExtendMerge(rrRange, TRUE, TRUE);
++				if (rrRange.aStart.Col() == nCol && rrRange.aStart.Row() == nRow1) {
++					printf(" => moving range");
++					qMovingRange.push(rrRange);
++				} else {
++					printf(" => growing range");
++					qGrowingRange.push(rrRange);
++				}
++				UnmergeCells( rrRange, TRUE, TRUE );
++				printf(" => unmerged : %d, %d -> %d, %d\n",
++					   rrRange.aStart.Col(), rrRange.aStart.Row(),
++					   rrRange.aEnd.Col(), rrRange.aEnd.Row());
++			}
++			else {
++				printf(" => No overlap on this one\n");
++			}
++		}
++	}
++
++
+ 	switch (eCmd)
+ 	{
+ 		case INS_CELLSDOWN:
+@@ -1375,6 +1391,7 @@
+ 			nPaintEndX = MAXCOL;
+ 			nPaintFlags |= PAINT_TOP;
+ 			break;
++		case INS_NONE:
+ 		default:
+ 			DBG_ERROR("Falscher Code beim Einfuegen");
+ 			bSuccess = FALSE;
+@@ -1383,6 +1400,57 @@
+ 
+ 	if ( bSuccess )
+ 	{
++        // #i8302 : we remerge growing ranges, with the new part inserted
++        while( !qGrowingRange.empty() )
++        {
++            ScRange rrRange = qGrowingRange.front();
++            switch (eCmd)
++            {
++			case INS_CELLSDOWN:
++			case INS_INSROWS:
++				rrRange.aEnd.IncRow(static_cast<SCsCOL>(nEndRow-nStartRow+1));
++				break;
++			case INS_CELLSRIGHT:
++			case INS_INSCOLS:
++				rrRange.aEnd.IncCol(static_cast<SCsCOL>(nEndCol-nStartCol+1));
++				break;
++			case INS_NONE:
++			default:
++				break;
++            }
++			MergeCells(rrRange, FALSE, TRUE, TRUE, FALSE);
++			printf("I have merged a growing range : %d, %d -> %d, %d\n",
++				   rrRange.aStart.Col(), rrRange.aStart.Row(),
++				   rrRange.aEnd.Col(), rrRange.aEnd.Row());
++            qGrowingRange.pop();
++        }
++        // #i8302 : we remerge moving ranges
++		while( !qMovingRange.empty() )
++		{
++            ScRange rrRange = qMovingRange.front();
++            switch (eCmd)
++            {
++			case INS_CELLSDOWN:
++			case INS_INSROWS:
++				rrRange.aEnd.IncRow(static_cast<SCsCOL>(nEndRow-nStartRow+1));
++				rrRange.aStart.IncRow(static_cast<SCsCOL>(nEndRow-nStartRow+1));
++				break;
++			case INS_CELLSRIGHT:
++			case INS_INSCOLS:
++				rrRange.aEnd.IncCol(static_cast<SCsCOL>(nEndCol-nStartCol+1));
++				rrRange.aStart.IncCol(static_cast<SCsCOL>(nEndCol-nStartCol+1));
++				break;
++			case INS_NONE:
++			default:
++				break;
++            }
++			MergeCells(rrRange, FALSE, TRUE, TRUE, FALSE);
++			printf("I have merged a moving range : %d, %d -> %d, %d\n",
++				   rrRange.aStart.Col(), rrRange.aStart.Row(),
++				   rrRange.aEnd.Col(), rrRange.aEnd.Row());
++			qMovingRange.pop();
++		}
++
+ 		if ( bRecord )
+ 		{
+ 			rDocShell.GetUndoManager()->AddUndoAction(
+@@ -1421,6 +1489,8 @@
+ 								 nPaintEndX,   nPaintEndY,   nEndTab,
+ 								 nPaintFlags,  nExtFlags);
+ 		aModificator.SetDocumentModified();
++        if (bRecord)
++            rDocShell.GetUndoManager()->LeaveListAction();
+ 
+ //!		pDocSh->UpdateOle(GetViewData());	// muss an der View bleiben
+ //!		CellContentChanged();				// muss an der View bleiben
+@@ -3619,7 +3689,7 @@
+ 	if (bNeedContents && bContents)
+ 		pDoc->DoMergeContents( nTab, nStartCol,nStartRow, nEndCol,nEndRow );
+ 	pDoc->DoMerge( nTab, nStartCol,nStartRow, nEndCol,nEndRow );
+-	
++
+ 	if (bCenter)
+ 	{
+ 		pDoc->ApplyAttr( nStartCol, nStartRow, nTab, SvxHorJustifyItem( SVX_HOR_JUSTIFY_CENTER, ATTR_HOR_JUSTIFY ) );
+@@ -4162,7 +4232,3 @@
+ 
+ 	return TRUE;
+ }
+-
+-
+-
+-
+

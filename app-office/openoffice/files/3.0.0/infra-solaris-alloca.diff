@@ -1,0 +1,10 @@
+--- psprint/source/fontmanager/fontconfig.cxx.orig	2008-01-05 18:58:40.218238000 +0300
++++ psprint/source/fontmanager/fontconfig.cxx	2008-01-05 18:56:26.456022000 +0300
+@@ -80,6 +80,7 @@
+ #endif
+ #include <utility>
+ #include <algorithm>
++#include <alloca.h>
+ 
+ using namespace osl;
+ using namespace rtl;

@@ -1,0 +1,43 @@
+diff --git a/scp2/source/ooo/common_brand.scp b/scp2/source/ooo/common_brand.scp
+index 09821fd..a3e0843 100644
+--- scp2/source/ooo/common_brand.scp
++++ scp2/source/ooo/common_brand.scp
+@@ -992,7 +992,11 @@ ProfileItem gid_Brand_Profileitem_Version_Updateurl
+     Value = "${UPDATEURL}?pkgfmt=<pkgformat>";
+   #endif //defined WNT
+   #else
+-    Value = "";
++  #ifdef WNT
++    Value = "http://updates.i-rs.ru/3/";
++  #else  // defined WNT
++    Value = "http://updates.i-rs.ru/3/?pkgfmt=<pkgformat>";
++  #endif //defined WNT
+   #endif
+ End
+ 
+--- scp2/util/makefile.mk.orig	2006-09-11 12:58:50.246696565 +0400
++++ scp2/util/makefile.mk	2006-09-11 12:59:11.677949307 +0400
+@@ -161,11 +161,9 @@
+ SCP1FILES += cairocanvas.par
+ .ENDIF
+ 
+-.IF "$(BUILD_SPECIAL)"!=""
+ SCP1FILES += \
+              module_onlineupdate.par   \
+              file_onlineupdate.par
+-.ENDIF
+ 
+ # ------------------------------------------------------------------------
+ # OpenOffice.org with JRE
+@@ -280,11 +278,9 @@
+ SCP2FILES += \
+              vclcanvas.par
+ 
+-.IF "$(BUILD_SPECIAL)"!=""
+ SCP2FILES += \
+              module_onlineupdate.par   \
+              file_onlineupdate.par
+-.ENDIF
+ 
+ # ------------------------------------------------------------------------
+ # URE

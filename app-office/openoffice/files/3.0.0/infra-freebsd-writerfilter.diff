@@ -1,0 +1,13 @@
+=== modified file 'writerfilter/unocomponent/debugservices/rtftok/ScannerTestService.cxx'
+--- writerfilter/unocomponent/debugservices/rtftok/ScannerTestService.cxx	2008-07-13 17:32:05 +0000
++++ writerfilter/unocomponent/debugservices/rtftok/ScannerTestService.cxx	2008-07-13 17:54:49 +0000
+@@ -122,7 +122,7 @@
+ 	}
+ 	void rbrace(void)
+ 	{
+-#ifndef LINUX
++#ifdef WIN32
+         unsigned char * binBufferStr = ((unsigned char*)&(*binBuffer.begin()));
+ 
+ 		if (objDataLevel)
+

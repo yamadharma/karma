@@ -1,0 +1,20 @@
+--- basic/source/runtime/methods1.cxx.orig	2006-09-25 15:08:52.212974746 +0400
++++ basic/source/runtime/methods1.cxx	2006-09-25 15:49:15.378985099 +0400
+@@ -1191,7 +1191,7 @@
+ 
+ 		if ( strnicmp( pCompare, lpszEnv, nCompareLen ) == 0 )
+ 		{
+-			aResult = (const char*)(lpszEnv+nCompareLen);
++			aResult = String::UniString( (const char*)(lpszEnv+nCompareLen), gsl_getSystemTextEncoding() );
+ 			rPar.Get(0)->PutString( aResult );
+ 			return;
+ 		}
+@@ -1201,7 +1201,7 @@
+ 	ByteString aByteStr( rPar.Get(1)->GetString(), gsl_getSystemTextEncoding() );
+ 	const char* pEnvStr = getenv( aByteStr.GetBuffer() );
+ 	if ( pEnvStr )
+-		aResult = String::CreateFromAscii( pEnvStr );
++		aResult =  String::UniString( pEnvStr, gsl_getSystemTextEncoding());
+ #endif
+ 	rPar.Get(0)->PutString( aResult );
+ }

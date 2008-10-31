@@ -1,0 +1,10 @@
+--- sc/uiconfig/scalc/menubar/menubar.xml
++++ sc/uiconfig/scalc/menubar/menubar.xml
+@@ -396,7 +396,6 @@
+ 					<menu:menuitem menu:id=".uno:DataFilterHideAutoFilter"/>
+ 				</menu:menupopup>
+ 			</menu:menu>
+-			<menu:menuitem menu:id=".uno:DataForm"/>
+ 			<menu:menuitem menu:id=".uno:DataSubTotals"/>
+ 			<menu:menuitem menu:id=".uno:Validation"/>
+ 			<menu:menuseparator/>

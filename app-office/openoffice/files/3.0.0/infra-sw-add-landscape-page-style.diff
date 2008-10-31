@@ -1,0 +1,136 @@
+=== modified file 'sw/inc/poolfmt.hrc'
+--- sw/inc/poolfmt.hrc	2008-09-05 09:05:45 +0000
++++ sw/inc/poolfmt.hrc	2008-09-05 09:13:18 +0000
+@@ -256,6 +256,7 @@
+ #define STR_POOLPAGE_HTML				(RC_POOLPAGEDESC_BEGIN+  6)
+ #define STR_POOLPAGE_FOOTNOTE			(RC_POOLPAGEDESC_BEGIN+  7)
+ #define STR_POOLPAGE_ENDNOTE			(RC_POOLPAGEDESC_BEGIN+  8)
++#define STR_POOLPAGE_LANDSCAPE			(RC_POOLPAGEDESC_BEGIN+  9)
+ 
+ //-----------------
+ // Numbering styles
+
+=== modified file 'sw/inc/poolfmt.hxx'
+--- sw/inc/poolfmt.hxx	2008-09-05 09:05:45 +0000
++++ sw/inc/poolfmt.hxx	2008-09-05 09:13:05 +0000
+@@ -196,6 +196,7 @@
+ RES_POOLPAGE_HTML,									// HTML
+ RES_POOLPAGE_FOOTNOTE,								// Fussnote bei Dokumentende
+ RES_POOLPAGE_ENDNOTE,								// Endnotensseite
++RES_POOLPAGE_LANDSCAPE,								// Landscape Page Style
+ 
+ RES_POOLPAGE_END
+ };
+
+=== modified file 'sw/source/core/doc/poolfmt.cxx'
+--- sw/source/core/doc/poolfmt.cxx	2008-09-05 09:05:45 +0000
++++ sw/source/core/doc/poolfmt.cxx	2008-09-05 09:50:43 +0000
+@@ -1605,6 +1605,24 @@
+ 			pNewPgDsc->SetFtnInfo( aInf );
+ 		}
+ 		break;
++	case RES_POOLPAGE_LANDSCAPE:
++		{
++	        SwPageDesc* pStdPgDsc = this->GetPageDescFromPool( RES_POOLPAGE_STANDARD );
++        	SwFmtFrmSize aFrmSz( pStdPgDsc->GetMaster().GetFrmSize() );
++		    SwTwips nTmp = aFrmSz.GetHeight();
++    		aFrmSz.SetHeight( aFrmSz.GetWidth() );
++	    	aFrmSz.SetWidth( nTmp );
++			aSet.Put( aFrmSz );
++			aSet.Put( aLR );
++			aSet.Put( aUL );
++			if( pNewPgDsc )
++			{
++				pNewPgDsc->SetUseOn( nsUseOnPage::PD_ALL );
++				pNewPgDsc->SetLandscape( TRUE );
++			}
++		}
++		break;
++
+ 	}
+ 
+ 	if( aSet.Count() )
+
+=== modified file 'sw/source/core/unocore/unoobj.cxx'
+--- sw/source/core/unocore/unoobj.cxx	2008-09-05 09:05:45 +0000
++++ sw/source/core/unocore/unoobj.cxx	2008-09-05 09:23:20 +0000
+@@ -764,7 +764,7 @@
+ 	}
+ 	if(!pRet)
+ 	{
+-		for(i = RC_POOLPAGEDESC_BEGIN; i <= STR_POOLPAGE_ENDNOTE; ++i)
++		for(i = RC_POOLPAGEDESC_BEGIN; i <= STR_POOLPAGE_LANDSCAPE; ++i)
+ 		{
+ 			const String aFmtName(SW_RES(i));
+ 			if(aFmtName == rName)
+
+=== modified file 'sw/source/core/unocore/unostyle.cxx'
+--- sw/source/core/unocore/unostyle.cxx	2008-09-05 09:05:45 +0000
++++ sw/source/core/unocore/unostyle.cxx	2008-09-05 09:23:10 +0000
+@@ -1732,7 +1732,7 @@
+         }
+         if(!pOldPageDesc)
+         {
+-            for(i = RC_POOLPAGEDESC_BEGIN; i <= STR_POOLPAGE_ENDNOTE; ++i)
++            for(i = RC_POOLPAGEDESC_BEGIN; i <= STR_POOLPAGE_LANDSCAPE; ++i)
+             {
+                 const String aFmtName(SW_RES(i));
+                 if(aFmtName == rStyleName)
+
+=== modified file 'sw/source/ui/utlui/poolfmt.src'
+--- sw/source/ui/utlui/poolfmt.src	2008-09-05 09:05:45 +0000
++++ sw/source/ui/utlui/poolfmt.src	2008-09-05 09:13:36 +0000
+@@ -739,6 +739,10 @@
+ {
+ 	Text [ en-US ] = "Endnote" ;
+ };
++String STR_POOLPAGE_LANDSCAPE
++{
++	Text [ en-US ] = "Landscape" ;
++};
+ /*
+  Numerierungs Regeln
+ */
+--- sw/source/ui/misc/docfnote.cxx      2008-09-05 09:05:45 +0000
++++ sw/source/ui/misc/docfnote.cxx      2008-09-05 11:23:43 +0000
+@@ -268,7 +268,7 @@ void SwEndNoteOptionPage::Reset( const S
+ 	}
+ 
+ 		// Seite
+-	for( i = RES_POOLPAGE_BEGIN; i <= RES_POOLPAGE_ENDNOTE; ++i )
++	for( i = RES_POOLPAGE_BEGIN; i <= RES_POOLPAGE_LANDSCAPE; ++i )
+ 		aPageTemplBox.InsertEntry(SwStyleNameMapper::GetUIName( i, aEmptyStr ));
+ 
+ 	USHORT nCount = pSh->GetPageDescCnt();
+=== modified file 'sw/source/core/doc/SwStyleNameMapper.cxx'
+--- sw/source/core/doc/SwStyleNameMapper.cxx	2008-09-05 22:03:27 +0000
++++ sw/source/core/doc/SwStyleNameMapper.cxx	2008-09-06 00:47:46 +0000
+@@ -301,6 +301,7 @@
+ 	ENTRY( "HTML" ),
+ 	ENTRY( "Footnote" ),
+ 	ENTRY( "Endnote" ), // STR_POOLPAGE_PRGM_ENDNOTE
++	ENTRY( "Landscape" ),
+ 	{ 0, NULL }
+ };
+ 
+
+Index: sw/source/ui/chrdlg/break.cxx
+===================================================================
+RCS file: /cvs/sw/sw/source/ui/chrdlg/break.cxx,v
+retrieving revision 1.16
+retrieving revision 1.16.224.1
+diff -u -3 -b -p -u -p -b -w -B -r1.16 -r1.16.224.1
+--- sw/source/ui/chrdlg/break.cxx	10 Apr 2008 17:56:58 -0000	1.16
++++ sw/source/ui/chrdlg/break.cxx	10 Sep 2008 12:09:18 -0000	1.16.224.1
+@@ -207,7 +207,10 @@ SwBreakDlg::SwBreakDlg( Window *pParent,
+ 		if(LISTBOX_ENTRY_NOTFOUND == aPageCollBox.GetEntryPos( aFmtName =
+ 									SwStyleNameMapper::GetUIName( i, aFmtName )))
+             ::InsertStringSorted(aFmtName, aPageCollBox, 1 );
+-
++    //add landscape page
++    if(LISTBOX_ENTRY_NOTFOUND == aPageCollBox.GetEntryPos( aFmtName =
++                                    SwStyleNameMapper::GetUIName( RES_POOLPAGE_LANDSCAPE, aFmtName )))
++            ::InsertStringSorted(aFmtName, aPageCollBox, 1 );
+ 	CheckEnable();
+ 	aPageNumEdit.SetText( aEmptyStr );
+ 	FreeResource();

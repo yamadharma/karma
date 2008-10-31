@@ -1,0 +1,49 @@
+=== modified file 'scp2/source/extensions/module_extensions.ulf'
+--- scp2/source/extensions/module_extensions.ulf	2008-09-25 07:11:55 +0000
++++ scp2/source/extensions/module_extensions.ulf	2008-09-25 07:13:43 +0000
+@@ -40,34 +40,34 @@
+ en-US = "Useful %PRODUCTNAME extensions."
+ 
+ [STR_NAME_MODULE_OPTIONAL_EXTENSIONS_MINIMIZER]
+-en-US = "Sun Presentation Minimizer"
++en-US = "Presentation Minimizer"
+ 
+ [STR_DESC_MODULE_OPTIONAL_EXTENSIONS_MINIMIZER]
+-en-US = "Sun Presentation Minimizer"
++en-US = "Presentation Minimizer"
+ 
+ [STR_NAME_MODULE_OPTIONAL_EXTENSIONS_REPORTDESIGN]
+-en-US = "Sun Report Builder"
++en-US = "Report Builder"
+ 
+ [STR_DESC_MODULE_OPTIONAL_EXTENSIONS_REPORTDESIGN]
+-en-US = "Sun Report Builder"
++en-US = "Report Builder"
+ 
+ [STR_NAME_MODULE_OPTIONAL_EXTENSIONS_MEDIAWIKI]
+-en-US = "Sun MediaWiki Publisher"
++en-US = "MediaWiki Publisher"
+ 
+ [STR_DESC_MODULE_OPTIONAL_EXTENSIONS_MEDIAWIKI]
+-en-US = "Sun MediaWiki Publisher"
++en-US = "MediaWiki Publisher"
+ 
+ [STR_NAME_MODULE_OPTIONAL_EXTENSIONS_PRESENTER_SCREEN]
+-en-US = "Sun Presenter Screen"
++en-US = "Presenter Screen"
+ 
+ [STR_DESC_MODULE_OPTIONAL_EXTENSIONS_PRESENTER_SCREEN]
+-en-US = "Sun Presenter Screen"
++en-US = "Presenter Screen"
+ 
+ [STR_NAME_MODULE_OPTIONAL_EXTENSIONS_PDFIMPORT]
+-en-US = "Sun PDF Import"
++en-US = "PDF Import"
+ 
+ [STR_DESC_MODULE_OPTIONAL_EXTENSIONS_PDFIMPORT]
+-en-US = "Sun PDF Import"
++en-US = "PDF Import"
+ 
+ [STR_MODULE_OPTIONAL_EXTENSIONS_TEMPLATE_PACK_en-US]
+ en-US = "Sun Professional Template Pack (en-US)"
+

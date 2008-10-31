@@ -1,0 +1,464 @@
+*** chart2/source/controller/chartapiwrapper/DataSeriesPointWrapper.cxx	Fri Apr 11 03:24:24 2008
+--- chart2/source/controller/chartapiwrapper/DataSeriesPointWrapper.cxx	Tue Sep 16 11:29:50 2008
+***************
+*** 49,54 ****
+--- 49,55 ----
+  #include "WrappedSymbolProperties.hxx"
+  #include "WrappedDataCaptionProperties.hxx"
+  #include "WrappedSeriesAreaOrLineProperty.hxx"
++ #include "WrappedTextRotationProperty.hxx"
+  #include <rtl/ustrbuf.hxx>
+  #include <rtl/math.hxx>
+  // header for define DBG_ASSERT
+***************
+*** 89,95 ****
+      PROP_SERIES_PERCENTAGE_NUMBERFORMAT,
+      PROP_SERIES_DATAPOINT_LABEL_PLACEMENT,
+      //other series properties
+!     PROP_SERIES_ATTACHED_AXIS
+  };
+  
+  void lcl_AddPropertiesToVector_PointProperties(
+--- 90,97 ----
+      PROP_SERIES_PERCENTAGE_NUMBERFORMAT,
+      PROP_SERIES_DATAPOINT_LABEL_PLACEMENT,
+      //other series properties
+!     PROP_SERIES_ATTACHED_AXIS,
+!     PROP_SERIES_DATAPOINT_TEXT_ROTATION
+  };
+  
+  void lcl_AddPropertiesToVector_PointProperties(
+***************
+*** 144,149 ****
+--- 146,158 ----
+                    ::getCppuType( reinterpret_cast< const sal_Int32 * >(0)),
+                    beans::PropertyAttribute::BOUND
+                    | beans::PropertyAttribute::MAYBEVOID ));
++ 
++     rOutProperties.push_back(
++         Property( C2U( "TextRotation" ),
++                   PROP_SERIES_DATAPOINT_TEXT_ROTATION,
++                   ::getCppuType( reinterpret_cast< const sal_Int32 * >(0)),
++                   beans::PropertyAttribute::BOUND
++                   | beans::PropertyAttribute::MAYBEDEFAULT ));
+  }
+   
+  void lcl_AddPropertiesToVector_SeriesOnly(
+***************
+*** 750,755 ****
+--- 759,766 ----
+      aWrappedProperties.push_back( new WrappedSegmentOffsetProperty() );
+      aWrappedProperties.push_back( new WrappedProperty( C2U( "D3DPercentDiagonal" ), C2U( "PercentDiagonal" ) ) );
+  
++     aWrappedProperties.push_back( new WrappedTextRotationProperty() );
++ 
+      return aWrappedProperties;
+  }
+  
+*** chart2/source/controller/dialogs/dlg_InsertDataLabel.cxx	Fri Apr 11 03:53:20 2008
+--- chart2/source/controller/dialogs/dlg_InsertDataLabel.cxx	Fri Sep 12 14:33:14 2008
+***************
+*** 47,53 ****
+  	m_aBtnOK(this, SchResId(BTN_OK)),
+  	m_aBtnCancel(this, SchResId(BTN_CANCEL)),
+  	m_aBtnHelp(this, SchResId(BTN_HELP)),
+!     m_apDataLabelResources( new DataLabelResources(this,rInAttrs) ),
+  	m_rInAttrs(rInAttrs)
+  {
+  	FreeResource();
+--- 47,53 ----
+  	m_aBtnOK(this, SchResId(BTN_OK)),
+  	m_aBtnCancel(this, SchResId(BTN_CANCEL)),
+  	m_aBtnHelp(this, SchResId(BTN_HELP)),
+!     m_apDataLabelResources( new DataLabelResources(this,rInAttrs,false) ),
+  	m_rInAttrs(rInAttrs)
+  {
+  	FreeResource();
+*** chart2/source/controller/dialogs/res_DataLabel.cxx	Fri Apr 11 04:04:08 2008
+--- chart2/source/controller/dialogs/res_DataLabel.cxx	Tue Sep 16 12:48:06 2008
+***************
+*** 114,120 ****
+  
+  }//end anonymous namespace
+  
+! DataLabelResources::DataLabelResources( Window* pWindow, const SfxItemSet& rInAttrs )
+      : m_aCBNumber(pWindow, SchResId(CB_VALUE_AS_NUMBER)),
+      m_aPB_NumberFormatForValue(pWindow, SchResId(PB_NUMBERFORMAT)),
+      m_aCBPercent(pWindow, SchResId(CB_VALUE_AS_PERCENTAGE)),
+--- 114,120 ----
+  
+  }//end anonymous namespace
+  
+! DataLabelResources::DataLabelResources( Window* pWindow, const SfxItemSet& rInAttrs, bool bShowRotation )
+      : m_aCBNumber(pWindow, SchResId(CB_VALUE_AS_NUMBER)),
+      m_aPB_NumberFormatForValue(pWindow, SchResId(PB_NUMBERFORMAT)),
+      m_aCBPercent(pWindow, SchResId(CB_VALUE_AS_PERCENTAGE)),
+***************
+*** 124,129 ****
+--- 124,133 ----
+      m_aSeparatorResources(pWindow),
+      m_aFT_LabelPlacement(pWindow, SchResId(FT_LABEL_PLACEMENT)),
+      m_aLB_LabelPlacement(pWindow, SchResId(LB_LABEL_PLACEMENT)),
++     m_aFL_Rotate(pWindow, SchResId(FL_LABEL_ROTATE)),
++     m_aDC_Dial(pWindow, SchResId(CT_LABEL_DIAL)),
++     m_aFT_Degrees(pWindow, SchResId(FT_LABEL_DEGREES)),
++     m_aNF_Degrees(pWindow, SchResId(NF_LABEL_DEGREES)),
+      m_pNumberFormatter(0),
+      m_bNumberFormatMixedState(true),
+      m_bPercentFormatMixedState(true),
+***************
+*** 201,206 ****
+--- 205,216 ----
+  
+      m_bNumberFormatMixedState = !lcl_ReadNumberFormatFromItemSet( rInAttrs, SID_ATTR_NUMBERFORMAT_VALUE, SID_ATTR_NUMBERFORMAT_SOURCE, m_nNumberFormatForValue, m_bSourceFormatForValue, m_bSourceFormatMixedState );
+      m_bPercentFormatMixedState = !lcl_ReadNumberFormatFromItemSet( rInAttrs, SCHATTR_PERCENT_NUMBERFORMAT_VALUE, SCHATTR_PERCENT_NUMBERFORMAT_SOURCE, m_nNumberFormatForPercent, m_bSourceFormatForPercent , m_bPercentSourceMixedState);
++ 
++     m_aDC_Dial.SetLinkedField( &m_aNF_Degrees );
++     m_aFL_Rotate.Show( bShowRotation );
++     m_aDC_Dial.Show( bShowRotation );
++     m_aFT_Degrees.Show( bShowRotation );
++     m_aNF_Degrees.Show( bShowRotation );
+  }
+  
+  DataLabelResources::~DataLabelResources()
+***************
+*** 290,295 ****
+--- 300,311 ----
+  
+      m_aPB_NumberFormatForValue.Enable( m_pNumberFormatter && m_aCBNumber.IsChecked() );
+      m_aPB_NumberFormatForPercent.Enable( m_pNumberFormatter && m_aCBPercent.IsChecked() );
++ 
++     bool bEnableRotation = ( m_aCBNumber.IsChecked() || m_aCBPercent.IsChecked() || m_aCBCategory.IsChecked() );
++     m_aFL_Rotate.Enable( bEnableRotation );
++     m_aDC_Dial.Enable( bEnableRotation );
++     m_aFT_Degrees.Enable( bEnableRotation );
++     m_aNF_Degrees.Enable( bEnableRotation );
+  }
+  
+  BOOL DataLabelResources::FillItemSet( SfxItemSet& rOutAttrs ) const
+***************
+*** 325,330 ****
+--- 341,352 ----
+          sal_Int32 nValue = aIt->second;
+          rOutAttrs.Put( SfxInt32Item( SCHATTR_DATADESCR_PLACEMENT, nValue ) );
+      }
++ 
++     if( m_aDC_Dial.IsVisible() )
++     {
++         sal_Int32 nDegrees = m_aDC_Dial.GetRotation();
++         rOutAttrs.Put(SfxInt32Item( SCHATTR_TEXT_DEGREES, nDegrees ) );
++     }
+          
+      return TRUE;
+  }
+***************
+*** 363,368 ****
+--- 385,397 ----
+      else
+          m_aLB_LabelPlacement.SetNoSelection();
+  
++     if( rInAttrs.GetItemState( SCHATTR_TEXT_DEGREES, TRUE, &pPoolItem ) == SFX_ITEM_SET )
++     {
++         sal_Int32 nDegrees = static_cast< const SfxInt32Item * >( pPoolItem )->GetValue();
++         m_aDC_Dial.SetRotation( nDegrees );
++     }
++     else
++         m_aDC_Dial.SetRotation( 0 );
+  
+      EnableControls();
+  }
+*** chart2/source/controller/dialogs/res_DataLabel.hxx	Fri Apr 11 04:04:30 2008
+--- chart2/source/controller/dialogs/res_DataLabel.hxx	Tue Sep 16 11:37:06 2008
+***************
+*** 38,43 ****
+--- 38,45 ----
+  // header for class SfxItemSet
+  #include <svtools/itemset.hxx>
+  
++ #include <svx/dialcontrol.hxx>
++ 
+  class SvNumberFormatter;
+  
+  //.............................................................................
+***************
+*** 48,54 ****
+  class DataLabelResources
+  {
+  public:
+!     DataLabelResources( Window* pParent, const SfxItemSet& rInAttrs );
+      virtual ~DataLabelResources();
+  
+      BOOL FillItemSet(SfxItemSet& rOutAttrs) const;
+--- 50,56 ----
+  class DataLabelResources
+  {
+  public:
+!     DataLabelResources( Window* pParent, const SfxItemSet& rInAttrs, bool bShowRotation );
+      virtual ~DataLabelResources();
+  
+      BOOL FillItemSet(SfxItemSet& rOutAttrs) const;
+***************
+*** 69,74 ****
+--- 71,81 ----
+      FixedText           m_aFT_LabelPlacement;
+      ListBox             m_aLB_LabelPlacement;
+  
++     FixedLine           m_aFL_Rotate;
++     svx::DialControl    m_aDC_Dial;
++     FixedText           m_aFT_Degrees;
++     NumericField        m_aNF_Degrees;
++ 
+      ::std::map< sal_Int32, USHORT > m_aPlacementToListBoxMap;
+      ::std::map< USHORT, sal_Int32 > m_aListBoxToPlacementMap;
+  
+*** chart2/source/controller/dialogs/res_DataLabel_IDs.hrc	Fri Apr 11 04:04:46 2008
+--- chart2/source/controller/dialogs/res_DataLabel_IDs.hrc	Tue Sep 16 11:37:50 2008
+***************
+*** 39,41 ****
+--- 39,46 ----
+  #define FT_LABEL_PLACEMENT 2
+  
+  #define LB_LABEL_PLACEMENT 2
++ 
++ #define FL_LABEL_ROTATE  1
++ #define CT_LABEL_DIAL    1
++ #define FT_LABEL_DEGREES 3
++ #define NF_LABEL_DEGREES 1
+\ No newline at end of file
+*** chart2/source/controller/dialogs/res_DataLabel_tmpl.hrc	Fri Apr 11 04:05:02 2008
+--- chart2/source/controller/dialogs/res_DataLabel_tmpl.hrc	Tue Sep 16 11:39:54 2008
+***************
+*** 120,125 ****
+--- 120,156 ----
+      DropDown=TRUE; \
+      DDExtraWidth = TRUE ; \
+      WORKAROUND          \
++ }; \
++ FixedLine FL_LABEL_ROTATE \
++ { \
++     Pos = MAP_APPFONT ( xpos+120, ypos ) ; \
++     Size = MAP_APPFONT ( 122, 8 ) ; \
++     Text [ en-US ] = "Rotate Text" ; \
++ }; \
++ Control CT_LABEL_DIAL \
++ { \
++     HelpId = HID_SCH_ALIGNMENT_CTR_DIAL ; \
++     Pos = MAP_APPFONT ( xpos+126 , ypos+14 ) ; \
++     Size = MAP_APPFONT ( 43 , 43 ) ; \
++     Text = "ABCD" ; \
++ }; \
++ FixedText FT_LABEL_DEGREES \
++ { \
++     Pos = MAP_APPFONT ( xpos+207 , ypos+31  ) ; \
++     Size = MAP_APPFONT ( 46, 8 ) ; \
++     Text [ en-US ] = "~Degrees" ; \
++ }; \
++ NumericField NF_LABEL_DEGREES \
++ { \
++     Pos = MAP_APPFONT ( xpos+175 , ypos+29 ) ; \
++     Size = MAP_APPFONT ( 28 , 12 ) ; \
++     Border = TRUE ; \
++     TabStop = TRUE ; \
++     Repeat = TRUE ; \
++     Spin = TRUE ; \
++     Minimum = 0 ; \
++     Maximum = 359 ; \
++     SpinSize = 5 ; \
+  };
+  
+  #endif
+*** chart2/source/controller/dialogs/tp_DataLabel.cxx	Fri Apr 11 04:16:00 2008
+--- chart2/source/controller/dialogs/tp_DataLabel.cxx	Fri Sep 12 14:33:34 2008
+***************
+*** 42,48 ****
+  
+  DataLabelsTabPage::DataLabelsTabPage(Window* pWindow, const SfxItemSet& rInAttrs) :
+  		SfxTabPage(pWindow, SchResId(TP_DATA_DESCR), rInAttrs),
+!         m_aDataLabelResources(this, rInAttrs)
+  {
+  	FreeResource();
+  }
+--- 42,48 ----
+  
+  DataLabelsTabPage::DataLabelsTabPage(Window* pWindow, const SfxItemSet& rInAttrs) :
+  		SfxTabPage(pWindow, SchResId(TP_DATA_DESCR), rInAttrs),
+!         m_aDataLabelResources(this, rInAttrs, true)
+  {
+  	FreeResource();
+  }
+*** chart2/source/controller/itemsetwrapper/DataPointItemConverter.cxx	Fri Apr 11 04:43:42 2008
+--- chart2/source/controller/itemsetwrapper/DataPointItemConverter.cxx	Fri Sep 12 14:49:38 2008
+***************
+*** 521,526 ****
+--- 521,544 ----
+              }
+          }
+          break;
++ 
++         case SCHATTR_TEXT_DEGREES:
++         {
++             double fValue = static_cast< double >(
++                 static_cast< const SfxInt32Item & >(
++                     rItemSet.Get( nWhichId )).GetValue()) / 100.0;
++             double fOldValue = 0.0;
++             bool bPropExisted =
++                 ( GetPropertySet()->getPropertyValue( C2U( "TextRotation" )) >>= fOldValue );
++ 
++             if( ! bPropExisted ||
++                 ( bPropExisted && fOldValue != fValue ))
++             {
++                 GetPropertySet()->setPropertyValue( C2U( "TextRotation" ), uno::makeAny( fValue ));
++                 bChanged = true;
++             }
++         }
++         break;
+      }
+  
+      return bChanged;
+***************
+*** 657,662 ****
+--- 675,692 ----
+              }
+          }
+          break;
++ 
++         case SCHATTR_TEXT_DEGREES:
++         {
++             double fValue = 0;
++ 
++             if( GetPropertySet()->getPropertyValue( C2U( "TextRotation" )) >>= fValue )
++             {
++                 rOutItemSet.Put( SfxInt32Item( nWhichId, static_cast< sal_Int32 >(
++                                                    ::rtl::math::round( fValue * 100.0 ) ) ));
++             }
++         }
++         break;
+     }
+  }
+  
+*** chart2/source/controller/itemsetwrapper/SchWhichPairs.hxx	Fri Jun  6 17:09:34 2008
+--- chart2/source/controller/itemsetwrapper/SchWhichPairs.hxx	Tue Sep 16 09:59:56 2008
+***************
+*** 130,135 ****
+--- 130,136 ----
+      SCHATTR_PERCENT_NUMBERFORMAT_SOURCE, SCHATTR_PERCENT_NUMBERFORMAT_SOURCE, /*	  41          sch/schattr.hxx*/	\
+      SCHATTR_DATADESCR_PLACEMENT, SCHATTR_DATADESCR_PLACEMENT,
+      SCHATTR_DATADESCR_AVAILABLE_PLACEMENTS, SCHATTR_DATADESCR_AVAILABLE_PLACEMENTS,
++     SCHATTR_TEXT_DEGREES,SCHATTR_TEXT_DEGREES,
+      0
+  };
+  
+***************
+*** 148,154 ****
+      SCHATTR_STYLE_START,SCHATTR_STYLE_END,			/*    59 -    68  sch/schattr.hxx*/	\
+  	SCHATTR_SYMBOL_BRUSH,SCHATTR_SYMBOL_BRUSH,		/*    94          sch/schattr.hxx*/	\
+  	SCHATTR_SYMBOL_SIZE,SCHATTR_SYMBOL_SIZE,        /*    97          sch/schattr.hxx*/	\
+! 	SDRATTR_3D_FIRST, SDRATTR_3D_LAST				/*  1244 -  1334  svx/svddef.hxx */
+  
+  const USHORT nDataPointWhichPairs[] =
+  {
+--- 149,156 ----
+      SCHATTR_STYLE_START,SCHATTR_STYLE_END,			/*    59 -    68  sch/schattr.hxx*/	\
+  	SCHATTR_SYMBOL_BRUSH,SCHATTR_SYMBOL_BRUSH,		/*    94          sch/schattr.hxx*/	\
+  	SCHATTR_SYMBOL_SIZE,SCHATTR_SYMBOL_SIZE,        /*    97          sch/schattr.hxx*/	\
+! 	SDRATTR_3D_FIRST, SDRATTR_3D_LAST,				/*  1244 -  1334  svx/svddef.hxx */ \
+!     SCHATTR_TEXT_DEGREES, SCHATTR_TEXT_DEGREES
+  
+  const USHORT nDataPointWhichPairs[] =
+  {
+*** chart2/source/model/main/DataPointProperties.cxx	Fri Apr 11 05:36:40 2008
+--- chart2/source/model/main/DataPointProperties.cxx	Fri Sep 12 14:45:14 2008
+***************
+*** 359,364 ****
+--- 359,371 ----
+                    ::getCppuType( reinterpret_cast< const sal_Int16 * >(0)),
+                    beans::PropertyAttribute::BOUND
+                    | beans::PropertyAttribute::MAYBEVOID ));
++ 
++     rOutProperties.push_back(
++         Property( C2U( "TextRotation" ),
++                   PROP_DATAPOINT_TEXT_ROTATION,
++                   ::getCppuType( reinterpret_cast< const double * >(0)),
++                   beans::PropertyAttribute::BOUND
++                   | beans::PropertyAttribute::MAYBEDEFAULT ));
+  }
+  
+  void DataPointProperties::AddDefaultsToMap(
+***************
+*** 428,433 ****
+--- 435,442 ----
+      PropertyHelper::setPropertyValueDefault( rOutMap, PROP_DATAPOINT_ERROR_BAR_X, uno::Reference< beans::XPropertySet >());
+      PropertyHelper::setPropertyValueDefault( rOutMap, PROP_DATAPOINT_ERROR_BAR_Y, uno::Reference< beans::XPropertySet >());
+      PropertyHelper::setPropertyValueDefault< sal_Int16 >( rOutMap, PROP_DATAPOINT_PERCENT_DIAGONAL, 0 );
++ 
++     PropertyHelper::setPropertyValueDefault< double >( rOutMap, PROP_DATAPOINT_TEXT_ROTATION, 0.0 );
+  }
+  
+  } //  namespace chart
+*** chart2/source/model/main/DataPointProperties.hxx	Fri Apr 11 05:36:56 2008
+--- chart2/source/model/main/DataPointProperties.hxx	Fri Sep 12 14:44:22 2008
+***************
+*** 82,88 ****
+          PROP_DATAPOINT_ERROR_BAR_X,
+          PROP_DATAPOINT_ERROR_BAR_Y,
+          PROP_DATAPOINT_SHOW_ERROR_BOX,
+!         PROP_DATAPOINT_PERCENT_DIAGONAL
+  
+          // additionally some properites from ::chart::LineProperties
+      };
+--- 82,89 ----
+          PROP_DATAPOINT_ERROR_BAR_X,
+          PROP_DATAPOINT_ERROR_BAR_Y,
+          PROP_DATAPOINT_SHOW_ERROR_BOX,
+!         PROP_DATAPOINT_PERCENT_DIAGONAL,
+!         PROP_DATAPOINT_TEXT_ROTATION
+  
+          // additionally some properites from ::chart::LineProperties
+      };
+*** chart2/source/view/charttypes/VSeriesPlotter.cxx	Thu May 15 16:05:20 2008
+--- chart2/source/view/charttypes/VSeriesPlotter.cxx	Tue Sep 16 11:42:04 2008
+***************
+*** 465,475 ****
+--- 465,479 ----
+          //prepare text
+          ::rtl::OUStringBuffer aText;
+          ::rtl::OUString aSeparator(sal_Unicode(' '));
++         double fRotationDegrees = 0.0;
+          try
+          {
+              uno::Reference< beans::XPropertySet > xPointProps( rDataSeries.getPropertiesOfPoint( nPointIndex ) );
+              if(xPointProps.is())
++             {
+                  xPointProps->getPropertyValue( C2U( "LabelSeparator" ) ) >>= aSeparator;
++                 xPointProps->getPropertyValue( C2U( "TextRotation" ) ) >>= fRotationDegrees;
++             }
+          }
+          catch( uno::Exception& e )
+          {
+***************
+*** 531,541 ****
+              return xTextShape;
+          LabelPositionHelper::changeTextAdjustment( *pPropValues, *pPropNames, eAlignment );
+  
+          //------------------------------------------------
+          //create text shape
+          xTextShape = ShapeFactory(m_xShapeFactory).
+              createText( xTarget_, aText.makeStringAndClear()
+!                         , *pPropNames, *pPropValues, ShapeFactory::makeTransformation( aScreenPosition2D ) );
+  
+          if( xSymbol.is() && xTextShape.is() )
+          {
+--- 535,547 ----
+              return xTextShape;
+          LabelPositionHelper::changeTextAdjustment( *pPropValues, *pPropNames, eAlignment );
+  
++         const double fDegreesPi( fRotationDegrees * ( F_PI / -180.0 ) );
++ 
+          //------------------------------------------------
+          //create text shape
+          xTextShape = ShapeFactory(m_xShapeFactory).
+              createText( xTarget_, aText.makeStringAndClear()
+!                         , *pPropNames, *pPropValues, ShapeFactory::makeTransformation( aScreenPosition2D, fDegreesPi ) );
+  
+          if( xSymbol.is() && xTextShape.is() )
+          {

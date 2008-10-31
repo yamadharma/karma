@@ -265,8 +265,8 @@ src_unpack() {
 	# Hackish workaround for overlong path problem, see bug #130837
 	mv "${S_OLD}" "${S}" || die
 
-	mkdir "${S}"/infra
-	cp -R -f infra-ooo-files_${PV}/* "${S}"/infra/
+#	mkdir "${S}"/infra
+#	cp -R -f infra-ooo-files_${PV}/* "${S}"/infra/
 
 	#Some fixes for our patchset
 	cd "${S}"
@@ -275,31 +275,33 @@ src_unpack() {
 	cp -f "${FILESDIR}/nojavanostax.diff" "${S}/patches/dev300" || die
 	cp -f "${FILESDIR}/hunspell-one-dir-nocrash.diff" "${S}/patches/dev300" || die
 	
-	epatch ${FILESDIR}/gentoo-3.0.0_infra-build.patch
+	cp -f "${FILESDIR}"/3.0.0/*.diff "${S}/patches/dev300" || die
+#	epatch ${FILESDIR}/gentoo-3.0.0_infra-build.patch
 
 	#{{{ Infra patches
 
-	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/bin/* "${S}"/bin/
-	cp -R -f "${WORKDIR}"/infra-ooo-files_${PV}/patches/* "${S}"/patches/
-	rm "${S}"/patches/infra/connectivity-freebsd-libs.diff
-	rm "${S}"/patches/infra/extensions-disable-template-pack.diff
-	rm "${S}"/patches/infra/extensions-separate-java-based.diff
-	rm "${S}"/patches/infra/extensions-zemberek.diff
-	rm "${S}"/patches/infra/javainstaller2-discard-rpm-warnings.diff
-	rm "${S}"/patches/infra/reportbuilder-no-license-infra.diff
-	rm "${S}"/patches/infra/sdext-no-registration.diff
-	rm "${S}"/patches/infra/solaris-basebmp-disable-test.diff
-	rm "${S}"/patches/infra/svtools-print-numcopies-focus.diff
-	rm "${S}"/patches/infra/sw-add-landscape-page-style.diff
-	rm "${S}"/patches/infra/wikipublisher-no-license-infra.diff
-	# Dirty hack
-	for i in infra # test
-	do
-	    for j in "${S}"/patches/$i/*.diff
-	    do
-		cp -f ${j} "${S}"/patches/hotfixes/${i}-`basename ${j}`
-	    done
-	done    
+#	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/bin/* "${S}"/bin/
+#	cp -R -f "${WORKDIR}"/infra-ooo-files_${PV}/patches/* "${S}"/patches/
+#	rm "${S}"/patches/infra/connectivity-freebsd-libs.diff
+#	rm "${S}"/patches/infra/extensions-disable-template-pack.diff
+#	rm "${S}"/patches/infra/extensions-separate-java-based.diff
+#	rm "${S}"/patches/infra/extensions-zemberek.diff
+#	rm "${S}"/patches/infra/javainstaller2-discard-rpm-warnings.diff
+#	rm "${S}"/patches/infra/reportbuilder-no-license-infra.diff
+#	rm "${S}"/patches/infra/sdext-no-registration.diff
+#	rm "${S}"/patches/infra/solaris-basebmp-disable-test.diff
+#	rm "${S}"/patches/infra/svtools-print-numcopies-focus.diff
+#	rm "${S}"/patches/infra/sw-add-landscape-page-style.diff
+#	rm "${S}"/patches/infra/wikipublisher-no-license-infra.diff
+#	rm "${S}"/patches/infra/infra-logo-easteregg.diff
+#	# Dirty hack
+#	for i in infra # test
+#	do
+#	    for j in "${S}"/patches/$i/*.diff
+#	    do
+#		cp -f ${j} "${S}"/patches/hotfixes/${i}-`basename ${j}`
+#	    done
+#	done    
 
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/ru/* "${S}"/src/sdf/
 	#}}}

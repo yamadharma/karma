@@ -1,0 +1,10 @@
+--- solenv/bin/build.pl.orig    2008-08-27 19:22:38.000000000 +0400
++++ solenv/bin/build.pl 2008-08-27 19:22:58.000000000 +0400
+@@ -1819,6 +1819,7 @@
+         $text = "Building module $Prj\n";
+     };
+     print $echo . "=============\n";
++    print "\x1b]1;\x07\x1b]2;$text\x07";
+     print $echo . $text;
+ };
+

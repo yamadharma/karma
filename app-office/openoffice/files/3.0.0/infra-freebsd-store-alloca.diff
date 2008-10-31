@@ -1,0 +1,15 @@
+diff --git a/store/source/storbase.cxx b/store/source/storbase.cxx
+index 5363031..4815e41 100644
+--- store/source/storbase.cxx
++++ store/source/storbase.cxx
+@@ -87,8 +87,10 @@ #endif
+ #ifdef WNT
+ #include <malloc.h>
+ #else
++#ifndef __FreeBSD__
+ #include <alloca.h>
+ #endif
++#endif
+ 
+ using namespace store;
+ 

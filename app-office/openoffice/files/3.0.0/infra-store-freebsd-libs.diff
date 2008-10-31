@@ -1,0 +1,11 @@
+--- store/util/makefile.mk.orig	Tue Sep 18 15:40:18 2007
++++ store/util/makefile.mk	Tue Sep 18 15:42:30 2007
+@@ -79,7 +79,7 @@
+ .IF "$(GUI)"=="WNT"
+ SHL1STDLIBS+= 	-lsupc++
+ .ELSE
+-.IF "$(OS)"=="NETBSD"
++.IF "$(OS)"=="NETBSD" || "$(OS)"=="FREEBSD"
+ SHL1STDLIBS+= 	-lsupc++
+ .ELIF "$(OS)"=="MACOSX"
+ .IF "$(CCNUMVER)"<="000399999999"

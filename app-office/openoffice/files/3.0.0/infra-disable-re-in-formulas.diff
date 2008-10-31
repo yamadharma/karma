@@ -1,0 +1,11 @@
+--- officecfg/registry/schema/org/openoffice/Office/Calc.xcs.orig	2006-09-14 17:01:38.803024814 +0400
++++ officecfg/registry/schema/org/openoffice/Office/Calc.xcs	2006-09-14 17:01:49.156546278 +0400
+@@ -1189,7 +1189,7 @@
+ 						<desc>Specifies whether the calculation uses regular expressions in formulas, e.g. for functions which look up sheet contents.</desc>
+ 						<label>Enable regular expressions in formulas</label>
+ 					</info>
+-					<value>true</value>
++					<value>false</value>
+ 				</prop>
+ 				<node-ref oor:name="Date" oor:node-type="Date">
+ 					<info>

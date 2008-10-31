@@ -1,0 +1,58 @@
+=== modified file 'scp2/source/extensions/module_extensions.scp'
+--- scp2/source/extensions/module_extensions.scp	2008-09-25 07:11:55 +0000
++++ scp2/source/extensions/module_extensions.scp	2008-09-25 07:17:03 +0000
+@@ -40,7 +40,7 @@
+     ParentID = gid_Module_Optional;
+     Files = ( ); 
+     Minimal = NO;
+-    Default = YES;
++    Default = NO;
+     Styles = ( );
+ End
+ 
+@@ -55,7 +55,7 @@
+     Files = (
+         gid_File_Oxt_Sun_Presentation_Minimizer );
+     Minimal = NO;
+-    Default = YES;
++    Default = NO;
+     Styles = ( );
+ End
+ #endif
+@@ -72,7 +72,7 @@
+     Files = (
+         gid_File_Oxt_Sun_Report_Builder );
+     Minimal = NO;
+-    Default = YES;
++    Default = NO;
+     Styles = ( );
+ End
+ #endif
+@@ -89,7 +89,7 @@
+     Files = (
+         gid_File_Oxt_Sun_MediaWiki );
+     Minimal = NO;
+-    Default = YES;
++    Default = NO;
+     Styles = ( );
+ End
+ #endif
+@@ -106,7 +106,7 @@
+     Files = (
+         gid_File_Oxt_Sun_Presenter_Screen );
+     Minimal = NO;
+-    Default = YES;
++    Default = NO;
+     Styles = ( );
+ End
+ #endif
+@@ -123,7 +123,7 @@
+     Files = (
+         gid_File_Oxt_Sun_PDF_Import );
+     Minimal = NO;
+-    Default = YES;
++    Default = NO;
+     Styles = ( );
+ End
+ #endif
+

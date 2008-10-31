@@ -1,0 +1,20 @@
+--- basic/source/runtime/methods.cxx.orig	2006-11-24 20:33:49.234618606 +0300
++++ basic/source/runtime/methods.cxx	2006-11-24 20:37:35.251705234 +0300
+@@ -452,7 +452,7 @@
+ 	}
+ 	char* pBuffer = new char[ _MAX_PATH ];
+ 	if ( _getdcwd( nCurDir, pBuffer, _MAX_PATH ) != 0 )
+-		rPar.Get(0)->PutString( String::CreateFromAscii( pBuffer ) );
++		rPar.Get(0)->PutString( String::UniString( pBuffer, gsl_getSystemTextEncoding() ) );
+ 	else
+ 		StarBASIC::Error( SbERR_NO_DEVICE );
+ 	delete [] pBuffer;
+@@ -471,7 +471,7 @@
+ 		  }
+ 		if( getcwd( pMem, nSize-1 ) != NULL )
+ 		  {
+-			rPar.Get(0)->PutString( String::CreateFromAscii(pMem) );
++			rPar.Get(0)->PutString( String::UniString( pMem, gsl_getSystemTextEncoding() ) );
+ 			delete [] pMem;
+ 			return;
+ 		  }

@@ -1,0 +1,79 @@
+=== modified file 'config_office/configure.in'
+--- config_office/configure.in	2008-09-05 05:04:01 +0000
++++ config_office/configure.in	2008-09-05 05:06:53 +0000
+@@ -25,6 +25,9 @@
+ AC_ARG_WITH(gnu-cp,
+ [  --with-gnu-cp           Specify location of GNU cp on Solaris or FreeBSD
+ ],,)
++AC_ARG_WITH(gperf,
++[  --with-gperf           Specify location of gperf on Solaris or FreeBSD
++],,)
+ AC_ARG_WITH(gpc,
+ [  --without-gpc           Use the internal polygon clipping code instead of
+                           the external GPC polygon clipping library.
+@@ -3437,16 +3440,26 @@
+ dnl ===================================================================
+ dnl Check for gperf
+ dnl ===================================================================
+-AC_PATH_PROG(GPERF, gperf)
+-if test -z "$GPERF"; then
+-	AC_MSG_ERROR([gperf not found but needed. Install it.])
++if test -z "$with_gperf"; then
++    AC_PATH_PROG(GPERF, gperf)
++    if test -z "$GPERF"; then
++       AC_MSG_ERROR([gperf not found but needed. Install it and/or specify --with-gperf=/path/to/it.])
++    fi
++else
++  if test -x "$with_gperf"; then
++    GPERF=$with_gperf
++  else
++    AC_MSG_ERROR([--with-gperf did not point to an executable])
++  fi
+ fi
+ AC_MSG_CHECKING([gperf version])
+ if test "`$GPERF --version | $EGREP ^GNU\ gperf | $AWK '{ print $3 }' | cut -d. -f1`" -ge "3"; then
+ 	AC_MSG_RESULT([OK])
++   GPERF=$GPERF
+ else
+ 	AC_MSG_ERROR([too old, you need at least 3.0.0])
+ fi
++AC_SUBST(GPERF)
+ 
+ dnl ===================================================================
+ dnl Check for building stax
+
+=== modified file 'config_office/set_soenv.in'
+--- config_office/set_soenv.in	2008-09-05 05:04:01 +0000
++++ config_office/set_soenv.in	2008-09-05 05:07:08 +0000
+@@ -2223,6 +2223,7 @@
+ {
+   ToFile( "GNUPATCH",   "@GNUPATCH@",	"e");
+   ToFile( "GNUCOPY",	"@GNUCP@",	"e");
++  ToFile( "GPERF", "@GPERF@",  "e");
+ }
+ # OS/2 define .pl as executable for 4os2
+ # use - as switch char for dmake (os2/switchar.c)
+
+=== modified file 'oox/source/token/makefile.mk'
+--- oox/source/token/makefile.mk	2008-09-05 05:04:01 +0000
++++ oox/source/token/makefile.mk	2008-09-05 05:12:54 +0000
+@@ -49,6 +49,9 @@
+ # --- Targets -------------------------------------------------------
+ 
+ .INCLUDE :  target.mk
++.IF "$(GPERF)" == "" || !DEFINED $(GPERF)
++GPERF=gperf
++.ENDIF
+ 
+ $(MISC)$/tokens.gperf $(INCCOM)$/tokenwords.inc $(INCCOM)$/tokens.hxx : 
+ 	@@noop $(assign do_phony:=.PHONY)
+@@ -57,7 +60,7 @@
+ 		$(PERL) gentoken.pl tokens.txt $(INCCOM)$/tokens.hxx $(INCCOM)$/tokenwords.inc $(MISC)$/tokens.gperf && $(TOUCH) $@
+ 
+ $(INCCOM)$/tokens.inc : $(MISC)$/tokens.gperf $(MISC)$/do_tokens
+-		gperf --compare-strncmp $(MISC)$/tokens.gperf | $(SED) -e "s/(char\*)0/(char\*)0, 0/g" | $(GREP) -v "^#line" >$(INCCOM)$/tokens.inc
++		$(GPERF) --compare-strncmp $(MISC)$/tokens.gperf | $(SED) -e "s/(char\*)0/(char\*)0, 0/g" | $(GREP) -v "^#line" >$(INCCOM)$/tokens.inc
+ 
+ $(SLO)$/tokenmap.obj : $(INCCOM)$/tokens.inc $(INCCOM)$/tokenwords.inc $(INCCOM)$/tokens.hxx $(MISC)$/do_tokens
+ 
+

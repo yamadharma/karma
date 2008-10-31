@@ -1,0 +1,104 @@
+=== modified file 'setup_native/source/packinfo/packinfo_office.txt'
+--- setup_native/source/packinfo/packinfo_office.txt	2008-08-30 19:01:05 +0000
++++ setup_native/source/packinfo/packinfo_office.txt	2008-08-30 19:02:19 +0000
+@@ -727,7 +727,7 @@
+ copyright = "1999-2007 by Sun Microsystems"
+ solariscopyright = "solariscopyrightfile"
+ vendor = "Sun Microsystems, Inc."
+-description = "Ru dictionary for %PRODUCTNAME %PRODUCTVERSION"
++description = "Russian dictionary for %PRODUCTNAME %PRODUCTVERSION"
+ destpath = "/opt"
+ packageversion = "%PACKAGEVERSION"
+ End
+@@ -813,6 +813,22 @@
+ End
+ 
+ Start
++module = "gid_Module_Root_Extension_Dictionary_Uk"
++script = "shellscripts_extensions.txt"
++solarispackagename = "%PACKAGEPREFIX%WITHOUTDOTUNIXPRODUCTNAME%BRANDPACKAGEVERSION-dict-uk"
++solarisrequires = "%SOLSUREPACKAGEPREFIX-ure (Name="UNO Runtime Environment"), %BASISPACKAGEPREFIX%WITHOUTDOTOOOBASEVERSION-core01 (Name="Core module for %PRODUCTNAME %PRODUCTVERSION"), %BASISPACKAGEPREFIX%WITHOUTDOTOOOBASEVERSION-core02 (Name="Core module for %PRODUCTNAME %PRODUCTVERSION"), %BASISPACKAGEPREFIX%WITHOUTDOTOOOBASEVERSION-core03 (Name="Core module for %PRODUCTNAME %PRODUCTVERSION"), %BASISPACKAGEPREFIX%WITHOUTDOTOOOBASEVERSION-core04 (Name="Core module for %PRODUCTNAME %PRODUCTVERSION"), %BASISPACKAGEPREFIX%WITHOUTDOTOOOBASEVERSION-core05 (Name="Core module for %PRODUCTNAME %PRODUCTVERSION"), %BASISPACKAGEPREFIX%WITHOUTDOTOOOBASEVERSION-core06 (Name="Core module for %PRODUCTNAME %PRODUCTVERSION"), %BASISPACKAGEPREFIX%WITHOUTDOTOOOBASEVERSION-core07 (Name="Core module for %PRODUCTNAME %PRODUCTVERSION"), %PACKAGEPREFIX%WITHOUTDOTUNIXPRODUCTNAME%BRANDPACKAGEVERSION (Name="Brand module for %PRODUCTNAME %PRODUCTVERSION")"
++packagename = "%UNIXPRODUCTNAME%BRANDPACKAGEVERSION-dict-uk"
++requires = "%UREPACKAGEPREFIX-ure,%BASISPACKAGEPREFIX%OOOBASEVERSION-core01,%BASISPACKAGEPREFIX%OOOBASEVERSION-core02,%BASISPACKAGEPREFIX%OOOBASEVERSION-core03,%BASISPACKAGEPREFIX%OOOBASEVERSION-core04,%BASISPACKAGEPREFIX%OOOBASEVERSION-core05,%BASISPACKAGEPREFIX%OOOBASEVERSION-core06,%BASISPACKAGEPREFIX%OOOBASEVERSION-core07,%UNIXPRODUCTNAME%BRANDPACKAGEVERSION"
++linuxpatchrequires = ""
++copyright = "1999-2007 by Sun Microsystems"
++solariscopyright = "solariscopyrightfile"
++vendor = "Sun Microsystems, Inc."
++description = "Ukrainian dictionary for %PRODUCTNAME %PRODUCTVERSION"
++destpath = "/opt"
++packageversion = "%PACKAGEVERSION"
++End
++
++Start
+ module = "gid_Module_Root_Extension_Dictionary_Vi"
+ script = "shellscripts_extensions.txt"
+ solarispackagename = "%BASISPACKAGEPREFIX%WITHOUTDOTOOOBASEVERSION-dict-vi"
+
+=== modified file 'scp2/source/ooo/file_ooo.scp'
+--- scp2/source/ooo/file_ooo.scp	2008-08-31 06:50:33 +0000
++++ scp2/source/ooo/file_ooo.scp	2008-08-31 06:54:07 +0000
+@@ -3181,6 +3181,15 @@
+ #endif
+ 
+ #ifndef WITHOUT_MYSPELL_DICTS
++File gid_File_Extension_Dictionary_Uk
++	Dir = gid_Brand_Dir_Share_Extension_Install;
++	Name = "dict-uk.oxt";
++	Styles = (PACKED);
++	UnixRights = 444;
++End
++#endif
++
++#ifndef WITHOUT_MYSPELL_DICTS
+ File gid_File_Extension_Dictionary_Vi
+ 	Dir = gid_Brand_Dir_Share_Extension_Install;
+ 	Name = "dict-vi.oxt";
+
+=== modified file 'scp2/source/ooo/module_hidden_ooo.scp'
+--- scp2/source/ooo/module_hidden_ooo.scp	2008-08-31 06:50:33 +0000
++++ scp2/source/ooo/module_hidden_ooo.scp	2008-08-31 06:51:49 +0000
+@@ -1175,6 +1175,17 @@
+ 	Styles = (HIDDEN_ROOT);
+ End
+ 
++Module gid_Module_Root_Extension_Dictionary_Uk
++	Name = "gid_Module_Root_Extension_Dictionary_Uk";
++	Description = "gid_Module_Root_Extension_Dictionary_Uk";
++	Files = (gid_File_Extension_Dictionary_Uk);
++	InstallOrder = "2000";
++	Spellcheckerlanguage = "uk";
++	PackageInfo = "packinfo_office.txt";
++	ParentID = gid_Module_Root;
++	Styles = (HIDDEN_ROOT);
++End
++
+ Module gid_Module_Root_Extension_Dictionary_Vi
+ 	Name = "gid_Module_Root_Extension_Dictionary_Vi";
+ 	Description = "gid_Module_Root_Extension_Dictionary_Vi";
+
+--- setup_native/source/packinfo/spellchecker_selection.txt.orig	2008-08-31 11:22:14.000000000 +0400
++++ setup_native/source/packinfo/spellchecker_selection.txt	2008-08-31 11:22:46.000000000 +0400
+@@ -7,7 +7,7 @@
+ cs = "cs,en-US"
+ da = "da,de,en-US"
+ de = "de,en-US,fr,it"
+-en-US = "en-US,es,fr"
++en-US = "en-US,es,fr,ru,uk"
+ es = "en-US,es,fr,pt"
+ et = "en-US,et"
+ fr = "en-US,es,fr"
+@@ -21,12 +21,13 @@
+ nl = "en-US,fr,de,nl"
+ pl = "de,en-US,pl,ru"
+ pt-BR = "en-US,es,pt"
+-ru = "de,en-US,ru"
++ru = "de,en-US,ru,uk"
+ sk = "en-US,sk"
+ sl = "en-US,sl"
+ sv = "de,en-US,sv"
+ sw = "en-US,sw"
+ th = "en-US,th"
++uk = "de,en-US,ru,uk"
+ vi = "en-US,fr,vi"
+ zh-TW = "en-US"
+ zh-CN = "en-US"
