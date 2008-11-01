@@ -22,3 +22,9 @@ DEPEND=">=dev-util/bzr-1.6_rc1-r1
 RDEPEND=""
 
 S="${WORKDIR}"/${MY_P}
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/${P}-compatible-versions.patch
+}
