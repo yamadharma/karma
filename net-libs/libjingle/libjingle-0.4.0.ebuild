@@ -12,7 +12,7 @@ HOMEPAGE="http://libjingle.sourceforge.net/"
 SRC_URI="mirror://sourceforge/libjingle/${P}.tar.gz"
 
 LICENSE="BSD"
-KEYWORDS="~amd64 ~x86"
+# KEYWORDS="~amd64 ~x86"
 IUSE="speex ilbc ortp"
 SLOT="0"
 
