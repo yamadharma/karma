@@ -11,7 +11,7 @@ HOMEPAGE="http://www.ekiga.org/"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
+# KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
 IUSE="avahi dbus debug doc eds gconf gnome ldap libnotify xv"
 
 RDEPEND=">=dev-libs/ptlib-2.4.2

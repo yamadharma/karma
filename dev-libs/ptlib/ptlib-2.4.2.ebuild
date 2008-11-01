@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/opalvoip/${P}.tar.bz2
 
 LICENSE="MPL-1.0"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
+# KEYWORDS="~alpha amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
 IUSE="alsa bsdvideo debug doc esd ieee1394 ipv6 ldap minimal noaudio novideo oss
 sasl sdl ssl sunaudio v4l v4l2 xml"
 
