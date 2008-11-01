@@ -30,6 +30,8 @@ DEPEND=">=sys-libs/ncurses-5.2-r5
 	dev-libs/lzo"
 PROVIDE="virtual/bootloader"
 
+RESTRICT="strip"
+
 SPLASH_DIR=/usr/share/images/grub/
 
 src_unpack() {
