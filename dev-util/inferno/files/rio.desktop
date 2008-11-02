@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=rio
+Comment=rio-like Window Manager for X
+Exec=rio
+TryExec=rio
+# no icon yet, only the top three are currently used
+Icon=
+Type=Application
