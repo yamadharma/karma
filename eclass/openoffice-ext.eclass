@@ -10,47 +10,51 @@ inherit eutils multilib
 # list of extentions
 # OOO_EXTENSIONS="" 
 
+OOO_ROOT_DIR="/usr/$(get_libdir)/openoffice"
+OOO_PROGRAM_DIR="${OOO_ROOT_DIR}/program"
+UNOPKG="${OOO_PROGRAM_DIR}/unopkg"
+OOO_EXT_DIR="${OOO_ROOT_DIR}/share/extension/install"
+
 add_extension() {
-  echo -n "Adding extension $1..."
-  INSTDIR=`mktemp -d`
-  /usr/lib/openoffice/program/unopkg add --shared $1 \
-    "-env:UserInstallation=file:///$INSTDIR" \
+  ebegin "Adding extension $1"
+  INSTDIR=$(mktemp -d --tmpdir=${T})
+  ${UNOPKG} add --shared $1 \
+    "-env:UserInstallation=file:///${INSTDIR}" \
     "-env:JFW_PLUGIN_DO_NOT_CHECK_ACCESSIBILITY=1"
-#     '-env:UNO_JAVA_JFW_INSTALL_DATA=$ORIGIN/../share/config/javasettingsunopkginstall.xml' \    
-  if [ -n $INSTDIR ]; then rm -rf $INSTDIR; fi
-  echo " done."
+  if [ -n ${INSTDIR} ]; then rm -rf ${INSTDIR}; fi
+  eend
 }
 
 flush_unopkg_cache() {
-    /usr/lib/openoffice/program/unopkg list --shared > /dev/null 2>&1
+    ${UNOPKG} list --shared > /dev/null 2>&1
 }
 
 remove_extension() {
-  if /usr/lib/openoffice/program/unopkg list --shared $1 >/dev/null; then
-    echo -n "Removing extension $1..."
-    INSTDIR=`mktemp -d`
-    /usr/lib/openoffice/program/unopkg remove --shared $1 \
-      "-env:UserInstallation=file://$INSTDIR" \
+  if ${UNOPKG} list --shared $1 >/dev/null; then
+    ebegin "Removing extension $1"
+    INSTDIR=$(mktemp -d --tmpdir=${T})
+    ${UNOPKG} remove --shared $1 \
+      "-env:UserInstallation=file://${INSTDIR}" \
       "-env:JFW_PLUGIN_DO_NOT_CHECK_ACCESSIBILITY=1"
-#       '-env:UNO_JAVA_JFW_INSTALL_DATA=$ORIGIN/../share/config/javasettingsunopkginstall.xml' \
-    if [ -n $INSTDIR ]; then rm -rf $INSTDIR; fi
-    echo " done."
+    if [ -n ${INSTDIR} ]; then rm -rf ${INSTDIR}; fi
+    eend
     flush_unopkg_cache
   fi
 }
 
 openoffice-ext_src_install() {
-	insinto /usr/$(get_libdir)/openoffice/share/extension/install
+	cd "${S}" || die
+	insinto ${OOO_EXT_DIR}
 	for i in ${OOO_EXTENSIONS}
 	do
-		doins ${i}
+		doins ${i} || die "doins failed."
 	done
 }
 
 openoffice-ext_pkg_postinst() {
 	for i in ${OOO_EXTENSIONS}
 	do
-		add_extension /usr/$(get_libdir)/openoffice/share/extension/install/${i}
+		add_extension ${OOO_EXT_DIR}/${i}
 	done
 
 }
