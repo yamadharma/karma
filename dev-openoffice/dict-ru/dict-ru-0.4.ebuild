@@ -8,7 +8,8 @@ inherit openoffice-ext
 
 DESCRIPTION="Russian Dictionaries and Thesaurus (combined ru_RU and ru_RU_yo)"
 LICENSE="LGPL-2.1 myspell-ru_RU-ALexanderLebedev"
-HOMEPAGE="http://lingucomponent.openoffice.org/"
+HOMEPAGE="http://lingucomponent.openoffice.org/
+	http://extensions.services.openoffice.org/project/dict_ru_RU"
 SRC_URI="http://extensions.services.openoffice.org/files/936/7/dict_ru_RU-${PV}.oxt"
 SLOT="0"
 
