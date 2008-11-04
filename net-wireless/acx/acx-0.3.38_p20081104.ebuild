@@ -32,7 +32,7 @@ RDEPEND="net-wireless/wireless-tools
 S=${WORKDIR}/${PN}-${PATCHLEVEL}
 
 MODULE_NAMES="acx(net:${S})"
-#CONFIG_CHECK="WIRELESS_EXT FW_LOADER"
+CONFIG_CHECK="WIRELESS_EXT FW_LOADER"
 BUILD_TARGETS="modules"
 
 pkg_setup() {
