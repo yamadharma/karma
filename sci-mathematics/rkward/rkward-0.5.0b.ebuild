@@ -4,15 +4,15 @@
 
 EAPI="2"
 
-NEED_KDE="4.2"
-inherit kde4overlay-base
+# NEED_KDE="4.2"
+inherit kde4-base
 
 DESCRIPTION="An IDE/GUI for the R-project"
 HOMEPAGE="http://rkward.sourceforge.net/"
 SRC_URI="mirror://sourceforge/rkward/${P}.tar.gz"
 
 LICENSE="GPL-2"
-SLOT="4.1"
+SLOT="4.2"
 KEYWORDS="amd64 x86"
 IUSE="debug"
 

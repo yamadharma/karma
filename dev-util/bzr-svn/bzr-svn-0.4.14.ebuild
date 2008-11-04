@@ -15,16 +15,10 @@ SLOT="0"
 KEYWORDS="x86 amd64"
 IUSE=""
 
-DEPEND=">=dev-util/bzr-1.6_rc1-r1
+DEPEND=">=dev-util/bzr-1.9_rc1
 	|| ( >=dev-lang/python-2.5 >=dev-python/pysqlite-2 )
 	>=dev-libs/apr-1
 	>=dev-util/subversion-1.4.0"
 RDEPEND=""
 
 S="${WORKDIR}"/${MY_P}
-
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	epatch "${FILESDIR}"/${P}-compatible-versions.patch
-}

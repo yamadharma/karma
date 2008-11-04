@@ -5,9 +5,10 @@
 EAPI="1"
 
 
-NEED_KDE="4.2"
-inherit kde4svn eutils
+# NEED_KDE="4.2"
+inherit kde4-base eutils
 
+KDE_DATE=20081027
 
 DESCRIPTION="KDE internationalization package"
 HOMEPAGE="http://www.kde.org/"
@@ -51,12 +52,12 @@ pkg_setup() {
 src_unpack() {
 	ESVN_PROJECT="KDE/${PN}"
 	for lang in ${enabled_linguas}; do
-		ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4/${lang}"
+		ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4/${lang}@{${KDE_DATE}}"
 		S="${WORKDIR}"/${PN}/${lang}
 		subversion_src_unpack
 	done
 
-	ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4/scripts"
+	ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4/scripts@{${KDE_DATE}}"
 	S="${WORKDIR}"/${PN}/scripts
 	kde4svn_src_unpack
 	S="${WORKDIR}"/${PN}

@@ -5,10 +5,10 @@
 EAPI="1"
 
 KMNAME="extragear/graphics"
-NEED_KDE="4.2"
+# NEED_KDE="4.2"
 OPENGL_REQUIRED="optional"
 
-inherit kde4svn eutils
+inherit kde4-base eutils
 
 ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/extragear/graphics/${PN}@{${PV}}"
 
