@@ -8,7 +8,7 @@ KMNAME="extragear/graphics"
 # NEED_KDE="4.2"
 OPENGL_REQUIRED="optional"
 
-inherit kde4-base eutils
+inherit kde4-base eutils subversion
 
 ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/extragear/graphics/${PN}@{${PV}}"
 

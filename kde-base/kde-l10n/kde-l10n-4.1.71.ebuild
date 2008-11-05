@@ -4,15 +4,15 @@
 
 EAPI="1"
 
-
 # NEED_KDE="4.2"
-inherit kde4-base eutils
+inherit kde4-base eutils subversion
 
 KDE_DATE=20081027
 
 DESCRIPTION="KDE internationalization package"
 HOMEPAGE="http://www.kde.org/"
 LICENSE="GPL-2"
+SRC_URI=""
 
 KEYWORDS="amd64 x86"
 IUSE="+doc"
@@ -59,7 +59,7 @@ src_unpack() {
 
 	ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4/scripts@{${KDE_DATE}}"
 	S="${WORKDIR}"/${PN}/scripts
-	kde4svn_src_unpack
+	subversion_src_unpack
 	S="${WORKDIR}"/${PN}
 }
 
@@ -85,11 +85,11 @@ src_compile() {
 				|| die "Disabling docs for ${lang} failed."
 		fi
 	done
-	kde4overlay-base_src_compile
+	kde4-base_src_compile
 }
 
 src_install() {
-	kde4overlay-base_src_compile
+	kde4-base_src_compile
 	
 	# Remove collisions
 	rm ${D}/usr/kde/${NEED_KDE}/share/locale/*/LC_MESSAGES/kplayer.mo
