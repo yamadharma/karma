@@ -1,13 +1,13 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-boot/grub/grub-1.96.ebuild,v 1.3 2008/05/05 03:37:21 vapier Exp $
+# $Header: $
 
 inherit mount-boot eutils flag-o-matic toolchain-funcs versionator
 
 MY_PV=$(replace_version_separator 2 '+')
 MY_PN=${PN}2
 MY_P=${MY_PN}_${MY_PV}
-DEB_PATCH_V=2
+DEB_PATCH_V=1
 
 S=${WORKDIR}/${MY_P/_/-}
 

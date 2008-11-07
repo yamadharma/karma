@@ -7,13 +7,13 @@
 #      we never updated any of the source code (it still all wants menu.lst),
 #      and there is no indication that upstream is making the transition.
 
-inherit mount-boot eutils flag-o-matic toolchain-funcs autotools versionator
+inherit mount-boot eutils flag-o-matic toolchain-funcs autotools
 
 MY_PV=${PV%_pre*}-2008-08-08
 
 PATCHVER="1.7"
-DESCRIPTION="GNU GRUB Legacy boot loader"
-HOMEPAGE="http://www.gnu.org/software/grub/"
+DESCRIPTION="GRUB4DOS is an universal boot loader based on GNU GRUB"
+HOMEPAGE="https://gna.org/projects/grub4dos"
 SRC_URI="http://download.gna.org/grub4dos/${PN}-${MY_PV}-src.zip
 	mirror://gentoo/splash.xpm.gz
 	mirror://gentoo/grub-0.97-patches-${PATCHVER}.tar.bz2"

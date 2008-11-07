@@ -7,7 +7,7 @@ EAPI="1"
 # NEED_KDE="4.2"
 inherit kde4-base eutils subversion
 
-KDE_DATE=20081027
+KDE_DATE=20081104
 
 DESCRIPTION="KDE internationalization package"
 HOMEPAGE="http://www.kde.org/"
