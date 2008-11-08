@@ -1,8 +1,0 @@
-DIST fedora-adminutil-1.0.4.tar.gz 106373 RMD160 34cf30fa5a62d70f203f8e23c91e69e22288fac7 SHA1 106ae4831b34f127c5a7c481290befa11cda2452 SHA256 e29884915a13d827e51626bdee09534a48b492d5c730c25bfd03837546c49eae
-EBUILD fedora-ds-adminutil-1.0.4.ebuild 1197 RMD160 71e61f687cdcdfa0acfe78ae315fcff6ead4a401 SHA1 7ddebf5382667262d2204d7c5ef48109eca53555 SHA256 eb1889ae52ab97e8a5d2cc791c3537c0a7ef00b031084f794b2b49c0104db386
-MD5 b0f0c0054cc42964ace56ff4cd09ee0a fedora-ds-adminutil-1.0.4.ebuild 1197
-RMD160 71e61f687cdcdfa0acfe78ae315fcff6ead4a401 fedora-ds-adminutil-1.0.4.ebuild 1197
-SHA256 eb1889ae52ab97e8a5d2cc791c3537c0a7ef00b031084f794b2b49c0104db386 fedora-ds-adminutil-1.0.4.ebuild 1197
-MD5 3c43c99b153252a8e1192adfcb4ee7d8 files/digest-fedora-ds-adminutil-1.0.4 268
-RMD160 c082a8f38fb1c92797febfe8f7581e9a36c32966 files/digest-fedora-ds-adminutil-1.0.4 268
-SHA256 392b2733382ce86042b1259bf78543895ef6a720585e529d7b755825877bcba5 files/digest-fedora-ds-adminutil-1.0.4 268

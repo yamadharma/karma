@@ -14,7 +14,7 @@ SLOT="0"
 IUSE=""
 
 DEPEND=">=dev-libs/nss-3.11.4
-        >=dev-libs/nspr-4.6.4"
+	>=dev-libs/nspr-4.6.4"
 RDEPEND="${DEPEND}"
 
 APACHE2_MOD_CONF="47_${PN}"
@@ -32,9 +32,9 @@ src_compile() {
 
 src_install() {
 	mv -f ".libs/libmodnss.so" ".libs/${PN}.so"
-	
+
 	dosbin gencert nss_pcache
 	dohtml docs/mod_nss.html
-	
+
 	apache-module_src_install
 }

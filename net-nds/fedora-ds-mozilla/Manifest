@@ -1,8 +1,0 @@
-DIST mozilla-components-1.0.3.tar.gz 5672899 RMD160 b1e384c5c4aaa06bce88330573e41de63f3b8b73 SHA1 927cc81a47da9863e1e73530a68a5203609e4115 SHA256 1a94a520ab123b48eed6ea49fdbdecbdfae5296757bdae739b18d875c0200238
-EBUILD fedora-ds-mozilla-1.0.3.ebuild 2966 RMD160 699b8589e892f5573ded0a672183eb6e53c4847c SHA1 ccaec20d2193ef7bfdb7594bb946aecd18485e65 SHA256 3eabb3bc91c7a8cec068c74a6b25f1812a240c5de4b9884e813889b0aae4ea8e
-MD5 9ecc04f15d0f7713b2e8a538a3732d4f fedora-ds-mozilla-1.0.3.ebuild 2966
-RMD160 699b8589e892f5573ded0a672183eb6e53c4847c fedora-ds-mozilla-1.0.3.ebuild 2966
-SHA256 3eabb3bc91c7a8cec068c74a6b25f1812a240c5de4b9884e813889b0aae4ea8e fedora-ds-mozilla-1.0.3.ebuild 2966
-MD5 a9b0e4a62e67b16270c7113c4e2564bb files/digest-fedora-ds-mozilla-1.0.3 277
-RMD160 e08736a9fd3c6585f51ada3a7665cc3fd424ef73 files/digest-fedora-ds-mozilla-1.0.3 277
-SHA256 77dc15bfeefb83bf067ceebd6ff7e9023a51375841ed955d6c456900d897096a files/digest-fedora-ds-mozilla-1.0.3 277

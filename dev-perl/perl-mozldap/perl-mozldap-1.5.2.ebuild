@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,7 +10,8 @@ SRC_URI="ftp://ftp.mozilla.org/pub/mozilla.org/directory/perldap/releases/${PV}/
 
 LICENSE="MPL-1.1"
 SLOT="0"
-KEYWORDS="alpha amd64 arm ~hppa ia64 mips ppc ppc64 s390 sh sparc x86 ~x86-fbsd"
+#KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86"
+KEYWORDS="amd64 x86"
 IUSE=""
 
 DEPEND=">=dev-libs/nspr-4.0.1
@@ -19,6 +20,6 @@ DEPEND=">=dev-libs/nspr-4.0.1
 	dev-lang/perl"
 
 src_compile() {
-	LDAPPKGNAME=mozldap perl Makefile.PL.rpm DESTDIR=${D} INSTALLDIRS=vendor
+	LDAPPKGNAME=mozldap perl Makefile.PL.rpm DESTDIR="${D}" INSTALLDIRS=vendor
 	perl-module_src_test
 }

@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -18,8 +18,8 @@ DEPEND=">=dev-libs/nss-3.11
 
 src_unpack() {
 	unpack ${A}
-	epatch ${FILESDIR}/${P}-gentoo.patch
-	cd ${S}
+	epatch "${FILESDIR}"/${P}-gentoo.patch
+	cd "${S}"
 	eautoreconf
 }
 
@@ -35,10 +35,9 @@ src_compile() {
 }
 
 src_install () {
-	emake DESTDIR=${D} install || die "emake failed"
-	
-	# cope with libraries being in /usr/lib/svrcore
-        dodir /etc/env.d
-        echo "LDPATH=/usr/$(get_libdir)/svrcore" > ${D}/etc/env.d/08svrcore
+	emake DESTDIR="${D}" install || die "emake failed"
 
+	# cope with libraries being in /usr/lib/svrcore
+	dodir /etc/env.d
+	echo "LDPATH=/usr/$(get_libdir)/svrcore" > "${D}"/etc/env.d/08svrcore
 }
