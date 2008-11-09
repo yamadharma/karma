@@ -8,12 +8,14 @@ MY_EXTRAS_VER="20070916"
 #SERVER_URI="mirror://gentoo/MySQL-${PV%.*}/mysql-${PV//_/-}.tar.gz"
 PBXT_VERSION="1.0.06-beta"
 
-inherit mysql
+inherit mysql flag-o-matic
 
 # REMEMBER: also update eclass/mysql*.eclass before committing!
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
 
 EPATCH_EXCLUDE="105_all_mysql_config_cleanup.patch"
+
+append-flags "-fPIC -DPIC"
 
 src_test() {
 	make check || die "make check failed"
