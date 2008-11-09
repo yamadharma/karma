@@ -97,4 +97,7 @@ src_compile() {
 
 src_install() {
 	[[ -z ${enabled_linguas} ]] || kde4-base_src_install
+	
+	# Dirty hack
+	rm ${D}/usr/kde/4.2/share/locale/ru/LC_MESSAGES/digikam.mo
 }

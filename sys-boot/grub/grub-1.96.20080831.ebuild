@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit mount-boot eutils flag-o-matic toolchain-funcs versionator
 
 MY_PV=$(replace_version_separator 2 '+')
@@ -34,8 +36,7 @@ RESTRICT="strip"
 
 SPLASH_DIR=/usr/share/images/grub/
 
-src_unpack() {
-	unpack ${A}
+src_prepare() {
 	cd ${WORKDIR}
 	epatch ${WORKDIR}/${MY_P}-${DEB_PATCH_V}.diff
 
