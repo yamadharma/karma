@@ -63,3 +63,20 @@ src_configure() {
 	"
 	kde4-base_src_configure
 }
+
+src_install() {
+	kde4-base_src_install
+
+	# Dirty hack
+	# kde-base/plasma-workspace-4.1.72
+	rm ${D}/usr/kde/4.2/lib64/kde4/plasma_animator_default.so
+	rm ${D}/usr/kde/4.2/share/kde4/services/plasma-animator-default.desktop
+
+	# kde-base/kdelibs-4.1.72
+	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-animator.desktop
+	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-applet.desktop
+	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-containment.desktop
+	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-dataengine.desktop
+	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-runner.desktop
+	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-scriptengine.desktop
+}
