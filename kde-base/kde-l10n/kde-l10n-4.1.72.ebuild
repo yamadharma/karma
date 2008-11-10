@@ -59,7 +59,7 @@ src_unpack() {
 	S="${WORKDIR}"/${PN}/scripts
 	subversion_src_unpack
 	S="${WORKDIR}"/${PN}
-	kde4-base_src_unpack
+#	kde4-base_src_unpack
 }
 
 src_configure() {

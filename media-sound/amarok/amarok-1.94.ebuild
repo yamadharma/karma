@@ -71,6 +71,7 @@ src_install() {
 	# kde-base/plasma-workspace-4.1.72
 	rm ${D}/usr/kde/4.2/lib64/kde4/plasma_animator_default.so
 	rm ${D}/usr/kde/4.2/share/kde4/services/plasma-animator-default.desktop
+	[ -e /usr/kde/4.2/lib/kde4/plasma_animator_default.so ] && rm ${D}/usr/kde/4.2/lib/kde4/plasma_animator_default.so
 
 	# kde-base/kdelibs-4.1.72
 	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-animator.desktop
