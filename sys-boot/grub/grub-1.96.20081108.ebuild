@@ -45,6 +45,8 @@ src_prepare() {
 	do
 	    epatch ${i}
 	done
+	
+	touch ${S}/docs/version.texi
 }
 
 src_compile() {
@@ -57,6 +59,11 @@ src_compile() {
 		--datadir=/usr/lib \
 		|| die "econf failed"
 	emake -j1 || die "making regular stuff"
+
+	cd ${S}/docs
+	makeinfo --force grub.texi
+	use doc && texi2pdf grub.texi
+
 }
 
 src_install() {
@@ -75,4 +82,9 @@ src_install() {
 	cp *.tga ${D}${SPLASH_DIR}
 	newdoc README README.splashimages
 	dodoc commons2tga.pl
+	
+	dodoc ${S}/docs/grub.cfg
+	doinfo	${S}/docs/grub.info
+	use doc && dodoc ${S}/docs/grub.pdf
+	
 }
