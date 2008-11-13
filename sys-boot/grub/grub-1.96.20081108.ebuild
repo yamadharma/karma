@@ -26,7 +26,7 @@ LICENSE="GPL-2"
 SLOT="0"
 # KEYWORDS="x86 amd64"
 KEYWORDS=""
-IUSE="static custom-cflags"
+IUSE="static custom-cflags doc"
 
 DEPEND=">=sys-libs/ncurses-5.2-r5
 	dev-libs/lzo"
@@ -46,6 +46,9 @@ src_prepare() {
 	    epatch ${i}
 	done
 	
+	epatch ${FILESDIR}/grub-1.96-915resolution-0.5.2-3.patch
+	
+	# FIXME! File missing
 	touch ${S}/docs/version.texi
 }
 
@@ -62,7 +65,7 @@ src_compile() {
 
 	cd ${S}/docs
 	makeinfo --force grub.texi
-	use doc && texi2pdf grub.texi
+	use doc && texi2pdf grub.texi 
 
 }
 
