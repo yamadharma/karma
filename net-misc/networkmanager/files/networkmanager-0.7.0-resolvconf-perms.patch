@@ -1,0 +1,20 @@
+Index: src/named-manager/nm-named-manager.c
+===================================================================
+--- src/named-manager/nm-named-manager.c.orig
++++ src/named-manager/nm-named-manager.c
+@@ -26,6 +26,7 @@
+ #include <stdlib.h>
+ #include <errno.h>
+ #include <arpa/inet.h>
++#include <sys/stat.h>
+ #include <glib.h>
+ 
+ #include <glib/gi18n.h>
+@@ -304,6 +305,7 @@ rewrite_resolv_conf (NMNamedManager *mgr
+ 				     g_strerror (errno));
+ 		} else {
+ 			nm_system_update_dns ();
++			chmod(RESOLV_CONF, S_IREAD | S_IWRITE | S_IRGRP | S_IROTH);
+ 		}
+ 	}
+ 
