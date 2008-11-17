@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit autotools versionator
-
 DESCRIPTION="GTK based GUI for xneur"
 HOMEPAGE="http://www.xneur.ru/"
 if [[ "${PV}" =~ (_p)([0-9]+) ]] ; then
@@ -12,14 +10,14 @@ if [[ "${PV}" =~ (_p)([0-9]+) ]] ; then
 	MTSLPT_REV=${BASH_REMATCH[2]}
 	ESVN_REPO_URI="svn://xneur.ru:3690/xneur/${PN}/@${MTSLPT_REV}"
 else
+	inherit eutils autotools versionator
 	SRC_URI="http://dists.xneur.ru/release-${PV}/tgz/${P}.tar.bz2"
 fi
+
 LICENSE="GPL-2"
-
-IUSE="nls"
 SLOT="0"
-
 KEYWORDS="x86 amd64"
+IUSE="nls"
 
 RDEPEND=">=x11-apps/xneur-$(get_version_component_range 1-2)
 	 >=x11-libs/gtk+-2.0.0
@@ -35,13 +33,14 @@ src_unpack() {
 		unpack ${A}
 	fi
 	cd "${S}"
+	epatch "${FILESDIR}/${P}-CFLAGS.patch"
 	# -Werror should not occure in resulting build.
-	sed -i "s/\(CFLAGS.*\)-Werror\(.*\)/\1\2/" configure.in
+	sed -i "s/-Werror -g0//" configure.in
 	eautoreconf
 }
 
 src_compile() {
-	XNEUR_CFLAGS="${CFLAGS}" econf $(use_enable nls)
+	econf $(use_enable nls)
 	emake || die "emake failed"
 }
 

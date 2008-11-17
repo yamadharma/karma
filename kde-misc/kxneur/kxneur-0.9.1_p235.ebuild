@@ -5,6 +5,7 @@
 inherit kde versionator
 
 DESCRIPTION="KDE front-end for XNeur keybord layout switcher"
+HOMEPAGE="http://www.xneur.ru/"
 if [[ "${PV}" =~ (_p)([0-9]+) ]] ; then
 	inherit subversion
 	SRC_URI=""
@@ -14,9 +15,7 @@ else
 	SRC_URI="http://dists.xneur.ru/release-${PV}/tgz/${P}.tar.bz2"
 fi
 
-HOMEPAGE="http://www.xneur.ru/"
 LICENSE="GPL-2"
-
 KEYWORDS="x86 amd64"
 IUSE=""
 
