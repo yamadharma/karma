@@ -6,11 +6,11 @@
 # genkernel-9999.REV    -> use SVN REV
 # genkernel-VERSION     -> normal genkernel release
 
-VERSION_BUSYBOX='1.12.0'
-VERSION_DMAP='1.02.27'
+VERSION_BUSYBOX='1.7.4'
+VERSION_DMAP='1.02.22'
 VERSION_DMRAID='1.0.0.rc14'
 VERSION_E2FSPROGS='1.41.2'
-VERSION_LVM='2.02.39'
+VERSION_LVM='2.02.28'
 
 MY_HOME="http://dev.gentoo.org/~wolf31o2"
 RH_HOME="ftp://sources.redhat.com/pub"
