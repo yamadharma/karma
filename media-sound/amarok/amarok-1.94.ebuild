@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-NEED_KDE=":4.2"
+KDE_MINIMAL="4.1"
 inherit kde4-base
 
 DESCRIPTION="Advanced audio player based on KDE framework."
@@ -12,7 +12,7 @@ HOMEPAGE="http://amarok.kde.org/"
 
 LICENSE="GPL-2"
 KEYWORDS="x86 amd64"
-SLOT="4.2"
+SLOT="2"
 IUSE="cdaudio daap debug ifp ipod mp3tunes mp4 mtp njb opengl visualization"
 SRC_URI="mirror://kde/unstable/${PN}/${PV}/src/${P}.tar.bz2"
 
@@ -21,12 +21,11 @@ SRC_URI="mirror://kde/unstable/${PN}/${PV}/src/${P}.tar.bz2"
 DEPEND="
 	|| ( dev-db/mysql[embedded,-minimal] dev-db/mysql-community[embedded,-minimal] )
 	>=app-misc/strigi-0.5.7
-	kde-base/kdelibs:${SLOT}
 	>=media-libs/taglib-1.5
 	|| ( media-sound/phonon x11-libs/qt-phonon:4 )
 	x11-libs/qt-webkit:4
-	cdaudio? ( kde-base/libkcddb:${SLOT}
-		kde-base/libkcompactdisc:${SLOT} )
+	cdaudio? ( >=kde-base/libkcddb-4.1
+		>=kde-base/libkcompactdisc-4.1 )
 	ifp? ( media-libs/libifp )
 	ipod? ( >=media-libs/libgpod-0.4.2 )
 	mp3tunes? ( net-misc/curl
@@ -38,8 +37,6 @@ DEPEND="
 	visualization? ( media-libs/libsdl
 		=media-plugins/libvisual-plugins-0.4* )
 	"
-# 	kde-base/libplasma:${SLOT}
-
 RDEPEND="${DEPEND}
 	app-arch/unzip
 	daap? ( www-servers/mongrel )
@@ -67,17 +64,18 @@ src_configure() {
 src_install() {
 	kde4-base_src_install
 
-	# Dirty hack
-	# kde-base/plasma-workspace-4.1.72
-	rm ${D}/usr/kde/4.2/lib64/kde4/plasma_animator_default.so
-	rm ${D}/usr/kde/4.2/share/kde4/services/plasma-animator-default.desktop
-	[ -e /usr/kde/4.2/lib/kde4/plasma_animator_default.so ] && rm ${D}/usr/kde/4.2/lib/kde4/plasma_animator_default.so
+	#provided by kdelibs
+	rm "${D}"/"${KDEDIR}"/share/kde4/servicetypes/plasma-animator.desktop
+	rm "${D}"/"${KDEDIR}"/share/kde4/servicetypes/plasma-applet.desktop
+	rm "${D}"/"${KDEDIR}"/share/kde4/servicetypes/plasma-dataengine.desktop
+	rm "${D}"/"${KDEDIR}"/share/kde4/servicetypes/plasma-runner.desktop
+	rm "${D}"/"${KDEDIR}"/share/kde4/servicetypes/plasma-scriptengine.desktop
+	rm "${D}"/"${KDEDIR}"/share/kde4/servicetypes/plasma-containment.desktop
+	#provided by plasma-workspace
+	rm "${D}"/"${KDEDIR}"/share/kde4/services/plasma-animator-default.desktop
+	rm "${D}"/"${KDEDIR}"/lib64/kde4/plasma_animator_default.so
+	rm ${D}/usr/kde/4.2/lib/kde4/plasma_animator_default.so
 
-	# kde-base/kdelibs-4.1.72
-	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-animator.desktop
-	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-applet.desktop
-	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-containment.desktop
-	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-dataengine.desktop
-	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-runner.desktop
-	rm ${D}/usr/kde/4.2/share/kde4/servicetypes/plasma-scriptengine.desktop
+
+	rm ${D}/usr/kde/4.2/share/locale/ru/LC_MESSAGES/amarok.mo
 }
