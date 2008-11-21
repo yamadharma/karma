@@ -1,0 +1,20 @@
+--- /dev/null	2007-08-24 09:09:18.263739314 +0200
++++ setup.py	2007-09-18 17:15:41.604762006 +0200
+@@ -0,0 +1,17 @@
++#!/usr/bin/env python
++
++"""Setup script for the dynagen module distribution."""
++
++from distutils.core import setup, Extension
++
++setup(
++    name = "dynagen",
++    version = "__VERSION__",
++    description = "A frontend for dynamips",
++    author = "Greg Anuzelli",
++    author_email = "dynagen@gmail.com",
++    url = "http://sourceforge.net/projects/dyna-gen",
++    py_modules = [ 'configobj', 'console', 'dynamips_lib',
++       'validate' ],
++    scripts = [ 'dynagen' ],
++)

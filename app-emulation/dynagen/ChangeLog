@@ -1,0 +1,7 @@
+# ChangeLog for app-emulation/dynagen
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  26 May 2008; Ycarus <ycarus@zugaina.org> +metadata.xml:
+  Add metadata and changelog
+
