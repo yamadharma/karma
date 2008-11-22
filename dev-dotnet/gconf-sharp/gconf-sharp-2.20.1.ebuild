@@ -14,7 +14,7 @@ IUSE=""
 
 DEPEND="${DEPEND}
 		>=gnome-base/gconf-2.20
-		>=dev-dotnet/glade-sharp-${GTK_SHARP_REQUIRED_VERSION}*
+		>=dev-dotnet/glade-sharp-${GTK_SHARP_REQUIRED_VERSION}
 		=dev-dotnet/gnome-sharp-${PV}*
 		=dev-dotnet/art-sharp-${PV}*"
 
