@@ -1,0 +1,23 @@
+#!/sbin/runscript
+# Copyright 1999-2008 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	need net
+	after postgresql
+}
+
+start() {
+	ebegin "Starting SOGo service"
+	start-stop-daemon --start --exec /usr/GNUstep/System/Tools/Admin/sogod-0.9 \
+		--chuid sogo -m -b --pidfile /var/run/sope.pid
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping SOGo service"
+	start-stop-daemon --stop \
+		--pidfile /var/run/sope.pid
+	eend $?
+}
