@@ -20,7 +20,7 @@ LICENSE="LLVM"
 
 SLOT="0"
 
-KEYWORDS="amd64 ~ppc x86"
+KEYWORDS="x86 amd64"
 
 IUSE="debug alltargets pic"
 # 'jit' is not a flag anymore.  at least on x86, disabling it saves nothing
@@ -41,6 +41,9 @@ PDEPEND=""
 
 S="${WORKDIR}/llvm-${PV}"
 
+MY_LLVM_GCC_PREFIX=/usr/lib/llvm-gcc
+# this same variable is located in llvm-gcc's ebuild; keep them in sync
+
 pkg_setup() {
 	
 	broken_gcc=( 3.2.2 3.2.3 3.3.2 4.1.1 )
@@ -54,7 +57,7 @@ pkg_setup() {
 		if [ "$gcc_vers" = "$version" ]; then
 			elog "Your version of gcc is known to miscompile llvm"
 			elog "check http://www.llvm.org/docs/GettingStarted.html for \
-possible solutions"
+			possible solutions"
 			die "Your version of gcc is known to miscompile llvm" 
 		fi
 	done
@@ -64,9 +67,9 @@ possible solutions"
 		do
 			if [ "$gcc_vers" = "$version" ]; then
 				elog "Your version of gcc is known to miscompile llvm in x86 \
-architectures"
+				architectures"
 				elog "check http://www.llvm.org/docs/GettingStarted.html for \
-possible solutions"
+				possible solutions"
 				die "Your version of gcc is known to miscompile llvm" 
 			fi
 		done
@@ -77,9 +80,9 @@ possible solutions"
 		do
 			if [ "$gcc_vers" = "$version" ]; then
 				elog "Your version of gcc is known to miscompile llvm in amd64 \
-architectures"
+				architectures"
 				elog "check http://www.llvm.org/docs/GettingStarted.html for \
-possible solutions"
+				possible solutions"
 				die "Your version of gcc is known to miscompile llvm" 
 			fi
 		done
@@ -91,7 +94,7 @@ possible solutions"
 	do
 		if [ $(bison --version | head -n1 | cut -f4 -d" ") = "$version" ]; then
 			elog "Your version of Bison is known not to work with llvm, please \
-upgrade to a newer version"
+			upgrade to a newer version"
 			die "Your version of Bison is known not to work with llvm"
 		fi
 	done
@@ -103,7 +106,7 @@ upgrade to a newer version"
 	do
 		if [ $(ld --version | head -n1 | cut -f5 -d" ") = "$version" ]; then
 			ewarn "Your version of Binutils is known to be problematic with \
-llvm -> llvm team recommends upgrading"
+			llvm -> llvm team recommends upgrading"
 		fi
 	done
 }
@@ -130,8 +133,16 @@ src_unpack() {
 	einfo "Fixing rpath"
 	sed -e 's,-rpath \$(ToolDir),,g' -i Makefile.rules || die "sed failed"
 
+	# This patch solves the PIC code generation for 64bits platforms. It is
+	# activated with a USE flag, so users know what they are doing
+#	if use amd64 && use pic; then
+#		epatch "${FILESDIR}"/llvm-2.3-64bits-pic.patch
+#		elog "PIC code generation for 64 bits -> patch applied"
+#	fi
+	
 	epatch "${FILESDIR}"/llvm-2.3-dont-build-hello.patch
 	epatch "${FILESDIR}"/llvm-2.3-disable-strip.patch
+	
 }
 
 
@@ -144,7 +155,7 @@ src_compile() {
 		# ...and you probably shouldn't use tmpfs, unless it can hold 900MB
 	else
 		CONF_FLAGS="${CONF_FLAGS} --enable-optimized --disable-assertions \
---disable-expensive-checks"
+		--disable-expensive-checks"
 	fi
 	
 	if use alltargets; then
@@ -153,7 +164,7 @@ src_compile() {
 		CONF_FLAGS="${CONF_FLAGS} --enable-targets=host-only"
 	fi
 
-	if use amd64 || use pic; then
+	if use amd64 && use pic; then
 		CONF_FLAGS="${CONF_FLAGS} --enable-pic"
 	fi
 
@@ -166,21 +177,24 @@ src_compile() {
 
 	econf ${CONF_FLAGS} || die "econf failed"
 	emake tools-only || die "emake failed"
+	emake || die "emake failed"	
 }
 
-src_install()
-{
+src_install() {
 	make DESTDIR="${D}" install || die "make install failed"
 
 	# for some reason, LLVM creates a few .dir files.  remove them
 	find "${D}" -name .dir -print0 | xargs -r0 rm
 
-	# tblgen does not get installed and wouldn't be very useful anyway
+	# tblgen and stkrc do not get installed and wouldn't be very useful anyway,
 	# so remove their man pages.  llvmgcc.1 and llvmgxx.1 are present here for
 	# unknown reasons.  llvm-gcc will install proper man pages for itself, so
-	# remove them here
+	# remove these strange thingies here.
 	einfo "Removing unnecessary man pages"
-	rm "${D}"/usr/share/man/man1/{tblgen,llvmgcc,llvmgxx}.1
+	rm "${D}"/usr/share/man/man1/{tblgen,stkrc,llvmgcc,llvmgxx}.1
+
+	# this also installed the man pages llvmgcc.1 and llvmgxx.1, which is a bit
+	# a mistery because those binares are provided by llvm-gcc
 
 }
 
