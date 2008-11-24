@@ -15,7 +15,7 @@ SRC_URI="http://www.nsnam.org/releases/${P}.tar.bz2
 
 LICENSE="GPL-2"
 SLOT="3"
-KEYWORDS="x86 amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE="doc examples"
 
 RDEPEND="dev-lang/python
