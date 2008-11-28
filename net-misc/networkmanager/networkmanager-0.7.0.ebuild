@@ -45,8 +45,8 @@ DEPEND="${RDEPEND}
 	net-dialup/ppp
         doc? ( >=dev-util/gtk-doc-1.8 )"
 
-PDEPEND="gnome? ( >=gnome-extra/nm-applet-0.7.0_pre0 )
-	kde? ( >=kde-misc/knetworkmanager-0.7_pre0 )"
+PDEPEND="gnome? ( >=gnome-extra/nm-applet-0.7.0 )
+	kde? ( >=kde-misc/knetworkmanager-0.7 )"
 
 S=${WORKDIR}/${MY_P/-rc2/}
 
