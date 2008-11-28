@@ -108,7 +108,9 @@ src_compile() {
 			append-flags -mmmx -msse -m3dnow -O2
 		fi
 	fi
-
+	
+	use amd64 || myconf="${myconf} $(use_enable 3dnow dynsimd)"
+	
 	econf \
 		$(use_enable freebob) \
 		$(use_enable altivec) \
@@ -121,7 +123,6 @@ src_compile() {
 		$(use_enable oss) \
 		$(use_enable portaudio) \
 		$(use_enable sse)  \
-		$(use_enable 3dnow dynsimd) \
 		--disable-dependency-tracking \
 		${myconf} || die "configure failed"
 	emake || die "compilation failed"
