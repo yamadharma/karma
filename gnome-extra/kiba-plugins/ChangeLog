@@ -1,0 +1,48 @@
+# ChangeLog for gnome-extra/kiba-plugins
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  13 Sep 2008; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  kiba-plugins-9999.ebuild:
+  Call scm src_unpack function and don't try to use unpack on live code.
+
+  13 Sep 2008; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  kiba-plugins-9999.ebuild:
+  Call eautoreconf after intltoolize, move autotools to src_unpack and fixed
+  qa issues.
+
+  02 Aug 2008; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  metadata.xml:
+  Added use flags descriptions to metadata.xml.
+
+  15 Apr 2008; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  kiba-plugins-9999.ebuild:
+  Updated pkg_postinst to include a warning on enabling glitz support for
+  kiba-dock and kiba-plugins with nvidia cards.
+
+  24 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  kiba-plugins-9999.ebuild:
+  Corrected SRC_URI for QA.
+
+  21 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  metadata.xml:
+  Updated metadata.xml
+
+  20 Aug 2007; Jorge Manuel B. S. Vicetto <jmbsvicetto@gentoo.org>
+  metadata.xml, kiba-plugins-9999.ebuild:
+  Fixed some minor syntax issues on the ebuild.
+  Added my details to metadata.xml
+
+  31 Jul 2007; <roderick_greening@hotmail.com> kiba-plugins-9999.ebuild:
+  Updated svn repo
+
+  22 Apr 2007; Alex Heck <nesl247@gmail.com> kiba-plugins-9999.ebuild:
+  gnome-extra/kiba-plugins: Remove glade as a dep
+
+  21 Apr 2007; Alex Heck <nesl247@gmail.com> kiba-plugins-9999.ebuild:
+  Fixed build issues
+
+  01 Mar 2007; Alex Heck <nesl247@gmail.com> +kiba-plugins-9999.ebuild,
+  +metadata.xml:
+  Initial import
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<use>
+	<flag name="glitz">Enables support for <pkg>media-libs/glitz</pkg>.
+	</flag>
+</use>
+<herd>no-herd</herd>
+<maintainer>
+	<email>jmbsvicetto@gentoo.org</email>
+	<name>Jorge Manuel B. S. Vicetto</name>
+</maintainer>
+<maintainer>
+	<email>ingmar@gentoo.org</email>
+	<name>Ingmar Vanhassel</name>
+</maintainer>
+<maintainer>
+	<email>philantrop@gentoo.org</email>
+	<name>Wulf C. Krueger</name>
+</maintainer>
+<longdescription>Kiba-dock plugins</longdescription>
+</pkgmetadata>
+
