@@ -105,19 +105,16 @@ src_install() {
 
 	dodoc ChangeLog AUTHORS MAINTAINERS FAQ INSTALL* NEWS README*
 
-        # Install cons.saver setuid to actually work
-        fperms u+s /usr/libexec/mc/cons.saver
+	# Install cons.saver setuid to actually work
+	fperms u+s /usr/libexec/mc/cons.saver
 
 	insinto /etc/mc
 	doins ${FILESDIR}/mc.gentoo
 	doins ${FILESDIR}/mc.ini
 
-#	insinto /usr/share/mc/syntax
-#	doins ${FILESDIR}/ebuild.syntax
-
 	# http://bugs.gentoo.org/show_bug.cgi?id=71275
 	rm -f ${D}/usr/share/locale/locale.alias
-	
+
 	dodir /etc/profile.d
 	exeinto /etc/profile.d
 	doexe ${D}/usr/share/mc/bin/mc.sh
@@ -129,14 +126,5 @@ src_install() {
 	insinto /etc/pam.d
         newins ${FILESDIR}/mcserv.pamd mcserv
 
-#{{ Add Russian and Ukrainian hints and help for CP1251 & UTF-8 locales
-#	if ( use unicode )
-#	then
-#	    iconv -fkoi8-r -tcp1251 ${D}/usr/share/mc/mc.hint.ru > ${D}/usr/share/mc/mc.hint.ru_RU.CP1251
-#	    iconv -fkoi8-u -tcp1251 ${D}/usr/share/mc/mc.hint.uk > ${D}/usr/share/mc/mc.hint.uk_UA.CP1251
-#	    iconv -fkoi8-r -tcp1251 ${D}/usr/share/mc/mc.hlp.ru >  ${D}/usr/share/mc/mc.hlp.ru_RU.CP1251
-#	fi	    
-#}}
-	
 	dodoc ${FILESDIR}/*.color
 }
