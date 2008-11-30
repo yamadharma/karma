@@ -110,7 +110,7 @@ src_install() {
 
 	insinto /etc/mc
 	doins ${FILESDIR}/mc.gentoo
-	doins ${FILESDIR}/mc.ini
+#	doins ${FILESDIR}/mc.ini
 
 	# http://bugs.gentoo.org/show_bug.cgi?id=71275
 	rm -f ${D}/usr/share/locale/locale.alias

@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit eutils
 
 DESCRIPTION="Field-theory motivated computer algebra system"
@@ -26,9 +28,7 @@ RDEPEND="${DEPEND}
 
 src_compile() {
 	local myconf=""
-	
-	myconf="${myconf} `use enable X gui`"
-	
+
 	econf ${myconf} || die
 	emake || die
 
@@ -48,13 +48,12 @@ src_install() {
 
 	use examples &&	cp -R ${S}/examples ${D}/usr/share/doc/${PF}
 
-	if ( use doc )	
-		then
+	if ( use doc )
+	then
 		cd ${S}/doc/doxygen
 		dohtml html/*
 		cp latex/*.pdf ${D}/usr/share/doc/${PF}
 	fi
 	
 	rm -rf ${D}/usr/share/TeXmacs
-
 }
