@@ -5,16 +5,15 @@
 inherit eutils
 
 # NetworkManager likes itself with capital letters
-MY_PN=${PN/networkmanager/NetworkManager}
-MY_P=${MY_PN}-${PV/_/-}
+MY_P=${P/networkmanager/NetworkManager}
 
 DESCRIPTION="Network configuration and management in an easy way. Desktop environment independent."
 HOMEPAGE="http://www.gnome.org/projects/NetworkManager/"
-SRC_URI="http://ftp.gnome.org/pub/gnome/sources/$MY_PN/0.7/${MY_P}.tar.gz"
+SRC_URI="http://ftp.gnome.org/pub/gnome/sources/NetworkManager/0.7/${MY_P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc x86"
-IUSE="doc gnome nss gnutls dhclient dhcpcd resolvconf"
+KEYWORDS="~arm amd64 ~ppc x86"
+IUSE="doc nss gnutls dhclient dhcpcd resolvconf"
 
 RDEPEND=">=sys-apps/dbus-1.2
 	>=dev-libs/dbus-glib-0.75
@@ -45,10 +44,7 @@ DEPEND="${RDEPEND}
 	net-dialup/ppp
         doc? ( >=dev-util/gtk-doc-1.8 )"
 
-PDEPEND="gnome? ( >=gnome-extra/nm-applet-0.7.0 )
-	kde? ( >=kde-misc/knetworkmanager-0.7 )"
-
-S=${WORKDIR}/${MY_P/-rc2/}
+S=${WORKDIR}/${MY_P}
 
 pkg_setup() {
 	if ! built_with_use net-wireless/wpa_supplicant dbus ; then

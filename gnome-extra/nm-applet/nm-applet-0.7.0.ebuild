@@ -4,21 +4,20 @@
 
 inherit gnome2 eutils
 
-MY_PN="${PN/nm-applet/network-manager-applet}"
-MY_P="${MY_PN}-${PV/_/-}"
+MY_P="${P/nm-applet/network-manager-applet}"
 
 DESCRIPTION="Gnome applet for NetworkManager."
 HOMEPAGE="http://people.redhat.com/dcbw/NetworkManager/"
-SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${MY_PN}/0.7/${MY_P}.tar.gz"
+SRC_URI="http://ftp.gnome.org/pub/gnome/sources/network-manager-applet/0.7/${MY_P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc x86"
+KEYWORDS="~arm amd64 ~ppc x86"
 IUSE=""
 
 RDEPEND=">=sys-apps/dbus-1.2
 	>=sys-apps/hal-0.5.9
 	>=dev-libs/libnl-1.1
-	>=net-misc/networkmanager-0.7.0_rc2
+	>=net-misc/networkmanager-0.7.0
 	>=net-wireless/wireless-tools-28_pre9
 	>=net-wireless/wpa_supplicant-0.5.7
 	>=dev-libs/glib-2.16
