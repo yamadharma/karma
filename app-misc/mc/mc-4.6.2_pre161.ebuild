@@ -57,7 +57,8 @@ src_compile() {
 
         append-flags "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
 
-        if use unicode; then
+        if use unicode
+        then
                 append-flags "-DUTF8=1"
         fi
 
@@ -92,6 +93,7 @@ src_compile() {
 	    --enable-extcharset \
 	    --with-mcfs \
 	    --with-subshell \
+	    $(use_enable unicode utf8) \
 	    ${myconf} || die
 
 	emake || die
