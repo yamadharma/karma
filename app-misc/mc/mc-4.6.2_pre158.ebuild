@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit flag-o-matic eutils subversion
 
-ESVN_REPO_URI="http://people.redhat-club.org/slavaz/svn/mc@{${PV##*_pre}}"
+ESVN_REPO_URI="http://mc.redhat-club.org/svn/trunk@${PV##*_pre}"
 
 MY_P=${P/_pre/-pre}
 S=${WORKDIR}/${MY_P}
