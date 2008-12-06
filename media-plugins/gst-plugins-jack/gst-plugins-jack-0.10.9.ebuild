@@ -5,9 +5,9 @@ inherit gst-plugins-bad
 
 KEYWORDS="amd64 x86"
 
-RDEPEND=">=media-libs/gst-plugins-base-0.10.13
-        >=media-libs/gstreamer-0.10.13
-		media-sound/jack-audio-connection-kit"
+RDEPEND=">=media-libs/gst-plugins-base-0.10.21
+	>=media-libs/gstreamer-0.10.21
+	media-sound/jack-audio-connection-kit"
 
 DEPEND="${RDEPEND}"
 
