@@ -19,12 +19,13 @@ HOMEPAGE="http://www.ibiblio.org/mc/
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sparc x86"
-IUSE="gpm nls samba +unicode X"
+IUSE="+7zip -attrs +background +editor ext2undel -dnotify gpm +network nls samba +unicode +vfs X"
 
 PROVIDE="virtual/editor"
 
 RDEPEND=">=dev-libs/glib-2
-	>=sys-libs/slang-2.1.3
+	unicode? ( >=sys-libs/slang-2.1.3 )
+	!unicode? ( sys-libs/ncurses )
 	gpm? ( sys-libs/gpm )
 	X? ( x11-libs/libX11
 		x11-libs/libICE
@@ -33,17 +34,16 @@ RDEPEND=">=dev-libs/glib-2
 		x11-libs/libSM )
 	samba? ( net-fs/samba )
 	kernel_linux? ( sys-fs/e2fsprogs )
+	ext2undel? ( sys-fs/e2fsprogs )
 	app-arch/zip
 	app-arch/unzip
-	app-arch/p7zip"
+	7zip? ( app-arch/p7zip )"
+
 DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
 	dev-util/pkgconfig"
 
 src_prepare() {
-
-#	epatch "${FILESDIR}"/mc-4.6.0-ebuild-syntax.patch
-
         # fix *.po files
         pushd po
         for i in *.po; do
@@ -52,51 +52,65 @@ src_prepare() {
         popd
 }
 
-src_compile() {
-	append-flags -I/usr/include/gssapi
-
-        append-flags "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
-
-        if use unicode
-        then
-                append-flags "-DUTF8=1"
-        fi
-
-
-	filter-flags -malign-double
-
+src_configure() {
 	local myconf=""
 
-	myconf="${myconf} --with-screen=slang"
+	append-flags -I/usr/include/gssapi
+	append-flags "-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE"
+	filter-flags -malign-double
 
-	myconf="${myconf} `use_with gpm gpm-mouse`"
+	# check for conflicts (currently doesn't compile with --without-vfs)
+	use vfs || {
+		use network || use samba && \
+		die "VFS is required for network or samba support."
+        }
+
+	use attrs && {
+		myconf+=" --enable-preserve-attrs"
+		ewarn "'Preserve Attributes' support is currently BROKEN. Use at your own risk."
+	}
+
+	use dnotify && {
+		myconf+=" --enable-dnotify"
+		ewarn "Support for dnotify is currently BROKEN. Use at your own risk."
+	}
 
 	use nls \
 	    && myconf="${myconf} --with-included-gettext" \
 	    || myconf="${myconf} --disable-nls"
 
-	myconf="${myconf} `use_with X x`"
-
 	use samba \
-	    && myconf="${myconf} --with-samba --with-configdir=/etc/samba --with-codepagedir=/var/lib/samba/codepages --with-privatedir=/etc/samba/private" \
-	    || myconf="${myconf} --without-samba"
+		&& myconf+=" --with-samba --with-configdir=/etc/samba --with-codepagedir=/var/lib/samba/codepages --with-privatedir=/etc/samba/private" \
+		|| myconf+=" --without-samba"
+
+	if use unicode 
+	then
+		myconf+=" --enable-utf8 --with-screen=slang"
+		append-flags "-DUTF8=1"
+	else
+		myconf+=" --disable-utf8 --with-screen=ncurses"
+		ewarn "Non UTF-8 setup is deprecated."
+		ewarn "You are highly encouraged to use UTF-8 compatible system locale."
+	fi
 
 	econf \
 	    --prefix=/usr \
 	    --datadir=/usr/share \
 	    --sysconfdir=/etc \
-	    --with-vfs \
 	    --with-gnu-ld \
-	    --with-ext2undel \
-	    --with-edit \
+	    $(use_with ext2undel) \
+	    $(use_enable nls) \
+	    $(use_with editor edit) \
+	    $(use_enable network netcode) \
+	    $(use_enable background) \
+	    $(use_with gpm gpm-mouse) \
+	    $(use_with vfs) \
+	    $(use_with X x) \
 	    --enable-charset \
 	    --enable-extcharset \
 	    --with-mcfs \
 	    --with-subshell \
-	    $(use_enable unicode utf8) \
 	    ${myconf} || die
-
-	emake || die
 }
 
 src_install() {
