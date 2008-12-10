@@ -6,14 +6,16 @@ WANT_AUTOCONF="2.5"
 WANT_AUTOMAKE="1.9"
 EAPI="1"
 
-inherit autotools check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions mono multilib toolchain-funcs
+inherit autotools check-reqs db-use eutils gnome2-utils fdo-mime flag-o-matic java-pkg-opt-2 kde-functions mono multilib
 
-IUSE="binfilter cups dbus debug eds gnome gstreamer gtk kde ldap mono nsplugin odk oodict opengl pam"
 
-PATCHLEVEL="OOO300"
-MILESTONE="9"
+IUSE="binfilter cups dbus debug eds firefox gnome gstreamer gtk java kde ldap mono odk oodict opengl pam seamonkey xulrunner"
+
+PATCHLEVEL="OOH680"
+MILESTONE="18"
 OOOTAG=${PATCHLEVEL}_m${MILESTONE}
-OOOBUILDTAG=ooo300-m${MILESTONE}
+OOOBUILDTAG=ooh680-m${MILESTONE}
+
 
 SRC="OOo_${PV}_src"
 S="${WORKDIR}/infra-ooo-files_${PV}"
@@ -21,20 +23,29 @@ WORKSRC="${WORKDIR}/${OOOTAG}"
 
 DESCRIPTION="OpenOffice-Infra, office suite with enhanced russinan support from Infra-Resource"
 
-SRC_URI="binfilter? ( mirror://openoffice/stable/${PV}/${SRC}_binfilter.tar.bz2 )
-	mirror://openoffice/stable/${PV}/${SRC}_core.tar.bz2
-	mirror://openoffice/stable/${PV}/${SRC}_l10n.tar.bz2
-	mirror://openoffice/stable/${PV}/${SRC}_extensions.tar.bz2
+SRC_URI="mirror://openoffice/stable/${PV}/${SRC}_core.tar.bz2
 	mirror://openoffice/stable/${PV}/${SRC}_system.tar.bz2
-	odk? ( java? ( http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll ) )
-	http://download.i-rs.ru/pub/openoffice/${PV}/ru/infra-ooo-files_${PV}.tar.gz"
+	mirror://openoffice/stable/${PV}/${SRC}_binfilter.tar.bz2
+	odk? ( mirror://openoffice/stable/${PV}/${SRC}_sdk.tar.bz2
+		java? ( http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll ) )
+	http://download.go-oo.org/SRC680/extras-2.tar.bz2
+	http://download.go-oo.org/SRC680/biblio.tar.bz2
+	http://download.go-oo.org/SRC680/lp_solve_5.5.0.10_source.tar.gz
+	http://download.go-oo.org/SRC680/oox.2008-02-29.tar.bz2
+	http://download.go-oo.org/SRC680/writerfilter.2008-02-29.tar.bz2
+	http://download.i-rs.ru/pub/openoffice/${PV}/ru/infra-ooo-files_2.4.2.tar.gz
+	http://tools.openoffice.org/unowinreg_prebuild/680/unowinreg.dll"
 
-LANGS1="ru uk"
+LANGS1="de fr ru uk"
 LANGS="${LANGS1} en en_US"
 
 # proprt linguas handling
 for X in ${LANGS} ; do
 	IUSE="${IUSE} linguas_${X}"
+done
+
+for Y in ${LANGS1} ; do
+	SRC_URI="${SRC_URI} linguas_${Y}? ( mirror://openoffice/stable/${PV}/${SRC}_l10n.tar.bz2 )"
 done
 
 # detect ARCH variable
@@ -48,7 +59,7 @@ HOMEPAGE="http://www.i-rs.ru"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="x86 amd64"
 
 COMMON_DEPEND="!app-office/openoffice-bin
 	x11-libs/libXaw
@@ -64,12 +75,25 @@ COMMON_DEPEND="!app-office/openoffice-bin
 	eds? ( >=gnome-extra/evolution-data-server-1.2 )
 	gstreamer? ( >=media-libs/gstreamer-0.10
 			>=media-libs/gst-plugins-base-0.10 )
-	kde? ( kde-base/kdelibs:3.5 )
+	kde? ( =kde-base/kdelibs-3* )
 	java? ( >=dev-java/bsh-2.0_beta4
-		>=dev-db/hsqldb-1.8.0.9 )
+	>=dev-java/xalan-2.7
+	>=dev-java/xalan-serializer-2.7
+	>=dev-java/xerces-2.7
+	=dev-java/xml-commons-external-1.3*
+	>=dev-db/hsqldb-1.8.0.9
+	=dev-java/rhino-1.5* )
 	mono? ( >=dev-lang/mono-1.2.3.1 )
 	opengl? ( virtual/opengl
 		virtual/glu )
+	xulrunner? ( >=net-libs/xulrunner-1.8
+		>=dev-libs/nspr-4.6.6
+		>=dev-libs/nss-3.11-r1 )
+	!xulrunner? ( firefox? ( >=dev-libs/nspr-4.6.6
+		>=dev-libs/nss-3.11-r1 ) )
+	!xulrunner? ( !firefox? ( seamonkey? ( =www-client/seamonkey-1*
+		>=dev-libs/nspr-4.6.6
+		>=dev-libs/nss-3.11-r1 ) ) )
 	>=net-misc/neon-0.24.7
 	>=dev-libs/openssl-0.9.8g
 	>=x11-libs/startup-notification-0.5
@@ -81,20 +105,24 @@ COMMON_DEPEND="!app-office/openoffice-bin
 	app-arch/zip
 	app-arch/unzip
 	>=app-text/hunspell-1.1.4-r1
+	>=app-admin/eselect-oodict-20060706
 	dev-libs/expat
 	>=dev-libs/icu-3.8
 	>=sys-libs/db-4.3
 	>=app-text/libwpd-0.8.8
+	>=media-libs/libsvg-0.1.4
 	>=media-libs/vigra-1.4
-	>=app-text/poppler-0.8.0
-	!oodict? ( >=app-admin/eselect-oodict-20060706 )"
+	linguas_ja? ( >=media-fonts/kochi-substitute-20030809-r3 )
+	linguas_zh_CN? ( >=media-fonts/arphicfonts-0.1-r2 )
+	linguas_zh_TW? ( >=media-fonts/arphicfonts-0.1-r2 )"
 
-RDEPEND="java? ( >=virtual/jre-1.5 )
+RDEPEND="java? ( >=virtual/jre-1.4 )
+	!xulrunner? ( firefox? ( || ( =www-client/mozilla-firefox-2*
+		=www-client/mozilla-firefox-bin-2* ) ) )
 	${COMMON_DEPEND}"
 
 DEPEND="${COMMON_DEPEND}
 	x11-libs/libXrender
-	x11-libs/libXtst
 	x11-proto/printproto
 	x11-proto/xextproto
 	x11-proto/xproto
@@ -111,6 +139,7 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/bison
 	dev-libs/libxslt
 	>=dev-libs/libxml2-2.0
+	!xulrunner? ( firefox? ( =www-client/mozilla-firefox-2* ) )
 	>=dev-util/gperf-3
 	>=net-misc/curl-7.12
 	sys-libs/zlib
@@ -119,11 +148,8 @@ DEPEND="${COMMON_DEPEND}
 	pam? ( sys-libs/pam )
 	!dev-util/dmake
 	>=dev-lang/python-2.3.4
-	nsplugin? ( || ( net-libs/xulrunner:1.8 net-libs/xulrunner:1.9 =www-client/seamonkey-1* )
-		>=dev-libs/nspr-4.6.6
-		>=dev-libs/nss-3.11-r1 )
-	java? ( || ( =virtual/jdk-1.6* =virtual/jdk-1.5* )
-		>=dev-java/ant-core-1.7 )
+	java? ( || ( =virtual/jdk-1.6* =virtual/jdk-1.5* =virtual/jdk-1.4* )
+		dev-java/ant-core )
 	ldap? ( net-nds/openldap )
 	virtual/postgresql-base"
 
@@ -140,9 +166,7 @@ pkg_setup() {
 	ewarn " merge again. Also note that building OOo takes a lot of time and "
 	ewarn " hardware ressources: 4-6 GB free diskspace and 256 MB RAM are "
 	ewarn " the minimum requirements. If you have less, use openoffice-infra-bin "
-	ewarn
-	ewarn " Also if you experience a build break, please make sure to retry "
-	ewarn " with MAKEOPTS="-j1" before filing a bug. "
+	ewarn " instead. "
 	ewarn
 
 	# Check if we have enough RAM and free diskspace to build this beast
@@ -163,8 +187,13 @@ pkg_setup() {
 			sed -e 's/\ben\b/en_US/g' -e 's/_/-/g'`
 	fi
 
+	if [[ "${#LINGUAS_OOO}" ==  "2" ]]; then
+		export BASELNG="${LINGUAS_OOO}"
+	else
+		export BASELNG="en-US"
+	fi
+
 	if use !java; then
-		ewarn
 		ewarn " You are building with java-support disabled, this results in some "
 		ewarn " of the OpenOffice.org functionality (i.e. help) being disabled. "
 		ewarn " If something you need does not work for you, rebuild with "
@@ -173,7 +202,6 @@ pkg_setup() {
 	fi
 
 	if is-flagq -ffast-math ; then
-		eerror
 		eerror " You are using -ffast-math, which is known to cause problems. "
 		eerror " Please remove it from your CFLAGS, using this globally causes "
 		eerror " all sorts of problems. "
@@ -184,41 +212,19 @@ pkg_setup() {
 
 	if use pam; then
 		if ! built_with_use sys-apps/shadow pam; then
-			eerror
 			eerror " shadow needs to be built with pam-support. "
 			eerror " rebuild it accordingly or remove the pam use-flag "
 			die
 		fi
 	fi
 
-	if use kde; then
-		ewarn
-		ewarn " Please note that this version of OpenOffice.org will NOT build "
-		ewarn " if you have kde-base/kdelibs or kde-base/kdepimlibs 4.1.x installed "
-		ewarn " without kdeprefix"
-		ewarn
-		ewarn " Until this is resolved, either disable the kde-use-flag or "
-		ewarn " rebuild KDE with USE='kdeprefix'. "
-		ewarn
-
-		if has_version kde-base/kdelibs:4.1; then
-			built_with_use kde-base/kdelibs:4.1 kdeprefix || die "rebuild kde-4.1 with USE='kdeprefix'"
-		fi
-
-		if has_version kde-base/kdepimlibs:4.1; then
-			built_with_use kde-base/kdepimlibs:4.1 kdeprefix || die "rebuild kde-4.1 with USE='kdeprefix'"
-		fi
-	fi
-
-	if use nsplugin; then
-		if pkg-config --exists libxul; then
-			BRWS="libxul"
-		elif pkg-config --exists xulrunner-xpcom; then
-			BRWS="xulrunner"
-		elif pkg-config --exists seamonkey-xpcom; then
-			BRWS="seamonkey"
+	if use xulrunner; then
+		if pkg-config --exists xulrunner-xpcom; then
+			XULR="xulrunner"
+		elif pkg-config --exists libxul; then
+			XULR="libxul"
 		else
-			die "USE flag [nsplugin] set but no installed xulrunner or seamonkey found!"
+			die "USE flag [xulrunner] set but not found!"
 		fi
 	fi
 
@@ -239,76 +245,72 @@ pkg_setup() {
 src_unpack() {
 
 	unpack infra-ooo-files_${PV}.tar.gz
-	use binfilter && unpack ${SRC}_binfilter.tar.bz2
-	unpack ${SRC}_core.tar.bz2
-	unpack ${SRC}_l10n.tar.bz2
-	unpack ${SRC}_extensions.tar.bz2
 	unpack ${SRC}_system.tar.bz2
-
-	if use odk && use java; then
-	    cp -f "${DISTDIR}"/unowinreg.dll "${WORKSRC}"/external/unowinreg/
-	fi
+	unpack ${SRC}_core.tar.bz2
+	unpack ${SRC}_binfilter.tar.bz2
+	unpack ${SRC}_l10n.tar.bz2
 
 	# Some fixes for our patchset
 	cd "${S}"
 	epatch "${FILESDIR}/${PV}/gentoo-scripts.diff"
+	# Missing includes for amd64 gcc43
+	cp -f "${FILESDIR}/${PV}/build-gcc43-missingincludes.diff" "${WORKDIR}"/infra-ooo-files_${PV}/patches/src680/
 	# Patch for using Gentoo specific goo team patches and GentooInfra distro target
-	epatch "${FILESDIR}/${PV}/gentoo-infragentoo.diff"
-	# Patches from go-oo mainstream
-	cp -f "${FILESDIR}/${PV}/gentoo-nojavanostax.diff" "${WORKDIR}/infra-ooo-files_${PV}/patches/dev300/nojavanostax.diff" || die
-	cp -f "${FILESDIR}/${PV}/gentoo-hunspell.diff" "${WORKDIR}/infra-ooo-files_${PV}/patches/dev300/hunspell-one-dir-nocrash.diff" || die
+	epatch "${FILESDIR}/${PV}/gentoo-gentooinfra.diff"
 
-	cd "${WORKSRC}"; tar xjf "${WORKDIR}/infra-ooo-files_${PV}/files/extras-templates.tar.bz2"
+	mkdir -p "${WORKSRC}"/solver/680/unxlng${ARCH_VAR}6.pro/pck/
+	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/extra_templates_*.zip "${WORKSRC}"/solver/680/unxlng${ARCH_VAR}6.pro/pck/
+
 	cd "${WORKSRC}"; rm -rf "extras/source/autotext/lang/ru/*" ; tar xjf "${WORKDIR}/infra-ooo-files_${PV}/files/extras_ru.tar.bz2"
-	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict ru_RU "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_ru_RU.tar.bz2  ${WORKSRC}
-	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict uk_UA "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_uk_UA.tar.bz2  ${WORKSRC}
+	cd "${WORKSRC}"; tar xjf "${WORKDIR}/infra-ooo-files_${PV}/files/oox.2008-02-29.tar.bz2"
 
+	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict ru_RU "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_ru_RU.tar.bz2  ${WORKSRC}
+	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict de_DE "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_de_DE.tar.bz2  ${WORKSRC}
+	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict uk_UA "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_uk_UA.tar.bz2  ${WORKSRC}
+	"${WORKDIR}"/infra-ooo-files_${PV}/bin/enable-dict fr_FR "${WORKDIR}"/infra-ooo-files_${PV}/files/dict_fr_FR.tar.bz2  ${WORKSRC}
+	mkdir -p "${WORKSRC}"/mdbtools/download/
 	mkdir -p "${WORKSRC}"/libwps/download/
 	mkdir -p "${WORKSRC}"/libwpg/download/
 	mkdir -p "${WORKSRC}"/libwpd/download/
 	mkdir -p "${WORKSRC}"/libsvg/download/
-
+	mkdir -p "${WORKSRC}"/default_images/sw/res/
+	mkdir -p "${WORKSRC}"/ooo_custom_images/nologo/introabout/
+	mkdir -p "${WORKSRC}"/default_images/introabout/
+	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/mdbtools*.tar.gz "${WORKSRC}"/mdbtools/download/
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/libwps*.tar.gz   "${WORKSRC}"/libwps/download/
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/libwpg*.tar.gz   "${WORKSRC}"/libwpg/download/
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/libwpd*.tar.gz   "${WORKSRC}"/libwpd/download/
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/libsvg*.tar.gz   "${WORKSRC}"/libsvg/download/
-	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/infra-logo-team.png   "${WORKSRC}"/default_images/sw/res/
+	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/infra-logo.png   "${WORKSRC}"/default_images/sw/res/
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/files/go-oo-team.png   "${WORKSRC}"/default_images/sw/res/
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/res/infra/intro.bmp    "${WORKSRC}"/ooo_custom_images/nologo/introabout/
 	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/res/infra/about.bmp    "${WORKSRC}"/default_images/introabout/
-	cp -f "${WORKDIR}"/infra-ooo-files_${PV}/res/infra/backing*.png    "${WORKSRC}"/default_images/framework/res/
 
 	local patchconf
-	patchconf="--tag=${OOOBUILDTAG} --distro=InfraGentoo --distro=Localize"
+	patchconf="--tag=${OOOBUILDTAG} --distro=GentooInfra --distro=Localize"
 	if use binfilter; then
-		patchconf="${patchconf} --distro=Binfilter"
+	    patchconf="${patchconf} --distro=Binfilter"
 	fi
-
-	"${WORKDIR}"/infra-ooo-files_${PV}/bin/apply.pl  "${WORKDIR}"/infra-ooo-files_${PV}/patches/dev300 ${WORKSRC} ${patchconf}
+	"${WORKDIR}"/infra-ooo-files_${PV}/bin/apply.pl  "${WORKDIR}"/infra-ooo-files_${PV}/patches/src680 ${WORKSRC} ${patchconf}
 	"${WORKDIR}"/infra-ooo-files_${PV}/bin/transform --apply "${WORKDIR}"/infra-ooo-files_${PV} ${WORKSRC}
+
+	cp -f "${DISTDIR}"/unowinreg.dll "${WORKSRC}"/external/unowinreg/
 
 	# workaround for x86/~x86 hunspell
 	export HUNSPELL_LIBS=$(echo "$(pkg-config hunspell --libs)" | sed 's|/|\\/|g')
 
+	# missing macolor1/macolor2 properties patch 
+	epatch "${FILESDIR}/${PV}/gentoo-macolor.diff"
+	# completion_matches -> rl_completion_matches
+	epatch "${FILESDIR}/${PV}/gentoo-completion_matches.diff"
 	# enable/disable-gstreamer, disable scanning for rpm/dpkg and etc
 	epatch "${FILESDIR}/${PV}/gentoo-configure.diff"
 	# disable mkdepend warning
 	epatch "${FILESDIR}/${PV}/gentoo-mkdepend.diff"
-	# completion_matches -> rl_completion_matches
-	epatch "${FILESDIR}/${PV}/gentoo-completion_matches.diff"
-	# disable rpm
+	# fix buildroot issue for rpm >=4.4.7
 	epatch "${FILESDIR}/gentoo-epm-3.7.patch.diff"
 	# fix handling of system libs for postgresql-base
 	epatch "${FILESDIR}/gentoo-system_pgsql.diff"
-	# more stabillity on multiprocessing build
-	epatch "${FILESDIR}/${PV}/gentoo-vba_incl.diff"
-	cp -f "${FILESDIR}/${PV}/gentoo-ReturnInteger.hdl" "${WORKSRC}/scripting/source/vbaevents/ReturnInteger.hdl" || die
-	cp -f "${FILESDIR}/${PV}/gentoo-ReturnInteger.hpp" "${WORKSRC}/scripting/source/vbaevents/ReturnInteger.hpp" || die
-	cp -f "${FILESDIR}/${PV}/gentoo-XVBAToOOEventDescGen.hdl" "${WORKSRC}/scripting/source/vbaevents/XVBAToOOEventDescGen.hdl" || die
-	cp -f "${FILESDIR}/${PV}/gentoo-XVBAToOOEventDescGen.hpp" "${WORKSRC}/scripting/source/vbaevents/XVBAToOOEventDescGen.hpp" || die
-	# fix ru dict
-	epatch "${FILESDIR}/${PV}/gentoo-ru_dict.diff"
-
 
 	# Use flag checks
 	if use java; then
@@ -316,37 +318,28 @@ src_unpack() {
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-jdk-home=$(java-config --jdk-home 2>/dev/null)"
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-java-target-version=$(java-pkg_get-target)"
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-beanshell"
+		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-xalan"
+		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-xerces"
+		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-xml-apis"
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-hsqldb"
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-beanshell-jar=$(java-pkg_getjar bsh bsh.jar)"
+		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-serializer-jar=$(java-pkg_getjar xalan-serializer serializer.jar)"
+		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-xalan-jar=$(java-pkg_getjar xalan xalan.jar)"
+		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-xerces-jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)"
+		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-xml-apis-jar=$(java-pkg_getjar xml-commons-external-1.3 xml-apis.jar)"
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-hsqldb-jar=$(java-pkg_getjar hsqldb hsqldb.jar)"
 	fi
 
-	if use nsplugin ; then
+	if use firefox || use seamonkey || use xulrunner; then
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-mozilla"
-		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-mozilla=${BRWS}"
+		local browser
+		use seamonkey && browser="seamonkey"
+		use firefox && browser="firefox"
+		use xulrunner && browser="${XULR}"
+		CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-mozilla=${browser}"
 	else
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --disable-mozilla"
 		CONFIGURE_ARGS="${CONFIGURE_ARGS} --without-system-mozilla"
-	fi
-
-	# Handle new dicts system
-	if use oodict ; then
-	    CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-myspell-dicts"
-	    local tempdicts=ENUS
-	    local tempdict
-	    for i in ${LINGUAS_OOO}; do
-		if [[ "${i}" != "en-US" ]]; then
-		    tempdict=`ls ${WORKSRC}/dictionaries/ | grep ${i} | sed -e 's/_//g' -e 's/\///g' | tr '[a-z]' '[A-Z]'`
-		    tempdicts="${tempdicts},${tempdict}"
-		fi
-	    done
-	    CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-dict=${tempdicts}"
-	else
-	    CONFIGURE_ARGS="${CONFIGURE_ARGS} --without-myspell-dicts"
-	    CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-dicts"
-	    CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-external-dict-dir=/usr/$(get_libdir)/openoffice/share/dict/ooo"
-	    CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-external-hyph-dir=/usr/$(get_libdir)/openoffice/share/dict/ooo"
-	    CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-external-thes-dir=/usr/$(get_libdir)/openoffice/share/dict/ooo"
 	fi
 
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable binfilter`"
@@ -355,24 +348,16 @@ src_unpack() {
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable eds evolution2`"
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable gnome gnome-vfs`"
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable gnome lockdown`"
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable gstreamer`"
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable gnome systray`"
+	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable gstreamer`"
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable ldap`"
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable opengl`"
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_with ldap openldap`"
+	CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-neon"
+	CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-neon"
+	CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-system-openssl"
+
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable debug crashdump`"
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} `use_enable debug strip-solver`"
-
-	# Extension stuff
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-extension-integration"
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-minimizer"
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-pdfimport"
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-presenter-console"
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-wiki-publisher"
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} --enable-report-builder"
-
-	# Fix kdefilepicker crash on exit
-	CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-alloc=system"
 
 	# Original branding results in black splash screens for some, so forcing ours
 	CONFIGURE_ARGS="${CONFIGURE_ARGS} --with-intro-bitmaps=\\\"${WORKSRC}/ooo_custom_images/nologo/introabout/intro.bmp\\\""
@@ -405,10 +390,6 @@ src_compile() {
 	append-flags "-Wno-implicit"
 	append-flags "-fno-strict-aliasing"
 
-	if [[ $(gcc-major-version) -lt 4 ]]; then
-		replace-flags "-fomit-frame-pointer" "-momit-leaf-frame-pointer"
-	fi
-
 	# Build with NVidia cards breaks otherwise
 	use opengl && append-flags "-DGL_GLEXT_PROTOTYPES"
 
@@ -417,8 +398,8 @@ src_compile() {
 	use debug || export LINKFLAGSOPTIMIZE="${LDFLAGS}"
 
 	# Make sure gnome-users get gtk-support
-	local GTKFLAG="--disable-gtk --disable-cairo --without-system-cairo"
-	( use gtk || use gnome ) && GTKFLAG="--enable-gtk --enable-cairo --with-system-cairo"
+	local GTKFLAG="--disable-gtk --disable-cairo"
+	( use gtk || use gnome ) && GTKFLAG="--enable-gtk --enable-cairo"
 
 	use kde && set-kdedir 3
 
@@ -434,15 +415,17 @@ src_compile() {
 		${GTKFLAG} \
 		`use_enable mono` \
 		`use_enable kde` \
+		`use_enable pam` \
 		`use_enable debug symbols` \
 		`use_enable odk` \
-		`use_enable pam` \
 		`use_with java` \
+		--with-system-freetype \
 		--with-system-libxml \
 		--with-system-libwpd \
 		--with-system-hunspell \
 		--disable-fontooo \
 		--disable-qadevooo \
+		--enable-sdext \
 		--with-system-boost \
 		--with-system-curl \
 		--with-system-db \
@@ -451,18 +434,10 @@ src_compile() {
 		--with-system-libxslt \
 		--with-system-vigra \
 		--without-stlport \
-		--with-system-zlib \
-		--with-system-stdlibs \
-		--enable-neon \
-		--with-system-neon \
-		--enable-xrender-link \
-		--with-system-xrender \
-		--with-system-openssl \
 		--mandir=/usr/share/man \
 		--libdir=/usr/$(get_libdir) \
 		--with-use-shell=bash \
 		--with-epm=internal \
-		--with-linker-hash-style=both \
 		--with-package-format=native \
 		--with-vendor="Infra-Resource" \
 		${CONFIGURE_ARGS} \
@@ -482,22 +457,20 @@ src_compile() {
 
 	./bootstrap
 
-	cd transex3; build.pl --checkmodules ; build.pl -P${JOBS} --all --html --dontgraboutput -- -P${JOBS} && deliver.pl
+	cd transex3; build.pl -P${JOBS} --all && deliver.pl
 
 	cd ${WORKSRC}
 
-	for i in ${LINGUAS_OOO}; do
-	    if [[ "${i}" == "ru" || "${i}" == "uk" ]]; then
-		[ -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${i}/${i}-vendor.sdf ] && "${WORKSRC}"/transex3/scripts/localize -m -l ${i} -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${i}/${i}-vendor.sdf
-	    fi
-	    if [[ "${i}" == "ru" ]]; then
-		[ -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${i}/${i}.sdf ] && "${WORKSRC}"/transex3/scripts/localize -m -l ${i} -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${i}/${i}.sdf
-		[ -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${i}/${i}-patched.sdf ] && "${WORKSRC}"/transex3/scripts/localize -m -l ${i} -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${i}/${i}-patched.sdf
-	    fi
-	done
+	if [[ "${BASELNG}" == "ru" || "${BASELNG}" == "uk" ]]; then
+	    [ -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${BASELNG}/${BASELNG}.sdf ] && "${WORKSRC}"/transex3/scripts/localize -m -l ${BASELNG} -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${BASELNG}/${BASELNG}.sdf
+	    [ -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${BASELNG}/${BASELNG}-vendor.sdf ] && "${WORKSRC}"/transex3/scripts/localize -m -l ${BASELNG} -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${BASELNG}/${BASELNG}-vendor.sdf
+	fi
+	if [[ "${BASELNG}" == "ru" ]]; then
+	    [ -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${BASELNG}/${BASELNG}-patched.sdf ] && "${WORKSRC}"/transex3/scripts/localize -m -l ${BASELNG} -f "${WORKDIR}"/infra-ooo-files_${PV}/sdf/${BASELNG}/${BASELNG}-patched.sdf
+	fi
 
 	if [[ "${JOBS}" != "1" ]]; then
-	    cd instsetoo_native ;  build.pl --checkmodules ; build.pl -P${JOBS} --all --html --dontgraboutput -- -P${JOBS} || die "Build failed"
+	    cd instsetoo_native ; build.pl -P${JOBS} --all || die "Build failed"
 	else
 	    dmake || die "Build failed"
 	fi
@@ -509,7 +482,7 @@ src_compile() {
 
 src_install() {
 
-	einfo "Preparing Installation ..."
+	einfo "Preparing Installation"
 
 	local gentoo_env_set_dst
 
@@ -524,49 +497,46 @@ src_install() {
 	local allcomponents
 
 	if use cups; then
-	    allcomponents="${basecomponents} printeradmin"
+	    allcomponents="${basecomponents} extension printeradmin"
 	else
-	    allcomponents="${basecomponents}"
+	    allcomponents="${basecomponents} extension"
 	fi
 
 	dodir "${instdir}"
 
-	cp -af "${WORKSRC}"/instsetoo_native/unxlng"${ARCH_VAR}"6.pro/OpenOffice/native/install/en-US/"${gentoo_env_set_dst}"/buildroot/opt/* \
-	    "${D}"${instdir}
+	cp -af "${WORKSRC}"/instsetoo_native/unxlng"${ARCH_VAR}"6.pro/OpenOffice/native/install/"${BASELNG}"/"${gentoo_env_set_dst}"/buildroot/opt/openoffice.org2.4/* \
+		"${D}"${instdir}
 
 	for i in ${LINGUAS_OOO}; do
-	    if [[ "${i}" != "en-US" ]]; then
-		cp -af "${WORKSRC}"/instsetoo_native/unxlng"${ARCH_VAR}"6.pro/OpenOffice_languagepack/native/install/"${i}"/"${gentoo_env_set_dst}"/buildroot/opt/* \
-		    "${D}"${instdir}
-	    fi
+	    cp -af "${WORKSRC}"/instsetoo_native/unxlng"${ARCH_VAR}"6.pro/OpenOffice_languagepack/native/install/"${i}"/"${gentoo_env_set_dst}"/buildroot/opt/openoffice.org2.4/* \
+		"${D}"${instdir}
 	done
 
-	# dict extensions
-	if use oodict; then
-	    rm -f "${D}"${instdir}/share/extension/install/dict-*.oxt
-	    insinto ${instdir}/share/extension/install
-	    local dictlang
-	    for i in ${LINGUAS_OOO}; do
-		if [[ "${i}" == "en-US" ]]; then
-		    dictlang=en
-		else
-		    dictlang=${i}
-		fi
-		doins "${WORKSRC}"/dictionaries/unxlng"${ARCH_VAR}"6.pro/bin/dict-"${dictlang}".oxt
-	    done
+	# oodict
+	if use !oodict; then
+	    rm -rf "${D}"${instdir}/share/dict/ooo/*.dic
+	    rm -rf "${D}"${instdir}/share/dict/ooo/*.aff
 	fi
 
 	# Menu entries
 	cd "${D}"${instdir}/share/xdg/
 
 	for i in ${allcomponents}; do
-		mv "${i}".desktop openoffice.org3-"${i}".desktop
+		mv "${i}".desktop openoffice.org2.4-"${i}".desktop
 		if [[ "${i}" == "printeradmin" ]]; then
-		    sed -i -e s/openoffice.org3-/oo/g openoffice.org3-"${i}".desktop || die "Sed failed"
+		    sed -i -e s/openoffice.org2.4-/oo/g openoffice.org2.4-"${i}".desktop || die "Sed failed"
 		else
-		    sed -i -e s/openoffice.org3/ooffice/g openoffice.org3-"${i}".desktop || die "Sed failed"
+		    sed -i -e s/openoffice.org2.4/ooffice/g openoffice.org2.4-"${i}".desktop || die "Sed failed"
 		fi
-		domenu openoffice.org3-"${i}".desktop
+		if [[ "${i}" == "draw" ]]; then
+		    sed -i -e "s/Name\=OpenOffice\.org 2\.4 Draw/Name\=OpenOffice\.org 2\.4 Draw\nGenericName\=Draw\nGenericName[ru]\=Рисунки, блок-схемы и логотипы/g" \
+		    openoffice.org2.4-"${i}".desktop || die "Sed failed"
+		fi
+		if [[ "${i}" == "math" ]]; then
+		    sed -i -e "s/Name\=OpenOffice\.org 2\.4 Math/Name\=OpenOffice\.org 2\.4 Math\nGenericName\=Math\nGenericName[ru]\=Формулы и уравнения/g" \
+		    openoffice.org2.4-"${i}".desktop || die "Sed failed"
+		fi
+		domenu openoffice.org2.4-"${i}".desktop
 	done
 
 	# Icons
@@ -576,7 +546,7 @@ src_install() {
 	for color in {hicolor,locolor}; do
 	    for sizes in "${D}"usr/share/icons/${color}/* ; do
 		for i in ${allcomponents}; do
-		    [[ -f "${sizes}"/apps/"${i}".png ]] && mv "${sizes}"/apps/"${i}".png "${sizes}"/apps/openofficeorg3-"${i}".png
+		    [[ -f "${sizes}"/apps/"${i}".png ]] && mv "${sizes}"/apps/"${i}".png "${sizes}"/apps/openofficeorg24-"${i}".png
 		done
 	    done
 	done
@@ -590,13 +560,13 @@ src_install() {
 		    mkdir -p "${D}"/usr/share/icons/gnome/"${size}/apps"
 		fi
 		for i in ${allcomponents}; do
-		    dosym /usr/share/icons/hicolor/"${size}"/apps/openofficeorg3-"${i}".png /usr/share/icons/gnome/"${size}"/apps/openofficeorg3-"${i}".png
+		    dosym /usr/share/icons/hicolor/"${size}"/apps/openofficeorg24-"${i}".png /usr/share/icons/gnome/"${size}"/apps/openofficeorg24-"${i}".png
 		done
 	    done
 	fi
 
 	for i in ${allcomponents}; do
-	    dosym /usr/share/icons/hicolor/48x48/apps/openofficeorg3-"${i}".png /usr/share/pixmaps/openofficeorg3-"${i}".png
+	    dosym /usr/share/icons/hicolor/48x48/apps/openofficeorg24-"${i}".png /usr/share/pixmaps/openofficeorg24-"${i}".png
 	done
 
 	# Mime types
@@ -613,31 +583,35 @@ src_install() {
 	done
 
 	if use cups; then
-	    dosym "${instdir}"/program/spadmin /usr/bin/ooprinteradmin
+	    dosym "${instdir}"/program/spadmin.bin /usr/bin/ooprinteradmin
 	fi
 	dosym "${instdir}"/program/soffice /usr/bin/soffice
-	dosym "${instdir}"/basis3.0/program/setofficelang /usr/bin/setofficelang
 	dosym "${instdir}"/program/unopkg  /usr/bin/unopkg
+
+	# Install extensions: Sun Report Builder and Sun Presentation Minimizer
+	insinto "${instdir}"/share/extension/install
+	doins "${WORKSRC}"/solver/680/unxlng"${ARCH_VAR}"6.pro/bin/sun-report-builder.oxt
+	doins "${WORKSRC}"/solver/680/unxlng"${ARCH_VAR}"6.pro/bin/minimizer/sun-presentation-minimizer.oxt
 
 	# Fix the permissions for security reasons
 	chown -R root:0 "${D}"
 
 	# Fix lib handling for internal old python 2.3
 	if [[ ! -e /usr/$(get_libdir)/libpython2.3.so.1.0 ]]; then
-	    dolib.so "${D}"${instdir}/basis3.0/program/libpython2.3.so.1.0
+	    dolib.so "${D}"${instdir}/program/libpython2.3.so.1.0
 	fi
 
 	# Non-java weirdness see bug #99366
-	use !java && rm -f "${D}"${instdir}/ure/bin/javaldx
+	use !java && rm -f "${D}"${instdir}/program/javaldx
 
 	# record java libraries
-	use java && java-pkg_regjar "${D}"/usr/$(get_libdir)/openoffice/basis3.0/program/classes/*.jar
+	use java && java-pkg_regjar "${D}"/usr/$(get_libdir)/openoffice/program/classes/*.jar
 
 	# install java-set-classpath
 	if use java; then
-	    insinto /usr/$(get_libdir)/openoffice/basis3.0/program
+	    insinto /usr/$(get_libdir)/openoffice/program
 	    newins "${FILESDIR}/java-set-classpath.in" java-set-classpath
-	    fperms 755 /usr/$(get_libdir)/openoffice/basis3.0/program/java-set-classpath
+	    fperms 755 /usr/$(get_libdir)/openoffice/program/java-set-classpath
 	fi
 
 }
@@ -655,21 +629,7 @@ pkg_postinst() {
 	[[ -x /sbin/chpax ]] && [[ -e /usr/$(get_libdir)/openoffice/program/soffice.bin ]] && chpax -zm /usr/$(get_libdir)/openoffice/program/soffice.bin
 
 	# Add available & useful jars to openoffice classpath
-	use java && /usr/$(get_libdir)/openoffice/basis3.0/program/java-set-classpath $(java-config --classpath=jdbc-mysql 2>/dev/null) >/dev/null
-
-	if use oodict; then
-	    einfo "Plug dict extensions ..."
-	    local dictlang
-	    export LD_LIBRARY_PATH="/usr/$(get_libdir)/openoffice/ure/lib:${LD_LIBRARY_PATH}"
-	    for i in ${LINGUAS_OOO}; do
-		if [[ "${i}" == "en-US" ]]; then
-		    dictlang=en
-		else
-		    dictlang=${i}
-		fi
-		/usr/bin/unopkg add --force --shared /usr/$(get_libdir)/openoffice/share/extension/install/dict-"${dictlang}".oxt >/dev/null
-	    done
-	fi
+	use java && /usr/$(get_libdir)/openoffice/program/java-set-classpath $(java-config --classpath=jdbc-mysql 2>/dev/null) >/dev/null
 
 	elog " To start OpenOffice-Infra, run:"
 	elog
@@ -681,7 +641,7 @@ pkg_postinst() {
 	elog
 	elog " You can find extension in: /usr/$(get_libdir)/openoffice/share/extension/install "
 	elog
-	use !oodict && elog " Spell checking is now provided through your own myspell-ebuilds, "
+	use !oodict && elog " Spell checking is now provided through our own myspell-ebuilds, "
 	use !oodict && elog " if you want to use it, please install the correct myspell package "
 	use !oodict && elog " according to your language needs. "
 	use !oodict && elog " For example, for myspell and the russian language You should do "
@@ -689,29 +649,8 @@ pkg_postinst() {
 	use !oodict && elog " emerge -av myspell-ru "
 	use !oodict && elog " eselect oodict set myspell-ru"
 	use !oodict && elog
-	use !oodict && elog " If You want to use internal openoffice dicts re-emerge the package with "
+	use !oodict && elog " If You do not like it re-emerge the package with "
 	use !oodict && elog " USE=\"oodict\" "
-
-}
-
-pkg_prerm() {
-
-	if use oodict; then
-	    einfo "Unplug dict extensions ..."
-	    local dictlang
-	    export LD_LIBRARY_PATH="/usr/$(get_libdir)/openoffice/ure/lib:${LD_LIBRARY_PATH}"
-	    for i in ${LINGUAS_OOO}; do
-		if [[ "${i}" == "en-US" ]]; then
-		    dictlang=en
-		else
-		    dictlang=${i}
-		fi
-		/usr/bin/unopkg remove --shared dict-"${dictlang}".oxt >/dev/null
-	    done
-	    [[ -d /usr/$(get_libdir)/openoffice/share/uno_packages/cache ]] && rm -rf /usr/$(get_libdir)/openoffice/share/uno_packages/cache/*
-	else
-	    [[ -d /usr/$(get_libdir)/openoffice/share/dict/ooo ]] && rm -rf /usr/$(get_libdir)/openoffice/share/dict
-	fi
 
 }
 
@@ -722,5 +661,7 @@ pkg_postrm() {
 	if use gtk || use gnome; then
 	    gnome2_icon_cache_update
 	fi
+
+	use !oodict && [[ ! -e /usr/$(get_libdir)/openoffice/program/soffice.bin ]] && rm -rf /usr/$(get_libdir)/openoffice
 
 }

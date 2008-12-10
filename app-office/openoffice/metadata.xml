@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>openoffice</herd>
-<longdescription>Openoffice is the opensource version of staroffice. 
-This ebuild allows you to compile it yourself. Unfortunately this 
-compilation can take up to a day depending on the speed of your 
-computer. It will however make a snappier openoffice than the binary 
+<herd>openoffice-infra</herd>
+<longdescription>Openoffice-infra is the opensource version of staroffice
+with some extra patches from Infra-Resource and enhanced russian support.
+This ebuild allows you to compile it yourself. Unfortunately this
+compilation can take up to a day depending on the speed of your
+computer. It will however make a snappier openoffice than the binary
 version</longdescription>
+<use>
+  <flag name='binfilter'>Enable support for legacy StarOffice 5.x and earlier
+    file formats</flag>
+  <flag name='odk'>Build the Office Development Kit</flag>
+  <flag name='oodict'>Use Open Office dicts instead of system</flag>
+</use>
 </pkgmetadata>
