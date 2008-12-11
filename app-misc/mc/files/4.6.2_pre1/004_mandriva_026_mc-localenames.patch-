@@ -1,8 +1,0 @@
-diff -urN mc-4.6.1-pre1.org/po/LINGUAS mc-4.6.1-pre1/po/LINGUAS
---- mc-4.6.1-pre1.org/po/LINGUAS	2004-06-06 23:19:35.790456472 +0200
-+++ mc-4.6.1-pre1/po/LINGUAS	2004-06-06 23:42:34.587847408 +0200
-@@ -1,3 +1,3 @@
- # List of available translations.
--az be bg ca cs da de el es eu fi fr hu it ja ko lt lv mn nl no pl
-+az be bg ca cs da de el es eu fi fr hu it ja ko lt lv mn nl nb pl
- pt pt_BR ro ru sk sl sr sv uk ta tr wa zh_CN zh_TW
