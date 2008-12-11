@@ -28,7 +28,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE="static custom-cflags doc"
 
-DEPEND=">=sys-libs/ncurses-5.2-r5
+DEPEND="!sys-boot/grub4dos
+	>=sys-libs/ncurses-5.2-r5
 	dev-libs/lzo"
 PROVIDE="virtual/bootloader"
 

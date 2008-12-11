@@ -2,28 +2,25 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-# XXX: we need to review menu.lst vs grub.conf handling.  We've been converting
-#      all systems to grub.conf (and symlinking menu.lst to grub.conf), but
-#      we never updated any of the source code (it still all wants menu.lst),
-#      and there is no indication that upstream is making the transition.
+EAPI="2"
 
 inherit mount-boot eutils flag-o-matic toolchain-funcs autotools
 
-MY_PV=${PV%_pre*}-2008-08-08
+MY_PV=${PV%_pre*}-2008-11-19
 
 PATCHVER="1.7"
 DESCRIPTION="GRUB4DOS is an universal boot loader based on GNU GRUB"
 HOMEPAGE="https://gna.org/projects/grub4dos"
 SRC_URI="http://download.gna.org/grub4dos/${PN}-${MY_PV}-src.zip
-	mirror://gentoo/splash.xpm.gz
-	mirror://gentoo/grub-0.97-patches-${PATCHVER}.tar.bz2"
+	mirror://gentoo/splash.xpm.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86 ~x86-fbsd"
 IUSE="custom-cflags ncurses netboot static"
 
-DEPEND="ncurses? (
+DEPEND="!sys-boot/grub
+	ncurses? (
 		>=sys-libs/ncurses-5.2-r5
 		amd64? ( app-emulation/emul-linux-x86-baselibs )
 	)"
@@ -31,25 +28,7 @@ PROVIDE="virtual/bootloader"
 
 S=${WORKDIR}/${PN}-${MY_PV}-src
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-
-	# patch breaks booting for some people #111885
-	rm "${WORKDIR}"/patch/400_*
-	
-	# Dirty Hack
-	rm "${WORKDIR}"/patch/00*_*
-	rm "${WORKDIR}"/patch/010_*
-	rm "${WORKDIR}"/patch/015_*	
-	rm "${WORKDIR}"/patch/040_*
-	rm "${WORKDIR}"/patch/060_*
-	rm "${WORKDIR}"/patch/090_*
-	rm "${WORKDIR}"/patch/100_*
-	rm "${WORKDIR}"/patch/5*_*
-	rm "${WORKDIR}"/patch/6*_*
-	rm "${WORKDIR}"/patch/810_*	
-
+src_prepare() {
 	# Grub will not handle a kernel larger than EXTENDED_MEMSIZE Mb as
 	# discovered in bug 160801. We can change this, however, using larger values
 	# for this variable means that Grub needs more memory to run and boot. For a
@@ -70,12 +49,6 @@ src_unpack() {
 		-e "/^#define.*EXTENDED_MEMSIZE/s,3,${GRUB_MAX_KERNEL_SIZE},g" \
 		"${S}"/grub/asmstub.c \
 		|| die "Failed to hack memory size"
-
-#	if [[ -n ${PATCHVER} ]] ; then
-#		EPATCH_SUFFIX="patch"
-#		epatch "${WORKDIR}"/patch
-#		eautoreconf
-#	fi
 }
 
 src_compile() {
@@ -158,12 +131,17 @@ src_install() {
 		doexe nbgrub pxegrub stage2/stage2.netboot || die "netboot install"
 	fi
 
-	dodoc AUTHORS BUGS ChangeLog NEWS README THANKS TODO
+	dodoc AUTHORS BUGS ChangeLog* NEWS* README* THANKS TODO
 	newdoc docs/menu.lst grub.conf.sample
 	dodoc "${FILESDIR}"/grub.conf.gentoo
 
 	insinto /usr/share/grub
 	doins "${DISTDIR}"/splash.xpm.gz
+
+	cd ${S}
+	tr -d "\r" < menu.lst > menu.lst.tmp
+	mv menu.lst.tmp menu.lst
+	dodoc *.lst
 }
 
 setup_boot_dir() {
