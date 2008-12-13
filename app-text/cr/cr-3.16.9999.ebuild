@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit eutils cvs
+inherit eutils autotools cvs
 
 DESCRIPTION="CoolReader"
 HOMEPAGE="http://crengine.sourceforge.net/"
@@ -22,6 +22,7 @@ KEYWORDS="x86 amd64 arm"
 
 IUSE=""
 DEPEND="
+	app-text/crengine
 	sys-libs/zlib
 	media-libs/libpng
 	media-libs/jpeg
@@ -31,3 +32,21 @@ DEPEND="
 	x11-libs/wxGTK
 	"
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+		sed -i -e "s:^AC_OUTPUT\(.*\)crengine/Makefile crengine/src/Makefile\(.*\)$:AC_OUTPUT\1\2:g" \
+			-e "s:-I\.\./crengine/include:-I/usr/include/crengine:g" configure.in
+		sed -i -e "s:^SUBDIRS\(.*\)crengine\(.*\)$:SUBDIRS\1\2:g" Makefile.am
+		eautomake
+}
+
+src_configure() {
+		econf \
+		--enable-unicode \
+		--enable-debug=no \
+		|| die
+}
+
+src_install() {
+		einstall || die
+}

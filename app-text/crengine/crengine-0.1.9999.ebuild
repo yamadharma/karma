@@ -20,7 +20,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 amd64 arm"
 
-IUSE=""
+IUSE="doc"
 DEPEND="
 	sys-libs/zlib
 	media-libs/libpng
@@ -33,5 +33,16 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
+	epatch ${FILESDIR}/loses_precision.patch
 	NOCONFIGURE=1 ./autogen.sh
 }
+
+src_install() {
+	einstall || die
+
+	insinto /usr/include/${PN}
+	doins include/*.h
+
+	use doc && dodoc docs/*
+}
+
