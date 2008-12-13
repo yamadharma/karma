@@ -2,77 +2,47 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit flag-o-matic eutils multilib linux-info autotools unipatch-001
-
-NETJACK="netjack-0.12"
-JACKDBUS="jackdbus-patches-0.9.tar.bz2"
+inherit flag-o-matic eutils multilib linux-info autotools
 
 DESCRIPTION="A low-latency audio server"
 HOMEPAGE="http://www.jackaudio.org"
-SRC_URI="mirror://sourceforge/jackit/${P}.tar.gz
-    netjack? ( mirror://sourceforge/netjack/${NETJACK}.tar.bz2 )
-	dbus? ( http://download.tuxfamily.org/proaudio/distfiles/${JACKDBUS} )"
+SRC_URI="http://jackaudio.org/downloads/${P}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sh ~sparc x86"
-IUSE="3dnow altivec alsa caps coreaudio cpudetection dbus doc debug jack-tmpfs mmx oss portaudio sse netjack freebob"
+KEYWORDS="amd64 x86"
+IUSE="3dnow altivec alsa caps celt coreaudio cpudetection doc debug ieee1394
+jack-tmpfs mmx netjack oss portaudio sse freebob"
 
 RDEPEND="
 	>=media-libs/libsndfile-1.0.0
 	sys-libs/ncurses
 	caps? ( sys-libs/libcap )
+	celt? ( >=media-libs/celt-0.5.0 )
 	portaudio? ( =media-libs/portaudio-18* )
 	alsa? ( >=media-libs/alsa-lib-0.9.1 )
-    dbus? ( sys-apps/dbus
-		dev-python/dbus-python )
-	freebob? ( sys-libs/libfreebob )"
+	freebob? ( sys-libs/libfreebob )
+	ieee1394? ( media-libs/libffado )
+	netjack? ( media-libs/libsamplerate )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
-	doc? ( app-doc/doxygen )
-	netjack? ( dev-util/scons )"
+	doc? ( app-doc/doxygen )"
 
 pkg_setup() {
 	if use caps; then
 		if kernel_is 2 4 ; then
 			einfo "will build jackstart for 2.4 kernel"
 		else
-			einfo "using compatibility symlink for jackstart"
+			ewarn "USE=\"caps\" is unneded on Linux 2.6 kernels!"
+			einfo "Anyways, compiling it and using compatibility symlink for jackstart"
 		fi
 	fi
-
-	if use netjack; then
-		einfo "including support for experimental netjack, see http://netjack.sourceforge.net/"
-	fi
-}
-
-src_unpack() {
-	unpack ${A}
-
-	cd "${S}"
-	epatch ${FILESDIR}/${PN}-transport.patch
-	# jack transport patch from Torben Hohn
-	epatch "${FILESDIR}/jack-transport-start-at-zero-fix.diff"
-	# more fixes
-	epatch "${FILESDIR}/${PN}-0.103.0-riceitdown.patch"
-	epatch "${FILESDIR}/${PN}-0.103.0-ppc64fix.patch"
-	
-	# dbus patches from Nedko Arnaudov
-	if use dbus; then
-		UNIPATCH_LIST="${DISTDIR}/${JACKDBUS}"
-		unipatch
-	fi
-
-	sed -i -e "s:include/nptl/:include/:g" configure.ac || die
-	eautoreconf
 }
 
 src_compile() {
-	local myconf
-
-	sed -i "s/^CFLAGS=\$JACK_CFLAGS/CFLAGS=\"\$JACK_CFLAGS $(get-flag -march)\"/" configure
-
-	use doc && myconf="--with-html-dir=/usr/share/doc/${PF}"
+	# building docs isn't configureable anymore, they are build if doxygen is
+	# installed
+	local myconf="--with-html-dir=/usr/share/doc/${PF}"
 
 	if use jack-tmpfs; then
 		myconf="${myconf} --with-default-tmpdir=/dev/shm"
@@ -108,21 +78,20 @@ src_compile() {
 			append-flags -mmmx -msse -m3dnow -O2
 		fi
 	fi
-	
-	use amd64 || myconf="${myconf} $(use_enable 3dnow dynsimd)"
-	
+
 	econf \
 		$(use_enable freebob) \
+		$(use_enable ieee1394 firewire) \
 		$(use_enable altivec) \
 		$(use_enable alsa) \
 		$(use_enable caps capabilities) $(use_enable caps stripped-jackd) \
 		$(use_enable coreaudio) \
 		$(use_enable debug) \
-		$(use_enable doc html-docs) \
 		$(use_enable mmx) \
 		$(use_enable oss) \
 		$(use_enable portaudio) \
 		$(use_enable sse)  \
+		$(use_enable 3dnow dynsimd) \
 		--disable-dependency-tracking \
 		${myconf} || die "configure failed"
 	emake || die "compilation failed"
@@ -132,12 +101,6 @@ src_compile() {
 		cd "${S}"/jackd
 		emake jackstart || die "jackstart build failed."
 	fi
-
-	if use netjack; then
-		cd "${WORKDIR}/${NETJACK}"
-		scons jack_source_dir="${S}"
-	fi
-
 }
 
 src_install() {
@@ -168,13 +131,4 @@ src_install() {
 	fi
 
 	rm -rf ${D}/usr/share/doc/${PF}/reference
-
-	if use netjack; then
-		cd "${WORKDIR}/${NETJACK}"
-		dobin alsa_in
-		dobin alsa_out
-		dobin jacknet_client
-		insinto /usr/$(get_libdir)/jack
-		doins jack_net.so
-	fi
 }
