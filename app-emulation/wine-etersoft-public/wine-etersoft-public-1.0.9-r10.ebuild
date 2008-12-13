@@ -9,7 +9,7 @@ DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 
 # WINEVER=20080505
-WINEVER=1.1.9
+WINEVER=1.1.10
 
 SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarball/wine-etersoft-common-${PV}.tar.bz2
 	mirror://sourceforge/wine/wine-${WINEVER}.tar.bz2
@@ -19,7 +19,7 @@ SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarb
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86"
-IUSE="alsa arts cups dbus esd gecko gnutls hal jack jpeg lcms ldap nas ncurses opengl oss samba scanner xml X"
+IUSE="alsa cups dbus esd gecko gnutls hal jack jpeg lcms ldap nas ncurses opengl oss samba scanner xml X"
 # RESTRICT="nomirror"
 
 S="${WORKDIR}"/wine-$WINEVER/
@@ -106,7 +106,6 @@ config_cache() {
 
 src_compile() {
 	export LDCONFIG=/bin/true
-	use arts    || export ac_cv_path_ARTSCCONFIG=""
 	use esd     || export ac_cv_path_ESDCONFIG=""
 	use scanner || export ac_cv_path_sane_devel="no"
 	config_cache jack jack/jack.h
