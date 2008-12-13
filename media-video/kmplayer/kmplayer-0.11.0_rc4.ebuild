@@ -4,7 +4,6 @@
 
 EAPI="2"
 
-NEED_KDE="4.2"
 inherit kde4-base
 
 MY_P="${P/_/-}"
