@@ -15,31 +15,34 @@ OOO_PROGRAM_DIR="${OOO_ROOT_DIR}/program"
 UNOPKG="${OOO_PROGRAM_DIR}/unopkg"
 OOO_EXT_DIR="${OOO_ROOT_DIR}/share/extension/install"
 
+DEPEND="virtual/ooo"
+RDEPEND="virtual/ooo"
+
 add_extension() {
-  ebegin "Adding extension $1"
-  INSTDIR=$(mktemp -d --tmpdir=${T})
-  ${UNOPKG} add --shared $1 \
-    "-env:UserInstallation=file:///${INSTDIR}" \
-    "-env:JFW_PLUGIN_DO_NOT_CHECK_ACCESSIBILITY=1"
-  if [ -n ${INSTDIR} ]; then rm -rf ${INSTDIR}; fi
-  eend
+	ebegin "Adding extension $1"
+	INSTDIR=$(mktemp -d --tmpdir=${T})
+	${UNOPKG} add --shared $1 \
+	"-env:UserInstallation=file:///${INSTDIR}" \
+	"-env:JFW_PLUGIN_DO_NOT_CHECK_ACCESSIBILITY=1"
+	if [ -n ${INSTDIR} ]; then rm -rf ${INSTDIR}; fi
+	eend
 }
 
 flush_unopkg_cache() {
-    ${UNOPKG} list --shared > /dev/null 2>&1
+	${UNOPKG} list --shared > /dev/null 2>&1
 }
 
 remove_extension() {
-  if ${UNOPKG} list --shared $1 >/dev/null; then
-    ebegin "Removing extension $1"
-    INSTDIR=$(mktemp -d --tmpdir=${T})
-    ${UNOPKG} remove --shared $1 \
-      "-env:UserInstallation=file://${INSTDIR}" \
-      "-env:JFW_PLUGIN_DO_NOT_CHECK_ACCESSIBILITY=1"
-    if [ -n ${INSTDIR} ]; then rm -rf ${INSTDIR}; fi
-    eend
-    flush_unopkg_cache
-  fi
+	if ${UNOPKG} list --shared $1 >/dev/null; then
+		ebegin "Removing extension $1"
+		INSTDIR=$(mktemp -d --tmpdir=${T})
+		${UNOPKG} remove --shared $1 \
+		"-env:UserInstallation=file://${INSTDIR}" \
+		"-env:JFW_PLUGIN_DO_NOT_CHECK_ACCESSIBILITY=1"
+		if [ -n ${INSTDIR} ]; then rm -rf ${INSTDIR}; fi
+    		eend
+		flush_unopkg_cache
+	fi
 }
 
 openoffice-ext_src_install() {

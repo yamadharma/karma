@@ -17,7 +17,7 @@ KEYWORDS="~alpha amd64 ~hppa ~ia64 ppc ~ppc64 sparc x86 ~x86-fbsd"
 
 S=${WORKDIR}
 
-RDEPEND=">=app-office/openoffice-3"
+RDEPEND=">=virtual/ooo-3.0"
 
 OOO_EXTENSIONS=dict_ru_RU.oxt
 
