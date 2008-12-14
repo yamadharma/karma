@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-BUILD="R200802051830"
+BUILD="M200812101743"
 
 SLOT="3.4"
 inherit eclipse-ext-2
 
 DESCRIPTION="A modeling framework and code generation facility"
 HOMEPAGE="http://www.eclipse.org/emf/"
-SRC_URI="mirror://eclipse/modeling/emf/emf/downloads/drops/${PV}/${BUILD}/emf-sdo-xsd-SDK-${PV}.zip"
+SRC_URI="mirror://eclipse/modeling/emf/emf/downloads/drops/${PV}/${BUILD}/emf-sdo-xsd-SDK-${BUILD}.zip"
 LICENSE="EPL-1.0"
 KEYWORDS="~amd64"
 IUSE=""

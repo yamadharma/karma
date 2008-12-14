@@ -10,7 +10,7 @@ HOMEPAGE="http://www.eclipse.org"
 SRC_URI=""
 SLOT="${PV}"
 LICENSE="as-is"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 IUSE=""
 
 DEPEND="dev-util/eclipse-sdk:${SLOT}"

@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 SLOT="3.4"
 ECLIPSE_NAME=ganymede
 inherit eclipse-ext-2
@@ -21,9 +23,9 @@ S="${WORKDIR}"
 
 src_unpack() {
 	base_src_unpack
-	# Hack
-#	unzip -o ${DISTDIR}/cdt-master-${PV}.zip
+}
 
+src_prepare() {
 	# Delete the Linux GTK source JARs that don't match our arch because they will clash when preparing to build.
 	find "${S}" plugins -maxdepth 1 -name "org.eclipse.cdt.platform.source.linux.gtk.*.jar" ! -name "*.${ECLIPSE_ARCH}_*" -delete || die
 
