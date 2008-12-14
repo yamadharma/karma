@@ -2,7 +2,7 @@
 <layman>
   <overlay
        name="karma" 
-       src="lp:~yamadharma/karma-gentoo-overlay/karma"
+       src="http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/karma"
        type="bzr"
        status  = "unofficial">
 
@@ -13,7 +13,7 @@
   </overlay>
   <overlay
        name="karma-profiles"
-       src="lp:~yamadharma/karma-gentoo-overlay/profiles"
+       src="http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/profiles"
        type="bzr"
        status  = "unofficial">
 
