@@ -4,13 +4,11 @@
 
 EAPI="2"
 
-inherit flag-o-matic eutils subversion
-
-ESVN_REPO_URI="http://mc.redhat-club.org/svn/trunk@${PV##*_pre}"
+inherit flag-o-matic eutils
 
 DESCRIPTION="GNU Midnight Commander cli-based file manager"
 HOMEPAGE="http://people.redhat-club.org/slavaz/trac/wiki/ProjectMc"
-# SRC_URI="http://people.redhat-club.org/inf/mc-slavaz/source/${P}.tar.bz2"
+SRC_URI="http://people.redhat-club.org/inf/mc-slavaz/source/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
