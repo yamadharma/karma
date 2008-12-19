@@ -13,12 +13,12 @@ LICENSE="GPL-2"
 DEPEND="sys-devel/gettext"
 RDEPEND=""
 
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 ~ppc ~ppc64 x86"
 IUSE="htmlhandbook"
 
-MY_LANGS="bg ca cs csb da de el en_GB eo es et fi fr fy ga gl hi hu
-		it ja kk km ko ku lt lv mk ml nb nds nl nn pa pl pt pt_BR
-		ru sl sr sv ta th tr uk wa zh_CN zh_TW"
+MY_LANGS="ar bg ca cs csb da de el en_GB eo es et fi fr fy ga gl gu he hi hu it
+		ja kk km ko ku lt lv mk ml nb nds nl nn pa pl pt pt_BR ro ru sl sr sv ta th tr
+		uk wa zh_CN zh_TW"
 
 URI_BASE="${SRC_URI/-${PV}.tar.bz2/}"
 SRC_URI=""
