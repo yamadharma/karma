@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit cmake-utils versionator
 
 PV_MAJ=$(get_version_component_range 1-2)
@@ -14,6 +16,8 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="amd64 x86"
 
+RESTRICT="mirror"
+
 IUSE="imagemagick debug"
 
 RDEPEND="imagemagick? ( media-gfx/imagemagick )"
@@ -24,7 +28,7 @@ DOCS="readme.txt"
 
 S="${S}.0"
 
-src_unpack(){
+src_unpack() {
 	unpack ${A}
 	# Fix automagic dependencies / linking
 	if ! use imagemagick; then
@@ -32,4 +36,9 @@ src_unpack(){
 			-i "${S}/cuneiform_src/Kern/CMakeLists.txt" \
 		|| die "Sed for ImageMagick automagic dependency failed."
 	fi
+}
+
+src_prepare() {
+	# sys-devel/binutils-2.19 fixups
+	epatch ${FILESDIR}/visibility.patch
 }
