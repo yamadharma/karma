@@ -11,7 +11,7 @@ SLOT="0"
 KEYWORDS="amd64 x86 ~sparc"
 IUSE="ape flac mp3 vorbis wavpack"
 
-RDEPEND="ape? ( media-libs/mac )
+RDEPEND="ape? ( media-sound/mac )
 	flac? ( media-libs/flac )
 	mp3? ( media-sound/lame )
 	vorbis?  ( media-libs/libvorbis )
