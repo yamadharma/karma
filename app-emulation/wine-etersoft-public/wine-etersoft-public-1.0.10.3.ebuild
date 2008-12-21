@@ -131,7 +131,7 @@ src_compile() {
 }
 
 src_install() {
-	make DESTDIR="${D}" initdir=${D}/etc/init.d sysconfdir=${D}/etc install || die
+	make DESTDIR="${D}" initdir=/etc/init.d sysconfdir=/etc install || die
 	dodoc ANNOUNCE AUTHORS ChangeLog README
 
 	if use gecko ; then
