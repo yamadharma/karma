@@ -131,7 +131,7 @@ src_compile() {
 }
 
 src_install() {
-	make DESTDIR="${D}" install || die
+	make DESTDIR="${D}" initdir=${D}/etc/init.d sysconfdir=${D}/etc install || die
 	dodoc ANNOUNCE AUTHORS ChangeLog README
 
 	if use gecko ; then
@@ -139,7 +139,7 @@ src_install() {
 		doins "${DISTDIR}"/wine_gecko-*.cab || die
 	fi
 
-	make -C etersoft install prefix=${D}/usr initdir=${D}/etc/init.d sysconfdir=${D}/etc
+#	make -C etersoft install prefix=${D}/usr initdir=${D}/etc/init.d sysconfdir=${D}/etc
 	cp "${FILESDIR}"/*.fon ${D}/usr/share/wine/fonts/
 	cp "${FILESDIR}"/*.ttf ${D}/usr/share/wine/fonts/
 
