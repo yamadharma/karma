@@ -1,13 +1,12 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-cpp/commoncpp2/commoncpp2-1.5.1-r1.ebuild,v 1.5 2006/11/05 22:49:57 lu_zero Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-cpp/commoncpp2/commoncpp2-1.6.2.ebuild,v 1.1 2008/05/07 05:32:39 dev-zero Exp $
 
-inherit autotools eutils
+inherit eutils autotools
 
 DESCRIPTION="GNU Common C++ is a C++ framework offering portable support for threading, sockets, file access, daemons, persistence, serial I/O, XML parsing, and system services"
-SRC_URI="mirror://sourceforge/gnutelephony/${P}.tar.gz"
+SRC_URI="mirror://gnu/commoncpp/${P}.tar.gz"
 HOMEPAGE="http://www.gnu.org/software/commoncpp/"
-
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 ~ppc ~ppc64 x86"
@@ -23,10 +22,11 @@ DEPEND="doc? ( >=app-doc/doxygen-1.3.6 )
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}/ccext2-as-needed.diff"
-	epatch "${FILESDIR}/ccgnu2-as-needed.diff"
-	epatch "${FILESDIR}/${PV}-ssl_config.patch"
-	eautoconf
+
+	epatch "${FILESDIR}/1.6.1-gcc42_atomicity.patch" \
+		"${FILESDIR}/${PV}-autoconf.patch" \
+		${FILESDIR}/1.6.2-configure_detect_netfilter.patch
+	AT_M4DIR="m4" eautoreconf
 }
 
 src_compile() {
@@ -34,16 +34,13 @@ src_compile() {
 		sed -i "s/^DOXYGEN=.*/DOXYGEN=no/" configure || die "sed failed"
 
 	local myconf
-	if use gnutls ; then
-		myconf="--with-gnutls"
-	else
-		myconf="--with-openssl"
-	fi
+	use gnutls || myconf="--with-openssl"
+
 	econf \
 		$(use_enable debug) \
 		$(use_with ipv6 ) \
 		${myconf} || die "econf failed"
-	emake || die "emake failed"
+	emake -j1 || die "emake failed"
 }
 
 src_install () {
@@ -61,3 +58,16 @@ src_install () {
 		doins *.cpp *.h *.xml README
 	fi
 }
+
+pkg_postinst() {
+	ewarn "There's a change in the ABI between version 1.5.x and 1.6.x, please"
+	ewarn "run the following command to find broken packages and rebuild them:"
+	ewarn "    revdep-rebuild --library=libccext2-1.5.so"
+}
+
+# Some of the tests hang forever
+#src_test() {
+#	cd "${S}/tests"
+#	emake || die "emake tests failed"
+#	./test.sh || die "tests failed"
+#}
