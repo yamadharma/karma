@@ -80,6 +80,12 @@ src_configure() {
 		ewarn "You are highly encouraged to use UTF-8 compatible system locale."
 	fi
 
+	./autogen.sh || die "autogen.sh failed"
+
+	# We want to set SVN revision version properly:
+	# tarball doesn't contain this info due to svn export.
+	export MCREVISION="r$( echo ${PV} | sed s/[[:digit:].]*_pre// )"
+
 	econf \
 	    --prefix=/usr \
 	    --datadir=/usr/share \
