@@ -31,7 +31,7 @@ src_install() {
 		insinto ${TEXMF}/fonts/enc/dvips/${PN}
 		doins tex/*.enc
 		insinto ${TEXMF}/fonts/map/dvips/${PN}
-		doins tex/*.enc
+		doins tex/*.map
 
 		# /etc/texmf/updmap.d/cm-unicode.cfg
 		dodir /etc/texmf/updmap.d
