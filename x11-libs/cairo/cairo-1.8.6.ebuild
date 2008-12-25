@@ -72,7 +72,7 @@ src_compile() {
 	append-flags -finline-limit=1200
 
 	if use glitz && use opengl; then
-		export glitz_LIBS=-lglitz-glx
+		export glitz_LIBS=$(pkg-config --libs glitz-glx)
 	fi
 
 	econf $(use_enable X xlib) $(use_enable doc gtk-doc) \
@@ -88,4 +88,15 @@ src_compile() {
 src_install() {
 	make DESTDIR="${D}" install || die "Installation failed"
 	dodoc AUTHORS ChangeLog NEWS README
+}
+
+pkg_postinst() {
+	if use xcb; then
+		ewarn "You have enabled the Cairo XCB backend which is used only by"
+		ewarn "a select few apps. The Cairo XCB backend is presently"
+		ewarn "un-maintained and needs a lot of work to get it caught up"
+		ewarn "to the Xrender and Xlib backends, which are the backends used"
+		ewarn "by most applications. See:"
+		ewarn "http://lists.freedesktop.org/archives/xcb/2008-December/004139.html"
+	fi
 }
