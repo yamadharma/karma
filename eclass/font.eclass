@@ -10,22 +10,45 @@
 
 inherit eutils 
 
-
 #
 # Variable declarations
 #
 
-FONT_SUFFIX=""	# Space delimited list of font suffixes to install
+# @ECLASS-VARIABLE: FONT_SUFFIX
+# @DESCRIPTION:
+# Space delimited list of font suffixes to install
+FONT_SUFFIX=""
 
-FONT_S="${S}" # Dir containing the fonts
+# @ECLASS-VARIABLE: FONT_S
+# @DESCRIPTION:
+# Dir containing the fonts
+FONT_S=${S}
 
-FONT_PN="${PN}" # Last part of $FONTDIR
+# @ECLASS-VARIABLE: FONT_PN
+# @DESCRIPTION:
+# Last part of $FONTDIR
+FONT_PN=${PN}
 
-FONTDIR="/usr/share/fonts/${FONT_PN}" # this is where the fonts are installed
+# @ECLASS-VARIABLE: FONTDIR
+# @DESCRIPTION:
+# This is where the fonts are installed
+FONTDIR=/usr/share/fonts/${FONT_PN}
 
-FONT_CONF=( "" )  # Array, which element(s) is(are) path(s) of fontconfig-2.4 file(s) to install
+# @ECLASS-VARIABLE: FONT_CONF
+# @DESCRIPTION:
+# Array, which element(s) is(are) path(s) of fontconfig-2.4 file(s) to install
+FONT_CONF=( "" )
 
-DOCS="" # Docs to install
+# @ECLASS-VARIABLE: DOCS
+# @DESCRIPTION:
+# Docs to install
+DOCS="" 
+
+# @ECLASS-VARIABLE: NFONT_SUFFIX
+# @DESCRIPTION:
+# Space delimited list of font suffixes to install for GNUstep
+NFONT_SUFFIX=""
+
 
 IUSE="X gnustep"
 
@@ -140,6 +163,10 @@ font_fontpath_dir_config() {
 }
 
 font_make_nfont() {
+	if [[ -z ${NFONT_SUFFIX} ]]
+	then
+		NFONT_SUFFIX=${FONT_SUFFIX}
+	fi
 	if ( use gnustep )
 	then
 		# Get additional variables
@@ -155,7 +182,7 @@ font_make_nfont() {
 		einfo "Generating nfonts support files"
 		dodir "${GNUSTEP_PREFIX}"/System/Library/Fonts
 		cd ${D}"${GNUSTEP_PREFIX}"/System/Library/Fonts
-		for suffix in ${FONT_SUFFIX}; do
+		for suffix in ${NFONT_SUFFIX}; do
 			set_FONTDIR ${suffix}
 			insinto "${FONTDIR}"
 			${GNUSTEP_SYSTEM_TOOLS}/mknfonts \
@@ -164,16 +191,16 @@ font_make_nfont() {
 		done
 		
 		# Trim whitepsaces
-		for fdir in *\ */; do
-			mv "$fdir" `echo $fdir | tr -d [:space:]`
-		done
+#		for fdir in *\ */; do
+#			mv "$fdir" `echo $fdir | tr -d [:space:]`
+#		done
 		
 		# Remove DESTDIR
 		find . -name "*.plist" -exec sed -ie "s:${D}::g" {} \;
 		find . -name "*.plist" -exec sed -ie "s://:/:g" {} \;		
 		find . -name "*.pliste" -exec rm {} \;
 	fi
-}	
+}
 
 # "
 #
