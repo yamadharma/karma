@@ -1,0 +1,1610 @@
+diff -Naur pidgin-2.5.1-org/libpurple/protocols/oscar/family_buddy.c pidgin-2.5.1/libpurple/protocols/oscar/family_buddy.c
+--- pidgin-2.5.1-org/libpurple/protocols/oscar/family_buddy.c	2008-07-02 04:46:17.000000000 +0400
++++ pidgin-2.5.1/libpurple/protocols/oscar/family_buddy.c	2008-08-06 02:22:11.000000000 +0400
+@@ -224,6 +224,9 @@
+ 	if (snac->subtype == SNAC_SUBTYPE_BUDDY_ONCOMING && userinfo.flags & AIM_FLAG_AWAY)
+ 		aim_locate_autofetch_away_message(od, userinfo.sn);
+ 
++	if (snac->subtype == SNAC_SUBTYPE_BUDDY_ONCOMING && userinfo.capabilities&OSCAR_CAPABILITY_XTRAZ && userinfo.customicon>0)
++		icq_im_xstatus_request(od, userinfo.sn);
++		
+ 	aim_info_free(&userinfo);
+ 
+ 	return ret;
+diff -Naur pidgin-2.5.1-org/libpurple/protocols/oscar/family_icbm.c pidgin-2.5.1/libpurple/protocols/oscar/family_icbm.c
+--- pidgin-2.5.1-org/libpurple/protocols/oscar/family_icbm.c	2008-07-02 04:46:17.000000000 +0400
++++ pidgin-2.5.1/libpurple/protocols/oscar/family_icbm.c	2008-08-06 02:23:40.000000000 +0400
+@@ -1948,8 +1949,8 @@
+ 	{
+ 		purple_debug_warning("oscar",
+ 				"Cookies don't match in rendezvous ICBM, bailing out.\n");
+-		g_free(cookie2);
+-		return 1;
++/*		g_free(cookie2);
++		return 1;*/
+ 	}
+ 	memcpy(args.cookie, cookie2, 8);
+ 	g_free(cookie2);
+@@ -2215,6 +2221,7 @@
+ 	 * for the common channel 1 case, in-place parsing is used for
+ 	 * performance reasons (less memory allocation).
+ 	 */
++	purple_debug_misc("oscar", "icbm: ICBM received on a channel.  (chan = %04x)\n", channel);
+ 	if (channel == 1) {
+ 
+ 		ret = incomingim_ch1(od, conn, mod, frame, snac, channel, &userinfo, bs, cookie);
+@@ -2533,23 +2540,74 @@
+ 	char *sn;
+ 	guchar *cookie;
+ 	guint8 snlen;
++	char *xml = NULL;
++	int hdrlen;
++	int curpos;
++	int num1,num2;
++	char *desc, *title, *temp;
++	PurpleAccount *account;
++	PurpleBuddy *buddy;
++	PurplePresence *presence;
++	PurpleStatus *status;
+ 
++	
+ 	cookie = byte_stream_getraw(bs, 8);
+ 	channel = byte_stream_get16(bs);
+ 	snlen = byte_stream_get8(bs);
+ 	sn = byte_stream_getstr(bs, snlen);
+ 	reason = byte_stream_get16(bs);
+ 
+-	if (channel == 0x0002)
+-	{
+-		if (reason == 0x0003) /* channel-specific */
+-			/* parse status note text */
+-			parse_status_note_text(od, cookie, sn, bs);
++	if (channel == 0x0002) {
+ 
+-		byte_stream_get16(bs); /* Unknown */
+-		byte_stream_get16(bs); /* Unknown */
+-		if ((userfunc = aim_callhandler(od, snac->family, snac->subtype)))
+-			ret = userfunc(od, conn, frame, channel, sn, reason, cookie);
++	 	hdrlen = byte_stream_getle16(bs);
++	 	if ( ((hdrlen == 27 ) && (bs->len > (27 + 51)))) {
++	 		byte_stream_advance(bs, 51);
++	 		num1 = byte_stream_getle16(bs); 
++	 		num2 = byte_stream_getle16(bs);
++	 		purple_debug_misc("oscar", "X-Status: Num1 %i, num2 %i\n",num1, num2);
++	 		
++	 		if(((num1 == 0x4f00)&&(num2 == 0x3b00))) {
++		 		byte_stream_advance(bs, 86);	
++		 		curpos = byte_stream_curpos(bs);
++		 		xml = byte_stream_getstr(bs, bs->len - curpos);
++		 		purple_debug_misc("oscar", "X-Status: Received XML reply\n");
++		 		if(xml) {
++ 				/* purple_debug_misc("oscar", "X-Status: XML reply: %s\n", (const char*)xml); */
++ 					if ((desc=strstr(xml,"&lt;desc&gt;"))!= NULL) {
++ 						temp=strstr(xml,"&lt;/desc&gt;");
++ 						temp[0]=0;
++ 						desc=desc+12;
++ 					} else {
++ 						desc="";
++ 					}
++ 					if ((title=strstr(xml,"&lt;title&gt;"))!= NULL) {
++ 						temp=strstr(xml,"&lt;/title&gt;");
++ 						temp[0]=0;
++ 						title=title+13;
++ 					} else {
++ 						title="";
++ 					}
++ 					strcpy(xml,title);
++ 					strcat(xml, " - ");
++ 					strcat(xml, desc);
++ 					purple_debug_misc("oscar", "X-Status reply: %s\n", (const char*)xml);
++ 					account = purple_connection_get_account(od->gc);
++ 					buddy = purple_find_buddy(account, sn);
++ 					presence = purple_buddy_get_presence(buddy);
++ 					status = purple_presence_get_active_status(presence);
++ 					purple_prpl_got_user_status(account, sn,
++  					purple_status_get_id(status),
++ 					"message", xml, NULL);
++		   		} else {
++			 		purple_debug_misc("oscar", "X-Status: Can't get XML reply string\n");
++				}
++	 		} else {
++		 		purple_debug_misc("oscar", "X-Status: 0x0004, 0x000b not an xstatus reply\n" );
++		 /*		if ((userfunc = aim_callhandler(od, snac->family, snac->subtype)))
++		 		ret = userfunc(od, conn, frame, channel, sn, reason); */
++			}
++		
++	 	}
+ 
+ 	} else if (channel == 0x0004) { /* ICQ message */
+ 		switch (reason) {
+@@ -2608,6 +2666,7 @@
+ 
+ 	g_free(cookie);
+ 	g_free(sn);
++	if (xml!=NULL) g_free(xml);
+ 
+ 	return ret;
+ }
+@@ -2720,6 +2779,187 @@
+ 	return 0;
+ }
+ 
++
++/*
++ * Subtype 0x0006 - Send eXtra Status request
++ */
++int icq_im_xstatus_request(OscarData *od, const char *sn)
++{
++	FlapConnection *conn;
++	FlapFrame *frame;
++	aim_snacid_t snacid;
++	guchar cookie[8];
++	GSList *outer_tlvlist = NULL, *inner_tlvlist = NULL;
++	ByteStream hdrbs, plugindata;
++	PurpleAccount *account;
++	PurpleConnection *gc;
++	const char *fmt;
++	char *statxml;
++	int xmllen;
++	static const guint8 pluginid[] = 
++	{
++	0x09, 0x46, 0x13, 0x49, 0x4C, 0x7F, 0x11, 0xD1, 
++	0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00
++	};
++	
++	static const guint8 c_plugindata[] =
++	{
++	0x1B, 0x00, 0x0A,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0xF9, 0xD1, 0x0E, 0x00, 0xF9, 0xD1, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1A, 0x00, 0x00, 0x00, 0x01, 0x00,
++	0x01, 0x00, 0x00, 0x4F, 0x00, 0x3B, 0x60, 0xB3, 0xEF, 0xD8, 0x2A, 0x6C, 0x45, 0xA4, 0xE0, 0x9C,
++	0x5A, 0x5E, 0x67, 0xE8, 0x65, 0x08, 0x00, 0x2A, 0x00, 0x00, 0x00, 0x53, 0x63, 0x72, 0x69, 0x70,
++	0x74, 0x20, 0x50, 0x6C, 0x75, 0x67, 0x2D, 0x69, 0x6E, 0x3A, 0x20, 0x52, 0x65, 0x6D, 0x6F, 0x74,
++	0x65, 0x20, 0x4E, 0x6F, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6F, 0x6E, 0x20, 0x41,
++	0x72, 0x72, 0x69, 0x76, 0x65, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x14, 0x01, 0x00, 0x00, 0x10, 0x01, 0x00, 0x00
++	};
++	
++	
++	if (!od || !(conn = flap_connection_findbygroup(od, 0x0004)))
++		return -EINVAL;
++
++	if (!sn)
++		return -EINVAL;
++
++	fmt =  "<N><QUERY>&lt;Q&gt;&lt;PluginID&gt;srvMng&lt;/PluginID&gt;&lt;/Q&gt;</QUERY><NOTIFY>&lt;srv&gt;&lt;id&gt;cAwaySrv&lt;/id&gt;&lt;req&gt;&lt;id&gt;AwayStat&lt;/id&gt;&lt;trans&gt;2&lt;/trans&gt;&lt;senderId&gt;%s&lt;/senderId&gt;&lt;/req&gt;&lt;/srv&gt;</NOTIFY></N>\r\n";	
++	gc = od->gc;
++	account = purple_connection_get_account(gc);
++	if(account->username == sn) return -EINVAL;
++	xmllen = strlen(fmt)-2+strlen(account->username);
++
++	statxml = (char*)g_malloc(xmllen);
++	snprintf(statxml, xmllen, fmt,
++	account->username);
++
++	aim_icbm_makecookie(cookie);
++
++	frame = flap_frame_new(od, 0x02, 10 + 8 + 2 + 1 + strlen(sn) + 2
++					  + 2 + 2 + 8 + 16 + 2 + 2 + 2 + 2 + 2
++					  + 2 + 2 + sizeof(c_plugindata) + xmllen
++					  + 2 + 2); /* Siizee off all the crap in the FLAP */
++					  
++	snacid = aim_cachesnac(od, 0x0004, 0x0006, 0x0000, NULL, 0);
++	aim_putsnac(&frame->data, 0x0004, 0x0006, 0x0000, snacid);
++	aim_im_puticbm(&frame->data, cookie, 0x0002, sn);
++
++
++	byte_stream_new(&hdrbs, (7*2) + 16 + 8 + 2 + sizeof(c_plugindata) + xmllen); /* TLV 0x0005 Stream + Size */
++	byte_stream_new(&plugindata, (sizeof(c_plugindata) + xmllen)); 
++
++	byte_stream_put16(&hdrbs, 0x0000); /* Unknown! */
++	byte_stream_putraw(&hdrbs, cookie, sizeof(cookie)); /* Message ID */
++	byte_stream_putraw(&hdrbs, pluginid, sizeof(pluginid)); /* Plugin ID */
++	
++	aim_tlvlist_add_16(&inner_tlvlist, 0x000a, 0x0001);
++	aim_tlvlist_add_noval(&inner_tlvlist, 0x000f);
++	
++	/* Add Plugin Specific Data */
++	byte_stream_putraw(&plugindata, c_plugindata, sizeof(c_plugindata)); /* Content of TLV 0x2711*/
++	byte_stream_putraw(&plugindata, (const guint8*)statxml, xmllen);
++
++	aim_tlvlist_add_raw(&inner_tlvlist, 0x2711, (sizeof(c_plugindata) + xmllen), plugindata.data); /* L */
++	
++	aim_tlvlist_write(&hdrbs, &inner_tlvlist);
++	
++	
++	aim_tlvlist_add_raw(&outer_tlvlist, 0x0005, byte_stream_curpos(&hdrbs), hdrbs.data);
++	aim_tlvlist_add_noval(&outer_tlvlist, 0x0003);		/*Empty TLV 0x0003*/
++	
++	aim_tlvlist_write(&frame->data, &outer_tlvlist);
++	
++	
++	aim_tlvlist_free(outer_tlvlist);
++
++	flap_connection_send(conn, frame);
++	g_free(hdrbs.data);
++/*	g_free(plugindata.data); */
++	purple_debug_misc("oscar", "X-Status Request\n");
++	return 0;
++}
++
++int icq_relay_xstatus(OscarData *od, const char *sn, const guchar *cookie)
++{
++	FlapConnection *conn;
++	FlapFrame *frame;
++	aim_snacid_t snacid;
++	PurpleConnection *gc;
++	PurpleAccount *account;
++	PurpleStatus *status;
++	const char *message;
++	const char *fmt;
++	char *statxml;
++	char *title;
++	int e;
++	int len;
++	
++
++	
++	static const guint8 plugindata[] = {
++	0x1B, 0x00,
++	0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
++	0x01, 0x00, 0x00, 0x00, 0x00, 0xF9, 0xD1, 0x0E, 0x00, 0xF9, 0xD1,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x1A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x4F, 
++	0x00, 0x3B, 0x60, 0xB3, 0xEF, 0xD8, 0x2A, 0x6C, 0x45, 0xA4, 0xE0, 
++	0x9C, 0x5A, 0x5E, 0x67, 0xE8, 0x65, 0x08, 0x00, 0x2A, 0x00, 0x00, 
++	0x00, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x20, 0x50, 0x6C, 0x75, 
++	0x67, 0x2D, 0x69, 0x6E, 0x3A, 0x20, 0x52, 0x65, 0x6D, 0x6F, 0x74, 
++	0x65, 0x20, 0x4E, 0x6F, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74,
++	0x69, 0x6F, 0x6E, 0x20, 0x41, 0x72, 0x72, 0x69, 0x76, 0x65, 0x00,
++	0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0xF3, 0x01, 0x00, 0x00, 0xEF, 0x01, 0x00, 0x00
++	};	
++
++	icq_im_xstatus_request(od, sn);
++	
++	title = "*";
++	fmt = "<NR><RES>&lt;ret event='OnRemoteNotification'&gt;&lt;srv&gt;&lt;id&gt;cAwaySrv&lt;/id&gt;&lt;val srv_id='cAwaySrv'&gt;&lt;Root&gt;&lt;CASXtraSetAwayMessage&gt;&lt;/CASXtraSetAwayMessage&gt;&lt;uin&gt;%s&lt;/uin&gt;&lt;index&gt;1&lt;/index&gt;&lt;title&gt;%s&lt;/title&gt;&lt;desc&gt;%s&lt;/desc&gt;&lt;/Root&gt;&lt;/val&gt;&lt;/srv&gt;&lt;srv&gt;&lt;id&gt;cRandomizerSrv&lt;/id&gt;&lt;val srv_id='cRandomizerSrv'&gt;undefined&lt;/val&gt;&lt;/srv&gt;&lt;/ret&gt;</RES></NR>\r\n";
++	
++	
++	if (!od || !(conn = flap_connection_findbygroup(od, 0x0002)))
++		return -EINVAL;
++
++	if (!sn)
++		return -EINVAL;
++		
++	gc = od->gc;
++	account = purple_connection_get_account(gc);
++	if(!account) return -EINVAL;
++	status  = purple_presence_get_active_status(account->presence);
++	if(!status)  return -EINVAL;
++	message = purple_status_get_attr_string(status, "message");
++	if(!message) return -EINVAL;
++	len = strlen(fmt)-6+strlen(account->username)+strlen(title)+strlen(message);
++	statxml = (char*)g_malloc(len);
++
++	snprintf(statxml, len, fmt, 
++	account->username, title, message);
++
++	purple_debug_misc("oscar", "X-Status AutoReply\n");
++	
++
++	frame = flap_frame_new(od, 0x02, 10 + 8 + 2 + 1 + strlen(sn) + 2 + sizeof(plugindata) + strlen(statxml)); /* 16 extra */
++
++
++
++	snacid = aim_cachesnac(od, 0x0004, 0x000b, 0x0000, NULL, 0);
++	aim_putsnac(&frame->data, 0x0004, 0x000b, 0x0000, snacid);
++	aim_im_puticbm(&frame->data, cookie, 0x0002, sn);
++	byte_stream_put16(&frame->data, 0x0003);
++	byte_stream_putraw(&frame->data, plugindata, sizeof(plugindata));
++	e = byte_stream_putraw(&frame->data, (const guint8*)statxml, strlen(statxml));
++/*	purple_debug_misc("oscar", "State %i XML Size %i: \n", e,strlen(statxml)); */
++	flap_connection_send(conn, frame);
++
++/*	if(statxml) 
++	g_free(statxml); */
++	
++	return 0;
++}
++
+ /*
+  * Subtype 0x0014 - Receive a mini typing notification (mtn) packet.
+  *
+@@ -2753,20 +2993,41 @@
+ snachandler(OscarData *od, FlapConnection *conn, aim_module_t *mod, FlapFrame *frame, aim_modsnac_t *snac, ByteStream *bs)
+ {
+ 	if (snac->subtype == 0x0005)
++	{
++		purple_debug_misc("oscar", "SNAC(0x0004,0x0005): \n");
+ 		return aim_im_paraminfo(od, conn, mod, frame, snac, bs);
++	}
+ 	else if (snac->subtype == 0x0006)
++	{
++		purple_debug_misc("oscar", "SNAC(0x0004,0x0006): \n");
+ 		return outgoingim(od, conn, mod, frame, snac, bs);
++	}
+ 	else if (snac->subtype == 0x0007)
+-		return incomingim(od, conn, mod, frame, snac, bs);
++	{
++		purple_debug_misc("oscar", "SNAC(0x0004,0x0007): \n");
++		return   incomingim(od, conn, mod, frame, snac, bs);
++
++	}
+ 	else if (snac->subtype == 0x000a)
++	{
++		purple_debug_misc("oscar", "SNAC(0x0004,0x000a): \n");
+ 		return missedcall(od, conn, mod, frame, snac, bs);
++	}
+ 	else if (snac->subtype == 0x000b)
++	{
++		purple_debug_misc("oscar", "SNAC(0x0004,0x000b): \n");
+ 		return clientautoresp(od, conn, mod, frame, snac, bs);
++	}
+ 	else if (snac->subtype == 0x000c)
++	{
++		purple_debug_misc("oscar", "SNAC(0x0004,0x000c): \n");
+ 		return msgack(od, conn, mod, frame, snac, bs);
++	}
+ 	else if (snac->subtype == 0x0014)
++	{
++		purple_debug_misc("oscar", "SNAC(0x0004,0x0014): \n");
+ 		return mtn_receive(od, conn, mod, frame, snac, bs);
+-
++	}
+ 	return 0;
+ }
+ 
+diff -Naur pidgin-2.5.1-org/libpurple/protocols/oscar/family_locate.c pidgin-2.5.1/libpurple/protocols/oscar/family_locate.c
+--- pidgin-2.5.1-org/libpurple/protocols/oscar/family_locate.c	2008-07-02 04:46:17.000000000 +0400
++++ pidgin-2.5.1/libpurple/protocols/oscar/family_locate.c	2008-08-06 02:22:11.000000000 +0400
+@@ -159,12 +159,13 @@
+ 	 * forgot to fix endianness, or they made a typo. It really doesn't
+ 	 * matter which.
+ 	 */
+-	{OSCAR_CAPABILITY_GAMES,
+-	 {0x09, 0x46, 0x13, 0x4a, 0x4c, 0x7f, 0x11, 0xd1,
++	{OSCAR_CAPABILITY_NEWCAPS,
++	 {0x09, 0x46, 0x00, 0x00, 0x4C, 0x7F, 0x11, 0xD1,
+ 	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
+-	{OSCAR_CAPABILITY_GAMES2,
+-	 {0x09, 0x46, 0x13, 0x4a, 0x4c, 0x7f, 0x11, 0xd1,
+-	  0x22, 0x82, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
++	  
++	{OSCAR_CAPABILITY_XTRAZ,
++	 {0x1A, 0x09, 0x3C, 0x6C, 0xD7, 0xFD, 0x4E, 0xC5, 
++	  0x9D, 0x51, 0xA6, 0x47, 0x4E, 0x34, 0xF5, 0xA0}},
+ 
+ 	{OSCAR_CAPABILITY_SENDBUDDYLIST,
+ 	 {0x09, 0x46, 0x13, 0x4b, 0x4c, 0x7f, 0x11, 0xd1,
+@@ -242,6 +243,155 @@
+ 	  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
+ };
+ 
++#define AIM_CUSTOM_ICONS_COUNT 35
++
++static const struct {
++	char *filename;
++	char *descriptivename;
++	guint8 data[16];
++} aim_custom_icons[AIM_CUSTOM_ICONS_COUNT] = {
++	/* empty X-Status for the case when customicon == 0 */
++	{NULL, NULL,
++	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
++
++	{"xstatus_thinking", "Thinking",
++	 {0x3f, 0xb0, 0xbd, 0x36, 0xaf, 0x3b, 0x4a, 0x60,
++	  0x9e, 0xef, 0xcf, 0x19, 0x0f, 0x6a, 0x5a, 0x7f}},
++
++	{"xstatus_busy", "Busy",
++	 {0x48, 0x8e, 0x14, 0x89, 0x8a, 0xca, 0x4a, 0x08,
++	  0x82, 0xaa, 0x77, 0xce, 0x7a, 0x16, 0x52, 0x08}},
++
++	{"xstatus_shopping", "Shopping",
++	 {0x63, 0x62, 0x73, 0x37, 0xa0, 0x3f, 0x49, 0xff,
++	  0x80, 0xe5, 0xf7, 0x09, 0xcd, 0xe0, 0xa4, 0xee}},
++
++	{"xstatus_typing", "Typing",
++	 {0x63, 0x4f, 0x6b, 0xd8 ,0xad, 0xd2, 0x4a, 0xa1,
++	  0xaa, 0xb9, 0x11, 0x5b, 0xc2, 0x6d, 0x05, 0xa1}},
++
++	{"xstatus_question", "Question Mark",
++	 {0x63, 0x14, 0x36, 0xff, 0x3f, 0x8a, 0x40, 0xd0,
++	  0xa5, 0xcb, 0x7b, 0x66, 0xe0, 0x51, 0xb3, 0x64}},
++
++	{"xstatus_angry", "Angry",
++	 {0x01, 0xd8, 0xd7, 0xee, 0xac, 0x3b, 0x49, 0x2a,
++	  0xa5, 0x8d, 0xd3, 0xd8, 0x77, 0xe6, 0x6b, 0x92}},
++
++	{"xstatus_eating", "Eating",
++	 {0xf8, 0xe8, 0xd7, 0xb2, 0x82, 0xc4, 0x41, 0x42,
++	  0x90, 0xf8, 0x10, 0xc6, 0xce, 0x0a, 0x89, 0xa6}},
++	  
++	{"xstatus_cinema", "Cinema",
++	 {0x10, 0x7a, 0x9a, 0x18, 0x12, 0x32, 0x4d, 0xa4,
++	  0xb6, 0xcd, 0x08, 0x79, 0xdb, 0x78, 0x0f, 0x09}},
++	
++	{"xstatus_sick", "Sick",
++	 {0x1f, 0x7a, 0x40, 0x71, 0xbf, 0x3b, 0x4e, 0x60,
++	  0xbc, 0x32, 0x4c, 0x57, 0x87, 0xb0, 0x4c, 0xf1}},
++	
++	{"xstatus_crap", "Unknown 1",
++	 {0x2c, 0xe0, 0xe4, 0xe5, 0x7c, 0x64, 0x43, 0x70,
++	  0x9c, 0x3a, 0x7a, 0x1c, 0xe8, 0x78, 0xa7, 0xdc}},
++	  
++	{"xstatus_iron", "Unknown 2",
++	 {0xb7, 0x08, 0x67, 0xf5, 0x38, 0x25, 0x43, 0x27,
++	  0xa1, 0xff, 0xcf, 0x4c, 0xc1, 0x93, 0x97, 0x97}},
++	
++	{"xstatus_bathing", "Bathing",
++	 {0x5a, 0x58, 0x1e, 0xa1, 0xe5, 0x80, 0x43, 0x0c,
++	  0xa0, 0x6f, 0x61, 0x22, 0x98, 0xb7, 0xe4, 0xc7}},
++	  
++	{"xstatus_tv", "Watching TV",
++	 {0x80, 0x53, 0x7d, 0xe2, 0xa4, 0x67, 0x4a, 0x76,
++	  0xb3, 0x54, 0x6d, 0xfd, 0x07, 0x5f, 0x5e, 0xc6}},
++	
++	{"xstatus_fun", "Having fun",
++	 {0x6f, 0x49, 0x30, 0x98, 0x4f, 0x7c, 0x4a, 0xff,
++	  0xa2, 0x76, 0x34, 0xa0, 0x3b, 0xce, 0xae, 0xa7}},
++
++	{"xstatus_sleeping", "Sleeping",
++	 {0x78, 0x5e, 0x8c, 0x48, 0x40, 0xd3, 0x4c, 0x65,
++	  0x88, 0x6f, 0x04, 0xcf, 0x3f, 0x3f, 0x43, 0xdf}},
++	
++	{"xstatus_pda", "PDA device",
++	 {0x10, 0x11, 0x17, 0xc9, 0xa3, 0xb0, 0x40, 0xf9,
++	  0x81, 0xac, 0x49, 0xe1, 0x59, 0xfb, 0xd5, 0xd4}},
++
++	{"xstatus_heart", "In love",
++	 {0xdd, 0xcf, 0x0e, 0xa9, 0x71, 0x95, 0x40, 0x48,
++	  0xa9, 0xc6, 0x41, 0x32, 0x06, 0xd6, 0xf2, 0x80}},
++
++	{"xstatus_tired", "Tired",
++	 {0x83, 0xc9, 0xb7, 0x8e, 0x77, 0xe7, 0x43, 0x78,
++	  0xb2, 0xc5, 0xfb, 0x6c, 0xfc, 0xc3, 0x5b, 0xec}},
++
++	{"xstatus_friends", "Friends",
++	 {0xf1, 0x8a, 0xb5, 0x2e, 0xdc, 0x57, 0x49, 0x1d,
++	  0x99, 0xdc, 0x64, 0x44, 0x50, 0x24, 0x57, 0xaf}},
++
++	{"xstatus_phone", "On the phone",
++	 {0x12, 0x92, 0xe5, 0x50, 0x1b, 0x64, 0x4f, 0x66,
++	  0xb2, 0x06, 0xb2, 0x9a, 0xf3, 0x78, 0xe4, 0x8d}},
++
++	{"xstatus_surfing", "Surfing",
++	 {0xa6, 0xed, 0x55, 0x7e, 0x6b, 0xf7, 0x44, 0xd4,
++	  0xa5, 0xd4, 0xd2, 0xe7, 0xd9, 0x5c, 0xe8, 0x1f}},
++
++	{"xstatus_mobile", "Cell phone",
++	 {0x16, 0x0c, 0x60, 0xbb, 0xdd, 0x44, 0x43, 0xf3,
++	  0x91, 0x40, 0x05, 0x0f, 0x00, 0xe6, 0xc0, 0x09}},
++
++	{"xstatus_google", "Googling",
++	 {0xd4, 0xe2, 0xb0, 0xba, 0x33, 0x4e, 0x4f, 0xa5,
++	  0x98, 0xd0, 0x11, 0x7d, 0xbf, 0x4d, 0x3c, 0xc8}},
++
++	{"xstatus_party", "Party",
++	 {0xe6, 0x01, 0xe4, 0x1c, 0x33, 0x73, 0x4b, 0xd1,
++	  0xbc, 0x06, 0x81, 0x1d, 0x6c, 0x32, 0x3d, 0x81}},
++
++	{"xstatus_coffee", "Coffee",
++	 {0x1b, 0x78, 0xae, 0x31, 0xfa, 0x0b, 0x4d, 0x38,
++	  0x93, 0xd1, 0x99, 0x7e, 0xee, 0xaf, 0xb2, 0x18}},
++
++	{"xstatus_gaming", "Playing",
++	 {0xd4, 0xa6, 0x11, 0xd0, 0x8f, 0x01, 0x4e, 0xc0,
++	  0x92, 0x23, 0xc5, 0xb6, 0xbe, 0xc6, 0xcc, 0xf0}},
++	
++	{"xstatus_internet", "Internet",
++	 {0x12, 0xd0, 0x7e, 0x3e, 0xf8, 0x85, 0x48, 0x9e,
++	  0x8e, 0x97, 0xa7, 0x2a, 0x65, 0x51, 0xe5, 0x8d}},
++	
++	{"xstatus_zzz", "Snoozing",
++	 {0x64, 0x43, 0xc6, 0xaf, 0x22, 0x60, 0x45, 0x17,
++	  0xb5, 0x8c, 0xd7, 0xdf, 0x8e, 0x29, 0x03, 0x52}},
++	
++	{"xstatus_writing", "Writing",
++	 {0x00, 0x72, 0xd9, 0x08, 0x4a, 0xd1, 0x43, 0xdd,
++	  0x91, 0x99, 0x6f, 0x02, 0x69, 0x66, 0x02, 0x6f}},
++	
++	{"xstatus_beer", "Drinking",
++	 {0x8c, 0x50, 0xdb, 0xae, 0x81, 0xed, 0x47, 0x86,
++	  0xac, 0xca, 0x16, 0xcc, 0x32, 0x13, 0xc7, 0xb7}},
++	
++	{"xstatus_music", "Music",
++	 {0x61, 0xbe, 0xe0, 0xdd, 0x8b, 0xdd, 0x47, 0x5d,
++	  0x8d, 0xee, 0x5f, 0x4b, 0xaa, 0xcf, 0x19, 0xa7}},
++	
++	{"xstatus_studying", "Studying",
++	 {0x60, 0x9d, 0x52, 0xf8, 0xa2, 0x9a, 0x49, 0xa6,
++	  0xb2, 0xa0, 0x25, 0x24, 0xc5, 0xe9, 0xd2, 0x60}},
++	
++	{"xstatus_engeneering", "Engineering",
++	 {0xba, 0x74, 0xdb, 0x3e, 0x9e, 0x24, 0x43, 0x4b,
++	  0x87, 0xb6, 0x2f, 0x6b, 0x8d, 0xfe, 0xe5, 0x0f}},
++	
++	{"xstatus_crapping", "In the restroom",
++	 {0x16, 0xf5, 0xb7, 0x6f, 0xa9, 0xd2, 0x40, 0x35,
++	  0x8c, 0xc5, 0xc0, 0x84, 0x70, 0x3c, 0x98, 0xfa}}
++};
++
+ /*
+  * Add the userinfo to our linked list.  If we already have userinfo
+  * for this buddy, then just overwrite parts of the old data.
+@@ -278,6 +428,9 @@
+ 		cur->sessionlen = userinfo->sessionlen;
+ 	if (userinfo->capabilities != 0)
+ 		cur->capabilities = userinfo->capabilities;
++	if (userinfo->customicon != 0)
++		cur->customicon = userinfo->customicon;
++
+ 	cur->present |= userinfo->present;
+ 
+ 	if (userinfo->iconcsumlen > 0) {
+@@ -469,13 +622,38 @@
+ 					cap[8], cap[9],
+ 					cap[10], cap[11], cap[12], cap[13],
+ 					cap[14], cap[15]);
+-
+ 		g_free(cap);
+ 	}
+ 
+ 	return flags;
+ }
+ 
++gint32
++aim_get_custom_icon(OscarData *od, ByteStream *bs, int len)
++{
++	int offset;
++	gint32 result = -1;
++
++	for (offset = 0; byte_stream_empty(bs) && (offset < len); offset += 0x10) {
++		/* check wheather this capability is a custom user icon */
++		guint8 *cap;
++		int i;
++
++		cap = byte_stream_getraw(bs, 0x10);
++
++		for (i = 1; i < AIM_CUSTOM_ICONS_COUNT; i++) {
++			if (memcmp(&aim_custom_icons[i].data, cap, 0x10) == 0) {
++				purple_debug_misc("oscar", "Custom user icon: %s\n", aim_custom_icons[i].descriptivename);		
++				result = i;
++				break; /* should only match once... */
++			}
++		}
++		g_free(cap);
++	}
++
++	return result;
++}
++
+ guint32
+ aim_locate_getcaps_short(OscarData *od, ByteStream *bs, int len)
+ {
+@@ -606,11 +784,12 @@
+ 	for (curtlv = 0; curtlv < tlvcnt; curtlv++) {
+ 		guint16 type, length;
+ 		int endpos;
++		int curpos;
+ 
+ 		type = byte_stream_get16(bs);
+ 		length = byte_stream_get16(bs);
+-
+-		endpos = byte_stream_curpos(bs) + MIN(length, byte_stream_empty(bs));
++		curpos = byte_stream_curpos(bs);
++		endpos = curpos + MIN(length, byte_stream_empty(bs));
+ 
+ 		if (type == 0x0001) {
+ 			/*
+@@ -725,6 +904,8 @@
+ 			 */
+ 			outinfo->capabilities |= aim_locate_getcaps(od, bs, length);
+ 			outinfo->present |= AIM_USERINFO_PRESENT_CAPABILITIES;
++			byte_stream_setpos(bs, curpos);
++			outinfo->customicon = aim_get_custom_icon(od, bs, length);
+ 
+ 		} else if (type == 0x000e) {
+ 			/*
+@@ -933,7 +1114,7 @@
+ #endif
+ 
+ 	if (info->present & AIM_USERINFO_PRESENT_CAPABILITIES)
+-		aim_tlvlist_add_caps(&tlvlist, 0x000d, info->capabilities);
++		aim_tlvlist_add_caps(&tlvlist, 0x000d, info->capabilities, info->customicon);
+ 
+ 	if (info->present & AIM_USERINFO_PRESENT_SESSIONLEN)
+ 		aim_tlvlist_add_32(&tlvlist, (guint16)((info->flags & AIM_FLAG_AOL) ? 0x0010 : 0x000f), info->sessionlen);
+@@ -1140,7 +1321,7 @@
+ 	if (!od || !(conn = flap_connection_findbygroup(od, SNAC_FAMILY_LOCATE)))
+ 		return -EINVAL;
+ 
+-	aim_tlvlist_add_caps(&tlvlist, 0x0005, caps);
++	aim_tlvlist_add_caps(&tlvlist, 0x0005, caps, purple_account_get_int(purple_connection_get_account(od->gc), "customicon", -1));
+ 
+ 	byte_stream_new(&bs, aim_tlvlist_size(tlvlist));
+ 
+@@ -1226,6 +1407,8 @@
+ 		ByteStream cbs;
+ 		byte_stream_init(&cbs, tlv->value, tlv->length);
+ 		userinfo->capabilities = aim_locate_getcaps(od, &cbs, tlv->length);
++		byte_stream_rewind(&cbs);
++		userinfo->customicon = aim_get_custom_icon(od, &cbs, tlv->length);
+ 		userinfo->present = AIM_USERINFO_PRESENT_CAPABILITIES;
+ 	}
+ 	aim_tlvlist_free(tlvlist);
+@@ -1453,3 +1636,33 @@
+ 
+ 	return 0;
+ }
++
++guint32
++aim_get_custom_icons_count()
++{
++	return AIM_CUSTOM_ICONS_COUNT;
++}
++
++char*
++aim_get_custom_icon_filename(gint32 no)
++{
++	if (no >= AIM_CUSTOM_ICONS_COUNT || no < 1)
++		return NULL;
++	return aim_custom_icons[no].filename;
++}
++
++char*
++aim_get_custom_icon_descriptivename(gint32 no)
++{
++	if (no >= AIM_CUSTOM_ICONS_COUNT || no < 1)
++		return NULL;
++	return aim_custom_icons[no].descriptivename;
++}
++
++guint8*
++aim_get_custom_icon_data(gint32 no)
++{
++	if (no >= AIM_CUSTOM_ICONS_COUNT || no < 1)
++		return NULL;
++	return (guint8 *)aim_custom_icons[no].data;
++}
+diff -Naur pidgin-2.5.1-org/libpurple/protocols/oscar/oscar.h pidgin-2.5.1/libpurple/protocols/oscar/oscar.h
+--- pidgin-2.5.1-org/libpurple/protocols/oscar/oscar.h	2008-07-02 04:46:17.000000000 +0400
++++ pidgin-2.5.1/libpurple/protocols/oscar/oscar.h	2008-08-06 02:22:11.000000000 +0400
+@@ -340,10 +340,10 @@
+ 	OSCAR_CAPABILITY_CHAT                 = 0x00000008,
+ 	OSCAR_CAPABILITY_GETFILE              = 0x00000010,
+ 	OSCAR_CAPABILITY_SENDFILE             = 0x00000020,
+-	OSCAR_CAPABILITY_GAMES                = 0x00000040,
++	OSCAR_CAPABILITY_NEWCAPS              = 0x00000040,
+ 	OSCAR_CAPABILITY_ADDINS               = 0x00000080,
+ 	OSCAR_CAPABILITY_SENDBUDDYLIST        = 0x00000100,
+-	OSCAR_CAPABILITY_GAMES2               = 0x00000200,
++	OSCAR_CAPABILITY_XTRAZ                = 0x00000200,
+ 	OSCAR_CAPABILITY_ICQ_DIRECT           = 0x00000400,
+ 	OSCAR_CAPABILITY_APINFO               = 0x00000800,
+ 	OSCAR_CAPABILITY_ICQRTF               = 0x00001000,
+@@ -557,6 +557,12 @@
+ #define AIM_ICQ_STATE_OUT               0x00000004
+ #define AIM_ICQ_STATE_BUSY              0x00000010
+ #define AIM_ICQ_STATE_CHAT              0x00000020
++#define AIM_ICQ_STATE_EVIL		0x00003000
++#define AIM_ICQ_STATE_DEPRESSION	0x00004000
++#define AIM_ICQ_STATE_ATHOME		0x00005000
++#define AIM_ICQ_STATE_ATWORK		0x00006000
++#define AIM_ICQ_STATE_LUNCH		0x00002001
++#define AIM_ICQ_STATE_EVIL		0x00003000
+ #define AIM_ICQ_STATE_INVISIBLE         0x00000100
+ #define AIM_ICQ_STATE_WEBAWARE          0x00010000
+ #define AIM_ICQ_STATE_HIDEIP            0x00020000
+@@ -966,6 +972,7 @@
+ /* 0x000b */ int aim_im_denytransfer(OscarData *od, const char *sn, const guchar *cookie, guint16 code);
+ /* 0x0010 */ int aim_im_reqofflinemsgs(OscarData *od);
+ /* 0x0014 */ int aim_im_sendmtn(OscarData *od, guint16 type1, const char *sn, guint16 type2);
++/* 0x000b */ int icq_relay_xstatus (OscarData *od, const char *sn, const guchar* cookie);
+ void aim_icbm_makecookie(guchar* cookie);
+ gchar *oscar_encoding_extract(const char *encoding);
+ gchar *oscar_encoding_to_utf8(PurpleAccount *account, const char *encoding, const char *text, int textlen);
+@@ -1019,6 +1026,7 @@
+ 	guint32 onlinesince; /* time_t */
+ 	guint32 sessionlen;  /* in seconds */
+ 	guint32 capabilities;
++	gint32 customicon;
+ 	struct {
+ 		guint32 status;
+ 		guint32 ipaddr;
+@@ -1097,8 +1105,12 @@
+ void aim_info_free(aim_userinfo_t *);
+ int aim_info_extract(OscarData *od, ByteStream *bs, aim_userinfo_t *);
+ int aim_putuserinfo(ByteStream *bs, aim_userinfo_t *info);
+-
+-
++gint32 aim_get_custom_icon(OscarData *od, ByteStream *bs, int len);
++guint32 aim_get_custom_icons_count(void);
++char* aim_get_custom_icon_filename(gint32 no);
++char* aim_get_custom_icon_descriptivename(gint32 no);
++guint8* aim_get_custom_icon_data(gint32 no);
++int icq_im_xstatus_request(OscarData *od, const char *sn);
+ 
+ /* 0x0003 - family_buddy.c */
+ /* 0x0002 */ void aim_buddylist_reqrights(OscarData *, FlapConnection *);
+@@ -1428,7 +1440,7 @@
+ int aim_tlvlist_add_16(GSList **list, const guint16 type, const guint16 value);
+ int aim_tlvlist_add_32(GSList **list, const guint16 type, const guint32 value);
+ int aim_tlvlist_add_str(GSList **list, const guint16 type, const char *value);
+-int aim_tlvlist_add_caps(GSList **list, const guint16 type, const guint32 caps);
++int aim_tlvlist_add_caps(GSList **list, const guint16 type, const guint32 caps, gint32 customicon);
+ int aim_tlvlist_add_userinfo(GSList **list, guint16 type, aim_userinfo_t *userinfo);
+ int aim_tlvlist_add_chatroom(GSList **list, guint16 type, guint16 exchange, const char *roomname, guint16 instance);
+ int aim_tlvlist_add_frozentlvlist(GSList **list, guint16 type, GSList **tl);
+diff -Naur pidgin-2.5.1-org/libpurple/protocols/oscar/tlv.c pidgin-2.5.1/libpurple/protocols/oscar/tlv.c
+--- pidgin-2.5.1-org/libpurple/protocols/oscar/tlv.c	2008-07-02 04:46:17.000000000 +0400
++++ pidgin-2.5.1/libpurple/protocols/oscar/tlv.c	2008-08-06 02:22:11.000000000 +0400
+@@ -407,10 +407,11 @@
+  * @param caps Bitfield of capability flags to send
+  * @return The size of the value added.
+  */
+-int aim_tlvlist_add_caps(GSList **list, const guint16 type, const guint32 caps)
++int aim_tlvlist_add_caps(GSList **list, const guint16 type, const guint32 caps, const gint32 customicon)
+ {
+ 	guint8 buf[256]; /* TODO: Don't use a fixed length buffer */
+ 	ByteStream bs;
++	guint8 *data;
+ 
+ 	if (caps == 0)
+ 		return 0; /* nothing there anyway */
+@@ -418,6 +419,12 @@
+ 	byte_stream_init(&bs, buf, sizeof(buf));
+ 
+ 	byte_stream_putcaps(&bs, caps);
++	
++	/* adding of custom icon GUID */
++	data = aim_get_custom_icon_data(customicon);	
++	if (data != NULL) {
++		byte_stream_putraw(&bs, data, 16);
++	}
+ 
+ 	return aim_tlvlist_add_raw(list, type, byte_stream_curpos(&bs), buf);
+ }
+diff -Naur pidgin-2.5.1-org/pidgin/pixmaps/Makefile.am pidgin-2.5.1/pidgin/pixmaps/Makefile.am
+--- pidgin-2.5.1-org/pidgin/pixmaps/Makefile.am	2008-07-02 04:46:19.000000000 +0400
++++ pidgin-2.5.1/pidgin/pixmaps/Makefile.am	2008-08-06 02:22:11.000000000 +0400
+@@ -126,7 +126,42 @@
+ 		emblems/16/secure.png \
+ 		emblems/16/unavailable.png \
+ 		emblems/16/video.png \
+-		emblems/16/voice.png
++		emblems/16/voice.png \
++		emblems/16/xstatus_angry.png \
++		emblems/16/xstatus_bathing.png \
++		emblems/16/xstatus_beer.png \
++		emblems/16/xstatus_busy.png \
++		emblems/16/xstatus_cinema.png \
++		emblems/16/xstatus_coffee.png \
++		emblems/16/xstatus_crap.png \
++		emblems/16/xstatus_crapping.png \
++		emblems/16/xstatus_eating.png \
++		emblems/16/xstatus_engeneering.png \
++		emblems/16/xstatus_friends.png \
++		emblems/16/xstatus_fun.png \
++		emblems/16/xstatus_gaming.png \
++		emblems/16/xstatus_google.png \
++		emblems/16/xstatus_heart.png \
++		emblems/16/xstatus_internet.png \
++		emblems/16/xstatus_iron.png \
++		emblems/16/xstatus_mobile.png \
++		emblems/16/xstatus_music.png \
++		emblems/16/xstatus_party.png \
++		emblems/16/xstatus_pda.png \
++		emblems/16/xstatus_phone.png \
++		emblems/16/xstatus_question.png \
++		emblems/16/xstatus_shopping.png \
++		emblems/16/xstatus_sick.png \
++		emblems/16/xstatus_sleeping.png \
++		emblems/16/xstatus_studying.png \
++		emblems/16/xstatus_surfing.png \
++		emblems/16/xstatus_thinking.png \
++		emblems/16/xstatus_tired.png \
++		emblems/16/xstatus_tv.png \
++		emblems/16/xstatus_typing.png \
++		emblems/16/xstatus_writing.png \
++		emblems/16/xstatus_zzz.png
++
+ 
+ EMOTES_DEFAULT_24_SCALABLE = \
+ 		emotes/default/24/scalable/airplane.svg \
+diff -Naur pidgin-2.5.1-org/pidgin/pixmaps/Makefile.in pidgin-2.5.1/pidgin/pixmaps/Makefile.in
+--- pidgin-2.5.1-org/pidgin/pixmaps/Makefile.in	2008-07-02 04:47:02.000000000 +0400
++++ pidgin-2.5.1/pidgin/pixmaps/Makefile.in	2008-08-06 02:22:11.000000000 +0400
+@@ -125,7 +125,27 @@
+ 	emblems/16/not-authorized.png emblems/16/operator.png \
+ 	emblems/16/qq-member.png emblems/16/secure.png \
+ 	emblems/16/unavailable.png emblems/16/video.png \
+-	emblems/16/voice.png protocols/16/aim.png \
++	emblems/16/voice.png \
++	emblems/16/xstatus_angry.png \
++	emblems/16/xstatus_bathing.png emblems/16/xstatus_beer.png \
++	emblems/16/xstatus_busy.png emblems/16/xstatus_cinema.png \
++	emblems/16/xstatus_coffee.png emblems/16/xstatus_crap.png \
++	emblems/16/xstatus_crapping.png emblems/16/xstatus_eating.png \
++	emblems/16/xstatus_engeneering.png \
++	emblems/16/xstatus_friends.png emblems/16/xstatus_fun.png \
++	emblems/16/xstatus_gaming.png emblems/16/xstatus_google.png \
++	emblems/16/xstatus_heart.png emblems/16/xstatus_internet.png \
++	emblems/16/xstatus_iron.png emblems/16/xstatus_mobile.png \
++	emblems/16/xstatus_music.png emblems/16/xstatus_party.png \
++	emblems/16/xstatus_pda.png emblems/16/xstatus_phone.png \
++	emblems/16/xstatus_question.png \
++	emblems/16/xstatus_shopping.png emblems/16/xstatus_sick.png \
++	emblems/16/xstatus_sleeping.png \
++	emblems/16/xstatus_studying.png emblems/16/xstatus_surfing.png \
++	emblems/16/xstatus_thinking.png emblems/16/xstatus_tired.png \
++	emblems/16/xstatus_tv.png emblems/16/xstatus_typing.png \
++	emblems/16/xstatus_writing.png emblems/16/xstatus_zzz.png \
++	protocols/16/aim.png \
+ 	protocols/16/bonjour.png protocols/16/gadu-gadu.png \
+ 	protocols/16/google-talk.png protocols/16/novell.png \
+ 	protocols/16/icq.png protocols/16/irc.png \
+@@ -596,7 +616,41 @@
+ @INSTALL_PIXMAPS_TRUE@		emblems/16/secure.png \
+ @INSTALL_PIXMAPS_TRUE@		emblems/16/unavailable.png \
+ @INSTALL_PIXMAPS_TRUE@		emblems/16/video.png \
+-@INSTALL_PIXMAPS_TRUE@		emblems/16/voice.png
++@INSTALL_PIXMAPS_TRUE@		emblems/16/voice.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_angry.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_bathing.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_beer.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_busy.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_cinema.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_coffee.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_crap.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_crapping.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_eating.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_engeneering.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_friends.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_fun.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_gaming.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_google.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_heart.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_internet.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_iron.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_mobile.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_music.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_party.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_pda.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_phone.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_question.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_shopping.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_sick.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_sleeping.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_studying.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_surfing.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_thinking.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_tired.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_tv.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_typing.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_writing.png \
++@INSTALL_PIXMAPS_TRUE@		emblems/16/xstatus_zzz.png
+ 
+ @INSTALL_PIXMAPS_TRUE@EMOTES_DEFAULT_24_SCALABLE = \
+ @INSTALL_PIXMAPS_TRUE@		emotes/default/24/scalable/airplane.svg \
+diff -Naurd pidgin-2.5.1/libpurple/request.c pidgin-2.5.1-org/libpurple/request.c
+--- pidgin-2.5.1/libpurple/request.c	2008-03-31 21:21:24.000000000 +0400
++++ pidgin-2.5.1-org/libpurple/request.c	2008-04-21 14:57:24.000000000 +0400
+@@ -790,6 +790,25 @@
+ }
+ 
+ void
++purple_request_field_list_set_pixbuf(PurpleRequestField *field,
++										 gboolean pixbuf)
++{
++	g_return_if_fail(field != NULL);
++	g_return_if_fail(field->type == PURPLE_REQUEST_FIELD_LIST);
++
++	field->u.list.pixbuf = pixbuf;
++}
++
++gboolean
++purple_request_field_list_get_pixbuf(const PurpleRequestField *field)
++{
++	g_return_val_if_fail(field != NULL, FALSE);
++	g_return_val_if_fail(field->type == PURPLE_REQUEST_FIELD_LIST, FALSE);
++
++	return field->u.list.pixbuf;
++}
++
++void
+ purple_request_field_list_set_multi_select(PurpleRequestField *field,
+ 										 gboolean multi_select)
+ {
+@@ -834,6 +853,23 @@
+ }
+ 
+ void
++purple_request_field_list_add_icon(PurpleRequestField *field, const char *item, const char* icon_path,
++							void *data)
++{
++	g_return_if_fail(field != NULL);
++	g_return_if_fail(item  != NULL);
++	g_return_if_fail(data  != NULL);
++	g_return_if_fail(icon_path != NULL);
++	g_return_if_fail(field->type == PURPLE_REQUEST_FIELD_LIST);
++
++	field->u.list.items = g_list_append(field->u.list.items, g_strdup(item));
++	field->u.list.icons = g_list_append(field->u.list.icons, g_strdup(icon_path));
++
++	g_hash_table_insert(field->u.list.item_data, g_strdup(item), data);
++	g_hash_table_insert(field->u.list.icon_data, g_strdup(icon_path), data);
++}
++
++void
+ purple_request_field_list_add_selected(PurpleRequestField *field, const char *item)
+ {
+ 	g_return_if_fail(field != NULL);
+@@ -935,6 +971,16 @@
+ 	return field->u.list.items;
+ }
+ 
++GList *
++purple_request_field_list_get_icons(const PurpleRequestField *field)
++{
++	g_return_val_if_fail(field != NULL, NULL);
++	g_return_val_if_fail(field->type == PURPLE_REQUEST_FIELD_LIST, NULL);
++	g_return_val_if_fail(field->u.list.pixbuf == TRUE, NULL);
++
++	return field->u.list.icons;
++}
++
+ PurpleRequestField *
+ purple_request_field_label_new(const char *id, const char *text)
+ {
+diff -Naurd pidgin-2.5.1/libpurple/request.h pidgin-2.5.1-org/libpurple/request.h
+--- pidgin-2.5.1/libpurple/request.h	2008-03-31 21:21:24.000000000 +0400
++++ pidgin-2.5.1-org/libpurple/request.h	2008-04-21 15:11:16.000000000 +0400
+@@ -147,10 +147,13 @@
+ 		{
+ 			GList *items;
+ 			GHashTable *item_data;
++			GList *icons;
++			GHashTable *icon_data;
+ 			GList *selected;
+ 			GHashTable *selected_table;
+ 
+ 			gboolean multiple_selection;
++			gboolean pixbuf;
+ 
+ 		} list;
+ 
+@@ -877,6 +880,26 @@
+ PurpleRequestField *purple_request_field_list_new(const char *id, const char *text);
+ 
+ /**
++ * Sets whether or not a list field allows icons.
++ *
++ * @param field        The list field.
++ * @param multi_select TRUE if icons are enabled,
++ *                     or FALSE otherwise.
++ */
++void purple_request_field_list_set_pixbuf(PurpleRequestField *field,
++											  gboolean pixbuf);
++
++/**
++ * Returns whether or not a list field allows icons.
++ *
++ * @param field The list field.
++ *
++ * @return TRUE if icons are enabled, or FALSE otherwise.
++ */
++gboolean purple_request_field_list_get_pixbuf(
++	const PurpleRequestField *field);
++
++/**
+  * Sets whether or not a list field allows multiple selection.
+  *
+  * @param field        The list field.
+@@ -918,6 +941,17 @@
+ 								 const char *item, void *data);
+ 
+ /**
++ * Adds an item with icon to a list field.
++ *
++ * @param field The list field.
++ * @param item  The list item.
++ * @param icon_path The path to icon file.
++ * @param data  The associated data.
++ */
++void purple_request_field_list_add_icon(PurpleRequestField *field,
++								 const char *item, const char* icon_path, void* data);
++
++/**
+  * Adds a selected item to the list field.
+  *
+  * @param field The field.
+@@ -975,6 +1009,15 @@
+  */
+ GList *purple_request_field_list_get_items(const PurpleRequestField *field);
+ 
++/**
++ * Returns a list of icons in a list field.
++ *
++ * @param field The field.
++ *
++ * @constreturn The list of icons.
++ */
++GList *purple_request_field_list_get_icons(const PurpleRequestField *field);
++
+ /*@}*/
+ 
+ /**************************************************************************/
+diff -Naurd pidgin-2.5.1/pidgin/gtkrequest.c pidgin-2.5.1-org/pidgin/gtkrequest.c
+--- pidgin-2.5.1/pidgin/gtkrequest.c	2008-03-31 21:21:25.000000000 +0400
++++ pidgin-2.5.1-org/pidgin/gtkrequest.c	2008-04-21 16:22:57.000000000 +0400
+@@ -995,7 +995,9 @@
+ 	GtkTreeSelection *sel;
+ 	GtkTreeViewColumn *column;
+ 	GtkTreeIter iter;
+-	GList *l;
++	GList *l, *ic = NULL;
++	GdkPixbuf* pixbuf;
++	gboolean icon = purple_request_field_list_get_pixbuf(field);
+ 
+ 	/* Create the scrolled window */
+ 	sw = gtk_scrolled_window_new(NULL, NULL);
+@@ -1007,7 +1009,10 @@
+ 	gtk_widget_show(sw);
+ 
+ 	/* Create the list store */
+-	store = gtk_list_store_new(2, G_TYPE_POINTER, G_TYPE_STRING);
++	if (icon)
++		store = gtk_list_store_new(3, G_TYPE_POINTER, G_TYPE_STRING, GDK_TYPE_PIXBUF);
++	else
++		store = gtk_list_store_new(2, G_TYPE_POINTER, G_TYPE_STRING);
+ 
+ 	/* Create the tree view */
+ 	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+@@ -1026,13 +1031,42 @@
+ 	gtk_tree_view_column_pack_start(column, renderer, TRUE);
+ 	gtk_tree_view_column_add_attribute(column, renderer, "text", 1);
+ 
++	if(icon == TRUE)
++	{
++		renderer = gtk_cell_renderer_pixbuf_new();
++		gtk_tree_view_column_pack_start(column, renderer, TRUE);
++		gtk_tree_view_column_add_attribute(column, renderer, "pixbuf", 2);
++
++		gtk_widget_set_size_request(treeview, 200, 400);
++	}
++
++	if(icon == TRUE)
++		ic = purple_request_field_list_get_icons(field);
++
+ 	for (l = purple_request_field_list_get_items(field); l != NULL; l = l->next)
+ 	{
+ 		const char *text = (const char *)l->data;
+ 
+ 		gtk_list_store_append(store, &iter);
+ 
+-		gtk_list_store_set(store, &iter,
++		if(icon == TRUE)
++		{
++			const char *icon_path = (const char *)ic->data;
++			char* filename = g_build_filename(DATADIR, icon_path, NULL);
++
++			pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
++
++			g_free(filename);
++
++			gtk_list_store_set(store, &iter,
++						   0, purple_request_field_list_get_data(field, text),
++						   1, text,
++						   2, pixbuf,
++						   -1);
++			ic = ic->next;
++		}
++		else
++			gtk_list_store_set(store, &iter,
+ 						   0, purple_request_field_list_get_data(field, text),
+ 						   1, text,
+ 						   -1);
+
+diff -Naur pidgin-2.5.1-org/libpurple/protocols/oscar/oscar.c pidgin-2.5.1/libpurple/protocols/oscar/oscar.c
+--- pidgin-2.5.1-orig/libpurple/protocols/oscar/oscar.c	2008-09-06 11:27:58.000000000 +0400
++++ pidgin-2.5.1/libpurple/protocols/oscar/oscar.c	2008-09-06 11:28:47.000000000 +0400
+@@ -59,6 +59,11 @@
+ #define OSCAR_STATUS_ID_NA          "na"
+ #define OSCAR_STATUS_ID_OCCUPIED    "occupied"
+ #define OSCAR_STATUS_ID_FREE4CHAT   "free4chat"
++#define OSCAR_STATUS_ID_EVIL		"evil"
++#define OSCAR_STATUS_ID_DEPRESSION	"depression"
++#define OSCAR_STATUS_ID_ATHOME		"athome"
++#define OSCAR_STATUS_ID_ATWORK		"atwork"
++#define OSCAR_STATUS_ID_LUNCH		"lunch"
+ #define OSCAR_STATUS_ID_CUSTOM      "custom"
+ #define OSCAR_STATUS_ID_MOBILE	    "mobile"
+ 
+@@ -68,7 +73,7 @@
+ 
+ static OscarCapability purple_caps = (OSCAR_CAPABILITY_CHAT | OSCAR_CAPABILITY_BUDDYICON | OSCAR_CAPABILITY_DIRECTIM |
+ 									  OSCAR_CAPABILITY_SENDFILE | OSCAR_CAPABILITY_UNICODE | OSCAR_CAPABILITY_INTEROPERATE |
+-									  OSCAR_CAPABILITY_SHORTCAPS | OSCAR_CAPABILITY_TYPING);
++									  OSCAR_CAPABILITY_SHORTCAPS | OSCAR_CAPABILITY_TYPING | OSCAR_CAPABILITY_ICQSERVERRELAY | OSCAR_CAPABILITY_NEWCAPS | OSCAR_CAPABILITY_XTRAZ);
+ 
+ static guint8 features_aim[] = {0x01, 0x01, 0x01, 0x02};
+ static guint8 features_icq[] = {0x01, 0x06};
+@@ -656,9 +661,9 @@
+ 			case OSCAR_CAPABILITY_SENDFILE:
+ 				tmp = _("Send File");
+ 				break;
+-			case OSCAR_CAPABILITY_GAMES:
+-			case OSCAR_CAPABILITY_GAMES2:
+-				tmp = _("Games");
++			case OSCAR_CAPABILITY_XTRAZ:
++			case OSCAR_CAPABILITY_NEWCAPS:
++				tmp = _("ICQ Xtraz");
+ 				break;
+ 			case OSCAR_CAPABILITY_ADDINS:
+ 				tmp = _("Add-Ins");
+@@ -727,21 +732,29 @@
+ 
+ static char *oscar_icqstatus(int state) {
+ 	/* Make a cute little string that shows the status of the dude or dudet */
+-	if (state & AIM_ICQ_STATE_CHAT)
++	if (state == AIM_ICQ_STATE_CHAT)
+ 		return g_strdup_printf(_("Free For Chat"));
+-	else if (state & AIM_ICQ_STATE_DND)
++	else if (state == AIM_ICQ_STATE_DND)
+ 		return g_strdup_printf(_("Do Not Disturb"));
+-	else if (state & AIM_ICQ_STATE_OUT)
++	else if (state == AIM_ICQ_STATE_OUT)
+ 		return g_strdup_printf(_("Not Available"));
+-	else if (state & AIM_ICQ_STATE_BUSY)
++	else if (state == AIM_ICQ_STATE_BUSY)
+ 		return g_strdup_printf(_("Occupied"));
+-	else if (state & AIM_ICQ_STATE_AWAY)
++	else if (state == AIM_ICQ_STATE_AWAY)
+ 		return g_strdup_printf(_("Away"));
+-	else if (state & AIM_ICQ_STATE_WEBAWARE)
++	else if (state == AIM_ICQ_STATE_WEBAWARE)
+ 		return g_strdup_printf(_("Web Aware"));
+-	else if (state & AIM_ICQ_STATE_INVISIBLE)
+-		return g_strdup_printf(_("Invisible"));
+-	else
++	else if (state == AIM_ICQ_STATE_EVIL)
++		return g_strdup_printf(_("Evil"));
++	else if (state == AIM_ICQ_STATE_DEPRESSION)
++		return g_strdup_printf(_("Depression"));
++	else if (state == AIM_ICQ_STATE_ATHOME)
++		return g_strdup_printf(_("At home"));
++	else if (state == AIM_ICQ_STATE_ATWORK)
++		return g_strdup_printf(_("At work"));
++	else if (state == AIM_ICQ_STATE_LUNCH)
++		return g_strdup_printf(_("At lunch"));
++	else 
+ 		return g_strdup_printf(_("Online"));
+ }
+ 
+@@ -1967,18 +1980,28 @@
+ 	}
+ 
+ 	if (aim_snvalid_icq(info->sn)) {
+-		if (type & AIM_ICQ_STATE_CHAT)
++		if (type == AIM_ICQ_STATE_CHAT)
+ 			status_id = OSCAR_STATUS_ID_FREE4CHAT;
+-		else if (type & AIM_ICQ_STATE_DND)
++		else if (type == AIM_ICQ_STATE_DND)
+ 			status_id = OSCAR_STATUS_ID_DND;
+-		else if (type & AIM_ICQ_STATE_OUT)
++		else if (type == AIM_ICQ_STATE_OUT)
+ 			status_id = OSCAR_STATUS_ID_NA;
+-		else if (type & AIM_ICQ_STATE_BUSY)
++		else if (type == AIM_ICQ_STATE_BUSY)
+ 			status_id = OSCAR_STATUS_ID_OCCUPIED;
+-		else if (type & AIM_ICQ_STATE_AWAY)
++		else if (type == AIM_ICQ_STATE_AWAY)
+ 			status_id = OSCAR_STATUS_ID_AWAY;
+-		else if (type & AIM_ICQ_STATE_INVISIBLE)
++		else if (type == AIM_ICQ_STATE_INVISIBLE)
+ 			status_id = OSCAR_STATUS_ID_INVISIBLE;
++		else if (type == AIM_ICQ_STATE_EVIL)
++			status_id = OSCAR_STATUS_ID_EVIL;
++		else if (type == AIM_ICQ_STATE_DEPRESSION)
++			status_id = OSCAR_STATUS_ID_DEPRESSION;
++		else if (type == AIM_ICQ_STATE_ATHOME)
++			status_id = OSCAR_STATUS_ID_ATHOME;
++		else if (type == AIM_ICQ_STATE_ATWORK)
++			status_id = OSCAR_STATUS_ID_ATWORK;
++		else if (type == AIM_ICQ_STATE_LUNCH)
++			status_id = OSCAR_STATUS_ID_LUNCH;
+ 		else
+ 			status_id = OSCAR_STATUS_ID_AVAILABLE;
+ 	} else {
+@@ -2295,7 +2318,9 @@
+ {
+ 	PurpleConnection *gc;
+ 	PurpleAccount *account;
++	PurpleMessageFlags flags = 0;
+ 	char *message = NULL;
++	char *rtfmsg = NULL;
+ 
+ 	g_return_val_if_fail(od != NULL, 0);
+ 	g_return_val_if_fail(od->gc != NULL, 0);
+@@ -2325,6 +2350,21 @@
+ 		}
+ 	}
+ 
++
++	if (args->info.rtfmsg.rtfmsg != NULL)
++	{
++		if (args->encoding != NULL)
++		{
++			char *encoding = NULL;
++			encoding = oscar_encoding_extract(args->encoding);
++			rtfmsg = oscar_encoding_to_utf8(account, encoding, args->info.rtfmsg.rtfmsg,
++			                                 strlen(args->info.rtfmsg.rtfmsg));
++			g_free(encoding);
++		} else {
++			if (g_utf8_validate(args->info.rtfmsg.rtfmsg, strlen(args->info.rtfmsg.rtfmsg), NULL))
++				rtfmsg = g_strdup(args->info.rtfmsg.rtfmsg);
++		}
++	}
+ 	if (args->type & OSCAR_CAPABILITY_CHAT)
+ 	{
+ 		char *encoding, *utf8name, *tmp;
+@@ -2412,6 +2452,21 @@
+ 	{
+ 		purple_debug_error("oscar", "Got an ICQ Server Relay message of "
+ 				"type %d\n", args->info.rtfmsg.msgtype);
++		purple_debug_error("oscar", "Sending X-Status Reply");
++
++		if(args->info.rtfmsg.msgtype == 26)
++		icq_relay_xstatus(od, userinfo->sn, args->cookie);
++		
++		if(args->info.rtfmsg.msgtype == 1)
++		{
++		if(rtfmsg)
++		serv_got_im(gc, userinfo->sn, rtfmsg, flags,
++		time(NULL));
++		else
++		serv_got_im(gc, userinfo->sn, args->info.rtfmsg.rtfmsg, flags,
++		time(NULL));
++		
++		}
+ 	}
+ 
+ 	else
+@@ -2815,7 +2870,6 @@
+ 			args = va_arg(ap, struct aim_incomingim_ch4_args *);
+ 			ret = incomingim_chan4(od, conn, userinfo, args, 0);
+ 		} break;
+-
+ 		default: {
+ 			purple_debug_warning("oscar",
+ 					   "ICBM received on unsupported channel (channel "
+@@ -2963,6 +3017,28 @@
+ 
+ 		} break;
+ 
++		case 0x0006: { /* Reply from an ICQ status message request */
++			char *statusmsg, **splitmsg;
++			PurpleNotifyUserInfo *user_info;
++
++			/* Split at (carriage return/newline)'s, then rejoin later with BRs between. */
++			statusmsg = oscar_icqstatus(state);
++			splitmsg = g_strsplit(msg, "\r\n", 0);
++			
++			user_info = purple_notify_user_info_new();
++				
++			purple_notify_user_info_add_pair(user_info, _("UIN"), who);
++			purple_notify_user_info_add_pair(user_info, _("Status"), statusmsg);
++			purple_notify_user_info_add_section_break(user_info);
++			purple_notify_user_info_add_pair(user_info, NULL, g_strjoinv("<BR>", splitmsg));
++
++			g_free(statusmsg);
++			g_strfreev(splitmsg);
++
++			purple_notify_userinfo(gc, who, user_info, NULL, NULL);
++			purple_notify_user_info_destroy(user_info);
++
++		} break;
+ 		default: {
+ 			purple_debug_warning("oscar",
+ 					   "Received an unknown client auto-response from %s.  "
+@@ -4616,10 +4692,22 @@
+ 		data |= AIM_ICQ_STATE_CHAT;
+ 	else if (!strcmp(status_id, OSCAR_STATUS_ID_INVISIBLE))
+ 		data |= AIM_ICQ_STATE_INVISIBLE;
++	else if (!strcmp(status_id, OSCAR_STATUS_ID_EVIL))
++		data |= AIM_ICQ_STATE_EVIL;
++	else if (!strcmp(status_id, OSCAR_STATUS_ID_DEPRESSION))
++		data |= AIM_ICQ_STATE_DEPRESSION;
++	else if (!strcmp(status_id, OSCAR_STATUS_ID_ATWORK))
++		data |= AIM_ICQ_STATE_ATWORK;
++	else if (!strcmp(status_id, OSCAR_STATUS_ID_ATHOME))
++		data |= AIM_ICQ_STATE_ATHOME;
++	else if (!strcmp(status_id, OSCAR_STATUS_ID_LUNCH))
++		data |= AIM_ICQ_STATE_LUNCH;
+ 	else if (!strcmp(status_id, OSCAR_STATUS_ID_CUSTOM))
+ 		data |= AIM_ICQ_STATE_OUT | AIM_ICQ_STATE_AWAY;
+ 
++	
+ 	aim_srv_setextrainfo(od, TRUE, data, FALSE, NULL, NULL);
++	
+ }
+ 
+ static void
+@@ -5764,6 +5852,7 @@
+ 			return "secure";
+ 		if (userinfo->icqinfo.status & AIM_ICQ_STATE_BIRTHDAY)
+ 			return "birthday";
++		return aim_get_custom_icon_filename(userinfo->customicon);
+ 	}
+ 	return NULL;
+ }
+@@ -5797,6 +5886,10 @@
+ 	const char *id;
+ 	const char *message;
+ 	gchar *ret = NULL;
++	gchar *out = NULL;
++	char *statname = NULL;
++	int outlen;
++	
+ 
+ 	gc = purple_account_get_connection(purple_buddy_get_account(b));
+ 	account = purple_connection_get_account(gc);
+@@ -5813,20 +5906,30 @@
+ 		else
+ 			ret = g_strdup(_("Offline"));
+ 	}
+-	else if (purple_status_is_available(status) && !strcmp(id, OSCAR_STATUS_ID_AVAILABLE))
+-	{
++/*	else if (purple_status_is_available(status) && !strcmp(id, OSCAR_STATUS_ID_AVAILABLE))
++	{ */
+ 		/* Available */
+ 		message = purple_status_get_attr_string(status, "message");
+ 		if (message != NULL)
+ 		{
++			statname = (gchar*)purple_status_get_name(status);
+ 			ret = g_strdup(message);
+ 			purple_util_chrreplace(ret, '\n', ' ');
++			outlen = strlen(statname) + strlen(ret) + 3;
++			out = g_malloc(outlen);
++			
++			snprintf(out, outlen, "%s: %s", statname, ret);
++			purple_debug_info("oscar", "Got status %s, text %s:\n", statname, ret);
++			purple_debug_info("oscar", "At all %s:\n", out);
++			ret = g_strdup(out);
+ 		}
+-	}
++		else
++		ret = g_strdup(purple_status_get_name(status));
++/*	}
+ 	else if (!purple_status_is_available(status) && !strcmp(id, OSCAR_STATUS_ID_AWAY))
+-	{
++	{ */
+ 		/* Away */
+-		message = purple_status_get_attr_string(status, "message");
++/*		message = purple_status_get_attr_string(status, "message");
+ 		if (message != NULL)
+ 		{
+ 			gchar *tmp1, *tmp2;
+@@ -5843,8 +5946,9 @@
+ 		}
+ 	}
+ 	else
+-		ret = g_strdup(purple_status_get_name(status));
+-
++		ret = g_strdup(purple_status_get_name(status)); */
++ 
++	g_free(out);
+ 	return ret;
+ }
+ 
+@@ -5985,9 +6089,53 @@
+ 										   purple_value_new(PURPLE_TYPE_STRING), NULL);
+ 	status_types = g_list_prepend(status_types, type);
+ 
+-	type = purple_status_type_new_full(PURPLE_STATUS_AVAILABLE,
++	type = purple_status_type_new_with_attrs(PURPLE_STATUS_AVAILABLE,
+ 									 OSCAR_STATUS_ID_FREE4CHAT,
+-									 _("Free For Chat"), TRUE, is_icq, FALSE);
++									 _("Free For Chat"), TRUE, is_icq, FALSE,
++									 "message", _("Message"),
++				purple_value_new(PURPLE_TYPE_STRING), NULL);
++
++	status_types = g_list_prepend(status_types, type);
++	
++	type = purple_status_type_new_with_attrs(PURPLE_STATUS_AVAILABLE,
++									 OSCAR_STATUS_ID_EVIL,
++									 _("Evil"), TRUE, is_icq, FALSE,
++				 "message", _("Message"),
++				purple_value_new(PURPLE_TYPE_STRING), NULL);
++	status_types = g_list_prepend(status_types, type);
++
++
++	type = purple_status_type_new_with_attrs(PURPLE_STATUS_AVAILABLE,
++									 OSCAR_STATUS_ID_DEPRESSION,
++									 _("Depression"), TRUE, is_icq, FALSE,
++				 "message", _("Message"),
++				purple_value_new(PURPLE_TYPE_STRING), NULL);
++	status_types = g_list_prepend(status_types, type);
++
++
++	type = purple_status_type_new_with_attrs(PURPLE_STATUS_AVAILABLE,
++									 OSCAR_STATUS_ID_ATHOME,
++									 _("At home"), TRUE, is_icq, FALSE,
++				"message", _("Message"),
++				purple_value_new(PURPLE_TYPE_STRING), NULL);
++	status_types = g_list_prepend(status_types, type);
++
++
++	type = purple_status_type_new_with_attrs(PURPLE_STATUS_AVAILABLE,
++									 OSCAR_STATUS_ID_ATWORK,
++									 _("At work"), TRUE, is_icq, FALSE,
++				"message", _("Message"),
++				purple_value_new(PURPLE_TYPE_STRING), NULL);
++
++	status_types = g_list_prepend(status_types, type);
++
++
++	type = purple_status_type_new_with_attrs(PURPLE_STATUS_AVAILABLE,
++									 OSCAR_STATUS_ID_LUNCH,
++									 _("Lunch"), TRUE, is_icq, FALSE,
++				"message", _("Message"),
++				purple_value_new(PURPLE_TYPE_STRING), NULL);
++
+ 	status_types = g_list_prepend(status_types, type);
+ 
+ 	type = purple_status_type_new_with_attrs(PURPLE_STATUS_AWAY,
+@@ -5997,9 +6145,12 @@
+ 										   purple_value_new(PURPLE_TYPE_STRING), NULL);
+ 	status_types = g_list_prepend(status_types, type);
+ 
+-	type = purple_status_type_new_full(PURPLE_STATUS_INVISIBLE,
++	type = purple_status_type_new_with_attrs(PURPLE_STATUS_INVISIBLE,
+ 									 OSCAR_STATUS_ID_INVISIBLE,
+-									 NULL, TRUE, TRUE, FALSE);
++									 NULL, TRUE, TRUE, FALSE,
++									 "message", _("Message"),
++									  purple_value_new(PURPLE_TYPE_STRING), NULL);
++
+ 	status_types = g_list_prepend(status_types, type);
+ 
+ 	type = purple_status_type_new_full(PURPLE_STATUS_MOBILE, OSCAR_STATUS_ID_MOBILE, NULL, FALSE, FALSE, TRUE);
+@@ -6166,6 +6317,25 @@
+ 	aim_locate_getinfoshort(gc->proto_data, purple_buddy_get_name(buddy), 0x00000003);
+ }
+ 
++static void oscar_get_icqxstatusmsg (PurpleBlistNode *node, gpointer ignore)
++{
++	PurpleBuddy *buddy;
++	PurpleConnection *gc;
++	PurpleAccount *account;
++	
++	
++	g_return_if_fail(PURPLE_BLIST_NODE_IS_BUDDY(node));
++
++	buddy = (PurpleBuddy *)node;
++	gc = purple_account_get_connection(buddy->account);
++	account = purple_connection_get_account(gc);
++	if(strcmp(purple_buddy_get_name(buddy), account->username) == 0)
++	return;
++	purple_debug_info("oscar",   "Manual X-Status Get From %s to %s:\n", purple_buddy_get_name(buddy), account->username);
++
++	icq_im_xstatus_request(gc->proto_data, purple_buddy_get_name(buddy));
++}
++
+ static GList *
+ oscar_buddy_menu(PurpleBuddy *buddy) {
+ 
+@@ -6193,15 +6363,14 @@
+ 	                           NULL, NULL);
+ 	menu = g_list_prepend(menu, act);
+ 
+-#if 0
+ 	if (od->icq)
+ 	{
+-		act = purple_menu_action_new(_("Get Status Msg"),
+-		                           PURPLE_CALLBACK(oscar_get_icqstatusmsg),
++		act = purple_menu_action_new(_("Get X-Status Msg"),
++		                           PURPLE_CALLBACK(oscar_get_icqxstatusmsg),
+ 		                           NULL, NULL);
+ 		menu = g_list_prepend(menu, act);
+ 	}
+-#endif
++	
+ 
+ 	if (userinfo &&
+ 		aim_sncmp(purple_account_get_username(buddy->account), buddy->name) &&
+@@ -6585,6 +6754,79 @@
+ 		purple_xfer_request(xfer);
+ }
+ 
++static void
++oscar_show_icq_custom_icons_cb(PurpleConnection *gc, PurpleRequestFields *fields) {
++	OscarData *od = gc->proto_data;
++	PurpleAccount *account = purple_connection_get_account(gc);
++	PurpleRequestField *f;
++	GList *l;
++
++	f = purple_request_fields_get_field(fields, "customicon");
++	l = purple_request_field_list_get_selected(f);
++	
++	if (l) {
++		gpointer d = purple_request_field_list_get_data(f, l->data);		
++		purple_account_set_int(account, "customicon", GPOINTER_TO_INT(d));
++	}
++	
++	aim_locate_setcaps(od, purple_caps);
++}
++
++static void
++oscar_show_icq_custom_icons(PurplePluginAction *action)
++{
++	guint32 i;
++	gint32 customicon;
++	PurpleConnection *gc = (PurpleConnection *) action->context;
++	PurpleAccount *account = purple_connection_get_account(gc);
++	PurpleRequestFields *fields;
++	PurpleRequestFieldGroup *g;
++	PurpleRequestField *f;
++	char* na_fn;
++
++	customicon = purple_account_get_int(account, "customicon", 0);
++	
++	fields = purple_request_fields_new();
++
++	g = purple_request_field_group_new(NULL);
++	
++	f = purple_request_field_list_new("customicon", _("XStatus"));
++
++	purple_request_field_list_set_pixbuf(f, TRUE);
++
++	na_fn = g_build_filename("pixmaps", "pidgin", "emblems", "16", "not-authorized.png", NULL);
++
++	purple_request_field_list_add_icon(f, _("None"), na_fn, GINT_TO_POINTER(-1));
++	if (customicon == 0)
++		purple_request_field_list_add_selected(f, _("None"));
++	
++	g_free(na_fn);
++	
++	for (i = 1; i < aim_get_custom_icons_count(); i++) {
++		char* icon_path = g_strdup_printf("%s.png", aim_get_custom_icon_filename(i));
++		char* filename = g_build_filename("pixmaps", "pidgin", "emblems", "16", icon_path, NULL);
++
++		purple_request_field_list_add_icon(f, _(aim_get_custom_icon_descriptivename(i)), filename, GINT_TO_POINTER(i));
++
++		if (customicon == i)
++			purple_request_field_list_add_selected(f, _(aim_get_custom_icon_descriptivename(i)));
++
++		g_free(filename);
++		g_free(icon_path);
++	}
++	purple_request_field_group_add_field(g, f);
++	
++	purple_request_fields_add_group(fields, g);
++	
++	purple_request_fields(gc, _("Set Custom Icon"), _("Set Custom Icon"),
++						NULL, fields,
++						_("OK"), G_CALLBACK(oscar_show_icq_custom_icons_cb),
++						_("Cancel"), NULL,
++						purple_connection_get_account(gc), NULL, NULL,
++						gc);
++}
++
++
+ GList *
+ oscar_actions(PurplePlugin *plugin, gpointer context)
+ {
+@@ -6627,6 +6869,10 @@
+ 		act = purple_plugin_action_new(_("Set Privacy Options..."),
+ 				oscar_show_icq_privacy_opts);
+ 		menu = g_list_prepend(menu, act);
++		
++		act = purple_plugin_action_new(_("Set Custom Icon..."),
++				oscar_show_icq_custom_icons);
++		menu = g_list_prepend(menu, act);
+ 	}
+ 	else
+ 	{
