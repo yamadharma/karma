@@ -8,19 +8,16 @@ inherit eutils flag-o-matic multilib versionator rpm
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 
-# WINEVER=20080505
-# WINEVER=1.1.10
+MY_PV=$(replace_version_separator 3 '-alt')
 
-MY_PV=$(replace_version_separator 3 '-alt' )
-
-SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/unstable/sources/wine-${MY_PV}.src.rpm
+SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/$(replace_version_separator 3 '-eter')/sources/wine-${MY_PV}.src.rpm
 	gecko? ( mirror://sourceforge/wine/wine_gecko-0.1.0.cab )"
 #	ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarball/wine-etersoft-public-${WINEVER}.tar.bz2
 #	ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarball/wine-etersoft-common-${PV}.tar.bz2
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-#KEYWORDS="-* amd64 x86"
+KEYWORDS="-* amd64 x86"
 IUSE="alsa cups dbus esd gecko gnutls hal jack jpeg lcms ldap nas ncurses opengl oss samba scanner xml X"
 
 S="${WORKDIR}"/wine-$(get_version_component_range 1-3)

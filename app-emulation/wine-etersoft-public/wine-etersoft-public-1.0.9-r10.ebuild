@@ -20,7 +20,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86"
 IUSE="alsa cups dbus esd gecko gnutls hal jack jpeg lcms ldap nas ncurses opengl oss samba scanner xml X"
-# RESTRICT="nomirror"
+RESTRICT="mirror"
 
 S="${WORKDIR}"/wine-$WINEVER/
 
