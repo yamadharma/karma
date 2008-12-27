@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit flag-o-matic eutils subversion
+inherit autotools flag-o-matic subversion
 
 ESVN_REPO_URI="http://mc.redhat-club.org/svn/trunk@${PV##*_pre}"
 
@@ -38,6 +38,13 @@ RDEPEND=">=dev-libs/glib-2
 DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
 	dev-util/pkgconfig"
+
+src_prepare() {
+	# we need this to fix autoreconf
+	mkdir config
+	touch config/config.rpath
+	eautoreconf
+}
 
 src_configure() {
 	local myconf=""
@@ -80,11 +87,8 @@ src_configure() {
 		ewarn "You are highly encouraged to use UTF-8 compatible system locale."
 	fi
 
-	./autogen.sh || die "autogen.sh failed"
-
-	# We want to set SVN revision version properly:
-	# tarball doesn't contain this info due to svn export.
-	export MCREVISION="r$( echo ${PV} | sed s/[[:digit:].]*_pre// )"
+	subversion_wc_info
+	export MCREVISION="r$ESVN_WC_REVISION"
 
 	econf \
 	    --prefix=/usr \
@@ -107,9 +111,6 @@ src_configure() {
 }
 
 src_install() {
-	 cat ${FILESDIR}/chdir-4.6.0.gentoo >>\
-		 ${S}/lib/mc-wrapper.sh
-
 	einstall || die
 
 	dodoc ChangeLog AUTHORS MAINTAINERS FAQ INSTALL* NEWS README*
@@ -123,12 +124,6 @@ src_install() {
 
 	# http://bugs.gentoo.org/show_bug.cgi?id=71275
 	rm -f ${D}/usr/share/locale/locale.alias
-
-	dodir /etc/profile.d
-	exeinto /etc/profile.d
-	doexe ${D}/usr/share/mc/bin/mc.sh
-	doexe ${D}/usr/share/mc/bin/mc.csh
-
 
 	newinitd ${FILESDIR}/mcserv.rc mcserv
 
