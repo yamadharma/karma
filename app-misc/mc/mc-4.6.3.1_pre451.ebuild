@@ -125,6 +125,11 @@ src_install() {
 	# http://bugs.gentoo.org/show_bug.cgi?id=71275
 	rm -f ${D}/usr/share/locale/locale.alias
 
+	dodir /etc/profile.d
+	exeinto /etc/profile.d
+	doexe ${D}/usr/share/mc/bin/mc.sh
+	doexe ${D}/usr/share/mc/bin/mc.csh
+
 	newinitd ${FILESDIR}/mcserv.rc mcserv
 
 	insinto /etc/pam.d

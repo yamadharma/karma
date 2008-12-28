@@ -121,7 +121,6 @@ src_install() {
 	doexe ${D}/usr/share/mc/bin/mc.sh
 	doexe ${D}/usr/share/mc/bin/mc.csh
 
-
 	newinitd ${FILESDIR}/mcserv.rc mcserv
 
 	insinto /etc/pam.d
