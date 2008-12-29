@@ -2,7 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit qt4 eutils
+EAPI="2"
+
+inherit kde4-base
 
 DESCRIPTION="Semantik - a mindmapping-like tool for document generation."
 HOMEPAGE="http://freehackers.org/~tnagy/semantik.html"
@@ -11,7 +13,7 @@ SRC_URI="http://freehackers.org/~tnagy/${P}.tar.bz2"
 LICENSE="QPL"
 SLOT="0"
 KEYWORDS="x86 amd64"
-#IUSE=""
+IUSE=""
 
 DEPEND=">=x11-libs/qt-4.2
 	>=dev-lang/python-2.3
@@ -28,4 +30,7 @@ src_compile() {
 
 src_install() {
 	DESTDIR=${D} ./waf install
+
+	# Dirty hack
+	rm -rf ${D}/usr/kde/4.2/share/locale
 }

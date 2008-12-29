@@ -15,6 +15,20 @@ SLOT="0"
 LICENSE="GPL-2"
 IUSE=""
 
-RDEPEND=""
-DEPEND=""
+S=${WORKDIR}/${P}-src
 
+RDEPEND="dev-lang/lua
+	x11-libs/libX11
+	virtual/opengl"
+
+DEPEND="${RDEPEND}
+	dev-util/scons"
+
+src_compile() {
+	scons PREFIX=/usr configure || die
+	scons PREFIX=/usr || die
+}
+
+src_install() {
+	scons DESTDIR="${D}" install || die "emake install failed"
+}
