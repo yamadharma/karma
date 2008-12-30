@@ -25,7 +25,7 @@ DEPEND="${RDEPEND}
 	dev-util/scons"
 
 src_compile() {
-	scons PREFIX=/usr configure || die
+#	scons PREFIX=/usr configure || die
 	scons PREFIX=/usr || die
 }
 
