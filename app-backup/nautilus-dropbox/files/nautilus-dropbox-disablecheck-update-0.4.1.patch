@@ -1,0 +1,19 @@
+--- nautilus-dropbox-0.4.1.orig/src/nautilus-dropbox-tray.c	2008-09-05 08:02:12.000000000 +0900
++++ nautilus-dropbox-0.4.1/src/nautilus-dropbox-tray.c	2008-09-30 11:36:54.761874575 +0900
+@@ -564,7 +564,7 @@
+ static void
+ is_out_of_date_cb(GHashTable *response, NautilusDropboxTray *ndt) {
+   gchar **outofdate;
+-
++#ifdef CHECK_UPDATE
+   if (response == NULL || 
+       ((outofdate = g_hash_table_lookup(response, "outofdate")) != NULL &&
+        strcmp(outofdate[0], "true") == 0)) {
+@@ -574,6 +574,7 @@
+ 				 "the nautilus-dropbox package for your system.", NULL,
+ 				 NULL, NULL, NULL, NULL);
+   }
++#endif
+ }
+ 
+ static void
