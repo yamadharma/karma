@@ -24,11 +24,20 @@ RDEPEND="dev-lang/lua
 DEPEND="${RDEPEND}
 	dev-util/scons"
 
+src_prepare() {
+	sed -i -e "s:.Copy():.Clone():g" \
+		SConstruct
+
+}
+
+
 src_compile() {
 #	scons PREFIX=/usr configure || die
 	scons PREFIX=/usr || die
 }
 
 src_install() {
-	scons DESTDIR="${D}" install || die "emake install failed"
+#	scons DESTDIR="${D}" install || die "emake install failed"
+
+	dodoc CHANGELOG COPYRIGHT.txt LICENSE.txt README.txt
 }
