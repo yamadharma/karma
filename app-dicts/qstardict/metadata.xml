@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>app-dicts</herd>
+	 <longdescription>
+		QStarDict is a dictionary program written using Qt4. The user interface
+		is similar to StarDict. Main features are: full support of StarDict
+		dictionaries; working in system tray; scanning mouse selection and
+		showing popup window with translation of selected word; translations
+		reformatting; plugins support;
+	 </longdescription>
+	 <use>
+		 <flag name='pronounce'>Use <pkg>app-dicts/wyabdcrealpeopletts</pkg>
+		 pakcage (collection of .wav files) to make QStarDict pronounce English words</flag>
+	</use>
+</pkgmetadata>
