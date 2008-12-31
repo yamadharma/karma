@@ -14,15 +14,6 @@ KEYWORDS="~ppc x86 amd64"
 SLOT="0"
 
 IUSE=""
-DEPEND="${GS_DEPEND}
-	gnustep-libs/xwindowserverkit
-	|| ( ( 	x11-libs/libXt
-		)
-		virtual/x11
-	)"
-RDEPEND="${GS_RDEPEND}
-	gnustep-libs/xwindowserverkit
-	|| ( ( 	x11-libs/libXt
-		)
-		virtual/x11
-	)"
+DEPEND="gnustep-libs/xwindowserverkit"
+RDEPEND="${DEPEND}"
+

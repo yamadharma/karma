@@ -32,10 +32,12 @@ dir=${GAMES_PREFIX_OPT}/cstalin
 src_install() {
 	dodir ${dir}
 	cp -R * ${D}/${dir}
-	games_make_wrapper ${PN} ./${PN} "${dir}" "${dir}"
+	games_make_wrapper cstalin ./cstalin "${dir}" "${dir}"
 
 	prepgamesdirs
-	make_desktop_entry ${PN} "Commander Stalin" ${PN}
+	make_desktop_entry cstalin "Commander Stalin" cstalin
 
 	dodoc CHANGELOG COPYRIGHT.txt LICENSE.txt README.txt
+	cd ${D}/${dir}
+	rm CHANGELOG COPYRIGHT.txt LICENSE.txt README.txt
 }
