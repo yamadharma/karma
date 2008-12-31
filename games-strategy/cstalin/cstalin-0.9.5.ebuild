@@ -39,5 +39,13 @@ src_compile() {
 src_install() {
 #	scons DESTDIR="${D}" install || die "emake install failed"
 
+	dodir /opt/${PN}
+	for i in campaigns doc graphics intro languages maps music scripts sounds units video
+	do
+		cp -R ${i} ${D}/opt/${PN}
+	done
+	insinto /opt/${PN}
+	newins boswars ${PN}
+
 	dodoc CHANGELOG COPYRIGHT.txt LICENSE.txt README.txt
 }
