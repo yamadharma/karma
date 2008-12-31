@@ -1,8 +1,8 @@
 #!/bin/sh
 
-old_v=3197
-new_v=3199
+old_v=3199
+new_v=4190
 
-find . -name "*_pre${old_v}.ebuild" -execdir sh -c 'bzr mv "$@" `echo "$@" | sed "s:3197:3199:g"`' sh {} +
+find . -name "*2.1_pre${old_v}.ebuild" -execdir sh -c 'bzr mv "$@" `echo "$@" | sed "s:2.1_pre3199:4.1_pre4190:g"`' sh {} +
 
 

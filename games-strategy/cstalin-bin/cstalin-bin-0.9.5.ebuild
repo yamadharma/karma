@@ -8,43 +8,30 @@ inherit games
 
 DESCRIPTION="An open source clone of the game Colonization"
 HOMEPAGE="http://commanderstalin.sourceforge.net/"
-SRC_URI="mirror://sourceforge/commanderstalin/${P}-src.tar.gz"
+SRC_URI="mirror://sourceforge/commanderstalin/cstalin-${PV}-linux.tar.gz"
 
 KEYWORDS="x86 amd64"
 SLOT="0"
 LICENSE="GPL-2"
 IUSE=""
 
-S=${WORKDIR}/${P}-src
+S=${WORKDIR}/cstalin-${PV}-linux
 
 RDEPEND="dev-lang/lua
 	virtual/opengl
-	!games-strategy/cstalin-bin"
+	amd64? ( app-emulation/emul-linux-x86-xlibs
+		app-emulation/emul-linux-x86-soundlibs
+		>=app-emulation/emul-linux-x86-xlibs-7.0
+		)
+	!games-strategy/cstalin"
 
-DEPEND="${RDEPEND}
-	dev-util/scons"
+DEPEND=""
 
-dir=${GAMES_PREFIX_OPT}/${PN}
-
-src_prepare() {
-	sed -i -e 's:.Copy():.Clone():g' \
-		SConstruct
-}
-
-
-src_compile() {
-	scons PREFIX=/usr || die
-}
+dir=${GAMES_PREFIX_OPT}/cstalin
 
 src_install() {
 	dodir ${dir}
-	for i in campaigns doc graphics intro languages maps music scripts sounds units video
-	do
-		cp -R ${i} ${D}/${dir}
-	done
-	exeinto ${dir}
-	newexe boswars ${PN}
-
+	cp -R * ${D}/${dir}
 	games_make_wrapper ${PN} ./${PN} "${dir}" "${dir}"
 
 	prepgamesdirs
