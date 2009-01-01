@@ -1,0 +1,8 @@
+# ChangeLog for x11-libs/qt-phonon
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  30 Dec 2008; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  +x11-libs/qt-phonon/qt-phonon-4.5.0_beta1.ebuild:
+  qt-phonon-4.5.0_beta1 ebuild
+
