@@ -5,6 +5,8 @@
 
 # This eclass sets the site-lisp directory for emacs-related packages.
 
+EAPI="2"
+
 inherit gnustep-2 subversion 
 
 ECLASS=etoile-svn

@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit etoile-svn
 
 S1=${S}/Frameworks/EtoileFoundation
@@ -12,15 +14,8 @@ HOMEPAGE="http://www.etoile-project.org/etoile/mediawiki/index.php?title=EtoileF
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="amd64 x86"
+# KEYWORDS="amd64 x86"
 
-src_unpack() {
-	subversion_src_unpack
-	
-	if ( use amd64 )
-	then
-		cd ${S1}
-		sed -i -e "s:@CFLAGS@:@CFLAGS@ -fPIC -DPIC:" UUID/Makefile.in
-	fi
+src_prepare() {
+	sed -i -e "s/-Werror/& -fgnu89-inline/" etoile.make || die "sed failed"
 }
-
