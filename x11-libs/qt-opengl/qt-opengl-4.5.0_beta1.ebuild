@@ -14,7 +14,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+qt3support"
 
 DEPEND="~x11-libs/qt-gui-${PV}
-	!x11-libs/qt:${SLOT}
 	virtual/opengl
 	virtual/glu"
 RDEPEND="${DEPEND}"

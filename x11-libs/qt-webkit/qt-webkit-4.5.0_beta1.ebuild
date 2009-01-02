@@ -14,8 +14,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="~x11-libs/qt-gui-${PV}
-	|| ( media-sound/phonon ~x11-libs/qt-phonon-${PV} )
-	!x11-libs/qt:${SLOT}"
+	|| ( media-sound/phonon ~x11-libs/qt-phonon-${PV} )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/3rdparty/webkit/WebCore tools/designer/src/plugins/qwebview"

@@ -16,7 +16,6 @@ IUSE="firebird mysql odbc postgres +qt3support +sqlite"
 
 DEPEND="
 	~x11-libs/qt-core-${PV}
-	!x11-libs/qt:${SLOT}
 	firebird? ( dev-db/firebird )
 	sqlite? ( dev-db/sqlite:3 )
 	mysql? ( virtual/mysql )

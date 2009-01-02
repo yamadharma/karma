@@ -15,8 +15,7 @@ IUSE="doc glib +qt3support ssl"
 
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
-	ssl? ( dev-libs/openssl )
-	!x11-libs/qt:${SLOT}"
+	ssl? ( dev-libs/openssl )"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"

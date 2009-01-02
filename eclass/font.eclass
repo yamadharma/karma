@@ -1,8 +1,6 @@
 # Copyright 1999-2004 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/font.eclass,v 1.17 2005/12/13 05:08:37 spyderous Exp $
-
-# Author: foser <foser@gentoo.org>
+# $Header: $
 
 # Font Eclass
 #
@@ -22,7 +20,7 @@ FONT_SUFFIX=""
 # @ECLASS-VARIABLE: FONT_S
 # @DESCRIPTION:
 # Dir containing the fonts
-FONT_S=${S}
+# FONT_S=${S}
 
 # @ECLASS-VARIABLE: FONT_PN
 # @DESCRIPTION:
@@ -62,27 +60,6 @@ GNUSTEP_PREFIX="/usr/GNUstep"
 FONTPATH_DIR="/etc/X11/fontpath.d"
 
 FONTDIR_ROOT="/usr/share/fonts"
-
-if [ -z "${FONT_SUPPLIER}" ]
-    then
-    FONT_SUPPLIER=public
-fi
-
-if [ -z "${FONT_BUNDLE}" ]
-    then
-    FONT_BUNDLE=${PN}
-fi
-
-#if [ -z "${FONT_FAMILY}" ]
-#    then
-#    FONT_FAMILY=${PN}
-#fi
-
-if [ -z "${FONTS_NAME_DIR}" ]
-    then
-    FONTS_NAME_DIR=${FONT_SUPPLIER}/${FONT_BUNDLE}/${FONT_FAMILY}
-fi    
-
 
 # arg1: font format
 set_FONTDIR ()
@@ -239,7 +216,33 @@ font_src_install() {
 	done
 }
 
+# @FUNCTION: font_pkg_setup
+# @DESCRIPTION:
+# The font pkg_setup function, which is exported.
 font_pkg_setup() {
+
+	FONT_S=${S}
+
+	if [ -z "${FONT_SUPPLIER}" ]
+	then
+		FONT_SUPPLIER=public
+	fi
+
+	if [ -z "${FONT_BUNDLE}" ]
+	then
+		FONT_BUNDLE=${PN}
+	fi
+
+#if [ -z "${FONT_FAMILY}" ]
+#    then
+#    FONT_FAMILY=${PN}
+#fi
+
+	if [ -z "${FONTS_NAME_DIR}" ]
+	then
+		FONTS_NAME_DIR=${FONT_SUPPLIER}/${FONT_BUNDLE}/${FONT_FAMILY}
+	fi
+
 	set_FONTDIR
 	# make sure we get no colissions
 	# setup is not the nicest place, but preinst doesn't cut it

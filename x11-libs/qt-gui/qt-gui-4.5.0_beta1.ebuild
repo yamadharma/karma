@@ -16,7 +16,6 @@ IUSE_INPUT_DEVICES="input_devices_wacom"
 IUSE="+accessibility cups dbus debug glib +gtkstyle mng nas nis tiff +qt3support xinerama ${IUSE_INPUT_DEVICES}"
 
 RDEPEND="
-	!x11-libs/qt:${SLOT}
 	media-libs/fontconfig
 	>=media-libs/freetype-2
 	media-libs/jpeg

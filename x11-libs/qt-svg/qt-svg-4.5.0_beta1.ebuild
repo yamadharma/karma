@@ -13,8 +13,7 @@ SLOT="4"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="~x11-libs/qt-gui-${PV}
-	!x11-libs/qt:${SLOT}"
+DEPEND="~x11-libs/qt-gui-${PV}"
 RDEPEND="${DEPEND}"
 
 QCONFIG_ADD="svg"

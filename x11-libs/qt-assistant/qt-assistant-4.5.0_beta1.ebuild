@@ -15,8 +15,7 @@ IUSE="+webkit"
 
 DEPEND="~x11-libs/qt-gui-${PV}
 	~x11-libs/qt-sql-${PV}[sqlite]
-	!alpha? ( !ia64? ( !ppc? ( webkit? ( ~x11-libs/qt-webkit-${PV} ) ) ) )
-	!x11-libs/qt:${SLOT}"
+	!alpha? ( !ia64? ( !ppc? ( webkit? ( ~x11-libs/qt-webkit-${PV} ) ) ) )"
 RDEPEND="${DEPEND}"
 
 # Pixeltool isn't really assistant related, but it relies on

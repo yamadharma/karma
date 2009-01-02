@@ -15,8 +15,7 @@ IUSE="+accessibility"
 
 DEPEND="~x11-libs/qt-core-${PV}
 	~x11-libs/qt-gui-${PV}
-	~x11-libs/qt-sql-${PV}
-	!x11-libs/qt:${SLOT}"
+	~x11-libs/qt-sql-${PV}"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="

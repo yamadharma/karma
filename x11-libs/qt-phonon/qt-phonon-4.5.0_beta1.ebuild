@@ -14,7 +14,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="dbus"
 
 DEPEND="~x11-libs/qt-gui-${PV}
-	!x11-libs/qt:${SLOT}
 	!media-sound/phonon
 	media-libs/gstreamer
 	media-libs/gst-plugins-base
