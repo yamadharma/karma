@@ -1,0 +1,10 @@
+--- configure.ac.orig	2008-12-14 16:54:30.000000000 +0100
++++ configure.ac	2008-12-14 16:59:14.000000000 +0100
+@@ -705,6 +705,7 @@
+ 	fi
+ 	AC_SUBST(DBUS_SERVICES_DIR)
+ 	AC_DEFINE_UNQUOTED(DBUS_SERVICES_DIR, "$DBUS_SERVICES_DIR", [Where services dir for DBUS is])
++	LIBS="$LIBS $DBUS_LIBS"
+ fi
+ 
+ HAVE_LIBXML2=false

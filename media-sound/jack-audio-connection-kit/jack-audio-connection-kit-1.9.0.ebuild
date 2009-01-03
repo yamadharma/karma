@@ -19,10 +19,11 @@ S=${WORKDIR}/${MY_P}
 LICENSE="GPL-2"
 SLOT="0"
 # KEYWORDS="x86 amd64"
-IUSE="dbus doc freebob monitor"
+IUSE="dbus doc freebob ieee1394 monitor"
 
 RDEPEND="dev-util/pkgconfig
 	>=media-libs/alsa-lib-0.9.1
+	ieee1394? ( media-libs/libffado )
 	freebob? ( sys-libs/libfreebob )"
 DEPEND="${RDEPEND}
 	app-arch/unzip
