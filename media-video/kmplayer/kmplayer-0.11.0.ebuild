@@ -1,6 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/kmplayer/kmplayer-0.11.0_rc4.ebuild,v 1.1 2008/10/27 18:12:42 scarabeus Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/kmplayer/kmplayer-0.11.0.ebuild,v 1.1 2009/01/04 15:00:49 scarabeus Exp $
 
 EAPI="2"
 
@@ -12,7 +12,7 @@ HOMEPAGE="http://kmplayer.kde.org/"
 SRC_URI="http://${PN}.kde.org/pkgs/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 SLOT="4.2"
 IUSE="cairo npp"
 
@@ -35,6 +35,7 @@ src_prepare() {
 	sed -i \
 		-e "s:add_subdirectory(icons):#add_subdirectory(icons):g"\
 		CMakeLists.txt || die "removing icons failed"
+	kde4-base_src_prepare
 }
 
 src_configure() {
