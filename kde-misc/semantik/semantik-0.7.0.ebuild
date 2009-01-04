@@ -23,14 +23,14 @@ RDEPEND=">=x11-libs/qt-4.2
         >=dev-lang/python-2.4.2"
 S=${WORKDIR}/${P}
 
-src_compile() {
+src_configure() {
 	./waf configure --prefix=/usr/ || die
+}
+
+src_compile() {
 	./waf || die
 }
 
 src_install() {
 	DESTDIR=${D} ./waf install
-
-	# Dirty hack
-	rm -rf ${D}/usr/kde/4.2/share/locale
 }
