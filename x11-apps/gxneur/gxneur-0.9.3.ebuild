@@ -33,7 +33,7 @@ src_unpack() {
 		unpack ${A}
 	fi
 	cd "${S}"
-	epatch "${FILESDIR}/${P}-CFLAGS.patch"
+#	epatch "${FILESDIR}/${P}-CFLAGS.patch"
 	# -Werror should not occure in resulting build.
 	sed -i "s/-Werror -g0//" configure.in
 	eautoreconf

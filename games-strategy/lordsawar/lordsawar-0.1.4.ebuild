@@ -1,6 +1,8 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/games-strategy/freelords/freelords-0.3.8.ebuild,v 1.2 2007/05/29 17:00:02 nyhm Exp $
+# $Header: $
+
+EAPI="2"
 
 inherit eutils games
 
@@ -21,31 +23,32 @@ RDEPEND="media-libs/libsdl
 	gzz? ( dev-games/libggz )
 	zip? ( app-arch/zip )"
 DEPEND="${RDEPEND}
-	nls? (sys-devel/gettext)"
+	nls? ( sys-devel/gettext )"
 
-src_compile() {
-	if use zip ; then
+src_configure() {
+	local myconf=""
+	if use zip
+	then
 		ewarn "Ziping saved filegames is still experimental, if you experience \
 		some troubles turn zip useflag off."
-		ZIP="--enable-zipping"
+		myconf+=" --enable-zipping"
 	else
-		ZIP="--disable-zipping"
+		myconf+=" --disable-zipping"
 	fi
 	egamesconf \
 		--disable-dependency-tracking \
 		--disable-rpath \
 		--disable-sdltest \
-		--disable-winlibs \
 		$(use_with sound) \
 		$(use_enable nls) \
 		$(use_enable gzz) \
 		$(use_with ggz ggz-server) \
 		$(use_with ggz ggz-client) \
 		$(use_enable editor) \
-		${ZIP} \
+		${myconf} \
 		|| die "egamesconf failed"
-	emake || die "emake failed"
 }
+
 src_install() {
 	P_N="freelords"
 	emake DESTDIR="${D}" install || die "emake install failed"
@@ -55,8 +58,7 @@ src_install() {
 		doicon dat/various/${P_N}_editor.png
 		make_desktop_entry ${P_N}_editor "LordsAWar Editor" ${P_N}_editor.png
 	fi
-	dodoc ChangeLog NEWS TODO doc/{Manual,README,Editor,Localization.HOWTO,lordsawarrc}
-	elog "see lordsawarrc /usr/share/doc/${PF} for example configuration"
+	dodoc ChangeLog NEWS TODO README doc/Savefile
 	prepgamesdirs
 }
 

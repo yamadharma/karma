@@ -41,7 +41,7 @@ src_unpack() {
 	fi
 	cd "${S}"
 
-	epatch "${FILESDIR}/${P}-CFLAGS.patch"
+#	epatch "${FILESDIR}/${P}-CFLAGS.patch"
 	sed -i -e "s/-Werror -g0//" configure.in
 	eautoreconf
 }
