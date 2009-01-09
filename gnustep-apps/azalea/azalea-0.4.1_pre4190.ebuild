@@ -20,7 +20,6 @@ DEPEND="${GS_DEPEND}
 		)
 		virtual/x11
 	)
-	virtual/xft
 	>=dev-libs/glib-2
 	>=media-libs/fontconfig-2
 	>=dev-libs/libxml2-2.0
@@ -31,7 +30,6 @@ RDEPEND="${GS_RDEPEND}
 		)
 		virtual/x11
 	)
-	virtual/xft
 	>=dev-libs/glib-2
 	>=media-libs/fontconfig-2
 	>=dev-libs/libxml2-2.0
