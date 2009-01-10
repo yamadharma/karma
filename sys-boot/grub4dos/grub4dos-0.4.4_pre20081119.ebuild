@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit mount-boot eutils flag-o-matic toolchain-funcs autotools
 
-MY_PV=${PV%_pre*}-2008-11-19
+MY_PV=${PV%_pre*}-2008-12-29
 
 PATCHVER="1.7"
 DESCRIPTION="GRUB4DOS is an universal boot loader based on GNU GRUB"
