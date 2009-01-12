@@ -198,14 +198,24 @@ font_src_install() {
 
 	rm -f fonts.{dir,scale} encodings.dir
 
-	for suffix in ${FONT_SUFFIX}; do
-		set_FONTDIR ${suffix}
+	if [[ -z ${FONT_SUFFIX} ]]
+	then
 		font_xfont_config
 		font_xft_config
 		font_fontconfig
 		font_fontpath_dir_config
 		font_make_nfont
-	done
+	else
+		for suffix in ${FONT_SUFFIX}
+		do
+			set_FONTDIR ${suffix}
+			font_xfont_config
+			font_xft_config
+			font_fontconfig
+			font_fontpath_dir_config
+			font_make_nfont
+		done
+	fi
 
 	cd "${S}"
 	dodoc ${DOCS} 2> /dev/null
