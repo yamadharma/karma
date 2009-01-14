@@ -1,6 +1,46 @@
 # ChangeLog for net-fs/openafs-kernel
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/ChangeLog,v 1.107 2008/05/04 13:40:15 maekke Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/ChangeLog,v 1.115 2008/12/26 11:25:39 klausman Exp $
+
+  26 Dec 2008; Tobias Klausmann <klausman@gentoo.org>
+  openafs-kernel-1.4.6.ebuild, openafs-kernel-1.4.6_p20080222.ebuild,
+  openafs-kernel-1.4.7.ebuild, openafs-kernel-1.4.8_pre3.ebuild,
+  openafs-kernel-1.4.8.ebuild, openafs-kernel-1.5.34.ebuild:
+  Dropped keyword for alpha.
+
+  25 Dec 2008; Markus Meier <maekke@gentoo.org> openafs-kernel-1.4.8.ebuild:
+  x86 stable, bug #236438
+
+  25 Dec 2008; Thomas Anderson <gentoofan23@gentoo.org>
+  openafs-kernel-1.4.8.ebuild:
+  stable amd64, bug 236438
+
+*openafs-kernel-1.4.8 (28 Nov 2008)
+
+  28 Nov 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  +openafs-kernel-1.4.8.ebuild:
+  Version bump to 1.4.8
+
+  28 Oct 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  -openafs-kernel-1.4.7_pre2-r1.ebuild, -openafs-kernel-1.4.7_pre3.ebuild,
+  -openafs-kernel-1.4.8_pre2.ebuild:
+  Remove some obsolete ebuilds
+
+*openafs-kernel-1.4.8_pre3 (27 Oct 2008)
+
+  27 Oct 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  +openafs-kernel-1.4.8_pre3.ebuild:
+  Version bump to 1.4.8_pre3
+
+*openafs-kernel-1.4.8_pre2 (08 Oct 2008)
+
+  08 Oct 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  +openafs-kernel-1.4.8_pre2.ebuild:
+  Version bump to 1.4.8_pre2
+
+  22 Sep 2008; Stefaan De Roeck <stefaan@gentoo.org>
+  openafs-kernel-1.4.7.ebuild:
+  Keyworded alpha
 
   04 May 2008; Markus Meier <maekke@gentoo.org>
   openafs-kernel-1.4.6_p20080222.ebuild:

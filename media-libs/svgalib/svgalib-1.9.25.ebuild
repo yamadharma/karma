@@ -27,9 +27,9 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	epatch "${FILESDIR}"/${PN}-1.9.25-linux2.6.patch
-	epatch "${FILESDIR}"/kernel-2.6.27.patch
 	epatch "${FILESDIR}"/${PN}-1.9.19-pic.patch #51698
 	epatch "${FILESDIR}"/${PN}-1.9.25-build.patch
+	epatch "${FILESDIR}"/${PN}-1.9.25-linux2.6.28.patch
 }
 
 src_compile() {
