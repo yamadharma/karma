@@ -1,0 +1,22 @@
+--- bashrc-ng/autopatch.module	2006-07-12 18:33:01.000000000 +0200
++++ bashrc-ng/autopatch.module	2008-12-12 16:14:56.000000000 +0100
+@@ -10,7 +10,19 @@
+ # echo 'PATCH_OVERLAY=/usr/portage/local/patches/' >> /etc/make.conf
+ # mkdir -p /usr/portage/local/patches/
+ 
++# avoid patching twice with EAPI=2
+ on_compile () {
++	if [ "${EAPI}" != 2 ];
++	then
++		do_autopatching
++	fi
++}
++
++on_configure () {
++	do_autopatching
++}
++
++do_autopatching () {
+ 	local diff level p patches patched
+ 
+ 	[[ ! -d "$PATCH_OVERLAY" ]] && return 0

@@ -7,13 +7,16 @@ EAPI="2"
 inherit eutils games
 
 DESCRIPTION="Another Free Warlords II clone"
-HOMEPAGE="http://www.lordsawar.com/"
-SRC_URI="http://download.savannah.gnu.org/releases/lordsawar/${P}.tar.gz"
+HOMEPAGE="http://www.lordsawar.com/
+	http://www.nongnu.org/lordsawar"
+SRC_URI="http://download.savannah.gnu.org/releases/lordsawar/${P/_/-}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 ~ppc x86"
 IUSE="editor ggz nls sound zip"
+
+S=${WORKDIR}/${P%%_pre*}
 
 RDEPEND="media-libs/libsdl
 	media-libs/sdl-image
@@ -61,4 +64,3 @@ src_install() {
 	dodoc ChangeLog NEWS TODO README doc/Savefile
 	prepgamesdirs
 }
-

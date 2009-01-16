@@ -1,0 +1,124 @@
+--- bashrc-ng/perpackage.module	2008-02-14 13:44:17.961231804 +0100
++++ bashrc-ng/perpackage.module	2008-02-14 14:06:21.000000000 +0100
+@@ -47,24 +47,24 @@
+ # Filtering functions #
+ #######################
+ 
+-filter-flags() {
++filter-var() {
+ 	local f x VAR VAL
+ 	declare -a new
+ 
+ 	VAR=$1
+ 	shift
+-	eval "VAL=\${${VAR}}"
++	eval VAL=\${${VAR}}
+ 	for f in ${VAL}; do
+ 		for x in "$@"; do
+ 			# Note this should work with globs like -O*
+ 			[[ ${f} == ${x} ]] && continue 2
+ 		done
+-		eval "new[${#new[@]}]='${f}'"
++		eval new\[\${\#new\[@]}]=\${f}
+ 	done
+-	eval "export ${VAR}='${new[*]}'"
++	eval export ${VAR}=\${new\[*]}
+ }
+ 
+-append-flags() {
++append-var() {
+ 	local VAR
+ 	VAR=$1
+ 
+@@ -85,12 +85,12 @@
+ 	do
+ 		if [ "${flag}" = "GLOBALCFLAGS" ]
+ 		then
+-			append-flags CFLAGS $GLOBALCFLAGS
++			append-var CFLAGS $GLOBALCFLAGS
+ 		elif [ "${flag}" = "GLOBALCXXFLAGS" ]
+ 		then
+-			append-flags CFLAGS $GLOBALCXXFLAGS
++			append-var CFLAGS $GLOBALCXXFLAGS
+ 		else
+-			append-flags CFLAGS ${flag}
++			append-var CFLAGS ${flag}
+ 		fi
+ 	done
+ 	export -n CFLAGS
+@@ -99,7 +99,7 @@
+ package-nocflags() {
+ 	for flag in $@
+ 	do
+-		filter-flags CFLAGS $flag
++		filter-var CFLAGS $flag
+ 	done
+ }
+ 
+@@ -113,12 +113,12 @@
+ 	do
+ 		if [ "${flag}" = "GLOBALCXXFLAGS" ]
+ 		then
+-			append-flags CXXFLAGS $GLOBALCXXFLAGS
++			append-var CXXFLAGS $GLOBALCXXFLAGS
+ 		elif [ "${flag}" = "GLOBALCFLAGS" ]
+ 		then
+-			append-flags CXXFLAGS $GLOBALCFLAGS
++			append-var CXXFLAGS $GLOBALCFLAGS
+ 		else
+-			append-flags CXXFLAGS ${flag}
++			append-var CXXFLAGS ${flag}
+ 		fi
+ 	done
+ 	export -n CXXFLAGS
+@@ -127,7 +127,7 @@
+ package-nocxxflags() {
+ 	for flag in $@
+ 	do
+-		filter-flags CXXFLAGS $flag
++		filter-var CXXFLAGS $flag
+ 	done
+ }
+ 
+@@ -141,9 +141,9 @@
+ 	do
+ 		if [ "${flag}" = "GLOBALLDFLAGS" ]
+ 		then
+-			append-flags LDFLAGS $GLOBALLDFLAGS
++			append-var LDFLAGS $GLOBALLDFLAGS
+ 		else
+-			append-flags LDFLAGS ${flag}
++			append-var LDFLAGS ${flag}
+ 		fi
+ 	done
+ 	export -n LDFLAGS
+@@ -152,7 +152,7 @@
+ package-noldflags() {
+ 	for flag in $@
+ 	do
+-		filter-flags LDFLAGS $flag
++		filter-var LDFLAGS $flag
+ 	done
+ }
+ 
+@@ -166,9 +166,9 @@
+ 	do
+ 		if [ "${flag}" = "GLOBALFEATURES" ]
+ 		then
+-			append-flags FEATURES $GLOBALFEATURES
++			append-var FEATURES $GLOBALFEATURES
+ 		else
+-			append-flags FEATURES ${flag}
++			append-var FEATURES ${flag}
+ 		fi
+ 	done
+ 	# checking features for disstcc (maybe we disabled it)
+@@ -188,7 +188,7 @@
+ package-nofeatures() {
+ 	for flag in $@
+ 	do
+-		filter-flags FEATURES $flag
++		filter-var FEATURES $flag
+ 	done
+ }
+ 
