@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-lang/perl/perl-5.8.8-r2.ebuild,v 1.29 2007/02/11 14:15:44 grobian Exp $
 
@@ -18,7 +18,7 @@ LIBPERL="libperl$(get_libname ${PERLSLOT}.${SHORT_PV})"
 
 LICENSE="|| ( Artistic GPL-2 )"
 SLOT="0"
-KEYWORDS="alpha amd64 arm hppa ia64 m68k mips ppc ppc64 s390 sh sparc ~sparc-fbsd x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
 IUSE="berkdb debug doc gdbm ithreads perlsuid build"
 PERL_OLDVERSEN=""
 
@@ -35,15 +35,17 @@ RDEPEND="~sys-devel/libperl-${PV}
 
 PDEPEND=">=app-admin/perl-cleaner-1.03
 		!build? (
-			>=perl-core/PodParser-1.32
-			>=perl-core/Test-Harness-2.56
+			>=perl-core/PodParser-1.35
+			>=perl-core/Test-Harness-2.64
+			>=perl-core/Module-Build-0.28.08
+			>=perl-core/Archive-Tar-1.38
+			>=perl-core/Digest-SHA-5.45
 		)"
 
 pkg_setup() {
 	# I think this should rather be displayed if you *have* 'ithreads'
 	# in USE if it could break things ...
-	if use ithreads
-	then
+	if use ithreads ; then
 		ewarn "PLEASE NOTE: You are compiling ${MY_P} with"
 		ewarn "interpreter-level threading enabled."
 		ewarn "Threading is not supported by all applications "
@@ -52,8 +54,7 @@ pkg_setup() {
 		epause 5
 	fi
 
-	if [ ! -f "${ROOT}/usr/$(get_libdir)/${LIBPERL}" ]
-	then
+	if [[ ! -f "${ROOT}/usr/$(get_libdir)/${LIBPERL}" ]] ; then
 		# Make sure we have libperl installed ...
 		eerror "Cannot find ${ROOT}/usr/$(get_libdir)/${LIBPERL}!  Make sure that you"
 		eerror "have sys-libs/libperl installed properly ..."
@@ -63,60 +64,12 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
+	cd "${S}"
 
-	# Get -lpthread linked before -lc.  This is needed
-	# when using glibc >= 2.3, or else runtime signal
-	# handling breaks.  Fixes bug #14380.
-	# <rac@gentoo.org> (14 Feb 2003)
-	# reinstated to try to avoid sdl segfaults 03.10.02
-	cd ${S}; epatch ${FILESDIR}/${PN}-prelink-lpthread.patch
-
-	# Patch perldoc to not abort when it attempts to search
-	# nonexistent directories; fixes bug #16589.
-	# <rac@gentoo.org> (28 Feb 2003)
-
-	# this lays the groundwork for solving the issue of what happens
-	# when people (or ebuilds) install different versiosn of modules
-	# that are in the core, by rearranging the @INC directory to look
-	# site -> vendor -> core.
-
-	# TODO: Holy crap, we'll need to re-patch this.
-	#cd ${S}; epatch ${FILESDIR}/${P}-reorder-INC.patch
-
-	# some well-intentioned stuff in http://groups.google.com/groups?hl=en&lr=&ie=UTF-8&selm=Pine.SOL.4.10.10205231231200.5399-100000%40maxwell.phys.lafayette.edu
-	# attempts to avoid bringing cccdlflags to bear on static
-	# extensions (like DynaLoader).  i believe this is
-	# counterproductive on a Gentoo system which has both a shared
-	# and static libperl, so effectively revert this here.
-	cd ${S}; epatch ${FILESDIR}/${PN}-picdl.patch
-
-	# We do not want the build root in the linked perl module's RUNPATH, so
-	# strip paths containing PORTAGE_TMPDIR if its set.  This is for the
-	# MakeMaker module, bug #105054.
-	#epatch ${FILESDIR}/${PN}-5.8.7-MakeMaker-RUNPATH.patch
-
-	# TODO: Is this relevant in 5.10?
-
-	# Starting and hopefully ending with 5.8.7 we observe stack
-	# corruption with the regexp handling in perls DynaLoader code
-	# with ssp enabled. This become fatal during compile time so we
-	# temporally disable ssp on two regexp files till upstream has a
-	# chance to work it out. Bug #97452
-	[[ -n $(test-flags -fno-stack-protector) ]] && \
-		epatch ${FILESDIR}/${P}-regexp-nossp.patch
-
-
-# 	[[ ${CHOST} == *-dragonfly* ]] && cd ${S} && epatch ${FILESDIR}/${P}-dragonfly-clean.patch
-# 	cd ${S}; epatch ${FILESDIR}/${P}-USE_MM_LD_RUN_PATH.patch
-# 	cd ${S}; epatch ${FILESDIR}/${P}-links.patch
-# 	# c++ patch - should address swig related items
-# 	cd ${S}; epatch ${FILESDIR}/${P}-cplusplus.patch
-
-#	has_version '>sys-devel/gcc-4.1.9999' && epatch ${FILESDIR}/${P}-gcc42-command-line.patch
-#	has_version '>=sys-kernel/linux-headers' && \
-#	has_version '>=sys-devel/gcc-4.1' \
-#		&& epatch ${FILESDIR}/${P}-SysV_makefile.patch
-
+	EPATCH_SOURCE="${FILESDIR}/${PV}" \
+	EPATCH_FORCE="yes" \
+	EPATCH_SUFFIX="patch" \
+	epatch
 }
 
 myconf() {
@@ -152,8 +105,7 @@ src_configure() {
 		*) osname="linux" ;;
 	esac
 
-	if use ithreads
-	then
+	if use ithreads ; then
 		einfo "using ithreads"
 		mythreading="-multi"
 		myconf -Dusethreads
@@ -172,48 +124,41 @@ src_configure() {
 	mygdbm='U'
 	mydb='U'
 
-	if use gdbm
-	then
+	if use gdbm ; then
 		mygdbm='D'
 		myndbm='D'
 	fi
-	if use berkdb
-	then
+	if use berkdb ; then
 		mydb='D'
 		has_version '=sys-libs/db-1*' && myndbm='D'
 	fi
 
 	myconf "-${myndbm}i_ndbm" "-${mygdbm}i_gdbm" "-${mydb}i_db"
 
-	if use mips
-	then
+	if use mips ; then
 		# this is needed because gcc 3.3-compiled kernels will hang
 		# the machine trying to run this test - check with `Kumba
 		# <rac@gentoo.org> 2003.06.26
 		myconf -Dd_u32align
 	fi
 
-	if use perlsuid
-	then
+	if use perlsuid ; then
 		myconf -Dd_dosuid
 		ewarn "You have enabled Perl's suid compile. Please"
 		ewarn "read http://perldoc.com/perl5.8.2/INSTALL.html#suidperl"
 		epause 3
 	fi
 
-	if use debug
-	then
+	if use debug ; then
 		CFLAGS="${CFLAGS} -g"
 		myconf -DDEBUGGING
 	fi
 
-	if use sparc
-	then
+	if use sparc ; then
 		myconf -Ud_longdbl
 	fi
 
-	if use alpha && "$(tc-getCC)" == "ccc"
-	then
+	if use alpha && [[ "$(tc-getCC)" = "ccc" ]] ; then
 		ewarn "Perl will not be built with berkdb support, use gcc if you needed it..."
 		myconf -Ui_db -Ui_ndbm
 	fi
@@ -256,7 +201,6 @@ src_configure() {
 }
 
 src_compile() {
-
 	# would like to bracket this with a test for the existence of a
 	# dotfile, but can't clean it automatically now.
 
@@ -271,7 +215,6 @@ src_test() {
 }
 
 src_install() {
-
 	export LC_ALL="C"
 
 	# Need to do this, else apps do not link to dynamic version of
@@ -291,32 +234,31 @@ src_install() {
 	fi
 	make DESTDIR="${D}" ${installtarget} || die "Unable to make ${installtarget}"
 
-	rm ${D}/usr/bin/perl
-	TODO: eselect?
-	ln -s perl${MY_PV} ${D}/usr/bin/perl
+	rm "${D}"/usr/bin/perl
+	#TODO: eselect?
+	ln -s perl${MY_PV} "${D}"/usr/bin/perl
 
-	cp -f utils/h2ph utils/h2ph_patched
-	epatch ${FILESDIR}/${PN}-h2ph-ansi-header.patch
-
-
-	LD_LIBRARY_PATH=. ./perl -Ilib utils/h2ph_patched \
-		-a -d ${D}/usr/$(get_libdir)/perl5/${MY_PV}/${myarch}${mythreading} <<EOF
-asm/termios.h
-syscall.h
-syslimits.h
-syslog.h
-sys/ioctl.h
-sys/socket.h
-sys/time.h
-wait.h
-EOF
+#	cp -f utils/h2ph utils/h2ph_patched
+#	epatch "${FILESDIR}"/${PN}-h2ph-ansi-header.patch
+#
+#	LD_LIBRARY_PATH=. ./perl -Ilib utils/h2ph_patched \
+#		-a -d "${D}"/usr/$(get_libdir)/perl5/${MY_PV}/${myarch}${mythreading} <<EOF
+#asm/termios.h
+#syscall.h
+#syslimits.h
+#syslog.h
+#sys/ioctl.h
+#sys/socket.h
+#sys/time.h
+#wait.h
+#EOF
 
 	# This is to fix a missing c flag for backwards compat
-	for i in `find ${D}/usr/$(get_libdir)/perl5 -iname "Config.pm"`;do
-		sed -e "s:ccflags=':ccflags='-DPERL5 :" \
-		    -e "s:cppflags=':cppflags='-DPERL5 :" \
-			${i} > ${i}.new &&\
-			mv ${i}.new ${i} || die "Sed failed"
+	for i in $(find "${D}"/usr/$(get_libdir)/perl5 -iname "Config.pm" ) ; do
+		sed -i \
+			-e "s:ccflags=':ccflags='-DPERL5 :" \
+			-e "s:cppflags=':cppflags='-DPERL5 :" \
+			"${i}" || die "Sed failed"
 	done
 
 	# A poor fix for the miniperl issues
@@ -326,20 +268,18 @@ EOF
 	fperms 0755 /usr/bin/xsubpp
 
 	# This removes ${D} from Config.pm and .packlist
-	for i in `find ${D} -iname "Config.pm"` `find ${D} -iname ".packlist"`;do
+	for i in $(find "${D}" -iname "Config.pm" -o -iname ".packlist" ) ; do
 		einfo "Removing ${D} from ${i}..."
-		sed -e "s:${D}::" ${i} > ${i}.new &&\
-			mv ${i}.new ${i} || die "Sed failed"
+		sed -i -e "s:${D}::" "${i}" || die "Sed failed"
 	done
 
 	# Note: find out from psm why we would need/want this.
 	# ( use berkdb && has_version '=sys-libs/db-1*' ) ||
-	#	find ${D} -name "*NDBM*" | xargs rm -f
+	#	find "${D}" -name "*NDBM*" | xargs rm -f
 
 	dodoc Changes* Artistic Copying README Todo* AUTHORS
 
-	if use doc
-	then
+	if use doc ; then
 		# HTML Documentation
 		# We expect errors, warnings, and such with the following.
 
@@ -351,33 +291,39 @@ EOF
 			--htmldir="${D}/usr/share/doc/${PF}/html" \
 			--libpods='perlfunc:perlguts:perlvar:perlrun:perlop'
 	fi
-	cd `find ${D} -name Path.pm|sed -e 's/Path.pm//'`
+	#cd `find "${D}" -name Path.pm | sed -e 's/Path.pm//'`
 	# CAN patch in bug 79685
-	#epatch ${FILESDIR}/${P}-CAN-2005-0448-rmtree.patch
+	#epatch "${FILESDIR}"/${P}-CAN-2005-0448-rmtree.patch
 
 	# Remove those items we PDPEND on
-	rm -f ${D}/usr/bin/pod2usage
-	rm -f ${D}/usr/bin/podchecker
-	rm -f ${D}/usr/bin/podselect
-	rm -f ${D}/usr/bin/prove
-	rm -f ${D}/usr/share/man/man1/pod2usage*
-	rm -f ${D}/usr/share/man/man1/podchecker*
-	rm -f ${D}/usr/share/man/man1/podselect*
-	rm -f ${D}/usr/share/man/man1/prove*
+	rm -f "${D}"/usr/bin/pod2usage
+	rm -f "${D}"/usr/bin/podchecker
+	rm -f "${D}"/usr/bin/podselect
+	rm -f "${D}"/usr/bin/prove
+	rm -f "${D}"/usr/bin/ptardiff
+	rm -f "${D}"/usr/bin/ptar
+	rm -f "${D}"/usr/bin/config_data
+	rm -f "${D}"/usr/bin/shasum
+	rm -f "${D}"/usr/share/man/man1/pod2usage*
+	rm -f "${D}"/usr/share/man/man1/podchecker*
+	rm -f "${D}"/usr/share/man/man1/podselect*
+	rm -f "${D}"/usr/share/man/man1/prove*
+	rm -f "${D}"/usr/share/man/man1/ptardiff*
+	rm -f "${D}"/usr/share/man/man1/ptar*
+	rm -f "${D}"/usr/share/man/man1/config_data*
+	rm -f "${D}"/usr/share/man/man1/shasum*
 	if use build ; then
 		src_remove_extra_files
 	fi
 
-	# TODO: Ugly. renaming the files for SLOTting
-	cd ${D}/usr/bin
-	for bin in "a2p c2ph config_data corelist cpan cpan2dist cpanp cpanp-run-perl dprofpp enc2xs find2perl h2ph h2xs instmodsh libnetcfg perlbug perldoc perlivp piconv pl2pm pod2html pod2latex pod2man pod2text pod2usage podchecker podselect prove psed pstruct ptar ptardiff s2p shasum splain xsubpp"; do
-		mv $bin ${bin}.${MY_PV}
-	done
-
+#	# TODO: Ugly. renaming the files for SLOTting
+#	cd "${D}"/usr/bin
+#	for bin in "a2p c2ph config_data corelist cpan cpan2dist cpanp cpanp-run-perl dprofpp enc2xs find2perl h2ph h2xs instmodsh libnetcfg perlbug perldoc perlivp piconv pl2pm pod2html pod2latex pod2man pod2text pod2usage podchecker podselect prove psed pstruct ptar ptardiff s2p shasum splain xsubpp"; do
+#		mv $bin ${bin}.${MY_PV}
+#	done
 }
 
-src_remove_extra_files()
-{
+src_remove_extra_files() {
 	local prefix="./usr" # ./ is important
 	local bindir="${prefix}/bin"
 	local perlroot="${prefix}/$(get_libdir)/perl5" # perl installs per-arch dirs
@@ -550,59 +496,58 @@ src_remove_extra_files()
 	${prV}/warnings.pm
 	${prV}/warnings/register.pm"
 
-
 	if use perlsuid ; then
 		MINIMAL_PERL_INSTALL="${MINIMAL_PERL_INSTALL}
 		${bindir}/suidperl
 		${bindir}/sperl${MY_PV}"
 	fi
 
-	pushd ${D} > /dev/null
+	pushd "${D}" > /dev/null
 	# Remove cruft
 	einfo "Removing files that are not in the minimal install"
 	echo "${MINIMAL_PERL_INSTALL}"
-	for f in $(find . -type f); do
-		has ${f} ${MINIMAL_PERL_INSTALL} || rm -f ${f}
+	for f in $(find . -type f ) ; do
+		has "${f}" ${MINIMAL_PERL_INSTALL} || rm -f "${f}"
 	done
 	# Remove empty directories
-	find . -depth -type d | xargs -r rmdir &> /dev/null
+	find . -depth -type d -print0 | xargs -0 -r rmdir &> /dev/null
 	popd > /dev/null
 }
 
 pkg_postinst() {
 	INC=$(perl -e 'for $line (@INC) { next if $line eq "."; next if $line =~ m/'${MY_PV}'|etc|local|perl$/; print "$line\n" }')
-	if [ "${ROOT}" = "/" ]
-	then
+	if [[ "${ROOT}" = "/" ]] ; then
 		ebegin "Removing old .ph files"
-		for DIR in $INC; do
-			if [ -d ${ROOT}/$DIR ]; then
-				for file in $(find ${ROOT}/$DIR -name "*.ph" -type f); do
-					rm ${ROOT}/$file
-					einfo "<< $file"
+		for DIR in ${INC}; do
+			if [[ -d "${ROOT}/${DIR}" ]]; then
+				for file in $(find "${ROOT}/${DIR}" -name "*.ph" -type f); do
+					rm "${ROOT}/${file}"
+					einfo "<< ${file}"
 				done
 			fi
 		done
 		# Silently remove the now empty dirs
-		for DIR in $INC; do
-		   if [ -d ${ROOT}/$DIR ]; then
-		   	find ${ROOT}/$DIR -depth -type d | xargs -r rmdir &> /dev/null
-		   fi
+		for DIR in ${INC}; do
+			if [[ -d "${ROOT}/${DIR}" ]]; then
+				find "${ROOT}/${DIR}" -depth -type d -print0 | xargs -0 -r rmdir &> /dev/null
+			fi
 		done
 		ebegin "Generating ConfigLocal.pm (ignore any error)"
 		enc2xs -C
 		ebegin "Converting C header files to the corresponding Perl format"
-		cd /usr/include;
+		cd /usr/include
 		h2ph *
 		h2ph -r sys/* arpa/* netinet/* bits/* security/* asm/* gnu/* linux/* gentoo*
-		cd /usr/include/linux
-		h2ph *
+		# TODO: vv isn't it done above already                       ^^^^^
+		#cd /usr/include/linux
+		#h2ph *
 	fi
 
 # This has been moved into a function because rumor has it that a future release
 # of portage will allow us to check what version was just removed - which means
 # we will be able to invoke this only as needed :)
 	# Tried doing this via  -z, but $INC is too big...
-	if [ "${INC}x" != "x" ]; then
+	if [[ "${INC}x" != "x" ]]; then
 		cleaner_msg
 		epause 5
 	fi
@@ -627,6 +572,4 @@ cleaner_msg() {
 	eerror "the problem, please check http://bugs.gentoo.org/"
 	eerror "for more information or to report a bug."
 	eerror ""
-	eerror ""
-
 }
