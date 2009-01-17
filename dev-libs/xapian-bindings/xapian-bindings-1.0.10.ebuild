@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/xapian-bindings/xapian-bindings-0.9.9.ebuild,v 1.3 2007/07/12 02:25:34 mr_bones_ Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-libs/xapian-bindings/xapian-bindings-1.0.6.ebuild,v 1.1 2008/04/05 20:45:54 hanno Exp $
 
 inherit mono java-pkg-opt-2
 
@@ -28,7 +28,6 @@ RDEPEND="${COMMONDEPEND}
 	java? ( >=virtual/jre-1.3 )"
 
 src_compile() {
-	addwrite /dev
 	if use java; then
 		CXXFLAGS="${CXXFLAGS} $(java-pkg_get-jni-cflags)"
 	fi
@@ -44,10 +43,7 @@ src_compile() {
 }
 
 src_install () {
-	# Dirty hack
-	sed -i -e "s:^dist_docdata_DATA.*$:dist_docdata_DATA = index.html:" ${S}/ruby/docs/Makefile
-	
-	emake -j1 DESTDIR="${D}" install || die
+	emake DESTDIR="${D}" install || die
 
 	if use java; then
 		java-pkg_dojar java/built/xapian_jni.jar
@@ -63,5 +59,5 @@ src_install () {
 		mv "${D}/usr/share/doc/xapian-bindings" "${D}/usr/share/doc/${PF}"
 	fi
 
-	dodoc AUTHORS HACKING NEWS TODO README
+	dodoc AUTHORS HACKING NEWS TODO README || die "dodoc failed"
 }
