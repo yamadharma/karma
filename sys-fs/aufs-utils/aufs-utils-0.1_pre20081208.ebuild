@@ -22,6 +22,7 @@ IUSE=""
 S="${WORKDIR}/aufs"
 
 src_compile() {
+	addwrite /usr/src/linux
 	emake -j1 -f local.mk aufs.5 mount.aufs auplink aulchown umount.aufs \
 		|| die "emake failed"
 }
