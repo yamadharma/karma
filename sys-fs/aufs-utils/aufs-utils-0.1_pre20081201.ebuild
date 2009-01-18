@@ -23,13 +23,19 @@ S="${WORKDIR}/aufs"
 
 src_compile() {
 	addwrite /usr/src/linux
-	emake -j1 -f local.mk aufs.5 mount.aufs auplink aulchown umount.aufs \
+	emake -j1 -f local.mk \
+		aufs.5 aufind.sh mount.aufs auplink aulchown umount.aufs etc_default_aufs auchk \
 		|| die "emake failed"
 }
 
 src_install() {
+	cd util
 	exeinto /sbin
 	exeopts -m0500
-	doexe mount.aufs umount.aufs auplink aulchown
+	doexe mount.aufs umount.aufs auplink aulchown auchk aufind.sh
+
 	doman aufs.5
+
+	insinto /etc/default
+	newins etc_default_aufs aufs
 }
