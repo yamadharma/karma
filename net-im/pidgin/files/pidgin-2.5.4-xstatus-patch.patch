@@ -1146,31 +1146,31 @@ diff -Naur pidgin-2.5.1-org/libpurple/protocols/oscar/oscar.c pidgin-2.5.1/libpu
  				break;
  			case OSCAR_CAPABILITY_ADDINS:
  				tmp = _("Add-Ins");
-@@ -727,21 +732,29 @@
+@@ -738,20 +738,30 @@ static gchar *oscar_caps_to_string(Oscar
  
  static char *oscar_icqstatus(int state) {
  	/* Make a cute little string that shows the status of the dude or dudet */
 -	if (state & AIM_ICQ_STATE_CHAT)
 +	if (state == AIM_ICQ_STATE_CHAT)
- 		return g_strdup_printf(_("Free For Chat"));
+ 		return g_strdup(_("Free For Chat"));
 -	else if (state & AIM_ICQ_STATE_DND)
 +	else if (state == AIM_ICQ_STATE_DND)
- 		return g_strdup_printf(_("Do Not Disturb"));
+ 		return g_strdup(_("Do Not Disturb"));
 -	else if (state & AIM_ICQ_STATE_OUT)
 +	else if (state == AIM_ICQ_STATE_OUT)
- 		return g_strdup_printf(_("Not Available"));
+ 		return g_strdup(_("Not Available"));
 -	else if (state & AIM_ICQ_STATE_BUSY)
 +	else if (state == AIM_ICQ_STATE_BUSY)
- 		return g_strdup_printf(_("Occupied"));
+ 		return g_strdup(_("Occupied"));
 -	else if (state & AIM_ICQ_STATE_AWAY)
 +	else if (state == AIM_ICQ_STATE_AWAY)
- 		return g_strdup_printf(_("Away"));
+ 		return g_strdup(_("Away"));
 -	else if (state & AIM_ICQ_STATE_WEBAWARE)
 +	else if (state == AIM_ICQ_STATE_WEBAWARE)
- 		return g_strdup_printf(_("Web Aware"));
+ 		return g_strdup(_("Web Aware"));
 -	else if (state & AIM_ICQ_STATE_INVISIBLE)
--		return g_strdup_printf(_("Invisible"));
--	else
++	else if (state == AIM_ICQ_STATE_INVISIBLE)
+ 		return g_strdup(_("Invisible"));
 +	else if (state == AIM_ICQ_STATE_EVIL)
 +		return g_strdup_printf(_("Evil"));
 +	else if (state == AIM_ICQ_STATE_DEPRESSION)
@@ -1181,10 +1181,9 @@ diff -Naur pidgin-2.5.1-org/libpurple/protocols/oscar/oscar.c pidgin-2.5.1/libpu
 +		return g_strdup_printf(_("At work"));
 +	else if (state == AIM_ICQ_STATE_LUNCH)
 +		return g_strdup_printf(_("At lunch"));
-+	else 
- 		return g_strdup_printf(_("Online"));
+ 	else
+ 		return g_strdup(_("Online"));
  }
- 
 @@ -1967,18 +1980,28 @@
  	}
  
