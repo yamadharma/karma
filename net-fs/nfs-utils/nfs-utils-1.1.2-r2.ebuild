@@ -18,7 +18,7 @@ IUSE="nonfsv4 tcpd kerberos"
 # so don't depend on virtual/krb.
 # (04 Feb 2005 agriffis)
 RDEPEND="tcpd? ( sys-apps/tcp-wrappers )
-	>=net-nds/portmap-5b-r6
+	|| ( net-nds/rpcbind >=net-nds/portmap-5b-r6 )
 	!nonfsv4? (
 		>=dev-libs/libevent-1.0b
 		>=net-libs/libnfsidmap-0.16
