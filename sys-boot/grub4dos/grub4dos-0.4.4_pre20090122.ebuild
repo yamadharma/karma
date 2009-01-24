@@ -6,9 +6,10 @@ EAPI="2"
 
 inherit mount-boot eutils flag-o-matic toolchain-funcs autotools
 
-MY_PV=${PV%_pre*}-2008-12-29
+MY_DATE=${PV#*_pre}
 
-PATCHVER="1.7"
+MY_PV=${PV%_pre*}-${MY_DATE:0:4}-${MY_DATE:4:2}-${MY_DATE:6:2}
+
 DESCRIPTION="GRUB4DOS is an universal boot loader based on GNU GRUB"
 HOMEPAGE="https://gna.org/projects/grub4dos"
 SRC_URI="http://download.gna.org/grub4dos/${PN}-${MY_PV}-src.zip
@@ -126,6 +127,9 @@ src_test() {
 
 src_install() {
 	emake DESTDIR="${D}" install || die
+
+	find ${D} -name bootlace.com -exec chmod +x {} \;
+
 	if use netboot ; then
 		exeinto /usr/lib/grub/${CHOST}
 		doexe nbgrub pxegrub stage2/stage2.netboot || die "netboot install"
