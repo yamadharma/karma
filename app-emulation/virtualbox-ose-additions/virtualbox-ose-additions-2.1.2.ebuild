@@ -10,7 +10,7 @@ BASE_URL="http://download.virtualbox.org/virtualbox/${PV}/"
 
 DESCRIPTION="Guest additions for VirtualBox"
 HOMEPAGE="http://www.virtualbox.org/"
-SRC_URI="${MY_P}.iso"
+SRC_URI="http://download.virtualbox.org/virtualbox/${PV}/${MY_P}.iso"
 
 LICENSE="PUEL"
 SLOT="0"
