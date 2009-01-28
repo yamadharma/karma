@@ -22,7 +22,7 @@ src_install() {
 
 	dodir "${EXT_DIR}" || die
 	touch "${D}${EXT_DIR}/.eclipseextension" || die
-	ln -s . "${D}${EXT_DIR}/eclipse" || die
+	dosym  "${SDK_DIR}" "${EXT_DIR}/eclipse" || die
 
 	dodir "${SDK_DIR}/links" || die
 	echo "path=${EXT_DIR}/eclipse" > "${D}${SDK_DIR}/links/eclipse-extensions-${SLOT}.link" || die

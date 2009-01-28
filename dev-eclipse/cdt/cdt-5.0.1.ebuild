@@ -6,7 +6,7 @@ EAPI="2"
 
 SLOT="3.4"
 ECLIPSE_NAME=ganymede
-inherit eclipse-ext-2 versionator
+inherit eclipse-ext-2
 
 DESCRIPTION="Eclipse C/C++ Development Tools"
 HOMEPAGE="http://www.eclipse.org/cdt/"
@@ -27,9 +27,13 @@ src_unpack() {
 
 src_prepare() {
 	# Delete the Linux GTK source JARs that don't match our arch because they will clash when preparing to build.
-#	find "${S}"/plugins -type f ! -name "org.eclipse.cdt.platform.source.linux.*.jar" -delete || die
-	find "${S}" plugins -maxdepth 1 -name "org.eclipse.cdt.platform.source.linux.gtk.*.jar" ! -name "*.${ECLIPSE_ARCH}_$(get_major_version )*" -delete || die
-	
+	find "${S}" plugins -maxdepth 1 -name "org.eclipse.cdt.platform.source.linux.gtk.*.jar" ! -name "*.${ECLIPSE_ARCH}_*" -delete || die
+	find "${S}" plugins -maxdepth 1 -name "org.eclipse.cdt.core.linux.*.jar" ! -name "*.${ECLIPSE_ARCH}_*" -delete || die
+
+for i in solaris qnx macosx aix win32
+do
+	find "${S}" plugins -maxdepth 1 -name "*${i}*" -delete
+done
 
 	# Delete Cyngwin and Mingwin
 #	find "${S}" plugins -type d -name "*cygwin*.jar" -delete || die
