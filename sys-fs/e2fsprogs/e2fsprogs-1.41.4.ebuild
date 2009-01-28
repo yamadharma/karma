@@ -1,6 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.3.ebuild,v 1.1 2008/10/18 16:44:15 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.4.ebuild,v 1.1 2009/01/28 05:47:45 vapier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib
 
@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/e2fsprogs/${P}.tar.gz"
 
 LICENSE="GPL-2 BSD"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86 ~x86-fbsd"
 IUSE="nls elibc_FreeBSD"
 
 RDEPEND="~sys-libs/${PN}-libs-${PV}
@@ -19,13 +19,20 @@ DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
 	sys-apps/texinfo"
 
+pkg_setup() {
+	if [[ ! -e ${ROOT}/etc/mtab ]] ; then
+		# add some crap to deal with missing /etc/mtab #217719
+		ewarn "No /etc/mtab file, creating one temporarily"
+		echo "${PN} crap for src_test" > "${ROOT}"/etc/mtab
+	fi
+}
+
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	epatch "${FILESDIR}"/${PN}-1.38-tests-locale.patch #99766
 	epatch "${FILESDIR}"/${PN}-1.41.2-makefile.patch
 	epatch "${FILESDIR}"/${PN}-1.40-fbsd.patch
-	epatch "${FILESDIR}"/${P}-tune2fs-opt.patch #253162
 	# blargh ... trick e2fsprogs into using e2fsprogs-libs
 	rm -rf doc
 	sed -i -r \
@@ -79,6 +86,14 @@ src_compile() {
 	fi
 }
 
+pkg_preinst() {
+	if [[ -r ${ROOT}/etc/mtab ]] ; then
+		if [[ $(<"${ROOT}"/etc/mtab) == "${PN} crap for src_test" ]] ; then
+			rm -f "${ROOT}"/etc/mtab
+		fi
+	fi
+}
+
 src_install() {
 	emake DESTDIR="${D}" install || die
 	emake DESTDIR="${D}" install-libs || die
@@ -118,5 +133,4 @@ src_install() {
 	cp ${FILESDIR}/e2fsck.conf.ext4 ${D}/etc/e2fsck.conf || die "cannot copy e2fsck.conf"
 	chmod 644 ${D}/etc/e2fsck.conf
 	chown root:root ${D}/etc/e2fsck.conf
-
 }
