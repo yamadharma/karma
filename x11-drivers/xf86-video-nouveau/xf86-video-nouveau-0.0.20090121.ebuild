@@ -21,8 +21,7 @@ LICENSE="MIT"
 KEYWORDS="amd64 x86"
 IUSE="dri"
 
-COMMON_DEPEND=">=x11-base/xorg-server-1.5
-	dri? ( x11-base/xorg-server[dri] )"
+COMMON_DEPEND=">=x11-base/xorg-server-1.5"
 DEPEND="${COMMON_DEPEND}
 	x11-misc/util-macros
 	x11-proto/fontsproto

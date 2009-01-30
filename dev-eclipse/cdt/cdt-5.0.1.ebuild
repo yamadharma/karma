@@ -6,7 +6,7 @@ EAPI="2"
 
 SLOT="3.4"
 ECLIPSE_NAME=ganymede
-inherit eclipse-ext-2
+inherit eclipse-ext-2 rpm
 
 DESCRIPTION="Eclipse C/C++ Development Tools"
 HOMEPAGE="http://www.eclipse.org/cdt/"
