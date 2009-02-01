@@ -1,33 +1,43 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/boost/boost-1.35.0-r1.ebuild,v 1.3 2008/06/16 04:49:39 jer Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-libs/boost/boost-1.37.0.ebuild,v 1.1 2008/12/16 16:37:27 dev-zero Exp $
+
+EAPI="2"
 
 inherit python flag-o-matic multilib toolchain-funcs versionator check-reqs
 
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86"
 
 MY_P=${PN}_$(replace_all_version_separators _)
+PATCHSET_VERSION="${PV}-1"
 
 DESCRIPTION="Boost Libraries for C++"
 HOMEPAGE="http://www.boost.org/"
-SRC_URI="mirror://sourceforge/boost/${MY_P}.tar.bz2"
+SRC_URI="mirror://sourceforge/boost/${MY_P}.tar.bz2
+	mirror://gentoo/boost-patches-${PATCHSET_VERSION}.tbz2
+	http://www.gentoo.org/~dev-zero/distfiles/boost-patches-${PATCHSET_VERSION}.tbz2"
 LICENSE="freedist Boost-1.0"
-SLOT="0"
+SLOT="1.37"
 IUSE="debug doc expat icu mpi tools"
 
 RDEPEND="icu? ( >=dev-libs/icu-3.3 )
 	expat? ( dev-libs/expat )
 	mpi? ( || ( sys-cluster/openmpi sys-cluster/mpich2 ) )
 	sys-libs/zlib
-	virtual/python"
+	virtual/python
+	!<=dev-libs/boost-1.35.0-r2"
 DEPEND="${RDEPEND}
-	>=dev-util/boost-build-${PV}"
+	dev-util/boost-build:${SLOT}"
+PDEPEND="app-admin/eselect-boost"
 
 S=${WORKDIR}/${MY_P}
 
 # Maintainer Information
 # ToDo:
 # - write a patch to support /dev/urandom on FreeBSD and OSX (see below)
+
+MAJOR_PV=$(replace_all_version_separators _ ${SLOT})
+BJAM="bjam-${MAJOR_PV}"
 
 pkg_setup() {
 	if has test ${FEATURES} ; then
@@ -46,14 +56,17 @@ pkg_setup() {
 	fi
 }
 
-src_unpack() {
-	unpack ${A}
+src_prepare() {
+	EPATCH_SOURCE="${WORKDIR}/patches"
+	EPATCH_SUFFIX="patch"
+	epatch
 
-	cd "${S}"
+	epatch "${FILESDIR}/remove_toolset_from_targetname.patch"
 
 	epatch "${FILESDIR}/${PN}-1.37.0-r1-fix_mpi_installation.patch"
 	epatch "${FILESDIR}/${PN}-1.37.0-r1-tools-build-fix.patch"
 	epatch "${FILESDIR}/${PN}-1.37.0-r1-function-template-compile-fix.patch"
+
 
 	# This enables building the boost.random library with /dev/urandom support
 	if ! use userland_Darwin ; then
@@ -73,8 +86,10 @@ generate_options() {
 	# Please take a look at the boost-build ebuild
 	# for more infomration.
 
-	OPTIONS="gentoorelease"
-	use debug && OPTIONS="gentoodebug"
+	BUILDNAME="gentoorelease"
+	use debug && BUILDNAME="gentoodebug"
+
+	OPTIONS="${BUILDNAME}"
 
 	use icu && OPTIONS="${OPTIONS} -sICU_PATH=/usr"
 	if use expat ; then
@@ -85,14 +100,14 @@ generate_options() {
 		OPTIONS="${OPTIONS} --without-mpi"
 	fi
 
-	OPTIONS="${OPTIONS} --user-config=${S}/user-config.jam --boost-build=/usr/share/boost-build"
+	OPTIONS="${OPTIONS} --user-config=${S}/user-config.jam --boost-build=/usr/share/boost-build-${MAJOR_PV}"
 }
 
-generate_userconfig() {
+src_configure() {
 	einfo "Writing new user-config.jam"
 	python_version
 
-	local compiler compilerVersion compilerExecutable
+	local compiler compilerVersion compilerExecutable mpi
 	if [[ ${CHOST} == *-darwin* ]] ; then
 		compiler=darwin
 		compilerVersion=$(gcc-version)
@@ -104,6 +119,8 @@ generate_userconfig() {
 		compilerExecutable=$(tc-getCXX)
 	fi
 
+	use mpi && mpi="using mpi ;"
+
 	cat > "${S}/user-config.jam" << __EOF__
 
 variant gentoorelease : release : <optimization>none <debug-symbols>none ;
@@ -112,50 +129,37 @@ variant gentoodebug : debug : <optimization>none <debug-symbols>none ;
 using ${compiler} : ${compilerVersion} : ${compilerExecutable} : <cxxflags>"${CXXFLAGS}" <linkflags>"${LDFLAGS}" ;
 using python : ${PYVER} : /usr : /usr/include/python${PYVER} : /usr/lib/python${PYVER} ;
 
+${mpi}
+
 __EOF__
 
-	if use mpi ; then
-		echo "using mpi ;" >> "${S}/user-config.jam"
-	fi
 }
 
 src_compile() {
 
-	NUMJOBS=$(sed -e 's/.*\(\-j[ 0-9]\+\) .*/\1/' <<< ${MAKEOPTS})
+	NUMJOBS=$(sed -e 's/.*\(\-j[ 0-9]\+\) .*/\1/; s/--jobs=\?/-j/' <<< ${MAKEOPTS})
 
-	generate_userconfig
 	generate_options
 
 	elog "Using the following options to build: "
 	elog "  ${OPTIONS}"
 
-	export BOOST_ROOT=${S}
+	export BOOST_ROOT="${S}"
 
-	bjam ${NUMJOBS} -q \
+	${BJAM} ${NUMJOBS} -q \
 		${OPTIONS} \
 		threading=single,multi link=shared,static runtime-link=shared,static \
 		--prefix="${D}/usr" \
-		--layout=system \
+		--layout=versioned \
 		|| die "building boost failed"
 
 	if use tools; then
 		cd "${S}/tools/"
-		# We have to set optimization to -O0 or -O1 to work around a gcc-bug
-		# optimization=off adds -O0 to the compiler call and overwrites our settings.
-		bjam ${NUMJOBS} -q \
+		${BJAM} ${NUMJOBS} -q \
 			${OPTIONS} \
 			--prefix="${D}/usr" \
-			--layout=system \
+			--layout=versioned \
 			|| die "building tools failed"
-	fi
-
-	if has test ${FEATURES} ; then
-		cd "${S}/tools/regression/build"
-		bjam -q \
-			${OPTIONS} \
-			--prefix="${D}/usr" \
-			--layout=system \
-			|| die "building regression test helpers failed"
 	fi
 
 }
@@ -164,21 +168,22 @@ src_install () {
 
 	generate_options
 
-	export BOOST_ROOT=${S}
+	export BOOST_ROOT="${S}"
 
-	bjam -q \
+	${BJAM} -q \
 		${OPTIONS} \
 		threading=single,multi link=shared,static runtime-link=shared,static \
 		--prefix="${D}/usr" \
 		--includedir="${D}/usr/include" \
 		--libdir="${D}/usr/$(get_libdir)" \
-		--layout=system \
+		--layout=versioned \
 		install || die "install failed for options '${OPTIONS}'"
 
-	# Move the mpi.so to the right place
+	# Move the mpi.so to the right place and make sure it's slotted
 	if use mpi; then
-		mkdir -p "${D}/usr/$(get_libdir)/python${PYVER}/site-packages"
-		mv "${D}/usr/$(get_libdir)/mpi.so" "${D}/usr/$(get_libdir)/python${PYVER}/site-packages"
+		mkdir -p "${D}/usr/$(get_libdir)/python${PYVER}/site-packages/mpi_${MAJOR_PV}"
+		mv "${D}/usr/$(get_libdir)/mpi.so" "${D}/usr/$(get_libdir)/python${PYVER}/site-packages/mpi_${MAJOR_PV}/"
+		touch "${D}/usr/$(get_libdir)/python${PYVER}/site-packages/mpi_${MAJOR_PV}/__init__.py"
 	fi
 
 	if use doc ; then
@@ -199,37 +204,64 @@ src_install () {
 
 	cd "${D}/usr/$(get_libdir)"
 
+	# Remove (unversioned) symlinks
+	# And check for what we remove to catch bugs
+	for f in libboost_*[!$(get_version_component_range 2)].{a,so} ; do
+		if [ ! -h "${f}" ] ; then
+			eerror "Ups, tried to remove a real file instead of a symlink"
+			die "slotting/naming of the libs broken!"
+		fi
+		rm "${f}"
+	done
+
 	# If built with debug enabled, all libraries get a 'd' postfix,
 	# this breaks linking other apps against boost (bug #181972)
 	if use debug ; then
-		for lib in $(ls -1 libboost_*) ; do
+		for lib in libboost_* ; do
 			dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-d\././' -e 's/d\././' <<< ${lib})"
 		done
 	fi
 
-	for lib in $(ls -1 libboost_thread-mt.*) ; do
+	for lib in libboost_thread-mt-{s-${MAJOR_PV}.a,${MAJOR_PV}.a,${MAJOR_PV}.so} ; do
 		dosym ${lib} "/usr/$(get_libdir)/$(sed -e 's/-mt//' <<< ${lib})"
 	done
 
 	if use tools; then
+		cd "${S}/dist/bin"
+		# Append version postfix to binaries for slotting
+		for b in * ; do
+			newbin "${b}" "${b}-${MAJOR_PV}"
+		done
+
 		cd "${S}/dist"
-		dobin bin/*
-		insinto /usr
-		doins -r share
+		insinto /usr/share
+		doins -r share/boostbook
+		# Append version postfix for slotting
+		mv "${D}/usr/share/boostbook" "${D}/usr/share/boostbook-${MAJOR_PV}"
 	fi
 
-	if has test ${FEATURES} ; then
-		cd "${S}/status"
+	cd "${S}/status"
+	if [ -f regress.log ] ; then
 		docinto status
 		dohtml *.{html,gif} ../boost.png
 		dodoc regress.log
 	fi
+
+	python_need_rebuild
 }
 
 src_test() {
 	generate_options
 
 	export BOOST_ROOT=${S}
+
+	cd "${S}/tools/regression/build"
+	${BJAM} -q \
+		${OPTIONS} \
+		--prefix="${D}/usr" \
+		--layout=versioned \
+		process_jam_log compiler_status \
+		|| die "building regression test helpers failed"
 
 	cd "${S}/status"
 
@@ -240,12 +272,12 @@ src_test() {
 	# but adapted to our needs.
 
 	# Run the tests & write them into a file for postprocessing
-	bjam \
+	${BJAM} \
 		${OPTIONS} \
 		--dump-tests 2>&1 | tee regress.log
 
 	# Postprocessing
-	cat regress.log | "${S}/dist/bin/process_jam_log" --v2
+	cat regress.log | "${S}/tools/regression/build/bin/gcc-$(gcc-version)/${BUILDNAME}/process_jam_log" --v2
 	if test $? != 0 ; then
 		die "Postprocessing the build log failed"
 	fi
@@ -255,7 +287,7 @@ src_test() {
 __EOF__
 
 	# Generate the build log html summary page
-	"${S}/dist/bin/compiler_status" --v2 \
+	"${S}/tools/regression/build/bin/gcc-$(gcc-version)/${BUILDNAME}/compiler_status" --v2 \
 		--comment "${S}/status/comment.html" "${S}" \
 		cs-$(uname).html cs-$(uname)-links.html
 	if test $? != 0 ; then
@@ -263,5 +295,5 @@ __EOF__
 	fi
 
 	# And do some cosmetic fixes :)
-	sed -i -e 's|../boost.png|boost.png|' *.html
+	sed -i -e 's|http://www.boost.org/boost.png|boost.png|' *.html
 }
