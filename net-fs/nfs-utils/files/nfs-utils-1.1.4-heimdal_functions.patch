@@ -1,0 +1,60 @@
+diff -Naur nfs-utils-1.1.4/utils/gssd/krb5_util.c nfs-utils-1.1.4-r1/utils/gssd/krb5_util.c
+--- utils/gssd/krb5_util.c	2008-10-17 14:20:09.000000000 +0000
++++ utils/gssd/krb5_util.c	2008-11-22 13:52:42.000000000 +0000
+@@ -927,9 +927,37 @@
+ {
+ 	krb5_error_code ret;
+ 	krb5_creds creds;
+-	krb5_cc_cursor cur;
+ 	int found = 0;
+ 
++#ifdef HAVE_HEIMDAL
++	krb5_creds pattern;
++	krb5_realm *client_realm;
++
++	krb5_cc_clear_mcred(&pattern);
++
++	client_realm = krb5_princ_realm (context, principal);
++
++	ret = krb5_make_principal (context, &pattern.server,
++				   *client_realm, KRB5_TGS_NAME, *client_realm,
++				   NULL);
++	if (ret)
++	  krb5_err (context, 1, ret, "krb5_make_principal");
++	pattern.client = principal;
++
++	ret = krb5_cc_retrieve_cred (context, ccache, 0, &pattern, &creds);
++	krb5_free_principal (context, pattern.server);
++	if (ret) {
++	  if (ret == KRB5_CC_END)
++            return 1;
++	  krb5_err (context, 1, ret, "krb5_cc_retrieve_cred");
++	}
++
++	found = creds.times.endtime > time(NULL);
++
++	krb5_free_cred_contents (context, &creds);
++#else
++	krb5_cc_cursor cur;
++
+ 	ret = krb5_cc_start_seq_get(context, ccache, &cur);
+ 	if (ret) 
+ 		return 0;
+@@ -949,6 +977,7 @@
+ 		krb5_free_cred_contents(context, &creds);
+ 	}
+ 	krb5_cc_end_seq_get(context, ccache, &cur);
++#endif
+ 
+ 	return found;
+ }
+@@ -995,6 +1024,9 @@
+ 	}
+ 	krb5_free_principal(context, principal);
+ err_princ:
++#ifdef HAVE_HEIMDAL
++#define KRB5_TC_OPENCLOSE              0x00000001
++#endif
+ 	krb5_cc_set_flags(context, ccache,  KRB5_TC_OPENCLOSE);
+ 	krb5_cc_close(context, ccache);
+ err_cache:
