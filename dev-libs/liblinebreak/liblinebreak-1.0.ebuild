@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+inherit eutils
+
 DESCRIPTION="Line breaking library"
 HOMEPAGE="http://vimgadgets.sourceforge.net/liblinebreak/"
 SRC_URI="mirror://sourceforge/vimgadgets/${P}.tar.gz"
@@ -16,4 +18,6 @@ RDEPEND=""
 
 src_install() {
 	emake DESTDIR="${D}" install || die "install failed"
+	dodoc AUTHORS ChangeLog NEWS README
+	dohtml doc/html/*
 }
