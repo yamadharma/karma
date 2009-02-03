@@ -22,7 +22,7 @@ RDEPEND="tcpd? ( sys-apps/tcp-wrappers )
 	|| ( net-nds/rpcbind >=net-nds/portmap-5b-r6 )
 	!nonfsv4? (
 		>=dev-libs/libevent-1.0b
-		>=net-libs/libnfsidmap-0.16
+		>=net-libs/libnfsidmap-0.21-r1
 		kerberos? (
 			net-libs/librpcsecgss
 			|| (
