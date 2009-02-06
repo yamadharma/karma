@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>avast4workstation</herd>
+<longdescription>
+avast! Linux Home Edition represents an antivirus solution for the increasingly popular Linux platform.
+</longdescription>
+</pkgmetadata>

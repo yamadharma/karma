@@ -6,11 +6,9 @@ inherit eutils
 
 DESCRIPTION="DrWeb virus scaner for Linux"
 HOMEPAGE="http://www.drweb.com"
-SRC_URI="ftp://ftp.drweb.com/pub/drweb/unix/Linux/Generic/drweb-${PV}-unix-glibc27.tar.bz2
-	X? ( ftp://ftp.drweb.com/pub/drweb/unix/Linux/Generic/drweb-x-${PV}-glibc2.7.tar.bz2 )"
-
-#SRC_URI="ftp://ftp.drweb.com/pub/drweb/unix/Linux/Generic/glibc2.6/drweb-${PV}-glibc2.6.tar.bz2
-#	X? ( ftp://ftp.drweb.com/pub/drweb/unix/Linux/Generic/glibc2.6/drweb-x-${PV}-glibc2.6.tar.bz2 )"
+MY_REVISION=${PR/r/}
+SRC_URI="ftp://ftp.drweb.com/pub/drweb/unix/Linux/Generic/glibc2.6/drweb-${PV}.${MY_REVISION}-unix-glibc26.tar.bz2
+	X? ( ftp://ftp.drweb.com/pub/drweb/unix/Linux/Generic/glibc2.6/drweb-x-${PV}.${MY_REVISION}-glibc2.6.tar.bz2 )"
 
 RESTRICT="mirror strip"
 
@@ -24,7 +22,7 @@ RDEPEND="${DEPEND}
 	dev-perl/libwww-perl
 	virtual/cron
 	sys-devel/gcc
-	>=sys-libs/glibc-2.7
+	>=sys-libs/glibc-2.6.1
 	logrotate? ( app-admin/logrotate )"
 
 PROVIDE="virtual/antivirus"
@@ -44,15 +42,11 @@ src_compile() {
 }
 
 src_install() {
-	components="drweb"
+	doins -r ${WORKDIR}/drweb-${PV}.${MY_REVISION}-unix-glibc26/* || die
 	if use X ; then
 		components="${components} drweb-x"
+		doins -r ${WORKDIR}/drweb-x-${PV}.${MY_REVISION}-glibc2.6/* || die
 	fi
-
-	for comp in ${components} ; do
-		insinto /
-		doins -r ${WORKDIR}/${comp}-${PV}-glibc2.7/*
-	done
 	
 	if use X ; then
 		fperms +x /opt/drweb/drweb-gui
