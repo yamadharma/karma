@@ -12,9 +12,9 @@ BASE_URL="http://download.virtualbox.org/virtualbox/${PV}/"
 
 DESCRIPTION="Family of powerful x86 virtualization products for enterprise as well as home use"
 HOMEPAGE="http://www.virtualbox.org/"
-SRC_URI="amd64? ( ${MY_P}_amd64.run )
-	x86? ( ${MY_P}_x86.run )
-	sdk? ( VirtualBoxSDK-${MY_PV}.zip )"
+SRC_URI="amd64? ( ${BASE_URL}${MY_P}_amd64.run )
+	x86? ( ${BASE_URL}${MY_P}_x86.run )
+	sdk? ( ${BASE_URL}VirtualBoxSDK-${MY_PV}.zip )"
 
 LICENSE="PUEL"
 SLOT="0"
@@ -55,25 +55,6 @@ RDEPEND="!app-emulation/virtualbox-ose
 
 S=${WORKDIR}
 
-RESTRICT="fetch"
-
-pkg_nofetch() {
-	# Fetch restriction added due licensing and problems downloading with
-	# wget, see http://www.virtualbox.org/ticket/2148
-	elog "Please download all the needed files and then"
-	elog "place them in: ${DISTDIR}"
-	elog ""
-	elog "You can use the following command(s):"
-	if use amd64 ; then
-		elog "wget ${BASE_URL}${MY_P}_amd64.run -O ${DISTDIR}/${MY_P}_amd64.run"
-	else
-		elog "wget ${BASE_URL}${MY_P}_x86.run -O ${DISTDIR}/${MY_P}_x86.run"
-	fi
-	if use sdk; then
-		elog "wget ${BASE_URL}VirtualBoxSDK-${MY_PV}.zip -O ${DISTDIR}/VirtualBoxSDK-${MY_PV}.zip"
-	fi
-	elog ""
-}
 
 pkg_setup() {
 	# The VBoxSDL frontend needs media-libs/libsdl compiled

@@ -18,7 +18,7 @@ DEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-sql:4[sqlite]"
 RDEPEND="${DEPEND}
 	app-admin/sudo
-	app-emulation/wine
+	|| ( app-emulation/wine app-emulation/wine-etersoft-public )
 	>=sys-apps/which-2.19
 	>=media-gfx/icoutils-0.26.0"
 
