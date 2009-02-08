@@ -1,0 +1,13 @@
+Index: ivman-0.6.14/src/manager.c
+===================================================================
+--- ivman-0.6.14.orig/src/manager.c	2007-05-28 10:30:10.000000000 +0200
++++ ivman-0.6.14/src/manager.c	2007-05-28 10:31:29.000000000 +0200
+@@ -1411,7 +1411,9 @@
+     }
+ 
+     // Permanently unlock CD / DVD drive
+-    if ( geteuid() == 0 )
++    // Silently ignore not existing CD / DVD drive
++    struct stat statistic;
++    if ( geteuid() == 0 && stat("/proc/sys/dev/cdrom/lock",&statistic) == 0 )
+         ivm_run_command( "echo 0 > /proc/sys/dev/cdrom/lock", NULL, FALSE );

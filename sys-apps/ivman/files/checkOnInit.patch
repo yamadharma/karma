@@ -1,0 +1,13 @@
+Index: ivman-0.6.14/src/userconfigs.h
+===================================================================
+--- ivman-0.6.14.orig/src/userconfigs.h	2007-03-07 03:48:18.000000000 -0500
++++ ivman-0.6.14/src/userconfigs.h	2007-03-07 03:48:38.000000000 -0500
+@@ -7,7 +7,7 @@
+ <ivm:ActionsConfig version=\"0.2\" xmlns:ivm=\"http://www.eikke.com/ivm\">\n\
+     <!-- Read the IvmConfigActions.xml man page for details on how to edit this file. -->\n\
+ \n\
+-	<ivm:Option name=\"checkOnInit\" value=\"true\" />\n\
++	<ivm:Option name=\"checkOnInit\" value=\"false\" />\n\
+ \n\
+     <!-- mount everything we can -->\n\
+     <ivm:Match name=\"ivm.mountable\" value=\"true\">\n\

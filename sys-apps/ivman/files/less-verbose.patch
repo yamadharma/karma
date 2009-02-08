@@ -1,0 +1,13 @@
+Index: ivman-0.6.14/src/IvmConfig/IvmConfigBase.xml
+===================================================================
+--- ivman-0.6.14.orig/src/IvmConfig/IvmConfigBase.xml	2007-03-07 03:56:19.000000000 -0500
++++ ivman-0.6.14/src/IvmConfig/IvmConfigBase.xml	2007-03-07 03:56:26.000000000 -0500
+@@ -7,7 +7,7 @@
+ 
+     <!-- Whether or not to give debugging output.  Warning, this is very
+          verbose! -->
+-    <ivm:Option name="debug" value="true" />
++    <ivm:Option name="debug" value="false" />
+ 
+     <!-- whether or not system-wide ivman should sleep a little while before
+          mounting volumes.  Default: true. -->

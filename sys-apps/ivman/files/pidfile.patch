@@ -1,0 +1,13 @@
+Index: ivman-0.6.14/src/IvmConfig/IvmConfigBase.xml
+===================================================================
+--- ivman-0.6.14.orig/src/IvmConfig/IvmConfigBase.xml	2007-03-07 03:54:03.000000000 -0500
++++ ivman-0.6.14/src/IvmConfig/IvmConfigBase.xml	2007-03-07 03:55:33.000000000 -0500
+@@ -17,7 +17,7 @@
+ 
+     <!-- pidfile to use to ensure that only one instance of Ivman will
+          be running -->
+-    <ivm:Option name="pidfile" value="/var/run/ivman.pid" />
++    <ivm:Option name="pidfile" value="/var/run/ivman/ivman.pid" />
+ 
+     <!-- user for Ivman to run as.  You can then setup sudo rules for this
+          user. -->

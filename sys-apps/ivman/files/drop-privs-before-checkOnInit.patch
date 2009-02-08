@@ -1,0 +1,45 @@
+Index: ivman-0.6.14/src/manager.c
+===================================================================
+--- ivman-0.6.14.orig/src/manager.c	2007-04-27 16:52:01.000000000 -0400
++++ ivman-0.6.14/src/manager.c	2007-04-27 16:54:27.000000000 -0400
+@@ -1222,7 +1222,15 @@
+                               (GDestroyNotify) hal_free_property_set);
+ #endif
+ 
+-    // Now try to watch all properties, if necessary.
++    ivm_check_dbus_error(&dbus_error);
++}
++
++void maybeCheckOnInit()
++{
++    DBusError dbus_error;
++    dbus_error_init(&dbus_error);
++
++    // Try to watch all properties, if necessary.
+     char * propfile = ivm_get_config_file("IvmConfigProperties.xml");
+     IvmConfigProperties *prop_cfg =
+         parseIvmConfigProperties(propfile, NULL, NULL);
+@@ -1292,12 +1300,8 @@
+ 
+     free(actionfile);
+     free(propfile);
+-
+-    ivm_check_dbus_error(&dbus_error);
+ }
+ 
+-
+-
+ /**
+  * Parse command-line options.
+  */
+@@ -1476,6 +1480,10 @@
+         return 1;
+     }
+ 
++    // if checkOnInit was specified in IvmConfigActions or IvmConfigProperties
++    // check every device
++    maybeCheckOnInit();
++
+     loop = g_main_loop_new(NULL, FALSE);
+     if ( !loop ) {
+         DEBUG( _("Error creating main loop!\n") );
