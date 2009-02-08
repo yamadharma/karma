@@ -4,17 +4,20 @@
 
 EAPI="2"
 
-inherit autotools flag-o-matic subversion
+inherit autotools flag-o-matic
 
-ESVN_REPO_URI="http://mc.redhat-club.org/svn/trunk@${PV##*_pre}"
+MY_PV=${PV/_p/-r}
+MY_P=${PN}-${MY_PV}
+
+S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="GNU Midnight Commander cli-based file manager"
 HOMEPAGE="http://people.redhat-club.org/slavaz/trac/wiki/ProjectMc"
-# SRC_URI="http://people.redhat-club.org/inf/mc-slavaz/source/${P}.tar.bz2"
+SRC_URI="http://people.redhat-club.org/inf/mc-slavaz/source/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-# KEYWORDS="alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sparc x86"
+KEYWORDS="alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sparc x86"
 IUSE="+7zip -attrs +background +editor ext2undel -dnotify gpm +network nls samba +unicode +vfs X"
 
 PROVIDE="virtual/editor"
@@ -86,9 +89,6 @@ src_configure() {
 		ewarn "Non UTF-8 setup is deprecated."
 		ewarn "You are highly encouraged to use UTF-8 compatible system locale."
 	fi
-
-	subversion_wc_info
-	export MCREVISION="r$ESVN_WC_REVISION"
 
 	econf \
 	    --prefix=/usr \
