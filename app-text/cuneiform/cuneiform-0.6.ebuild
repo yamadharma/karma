@@ -28,17 +28,12 @@ DOCS="readme.txt"
 
 S="${S}.0"
 
-src_unpack() {
-	unpack ${A}
-	# Fix automagic dependencies / linking
+src_prepare() {
 	if ! use imagemagick; then
 		sed -e '/pkg_check_modules(MAGICK ImageMagick++)/s/^/#DONOTFIND /' \
 			-i "${S}/cuneiform_src/Kern/CMakeLists.txt" \
 		|| die "Sed for ImageMagick automagic dependency failed."
 	fi
-}
-
-src_prepare() {
 	# sys-devel/binutils-2.19 fixups
-	epatch ${FILESDIR}/visibility.patch
+# 	epatch ${FILESDIR}/visibility.patch
 }
