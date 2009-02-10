@@ -96,6 +96,19 @@ config_cache() {
 
 src_configure() {
 	export LDCONFIG=/bin/true
+	use esd     || export ac_cv_path_ESDCONFIG=""
+	use scanner || export ac_cv_path_sane_devel="no"
+	config_cache jack jack/jack.h
+	config_cache cups cups/cups.h
+	config_cache alsa alsa/asoundlib.h sys/asoundlib.h asound:snd_pcm_open
+	config_cache nas audio/audiolib.h audio/soundlib.h
+	config_cache xml libxml/parser.h libxslt/pattern.h libxslt/transform.h
+	config_cache ldap ldap.h lber.h
+	config_cache dbus dbus/dbus.h
+	config_cache hal hal/libhal.h
+	config_cache jpeg jpeglib.h
+	config_cache oss sys/soundcard.h machine/soundcard.h soundcard.h
+	config_cache lcms lcms.h
 
 	# XXX: should check out these flags too:
 	#	audioio capi fontconfig freetype gphoto
@@ -109,7 +122,6 @@ src_configure() {
 		$(use_with jack) \
 		$(use_with jpeg) \
 		$(use_with lcms cms) \
-		$(use_with ldap) \
 		$(use_with nas) \
 		$(use_with ncurses curses) \
 		$(use_with opengl) \
@@ -124,6 +136,8 @@ src_configure() {
 		$(use_with xml) \
 		$(use_with xml xslt) \
 		|| die "configure failed"
+
+#		$(use_with ldap) \
 
 	emake -j1 depend || die "depend"
 }
