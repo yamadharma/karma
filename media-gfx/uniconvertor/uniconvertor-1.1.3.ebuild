@@ -1,23 +1,27 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $ Ilya Kashirin (seclorum@seclorum.ru)
+# $Header: $
 
 NEED_PYTHON=2.4
 
 inherit distutils
 
-KEYWORDS="x86 amd64"
+MY_P="UniConvertor"
 
+KEYWORDS="amd64 x86"
 DESCRIPTION="UniConvertor - commandline tool for popular vector formats convertion."
 HOMEPAGE="http://sk1project.org/modules.php?name=Products&product=uniconvertor"
-SRC_URI="http://sk1project.org/downloads/uniconvertor/v${PV}/${PN}-${PV}.tar.gz"
+SRC_URI="http://sk1project.org/downloads/${PN}/v${PV}/${P}.tar.gz"
 LICENSE="|| ( GPL-2 LGPL-2 )"
 SLOT="0"
+IUSE=""
 
-DEPEND="virtual/python"
 RDEPEND="dev-python/imaging"
-S=${WORKDIR}/UniConvertor-${PV}
 
-pkg_postinst() {
-	einfo "Run uniconv in console."
+S=${WORKDIR}/${MY_P}-${PV}
+
+src_install() {
+	# users would like to have same name of package and binary they execute;
+	dosym uniconv /usr/bin/${PN}
+	distutils_src_install
 }

@@ -1,0 +1,11 @@
+--- mainwindow.h.orig	2009-01-11 21:31:17.000000000 +0100
++++ mainwindow.h	2009-01-19 22:07:55.814844599 +0100
+@@ -47,7 +47,7 @@
+ #include <libkcddb/client.h>
+ #include <libkcddb/cdinfo.h>
+ 
+-#include "../utils/error.h"
++#include "utils/error.h"
+ 
+ #include "models/cddamodel.h"
+ #include "models/profilemodel.h"
