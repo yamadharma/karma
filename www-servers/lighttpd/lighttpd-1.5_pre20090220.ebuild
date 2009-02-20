@@ -16,7 +16,7 @@ SVN_BOOTSTRAP="NOCONFIGURE=1 ./autogen.sh"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="amd64 x86"
 IUSE="bzip2 doc fastcgi gdbm ipv6 ldap lua minimal memcache mysql postgres pcre php rrdtool ssl test webdav xattr"
 
 # cherokee block should be resolved properly

@@ -30,11 +30,7 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	if use dbus; then
-		epatch "${FILESDIR}/${P}-dbus.patch"
-		epatch "${FILESDIR}/${P}-dbus_as-needed.patch"
-		eautoreconf
-	fi
+epatch "${FILESDIR}/${PN}-sparc-cpuinfo.patch"
 }
 
 src_compile() {
