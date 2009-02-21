@@ -6,7 +6,7 @@ EAPI="2"
 inherit eutils flag-o-matic multilib versionator rpm
 
 
-GV="0.9.0"
+GV="0.9.1"
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 
@@ -118,7 +118,6 @@ src_configure() {
 		$(use_with cups) \
 		$(use_with esd) \
 		$(use_with gnutls) \
-		$(! use dbus && echo --without-hal || use_with hal) \
 		$(use_with jack) \
 		$(use_with jpeg) \
 		$(use_with lcms cms) \
@@ -127,7 +126,6 @@ src_configure() {
 		$(use_with opengl) \
 		$(use_with oss) \
 		$(use_with png) \
-		$(use_with scanner sane) \
 		$(use_with ssl openssl) \
 		$(use_enable win64) \
 		$(use_with X x) \
@@ -138,6 +136,8 @@ src_configure() {
 		|| die "configure failed"
 
 #		$(use_with ldap) \
+#		$(! use dbus && echo --without-hal || use_with hal) \
+#		$(use_with scanner sane) \
 
 	emake -j1 depend || die "depend"
 }

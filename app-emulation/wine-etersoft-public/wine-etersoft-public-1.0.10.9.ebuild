@@ -5,25 +5,24 @@ EAPI="2"
 
 inherit eutils flag-o-matic multilib versionator rpm
 
+
+GV="0.9.1"
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 
-# WINEVER=20080505
-# WINEVER=1.1.10
+MY_PV=$(replace_version_separator 3 '-alt')
 
-MY_PV=$(replace_version_separator 3 '-alt' )
-
-SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/unstable/sources/wine-${MY_PV}.src.rpm
-	gecko? ( mirror://sourceforge/wine/wine_gecko-0.1.0.cab )"
+SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/$(get_version_component_range 1-3)/sources/wine-etersoft-${MY_PV}.src.rpm"
+#	gecko? ( mirror://sourceforge/wine/wine_gecko-${GV}.cab )"
 #	ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarball/wine-etersoft-public-${WINEVER}.tar.bz2
 #	ftp://updates.etersoft.ru/pub/Etersoft/WINE@Etersoft/${PV}/sources/tarball/wine-etersoft-common-${PV}.tar.bz2
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-#KEYWORDS="-* amd64 x86"
-IUSE="alsa cups dbus esd gecko gnutls hal jack jpeg lcms ldap nas ncurses opengl oss samba scanner xml X"
+KEYWORDS="-* amd64 x86"
+IUSE="alsa cups dbus esd gecko gnutls hal jack jpeg lcms ldap nas ncurses opengl oss png samba scanner ssl win64 X xcomposite xinerama xml"
 
-S="${WORKDIR}"/wine-$(get_version_component_range 1-3)
+S="${WORKDIR}"/wine-etersoft-$(get_version_component_range 1-3)
 
 RDEPEND=">=media-libs/freetype-2.0.0
 	!app-emulation/wine
@@ -41,7 +40,7 @@ RDEPEND=">=media-libs/freetype-2.0.0
 		x11-libs/libXxf86vm
 		x11-apps/xmessage
 	)
-	alsa? ( media-libs/alsa-lib )
+	alsa? ( media-libs/alsa-lib[midi] )
 	esd? ( media-sound/esound )
 	nas? ( media-libs/nas )
 	cups? ( net-print/cups )
@@ -52,9 +51,15 @@ RDEPEND=">=media-libs/freetype-2.0.0
 	xml? ( dev-libs/libxml2 dev-libs/libxslt )
 	>=media-gfx/fontforge-20060703
 	scanner? ( media-gfx/sane-backends )
+	ssl? ( dev-libs/openssl )
+	png? ( media-libs/libpng )
+	win64? ( >=sys-devel/gcc-4.4_alpha )
 	amd64? (
-		>=app-emulation/emul-linux-x86-xlibs-2.1
-		>=app-emulation/emul-linux-x86-soundlibs-2.1
+		X? (
+			>=app-emulation/emul-linux-x86-xlibs-2.1
+			>=app-emulation/emul-linux-x86-soundlibs-2.1
+		)
+		app-emulation/emul-linux-x86-baselibs
 		>=sys-kernel/linux-headers-2.6
 	)"
 DEPEND="${RDEPEND}
@@ -67,19 +72,11 @@ DEPEND="${RDEPEND}
 	sys-devel/flex"
 
 pkg_setup() {
-	use alsa || return 0
-	if ! built_with_use --missing true media-libs/alsa-lib midi ; then
-		eerror "You must build media-libs/alsa-lib with USE=midi"
-		die "please re-emerge media-libs/alsa-lib with USE=midi"
-	fi
-	
 	enewgroup wineadmin
 }
 
 src_prepare() {
 	sed -i '/^UPDATE_DESKTOP_DATABASE/s:=.*:=true:' tools/Makefile.in
-	epatch "${FILESDIR}"/oem_charset-jrd63fix.patch
-	epatch "${FILESDIR}"/wine-gentoo-no-ssp.patch #66002
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
 }
 
@@ -95,7 +92,7 @@ config_cache() {
 	done
 }
 
-src_compile() {
+src_configure() {
 	export LDCONFIG=/bin/true
 	use esd     || export ac_cv_path_ESDCONFIG=""
 	use scanner || export ac_cv_path_sane_devel="no"
@@ -111,22 +108,39 @@ src_compile() {
 	config_cache oss sys/soundcard.h machine/soundcard.h soundcard.h
 	config_cache lcms lcms.h
 
-	strip-flags
-
-	use amd64 && multilib_toolchain_setup x86
-
+	# XXX: should check out these flags too:
+	#	audioio capi fontconfig freetype gphoto
 	econf \
-		CC=$(tc-getCC) \
 		--sysconfdir=/etc/wine \
+		$(use_with alsa) \
+		$(use_with cups) \
+		$(use_with esd) \
 		$(use_with gnutls) \
+		$(use_with jack) \
+		$(use_with jpeg) \
+		$(use_with lcms cms) \
+		$(use_with nas) \
 		$(use_with ncurses curses) \
 		$(use_with opengl) \
+		$(use_with oss) \
+		$(use_with png) \
+		$(use_with ssl openssl) \
+		$(use_enable win64) \
 		$(use_with X x) \
-		$(use_enable debug trace) \
-		$(use_enable debug) \
+		$(use_with xcomposite) \
+		$(use_with xinerama) \
+		$(use_with xml) \
+		$(use_with xml xslt) \
 		|| die "configure failed"
 
+#		$(use_with ldap) \
+#		$(! use dbus && echo --without-hal || use_with hal) \
+#		$(use_with scanner sane) \
+
 	emake -j1 depend || die "depend"
+}
+
+src_compile() {
 	emake all || die "all"
 }
 
@@ -134,10 +148,10 @@ src_install() {
 	make DESTDIR="${D}" initdir=/etc/init.d sysconfdir=/etc install || die
 	dodoc ANNOUNCE AUTHORS ChangeLog README
 
-	if use gecko ; then
-		insinto /usr/share/wine/gecko
-		doins "${DISTDIR}"/wine_gecko-*.cab || die
-	fi
+#	if use gecko ; then
+#		insinto /usr/share/wine/gecko
+#		doins "${DISTDIR}"/wine_gecko-${GV}.cab || die
+#	fi
 
 	cp "${FILESDIR}"/*.fon ${D}/usr/share/wine/fonts/
 	cp "${FILESDIR}"/*.ttf ${D}/usr/share/wine/fonts/
@@ -150,10 +164,3 @@ src_install() {
 	fowners root:wineadmin /var/lib/wine
 }
 
-pkg_postinst() {
-	elog "~/.wine/config is now deprecated.  For configuration either use"
-	elog "winecfg or regedit HKCU\\Software\\Wine"
-	elog ""
-	elog "Use wine for initial user enviroment or wine --update."
-
-}
