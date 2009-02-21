@@ -6,6 +6,8 @@ EAPI=2
 
 inherit subversion multilib
 
+MY_P=jack-${PV}
+
 DESCRIPTION="Jackdmp jack implemention for multi-processor machine"
 HOMEPAGE="http://www.grame.fr/~letz/jackdmp.html"
 # SRC_URI="http://www.grame.fr/~letz/${MY_P}.tar.bz2"

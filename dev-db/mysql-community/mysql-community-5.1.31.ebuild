@@ -11,7 +11,7 @@ inherit mysql
 IUSE="$IUSE"
 
 # REMEMBER: also update eclass/mysql*.eclass before committing!
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
+# KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
 
 src_test() {
 	make check || die "make check failed"

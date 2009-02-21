@@ -25,6 +25,7 @@ DEPEND="
 	dev-util/pkgconfig
 	app-misc/run-mailcap
 	>=dev-lang/lua-5.1.1
+	x11-terms/rxvt-unicode
 	doc? ( dev-tex/latex2html
 			virtual/tex-base )"
 

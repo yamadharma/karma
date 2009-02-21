@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit flag-o-matic
+inherit multilib
 
 MY_P=jack-${PV}
 
@@ -31,11 +31,11 @@ DEPEND="${RDEPEND}
 	dbus? ( sys-apps/dbus )"
 
 src_configure() {
-	local myconf="--prefix=/usr --destdir=${D}"
-	use dbus && myconf="${myconf} --dbus"
-	use doc && myconf="${myconf} --doxygen"
-	use monitor && myconf="${myconf} --monitor"
-	
+	local myconf="--prefix=/usr --destdir=${D} --libdir=/usr/$(get_libdir)"
+	use dbus && myconf+=" --dbus"
+	use doc && myconf+=" --doxygen"
+	use monitor && myconf+=" --monitor"
+
 	einfo "Running \"/waf configure ${myconf}\" ..."
 	./waf configure ${myconf} || die "waf configure failed"
 }
@@ -46,5 +46,6 @@ src_compile() {
 
 src_install() {
 	./waf install --destdir="${D}" || die "waf install failed"
-	dodoc Readme Todo ChangeLog Readme_NetJack2.txt
+	dodoc ChangeLog README README_NETJACK2 TODO
+	mv ${D}/usr/share/${PN}/* ${D}/usr/share/doc/${PF}
 }
