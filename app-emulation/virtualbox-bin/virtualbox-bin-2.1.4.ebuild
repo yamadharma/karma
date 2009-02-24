@@ -6,7 +6,7 @@ EAPI=1
 
 inherit eutils fdo-mime pax-utils
 
-MY_PV=${PV}-41885
+MY_PV=${PV}-42893
 MY_P=VirtualBox-${MY_PV}-Linux
 BASE_URL="http://download.virtualbox.org/virtualbox/${PV}/"
 
