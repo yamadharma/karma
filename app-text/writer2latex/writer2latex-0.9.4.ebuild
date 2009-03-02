@@ -11,8 +11,8 @@ MY_PV=${MY_PV/_/}
 MY_P=${PN}${MY_PV}source
 
 DESCRIPTION="Writer2Latex (w2l) - converter from OpenDocument .odt format"
-HOMEPAGE="http://www.hj-gym.dk/~hj/writer2latex"
-SRC_URI="http://www.hj-gym.dk/~hj/${PN}/${MY_P}.zip"
+HOMEPAGE="http://writer2latex.sourceforge.net"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
 
 SLOT="0"
 LICENSE="GPL-2"
