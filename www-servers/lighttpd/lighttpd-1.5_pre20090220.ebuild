@@ -30,7 +30,7 @@ RDEPEND="
 	lua?      ( >=dev-lang/lua-5.1 )
 	memcache? ( dev-libs/libmemcache )
 	mysql?    ( >=virtual/mysql-4.0 )
-	postgres? ( >=dev-db/libpq-8.0 )
+	postgres? ( virtual/postgresql-base )
 	pcre?     ( >=dev-libs/libpcre-3.1 )
 	php?      (
 		virtual/httpd-php
