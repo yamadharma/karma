@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit eutils
+inherit eutils flag-o-matic latex-package
 
 DESCRIPTION="Field-theory motivated computer algebra system"
 HOMEPAGE="http://www.aei.mpg.de/~peekas/cadabra"
@@ -26,8 +26,12 @@ DEPEND="sci-libs/modglue
 RDEPEND="${DEPEND}
 	|| ( app-text/texlive dev-tex/breqn )"
 
+filter-ldflags -Wl,--as-needed
+
 src_compile() {
 	local myconf=""
+	
+	myconf+=" `use enable X gui`"
 
 	econf ${myconf} || die
 	emake || die
@@ -57,3 +61,4 @@ src_install() {
 	
 	rm -rf ${D}/usr/share/TeXmacs
 }
+

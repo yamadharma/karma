@@ -2,11 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils
+EAPI="2"
+
+inherit eutils rpm
 
 DESCRIPTION="A Computer algebra package for Lie group computations"
 HOMEPAGE="http://young.sp2mi.univ-poitiers.fr/~marc/LiE"
-SRC_URI="http://www.aei.mpg.de/~peekas/cadabra/linux/dapper/${P/-/_}.orig.tar.gz"
+SRC_URI="http://www.aei.mpg.de/~peekas/cadabra/linux/SRPMS/lie-${PV}-1.src.rpm"
+#SRC_URI="http://young.sp2mi.univ-poitiers.fr/~marc/LiE/conLiE.tar.gz "
 
 LICENSE="LGPL"
 
@@ -16,12 +19,9 @@ IUSE="doc"
 DEPEND=""
 RDEPEND=""
 
-S=${WORKDIR}/${P}.orig
-
-src_unpack() {
-	unpack ${A}
-	cd ${S}
+src_prepare() {
 	epatch ${FILESDIR}/${P}-make.patch
+	epatch ${FILESDIR}/parrallelmake-${P}.patch
 }
 
 
