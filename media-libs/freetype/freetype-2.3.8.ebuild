@@ -1,8 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/freetype/freetype-2.3.7.ebuild,v 1.8 2008/08/20 17:26:51 vapier Exp $
-
-# ClearType patched by bobrik <ibobrik@gmail.com>
+# $Header: /var/cvsroot/gentoo-x86/media-libs/freetype/freetype-2.3.8.ebuild,v 1.7 2009/03/08 19:05:04 klausman Exp $
 
 inherit eutils flag-o-matic libtool
 
@@ -14,8 +12,8 @@ SRC_URI="mirror://sourceforge/freetype/${P/_/}.tar.bz2
 
 LICENSE="FTL GPL-2"
 SLOT="2"
-KEYWORDS="alpha amd64 arm hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc ~sparc-fbsd x86 ~x86-fbsd"
-IUSE="X bindist debug doc utils"
+KEYWORDS="alpha amd64 ~arm hppa ~ia64 ~m68k ~mips ~ppc ppc64 ~s390 ~sh sparc ~sparc-fbsd x86 ~x86-fbsd"
+IUSE="X bindist debug doc utils fontforge"
 
 DEPEND="X?	( x11-libs/libX11
 			  x11-libs/libXau
@@ -83,7 +81,7 @@ src_compile() {
 	append-flags -fno-strict-aliasing
 
 	type -P gmake &> /dev/null && export GNUMAKE=gmake
-	econf || die "econf failed"
+	econf
 	emake || die "emake failed"
 
 	if use utils; then
@@ -107,12 +105,18 @@ src_install() {
 				"${D}"/usr/bin
 		done
 	fi
+	# Probably fontforge needs less but this way makes things simplier...
+	if use fontforge; then
+		einfo "Installing internal headers required for fontforge"
+		find src/truetype include/freetype/internal -name '*.h' | \
+		while read header; do
+			mkdir -p "${D}/usr/include/freetype2/internal4fontforge/$(dirname ${header})"
+			cp ${header} "${D}/usr/include/freetype2/internal4fontforge/$(dirname ${header})"
+		done
+	fi
 }
 
 pkg_postinst() {
-	echo
-	ewarn "After upgrading to freetype-2.3.5, it is necessary to rebuild"
-	ewarn "libXfont to avoid build errors in some packages."
 	echo
 	elog "The utilities and demos previously bundled with freetype are now"
 	elog "optional.  Enable the utils USE flag if you would like them"

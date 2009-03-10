@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-misc/openssh/openssh-5.2_p1-r1.ebuild,v 1.1 2009/02/24 21:56:09 robbat2 Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-misc/openssh/openssh-5.2_p1-r2.ebuild,v 1.2 2009/03/09 04:23:00 mr_bones_ Exp $
 
 inherit eutils flag-o-matic multilib autotools pam
 
@@ -9,22 +9,24 @@ inherit eutils flag-o-matic multilib autotools pam
 PARCH=${P/_/}
 
 #HPN_PATCH="${PARCH/2/1}-hpn13v5.diff.gz"
+HPN_PATCH="${PARCH}-hpn13v5-gentoo.diff.gz" # Unofficial Gentoo port of original patch
 LDAP_PATCH="${PARCH/openssh/openssh-lpk}-0.3.11.patch.gz"
-#PKCS11_PATCH="${PARCH/2p1/1}pkcs11-0.26.tar.bz2"
+PKCS11_PATCH="${PARCH/p1}pkcs11-0.26.tar.bz2"
 X509_VER="6.2" X509_PATCH="${PARCH}+x509-${X509_VER}.diff.gz"
 
 DESCRIPTION="Port of OpenBSD's free SSH release"
 HOMEPAGE="http://www.openssh.org/"
 SRC_URI="mirror://openbsd/OpenSSH/portable/${PARCH}.tar.gz
 	http://www.sxw.org.uk/computing/patches/openssh-5.0p1-gsskex-20080404.patch
-	${HPN_PATCH:+hpn? ( http://www.psc.edu/networking/projects/hpn-ssh/${HPN_PATCH} )}
+	${HPN_PATCH:+hpn? ( mirror://gentoo/${HPN_PATCH} )}
 	${LDAP_PATCH:+ldap? ( mirror://gentoo/${LDAP_PATCH} )}
 	${PKCS11_PATCH:+pkcs11? ( http://alon.barlev.googlepages.com/${PKCS11_PATCH} )}
 	${X509_PATCH:+X509? ( http://roumenpetrov.info/openssh/x509-${X509_VER}/${X509_PATCH} )}"
+#	${HPN_PATCH:+hpn? ( http://www.psc.edu/networking/projects/hpn-ssh/${HPN_PATCH} )}
 
 LICENSE="as-is"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
 IUSE="hpn kerberos ldap libedit pam pkcs11 selinux skey smartcard static tcpd X X509"
 
 RDEPEND="pam? ( virtual/pam )
@@ -106,7 +108,6 @@ src_unpack() {
 	epatch "${FILESDIR}"/openssh-4.3p2-cve-2007-3102.patch
 	epatch "${FILESDIR}"/openssh-5.0p1-pam_selinux.patch
 
-
 	sed -i "s:-lcrypto:$(pkg-config --libs openssl):" configure{,.ac} || die
 
 	# Disable PATH reset, trust what portage gives us. bug 254615
@@ -169,6 +170,12 @@ src_install() {
 			"${D}"/etc/ssh/sshd_config || die "sed of configuration file failed"
 	fi
 
+	# This instruction is from the HPN webpage,
+	# Used for the server logging functionality
+	if [[ -n ${HPN_PATCH} ]] && use hpn; then
+		keepdir /var/empty/dev
+	fi
+
 	doman contrib/ssh-copy-id.1
 	dodoc ChangeLog CREDITS OVERVIEW README* TODO sshd_config
 
@@ -195,5 +202,12 @@ pkg_postinst() {
 		echo
 		einfo "For PKCS#11 you should also emerge one of the askpass softwares"
 		einfo "Example: net-misc/x11-ssh-askpass"
+	fi
+	# This instruction is from the HPN webpage,
+	# Used for the server logging functionality
+	if [[ -n ${HPN_PATCH} ]] && use hpn; then
+		echo
+		einfo "For the HPN server logging patch, you must ensure that"
+		einfo "your syslog application also listens at /var/empty/dev/log."
 	fi
 }
