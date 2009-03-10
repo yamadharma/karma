@@ -14,7 +14,7 @@ inherit eutils
 
 DESCRIPTION="C and C++ Frontend for the Low Level Virtual Machine"
 HOMEPAGE="http://llvm.org/"
-SRC_URI="http://llvm.org/releases/2.4/llvm-gcc-4.2-${PV}.source.tar.gz"
+SRC_URI="http://llvm.org/releases/${PV}/llvm-gcc-4.2-${PV}.source.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -25,8 +25,8 @@ IUSE=""
 # we're not mirrored, fetch from homepage
 RESTRICT="mirror"
 
-DEPEND=">=sys-devel/llvm-2.4"
-RDEPEND=">=sys-devel/llvm-2.4"
+DEPEND=">=sys-devel/llvm-2.5"
+RDEPEND=">=sys-devel/llvm-2.5"
 
 S="${WORKDIR}/llvm-gcc4.2-${PV}.source"
 
