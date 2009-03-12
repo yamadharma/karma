@@ -13,7 +13,9 @@ RESTRICT="nomirror"
 
 IUSE="rapidshare-premium"
 SLOT="0"
-RDEPEND=">=virtual/jre-1.6"
+DEPEND=">=virtual/jdk-1.6"
+RDEPEND=">=virtual/jre-1.6
+	app-admin/realpath"
 
 S="${WORKDIR}/FreeRapid-${PV%%0}"
 INSTALLDIR="/opt/${PN}"
