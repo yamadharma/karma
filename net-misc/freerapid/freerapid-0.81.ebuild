@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+inherit eutils
+
 DESCRIPTION="FreeRapid is a simple Java downloader that supports downloading from Rapidshare and other file-sharing services."
 HOMEPAGE="http://wordrider.net/freerapid/"
 SRC_URI="http://frd.sislik.net/FreeRapid-${PV%%0}.zip
@@ -19,6 +21,12 @@ RDEPEND=">=virtual/jre-1.6
 
 S="${WORKDIR}/FreeRapid-${PV%%0}"
 INSTALLDIR="/opt/${PN}"
+
+pkg_setup () {
+	# create the group for update plugins (och meens One Click Hosting)
+	enewgroup och
+}
+
 
 src_unpack() {
 	unpack ${A}
@@ -58,4 +66,8 @@ src_install() {
 	# env
 	dodir /etc/env.d
 	echo -e "PATH=${INSTALLDIR}\nROOTPATH=${INSTALLDIR}" > "${D}/etc/env.d/10${PN}"
+
+	fowners -R root:och ${INSTALLDIR}/plugins
+	fperms 775 ${INSTALLDIR}/plugins
+	fperms 664 ${INSTALLDIR}/plugins/*
 }

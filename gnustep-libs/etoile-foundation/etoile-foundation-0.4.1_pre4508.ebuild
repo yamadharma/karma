@@ -14,8 +14,9 @@ HOMEPAGE="http://www.etoile-project.org/etoile/mediawiki/index.php?title=EtoileF
 
 LICENSE="BSD"
 SLOT="0"
-# KEYWORDS="amd64 x86"
+KEYWORDS="amd64 x86"
 
 src_prepare() {
+	epatch ${FILESDIR}/mkdtemp.patch
 	sed -i -e "s/-Werror/& -fgnu89-inline/" etoile.make || die "sed failed"
 }
