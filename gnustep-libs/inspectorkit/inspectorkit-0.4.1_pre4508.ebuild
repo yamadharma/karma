@@ -10,7 +10,7 @@ DESCRIPTION="Commonly used inspector adapted for Etoile"
 HOMEPAGE="http://www.etoile-project.org/etoile/mediawiki/index.php?title=Frameworks_Suite"
 # SRC_URI="http://download.gna.org/etoile/etoile-${PV}.tar.gz"
 LICENSE="BSD"
-KEYWORDS="amd64 x86"
+# KEYWORDS="amd64 x86"
 SLOT="0"
 
 DEPEND="gnustep-libs/panekit"
