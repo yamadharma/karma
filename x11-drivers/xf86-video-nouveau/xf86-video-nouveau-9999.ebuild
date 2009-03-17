@@ -6,9 +6,9 @@ EAPI="2"
 
 # Must be before x-modular eclass is inherited
 SNAPSHOT="yes"
-XDPVER=4
+GIT_ECLASS="git"
 
-inherit x-modular git
+inherit x-modular
 
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/nouveau/${PN}"
 
@@ -20,28 +20,19 @@ LICENSE="MIT"
 KEYWORDS=""
 IUSE=""
 
-COMMON_DEPEND="|| ( >=x11-base/xorg-server-1.5[dri] >=x11-base/xorg-server-1.5.3 )"
+COMMON_DEPEND=">=x11-base/xorg-server-1.5.3[-minimal]"
 DEPEND="${COMMON_DEPEND}
 	x11-misc/util-macros
 	x11-proto/fontsproto
 	x11-proto/randrproto
+	x11-proto/renderproto
 	x11-proto/videoproto
 	x11-proto/xextproto
-	x11-proto/xproto
-	x11-proto/glproto
 	x11-proto/xf86driproto
-	>=x11-libs/libdrm-2.4.5"
+	x11-proto/xproto
+	|| ( x11-libs/libdrm_nouveau x11-libs/libdrm[video_cards_nouveau] )"
 
 # need x11-base/x11-drm until nouveau drm enters the kernel
 RDEPEND="${COMMON_DEPEND}
-	>=x11-base/x11-drm-20090204[video_cards_nv]"
+	|| ( x11-base/nouveau-drm x11-base/x11-drm[video_cards_nouveau] )"
 
-src_unpack() {
-	x-modular_specs_check
-	x-modular_server_supports_drivers_check
-	x-modular_dri_check
-	git_src_unpack
-	cd "${S}"
-	x-modular_patch_source
-	x-modular_reconf_source
-}

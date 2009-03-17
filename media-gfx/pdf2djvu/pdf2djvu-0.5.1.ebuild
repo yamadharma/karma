@@ -4,11 +4,11 @@
 
 inherit eutils
 
-MY_P=${P/-/_}
+# MY_P=${P/-/_}
 
 DESCRIPTION="PDF to DjVu converter"
 HOMEPAGE="http://code.google.com/p/pdf2djvu"
-SRC_URI="http://pdf2djvu.googlecode.com/files/${MY_P}.tar.gz"
+SRC_URI="http://pdf2djvu.googlecode.com/files/${P}.tar.gz"
 
 
 LICENSE="GPL-2"
