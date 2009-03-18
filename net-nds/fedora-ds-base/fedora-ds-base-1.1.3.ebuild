@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils multilib flag-o-matic
+inherit eutils multilib flag-o-matic autotools
 
 DESCRIPTION="Fedora Directory Server (base)"
 HOMEPAGE="http://directory.fedora.redhat.com/"
@@ -29,10 +29,17 @@ DEPEND=">=dev-libs/nss-3.11.4
 	sys-libs/zlib
 	dev-perl/perl-mozldap"
 
+pkg_setup() {
+	enewgroup dirsrv
+	enewuser dirsrv -1 -1 -1 dirsrv
+}
+
 src_unpack() {
 	unpack ${A}
 	cd ${S}
 #	epatch ${FILESDIR}/bug435774.patch
+	sed -e "s!nobody!dirsrv!g" -i configure.ac
+	eautoreconf
 }
 
 src_compile() {
@@ -74,4 +81,13 @@ src_install () {
 	# cope with libraries being in /usr/lib/dirsrv
 	dodir /etc/env.d
 	echo "LDPATH=/usr/$(get_libdir)/dirsrv" > "${D}"/etc/env.d/08dirsrv
+
+	keepdir /var/lock/dirsrv
+	keepdir /var/lib/dirsrv
+
+}
+
+pkg_postinst() {
+	chown dirsrv:dirsrv ${ROOT}/var/lock/dirsrv
+	chown dirsrv:dirsrv ${ROOT}/var/lib/dirsrv
 }

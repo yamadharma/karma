@@ -14,14 +14,12 @@ KEYWORDS="x86 ~ppc ~sparc ~alpha ~hppa amd64 ~ppc64 ~ia64"
 IUSE="doc"
 
 src_compile() {
-	emake  || die
+	true
 }
 
 src_install() {
 	insinto /usr/include/pstreams
 	doins pstream.h
 	
-	doman doc/man/man3/*
-	use doc && dohtml -r doc/html/*
-	dodoc AUTHORS COPYING.LIB ChangeLog INSTALL MANIFEST README
+	use doc && dodoc AUTHORS COPYING.LIB ChangeLog INSTALL MANIFEST README
 }

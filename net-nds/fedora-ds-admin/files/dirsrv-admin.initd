@@ -11,7 +11,7 @@ depend() {
 }
 
 configtest() {
-	ebegin "Checking Apache Configuration"
+	ebegin "Checking Apache Configuration of Fedora Admin Server"
 	checkconfig
 	eend $?
 }
@@ -46,7 +46,7 @@ checkconfig() {
 	${APACHE2} ${APACHE2_OPTS} -t 1>/dev/null 2>&1
 	ret=$?
 	if [ $ret -ne 0 ]; then
-		eerror "Apache2 has detected a syntax error in your configuration files:"
+		eerror "Fedora Admin Server (Apache2) has detected a syntax error in your configuration files:"
 		${APACHE2} ${APACHE2_OPTS} -t
 	fi
 
@@ -58,7 +58,7 @@ start() {
 
 	[ -f /var/log/dirsrv/admin-serv/ssl_scache ] && rm /var/log/dirsrv/admin-serv/ssl_scache
 
-	ebegin "Starting apache2"
+	ebegin "Starting Fedora Admin Server (apache2)"
 	${APACHE2} ${APACHE2_OPTS} -k start
 
 	let i=0
@@ -73,7 +73,7 @@ start() {
 stop() {
 	checkconfd || return 1
 
-	ebegin "Stopping apache2"
+	ebegin "Stopping Fedora Admin Server (apache2)"
 	${APACHE2} ${APACHE2_OPTS} -k stop
 
 	let i=0
@@ -92,11 +92,11 @@ reload() {
 	service_started "${SVCNAME}" || return
 
 	if [ "${RELOAD_TYPE}" = "restart" ]; then
-		ebegin "Restarting apache2"
+		ebegin "Restarting Fedora Admin Server (apache2)"
 		${APACHE2} ${APACHE2_OPTS} -k restart
 		eend $?
 	elif [ "${RELOAD_TYPE}" = "graceful" ]; then
-		ebegin "Gracefully restarting apache2"
+		ebegin "Gracefully restarting Fedora Admin Server (apache2)"
 		${APACHE2} ${APACHE2_OPTS} -k graceful
 		eend $?
 	else
@@ -107,7 +107,7 @@ reload() {
 graceful() {
 	checkconfig || return 1
 	service_started "${SVCNAME}" || return
-	ebegin "Gracefully restarting apache2"
+	ebegin "Gracefully restarting Fedora Admin Server (apache2)"
 	${APACHE2} ${APACHE2_OPTS} -k graceful
 	eend $?
 }
@@ -120,7 +120,7 @@ gracefulstop() {
 		mark_service_stopped "${SVCNAME}"
 	fi
 
-	ebegin "Gracefully stopping apache2"
+	ebegin "Gracefully stopping Fedora Admin Server (apache2)"
 	${APACHE2} ${APACHE2_OPTS} -k graceful-stop
 	eend $?
 }

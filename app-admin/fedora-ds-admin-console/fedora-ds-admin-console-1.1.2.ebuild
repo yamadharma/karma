@@ -5,7 +5,7 @@
 JAVA_PKG_IUSE="doc source"
 inherit java-pkg-2 eutils java-ant-2
 
-MY_V=1.1.1
+MY_V=1.1.2
 MY_MV=1.1
 
 DESCRIPTION="Fedora Admin Server Management Console"
@@ -18,7 +18,8 @@ IUSE="doc source"
 
 COMMON_DEP="=dev-java/jss-4*
 	>=dev-java/ldapsdk-4.0
-	>=dev-java/idm-console-framework-1.1"
+	>=dev-java/idm-console-framework-1.1
+	!app-admin/fedora-admin-console"
 RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEP}"
 DEPEND=">=virtual/jdk-1.5

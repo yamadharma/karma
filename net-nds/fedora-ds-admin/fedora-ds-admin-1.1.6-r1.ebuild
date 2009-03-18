@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -46,6 +46,7 @@ src_unpack() {
 	cd "${S}"
 	epatch "${FILESDIR}"/fedora-ds-admin-1.1.5-cfgstuff-1.patch
 	sed -e "s!SUBDIRS!# SUBDIRS!g" -i Makefile.am
+	sed -e "s!nobody!apache!g" -i configure.ac
 	rm -rf mod_*
 	eautoreconf
 }
@@ -77,4 +78,9 @@ src_install () {
 	# install gentoo style init script.
 	newinitd "${FILESDIR}"/dirsrv-admin.initd dirsrv-admin
 	newconfd "${FILESDIR}"/dirsrv-admin.confd dirsrv-admin
+
+	# remove redhat style wrapper scripts
+	# and install gentoo scripts.
+	rm -rf "${D}"/usr/sbin/*-ds-admin
+	dosbin "${FILESDIR}"/*-ds-admin
 }
