@@ -20,19 +20,19 @@ KEYWORDS="x86 amd64"
 
 DEPEND=""
 RDEPEND="${DEPEND}
+	~app-admin/systemimager-common-${PV}
+	~app-admin/systemimager-initrd-template-${PV}
 	dev-lang/perl
-	dev-perl/AppConfig
-	net-misc/rsync
-	sys-fs/mtools"
+	|| ( sys-apps/util-linux sys-apps/parted )"
 
 src_compile () 
 {
-        econf || die "Config error"    
+        econf || die "Config error"
 	emake manpages
 }
 
 src_install () 
 {
-	einstall install_common DESTDIR=${D}
+	einstall install_client DESTDIR=${D}
 }
 

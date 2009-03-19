@@ -27,7 +27,7 @@ RDEPEND="${DEPEND}
 
 src_compile () 
 {
-        econf || die "Config error"    
+        econf || die "Config error"
 	emake manpages
 }
 
