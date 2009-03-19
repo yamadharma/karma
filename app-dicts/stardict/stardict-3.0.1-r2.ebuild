@@ -33,7 +33,7 @@ DEP="gnome? ( >=gnome-base/libbonobo-2.2.0
 
 RDEPEND="${DEP}
 	espeak? ( >=app-accessibility/espeak-1.29 )
-	festival? ( =app-accessibility/festival-1.96_beta )"
+	festival? ( >=app-accessibility/festival-1.96_beta )"
 
 DEPEND="${DEP}
 	>=dev-util/intltool-0.22
