@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-0.5.1.ebuild,v 1.1 2009/01/09 04:31:31 marineam Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-0.5.1.ebuild,v 1.2 2009/02/20 17:47:32 cardoe Exp $
 
 inherit eutils autotools
 
@@ -11,7 +11,7 @@ SRC_URI="http://libvirt.org/sources/${P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="avahi iscsi lvm lxc hal kvm openvz parted qemu sasl selinux uml xen"
+IUSE="avahi iscsi lvm lxc hal kvm openvz parted qemu sasl selinux uml xen policykit"
 # policykit is in package.mask
 # devicekit isn't in portage
 
@@ -22,8 +22,9 @@ DEPEND="sys-libs/readline
 	dev-lang/python
 	sys-fs/sysfsutils
 	net-misc/bridge-utils
-	net-analyzer/netcat-openbsd
+	net-analyzer/netcat
 	net-dns/dnsmasq
+	dev-util/pkgconfig
 	avahi? ( >=net-dns/avahi-0.6 )
 	iscsi? ( sys-block/open-iscsi )
 	kvm? ( app-emulation/kvm )
@@ -34,17 +35,13 @@ DEPEND="sys-libs/readline
 	sasl? ( dev-libs/cyrus-sasl )
 	selinux? ( sys-libs/libselinux )
 	xen? ( app-emulation/xen-tools app-emulation/xen )
-	"
-	#policykit? ( >=sys-auth/policykit-0.6 )
+	policykit? ( >=sys-auth/policykit-0.6 )"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
 	epatch "${FILESDIR}"/"${PN}"-0.4.6-qemu-img-name.patch
-	epatch "${FILESDIR}"/"${PN}"-0.4.6-parallel-build-fix.patch
-	epatch "${FILESDIR}"/"${P}"-libgnu-reposition.patch
-	epatch "${FILESDIR}"/"${P}"-add-missing-permission-checks.patch
 	eautoreconf
 }
 
@@ -86,9 +83,9 @@ src_compile() {
 		$(use_with selinux) \
 		$(use_with uml) \
 		$(use_with xen) \
+		$(use_with policykit polkit) \
 		${my_conf} \
 		--without-devkit \
-		--without-polkit \
 		--with-remote \
 		--disable-iptables-lokkit \
 		--localstatedir=/var \
