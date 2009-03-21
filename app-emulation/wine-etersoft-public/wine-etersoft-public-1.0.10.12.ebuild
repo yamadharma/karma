@@ -76,6 +76,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	epatch "${FILESDIR}"/wine-1.1.15-winegcc.patch #260726
 	sed -i '/^UPDATE_DESKTOP_DATABASE/s:=.*:=true:' tools/Makefile.in
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
 }
@@ -94,6 +95,7 @@ config_cache() {
 
 src_configure() {
 	export LDCONFIG=/bin/true
+
 	use esd     || export ac_cv_path_ESDCONFIG=""
 	use scanner || export ac_cv_path_sane_devel="no"
 	config_cache jack jack/jack.h
@@ -107,6 +109,8 @@ src_configure() {
 	config_cache jpeg jpeglib.h
 	config_cache oss sys/soundcard.h machine/soundcard.h soundcard.h
 	config_cache lcms lcms.h
+
+	use amd64 && ! use win64 && multilib_toolchain_setup x86
 
 	# XXX: should check out these flags too:
 	#	audioio capi fontconfig freetype gphoto
