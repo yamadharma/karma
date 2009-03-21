@@ -30,7 +30,7 @@ start ()
 	else
 	    if [ ! -e ${PROCBIN}/register ]
 	    then
-		    mount -t binfmt_misc none ${PROCBIN}	
+		    mount -t binfmt_misc none ${PROCBIN}
 	    fi
 	    echo ':windows:M::MZ::/usr/bin/wine:' > ${PROCBIN}/register
 	    echo ':windowsPE:M::PE::/usr/bin/wine:' > ${PROCBIN}/register 

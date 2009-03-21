@@ -110,6 +110,8 @@ src_configure() {
 	config_cache oss sys/soundcard.h machine/soundcard.h soundcard.h
 	config_cache lcms lcms.h
 
+	strip-flags
+
 	use amd64 && ! use win64 && multilib_toolchain_setup x86
 
 	# XXX: should check out these flags too:
