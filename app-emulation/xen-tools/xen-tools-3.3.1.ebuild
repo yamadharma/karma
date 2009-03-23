@@ -16,7 +16,7 @@ S="${WORKDIR}/xen-${PV}"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+# KEYWORDS="amd64 x86"
 IUSE="doc debug screen custom-cflags pygrub hvm api acm flask"
 
 

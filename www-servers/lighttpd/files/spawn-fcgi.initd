@@ -25,7 +25,7 @@ start() {
         done
 
         # clean environment and set up a new one
-        env - ${E} ${EX} 2>${SPAWNFCGI_PID}
+        env - ${E} ${EX} 1>${SPAWNFCGI_PID} 2>&1
         my_end=$?
         if [ "$my_end" != "0" ]; then
                 [ -f ${SPAWNFCGI_PID} ] && rm -f ${SPAWNFCGI_PID}
