@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-emulation/xen/xen-3.3.0.ebuild,v 1.1 2008/09/01 00:30:53 rbu Exp $
 
+EAPI="2"
+
 inherit mount-boot flag-o-matic toolchain-funcs
 
 DESCRIPTION="The Xen virtual machine monitor"
@@ -48,9 +50,9 @@ pkg_setup() {
 	fi
 }
 
-src_unpack() {
-	unpack ${A}
 
+
+src_prepare() {
 	cd "${S}"
 
 	# if the user *really* wants to use their own custom-cflags, let them

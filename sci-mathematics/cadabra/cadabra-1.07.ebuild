@@ -24,7 +24,8 @@ DEPEND="sci-libs/modglue
 	    >=dev-cpp/gtkmm-2.4
 	    app-text/dvipng )"
 RDEPEND="${DEPEND}
-	|| ( app-text/texlive dev-tex/breqn )"
+	virtual/latex-base
+	dev-tex/mh"
 
 filter-ldflags -Wl,--as-needed
 

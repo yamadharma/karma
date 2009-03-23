@@ -22,7 +22,7 @@ DEPEND="sys-libs/readline
 	dev-lang/python
 	sys-fs/sysfsutils
 	net-misc/bridge-utils
-	net-analyzer/netcat
+	net-analyzer/netcat-openbsd
 	net-dns/dnsmasq
 	dev-util/pkgconfig
 	avahi? ( >=net-dns/avahi-0.6 )

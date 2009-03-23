@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-emulation/xen-tools/xen-tools-3.3.0.ebuild,v 1.1 2008/09/01 00:41:07 rbu Exp $
 
+EAPI="2"
+
 inherit flag-o-matic eutils multilib python
 
 # TPMEMUFILE=tpm_emulator-0.4.tar.gz
@@ -90,8 +92,7 @@ pkg_setup() {
 	use flask   && export "FLASK_ENABLE=y"
 }
 
-src_configure() {
-#	use vtpm && cp "${DISTDIR}"/${TPMEMUFILE}  tools/vtpm
+src_prepare() {
 
 	# if the user *really* wants to use their own custom-cflags, let them
 	if use custom-cflags; then
@@ -121,14 +122,16 @@ src_configure() {
 	epatch "${FILESDIR}/${PN}-3.1.3-network-bridge-broadcast.patch"
 
 	# Fix building small dumb utility called 'xen-detect' on hardened
-	epatch "${FILESDIR}/${PN}-3.3.0-xen-detect-nopie-fix.patch"
+	epatch "${FILESDIR}/${P}-xen-detect-nopie-fix.patch"
 
 	# Do not strip binaries
-	epatch "${FILESDIR}/${PN}-3.3.0-nostrip.patch"
+	epatch "${FILESDIR}/"${P}-nostrip.patch
+
+	# Fix unexport $target in xen-setup
+	epatch "${FILESDIR}/"${P}-unexported-target-fix.patch
 
 	# Fix eqemu-xen
 	epatch "${FILESDIR}/${P}-qemu-xen.patch"
-
 }
 
 src_compile() {
