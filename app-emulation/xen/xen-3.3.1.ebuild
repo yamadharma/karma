@@ -12,7 +12,7 @@ SRC_URI="http://bits.xensource.com/oss-xen/release/${PV}/xen-${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-# KEYWORDS="amd64 x86"
+KEYWORDS="amd64 x86"
 IUSE="debug custom-cflags pae acm flask xsm"
 
 RDEPEND="|| ( sys-boot/grub
