@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-
-
 ETYPE="sources"
 
 inherit kernel-2
@@ -22,15 +20,15 @@ S=${WORKDIR}/linux-${KV}
 
 DESCRIPTION="KLK Sources."
 
-KARMA_PATCH="karma-ws-${PV}${EXTRAREVISION}.tar.bz2"
+KARMA_PATCH="karma-ws-${PV}${EXTRAREVISION}.tar.lzma"
 KARMA_PATCH_URI="mirror://sourceforge/klk/${KARMA_PATCH}"
 
 UNIPATCH_LIST="${DISTDIR}/${KARMA_PATCH}"
 UNIPATCH_STRICTORDER="yes"
 
 SRC_URI="${KERNEL_URI} ${KARMA_PATCH_URI}"
-	
-KEYWORDS="x86 amd64"
+
+KEYWORDS="~x86 ~amd64"
 
 # Local Variables:
 # mode: sh
