@@ -62,6 +62,8 @@ src_install() {
 			doins Russian.qm
 		fi
 		
+		doins aqemu_links.html
+		
 		dodir /usr/share/aqemu/os_icons/
 		insinto /usr/share/aqemu/os_icons
 		doins ./os_icons/*
@@ -89,6 +91,8 @@ src_install() {
 		then
 			doins ./share/aqemu/Russian.qm
 		fi
+		
+		doins aqemu_links.html
 		
 		dodir /usr/share/aqemu/os_icons/
 		insinto /usr/share/aqemu/os_icons
