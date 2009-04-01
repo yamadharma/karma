@@ -13,7 +13,7 @@ DESCRIPTION="Ebook management application."
 HOMEPAGE="http://calibre.kovidgoyal.net"
 SRC_URI="http://calibre.kovidgoyal.net/downloads/${MY_P}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 
 KEYWORDS="amd64 x86"
 
@@ -32,18 +32,14 @@ RDEPEND=">=dev-python/imaging-1.1.6
 	>=app-text/convertlit-1.8
 	>=dev-python/lxml-1.3.3
 	dev-python/ttfquery
-	dev-python/genshi"
+	dev-python/genshi
+	>=dev-lang/python-2.6"
 
 DEPEND="${RDEPEND}
 	dev-python/setuptools
 	>=gnome-base/librsvg-2.0.0
 	>=x11-misc/xdg-utils-1.0.2-r2
 	sys-apps/help2man"
-
-src_compile() {
-	emake || die "pre-build failed"
-	distutils_src_compile
-}
 
 src_install() {
 	distutils_src_install
