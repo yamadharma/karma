@@ -1,14 +1,4 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## 12_cmake-2.6-fixes.dpatch by  <andrewross@users.sourceforge.net>
-##
-## All lines beginning with `## DP:' are a description of the patch.
-## DP: Fix the build system to work with cmake 2.6.
-## DP: This patch is extracted from the upstream SVN version of plplot.
-
-@DPATCH@
-
-diff -ur plplot-5.9.0-orig/bindings/f95/CMakeLists.txt plplot-5.9.0/bindings/f95/CMakeLists.txt
---- plplot-5.9.0-orig/bindings/f95/CMakeLists.txt	2008-02-10 15:54:01.000000000 +0000
+--- plplot-5.9.0.orig/bindings/f95/CMakeLists.txt	2008-02-10 15:54:01.000000000 +0000
 +++ plplot-5.9.0/bindings/f95/CMakeLists.txt	2008-07-16 10:53:26.000000000 +0100
 @@ -141,14 +141,30 @@
  RUNTIME DESTINATION ${BIN_DIR}
@@ -49,8 +39,7 @@ diff -ur plplot-5.9.0-orig/bindings/f95/CMakeLists.txt plplot-5.9.0/bindings/f95
  
  # Configure pkg-config *.pc file corresponding to libplplotf95${LIB_TAG}
  if(PKG_CONFIG_EXECUTABLE)
-diff -ur plplot-5.9.0-orig/cmake/modules/cairo.cmake plplot-5.9.0/cmake/modules/cairo.cmake
---- plplot-5.9.0-orig/cmake/modules/cairo.cmake	2008-02-10 15:53:59.000000000 +0000
+--- plplot-5.9.0.orig/cmake/modules/cairo.cmake	2008-02-10 15:53:59.000000000 +0000
 +++ plplot-5.9.0/cmake/modules/cairo.cmake	2008-07-15 16:25:46.000000000 +0100
 @@ -97,13 +97,7 @@
        string(REGEX REPLACE ";" " " 
@@ -67,16 +56,14 @@ diff -ur plplot-5.9.0-orig/cmake/modules/cairo.cmake plplot-5.9.0/cmake/modules/
      else(PLD_xcairo AND X11_COMPILE_FLAGS)
        message(STATUS 
         "WARNING: X windows not found. Setting xcairo driver to OFF."
-diff -ur plplot-5.9.0-orig/cmake/modules/CMakeAdaCompiler.cmake.in plplot-5.9.0/cmake/modules/CMakeAdaCompiler.cmake.in
---- plplot-5.9.0-orig/cmake/modules/CMakeAdaCompiler.cmake.in	2008-02-10 15:53:59.000000000 +0000
+--- plplot-5.9.0.orig/cmake/modules/CMakeAdaCompiler.cmake.in	2008-02-10 15:53:59.000000000 +0000
 +++ plplot-5.9.0/cmake/modules/CMakeAdaCompiler.cmake.in	2008-07-15 15:47:30.000000000 +0100
 @@ -14,3 +14,4 @@
  ELSE(UNIX OR MINGW)
    SET(CMAKE_Ada_OUTPUT_EXTENSION .obj)
  ENDIF(UNIX OR MINGW)
 +SET(CMAKE_Ada_OUTPUT_EXTENSION_REPLACE 1)
-diff -ur plplot-5.9.0-orig/cmake/modules/CMakeAdaInformation.cmake plplot-5.9.0/cmake/modules/CMakeAdaInformation.cmake
---- plplot-5.9.0-orig/cmake/modules/CMakeAdaInformation.cmake	2008-02-10 15:53:59.000000000 +0000
+--- plplot-5.9.0.orig/cmake/modules/CMakeAdaInformation.cmake	2008-02-10 15:53:59.000000000 +0000
 +++ plplot-5.9.0/cmake/modules/CMakeAdaInformation.cmake	2008-07-15 15:47:54.000000000 +0100
 @@ -41,9 +41,9 @@
    SET(CMAKE_SHARED_LIBRARY_Ada_FLAGS ${CMAKE_SHARED_LIBRARY_C_FLAGS})
@@ -138,8 +125,7 @@ diff -ur plplot-5.9.0-orig/cmake/modules/CMakeAdaInformation.cmake plplot-5.9.0/
       "Flags for Ada compiler.")
  
  INCLUDE(CMakeCommonLanguageInclude)
-diff -ur plplot-5.9.0-orig/cmake/modules/CMakeTestAdaCompiler.cmake plplot-5.9.0/cmake/modules/CMakeTestAdaCompiler.cmake
---- plplot-5.9.0-orig/cmake/modules/CMakeTestAdaCompiler.cmake	2008-02-10 15:53:59.000000000 +0000
+--- plplot-5.9.0.orig/cmake/modules/CMakeTestAdaCompiler.cmake	2008-02-10 15:53:59.000000000 +0000
 +++ plplot-5.9.0/cmake/modules/CMakeTestAdaCompiler.cmake	2008-07-15 15:48:05.000000000 +0100
 @@ -17,6 +17,8 @@
  
@@ -150,8 +136,7 @@ diff -ur plplot-5.9.0-orig/cmake/modules/CMakeTestAdaCompiler.cmake plplot-5.9.0
  set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
  set(CMAKE_VERBOSE_MAKEFILE ON CACHE BOOL \"\" FORCE)
  project(test Ada)
-diff -ur plplot-5.9.0-orig/cmake/modules/pkg-config.cmake plplot-5.9.0/cmake/modules/pkg-config.cmake
---- plplot-5.9.0-orig/cmake/modules/pkg-config.cmake	2008-02-10 15:53:59.000000000 +0000
+--- plplot-5.9.0.orig/cmake/modules/pkg-config.cmake	2008-02-10 15:53:59.000000000 +0000
 +++ plplot-5.9.0/cmake/modules/pkg-config.cmake	2008-07-15 16:27:07.000000000 +0100
 @@ -20,10 +20,10 @@
  # Module for determining pkg-config configuration variables related to the
@@ -198,8 +183,7 @@ diff -ur plplot-5.9.0-orig/cmake/modules/pkg-config.cmake plplot-5.9.0/cmake/mod
        if(_list_element STREQUAL "-l${_list_element1}")
          set(_library_pathname "_library_pathname-NOTFOUND")
          find_library(
-diff -ur plplot-5.9.0-orig/cmake/modules/tcl-related.cmake plplot-5.9.0/cmake/modules/tcl-related.cmake
---- plplot-5.9.0-orig/cmake/modules/tcl-related.cmake	2008-02-10 15:53:59.000000000 +0000
+--- plplot-5.9.0.orig/cmake/modules/tcl-related.cmake	2008-02-10 15:53:59.000000000 +0000
 +++ plplot-5.9.0/cmake/modules/tcl-related.cmake	2008-07-15 16:55:58.000000000 +0100
 @@ -135,12 +135,7 @@
      endif(ENABLE_tk AND NOT X11_FOUND)
@@ -224,48 +208,7 @@ diff -ur plplot-5.9.0-orig/cmake/modules/tcl-related.cmake plplot-5.9.0/cmake/mo
                         PATH_SUFFIXES itk${version})
          endforeach(version ${itk_library_versions})
          if(ITK_LIBRARY)
-diff -ur plplot-5.9.0-orig/cmake/modules/wxwidgets.cmake plplot-5.9.0/cmake/modules/wxwidgets.cmake
---- plplot-5.9.0-orig/cmake/modules/wxwidgets.cmake	2008-02-10 15:53:59.000000000 +0000
-+++ plplot-5.9.0/cmake/modules/wxwidgets.cmake	2008-07-15 16:31:27.000000000 +0100
-@@ -23,8 +23,10 @@
- # PLD_wxwidgets		  - ON means the wxwidgets device is enabled.
- # wxwidgets_COMPILE_FLAGS	  - individual COMPILE_FLAGS required to compile wxwidgets
- # 			    device.
--# wxwidgets_LINK_FLAGS	  - individual LINK_FLAGS for dynamic wxwidgets device.
--# DRIVERS_LINK_FLAGS  	  - list of LINK_FLAGS for all static devices.
-+# wxwidgets_LINK_FLAGS	  - list of full path names of libraries and
-+# 			    linker flags for dynamic wxwidgets device driver.
-+# DRIVERS_LINK_FLAGS  	  - list of device LINK_FLAGS for case
-+# 			    when ENABLE_DYNDRIVERS OFF.
- 
- # Find wxWidgets needed for driver and bindings
- if(PLD_wxwidgets)
-@@ -39,11 +41,21 @@
- endif(PLD_wxwidgets)
- 
- if(PLD_wxwidgets)
-+  #message("wxWidgets_INCLUDE_DIRS = ${wxWidgets_INCLUDE_DIRS}")
-+  #message("wxWidgets_DEFINITIONS = ${wxWidgets_DEFINITIONS}")
-   string(REGEX REPLACE ";" " -I" 
-   wxwidgets_COMPILE_FLAGS
--  "-I${wxWidgets_INCLUDE_DIRS} ${wxWidgets_DEFINITIONS}"
-+  "-I${wxWidgets_INCLUDE_DIRS}"
-   )
--  set(wxwidgets_LINK_FLAGS ${wxWidgets_LIBRARIES})
-+  # For case (cvs version of CMake as of 2008-03-23, but not cmake-2.4.8)
-+  # when wxWidgets_DEFINITIONS is a list.
-+  string(REGEX REPLACE ";" " " 
-+  wxwidgets_COMPILE_FLAGS
-+  ${wxwidgets_COMPILE_FLAGS}
-+  " ${wxWidgets_DEFINITIONS}"
-+  )
-+  # Convert wxWidgets_LIBRARIES to full pathname form.
-+  cmake_link_flags(wxwidgets_LINK_FLAGS "${wxWidgets_LIBRARIES}")
-   if(WITH_FREETYPE)
-     set(
-     wxwidgets_COMPILE_FLAGS
-diff -ur plplot-5.9.0-orig/cmake/modules/xwin.cmake plplot-5.9.0/cmake/modules/xwin.cmake
---- plplot-5.9.0-orig/cmake/modules/xwin.cmake	2008-02-10 15:53:59.000000000 +0000
+--- plplot-5.9.0.orig/cmake/modules/xwin.cmake	2008-02-10 15:53:59.000000000 +0000
 +++ plplot-5.9.0/cmake/modules/xwin.cmake	2008-07-15 16:31:23.000000000 +0100
 @@ -30,12 +30,7 @@
  if(PLD_xwin)
@@ -281,8 +224,7 @@ diff -ur plplot-5.9.0-orig/cmake/modules/xwin.cmake plplot-5.9.0/cmake/modules/x
      option(HAVE_PTHREAD "Use pthreads with the xwin driver" OFF)
      if(HAVE_PTHREAD)
        find_package(Threads)
-diff -ur plplot-5.9.0-orig/CMakeLists.txt plplot-5.9.0/CMakeLists.txt
---- plplot-5.9.0-orig/CMakeLists.txt	2008-02-10 15:54:06.000000000 +0000
+--- plplot-5.9.0.orig/CMakeLists.txt	2008-02-10 15:54:06.000000000 +0000
 +++ plplot-5.9.0/CMakeLists.txt	2008-07-15 16:06:05.000000000 +0100
 @@ -21,6 +21,12 @@
  
@@ -297,8 +239,7 @@ diff -ur plplot-5.9.0-orig/CMakeLists.txt plplot-5.9.0/CMakeLists.txt
  
  # Recommended way to do user overrides of C-related variables, is given at
  # http://public.kitware.com/pipermail/cmake/2006-July/010334.html.
-diff -ur plplot-5.9.0-orig/examples/f95/CMakeLists.txt plplot-5.9.0/examples/f95/CMakeLists.txt
---- plplot-5.9.0-orig/examples/f95/CMakeLists.txt	2008-02-10 15:54:08.000000000 +0000
+--- plplot-5.9.0.orig/examples/f95/CMakeLists.txt	2008-02-10 15:54:08.000000000 +0000
 +++ plplot-5.9.0/examples/f95/CMakeLists.txt	2008-07-15 16:04:44.000000000 +0100
 @@ -50,32 +50,43 @@
  

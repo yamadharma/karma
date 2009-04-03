@@ -1,0 +1,33 @@
+From 176c3bf1ddd59cf3195d3adfe841ebc7655601ae Mon Sep 17 00:00:00 2001
+From: Ahmed Ammar <aammar@edge-techno.com>
+Date: Sun, 16 Nov 2008 09:06:35 +0200
+Subject: [PATCH] Add missing structure elements.
+
+---
+ src/i830.h |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/src/i830.h b/src/i830.h
+index 9b9c81f..68d0311 100644
+--- a/src/i830.h
++++ b/src/i830.h
+@@ -435,7 +435,15 @@ typedef struct _I830Rec {
+ 
+    dri_bufmgr *bufmgr;
+ 
+-   struct intel_batchbuffer *batch;
++   uint8_t *batch_ptr;
++   /** Byte offset in batch_ptr for the next dword to be emitted. */
++   unsigned int batch_used;
++   /** Position in batch_ptr at the start of the current BEGIN_BATCH */
++   unsigned int batch_emit_start;
++   /** Number of bytes to be emitted in the current BEGIN_BATCH. */
++   uint32_t batch_emitting;
++   dri_bo *batch_bo;
++
+ #ifdef I830_XV
+    /* For Xvideo */
+    i830_memory *overlay_regs;
+-- 
+1.6.0.3
+
