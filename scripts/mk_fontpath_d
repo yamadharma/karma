@@ -1,0 +1,9 @@
+#!/bin/bash
+
+fc-list : file \
+| grep -v '.bdf' \
+| while read i; do dirname $i; done \
+| sort -u \
+|  while read i; do ln -snf $i /etc/X11/fontpath.d/`echo $i | sed s:/usr/share/fonts/:: | sed s:/:_:g` ; done
+
+
