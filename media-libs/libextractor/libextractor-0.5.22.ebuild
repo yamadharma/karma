@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit libtool
+inherit eutils libtool
 
 DESCRIPTION="A simple library for keyword extraction"
 HOMEPAGE="http://www.gnunet.org/libextractor/"
@@ -26,9 +26,8 @@ DEPEND=">=sys-devel/libtool-1.4.1
 	vorbis? ( >=media-libs/libvorbis-1.0_beta4 )"
 RDEPEND=""
 
-src_prepare()
-{
-	epatch ${FELESDIR}/rpm_copyright.patch
+src_prepare() {
+	epatch ${FILESDIR}/rpm_copyright.patch
 }
 
 src_compile() {
