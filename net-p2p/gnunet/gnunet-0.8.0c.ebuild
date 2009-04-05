@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 # Nonofficial ebuild by Ycarus. For new version look here : http://gentoo.zugaina.org/
@@ -6,11 +6,10 @@
 
 inherit eutils autotools
 
-MY_PV=${PV/_pre/pre}
-S="${WORKDIR}/GNUnet-${MY_PV}"
+S="${WORKDIR}/GNUnet-${PV}"
 DESCRIPTION="GNUnet is an anonymous, distributed, reputation based network."
 HOMEPAGE="http://gnunet.org/"
-SRC_URI="http://gnunet.org/download/GNUnet-${MY_PV}.tar.bz2"
+SRC_URI="http://gnunet.org/download/GNUnet-${PV}.tar.bz2"
 #tests don't work
 RESTRICT="test"
 
@@ -20,22 +19,20 @@ LICENSE="GPL-2"
 SLOT="0"
 
 DEPEND=">=dev-libs/libgcrypt-1.2.0
-	>=media-libs/libextractor-0.5.18a
+	>=media-libs/libextractor-0.5.20c
+	>=net-libs/libmicrohttpd-0.4.0
 	>=dev-libs/gmp-4.0.0
-	>=net-libs/libmicrohttpd-0.3.1
-	net-libs/libesmtp
-	net-libs/adns
 	gnome-base/libglade
 	sys-libs/zlib
 	net-misc/curl
 	gtk? ( >=x11-libs/gtk+-2.6.10 )
 	sys-apps/sed
-	x11-libs/libnotify
 	>=dev-scheme/guile-1.8.0
 	ncurses? ( sys-libs/ncurses )
 	mysql? ( >=virtual/mysql-4.0 )
 	sqlite? ( >=dev-db/sqlite-3.0.8 )
-	nls? ( sys-devel/gettext )"
+	nls? ( sys-devel/gettext )
+	>=sys-devel/libtool-2.2.4"
 
 pkg_setup() {
 	if ! use mysql && ! use sqlite; then
@@ -67,7 +64,7 @@ src_unpack() {
 		sed -i "s:AC_DEFINE_UNQUOTED..HAVE_GTK.*:true:" configure.ac
 	fi
 
-	AT_M4DIR="${S}/m4" eautoreconf	
+	AT_M4DIR="${S}/m4" eautoreconf
 }
 
 src_compile() {
@@ -87,18 +84,13 @@ src_compile() {
 
 src_install() {
 	emake DESTDIR="${D}" -j1 install || die "make install failed"
-
-	#cd ${S}/contrib
-	#emake DESTDIR="${D}" -j1 install || die "make install contrib failed"
-	#cd ${S}
-	
 	dodoc AUTHORS ChangeLog INSTALL NEWS PLATFORMS README README.fr UPDATING
 	insinto /etc
-	newins contrib/gnunet.root gnunet.conf
+	doins contrib/gnunet.conf
 	docinto contrib
 	dodoc contrib/*
 	newinitd "${FILESDIR}"/${PN}.initd gnunet
-	keepdir /var/lib/gnunet
+	dodir /var/lib/gnunet
 	chown gnunetd:gnunetd "${D}"/var/lib/gnunet
 }
 

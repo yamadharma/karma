@@ -1,0 +1,11 @@
+diff -Naurp libextractor-0.5.22/src/plugins/rpm/rpmextractor.c libextractor-0.5.22.new/src/plugins/rpm/rpmextractor.c
+--- libextractor-0.5.22/src/plugins/rpm/rpmextractor.c	2008-12-31 09:40:35.000000000 +0300
++++ libextractor-0.5.22.new/src/plugins/rpm/rpmextractor.c	2009-04-05 10:43:05.212418034 +0400
+@@ -91,7 +91,6 @@ static Matches tests[] = {
+   {RPMTAG_SUMMARY, EXTRACTOR_SUMMARY},
+   {RPMTAG_PACKAGER, EXTRACTOR_PACKAGER},
+   {RPMTAG_BUILDTIME, EXTRACTOR_CREATION_DATE},
+-  {RPMTAG_COPYRIGHT, EXTRACTOR_COPYRIGHT},
+   {RPMTAG_LICENSE, EXTRACTOR_LICENSE},
+   {RPMTAG_DISTRIBUTION, EXTRACTOR_DISTRIBUTION},
+   {RPMTAG_BUILDHOST, EXTRACTOR_BUILDHOST},
