@@ -1,0 +1,11 @@
+--- patches/dev300/build-java-target.diff.orig	2006-10-14 16:57:34.000000000 +0200
++++ patches/dev300/build-java-target.diff	2006-10-14 16:57:46.000000000 +0200
+@@ -28,7 +28,7 @@
+ +dnl ===================================================================
+ +if test "$SOLAR_JAVA" != ""; then
+ +    AC_MSG_CHECKING([for target java bytecode version])
+-+    if test "$JDK" = "gcj" -o "$JDK" = "kaffe"; then
+++    if test "$JDK" = "kaffe"; then
+ +	AC_MSG_RESULT([default by $JDK])
+ +	if test -n "$with_java_target_version" -a "$with_java_target_version" != "no" ; then
+ +	    AC_MSG_WARN([Value defined by --with-java-target-version is ignored!])
