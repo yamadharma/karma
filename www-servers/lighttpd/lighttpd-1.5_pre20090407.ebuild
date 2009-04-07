@@ -32,9 +32,9 @@ RDEPEND="
 	mysql?    ( >=virtual/mysql-4.0 )
 	postgres? ( virtual/postgresql-base )
 	pcre?     ( >=dev-libs/libpcre-3.1 )
-	php?      (
-		virtual/httpd-php
-		!net-www/spawn-fcgi
+	fastcgi?  (
+		www-servers/spawn-fcgi
+		php? ( virtual/httpd-php )
 	)
 	rrdtool? ( net-analyzer/rrdtool )
 	ssl?    ( >=dev-libs/openssl-0.9.7 )
@@ -57,8 +57,8 @@ update_config() {
 	local config="/etc/lighttpd/lighttpd.conf"
 
 	# enable php/mod_fastcgi settings
-	use php && \
-		dosed 's|#.*\(include.*fastcgi.*$\)|\1|' ${config}
+#	use php && \
+#		dosed 's|#.*\(include.*fastcgi.*$\)|\1|' ${config}
 }
 
 # remove non-essential stuff (for USE=minimal)
@@ -151,11 +151,6 @@ src_install() {
 	newinitd "${FILESDIR}"/lighttpd.initd-1.4.13-r3 lighttpd || die
 	newconfd "${FILESDIR}"/lighttpd.confd lighttpd || die
 
-	if use php || use fastcgi ; then
-		newinitd "${FILESDIR}"/spawn-fcgi.initd spawn-fcgi || die
-		newconfd "${FILESDIR}"/spawn-fcgi.confd spawn-fcgi || die
-	fi
-
 	# configs
 	insinto /etc/lighttpd
 	newins "${FILESDIR}"/conf/lighttpd.conf-1.5.0 lighttpd.conf
@@ -193,12 +188,6 @@ src_install() {
 
 pkg_postinst () {
 	echo
-	if [[ -f ${ROOT}etc/conf.d/spawn-fcgi.conf ]] ; then
-		einfo "spawn-fcgi is now included with lighttpd"
-		einfo "spawn-fcgi's init script configuration is now located"
-		einfo "at /etc/conf.d/spawn-fcgi."
-		echo
-	fi
 
 	if use fastcgi ; then
 		ewarn "As of lighttpd-1.5.0, mod_fastcgi has been replaced by mod_proxy_core."
