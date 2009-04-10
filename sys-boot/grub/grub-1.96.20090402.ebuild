@@ -19,8 +19,8 @@ HOMEPAGE="http://www.gnu.org/software/grub/"
 #	mirror://gentoo/${P}.tar.gz"
 
 SRC_URI="mirror://debian/pool/main/g/${MY_PN}/${MY_P}.orig.tar.gz
-	mirror://debian/pool/main/g/${MY_PN}/${MY_P}-${DEB_PATCH_V}.diff.gz
-	mirror://debian/pool/main/g/grub2-splashimages/grub2-splashimages_1.0.0.tar.gz"
+	mirror://debian/pool/main/g/${MY_PN}/${MY_P}-${DEB_PATCH_V}.diff.gz"
+# 	mirror://debian/pool/main/g/grub2-splashimages/grub2-splashimages_1.0.0.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -47,7 +47,7 @@ src_prepare() {
 	    epatch ${i}
 	done
 	
-	epatch ${FILESDIR}/grub-1.96-915resolution-0.5.2-3.patch
+#	epatch ${FILESDIR}/grub-1.96-915resolution-0.5.2-3.patch
 	
 	# FIXME! File missing
 	touch ${S}/docs/version.texi

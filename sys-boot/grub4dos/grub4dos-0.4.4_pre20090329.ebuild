@@ -8,7 +8,9 @@ inherit mount-boot eutils flag-o-matic toolchain-funcs autotools
 
 MY_DATE=${PV#*_pre}
 
-MY_PV=${PV%_pre*}-${MY_DATE:0:4}-${MY_DATE:4:2}-${MY_DATE:6:2}
+MOD=p
+
+MY_PV=${PV%_pre*}-${MY_DATE:0:4}-${MY_DATE:4:2}-${MY_DATE:6:2}${MOD}
 
 DESCRIPTION="GRUB4DOS is an universal boot loader based on GNU GRUB"
 HOMEPAGE="https://gna.org/projects/grub4dos"
