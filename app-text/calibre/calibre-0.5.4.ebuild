@@ -4,7 +4,7 @@
 
 NEED_PYTHON=2.5
 
-inherit distutils eutils fdo-mime
+inherit python distutils eutils fdo-mime bash-completion
 
 MY_P="${P/_p/-p}"
 S="${WORKDIR}/${MY_P}"
@@ -13,7 +13,7 @@ DESCRIPTION="Ebook management application."
 HOMEPAGE="http://calibre.kovidgoyal.net"
 SRC_URI="http://calibre.kovidgoyal.net/downloads/${MY_P}.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="GPL-2"
 
 KEYWORDS="amd64 x86"
 
@@ -21,19 +21,19 @@ SLOT="0"
 
 IUSE=""
 
-RDEPEND=">=dev-python/imaging-1.1.6
+RDEPEND=">=dev-lang/python-2.5
+	>=dev-python/setuptools-0.6_rc5
+	>=dev-python/imaging-1.1.6  
 	>=dev-libs/libusb-0.1.12
-	>=dev-python/PyQt4-4.3.1
-	>=dev-python/fonttools-2.0_beta1
-	>=app-text/unrtf-0.20.1
-	>=dev-python/mechanize-0.1.7b
+	>=dev-python/PyQt4-4.2.2
+	>=dev-python/mechanize-0.1.11
 	>=media-gfx/imagemagick-6.3.5
+	>=x11-misc/xdg-utils-1.0.2 
 	>=dev-python/dbus-python-0.82.2
-	>=app-text/convertlit-1.8
-	>=dev-python/lxml-1.3.3
-	dev-python/ttfquery
-	dev-python/genshi
-	>=dev-lang/python-2.6"
+	>=dev-python/lxml-2.1.5
+	>=dev-python/python-dateutil-1.4.1
+	>=dev-python/beautifulsoup-3.0.5
+	>=sys-apps/help2man-1.36.4"
 
 DEPEND="${RDEPEND}
 	dev-python/setuptools
@@ -41,7 +41,20 @@ DEPEND="${RDEPEND}
 	>=x11-misc/xdg-utils-1.0.2-r2
 	sys-apps/help2man"
 
+src_compile() {
+	# Removing the post_install call. We'll do that stuff in src_install.
+	sed -i -e "/if 'install'/,/subprocess.check_call/d" \
+		setup.py || die "couldn't remove post_install call"
+	# For help2man to succeed, we need to tell it the path to the tools.
+	sed -i -e "s:\('help2man',\) \(prog\):\1 \'PYTHONPATH=\"${D}$(python_get_sitedir)\" \' + \'${D}usr/bin/\' + \2:" \
+		src/calibre/linux.py || die "sed'ing in the IMAGE path failed"
+	distutils_src_compile
+}
+
 src_install() {
+	pushd "${S}"/build
+	ln -s lib\.* lib
+	popd
 	distutils_src_install
 
 	# Create directory before running the postinst script
@@ -69,12 +82,19 @@ EOF
 	PATH="${T}:${PATH}" KDEDIRS="${D}/usr" XDG_DATA_DIRS="${D}/usr/share" DESTDIR="${D}" PYTHONPATH="${S}/build/lib" \
 		python "${S}"/src/${PN}/linux.py \
 		--use-destdir --do-not-reload-udev-hal \
-		--group-file="${ROOT}"/etc/group --dont-check-root \
-		|| die "post-installation failed."
+		--group-file="${ROOT}"/etc/group --dont-check-root #\
+#		|| die "post-installation failed."
 
+	# Move the bash-completion file and properly install it.
+#	mv "${D}"/etc/bash_completion.d/calibre "${S}/" \
+#		|| die "cannot move the bash-completion file"
+#	dobashcompletion "${S}"/calibre
+	find "${D}"/etc -type d -empty -delete
+
+	# Removing junk.
 	rm -r "${D}"/usr/share/applications/{mimeinfo.cache,defaults.list} \
 		"${D}"/usr/share/mime/{subclasses,XMLnamespaces,globs{,2},mime.cache,magic,aliases,{generic-,}icons} \
-		"${D}"/usr/share/applnk
+		"${D}"/usr/share/{applnk,desktop-directories}
 }
 
 pkg_postinst() {
