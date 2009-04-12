@@ -1,0 +1,56 @@
+# ChangeLog for app-cdr/k3b
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  16 Mar 2009; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20090310.ebuild:
+  Bump
+
+  10 Mar 2009; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20090222.ebuild:
+  Bump
+
+  22 Feb 2009; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20090216.ebuild:
+  Bump
+
+  16 Feb 2009; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20090130.ebuild:
+  Bump
+
+  30 Jan 2009; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20090114.ebuild:
+  Bump
+
+  14 Jan 2009; Mario Fetka <mario.fetka@gmail.com>
+  -k3b-2.0_pre20081219.ebuild, +k3b-2.0_pre20090114.ebuild:
+  Bump
+
+  19 Dec 2008; Mario Fetka <mario.fetka@gmail.com>
+  k3b-2.0_pre20081219.ebuild:
+  correct typo
+
+  19 Dec 2008; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20081208.ebuild:
+  Bump
+
+  17 Dec 2008; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20081208.ebuild:
+  bump
+
+  17 Dec 2008; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20081208.ebuild:
+  bump
+
+  10 Dec 2008; Mario Fetka <mario.fetka@gmail.com>
+  +files/k3b-2.0_pre20081208-lame.patch, k3b-2.0_pre20081208.ebuild:
+  add lame patch
+
+  08 Dec 2008; Mario Fetka <mario.fetka@gmail.com> ++,
+  -k3b-2.0_pre20081104.ebuild:
+  Bump
+
+  31 May 2008; Patrick Lauer ( bugs at dev.gentooexperimental.org )
+  ChangeLog:
+  Recovering Changelogs
+
