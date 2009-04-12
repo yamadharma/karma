@@ -12,7 +12,7 @@ HOMEPAGE="http://www.k3b.org/"
 
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS="amd64 x86"
+# KEYWORDS="amd64 x86"
 IUSE="css debug dvdr dvdread encode -ffmpeg flac hal htmlhandbook mp3 musepack
 	musicbrainz sndfile vcd vorbis emovix"
 ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/extragear/multimedia/${PN}/@{${PV/2.0_pre/}}"
@@ -43,7 +43,7 @@ RDEPEND="${DEPEND}
 	dvdr? ( >=app-cdr/dvd+rw-tools-7.0 )
 	emovix? ( media-video/emovix )
 	encode? ( media-sound/sox
-	dvdread? ( media-video/transcode[dvdread] ) )
+	dvdread? ( media-video/transcode ) )
 	vcd? ( media-video/vcdimager )
 	"
 
