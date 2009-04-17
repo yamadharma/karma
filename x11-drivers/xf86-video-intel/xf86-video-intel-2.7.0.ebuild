@@ -9,7 +9,7 @@ inherit x-modular
 
 DESCRIPTION="X.Org driver for Intel cards"
 
-KEYWORDS="~amd64 ~ia64 ~x86 ~x86-fbsd"
+KEYWORDS="amd64 ~ia64 ~x86 x86-fbsd"
 IUSE="dri"
 
 RDEPEND=">=x11-base/xorg-server-1.5
