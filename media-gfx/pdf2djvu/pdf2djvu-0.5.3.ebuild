@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-RDEPEND="app-text/poppler
+RDEPEND="virtual/poppler
 	app-text/djvu"
 
 DEPEND="${RDEPEND}
