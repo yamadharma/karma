@@ -13,7 +13,7 @@ IUSE=""
 
 DEPEND=">=x11-libs/qt-4.4 
 	x11-base/xorg-x11"
-RDEPEND="app-text/poppler"
+RDEPEND="virtual/poppler"
 
 src_compile() {
 	./configure --qmakepath /usr/bin/qmake --prefix /usr --datadir /usr/share || die "configure failed"
