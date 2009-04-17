@@ -12,7 +12,7 @@ KEYWORDS="x86 amd64"
 IUSE="kde"
 
 DEPEND=""
-RDEPEND=">=app-text/poppler-0.5.3
+RDEPEND=">=virtual/poppler-0.5.3
 	>=media-gfx/imagemagick-6.2.8.0
 	>=app-arch/zip-2.31
 	kde? (

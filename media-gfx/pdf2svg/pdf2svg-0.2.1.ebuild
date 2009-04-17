@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-RDEPEND="app-text/poppler
+RDEPEND="virtual/poppler
 	x11-libs/cairo"
 DEPEND="${RDEPEND}"
 
