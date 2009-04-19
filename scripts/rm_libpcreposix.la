@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -d /usr/lib64 ]
+then
+	find /usr/lib64 -name "*.la" -exec sed -i -e "s:/usr/lib64/libpcreposix.la::g" -e "s:/usr/lib64/libpcre.la::g" {} \;
+	find /usr/kde/3.5/lib64 -name "*.la" -exec sed -e "s:/usr/lib64/libpcreposix.la::g" -e "s:/usr/lib64/libpcre.la::g" -i {} \;
+else
+	find /usr/lib -name "*.la" -exec sed -i -e  "s:/usr/lib/libpcreposix.la::g" -e "s:/usr/lib/libpcre.la::g" {} \;
+	find /usr/kde/3.5/lib -name "*.la" -exec sed -e "s:/usr/lib/libpcreposix.la::g" -e "s:/usr/lib/libpcre.la::g" -i {} \;
+fi
+
+
