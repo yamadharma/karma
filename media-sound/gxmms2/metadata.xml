@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>media-sound</herd>
+<maintainer>
+  <email>ycarus@zugaina.org</email>
+  <description>This ebuild come from http://gentoo.zugaina.org/</description>
+</maintainer>
+    <longdescription lang="en">A GTK+ 2.6 based XMMS2 client</longdescription>
+    <longdescription lang="fr">Un client XMMS2 GTK+ 2.6</longdescription>
+</pkgmetadata>
