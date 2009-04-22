@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-wm/awesome/awesome-3.2.1-r2.ebuild,v 1.2 2009/04/21 23:23:41 matsuu Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-wm/awesome/awesome-3.2.1-r3.ebuild,v 1.1 2009/04/22 16:34:50 matsuu Exp $
 
 EAPI="2"
 inherit cmake-utils eutils
@@ -65,21 +65,18 @@ RDEPEND="${RDEPEND}
 
 DOCS="AUTHORS BUGS PATCHES README STYLE"
 
-src_configure() {
+mycmakeargs="-DPREFIX=/usr
+	-DSYSCONFDIR=/etc
+	$(cmake-utils_use_with dbus DBUS)
+	$(cmake-utils_use doc GENERATE_LUADOC)"
+
+src_compile() {
 	local myargs="all"
 
-	mycmakeargs="${mycmakeargs}
-		-DPREFIX=/usr
-		-DSYSCONFDIR=/etc
-		$(cmake-utils_use_with dbus DBUS)"
-
 	if use doc ; then
-		mycmakeargs="${mycmakeargs} -DGENERATE_LUADOC=ON"
 		myargs="${myargs} doc"
-	else
-		mycmakeargs="${mycmakeargs} -DGENERATE_LUADOC=OFF"
 	fi
-	cmake-utils_src_configure ${myargs}
+	cmake-utils_src_compile ${myargs}
 }
 
 src_install() {
