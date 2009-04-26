@@ -1,16 +1,16 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-analyzer/ns/ns-2.29.ebuild,v 1.2 2006/06/19 15:12:54 chutzpah Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-analyzer/ns/ns-2.31.ebuild,v 1.4 2008/09/03 07:36:41 opfer Exp $
 
 inherit eutils toolchain-funcs flag-o-matic
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.isi.edu/nsnam/ns/"
-SRC_URI="mirror://sourceforge/nsnam/${PN}-src-${PV}.tar.gz"
+SRC_URI="http://downloads.sourceforge.net/nsnam/${PN}-src-${PV}.tar.gz"
 
 LICENSE="BSD as-is"
 SLOT="0"
-KEYWORDS="~ppc ~sparc ~x86 ~amd64"
+KEYWORDS="~ppc ~sparc x86 amd64"
 IUSE="doc debug"
 
 RDEPEND=">=dev-lang/tcl-8.4.5
@@ -18,21 +18,19 @@ RDEPEND=">=dev-lang/tcl-8.4.5
 		>=dev-tcltk/otcl-1.11
 		>=dev-tcltk/tclcl-1.17
 		virtual/libpcap
-		debug? ( 	=dev-lang/perl-5*
+		debug? (	=dev-lang/perl-5*
 					>=sci-visualization/xgraph-12.1
 					>=dev-libs/dmalloc-4.8.2
 					>=dev-tcltk/tcl-debug-2.0 )"
 DEPEND="${RDEPEND}
-		doc? ( 	virtual/tex-base
+		doc? (	virtual/latex-base
 				virtual/ghostscript
 				dev-tex/latex2html )"
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
-#	epatch ${FILESDIR}/${P}-gentoo.diff
-#	epatch "${FILESDIR}/${P}-gcc41.patch"
-	sed '/$(CC)/s!-g!$(CFLAGS)!g' ${S}/indep-utils/model-gen/Makefile
+	cd "${S}"
+	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/indep-utils/model-gen/Makefile"
 }
 
 src_compile() {
@@ -66,18 +64,18 @@ src_compile() {
 		--enable-release || die "./configure failed"
 	emake CCOPT="${CFLAGS}" || die
 
-	cd ${S}/indep-utils/dosdbell
+	cd "${S}/indep-utils/dosdbell"
 	emake DFLAGS="${CFLAGS}" || die
-	cd ${S}/indep-utils/dosreduce
+	cd "${S}/indep-utils/dosreduce"
 	${CC} ${CFLAGS} dosreduce.c -o dosreduce
-	cd ${S}/indep-utils/propagation
+	cd "${S}/indep-utils/propagation"
 	${CXX} ${CXXFLAGS} threshold.cc -o threshold
-	cd ${S}/indep-utils/model-gen
+	cd "${S}/indep-utils/model-gen"
 	emake CFLAGS="${CFLAGS}" || die
 
 	if useq doc; then
 		einfo "Generating extra docs"
-		cd ${S}/doc
+		cd "${S}/doc"
 		yes '' | emake all
 	fi
 }
@@ -92,8 +90,6 @@ src_install() {
 	dohtml CHANGES.html TODO.html
 
 	cd "${S}"
-	insinto /usr/share/doc/${PF}
-	doins -r ns-tutorial
 	insinto /usr/share/ns
 	doins -r tcl
 
@@ -112,11 +108,11 @@ src_install() {
 	dobin http_connect http_active
 
 	if use doc; then
-		cd ${S}/doc
+		cd "${S}/doc"
 		docinto doc
 		dodoc everything.dvi everything.ps.gz everything.html everything.pdf
 		docinto model-gen
-		cd ${S}/indep-utils/model-gen
+		cd "${S}/indep-utils/model-gen"
 		dodoc *
 	fi
 }
@@ -127,6 +123,7 @@ src_test() {
 	einfo "We log to 'validate.run', which you should compare against"
 	einfo "the shipped 'validate.out' to evaluate success."
 	einfo "At the time of assembling this ebuild, these test suites failed:"
-	einfo "all-smac-multihop all-red all-plm all-wireless-tdma"
-	./validate 2>&1 | tee ${S}/validate.run
+	einfo "srm smac-multihop hier-routing algo-routing mcast vc"
+	einfo "session mixmode webcache mcache plm wireless-tdma"
+	./validate 2>&1 | tee "${S}/validate.run"
 }
