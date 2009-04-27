@@ -6,7 +6,7 @@ inherit eutils toolchain-funcs flag-o-matic
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.isi.edu/nsnam/ns/"
-SRC_URI="http://downloads.sourceforge.net/nsnam/${PN}-src-${PV}.tar.gz"
+SRC_URI="mirror://sourceforge/nsnam/${PN}-${PV}.tar.gz"
 
 LICENSE="BSD as-is"
 SLOT="0"
