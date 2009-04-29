@@ -6,14 +6,13 @@ inherit eutils
 
 DESCRIPTION="FreeRapid is a simple Java downloader that supports downloading from Rapidshare and other file-sharing services."
 HOMEPAGE="http://wordrider.net/freerapid/"
-SRC_URI="http://frd.sislik.net/FreeRapid-${PV%%0}.zip
-	rapidshare-premium? ( http://wordrider.net/download/rapidshare_premium.frp )"
+SRC_URI="http://wordrider.net/download.php?file=FreeRapiD-${PV}.zip"
 
 LICENSE="GPL"
 KEYWORDS="x86 amd64"
 RESTRICT="nomirror"
 
-IUSE="rapidshare-premium"
+IUSE=""
 SLOT="0"
 DEPEND=">=virtual/jdk-1.6"
 RDEPEND=">=virtual/jre-1.6
@@ -35,11 +34,11 @@ src_unpack() {
 	# copy executor
 	cp "${FILESDIR}/${PN}.sh" "${S}/${PN}" || die "Cannot copy an executor!"
 	chmod 755 "${S}/${PN}"
-	# replace RapidShare Free with Premium account
-	if use premium; then
-		rm "${S}/plugins/rapidshare.frp" && \
-		cp "${DISTDIR}/rapidshare_premium.frp" "${S}/plugins/" || die "Unable to replace with RapidShare Premium!"
-	fi
+#	# replace RapidShare Free with Premium account
+#	if use premium; then
+#		rm "${S}/plugins/rapidshare.frp" && \
+#		cp "${DISTDIR}/rapidshare_premium.frp" "${S}/plugins/" || die "Unable to replace with RapidShare Premium!"
+#	fi
 	# update paths in logger configuration
 	cd "${S}" && \
 	cp "${FILESDIR}/logger.properties" "${S}/logdebug.properties" && \
