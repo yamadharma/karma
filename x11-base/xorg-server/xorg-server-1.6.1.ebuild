@@ -173,9 +173,11 @@ DEPEND="${RDEPEND}
 	>=x11-proto/xcmiscproto-1.1.2
 	>=x11-proto/glproto-1.4.9
 	dmx? ( >=x11-proto/dmxproto-2.2.2 )
-	!minimal? ( >=x11-proto/xf86driproto-2.0.4
+	!minimal? (
+		>=x11-proto/xf86driproto-2.0.4
 		>=x11-proto/dri2proto-1.99.3
-		>=x11-libs/libdrm-2.3 )"
+		>=x11-libs/libdrm-2.3
+	)"
 
 # Drivers
 PDEPEND="
@@ -313,6 +315,7 @@ pkg_setup() {
 		$(use_enable !minimal xfree86-utils)
 		$(use_enable !minimal install-libxf86config)
 		$(use_enable !minimal dri)
+		$(use_enable !minimal dri2)
 		$(use_enable !minimal glx)
 		$(use_enable xorg)
 		$(use_enable nptl glx-tls)
