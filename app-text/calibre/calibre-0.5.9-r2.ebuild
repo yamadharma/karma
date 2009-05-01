@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-text/calibre/calibre-0.5.9-r1.ebuild,v 1.1 2009/04/28 17:53:15 zmedico Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-text/calibre/calibre-0.5.9-r2.ebuild,v 1.1 2009/04/29 07:22:48 zmedico Exp $
 
 EAPI=2
 NEED_PYTHON=2.6
@@ -16,13 +16,13 @@ SRC_URI="http://calibre.kovidgoyal.net/downloads/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
 
 IUSE=""
 
-SHARED_DEPEND=">=dev-lang/python-2.6
+SHARED_DEPEND=">=dev-lang/python-2.6[sqlite]
 	>=dev-python/setuptools-0.6_rc5
 	>=dev-python/imaging-1.1.6
 	>=dev-libs/libusb-0.1.12
@@ -39,7 +39,11 @@ SHARED_DEPEND=">=dev-lang/python-2.6
 	>=dev-python/pyPdf-1.12"
 
 RDEPEND="$SHARED_DEPEND
-	>=dev-python/reportlab-2.1"
+	>=dev-python/reportlab-2.1
+	!dev-python/cherrypy
+	!dev-python/cssutils
+	!dev-python/django-tagging
+	!dev-python/odfpy"
 
 DEPEND="$SHARED_DEPEND
 	dev-python/setuptools
@@ -47,14 +51,14 @@ DEPEND="$SHARED_DEPEND
 	>=x11-misc/xdg-utils-1.0.2-r2
 	sys-apps/help2man"
 
-src_compile() {
+src_prepare() {
 	# Removing the post_install call. We'll do that stuff in src_install.
 	sed -i -e "/if 'install'/,/subprocess.check_call/d" \
 		setup.py || die "couldn't remove post_install call"
 	# For help2man to succeed, we need to tell it the path to the tools.
 	sed -i -e "s:\('help2man',\) \(prog\):\1 \'PYTHONPATH=\"${D}$(python_get_sitedir)\" \' + \'${D}usr/bin/\' + \2:" \
 		src/calibre/linux.py || die "sed'ing in the IMAGE path failed"
-	distutils_src_compile
+	distutils_src_prepare
 }
 
 src_install() {
@@ -93,11 +97,11 @@ EOF
 		--group-file="${ROOT}"/etc/group --dont-check-root #\
 #		|| die "post-installation failed."
 
-#	# Move the bash-completion file and properly install it.
+	# Move the bash-completion file and properly install it.
 #	mv "${D}"/etc/bash_completion.d/calibre "${S}/" \
 #		|| die "cannot move the bash-completion file"
 #	dobashcompletion "${S}"/calibre
-	find "${D}"/etc -type d -empty -delete
+#	find "${D}"/etc -type d -empty -delete
 
 	# Removing junk.
 	rm -r "${D}"/usr/share/applications/{mimeinfo.cache,defaults.list} \
@@ -110,4 +114,5 @@ pkg_postinst() {
 	fdo-mime_desktop_database_update
 	fdo-mime_mime_database_update
 	distutils_pkg_postinst
+	bash-completion_pkg_postinst
 }
