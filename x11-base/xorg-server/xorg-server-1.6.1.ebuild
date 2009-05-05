@@ -40,6 +40,7 @@ IUSE_INPUT_DEVICES="
 	input_devices_tek4957
 	input_devices_tslib
 	input_devices_ur98
+	input_devices_virtualbox
 	input_devices_vmmouse
 	input_devices_void
 
@@ -51,7 +52,6 @@ IUSE_VIDEO_CARDS="
 	video_cards_ast
 	video_cards_chips
 	video_cards_cirrus
-	video_cards_cyrix
 	video_cards_dummy
 	video_cards_epson
 	video_cards_fbdev
@@ -65,8 +65,6 @@ IUSE_VIDEO_CARDS="
 	video_cards_mach64
 	video_cards_mga
 	video_cards_neomagic
-	video_cards_newport
-	video_cards_nsc
 	video_cards_nv
 	video_cards_r128
 	video_cards_radeon
@@ -92,8 +90,8 @@ IUSE_VIDEO_CARDS="
 	video_cards_v4l
 	video_cards_vermilion
 	video_cards_vesa
-	video_cards_vga
 	video_cards_via
+	video_cards_virtualbox
 	video_cards_vmware
 	video_cards_voodoo
 	video_cards_xgi
@@ -106,7 +104,7 @@ IUSE="${IUSE_VIDEO_CARDS}
 	3dfx tslib
 	hal ipv6 minimal nptl sdl"
 RDEPEND="hal? ( sys-apps/hal )
-	tslib? ( >=x11-libs/tslib-1.0 )
+	tslib? ( >=x11-libs/tslib-1.0 x11-proto/xcalibrateproto )
 	dev-libs/openssl
 	>=x11-libs/libXfont-1.4.0
 	>=x11-libs/xtrans-1.2.3
@@ -141,7 +139,6 @@ RDEPEND="hal? ( sys-apps/hal )
 		>=media-libs/mesa-7.3_rc1[nptl=]
 	)
 	>=x11-libs/libxkbui-1.0.2
-	>=x11-libs/liblbxutil-1.0.1
 	kdrive? ( sdl? ( media-libs/libsdl ) )"
 	# Xres is dmx-dependent
 	# Xaw is dmx-dependent
@@ -208,6 +205,7 @@ PDEPEND="
 		input_devices_tek4957? ( >=x11-drivers/xf86-input-tek4957-1.2.0 )
 		input_devices_tslib? ( x11-drivers/xf86-input-tslib )
 		input_devices_ur98? ( >=x11-drivers/xf86-input-ur98-1.1.0 )
+		input_devices_virtualbox? ( x11-drivers/xf86-input-virtualbox )
 		input_devices_vmmouse? ( >=x11-drivers/xf86-input-vmmouse-12.6.3 )
 		input_devices_void? ( >=x11-drivers/xf86-input-void-1.2.0 )
 		input_devices_synaptics? ( >=x11-drivers/xf86-input-synaptics-0.15.0 )
@@ -250,6 +248,7 @@ PDEPEND="
 		video_cards_v4l? ( >=x11-drivers/xf86-video-v4l-0.2.0 )
 		video_cards_vesa? ( >=x11-drivers/xf86-video-vesa-2.2.0 )
 		video_cards_via? ( >=x11-drivers/xf86-video-openchrome-0.2.903 )
+		video_cards_virtualbox? ( x11-drivers/xf86-video-virtualbox )
 		video_cards_vmware? ( >=x11-drivers/xf86-video-vmware-10.16.5 )
 		video_cards_voodoo? ( >=x11-drivers/xf86-video-voodoo-1.2.1 )
 		video_cards_xgi? ( >=x11-drivers/xf86-video-xgi-1.5.0 )
@@ -309,6 +308,7 @@ pkg_setup() {
 		$(use_enable dmx)
 		$(use_enable kdrive)
 		$(use_enable tslib)
+		$(use_enable tslib xcalibrate)
 		$(use_enable !minimal xvfb)
 		$(use_enable !minimal xnest)
 		$(use_enable !minimal record)
@@ -331,6 +331,13 @@ pkg_setup() {
 
 	# (#121394) Causes window corruption
 	filter-flags -fweb
+
+	# Incompatible with GCC 3.x SSP on x86, bug #244352
+	if use x86 ; then
+		if [[ $(gcc-major-version) -lt 4 ]]; then
+			filter-flags -fstack-protector
+		fi
+	fi
 
 	OLD_IMPLEM="$(eselect opengl show)"
 	eselect opengl set --impl-headers ${OPENGL_DIR}
