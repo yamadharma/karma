@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/media-libs/libid3tag/libid3tag-0.15.1b-r2.ebuild,v 1.6 2008/05/07 18:46:14 corsair Exp $
 
-inherit eutils multilib
+inherit eutils multilib autotools
 
 DESCRIPTION="The MAD id3tag library"
 HOMEPAGE="http://www.underbit.com/products/mad/"
@@ -13,7 +13,8 @@ SLOT="0"
 KEYWORDS="alpha amd64 ~arm hppa ia64 ~mips ppc ppc64 ~sh sparc x86 ~x86-fbsd"
 IUSE="debug"
 
-DEPEND="dev-util/gperf"
+DEPEND="dev-util/gperf
+	sys-devel/libtool"
 
 RDEPEND="${DEPEND}
 	>=sys-libs/zlib-1.1.3"
@@ -27,10 +28,11 @@ src_unpack() {
 
 #SDS
 	epatch "${FILESDIR}"/libid3tag-0.15.1b-ds-rcc.patch || die
-	libtoolize --copy --force
-	aclocal
-	automake
-	autoconf
+	eautoreconf || die
+#	libtoolize --copy --force
+#	aclocal
+#	automake
+#	autoconf
 #EDS
 
 }

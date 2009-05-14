@@ -22,7 +22,7 @@ src_unpack() {
 	cd "${S}"
 
 	use rcc && (
-	    epatch ${FILESDIR}/taglib-1.5-ds-rusxmms.patch || die
+	    epatch ${FILESDIR}/taglib-1.5-ds-rusxmms6.patch || die
 	    aclocal
 	    automake
 	    autoconf
