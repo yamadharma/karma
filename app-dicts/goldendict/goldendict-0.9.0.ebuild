@@ -13,34 +13,36 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
+S="${WORKDIR}/${P}-src"
+
 DEPEND="${RDEPEND}
 	>=x11-libs/qt-core-4.5
 	>=x11-libs/qt-gui-4.5
-	>=x11-libs/qt-webkit-4.5
-	=app-text/hunspell-1.2*
-	x11-proto/recordproto"
+	>=x11-libs/qt-webkit-4.5"
 RDEPEND="dev-libs/libzip
 	media-libs/libvorbis
-	sys-libs/zlib"
+	>=app-text/hunspell-1.2"
 
-S="${WORKDIR}/${P}-src"
 
-src_unpack() {
+src_unpack(){
 	unpack ${A}
-	# fast fix for hunspell
-	sed -i \
-		-e s/-lhunspell/-lhunspell-1\.2/g \
-		"${S}"/goldendict.pro || die "sed failed"
+	cd ${S}
 }
 
 src_compile() {
-	eqmake4 || die "eqmake failed"
+	PREFIX=/usr eqmake4 ${PN}.pro
 	emake || die "emake failed"
+	lrelease ${PN}.pro || die "failed to compile locale"
 }
 
 src_install() {
-	dobin goldendict
+	emake -j1 INSTALL_ROOT="${D}" install || die 'make install failed'	
+	# install icon
 	newicon icons/programicon.png ${PN}.png
-	make_desktop_entry ${PN} GoldenDict ${PN}.png
+	# create desktop entry
+	make_desktop_entry ${PN} GoldenDict ${PN}.png "Qt;Utility;Dictionary;"
+	# install locale
+	insinto /usr/share/apps/${PN}/locale
+	doins locale/*.qm
 }
 
