@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header:  $
 
+EAPI="2"
+
 inherit eutils
 
 DESCRIPTION="pdf2svg is based on poppler and cairo and can convert pdf to svg files"
@@ -14,15 +16,8 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 RDEPEND="virtual/poppler
-	x11-libs/cairo"
+	x11-libs/cairo[svg]"
 DEPEND="${RDEPEND}"
-
-pkg_setup() {
-	if ! built_with_use x11-libs/cairo svg ; then
-		eerror "you need to emerge x11-libs/cairo with svg support."
-		die "remerge x11-libs/cairo with USE=\"svg\""
-	fi
-}
 
 src_install() {
 	dobin ${PN}
