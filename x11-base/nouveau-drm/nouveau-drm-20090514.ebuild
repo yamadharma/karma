@@ -5,7 +5,7 @@
 WANT_AUTOMAKE="1.7"
 
 #EGIT_BRANCH="vblank-rework"
-#EGIT_TREE="3dcc742a9fdd909d3a7ebb2f634a6b2759c3dbd4"
+EGIT_TREE="f57d7f4b0b14972f92a83f155ae8033478aa7729"
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/mesa/drm"
 
 inherit eutils x11 linux-mod autotools git
@@ -21,11 +21,11 @@ S="${WORKDIR}/drm"
 
 DESCRIPTION="Nouveau DRM Kernel Modules for X11"
 HOMEPAGE="http://dri.sf.net"
-# SRC_URI=""
+SRC_URI=""
 
 SLOT="0"
 LICENSE="X11"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 
 DEPEND="kernel_linux? ( virtual/linux-sources )
 	kernel_FreeBSD? ( sys-freebsd/freebsd-sources

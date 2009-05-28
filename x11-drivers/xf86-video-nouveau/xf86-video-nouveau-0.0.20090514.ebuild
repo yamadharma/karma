@@ -34,6 +34,6 @@ DEPEND="${COMMON_DEPEND}
 	|| ( x11-libs/libdrm_nouveau x11-libs/libdrm[video_cards_nouveau] )"
 
 # need x11-base/x11-drm until nouveau drm enters the kernel
-RDEPEND="${COMMON_DEPEND}
-	|| ( x11-base/nouveau-drm x11-base/x11-drm[video_cards_nouveau] )"
+RDEPEND="${COMMON_DEPEND}"
+#	|| ( x11-base/nouveau-drm x11-base/x11-drm[video_cards_nouveau] )"
 
