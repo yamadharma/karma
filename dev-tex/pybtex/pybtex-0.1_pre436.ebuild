@@ -14,7 +14,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
 IUSE=""
-DEPEND=""
+RDEPEND="dev-python/pyparsing"
 
 pkg_setup() {
 	export EBZR_REVISION=`echo "${PV}" | sed -e 's:^.\+_pre\(.*\)$:\1:g' `
