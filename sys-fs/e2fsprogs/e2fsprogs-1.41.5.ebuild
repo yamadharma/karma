@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.4.ebuild,v 1.1 2009/01/28 05:47:45 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.5.ebuild,v 1.1 2009/05/29 23:27:02 vapier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib
 
@@ -31,27 +31,26 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	epatch "${FILESDIR}"/${PN}-1.38-tests-locale.patch #99766
-	epatch "${FILESDIR}"/${PN}-1.41.2-makefile.patch
+	epatch "${FILESDIR}"/${PN}-1.41.5-makefile.patch
 	epatch "${FILESDIR}"/${PN}-1.40-fbsd.patch
 	# blargh ... trick e2fsprogs into using e2fsprogs-libs
 	rm -rf doc
 	sed -i -r \
 		-e 's:@LIBINTL@:@LTLIBINTL@:' \
-		-e '/^LIB(BLKID|COM_ERR|SS|UUID)/s:[$][(]LIB[)]/lib([^@]*)@LIB_EXT@:-l\1:' \
-		-e '/^DEPLIB(BLKID|COM_ERR|SS|UUID)/s:=.*:=:' \
+		-e '/^LIB(COM_ERR|SS|UUID)/s:[$][(]LIB[)]/lib([^@]*)@LIB_EXT@:-l\1:' \
+		-e '/^DEPLIB(COM_ERR|SS|UUID)/s:=.*:=:' \
 		MCONFIG.in || die "muck libs" #122368
 	sed -i -r \
-		-e '/^LIB_SUBDIRS/s:lib/(blkid|et|ss|uuid)::g' \
+		-e '/^LIB_SUBDIRS/s:lib/(et|ss|uuid)::g' \
 		Makefile.in || die "remove subdirs"
+	# stupid configure script clobbers CC for us
+	sed -i '/if test -z "$CC" ; then CC=cc; fi/d' configure
 	touch lib/ss/ss_err.h
 }
 
 src_compile() {
 	# Keep the package from doing silly things
 	addwrite /var/cache/fonts
-	export LDCONFIG=:
-	export CC=$(tc-getCC)
-	export STRIP=:
 
 	# We want to use the "bsd" libraries while building on Darwin, but while
 	# building on other Gentoo/*BSD we prefer elf-naming scheme.
@@ -61,6 +60,7 @@ src_compile() {
 		*)         libtype=elf;;
 	esac
 
+	ac_cv_path_LDCONFIG=: \
 	econf \
 		--bindir=/bin \
 		--sbindir=/sbin \
@@ -70,6 +70,7 @@ src_compile() {
 		--without-included-gettext \
 		$(use_enable nls) \
 		$(use_enable userland_GNU fsck) \
+		--disable-libblkid \
 		|| die
 	if [[ ${CHOST} != *-uclibc ]] && grep -qs 'USE_INCLUDED_LIBINTL.*yes' config.{log,status} ; then
 		eerror "INTL sanity check failed, aborting build."
@@ -95,19 +96,14 @@ pkg_preinst() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
-	emake DESTDIR="${D}" install-libs || die
+	emake STRIP=: DESTDIR="${D}" install install-libs || die
 	dodoc README RELEASE-NOTES
 
 	# Move shared libraries to /lib/, install static libraries to /usr/lib/,
 	# and install linker scripts to /usr/lib/.
-	dodir /$(get_libdir)
-	local lib slib
-	for lib in "${D}"/usr/$(get_libdir)/*.a ; do
-		slib=${lib##*/}
-		mv "${lib%.a}"$(get_libname)* "${D}"/$(get_libdir)/ || die "moving lib ${slib}"
-		gen_usr_ldscript ${slib%.a}$(get_libname)
-	done
+	set -- "${D}"/usr/$(get_libdir)/*.a
+	set -- ${@/*\/lib}
+	gen_usr_ldscript -a "${@/.a}"
 
 	# move 'useless' stuff to /usr/
 	dosbin "${D}"/sbin/mklost+found
