@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.5.ebuild,v 1.1 2009/05/29 23:27:02 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.6.ebuild,v 1.1 2009/05/30 18:57:03 vapier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib
 
@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/e2fsprogs/${P}.tar.gz"
 
 LICENSE="GPL-2 BSD"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd"
 IUSE="nls elibc_FreeBSD"
 
 RDEPEND="~sys-libs/${PN}-libs-${PV}
@@ -129,4 +129,5 @@ src_install() {
 	cp ${FILESDIR}/e2fsck.conf.ext4 ${D}/etc/e2fsck.conf || die "cannot copy e2fsck.conf"
 	chmod 644 ${D}/etc/e2fsck.conf
 	chown root:root ${D}/etc/e2fsck.conf
+
 }
