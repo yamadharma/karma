@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-0.6.3-r3.ebuild,v 1.1 2009/05/28 21:57:26 cardoe Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-0.6.4.ebuild,v 1.2 2009/06/09 18:37:33 patrick Exp $
 
 EAPI="2"
 
@@ -35,28 +35,20 @@ RDEPEND="sys-libs/readline
 	qemu? ( >=app-emulation/qemu-0.10.0 )
 	sasl? ( dev-libs/cyrus-sasl )
 	selinux? ( sys-libs/libselinux )
-	virtualbox? ( >=app-emulation/virtualbox-bin-2.2.0 )
+	virtualbox? ( || ( >=app-emulation/virtualbox-ose-2.2.0 >=app-emulation/virtualbox-bin-2.2.0 ) )
 	xen? ( app-emulation/xen-tools app-emulation/xen )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 src_prepare() {
-	# Fix argv handling for KVM 85 and newer
-	epatch "${FILESDIR}/${P}-kvm-85-argv-detection.patch"
 	# Patch sent upstream for working with kvm-img
 	epatch "${FILESDIR}/${P}-kvm-img.patch"
 	# upstream patch. fix shared/read-only disk labeling
 	epatch "${FILESDIR}/${PN}-0.6.2-shared-readonly-label.patch"
-	# upstream patch. fix <hostdev managed='yes'>
-	epatch "${FILESDIR}/${P}-hostdev-managed.patch"
-	# upstream patch. refresh qemu caps when getCapabilities is called
-	epatch "${FILESDIR}/${P}-refresh-qemu-caps.patch"
-	# upstream patch. enable migration support which appeared in QEMU 0.10.0
-	epatch "${FILESDIR}/${PN}-0.6.2-enable-qemu-0-10-migration.patch"
 	# upstream patch. don't try to label a disk with no path (empty cdrom)
 	epatch "${FILESDIR}/${PN}-0.6.2-fix-nosource-label.patch"
-	# upstream patch. don't print raw uuid instead print ascii
-	epatch "${FILESDIR}/${P}-print-ascii-uuid.patch"
+	# Fix logic error when using qemu-img
+	epatch "${FILESDIR}/${P}-qemu-img-logic-fix.patch"
 
 	eautoreconf
 }
