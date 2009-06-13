@@ -26,7 +26,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE=""
 
-RDEPEND="!app-arch/lzma
+RDEPEND="!<app-arch/lzma-4.63
 	!app-arch/lzma-utils
 	!<app-arch/p7zip-4.57"
 
