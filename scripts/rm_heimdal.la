@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if [ -d /usr/lib64 ]
+then
+	find /usr/lib64 -name "*.la" -exec sed -i -e "s:-lgssapi ::g" -e "s:/usr/lib64/libgssapi.la::g" {} \;
+	find /usr/kde/3.5/lib64 -name "*.la" -exec sed -e "s:-lgssapi ::g" -e "s:/usr/lib64/libgssapi.la::g" -i {} \;
+	find /usr/lib64 -name "*.la" -exec sed -i -e "s:-lheimntlm ::g" -e "s:/usr/lib64/libheimntlm.la::g" {} \;
+	find /usr/kde/3.5/lib64 -name "*.la" -exec sed -e "s:-lheimntlm ::g" -e "s:/usr/lib64/libheimntlm.la::g" -i {} \;
+	find /usr/lib64 -name "*.la" -exec sed -i -e "s:/usr/lib64/libkrb5.la::g" {} \;
+	find /usr/kde/3.5/lib64 -name "*.la" -exec sed -e "s:/usr/lib64/libkrb5.la::g" -i {} \;
+	find /usr/lib64 -name "*.la" -exec sed -i -e "s:/usr/lib64/libhx509.la::g" {} \;
+	find /usr/kde/3.5/lib64 -name "*.la" -exec sed -e "s:/usr/lib64/libhx509.la::g" -i {} \;
+	find /usr/lib64 -name "*.la" -exec sed -i -e "s:/usr/lib64/libasn1.la::g" {} \;
+	find /usr/kde/3.5/lib64 -name "*.la" -exec sed -e "s:/usr/lib64/libasn1.la::g" -i {} \;
+else
+	find /usr/lib -name "*.la" -exec sed -i -e "s:-lgssapi ::g" -e  "s:/usr/lib/libgssapi.la::g" {} \;
+	find /usr/kde/3.5/lib -name "*.la" -exec sed -e "s:-lgssapi ::g" -e "s:/usr/lib/libgssapi.la::g" -i {} \;
+	find /usr/lib -name "*.la" -exec sed -i -e "s:-lheimntlm ::g" -e  "s:/usr/lib/libheimntlm.la::g" {} \;
+	find /usr/kde/3.5/lib -name "*.la" -exec sed -e "s:-lheimntlm ::g" -e "s:/usr/lib/libheimntlm.la::g" -i {} \;
+	find /usr/lib -name "*.la" -exec sed -i -e  "s:/usr/lib/libkrb5.la::g" {} \;
+	find /usr/kde/3.5/lib -name "*.la" -exec sed -e "s:/usr/lib/libkrb5.la::g" -i {} \;
+	find /usr/lib -name "*.la" -exec sed -i -e  "s:/usr/lib/libhx509.la::g" {} \;
+	find /usr/kde/3.5/lib -name "*.la" -exec sed -e "s:/usr/lib/libhx509.la::g" -i {} \;
+	find /usr/lib -name "*.la" -exec sed -i -e  "s:/usr/lib/libasn1.la::g" {} \;
+	find /usr/kde/3.5/lib -name "*.la" -exec sed -e "s:/usr/lib/libasn1.la::g" -i {} \;
+fi
+
+
