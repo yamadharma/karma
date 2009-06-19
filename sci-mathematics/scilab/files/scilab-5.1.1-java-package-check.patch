@@ -1,0 +1,37 @@
+diff -urN scilab-5.1.1-orig/m4/java.m4 scilab-5.1.1/m4/java.m4
+--- scilab-5.1.1-orig/m4/java.m4	2009-06-09 21:19:25.000000000 -0400
++++ scilab-5.1.1/m4/java.m4	2009-06-09 21:28:43.000000000 -0400
+@@ -745,15 +745,15 @@
+ 	AC_MSG_CHECKING($1)
+ 	found_jar=no
+ 	saved_ac_java_classpath=$ac_java_classpath
+-	DEFAULT_JAR_DIR="/usr/share/java/ /usr/lib/java/ /usr/share/java /usr/share/java/jar /opt/java/lib /usr/local/java /usr/local/java/jar /usr/local/share/java /usr/local/share/java/jar /usr/local/lib/java"
+-    for jardir in "`pwd`/thirdparty" "`pwd`/jar" $DEFAULT_JAR_DIR "$_user_libdir"; do
+-      for jar in "$jardir/$1.jar" "$jardir/lib$1.jar" "$jardir/lib$1-java.jar" "$jardir/$1*.jar"; do
++#	DEFAULT_JAR_DIR="/usr/share/java/ /usr/lib/java/ /usr/share/java /usr/share/java/jar /opt/java/lib /usr/local/java /usr/local/java/jar /usr/local/share/java /usr/local/share/java/jar /usr/local/lib/java"
++#    for jardir in "`pwd`/thirdparty" "`pwd`/jar" $DEFAULT_JAR_DIR "$_user_libdir"; do
++#      for jar in "$jardir/$1.jar" "$jardir/lib$1.jar" "$jardir/lib$1-java.jar" "$jardir/$1*.jar"; do
+ #	jar=`echo $jar|sed -e 's/ /\\ /'`
+ #	echo "protected $jar"
+ #	jar_resolved=`ls $jar 2>/dev/null`
+ #	echo "looking for $jar_resolved"
+ # TODO check the behaviour when spaces
+-	jar_resolved=`ls $jar 2>/dev/null`
++	jar_resolved=$1
+         if test -e "$jar_resolved"; then
+           export ac_java_classpath="$jar_resolved:$ac_java_classpath"
+           AC_JAVA_TRY_COMPILE([import $2;], , [
+@@ -766,11 +766,11 @@
+ 			
+           ])
+         fi
+-      done
++#     done
+       if test "$found_jar" = "yes"; then
+         break
+       fi
+-    done
++#    done
+     if test "$found_jar" = "no"; then
+       AC_MSG_RESULT([no])
+ 	  if test "$4" == "yes"; then

@@ -2,15 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit latex-package font
 
 MY_P=cm-unicode-${PV}
 
 DESCRIPTION="Computer Modern Unicode fonts"
 HOMEPAGE="http://canopus.iacp.dvo.ru/~panov/cm-unicode/"
-SRC_URI="mirror://sourceforge/cm-unicode/${MY_P}-otf.tar.gz"
+SRC_URI="mirror://sourceforge/cm-unicode/${MY_P}-otf.tar.xz"
 
-LICENSE="X11"
+LICENSE="OFL-1.1"
 SLOT="0"
 KEYWORDS="amd64 ~ppc x86"
 IUSE=""
@@ -23,3 +25,6 @@ FONT_SUFFIX="otf"
 
 DOCS="README Changes FAQ TODO Fontmap* INSTALL"
 
+src_unpack() {
+	tar -xJvf ${DISTDIR}/${MY_P}-otf.tar.xz
+}
