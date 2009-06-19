@@ -27,7 +27,7 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="!<app-arch/lzma-4.63
-	!app-arch/lzma-utils
+	!<app-arch/lzma-utils-1000
 	!<app-arch/p7zip-4.57"
 
 src_unpack() {
