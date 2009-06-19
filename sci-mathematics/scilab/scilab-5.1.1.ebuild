@@ -90,8 +90,8 @@ src_compile() {
 		$(use_enable doc build-help) \
 		${myopts} || die "econf failed"
 
-	emake|| die "emake failed"
-
+	emake || die "emake failed"
+	make macros || die "make macros failed"
 }
 
 src_install() {
@@ -102,10 +102,3 @@ src_install() {
 		Readme_Visual.txt || die "failed to install docs"
 
 }
-
-#pkg_postinst() {
-#	einfo "To tell Scilab about your printers, set the environment"
-#	einfo "variable PRINTERS in the form:"
-#	einfo
-#	einfo "PRINTERS=\"firstPrinter:secondPrinter:anotherPrinter\""
-#}
