@@ -12,7 +12,7 @@ HOMEPAGE="http://www.scilab.org/"
 
 SLOT="0"
 IUSE="+tk -scicos +umfpack +gui +fftw -pvm +gui -doc +matio"
-KEYWORDS="~amd64 ~ppc ~x86"
+# KEYWORDS="~amd64 ~ppc ~x86"
 
 RDEPEND="virtual/blas
 	virtual/lapack
