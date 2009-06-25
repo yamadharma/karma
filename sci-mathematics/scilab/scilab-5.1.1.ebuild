@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/sci-mathematics/scilab/scilab-4.1.2-r1.ebuild,v 1.3 2008/11/15 18:41:11 dertobi123 Exp $
 
+EAPI="2"
 inherit eutils fortran toolchain-funcs multilib autotools java-pkg-2
-EAPI=2
 
 DESCRIPTION="Scientific software package for numerical computations (Matlab lookalike)"
 LICENSE="CeCILL-2"
@@ -12,7 +12,7 @@ HOMEPAGE="http://www.scilab.org/"
 
 SLOT="0"
 IUSE="+tk -scicos +umfpack +gui +fftw -pvm +gui -doc +matio"
-# KEYWORDS="~amd64 ~ppc ~x86"
+#KEYWORDS="~amd64 ~ppc ~x86"
 
 RDEPEND="virtual/blas
 	virtual/lapack
@@ -44,7 +44,6 @@ DEPEND="doc? (
 		app-text/docbook-xsl-stylesheets
 		)
 		${RDEPEND}"
-
 
 pkg_setup() {
 	java-pkg-2_pkg_setup
@@ -83,11 +82,10 @@ src_prepare() {
 
 src_configure() {
 	local myopts
-	myopts="${myopts} --with-jdk=`java-config -O`"
 	if use doc ; then
 		myopts="${myopts} -with-docbook=/usr/share/sgml/docbook/xsl-stylesheets/"
 	fi
-
+	export JAVA_HOME=`java-config -O`
 	econf \
 		$(use_with scicos) \
 		$(use_with tk) \
@@ -121,7 +119,7 @@ src_install() {
 	#install icon
 	newicon icons/scilab.xpm scilab.xpm
 	
-	make_desktop_entry ${PN} "Scilab" ${PN} "Education;Science;Math"
+	make_desktop_entry ${PN} "Scilab" ${PN} "Education;Math"
 }
 
 pkg_postinst() {

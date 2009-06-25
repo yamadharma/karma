@@ -6,8 +6,8 @@ inherit latex-package font
 
 DESCRIPTION="Computer Modern Unicode fonts"
 HOMEPAGE="http://canopus.iacp.dvo.ru/~panov/cm-unicode/"
-SRC_URI="mirror://sourceforge/cm-unicode/${P}-pfb.tar.gz
-	mirror://sourceforge/cm-unicode/${P}-otf.tar.gz"
+SRC_URI="mirror://sourceforge/cm-unicode/${P}-pfb.tar.xz
+	mirror://sourceforge/cm-unicode/${P}-otf.tar.xz"
 
 LICENSE="X11"
 SLOT="0"
