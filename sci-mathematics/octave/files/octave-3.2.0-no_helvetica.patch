@@ -1,0 +1,20 @@
+--- octave-3.2.0.orig/scripts/plot/__go_draw_axes__.m	2009-03-25 13:49:30.000000000 -0700
++++ octave-3.2.0/scripts/plot/__go_draw_axes__.m	2009-04-04 21:27:43.341212944 -0700
+@@ -1619,7 +1619,7 @@
+ 
+ function [f, s, fnt, it, bld] = get_fontname_and_size (t)
+   if (isempty (t.fontname))
+-    fnt = "Helvetica";
++    fnt = "";
+   else
+     fnt = t.fontname;
+   endif
+@@ -1657,7 +1657,7 @@
+   if (strcmp (fld, "string"))
+     [f, s, fnt, it, bld] = get_fontname_and_size (obj);
+   else
+-    f = "Helvetica";
++    f = "";
+     s = 10;
+     fnt = f;
+     it = false;
