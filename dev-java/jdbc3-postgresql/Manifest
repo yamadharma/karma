@@ -1,22 +1,4 @@
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-MD5 6d2651223769763f104bb5e71320671a ChangeLog 1564
-MD5 927470f50a83ea9bf353f3d3e8c68c4f files/digest-jdbc3-postgresql-7.3 58
-MD5 e71acb8b196dc2466141bfe8dabe0eee files/digest-jdbc3-postgresql-7.4.5 73
-MD5 68212c0fc3f178e7dcd29a128bc6dbb5 files/digest-jdbc3-postgresql-8.0_p311 79
-MD5 fed5ba078df8a2fef6f75ca29be58503 files/digest-jdbc3-postgresql-8.0_p312 79
-MD5 a6eccc6d199c87b687b1a5ebe49424e8 files/digest-jdbc3-postgresql-8.1_p404 79
-MD5 3d80aae0ac6bc38c96a1eb2756a7d62b jdbc3-postgresql-7.3.ebuild 577
-MD5 d48c8950c95796f70666b0874df8f4d6 jdbc3-postgresql-7.4.5.ebuild 1115
-MD5 aafcc49fe60193eedeb00150bdcc2b60 jdbc3-postgresql-8.0_p311.ebuild 1213
-MD5 383b03657aca36b9aa418e36d08724bb jdbc3-postgresql-8.0_p312.ebuild 1213
-MD5 ca2d6af106ac3c5bd9c7507df6bbb259 jdbc3-postgresql-8.1_p404.ebuild 1244
-MD5 a6ec7d7724fbd068ffb39b5be56134ed metadata.xml 157
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
-
-iD8DBQFDp5VQndWRXhKOboURAjq1AJ49NHyU5Pg6dnqbQhu/FKIseeBydQCg71eT
-YPJGQYANCqhV/IfBy0cXdnQ=
-=+R19
------END PGP SIGNATURE-----
+DIST postgresql-jdbc-8.1-404.src.tar.gz 474266 RMD160 2258d2ab1d743afbfeacb60e0d53b7d58de519a7 SHA1 60872374660228966b723f03bfa2ae63bd7e2b4a SHA256 db11ec57331ab005162b01cfb9caf16b7cfa78c9d1540ae8a11afb72293246f8
+EBUILD jdbc3-postgresql-8.1_p404.ebuild 1242 RMD160 e922e5e7871be8996bd3e8d1b9cfb68a785478de SHA1 4b0edddb4c2d25a15a7229d0b379ff95b92c38fd SHA256 fce850f1494b22d9676c85a7ac410c90f4974b4007a849548f7ecdb3c2d0dab4
+MISC ChangeLog 1564 RMD160 3b5f56c298a52925e5fc7e903aae3a9511127102 SHA1 b1df7364b9e1922b4beaded02582682f1612b17b SHA256 05bcfe15537d6f330c15668e89780d8fb2ad501fd7b5d8698bc34a4ceb526a46
+MISC metadata.xml 157 RMD160 ab0b3741457dee7531f59c4da0f0e9e8399af084 SHA1 c37a6b9922aef61b5b3387655bccb6e3b16e0e26 SHA256 295d02c5805b0257938eb80314b371daac94b8d6ea85629a902de7a824adc0c9
