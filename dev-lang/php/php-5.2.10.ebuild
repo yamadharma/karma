@@ -37,7 +37,7 @@ inherit versionator php5_2-sapi apache-module
 
 # php-fpm patch support
 IUSE="${IUSE} fpm"
-FPM_PATCH="unofficial-php-5.2.10-fpm-0.5.10.diff.gz"
+FPM_PATCH="php-5.2.10-fpm-0.5.10.diff.gz"
 # [[ -n "${FPM_PATCH}" ]] && SRC_URI="${SRC_URI} fpm? ( http://php-fpm.anight.org/downloads/archive/php-${PV%.*}/${FPM_PATCH}.gz )"
 
 DESCRIPTION="The PHP language runtime engine: CLI, CGI and Apache2 SAPIs."

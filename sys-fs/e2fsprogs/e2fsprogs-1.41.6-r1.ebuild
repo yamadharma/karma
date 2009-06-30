@@ -1,10 +1,10 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.6.ebuild,v 1.1 2009/05/30 18:57:03 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.6-r1.ebuild,v 1.1 2009/06/28 17:55:59 robbat2 Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib
 
-DESCRIPTION="Standard EXT2 and EXT3 filesystem utilities"
+DESCRIPTION="Standard EXT2/EXT3/EXT4 filesystem utilities"
 HOMEPAGE="http://e2fsprogs.sourceforge.net/"
 SRC_URI="mirror://sourceforge/e2fsprogs/${P}.tar.gz"
 
@@ -17,6 +17,7 @@ RDEPEND="~sys-libs/${PN}-libs-${PV}
 	nls? ( virtual/libintl )"
 DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
+	dev-util/pkgconfig
 	sys-apps/texinfo"
 
 pkg_setup() {
@@ -44,7 +45,19 @@ src_unpack() {
 		-e '/^LIB_SUBDIRS/s:lib/(et|ss|uuid)::g' \
 		Makefile.in || die "remove subdirs"
 	# stupid configure script clobbers CC for us
-	sed -i '/if test -z "$CC" ; then CC=cc; fi/d' configure
+	sed -i \
+		-e '/if test -z "$CC" ; then CC=cc; fi/d' \
+		configure || die "touching configure"
+
+	# we want to build the blkid/findfs binaries, but not the libs
+	sed -i \
+		-e '/BLKID_CMT=/s:BLKID_CMT:LIBBLKID_CMT:g' \
+		configure || die "touching configure for blkid"
+	sed -i \
+		-e '/BLKID_LIB_SUBDIR/s:@BLKID_CMT@:@LIBBLKID_CMT@:g' \
+		Makefile.in || die "remove blkid subdir better"
+
+	# Avoid rebuild
 	touch lib/ss/ss_err.h
 }
 
