@@ -20,8 +20,8 @@ KEYWORDS="x86 amd64"
 IUSE=""
 
 RDEPEND="|| (
-		>=www-client/mozilla-firefox-3.1_beta3
-		>=www-client/seamonkey-2.0_alpha3
+		>=www-client/mozilla-firefox-3.5
+		>=www-client/seamonkey-2.0
 	)
 	net-libs/xulrunner:1.9
 	>=dev-libs/nss-3.12
