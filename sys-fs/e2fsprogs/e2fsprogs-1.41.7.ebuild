@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.6-r1.ebuild,v 1.1 2009/06/28 17:55:59 robbat2 Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.7.ebuild,v 1.1 2009/07/01 14:41:03 vapier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib
 
@@ -75,8 +75,7 @@ src_compile() {
 
 	ac_cv_path_LDCONFIG=: \
 	econf \
-		--bindir=/bin \
-		--sbindir=/sbin \
+		--with-root-prefix=/ \
 		--enable-${libtype}-shlibs \
 		--with-ldopts="${LDFLAGS}" \
 		$(use_enable !elibc_uclibc tls) \
@@ -84,6 +83,7 @@ src_compile() {
 		$(use_enable nls) \
 		$(use_enable userland_GNU fsck) \
 		--disable-libblkid \
+		--disable-libuuid \
 		|| die
 	if [[ ${CHOST} != *-uclibc ]] && grep -qs 'USE_INCLUDED_LIBINTL.*yes' config.{log,status} ; then
 		eerror "INTL sanity check failed, aborting build."
@@ -118,10 +118,6 @@ src_install() {
 	set -- ${@/*\/lib}
 	gen_usr_ldscript -a "${@/.a}"
 
-	# move 'useless' stuff to /usr/
-	dosbin "${D}"/sbin/mklost+found
-	rm -f "${D}"/sbin/mklost+found
-
 	if use elibc_FreeBSD ; then
 		# Install helpers for us
 		into /
@@ -131,9 +127,9 @@ src_install() {
 		# these manpages are already provided by FreeBSD libc
 		# and filefrag is linux only
 		rm -f \
-			"${D}"/sbin/filefrag \
+			"${D}"/usr/sbin/filefrag \
 			"${D}"/usr/share/man/man8/filefrag.8 \
-			"${D}"/bin/uuidgen \
+			"${D}"/usr/bin/uuidgen \
 			"${D}"/usr/share/man/man3/{uuid,uuid_compare}.3 \
 			"${D}"/usr/share/man/man1/uuidgen.1 || die
 	fi
