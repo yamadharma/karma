@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.7.ebuild,v 1.1 2009/07/01 14:41:03 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.7-r1.ebuild,v 1.1 2009/07/03 19:35:20 vapier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib
 
@@ -34,15 +34,16 @@ src_unpack() {
 	epatch "${FILESDIR}"/${PN}-1.38-tests-locale.patch #99766
 	epatch "${FILESDIR}"/${PN}-1.41.5-makefile.patch
 	epatch "${FILESDIR}"/${PN}-1.40-fbsd.patch
+	epatch "${FILESDIR}"/0001-resize2fs-Fix-error-message-so-the-mountpoint-is-pri.patch #276352
 	# blargh ... trick e2fsprogs into using e2fsprogs-libs
 	rm -rf doc
 	sed -i -r \
 		-e 's:@LIBINTL@:@LTLIBINTL@:' \
-		-e '/^LIB(COM_ERR|SS|UUID)/s:[$][(]LIB[)]/lib([^@]*)@LIB_EXT@:-l\1:' \
-		-e '/^DEPLIB(COM_ERR|SS|UUID)/s:=.*:=:' \
+		-e '/^LIB(COM_ERR|SS)/s:[$][(]LIB[)]/lib([^@]*)@LIB_EXT@:-l\1:' \
+		-e '/^DEPLIB(COM_ERR|SS)/s:=.*:=:' \
 		MCONFIG.in || die "muck libs" #122368
 	sed -i -r \
-		-e '/^LIB_SUBDIRS/s:lib/(et|ss|uuid)::g' \
+		-e '/^LIB_SUBDIRS/s:lib/(et|ss)::g' \
 		Makefile.in || die "remove subdirs"
 	# stupid configure script clobbers CC for us
 	sed -i \
@@ -56,14 +57,15 @@ src_unpack() {
 	sed -i \
 		-e '/BLKID_LIB_SUBDIR/s:@BLKID_CMT@:@LIBBLKID_CMT@:g' \
 		Makefile.in || die "remove blkid subdir better"
+	append-cppflags -DCONFIG_BUILD_FINDFS #275923
 
 	# Avoid rebuild
 	touch lib/ss/ss_err.h
 }
 
 src_compile() {
-	# Keep the package from doing silly things
-	addwrite /var/cache/fonts
+	# Keep the package from doing silly things #261411
+	export VARTEXFONTS=${T}/fonts
 
 	# We want to use the "bsd" libraries while building on Darwin, but while
 	# building on other Gentoo/*BSD we prefer elf-naming scheme.

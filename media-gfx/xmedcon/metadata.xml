@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>sci</herd>
+	<longdescription lang="en">
+		A toolkit for medical image conversion including C written library,
+		a flexible command-line utility and a graphical GTK+ front-end.
+	</longdescription>
+	<longdescription lang="fr">
+		Une boîte à outils de conversion d'images médicales comprenant une
+		bibliothèque écrite en C, un utilitaire en lignes de commandes et une
+		interface graphique GTK+.
+	</longdescription>
+</pkgmetadata>
