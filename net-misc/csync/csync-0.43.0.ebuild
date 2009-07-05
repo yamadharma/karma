@@ -13,13 +13,14 @@ SRC_URI="http://www.csync.org/files/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd"
-IUSE="samba"
-
-DEPEND=">=dev-libs/check-0.9.5
-	>=dev-libs/log4c-1.2
-	>=dev-db/sqlite-3.4
-	samba? ( net-fs/samba )"
+IUSE="samba sftp"
 
 RDEPEND=">=dev-libs/log4c-1.2
 	>=dev-db/sqlite-3.4
-	samba? ( net-fs/samba )"
+	samba? ( net-fs/samba )
+	sftp? ( >=net-libs/libssh-0.3.0 )"
+
+
+DEPEND=">=dev-libs/check-0.9.5
+	${RDEPEND}"
+
