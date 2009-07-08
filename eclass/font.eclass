@@ -48,11 +48,12 @@ DOCS=""
 NFONT_SUFFIX=""
 
 
-IUSE="X gnustep"
+IUSE="gnustep X"
 
-DEPEND="X? ( x11-apps/mkfontdir )
+DEPEND="X? ( x11-apps/mkfontdir
+			media-fonts/encodings )
 	gnustep? ( >=gnustep-base/mknfonts-0.5-r1 )
-	media-libs/fontconfig"
+		media-libs/fontconfig"
 
 # Where to install GNUstep
 GNUSTEP_PREFIX="/usr/GNUstep"
