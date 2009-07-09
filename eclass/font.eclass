@@ -20,7 +20,7 @@ FONT_SUFFIX=""
 # @ECLASS-VARIABLE: FONT_S
 # @DESCRIPTION:
 # Dir containing the fonts
-# FONT_S=${S}
+FONT_S=${S}
 
 # @ECLASS-VARIABLE: FONT_PN
 # @DESCRIPTION:
@@ -92,11 +92,14 @@ set_FONTDIR ()
 # Public functions
 #
 
+# @FUNCTION: font_xfont_config
+# @DESCRIPTION:
+# Creates the Xfont files.
 font_xfont_config() {
-
 	# create Xfont files
 	if use X ; then
 		einfo "Creating fonts.scale & fonts.dir ..."
+		rm -f "${D}${FONTDIR}"/fonts.{dir,scale}
 		mkfontscale "${D}${FONTDIR}"
 		mkfontdir \
 			-e /usr/share/fonts/encodings \
@@ -106,19 +109,22 @@ font_xfont_config() {
 			doins "${FONT_S}/fonts.alias"
 		fi
 	fi
-
 }
 
+# @FUNCTION: font_xft_config
+# @DESCRIPTION:
+# Creates the fontconfig cache if necessary.
 font_xft_config() {
-
 	if ! has_version '>=media-libs/fontconfig-2.4'; then
 		# create fontconfig cache
 		einfo "Creating fontconfig cache ..."
-		# Mac OS X has fc-cache at /usr/X11R6/bin
-		HOME="/root" fc-cache -f "${D}${FONTDIR}"
+		fc-cache -sf "${D}${FONTDIR}"
 	fi
 }
 
+# @FUNCTION: font_fontconfig
+# @DESCRIPTION:
+# Installs the fontconfig config files of FONT_CONF.
 font_fontconfig() {
 	local conffile
 	if [[ -n ${FONT_CONF[@]} ]]; then
@@ -175,7 +181,7 @@ font_make_nfont() {
 		
 		# Remove DESTDIR
 		find . -name "*.plist" -exec sed -ie "s:${D}::g" {} \;
-		find . -name "*.plist" -exec sed -ie "s://:/:g" {} \;		
+		find . -name "*.plist" -exec sed -ie "s://:/:g" {} \;
 		find . -name "*.pliste" -exec rm {} \;
 	fi
 }
@@ -185,6 +191,10 @@ font_make_nfont() {
 # Public inheritable functions
 #
 
+
+# @FUNCTION: font_src_install
+# @DESCRIPTION:
+# The font src_install function, which is exported.
 font_src_install() {
 	set_FONTDIR
 	local suffix commondoc
@@ -232,7 +242,7 @@ font_src_install() {
 # The font pkg_setup function, which is exported.
 font_pkg_setup() {
 
-	FONT_S=${S}
+#	FONT_S=${S}
 
 	if [ -z "${FONT_SUPPLIER}" ]
 	then
