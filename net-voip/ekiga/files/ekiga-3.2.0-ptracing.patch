@@ -1,0 +1,137 @@
+diff -ru ekiga-3.2.0-old/lib/engine/audioinput/audioinput-core.cpp ekiga-3.2.0/lib/engine/audioinput/audioinput-core.cpp
+--- ekiga-3.2.0-old/lib/engine/audioinput/audioinput-core.cpp	2009-01-07 05:02:11.000000000 -0500
++++ ekiga-3.2.0/lib/engine/audioinput/audioinput-core.cpp	2009-03-28 12:58:37.000000000 -0400
+@@ -197,13 +197,13 @@
+        iter++)
+     (*iter)->get_devices (devices);
+ 
+-  if (PTrace::CanTrace(4)) {
+-     for (std::vector<AudioInputDevice>::iterator iter = devices.begin ();
+-         iter != devices.end ();
+-         iter++) {
+-      PTRACE(4, "AudioInputCore\tDetected Device: " << *iter);
+-    }
+-  }
++#if PTRACING
++	for (std::vector<AudioInputDevice>::iterator iter = devices.begin ();
++			iter != devices.end ();
++			iter++) {
++		PTRACE(4, "AudioInputCore\tDetected Device: " << *iter);
++	}
++#endif // PTRACING
+ 
+ }
+ 
+diff -ru ekiga-3.2.0-old/lib/engine/audiooutput/audiooutput-core.cpp ekiga-3.2.0/lib/engine/audiooutput/audiooutput-core.cpp
+--- ekiga-3.2.0-old/lib/engine/audiooutput/audiooutput-core.cpp	2009-01-07 05:02:11.000000000 -0500
++++ ekiga-3.2.0/lib/engine/audiooutput/audiooutput-core.cpp	2009-03-28 12:59:58.000000000 -0400
+@@ -151,13 +151,13 @@
+        iter++)
+     (*iter)->get_devices (devices);
+ 
+-  if (PTrace::CanTrace(4)) {
+-     for (std::vector<AudioOutputDevice>::iterator iter = devices.begin ();
+-         iter != devices.end ();
+-         iter++) {
+-      PTRACE(4, "AudioOutputCore\tDetected Device: " << *iter);
+-    }
+-  }
++#if PTRACING
++	for (std::vector<AudioOutputDevice>::iterator iter = devices.begin ();
++			iter != devices.end ();
++			iter++) {
++		PTRACE(4, "AudioOutputCore\tDetected Device: " << *iter);
++	}
++#endif // PTRACING
+ 
+ }
+ 
+diff -ru ekiga-3.2.0-old/lib/engine/videoinput/videoinput-core.cpp ekiga-3.2.0/lib/engine/videoinput/videoinput-core.cpp
+--- ekiga-3.2.0-old/lib/engine/videoinput/videoinput-core.cpp	2009-03-01 17:47:10.000000000 -0500
++++ ekiga-3.2.0/lib/engine/videoinput/videoinput-core.cpp	2009-03-28 12:57:34.000000000 -0400
+@@ -207,13 +207,13 @@
+        iter++)
+     (*iter)->get_devices (devices);
+ 
+-  if (PTrace::CanTrace(4)) {
+-     for (std::vector<VideoInputDevice>::iterator iter = devices.begin ();
+-         iter != devices.end ();
+-         iter++) {
+-      PTRACE(4, "VidInputCore\tDetected Device: " << *iter);
+-    }
+-  }
++#if PTRACING
++	for (std::vector<VideoInputDevice>::iterator iter = devices.begin ();
++			iter != devices.end ();
++			iter++) {
++		PTRACE(4, "VidInputCore\tDetected Device: " << *iter);
++	}
++#endif // PTRACING
+ }
+ 
+ void VideoInputCore::set_device(const VideoInputDevice & device, int channel, VideoInputFormat format)
+diff -ru ekiga-3.2.0-old/lib/gui/xvwindow.cpp ekiga-3.2.0/lib/gui/xvwindow.cpp
+--- ekiga-3.2.0-old/lib/gui/xvwindow.cpp	2009-01-07 05:02:11.000000000 -0500
++++ ekiga-3.2.0/lib/gui/xvwindow.cpp	2009-03-28 12:50:33.000000000 -0400
+@@ -409,8 +409,9 @@
+           continue;
+         }
+ 
+-        if (PTrace::CanTrace (4)) 
+-          DumpCapabilities (candidateXVPort);
++#if PTRACING
++				DumpCapabilities (candidateXVPort);
++#endif // PTRACING
+ 
+         // Check if the Port supports YV12/YUV colorspace
+         supportsYV12 = false;
+@@ -684,7 +685,8 @@
+       }
+     }
+   
+-    if ( (_useShm) && (PTrace::CanTrace (4)) ) {
++#if PTRACING
++    if ( (_useShm) ) {
+       int j = 0;
+       PTRACE(4, "XVideo\tCreated XvImage (" << _XVImage[i]->width << "x" << _XVImage[i]->height 
+             << ", data size: " << _XVImage[i]->data_size << ", num_planes: " << _XVImage[i]->num_planes);
+@@ -692,6 +694,7 @@
+       for (j = 0 ; j < _XVImage[i]->num_planes ; j++) 
+         PTRACE(4, "XVideo\t  Plane " << j << ": pitch=" << _XVImage[i]->pitches [j] << ", offset=" << _XVImage[i]->offsets [j]);
+     }
++#endif // PTRACING
+   
+     if (_useShm) {
+       _XShmInfo[i].shmid = shmget (IPC_PRIVATE, _XVImage[i]->data_size, IPC_CREAT | 0777);
+diff -ru ekiga-3.2.0-old/lib/gui/xwindow.cpp ekiga-3.2.0/lib/gui/xwindow.cpp
+--- ekiga-3.2.0-old/lib/gui/xwindow.cpp	2009-01-07 05:02:11.000000000 -0500
++++ ekiga-3.2.0/lib/gui/xwindow.cpp	2009-03-28 12:47:40.000000000 -0400
+@@ -200,8 +200,9 @@
+   PTRACE(4, "X11\tInitiasing new X11 window with " << windowWidth << "x" << windowHeight << " at " << x << "," << y);
+   XLockDisplay (_display);
+ 
+-  if (PTrace::CanTrace (4)) 
+-    DumpVisuals();
++#if PTRACING
++	DumpVisuals();
++#endif // PTRACING
+ 
+   if (!CreateAtomsAndWindow(gc, x, y, windowWidth, windowHeight)) {
+     XUnlockDisplay(_display);
+diff -ru ekiga-3.2.0-old/src/gui/main.cpp ekiga-3.2.0/src/gui/main.cpp
+--- ekiga-3.2.0-old/src/gui/main.cpp	2009-03-03 16:48:37.000000000 -0500
++++ ekiga-3.2.0/src/gui/main.cpp	2009-03-28 13:16:24.000000000 -0400
+@@ -4453,10 +4453,13 @@
+   /* Ekiga initialisation */
+   static GnomeMeeting instance;
+ 
++#if PTRACING
+   if (debug_level != 0)
+     PTrace::Initialise (PMAX (PMIN (5, debug_level), 0), NULL,
+ 			PTrace::Timestamp | PTrace::Thread
+ 			| PTrace::Blocks | PTrace::DateAndTime);
++#endif // PTRACING
++
+ #ifdef EKIGA_REVISION
+   PTRACE(1, "Ekiga SVN revision: " << EKIGA_REVISION);
+ #endif
