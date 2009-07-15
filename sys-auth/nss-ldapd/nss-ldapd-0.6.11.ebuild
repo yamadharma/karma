@@ -5,8 +5,9 @@
 inherit multilib
 
 DESCRIPTION="NSS module for name lookups using LDAP"
-HOMEPAGE="http://ch.tudelft.nl/~arthur/nss-ldapd/"
-SRC_URI="http://ch.tudelft.nl/~arthur/nss-ldapd/${P}.tar.gz"
+HOMEPAGE="http://arthurdejong.org/nss-ldapd
+	http://ch.tudelft.nl/~arthur/nss-ldapd/"
+SRC_URI="http://arthurdejong.org/nss-ldapd/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -22,6 +23,7 @@ RDEPEND="${DEPEND}"
 src_compile() {
 	# nss libraries always go in /lib on Gentoo
 	econf --enable-warnings --with-ldap-lib=openldap $(use_enable debug) \
+		$(use_enable sasl) $(use_enable kerberos) \
 		--libdir=/$(get_libdir) \
 		|| die "econf failed"
 	emake || die "emake failed"
