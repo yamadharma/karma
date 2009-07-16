@@ -28,10 +28,10 @@ RDEPEND=""
 
 src_prepare() {
 	epatch ${FILESDIR}/rpm_copyright.patch
+	elibtoolize
 }
 
 src_compile() {
-	elibtoolize
 	#bug #188169 -> --disable-xpdf
 	econf --enable-glib --enable-exiv2 \
 		--disable-xpdf \

@@ -10,7 +10,7 @@ GIT_ECLASS="git"
 
 inherit x-modular
 
-#EGIT_TREE="292c8c2c4fa5147cbbff3da28a0805c479caa765"
+EGIT_TREE="c0bf670ac6b58cff60a01ab6b174ece6b1b7d892"
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/nouveau/${PN}"
 
 DESCRIPTION="Nouveau video driver"
@@ -18,12 +18,11 @@ HOMEPAGE="http://nouveau.freedesktop.org/"
 SRC_URI=""
 
 LICENSE="MIT"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 COMMON_DEPEND=">=x11-base/xorg-server-1.5.3[-minimal]"
 DEPEND="${COMMON_DEPEND}
-	x11-misc/util-macros
 	x11-proto/fontsproto
 	x11-proto/randrproto
 	x11-proto/renderproto
@@ -31,9 +30,8 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/xextproto
 	x11-proto/xf86driproto
 	x11-proto/xproto
-	|| ( x11-libs/libdrm_nouveau x11-libs/libdrm[video_cards_nouveau] )"
+	|| ( >=x11-libs/libdrm-9999 x11-libs/libdrm_nouveau )"
 
 # need x11-base/x11-drm until nouveau drm enters the kernel
 RDEPEND="${COMMON_DEPEND}"
-#	|| ( x11-base/nouveau-drm x11-base/x11-drm[video_cards_nouveau] )"
-
+#	|| ( x11-base/x11-drm[video_cards_nouveau] x11-base/nouveau-drm )"
