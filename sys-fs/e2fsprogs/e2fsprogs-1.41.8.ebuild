@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.7-r1.ebuild,v 1.1 2009/07/03 19:35:20 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.8.ebuild,v 1.5 2009/07/22 14:05:59 aballier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib
 
@@ -10,10 +10,11 @@ SRC_URI="mirror://sourceforge/e2fsprogs/${P}.tar.gz"
 
 LICENSE="GPL-2 BSD"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 -x86-fbsd"
 IUSE="nls elibc_FreeBSD"
 
 RDEPEND="~sys-libs/${PN}-libs-${PV}
+	>=sys-apps/util-linux-2.16
 	nls? ( virtual/libintl )"
 DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
@@ -32,9 +33,12 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	epatch "${FILESDIR}"/${PN}-1.38-tests-locale.patch #99766
-	epatch "${FILESDIR}"/${PN}-1.41.5-makefile.patch
+	epatch "${FILESDIR}"/${PN}-1.41.8-makefile.patch
 	epatch "${FILESDIR}"/${PN}-1.40-fbsd.patch
-	epatch "${FILESDIR}"/0001-resize2fs-Fix-error-message-so-the-mountpoint-is-pri.patch #276352
+	# use symlinks rather than hardlinks
+	sed -i \
+		-e 's:$(LN) -f $(DESTDIR).*/:$(LN_S) -f :' \
+		{e2fsck,misc}/Makefile.in || die
 	# blargh ... trick e2fsprogs into using e2fsprogs-libs
 	rm -rf doc
 	sed -i -r \
@@ -49,15 +53,6 @@ src_unpack() {
 	sed -i \
 		-e '/if test -z "$CC" ; then CC=cc; fi/d' \
 		configure || die "touching configure"
-
-	# we want to build the blkid/findfs binaries, but not the libs
-	sed -i \
-		-e '/BLKID_CMT=/s:BLKID_CMT:LIBBLKID_CMT:g' \
-		configure || die "touching configure for blkid"
-	sed -i \
-		-e '/BLKID_LIB_SUBDIR/s:@BLKID_CMT@:@LIBBLKID_CMT@:g' \
-		Makefile.in || die "remove blkid subdir better"
-	append-cppflags -DCONFIG_BUILD_FINDFS #275923
 
 	# Avoid rebuild
 	touch lib/ss/ss_err.h
@@ -83,10 +78,10 @@ src_compile() {
 		$(use_enable !elibc_uclibc tls) \
 		--without-included-gettext \
 		$(use_enable nls) \
-		$(use_enable userland_GNU fsck) \
 		--disable-libblkid \
 		--disable-libuuid \
-		|| die
+		--disable-fsck \
+		--disable-uuidd
 	if [[ ${CHOST} != *-uclibc ]] && grep -qs 'USE_INCLUDED_LIBINTL.*yes' config.{log,status} ; then
 		eerror "INTL sanity check failed, aborting build."
 		eerror "Please post your ${S}/config.log file as an"
@@ -111,14 +106,24 @@ pkg_preinst() {
 }
 
 src_install() {
-	emake STRIP=: DESTDIR="${D}" install install-libs || die
+	# need to set root_libdir= manually as any --libdir options in the
+	# econf above (i.e. multilib) will screw up the default #276465
+	emake \
+		STRIP=: \
+		root_libdir="/$(get_libdir)" \
+		DESTDIR="${D}" \
+		install install-libs || die
 	dodoc README RELEASE-NOTES
 
-	# Move shared libraries to /lib/, install static libraries to /usr/lib/,
-	# and install linker scripts to /usr/lib/.
-	set -- "${D}"/usr/$(get_libdir)/*.a
-	set -- ${@/*\/lib}
-	gen_usr_ldscript -a "${@/.a}"
+	# make sure symlinks are relative, not absolute, for cross-compiling
+	cd "${D}"/usr/$(get_libdir)
+	local x l
+	for x in lib* ; do
+		l=$(readlink "${x}")
+		[[ ${l} == /* ]] || continue
+		rm -f "${x}"
+		ln -s "../..${l}" "${x}"
+	done
 
 	if use elibc_FreeBSD ; then
 		# Install helpers for us
@@ -126,14 +131,10 @@ src_install() {
 		dosbin "${S}"/fsck_ext2fs || die
 		doman "${FILESDIR}"/fsck_ext2fs.8
 
-		# these manpages are already provided by FreeBSD libc
-		# and filefrag is linux only
-		rm -f \
+		# filefrag is linux only
+		rm \
 			"${D}"/usr/sbin/filefrag \
-			"${D}"/usr/share/man/man8/filefrag.8 \
-			"${D}"/usr/bin/uuidgen \
-			"${D}"/usr/share/man/man3/{uuid,uuid_compare}.3 \
-			"${D}"/usr/share/man/man1/uuidgen.1 || die
+			"${D}"/usr/share/man/man8/filefrag.8 || die
 	fi
 
 	# Ext4 hack to avoid e2fsck removing the test_fs flag
