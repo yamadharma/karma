@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-0.6.4-r1.ebuild,v 1.1 2009/06/10 15:34:16 cardoe Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-0.6.5.ebuild,v 1.2 2009/08/02 14:27:07 cardoe Exp $
 
 EAPI="2"
 
@@ -24,6 +24,7 @@ RDEPEND="sys-libs/readline
 	sys-fs/sysfsutils
 	net-analyzer/netcat-openbsd
 	avahi? ( >=net-dns/avahi-0.6 )
+	hal? ( >=sys-apps/hal-0.5.9 )
 	iscsi? ( sys-block/open-iscsi )
 	kvm? ( app-emulation/kvm )
 	lvm? ( sys-fs/lvm2 )
@@ -39,19 +40,6 @@ RDEPEND="sys-libs/readline
 	xen? ( app-emulation/xen-tools app-emulation/xen )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-
-src_prepare() {
-	# Patch sent upstream for working with kvm-img
-	epatch "${FILESDIR}/${P}-kvm-img.patch"
-	# upstream patch. fix shared/read-only disk labeling
-	epatch "${FILESDIR}/${PN}-0.6.2-shared-readonly-label.patch"
-	# upstream patch. don't try to label a disk with no path (empty cdrom)
-	epatch "${FILESDIR}/${PN}-0.6.2-fix-nosource-label.patch"
-	# Fix logic error when using qemu-img
-	epatch "${FILESDIR}/${P}-qemu-img-logic-fix.patch"
-
-	eautoreconf
-}
 
 pkg_setup() {
 	confutils_require_any lxc kvm openvz qemu uml virtualbox xen
