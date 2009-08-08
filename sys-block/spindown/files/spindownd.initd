@@ -1,0 +1,77 @@
+#!/sbin/runscript
+# Copyright 1999-2008 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+description="starts/stops/queries spindownd daemon."
+
+# Default configuration values 
+SPINDOWNPATH=${SPINDOWNPATH:-/usr/sbin/spindownd}
+SPINDOWND_FIFO=${SPINDOWND_FIFO:-/var/run/spindown.fifo}
+SPINDOWND_CFG=${SPINDOWND_CFG:-/etc/spindown.conf}
+PIDPATH=${PIDPATH:-/var/run/spindownd.pid}
+
+# opts="reload stats"
+opts="${opts} reload"
+
+
+depend() {
+	need localmount
+	after bootmisc
+}
+
+print_stats() {
+  #print the header of the table
+  printf "%-5s %10s %10s %15s %20s\n" name watched active idle-time spindown-time
+  # read the pipe and print 
+  # the rows with disks
+  while read line; do
+  printf "%-5s %10s %10s %15s %20s\n" $line
+  done < ${SPINDOWND_FIFO}
+  exit 0
+}
+
+#prints table with status of disks
+status() {
+  if [ -e ${PIDPATH} ]; then
+      PID=`cat ${PIDPATH} 2>/dev/null`
+      CHECK=`pgrep -g ${PID} -x spindownd`
+      if [ -z ${CHECK} ]; then
+          ISWORKING="no"
+      fi
+  else
+      ISWORKING="no"
+  fi
+  if [[ ${ISWORKING} == "no" ]]; then
+      echo "Daemon not running."
+      exit 1
+  fi
+  # If the deamon is running print status info
+  print_stats &
+  sleep 0.1
+  kill -pipe `cat ${PIDPATH}`
+  wait $1
+}
+
+start() {
+	ebegin "Starting spindownd"
+	start-stop-daemon --start \
+		--exec ${SPINDOWNPATH} \
+		--name spindownd \
+		-- -d -f ${SPINDOWND_FIFO} -c ${SPINDOWND_CFG} -p ${PIDPATH}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping spindownd"
+	start-stop-daemon --stop \
+		--exec ${SPINDOWNPATH} \
+		--name spindownd
+	eend $?
+}
+
+reload() {
+	ebegin "Reloading spindownd configuration"
+	start-stop-daemon --signal HUP \
+	    --pidfile ${PIDPATH}
+	eend $?
+}

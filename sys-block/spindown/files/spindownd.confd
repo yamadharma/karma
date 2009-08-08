@@ -1,0 +1,19 @@
+# /etc/conf.d/spindownd
+
+# Configuration file for /init.d/spindownd startup script
+# Default values are shown below.
+# Uncomment and change values if you need something different.
+
+
+# spindownd config file
+# SPINDOWND_CFG=/etc/spindown.conf
+
+# Path to executable
+# SPINDOWNPATH=/usr/sbin/spindownd
+
+# Path to spindown fifo pipe
+# SPINDOWND_FIFO=/var/run/spindown.fifo
+
+# Path to PID file
+# PIDPATH=/var/run/spindownd.pid
+ 

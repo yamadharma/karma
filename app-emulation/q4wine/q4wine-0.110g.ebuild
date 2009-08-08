@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-edge
+inherit qt4
 
 DESCRIPTION="Qt4 GUI for wine"
 HOMEPAGE="http://sourceforge.net/projects/q4wine/"
