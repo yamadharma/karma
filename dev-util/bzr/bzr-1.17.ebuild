@@ -1,10 +1,14 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/bzr/bzr-0.91-r1.ebuild,v 1.1 2007/10/05 12:49:10 hawking Exp $
+# $Header: $
+
+EAPI=2
+NEED_PYTHON=2.4
 
 inherit distutils bash-completion elisp-common eutils versionator
 
 MY_RV=${PV/_/}
+LPV="${MY_RV}"
 MY_PV=${MY_RV/beta/b}
 MY_P="${PN}-${MY_PV}"
 SERIES=$(get_version_component_range 1-2)
@@ -12,35 +16,33 @@ S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Bazaar is a next generation distributed version control system."
 HOMEPAGE="http://bazaar-vcs.org/"
-SRC_URI="http://launchpad.net/bzr/${SERIES}/${MY_RV}/+download/${MY_P}.tar.gz"
+SRC_URI="http://launchpad.net/bzr/${SERIES}/${LPV}/+download/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ia64 ~ppc ~sparc x86 ~x86-fbsd"
-IUSE="curl doc emacs test"
+KEYWORDS="~amd64 ~ia64 ~ppc ~sparc ~x86 ~x86-fbsd"
+IUSE="curl doc emacs kerberos +sftp test"
 
 python_rdep="|| ( >=dev-lang/python-2.5 dev-python/celementtree )
-	>=dev-python/paramiko-1.5
-	curl? ( dev-python/pycurl )"
-DEPEND=">=dev-lang/python-2.4
+	sftp? ( >=dev-python/paramiko-1.5 )
+	curl? ( dev-python/pycurl )
+	kerberos? ( dev-python/pykerberos )
+	sys-libs/zlib"
+DEPEND="dev-python/pyrex
 	!=dev-python/pyrex-0.9.6.3
 	emacs? ( virtual/emacs )
 	test? (
-		$python_rdep
-		dev-python/medusa
+		${python_rdep}
+		|| ( dev-python/pyftpdlib dev-python/medusa )
 	)"
-RDEPEND=">=dev-lang/python-2.4
-	$python_rdep"
+RDEPEND="${python_rdep}"
 
 PYTHON_MODNAME="bzrlib"
 SITEFILE=71${PN}-gentoo.el
 
 DOCS="README NEWS doc/*.txt"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-
+src_prepare() {
 	# Don't run lock permission tests when running as root
 	epatch "${FILESDIR}"/${PN}-0.90-tests-fix_root.patch
 	# Fix permission errors when run under directories with setgid set.
@@ -50,7 +52,7 @@ src_unpack() {
 src_compile() {
 	distutils_src_compile
 	if use emacs; then
-		elisp-compile contrib/emacs/bzr-mode.el || die "Emacs modules failed!"
+		elisp-compile contrib/emacs/bzr-mode.el || die
 	fi
 }
 
@@ -78,8 +80,8 @@ src_install() {
 		done
 	fi
 	if use emacs; then
-		elisp-install ${PN} contrib/emacs/*.el* || die "elisp-install failed"
-		elisp-site-file-install "${FILESDIR}/${SITEFILE}" || die "elisp-site-file-install failed"
+		elisp-install ${PN} contrib/emacs/*.el* || die
+		elisp-site-file-install "${FILESDIR}/${SITEFILE}" || die
 		# don't add automatically to the load-path, so the sitefile
 		# can do a conditional loading
 		touch "${D}${SITELISP}/${PN}/.nosearch"
@@ -109,5 +111,5 @@ pkg_postrm() {
 
 src_test() {
 	PYTHONPATH="build/lib*" "${python}" "${S}"/bzr --no-plugins selftest \
-		|| die "bzr selftest failed"
+		|| die
 }
