@@ -1,0 +1,11 @@
+diff -Naurp modglue-1.13/include/modglue/pipe.hh modglue-1.13.new/include/modglue/pipe.hh
+--- modglue-1.13/include/modglue/pipe.hh	2009-03-10 14:22:42.000000000 +0300
++++ modglue-1.13.new/include/modglue/pipe.hh	2009-08-14 14:16:39.441445885 +0400
+@@ -27,6 +27,7 @@
+ 
+ #include <string>
+ #include <string.h>
++#include <cstdio>
+ #include <sigc++/sigc++.h>
+ #include <iostream>
+ 
