@@ -15,7 +15,7 @@ MY_P="${MY_PN}-${PV}"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
 LICENSE="GPL-2"
 
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="
 	bzip2 corba curl debug doc examples firebird gtk kde mysql odbc opengl pcre
 	pdf postgres qt3 sdl smtp sqlite sqlite3 svg v4l xml zlib
@@ -150,12 +150,12 @@ src_prepare() {
 	# submitted upstream
 	epatch "${FILESDIR}/svn-r1636-xdg-utils.patch"
 
-	epatch "${FILESDIR}/${PN}-2.9.0-app_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-comp_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-examples_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-help_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-main_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-component.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-app_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-comp_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-examples_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-help_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-main_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-component.am.patch"
 
 	ebegin "Applying sed remove-dist_gblib_DATA-patch"
 	# Prevent repeat installation of component files
