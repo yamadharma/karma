@@ -1,11 +1,10 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
-# This ebuild come from voip overlay, with small modification by Ycarus for Zugaina overlay.
+# $Header: /var/cvsroot/gentoo-x86/net-libs/ptlib/ptlib-2.6.2.ebuild,v 1.7 2009/08/03 21:31:01 maekke Exp $
 
 EAPI="2"
 
-inherit eutils flag-o-matic
+inherit eutils
 
 DESCRIPTION="Network focused portable C++ class library providing high level functions"
 HOMEPAGE="http://www.opalvoip.org/"
@@ -14,12 +13,12 @@ SRC_URI="mirror://sourceforge/opalvoip/${P}.tar.bz2
 
 LICENSE="MPL-1.0"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS="~alpha ~amd64 ~ppc ~x86"
 # default enabled are features from 'minsize', the most used according to ptlib
 IUSE="alsa +asn +audio config-file debug dns doc dtmf esd examples ffmpeg ftp
-+http http-forms http-server ieee1394 ipv6 jabber ldap mail odbc oss pch
-pipechan qos remote sasl sdl serial shmvideo snmp soap socks ssl +stun telnet
-tts +url v4l v4l2 +video vxml wav xml xmlrpc"
++http http-forms http-server ieee1394 ipv6 jabber ldap mail pipechan odbc oss
+pch qos remote sasl sdl serial shmvideo snmp soap socks ssl +stun telnet tts
++url v4l v4l2 +video video-file vxml wav xml xmlrpc"
 
 COMMON_DEP="audio? ( alsa? ( media-libs/alsa-lib )
 		esd? ( media-sound/esound ) )
@@ -28,9 +27,10 @@ COMMON_DEP="audio? ( alsa? ( media-libs/alsa-lib )
 	sasl? ( dev-libs/cyrus-sasl:2 )
 	sdl? ( media-libs/libsdl )
 	ssl? ( dev-libs/openssl )
-	video? ( ieee1394? ( media-libs/libdv
-			sys-libs/libavc1394
-			media-libs/libdc1394:1 )
+	video? ( ieee1394? ( media-libs/libdc1394:1
+				media-libs/libdv
+				sys-libs/libavc1394
+				sys-libs/libraw1394 )
 		v4l2? ( media-libs/libv4l ) )
 	xml? ( dev-libs/expat )"
 RDEPEND="${COMMON_DEP}
@@ -47,121 +47,121 @@ DEPEND="${COMMON_DEP}
 # media-libs/libdc1394:2 should be supported but headers location have changed
 # tools/ directory is ignored
 # looks to have an auto-magic dep with medialibs, but not in the tree so...
-# 	TODO: contact upstream about this auto-magic dep
-# TODO: according to scanelf, there is a dep with libraw1394
+#	upstream bug 2794736
+# avc plugin is disabled to fix bug 276514, see upstream bug 2821744
+
+# TODO:
+# manage in a better way the conditional use flags (with eapi-3 ?)
+
+conditional_use_error_msg() {
+	eerror "To enable ${1} USE flag, you need ${2} USE flag to be enabled"
+	eerror "Please, enable ${2} or disable ${1}"
+}
 
 pkg_setup() {
-	local warning=false
+	local use_error=false
 
-	# ekiga can't use, at least, alsa plugin with --as-needed
-	# users where experiencing issues with --as-needed, see bug 238617
-	# TODO: should be re-tested and, if possible, fixed in a cleanier way
-	append-ldflags -Wl,--no-as-needed
-
-	# bug that make ptlib unusable when ffmpeg is enabled without pipechan
-	# upstream has been contacted, see bug 2726070
-	if use ffmpeg && ! use pipechan; then
-		eerror "ffmpeg can't be enabled without enabling pipechan"
-		eerror "Please, try again with disabling ffmpeg or enabling pipechan"
-		die
-	fi
-
-	# warn user about use flag that are gonna override other ones
-
-	if ! use audio; then
-		ewarn "disabling audio will remove all audio support"
-		ewarn "even if other audio features have been enabled"
-		warning=true
-	fi
+	# stop emerge if a conditional use flag is not respected
 
 	if ! use video; then
-		ewarn "disabling video will remove all video support"
-		ewarn "even if other video features have been enabled"
-		warning=true
+		if use sdl; then
+			conditional_use_error_msg "sdl" "video"
+			use_error=true
+		fi
+		if use video-file; then
+			conditional_use_error_msg "video-file" "video"
+			use_error=true
+		fi
 	fi
 
 	if use jabber && ! use xml; then
-		ewarn "jabber support needs xml support: jabber has been disabled"
-		ewarn "enable xml support if you want to use the jabber protocol"
-		warning=true
+		conditional_use_error_msg "jabber" "xml"
+		use_error=true
+	fi
+
+	if use ldap && ! use dns; then
+		conditional_use_error_msg "ldap" "dns"
+		use_error=true
+	fi
+
+	if use ffmpeg && ! use pipechan; then
+		conditional_use_error_msg "ffmpeg" "pipechan"
+		use_error=true
 	fi
 
 	if use http && ! use url; then
-		ewarn "http support needs url support: http support has been disabled"
-		ewarn "enable url support if you want to use the http protocol"
-		warning=true
+		conditional_use_error_msg "http" "url"
+		use_error=true
 	fi
 
 	if use http-forms; then
 		if ! use http; then
-			ewarn "http-forms support needs http support: http-forms support has been disabled"
-			ewarn "enable http support if you want to use http-forms"
-			warning=true
+			conditional_use_error_msg "http-forms" "http"
+			use_error=true
 		fi
 		if ! use config-file; then
-			ewarn "http-forms support needs config-file support: http-forms support has been disabled"
-			ewarn "enable config-file support if you want to use http-forms"
-			warning=true
+			conditional_use_error_msg "http-forms" "config-file"
+			use_error=true
 		fi
 	fi
 
 	if use http-server && ! use http-forms; then
-		ewarn "http-server support needs http-forms support: http-server support has been disabled"
-		ewarn "enable http-forms support if you want to use http-server"
-		warning=true
+		conditional_use_error_msg "http-server" "http-forms"
+		use_error=true
 	fi
 
 	if use vxml; then
 		if ! use xml; then
-			ewarn "vxml support needs xml support: vxml support has been disabled"
-			ewarn "enable xml support if you want to use vxml"
-			warning=true
+			conditional_use_error_msg "vxml" "xml"
+			use_error=true
 		fi
 		if ! use http; then
-			ewarn "vxml support needs http support: vxml support has been disabled"
-			ewarn "enable http support if you want to use vxml"
-			warning=true
+			conditional_use_error_msg "vxml" "http"
+			use_error=true
 		fi
 	fi
 
 	if use xmlrpc; then
 		if ! use xml; then
-			ewarn "xmlrpc support needs xml support: xmlrpc support has been disabled"
-			ewarn "enable xml support if you want to use xmlrpc"
-			warning=true
+			conditional_use_error_msg "xmlrpc" "xml"
+			use_error=true
 		fi
-		if ! use http; then
-			ewarn "xmlrpc support needs http support: xmlrpc support has been disabled"
-			ewarn "enable http support if you want to use xmlrpc"
-			warning=true
+		# configure script tells it needs http but it fails, see bug 277385
+		# the bug has been reported at upstream bug 2820814
+		if ! use http-server; then
+			conditional_use_error_msg "xmlrpc" "http-server"
+			use_error=true
 		fi
 	fi
 
 	if use soap; then
 		if ! use xml; then
-			ewarn "soap support needs xml support: soap support has been disabled"
-			ewarn "enable xml support if you want to use soap"
-			warning=true
+			conditional_use_error_msg "soap" "xml"
+			use_error=true
 		fi
 		if ! use http; then
-			ewarn "soap support needs http support: soap support has been disabled"
-			ewarn "enable http support if you want to use soap"
-			warning=true
+			conditional_use_error_msg "soap" "http"
+			use_error=true
 		fi
 	fi
 
-	if ${warning}; then
+	# fix bug 277617, upstream bug 2820953
+	if use remote; then
+		if ! use config-file; then
+			conditional_use_error_msg "remote" "config-file"
+			use_error=true
+		fi
+	fi
+
+	if ${use_error}; then
 		echo
-		ewarn "If one of the warnings above is not volunteer, hit Ctrl+C now"
-		ewarn "and re-emerge ${PN} with the desired USE flags"
-		echo
-		ebeep
-		epause
+		eerror "Please look at previous messages and re-emerge ${PN} accordingly."
+		die "conditional USE flags error"
 	fi
 }
 
 src_prepare() {
-	# move files from ${P}-htmldoc.tar.gz
+	# move files from doc tarball into ${S}
 	if use doc; then
 		mv ../html . || die "moving doc files failed"
 	fi
@@ -174,12 +174,8 @@ src_prepare() {
 		rm -f samples/*/*.dsw
 	fi
 
-	# --enable-ansi-bool and --disable-ansi-bool are the same
-	# we want to enable it so to prevent eautoreconf, a sed script is enough
-	# upstream has been contacted with a patch, see bug 2685609 in patch tracker
-	# TODO: has been accepted by upstream, check for fix when bumping
-	sed -i -e "s/\${enable_ansi_bool}x/x/" configure \
-		|| die "patching configure failed"
+	# workaround for a compilation issue in contain.cxx, upstream bug 2794741
+#	epatch "${FILESDIR}"/${P}-gcc-allocator.patch
 }
 
 src_configure() {
@@ -197,9 +193,9 @@ src_configure() {
 	# internalregex: we want to use system one
 	# sunaudio and bsdvideo are respectively for SunOS and BSD's
 	# appshare, vfw: only for windows
-	# sockagg: always enabled, see bug 2685379 in upstream bugtracker
+	# sockagg: not used anymore, upstream bug 2794755
 	# samples: no need to build samples
-	# vidfile has been merged with video use flag
+	# avc: disabled, bug 276514, upstream bug 2821744
 	econf ${myconf} \
 		--disable-minsize \
 		--disable-openh323 \
@@ -211,8 +207,9 @@ src_configure() {
 		--disable-bsdvideo \
 		--disable-appshare \
 		--disable-vfw \
-		--enable-sockagg \
+		--disable-sockagg \
 		--disable-samples \
+		--disable-avc \
 		$(use_enable audio) \
 		$(use_enable alsa) \
 		$(use_enable asn) \
@@ -220,6 +217,7 @@ src_configure() {
 		$(use_enable debug exceptions) \
 		$(use_enable debug memcheck) \
 		$(use_enable debug tracing) \
+		$(use_enable dns resolver) \
 		$(use_enable dtmf) \
 		$(use_enable esd) \
 		$(use_enable ffmpeg ffvdev) \
@@ -227,7 +225,6 @@ src_configure() {
 		$(use_enable http) \
 		$(use_enable http-forms httpforms) \
 		$(use_enable http-server httpsvc) \
-		$(use_enable ieee1394 avc) \
 		$(use_enable ieee1394 dc) \
 		$(use_enable ipv6) \
 		$(use_enable jabber) \
@@ -239,7 +236,6 @@ src_configure() {
 		$(use_enable pipechan) \
 		$(use_enable qos) \
 		$(use_enable remote remconn) \
-		$(use_enable dns resolver) \
 		$(use_enable sasl) \
 		$(use_enable sdl) \
 		$(use_enable serial) \
@@ -255,7 +251,7 @@ src_configure() {
 		$(use_enable v4l) \
 		$(use_enable v4l2) \
 		$(use_enable video) \
-		$(use_enable video vidfile) \
+		$(use_enable video-file vidfile) \
 		$(use_enable vxml) \
 		$(use_enable wav wavfile) \
 		$(use_enable xml expat) \
@@ -309,5 +305,15 @@ pkg_postinst() {
 		ewarn "it will depend of the enabled USE flags."
 		ewarn "To test examples, you have to run PTLIBDIR=/usr/share/ptlib make"
 	fi
-}
 
+	if ! use audio || ! use video; then
+		ewarn "You have disabled audio or video USE flags."
+		ewarn "Most audio/video have been disabled silently even if enabled via USE flags."
+		ewarn "Having a feature enabled via use flag but disabled can lead to issues."
+	fi
+
+	ewarn "If you've just removed pwlib to install ptlib, some packages will be broken."
+	ewarn "Please use 'revdep-rebuild' from app-portage/gentoolkit to check."
+	ewarn "If some packages need pwlib, consider removing ptlib and re-installing pwlib"
+	ewarn "or help us to make them live together."
+}
