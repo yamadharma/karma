@@ -148,7 +148,7 @@ src_prepare() {
 	eend 0
 
 	# Gentoo-specific patches for libtool compatibility
-	epatch "${FILESDIR}/${PN}-2.7.0-r1-remove-libltdl-from-main.patch"
+#	epatch "${FILESDIR}/${PN}-2.7.0-r1-remove-libltdl-from-main.patch"
 	epatch "${FILESDIR}/${PN}-2.8.0-libtool.patch"
 
 	# Gentoo-specific patch
