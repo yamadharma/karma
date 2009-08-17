@@ -1,19 +1,18 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/sci-mathematics/octave/octave-3.2.0.ebuild,v 1.5 2009/07/11 16:28:28 mr_bones_ Exp $
 
 EAPI="2"
-
-inherit fortran xemacs-elisp-common
+inherit flag-o-matic fortran xemacs-elisp-common
 
 DESCRIPTION="High-level interactive language for numerical computations"
+LICENSE="GPL-3"
 HOMEPAGE="http://www.octave.org/"
 SRC_URI="ftp://ftp.gnu.org/pub/gnu/${PN}/${P}.tar.bz2"
 
-LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~alpha amd64 ~hppa ~ppc ~ppc64 ~sparc x86"
-IUSE="emacs readline zlib doc hdf5 curl fftw fltk xemacs sparse"
+IUSE="emacs readline zlib doc hdf5 curl fftw xemacs sparse"
+KEYWORDS="~alpha ~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 
 RDEPEND="virtual/lapack
 	dev-libs/libpcre
@@ -21,19 +20,17 @@ RDEPEND="virtual/lapack
 	sci-visualization/gnuplot
 	>=sci-mathematics/glpk-4.15
 	media-libs/qhull
-	curl? ( net-misc/curl )
 	fftw? ( >=sci-libs/fftw-3.1.2 )
-	fltk? ( x11-libs/fltk[opengl] )
+	zlib? ( sys-libs/zlib )
 	hdf5? ( sci-libs/hdf5 )
+	curl? ( net-misc/curl )
+	xemacs? ( app-editors/xemacs )
 	sparse? ( sci-libs/umfpack
-		sci-libs/arpack
+		sci-libs/colamd
 		sci-libs/camd
 		sci-libs/ccolamd
 		sci-libs/cholmod
-		sci-libs/colamd
 		sci-libs/cxsparse )
-	xemacs? ( app-editors/xemacs )
-	zlib? ( sys-libs/zlib )
 	!sci-mathematics/octave-forge"
 
 DEPEND="${RDEPEND}
@@ -47,23 +44,21 @@ DEPEND="${RDEPEND}
 FORTRAN="gfortran ifc g77 f2c"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-3.0.0-pkg.patch
-	epatch "${FILESDIR}"/${P}-test-fix.patch
-	epatch "${FILESDIR}"/${P}-no_helvetica.patch
+	epatch "${FILESDIR}"/${P}_parallel_make.patch
+	epatch "${FILESDIR}"/${P}_as_needed.patch
 }
 
 src_configure() {
 	econf \
 		--localstatedir=/var/state/octave \
 		--enable-shared \
+		--without-arpack \
 		--with-blas="$(pkg-config --libs blas)" \
 		--with-lapack="$(pkg-config --libs lapack)" \
 		$(use_with hdf5) \
 		$(use_with curl) \
 		$(use_with zlib) \
-		$(use_with fltk) \
 		$(use_with fftw) \
-		$(use_with sparse arpack) \
 		$(use_with sparse umfpack) \
 		$(use_with sparse colamd) \
 		$(use_with sparse ccolamd) \
