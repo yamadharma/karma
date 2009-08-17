@@ -1,0 +1,51 @@
+diff -Naur root.orig/Makefile root/Makefile
+--- root.orig/Makefile	2009-06-30 11:23:50.000000000 +0400
++++ root/Makefile	2009-08-09 16:23:05.260575490 +0400
+@@ -418,8 +418,8 @@
+ ifneq ($(F77),)
+ F77LD        := $(F77)
+ endif
+-ifeq ($(F77OPT),)
+-F77OPT       := $(OPT)
++ifeq ($(FFLAGS),)
++F77OPT       := $(FFLAGS)
+ endif
+ ifeq ($(F77LDFLAGS),)
+ F77LDFLAGS   := $(LDFLAGS)
+diff -Naur root.orig/config/Makefile.in root/config/Makefile.in
+--- root.orig/config/Makefile.in	2009-06-30 11:23:28.000000000 +0400
++++ root/config/Makefile.in	2009-08-09 16:23:05.260575490 +0400
+@@ -7,9 +7,9 @@
+ USECONFIG      := @useconfig@
+ MKLIBOPTIONS   := @mkliboption@
+ 
+-EXTRA_CFLAGS   := -Iinclude @cflags@
+-EXTRA_CXXFLAGS := -Iinclude @cflags@
+-EXTRA_LDFLAGS  := @ldflags@
++EXTRA_CFLAGS   := -Iinclude @cflags@ $(CFLAGS)
++EXTRA_CXXFLAGS := -Iinclude @cflags@ $(CXXFLAGS)
++EXTRA_LDFLAGS  := @ldflags@ $(LDFLAGS)
+ WINRTDEBUG     := @winrtdebug@
+ ENABLEPCH      := @enable_pch@
+ NOSTUBS        := @no_stubs@
+diff -Naur root.orig/net/xrootd/src/xrootd/config/GNUmake.options.in root/net/xrootd/src/xrootd/config/GNUmake.options.in
+--- root.orig/net/xrootd/src/xrootd/config/GNUmake.options.in	2009-06-30 11:23:14.000000000 +0400
++++ root/net/xrootd/src/xrootd/config/GNUmake.options.in	2009-08-09 16:23:05.260575490 +0400
+@@ -16,7 +16,7 @@
+ CF32="$(TYPECF32)" \
+ CFOP="$(@buildopt@)" \
+ LD="$(TYPELD)" \
+-LDOP="$(@buildopt@)" \
++LDOP="$(LDFLAGS)" \
+ LDSO="$(TYPELDSO)" \
+ LIBS="$(TYPELIBS)" \
+ LIBM="$(TYPELIBSM)" \
+@@ -34,7 +34,7 @@
+ CF32="$(TYPECF32)" \
+ CFOP="$(@buildopt@)" \
+ LD="$(TYPELD)" \
+-LDOP="$(@buildopt@)" \
++LDOP="$(LDFLAGS)" \
+ LDSO="$(TYPELDSO)" \
+ LIBS="$(TYPELIBS)" \
+ LIBM="$(TYPELIBSM)" \
