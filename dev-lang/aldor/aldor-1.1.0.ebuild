@@ -76,7 +76,7 @@ EOF
 	dodir /opt
 	cp -a "${PN}" "${D}opt/"
 
-	dosym /opt/${PN}/linux/${PV}/bin/aldor /usr/bin/aldor
+#	dosym /opt/${PN}/linux/${PV}/bin/aldor /usr/bin/aldor
 }
 
 pkg_postinst() {
