@@ -1,9 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
-# This ebuild come from http://bugs.gentoo.org/show_bug.cgi?id=203758
+# $Header: /var/cvsroot/gentoo-x86/app-forensics/afflib/afflib-3.3.4.ebuild,v 1.6 2009/08/06 14:32:11 ssuominen Exp $
 
-inherit eutils autotools
+inherit eutils
 
 DESCRIPTION="Library that implements the AFF image standard"
 HOMEPAGE="http://www.afflib.org/"
@@ -11,7 +10,7 @@ SRC_URI="http://www.afflib.org/downloads/${P}.tar.gz"
 
 LICENSE="BSD-4"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~arm ~hppa ~ppc ~s390 ~sparc ~x86"
 IUSE="ewf fuse ncurses python qemu readline s3 threads"
 
 DEPEND="
@@ -24,6 +23,12 @@ DEPEND="
 	sys-libs/zlib
 	dev-libs/openssl"
 RDEPEND=${DEPEND}
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/${P}-glibc-2.10.patch
+}
 
 src_compile() {
 	econf \

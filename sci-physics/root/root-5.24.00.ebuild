@@ -116,6 +116,8 @@ src_prepare() {
 	epatch "${FILESDIR}"/${P}-configure-sandbox.patch
 	epatch "${FILESDIR}"/${P}-minuit2-openmp.patch
 
+	epatch "${FILESDIR}"/${P}-gcc-4.4.patch
+
 	# use system cfortran
 	rm montecarlo/eg/inc/cfortran.h README/cfortran.doc
 
