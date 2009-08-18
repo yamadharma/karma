@@ -57,6 +57,7 @@ src_install() {
 	cat > 64aldor <<EOF
 ALDORROOT=/opt/${PN}/linux/${PV}
 PATH=/opt/${PN}/linux/${PV}/bin
+ROOTPATH=/opt/${PN}/linux/${PV}/bin
 EOF
 	doenvd 64aldor
 	if use doc; then
