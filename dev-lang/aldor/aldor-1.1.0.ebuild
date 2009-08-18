@@ -67,13 +67,15 @@ EOF
 	fi
 	if use emacs; then
 		einfo "Installing the aldor emacs mode"
-		elisp-install aldor.el
+		elisp-install . aldor.el
 		elisp-site-file-install 64aldor-gentoo.el
 	fi
 	einfo "Installing aldor and its libraries"
 	cd "${PN}/install"
 	dodir /opt
 	cp -a "${PN}" "${D}opt/"
+
+	dosym /opt/${PN}/linux/${PV}/bin/aldor /usr/bin/aldor
 }
 
 pkg_postinst() {
