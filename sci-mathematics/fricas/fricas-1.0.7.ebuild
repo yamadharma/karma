@@ -21,8 +21,9 @@ IUSE="X"
 
 DEPEND="dev-lisp/sbcl
 	app-text/noweb
-	x11-libs/libXaw"
-	
+	x11-libs/libXaw
+	dev-lang/aldor"
+
 #||( dev-lisp/gcl
 #	dev-lisp/sbcl 
 #	dev-lisp/clisp 
@@ -38,6 +39,7 @@ src_compile() {
 	local myconf
 	
 	myconf="${myconf} --with-lisp=sbcl"
+	myconf="${myconf} --enable-aldor"
 	myconf="${myconf} $(use_with X x)"
 		
 	econf \
