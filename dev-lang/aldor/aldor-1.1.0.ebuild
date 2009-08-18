@@ -1,6 +1,9 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+EAPI="2"
+
 inherit subversion elisp-common
 
 DESCRIPTION="Aldor - programming language with a two-level type system"
@@ -41,10 +44,13 @@ src_compile() {
 		gunzip aldorug.pdf.gz libaldor.pdf.gz tutorial.pdf.gz
 		tar xzf "${DISTDIR}/algebra.html.tar.gz"
 	fi
-	cd "${PN}"
+
+	cd "${S}/${PN}"
 	einfo "Compiling aldor and its libraries"
 	epatch "${FILESDIR}/${P}.patch"
-	emake distrib
+	make distrib
+
+
 }
 
 src_install() {
@@ -61,7 +67,7 @@ EOF
 	fi
 	if use emacs; then
 		einfo "Installing the aldor emacs mode"
-		elisp-site-file-install aldor.el
+		elisp-install aldor.el
 		elisp-site-file-install 64aldor-gentoo.el
 	fi
 	einfo "Installing aldor and its libraries"
