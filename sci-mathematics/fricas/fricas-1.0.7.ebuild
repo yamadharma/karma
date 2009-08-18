@@ -27,7 +27,7 @@ DEPEND="dev-lisp/sbcl
 #||( dev-lisp/gcl
 #	dev-lisp/sbcl 
 #	dev-lisp/clisp 
-#	dev-lisp/ecls )	
+#	dev-lisp/ecls )
 
 RDEPEND="${DEPEND}
 	virtual/latex-base
