@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/sci-mathematics/scilab/scilab-4.1.2-r1.ebuild,v 1.3 2008/11/15 18:41:11 dertobi123 Exp $
 
 EAPI="2"
-inherit eutils fortran toolchain-funcs multilib autotools java-pkg-2
+inherit eutils fortran autotools java-pkg-2
 
 DESCRIPTION="Scientific software package for numerical computations (Matlab lookalike)"
 LICENSE="CeCILL-2"
@@ -12,7 +12,7 @@ HOMEPAGE="http://www.scilab.org/"
 
 SLOT="0"
 IUSE="+tk -scicos +umfpack +gui +fftw -pvm +gui -doc +matio"
-#KEYWORDS="amd64 ~ppc x86"
+#KEYWORDS="~amd64 ~x86"
 
 RDEPEND="virtual/blas
 	virtual/lapack
@@ -51,9 +51,10 @@ pkg_setup() {
 }
 
 src_prepare() {
-
 	epatch "${FILESDIR}"/${P}-java-package-check.patch
+	#pvm cleanup backported from upstream commit cdd230092e7cdcbdf24bd3c0206d8c1a21f46850
 	epatch "${FILESDIR}"/${P}-pvmfix.patch
+	epatch "${FILESDIR}"/${P}-malloc.patch
 	eautoreconf
 	
 	if use gui; then
@@ -67,8 +68,8 @@ src_prepare() {
 		sed -i "s|jar_resolved=jrosetta-engine|jar_resolved=$(java-pkg_getjar jrosetta jrosetta-engine.jar)|" configure
 		sed -i "s|jar_resolved=commons-logging|jar_resolved=$(java-pkg_getjar commons-logging commons-logging.jar)|" configure
 		
-		sed -i "/<\/librarypaths>/i\<path value=\"$(java-config -i gluegen)\"\/>"${S}/etc/librarypath.xml
-	    sed -i "/<\/librarypaths>/i\<path value=\"$(java-config -i jogl)\"\/>"${S}/etc/librarypath.xml
+		sed -i "/<\/librarypaths>/i\<path value=\"$(java-config -i gluegen)\"\/>" ${S}/etc/librarypath.xml
+	    sed -i "/<\/librarypaths>/i\<path value=\"$(java-config -i jogl)\"\/>" ${S}/etc/librarypath.xml
 	fi
 
 	#docs

@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-
 inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Core module of MathML rendering solution."
@@ -12,7 +10,7 @@ SRC_URI="mirror://sourceforge/jeuclid/jeuclid-parent-${PV}-src.zip"
 LICENSE="Apache-2.0"
 SLOT="0"
 RESTRICT=""
-KEYWORDS="amd64 ~ia64 ~ppc ~ppc64 x86"
+KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86"
 
 COMMON_DEPEND="
 	dev-java/ant-core
@@ -31,7 +29,11 @@ DEPEND=">=virtual/jdk-1.5
 
 S="${WORKDIR}/jeuclid-parent-${PV}/${PN}"
 
-src_prepare() {
+src_unpack() {
+	unpack ${A}
+
+	cd ${S} || die
+
 	# remove support of FreeHep from JAVA files (not needed for FOP plugin)
 	rm -f src/main/java/net/sourceforge/jeuclid/converter/FreeHep*
 	epatch ${FILESDIR}/${PN}-freehep.patch
@@ -46,7 +48,7 @@ src_prepare() {
 	java-pkg_jar-from commons-logging commons-logging.jar
 	java-pkg_jar-from jcip-annotations jcip-annotations.jar
 	java-pkg_jar-from xml-commons-external-1.3 xml-apis.jar
-	java-pkg_jar-from xmlgraphics-commons-1 xmlgraphics-commons.jar
+	java-pkg_jar-from xmlgraphics-commons-1.3 xmlgraphics-commons.jar
 }
 
 src_install() {
