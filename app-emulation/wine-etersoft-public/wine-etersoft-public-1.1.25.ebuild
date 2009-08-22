@@ -9,7 +9,8 @@ inherit multilib eutils rpm
 GV="0.9.1"
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
-SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV}/sources/wine-${PV}-alt1.src.rpm"
+SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV}/sources/wine-${PV}-alt1.src.rpm
+	gecko? ( mirror://sourceforge/wine/wine_gecko-${GV}.cab )"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -113,12 +114,13 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
+	emake DESTDIR="${D}" initdir=/etc/init.d sysconfdir=/etc install || die
 	dodoc ANNOUNCE AUTHORS README
-#	if use gecko ; then
-#		insinto /usr/share/wine/gecko
-#		doins "${DISTDIR}"/wine_gecko-${GV}.cab || die
-#	fi
+
+	if use gecko ; then
+		insinto /usr/share/wine/gecko
+		doins "${DISTDIR}"/wine_gecko-${GV}.cab || die
+	fi
 
 #	cp "${FILESDIR}"/*.fon ${D}/usr/share/wine/fonts/
 #	cp "${FILESDIR}"/*.ttf ${D}/usr/share/wine/fonts/
