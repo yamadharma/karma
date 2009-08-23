@@ -15,7 +15,7 @@ MY_P="${MY_PN}-${PV}"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
 LICENSE="GPL-2"
 
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="
 	bzip2 corba curl debug doc examples firebird gtk kde mysql odbc opengl pcre
 	pdf postgres qt3 sdl smtp sqlite sqlite3 svg v4l xml zlib
