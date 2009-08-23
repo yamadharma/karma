@@ -21,7 +21,7 @@ DEPEND=">=dev-perl/extutils-depends-0.300
 	>=dev-perl/glib-perl-1.182
 	>=dev-perl/gtk2-perl-1.182
 	>=dev-perl/Cairo-1.00
-	>=x11-libs/gtkimageview-1.6.1
+	>=media-gfx/gtkimageview-1.6.1
 	dev-lang/perl"
 
 S=${WORKDIR}/${MY_P}
