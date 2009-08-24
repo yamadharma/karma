@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.8.ebuild,v 1.5 2009/07/22 14:05:59 aballier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/e2fsprogs/e2fsprogs-1.41.9.ebuild,v 1.1 2009/08/23 21:28:04 vapier Exp $
 
 inherit eutils flag-o-matic toolchain-funcs multilib
 
