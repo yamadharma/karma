@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 DESCRIPTION="Docbook2odf is a toolkit that automaticaly converts DocBook to OASIS OpenDocument"
 HOMEPAGE="http://open.comsultia.com/docbook2odf/"
 SRC_URI="http://open.comsultia.com/docbook2odf/dwn/docbook2odf-${PV}.tar.gz"
@@ -31,29 +33,31 @@ DEPEND="
 	
 "
 
+S=${WORKDIR}/docbook2odf-${PV}
+DEST="/usr/share/docbook2odf"
+EXEDESTTREE="/usr/bin"
+
 src_install() {
-	WORKDIR=${WORKDIR}/docbook2odf-${PV};
-	DEST="/usr/share/docbook2odf"
-	EXEDESTTREE="/usr/bin"
+
 
 	if use kde; then
                 insinto /usr/kde/3.5/share/apps/konqueror/servicemenus/
-                doins ${WORKDIR}/bindings/desktop/*.desktop
+                doins bindings/desktop/*.desktop
         fi
 
 	if use examples; then
 		insinto ${DEST}/examples/
-		doins ${WORKDIR}/examples/*
+		doins examples/*
 	fi
 
 	insinto /usr/share/applications
-	doins ${WORKDIR}/bindings/desktop/*.desktop
+	doins bindings/desktop/*.desktop
 
 	insinto /usr/share/man/man1/
-	doins ${WORKDIR}/docs/docbook2odf.1
+	doins docs/docbook2odf.1
 	prepallman
 
 	exeinto /usr/bin
-	doexe ${WORKDIR}/utils/docbook2odf
+	doexe utils/docbook2odf
 
 }
