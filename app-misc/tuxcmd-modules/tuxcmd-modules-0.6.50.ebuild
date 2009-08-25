@@ -25,22 +25,22 @@ src_compile() {
 	
 	if use gnome; then
 	    einfo "Making GVFS module"
-	    ( cd gvfs && emake -j1 || die "compilation failed" )
+	    ( cd gvfs && emake  || die "compilation failed" )
 	fi
 
 	if use zip; then
 	    einfo "Making ZIP module"
-	    ( cd zip && emake -j1 || die "compilation failed" )
+	    ( cd zip && emake  || die "compilation failed" )
 	fi
 
 	if use unrar; then
 	    einfo "Making UNRAR module"
-	    ( cd unrar && emake -j1 || die "compilation failed" )
+	    ( cd unrar && emake  || die "compilation failed" )
 	fi
 
 	if use libarchive; then
 	    einfo "Making LIBARCHIVE module"
-	    ( cd libarchive && emake -j1 shared || die "compilation failed" )
+	    ( cd libarchive && emake  shared || die "compilation failed" )
 	fi
 }
 
