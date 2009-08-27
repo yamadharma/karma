@@ -6,6 +6,9 @@ DESCRIPTION="XSL Stylesheets for docbook2odf"
 HOMEPAGE="http://open.comsultia.com/docbook2odf/"
 SRC_URI="http://open.comsultia.com/docbook2odf/dwn/docbook2odf-${PV}.tar.gz"
 
+#ESVN_REPO_URI="http://svn.comsultia.com/docbook2odf/trunk/xsl"
+#ESVN_PROJECT="docbook2odf"
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 amd64"
