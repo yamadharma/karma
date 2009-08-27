@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 ESVN_REPO_URI="https://gigi.svn.sourceforge.net/svnroot/gigi/trunk/GG"
 
 inherit multilib eutils subversion
@@ -47,13 +49,8 @@ vscons() {
 	scons "$@"
 }
 
-src_unpack() {
-#	unpack ${A}
-	subversion_src_unpack
-	
-	cd ${S}
-	
-	epatch ${FILESDIR}/gigi-sconspatch.patch
+src_prepare() {
+#	epatch ${FILESDIR}/gigi-sconspatch.patch
 	sed "s|'ln -s ' + lib_dir + '/'|'ln -s '|g" -i SConstruct
 }
 
