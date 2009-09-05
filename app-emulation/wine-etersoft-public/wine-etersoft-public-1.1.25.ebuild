@@ -14,6 +14,7 @@ SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV}/sources/wine-$
 
 LICENSE="LGPL-2.1"
 SLOT="0"
+KEYWORDS="-* amd64 x86"
 IUSE="alsa cups dbus esd +gecko gnutls hal jack jpeg lcms ldap nas ncurses +opengl oss png samba scanner ssl win64 +X xcomposite xinerama xml"
 RESTRICT="test" #72375
 
@@ -114,7 +115,7 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" initdir=/etc/init.d sysconfdir=/etc install || die
+	make DESTDIR="${D}" initdir=/etc/init.d sysconfdir=/etc install || die
 	dodoc ANNOUNCE AUTHORS README
 
 	if use gecko ; then
