@@ -1,0 +1,22 @@
+>=virtual/jdk-1.4 >=dev-java/ant-core-1.6 jikes? ( dev-java/jikes ) source? ( app-arch/zip )
+>=virtual/jre-1.4
+0
+http://jdbc.postgresql.org/download/postgresql-jdbc-8.1-404.src.tar.gz
+
+http://jdbc.postgresql.org/
+POSTGRESQL
+JDBC Driver for PostgreSQL
+x86 ~ppc ~sparc amd64
+java-pkg multilib toolchain-funcs
+doc examples jikes source
+
+
+
+
+
+compile install setup
+
+
+
+
+

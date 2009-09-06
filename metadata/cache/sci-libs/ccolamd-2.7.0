@@ -1,0 +1,22 @@
+sci-libs/ufconfig =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+sci-libs/ufconfig
+0
+http://www.cise.ufl.edu/research/sparse/ccolamd/CCOLAMD-2.7.0.tar.gz
+
+http://www.cise.ufl.edu/research/sparse/ccolamd
+LGPL-2
+Column approximate minimum degree ordering algorithm
+amd64 x86
+autotools eutils libtool multilib portability toolchain-funcs
+
+
+
+
+
+
+install test unpack
+
+
+
+
+

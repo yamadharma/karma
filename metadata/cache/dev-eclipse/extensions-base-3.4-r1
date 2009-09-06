@@ -1,0 +1,22 @@
+dev-util/eclipse-sdk:3.4
+dev-util/eclipse-sdk:3.4
+3.4
+
+
+http://www.eclipse.org
+as-is
+Base package for Eclipse extensions
+amd64 x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+1
+
+install
+
+
+
+
+

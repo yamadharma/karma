@@ -1,0 +1,22 @@
+>=app-pda/libopensync-0.38 >=app-pda/libsyncml-0.4.7 >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=app-pda/libopensync-0.38 >=app-pda/libsyncml-0.4.7
+0
+http://www.opensync.org/download/releases/0.38/libopensync-plugin-syncml-0.38.tar.bz2
+
+http://www.opensync.org/
+LGPL-2.1
+OpenSync SyncML Plugin
+~amd64 ~ppc ~x86
+base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs
+http +obex
+
+
+
+1
+
+compile install setup test unpack
+
+
+
+
+

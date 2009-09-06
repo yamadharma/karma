@@ -1,0 +1,22 @@
+supernodal? ( virtual/lapack ) sci-libs/amd sci-libs/colamd metis? ( sci-libs/camd sci-libs/ccolamd sci-libs/metis ) =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+supernodal? ( virtual/lapack ) sci-libs/amd sci-libs/colamd metis? ( sci-libs/camd sci-libs/ccolamd sci-libs/metis )
+0
+http://www.cise.ufl.edu/research/sparse/cholmod/CHOLMOD-1.6.0.tar.gz
+
+http://www.cise.ufl.edu/research/sparse/cholmod
+LGPL-2 GPL-2
+Sparse Cholesky factorization and update/downdate library
+amd64 x86
+autotools eutils libtool multilib portability toolchain-funcs
+doc metis minimal supernodal
+
+
+
+
+
+compile install test unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+
+net-firewall/iptables
+0
+mirror://sourceforge/pcxfirewall/pcx_firewall-2.24.tar.gz
+
+http://pcxfirewall.sourceforge.net/
+GPL-2
+Command line util for managing firewall rules
+x86
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

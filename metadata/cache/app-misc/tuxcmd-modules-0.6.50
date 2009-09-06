@@ -1,0 +1,22 @@
+
+>=app-misc/tuxcmd-0.6.50 >=dev-libs/glib-2.16.0 gnome? ( >=gnome-base/gvfs-0.2.5 ) libarchive? ( >=app-arch/libarchive-2.5.5 )
+0
+mirror://sourceforge/tuxcmd/tuxcmd-modules-0.6.50.tar.bz2
+
+http://tuxcmd.sourceforge.net/
+GPL-2
+Tux Commander - Fast and Small filemanager - VFS modules
+x86 amd64
+eutils multilib portability toolchain-funcs
+gnome zip unrar libarchive
+
+
+
+
+
+compile install
+
+
+
+
+

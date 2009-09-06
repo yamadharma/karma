@@ -1,0 +1,22 @@
+gnustep-libs/etoile-foundation gnustep-libs/languagekit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-util/subversion net-misc/rsync
+gnustep-libs/etoile-foundation gnustep-libs/languagekit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+http://www.sqlite.org/sqlite-3.6.2.tar.gz
+
+http://www.etoile-project.org
+BSD
+Étoilé's Pragmatic Smalltalk, a Smalltalk JIT compiler which generates code binary-compatible with Objective-C
+amd64 ~ppc x86
+etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs
+debug doc
+
+
+
+2
+
+compile configure install postinst preinst prepare setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=sci-mathematics/octave-forge-signal-1.0.0 >=sci-mathematics/octave-3.0.0 || ( >=sys-apps/coreutils-6.10-r1 sys-apps/mktemp )
+>=sci-mathematics/octave-forge-signal-1.0.0 >=sci-mathematics/octave-3.0.0
+0
+mirror://sourceforge/octave/communications-1.0.10.tar.gz
+
+http://octave.sourceforge.net/communications/index.html
+GPL-2
+Digital Communications, Error Correcting Codes (Channel Code), Source Code functions, Modulation and Galois Fields.
+~amd64 ~x86
+eutils multilib octave-forge portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst prerm unpack
+
+
+
+
+

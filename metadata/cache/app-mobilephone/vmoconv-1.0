@@ -1,0 +1,22 @@
+virtual/libc
+virtual/libc
+0
+http://triq.net/obexftp/vmoconv-1.0.tar.gz
+
+http://triq.net/obex/
+GPL-2
+A tool that converts Siemens phones VMO and VMI audio files to gsm and wav.
+x86 amd64
+
+
+
+
+
+
+
+compile install
+
+
+
+
+

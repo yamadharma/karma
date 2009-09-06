@@ -1,0 +1,22 @@
+app-arch/p7zip app-arch/cabextract
+app-arch/p7zip app-arch/cabextract
+0
+directx_jun2008_redist.exe
+fetch strip
+http://www.microsoft.com
+EULA
+A remote security scanner for Linux
+x86 amd64
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+install nofetch unpack
+
+
+
+
+

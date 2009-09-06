@@ -1,0 +1,22 @@
+virtual/libc sys-fs/e2fsprogs sys-fs/device-mapper >=sys-apps/baselayout-1.9.4-r6 gtk? ( =x11-libs/gtk+-1* ) ncurses? ( sys-libs/ncurses =dev-libs/glib-2* ) =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+virtual/libc sys-fs/e2fsprogs sys-fs/device-mapper >=sys-apps/baselayout-1.9.4-r6 gtk? ( =x11-libs/gtk+-1* ) ncurses? ( sys-libs/ncurses =dev-libs/glib-2* )
+0
+mirror://sourceforge/evms/evms-2.5.5.tar.gz
+
+http://www.sourceforge.net/projects/evms
+GPL-2
+Utilities for the IBM Enterprise Volume Management System
+amd64 ~ia64 ~ppc ~ppc64 ~sparc x86
+autotools eutils flag-o-matic libtool multilib portability toolchain-funcs
+gtk ncurses nls
+
+
+
+
+
+compile install unpack
+
+
+
+
+

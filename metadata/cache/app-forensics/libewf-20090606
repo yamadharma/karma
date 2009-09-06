@@ -1,0 +1,22 @@
+sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl
+0
+mirror://sourceforge/libewf/libewf-beta-20090606.tar.gz
+
+http://libewf.sourceforge.net
+BSD
+Implementation of the EWF (SMART and EnCase) image format
+~x86 ~amd64
+autotools eutils libtool multilib portability toolchain-funcs
+debug rawio unicode
+
+
+
+
+
+compile install unpack
+
+
+
+
+

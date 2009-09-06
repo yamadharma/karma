@@ -1,0 +1,22 @@
+dev-lang/yasm
+dev-lang/yasm
+0
+http://www.genoetigt.de/ape//mac-3.99-u4-b5.tar.gz
+
+http://www.monkeysaudio.com/
+monkeysaudio
+Unix port of Monkey's Audio codec
+amd64 x86
+eutils multilib portability toolchain-funcs versionator
+
+
+
+
+
+
+install
+
+
+
+
+

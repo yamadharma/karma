@@ -1,0 +1,22 @@
+virtual/poppler app-text/djvu dev-libs/pstreams
+virtual/poppler app-text/djvu
+0
+http://pdf2djvu.googlecode.com/files/pdf2djvu_0.5.11.tar.gz
+
+http://code.google.com/p/pdf2djvu
+GPL-2
+PDF to DjVu converter
+amd64 x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+install
+
+
+
+
+

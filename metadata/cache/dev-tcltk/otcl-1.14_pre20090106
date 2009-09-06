@@ -1,0 +1,22 @@
+>=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool X? ( x11-base/xorg-server x11-apps/xhost )
+>=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5
+0
+http://www.isi.edu/nsnam/dist/daily/otcl-20090106.tar.gz
+
+http://otcl-tclcl.sourceforge.net/otcl/
+MIT
+MIT Object extension to Tcl
+amd64 ~ppc ~sparc x86
+autotools eutils libtool multilib portability toolchain-funcs virtualx
+X
+
+
+
+
+
+compile install test unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=app-pda/libopensync-0.38 dev-python/httplib2 dev-libs/libgcal >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=app-pda/libopensync-0.38 dev-python/httplib2 dev-libs/libgcal dev-python/pyxml
+0
+http://www.opensync.org/download/releases/0.38/libopensync-plugin-google-calendar-0.38.tar.bz2
+
+http://www.opensync.org/
+GPL-2
+OpenSync Google Calendar Plugin
+~amd64 ~x86
+base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install test unpack
+
+
+
+
+

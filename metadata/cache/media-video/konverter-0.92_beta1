@@ -1,0 +1,22 @@
+media-libs/xine-lib media-video/mplayer =kde-base/kdelibs-3.5* =x11-libs/qt-3* =sys-devel/automake-1.9* >=sys-devel/autoconf-2.61 sys-devel/libtool sys-devel/make dev-util/pkgconfig dev-lang/perl x11-libs/libXt x11-proto/xf86vidmodeproto xinerama? ( x11-proto/xineramaproto ) arts? ( kde-base/arts )
+media-libs/xine-lib media-video/mplayer =kde-base/kdelibs-3.5* =x11-libs/qt-3* xinerama? ( x11-libs/libXinerama ) arts? ( kde-base/arts )
+0
+http://www.kraus.tk/projects/konverter/sources/konverter-0.92-beta1.tar.gz
+
+http://www.kraus.tk/projects/konverter/
+GPL-2
+A KDE MEncoder frontend for video-conversion.
+x86 ~ppc amd64
+autotools base eutils flag-o-matic kde kde-functions libtool multilib portability qt3 toolchain-funcs versionator
+debug elibc_FreeBSD arts xinerama
+
+
+
+
+
+compile install postinst postrm preinst setup unpack
+
+
+
+
+

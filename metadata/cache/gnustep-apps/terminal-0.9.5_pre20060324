@@ -1,0 +1,22 @@
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+http://overlays.gentoo.org/svn/proj/gnustep/downloads/terminal-0.9.5_pre20060324.tar.bz2
+
+http://www.nongnu.org/terminal/
+GPL-2
+A terminal emulator for GNUstep
+amd64 ~ppc x86
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

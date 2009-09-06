@@ -1,0 +1,22 @@
+dev-util/subversion net-misc/rsync
+net-im/tapiocad dev-dotnet/telepathy-sharp gnome-base/gconf media-libs/farsight media-libs/gstreamer >=media-libs/gst-plugins-base-0.10.5 >=dev-dotnet/gtk-sharp-2.10.0
+0
+
+
+http://tapioca-voip.sf.net
+LGPL-2
+Tapioca UI
+x86 amd64
+eutils mono multilib portability subversion toolchain-funcs
+
+
+
+
+
+
+install preinst unpack
+
+
+
+
+

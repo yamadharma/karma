@@ -1,0 +1,22 @@
+sys-devel/gnuconfig =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool ssl? ( >=dev-libs/openssl-0.9.6d ) userland_GNU? ( sys-process/procps ) >=sys-apps/sed-4 >=sys-apps/texinfo-4.7-r1 >=sys-libs/readline-4.1 >=sys-libs/zlib-1.2.3 !dev-db/mysql >=dev-util/cmake-2.4.3
+ssl? ( >=dev-libs/openssl-0.9.6d ) userland_GNU? ( sys-process/procps ) >=sys-apps/sed-4 >=sys-apps/texinfo-4.7-r1 >=sys-libs/readline-4.1 >=sys-libs/zlib-1.2.3 !dev-db/mysql !minimal? ( dev-db/mysql-init-scripts ) selinux? ( sec-policy/selinux-mysql )
+0
+mirror://mysql/Downloads/MySQL-5.1/mysql-5.1.31.tar.gz mirror://gentoo/mysql-extras-20081211.tar.bz2 http://g3nt8.org/patches/mysql-extras-20081211.tar.bz2 pbxt? ( mirror://sourceforge/pbxt/pbxt-0.9.8-beta.tar.gz )
+
+http://www.mysql.com/
+GPL-2
+A fast, multi-threaded, multi-user SQL database server.
+
+autotools eutils flag-o-matic gnuconfig libtool multilib mysql mysql_fx portability toolchain-funcs versionator
+big-tables debug embedded minimal perl selinux ssl static latin1 cluster extraengine max-idx-128 pbxt community profiling
+
+perl? ( >=dev-perl/DBD-mysql-2.9004 ) =virtual/mysql-5.1
+
+
+
+compile config install postinst postrm preinst setup test unpack
+
+
+
+
+

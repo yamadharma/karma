@@ -1,0 +1,22 @@
+>=app-shells/bash-3.2 >=app-shells/bash-3.2 virtual/python
+app-emulation/dynamips virtual/python
+0
+mirror://sourceforge/dyna-gen/dynagen-0.11.0.tar.gz
+
+http://dyna-gen.sourceforge.net/
+GPL-2
+Dynamips Configuration Generator
+amd64 x86
+distutils eutils multilib portability python toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm unpack
+
+
+
+
+

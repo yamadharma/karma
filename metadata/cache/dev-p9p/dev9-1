@@ -1,0 +1,22 @@
+>=sys-libs/curie-3 >=sys-libs/duat-3 dev-util/scons
+>=sys-libs/curie-3 >=sys-libs/duat-3
+0
+http://kyuba.org/files/dev9-1.tar.bz2
+
+http://kyuba.org/
+BSD
+udev/devfs workalike, based on Duat
+~x86 ~amd64
+
+doc
+
+
+
+
+
+compile install
+
+
+
+
+

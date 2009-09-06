@@ -1,0 +1,22 @@
+>=dev-libs/glib-2.8 dev-libs/libxml2 >=gnome-base/gnome-desktop-2.8 >=x11-libs/gtk+-2.8 >=x11-libs/pango-1.10 akamaru? ( gnome-extra/akamaru ) glitz? ( >=media-libs/glitz-0.4 ) svg? ( gnome-base/librsvg ) =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool >=sys-apps/sed-4 dev-util/subversion net-misc/rsync
+>=dev-libs/glib-2.8 dev-libs/libxml2 >=gnome-base/gnome-desktop-2.8 >=x11-libs/gtk+-2.8 >=x11-libs/pango-1.10 akamaru? ( gnome-extra/akamaru ) glitz? ( >=media-libs/glitz-0.4 ) svg? ( gnome-base/librsvg )
+0
+
+
+http://kiba-dock.org
+GPL-2
+Funny dock with support for the akamaru physics engine
+x86 amd64
+autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability subversion toolchain-funcs
+akamaru glitz svg debug
+
+gnome-extra/kiba-plugins
+
+
+
+compile install postinst postrm preinst setup unpack
+
+
+
+
+

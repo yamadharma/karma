@@ -1,0 +1,22 @@
+=media-libs/libdvdread-0.9* =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+=media-libs/libdvdread-0.9*
+0
+mirror://sourceforge/lsdvd/lsdvd-0.16.tar.gz
+
+http://untrepid.com/lsdvd/
+GPL-2
+Utility for getting info out of DVDs
+amd64 ~ppc ~ppc64 ~sparc x86
+autotools eutils libtool multilib portability toolchain-funcs
+
+
+
+
+
+
+install unpack
+
+
+
+
+

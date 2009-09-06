@@ -1,0 +1,22 @@
+nls? ( sys-devel/gettext ) x11-misc/lineakd =x11-libs/gtk+-1.2*
+x11-misc/lineakd =x11-libs/gtk+-1.2*
+0
+mirror://sourceforge/lineak/lineakconfig-0.4.1b.tar.gz
+
+http://lineak.sourceforge.net/
+GPL-2
+Linux support for Easy Access and Internet Keyboards features X11 support
+~ppc x86 amd64
+eutils multilib portability toolchain-funcs
+nls
+
+
+
+
+
+compile install unpack
+
+
+
+
+

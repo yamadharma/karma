@@ -1,0 +1,22 @@
+nls? ( sys-devel/gettext ) >=app-shells/bash-3.2
+>=dev-python/pygtk-2.0
+0
+http://www.pixelbeat.org/fslint/fslint-2.28.tar.gz
+
+http://www.pixelbeat.org/fslint/
+GPL-2
+A utility to find various forms of lint on a filesystem
+amd64 x86
+eutils multilib portability python toolchain-funcs
+nls
+
+
+
+
+
+install postinst postrm
+
+
+
+
+

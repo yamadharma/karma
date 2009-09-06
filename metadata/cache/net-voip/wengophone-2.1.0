@@ -1,0 +1,22 @@
+dev-libs/boost dev-libs/glib dev-libs/openssl media-libs/alsa-lib net-libs/gnutls media-video/ffmpeg =media-libs/portaudio-19* || ( x11-libs/libX11 virtual/x11 ) >=x11-libs/qt-4.1 media-libs/speex dev-util/scons >=dev-util/cmake-2.4.3
+dev-libs/boost dev-libs/glib dev-libs/openssl media-libs/alsa-lib net-libs/gnutls media-video/ffmpeg =media-libs/portaudio-19* || ( x11-libs/libX11 virtual/x11 ) >=x11-libs/qt-4.1
+0
+http://ftp.debian.org/debian/pool/main/w/wengophone/wengophone_2.1.0.dfsg.orig.tar.gz http://ftp.debian.org/debian/pool/main/w/wengophone/wengophone_2.1.0.dfsg-1.diff.gz
+
+http://dev.openwengo.com
+GPL-2
+Wengophone NG is a VoIP client featuring the SIP protcol
+x86 amd64
+eutils multilib portability toolchain-funcs
+esd arts ilbc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

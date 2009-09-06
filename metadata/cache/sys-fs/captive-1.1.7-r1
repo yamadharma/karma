@@ -1,0 +1,22 @@
+sys-libs/zlib >=sys-fs/fuse-2.4 readline? ( sys-libs/readline ) >=dev-libs/openssl-0.9.7c >=dev-libs/libxml2-2.4.29 >=gnome-base/orbit-2.8.2 gnome-base/gconf gnome-base/libbonobo gnome-base/gnome-vfs dev-libs/popt dev-libs/glib gtk? ( dev-libs/atk sys-fs/ntfsprogs gnome-base/libbonoboui gnome-base/libgnomeui media-libs/libpng >x11-libs/gtk+-2.2 x11-libs/pango )
+sys-libs/zlib >=sys-fs/fuse-2.4 readline? ( sys-libs/readline ) >=dev-libs/openssl-0.9.7c >=dev-libs/libxml2-2.4.29 >=gnome-base/orbit-2.8.2 gnome-base/gconf gnome-base/libbonobo gnome-base/gnome-vfs dev-libs/popt dev-libs/glib gtk? ( dev-libs/atk sys-fs/ntfsprogs gnome-base/libbonoboui gnome-base/libgnomeui media-libs/libpng >x11-libs/gtk+-2.2 x11-libs/pango )
+0
+http://www.jankratochvil.net/project/captive/dist/captive-1.1.7.tar.gz
+
+http://www.jankratochvil.net/project/captive/
+GPL-2
+Captive uses binary Windows drivers for full NTFS r/w access.
+x86 -*
+eutils multilib portability toolchain-funcs
+debug gtk readline
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

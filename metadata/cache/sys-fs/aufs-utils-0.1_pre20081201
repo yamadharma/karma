@@ -1,0 +1,22 @@
+dev-util/cvs
+
+0
+
+
+http://aufs.sourceforge.net/
+GPL-2
+Userspace utilities for aufs.
+x86 amd64
+cvs eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+media-libs/libmp4v2 gnustep-libs/coreobject gnustep-libs/etoile-ui gnustep-libs/iconkit gnustep-libs/mediakit gnustep-libs/scriptkit gnustep-libs/smalltalkkit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-util/subversion net-misc/rsync
+media-libs/libmp4v2 gnustep-libs/coreobject gnustep-libs/etoile-ui gnustep-libs/iconkit gnustep-libs/mediakit gnustep-libs/scriptkit gnustep-libs/smalltalkkit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+
+
+http://www.etoile-project.org
+BSD
+Melodie is a music player for Etoile
+amd64 ~ppc x86
+etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs
+debug doc
+
+
+
+2
+
+compile configure install postinst preinst prepare setup unpack
+
+
+
+
+

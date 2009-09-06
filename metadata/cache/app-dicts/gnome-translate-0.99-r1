@@ -1,0 +1,22 @@
+>=x11-libs/gtk+-2.4.0 >=app-dicts/libtranslate-0.99 >=gnome-base/eel-2.6.0 app-text/aspell >=sys-apps/sed-4
+>=x11-libs/gtk+-2.4.0 >=app-dicts/libtranslate-0.99 >=gnome-base/eel-2.6.0 app-text/aspell
+0
+http://savannah.nongnu.org/download/libtranslate/gnome-translate-0.99.tar.gz
+
+http://www.nongnu.org/libtranslate/gnome-translate
+GPL-2
+GNOME interface for libtranslate
+x86 amd64
+eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability toolchain-funcs
+debug
+
+
+
+
+
+compile install postinst postrm preinst unpack
+
+
+
+
+

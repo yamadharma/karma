@@ -1,0 +1,22 @@
+>=sys-apps/daemontools-0.70 >=sys-apps/skalibs-0.13 >=sys-apps/symtools-0.14 virtual/glibc
+virtual/glibc
+0
+http://js.hu/package/daemontools-conf/daemontools-conf-0.15.tar.gz
+
+http://js.hu/package/daemontools-conf.html
+freedist
+Configuration package for daemontools
+x86 ppc sparc sparc64
+
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

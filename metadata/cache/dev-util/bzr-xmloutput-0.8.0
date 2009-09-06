@@ -1,0 +1,22 @@
+>=app-shells/bash-3.2 virtual/python
+dev-util/bzr virtual/python
+0
+http://launchpad.net/bzr-xmloutput/trunk/0.8/+download/bzr-xmloutput-0.8.0.tar.gz
+
+http://bazaar-vcs.org/XMLOutput
+GPL-2
+A Bazaar plugin that provides a option to generate XML output for builtins commands.
+x86 amd64
+distutils eutils multilib portability python toolchain-funcs versionator
+
+
+
+
+
+
+compile install postinst postrm unpack
+
+
+
+
+

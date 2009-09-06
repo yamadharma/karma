@@ -1,0 +1,22 @@
+>=app-shells/bash-3.2 virtual/python dev-util/bzr
+dev-python/pyparsing virtual/python
+0
+
+
+https://launchpad.net/ami/pybtex
+GPL-2
+BibTeX-compateble bibliography processor in Python
+amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86
+bzr distutils eutils multilib portability python toolchain-funcs
+
+
+
+
+2
+
+compile install postinst postrm prepare setup unpack
+
+
+
+
+

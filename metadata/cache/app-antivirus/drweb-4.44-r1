@@ -1,0 +1,22 @@
+app-arch/unzip
+app-arch/unzip dev-perl/libwww-perl virtual/cron sys-devel/gcc >=sys-libs/glibc-2.6.1 logrotate? ( app-admin/logrotate )
+0
+ftp://ftp.drweb.com/pub/drweb/unix/Linux/Generic/glibc2.6/drweb-4.44.1-unix-glibc26.tar.bz2 X? ( ftp://ftp.drweb.com/pub/drweb/unix/Linux/Generic/glibc2.6/drweb-x-4.44.1-glibc2.6.tar.bz2 )
+mirror strip
+http://www.drweb.com
+DRWEB
+DrWeb virus scaner for Linux
+x86 amd64
+eutils multilib portability toolchain-funcs
+X daemon logrotate
+
+
+virtual/antivirus
+
+
+compile install setup unpack
+
+
+
+
+

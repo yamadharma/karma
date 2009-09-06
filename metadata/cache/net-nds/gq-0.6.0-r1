@@ -1,0 +1,22 @@
+=x11-libs/gtk+-1.2* >=net-nds/openldap-2 kerberos? ( virtual/krb5 ) jpeg? ( media-libs/gdk-pixbuf ) ssl? ( dev-libs/openssl )
+=x11-libs/gtk+-1.2* >=net-nds/openldap-2 kerberos? ( virtual/krb5 ) jpeg? ( media-libs/gdk-pixbuf ) ssl? ( dev-libs/openssl )
+0
+mirror://sourceforge/gqclient/gq-0.6.0.tar.gz
+
+http://www.biot.com/gq/
+GPL-2
+GTK-based LDAP client
+x86
+
+kerberos jpeg nls ssl
+
+
+
+
+
+compile install
+
+
+
+
+

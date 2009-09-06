@@ -1,0 +1,22 @@
+sys-devel/flex dev-util/pkgconfig doc? ( dev-util/gtk-doc ) alsa? ( media-libs/alsa-lib ) gstreamer? ( >=media-libs/gstreamer-0.10 >=media-libs/gst-plugins-base-0.10 ) usb? ( dev-libs/libusb ) cups? ( net-print/cups ) sys-fs/udev dev-libs/glib sys-apps/dbus media-libs/libsndfile >=dev-libs/libnl-1.1 !net-wireless/bluez-libs !net-wireless/bluez-utils =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+alsa? ( media-libs/alsa-lib ) gstreamer? ( >=media-libs/gstreamer-0.10 >=media-libs/gst-plugins-base-0.10 ) usb? ( dev-libs/libusb ) cups? ( net-print/cups ) sys-fs/udev dev-libs/glib sys-apps/dbus media-libs/libsndfile >=dev-libs/libnl-1.1 !net-wireless/bluez-libs !net-wireless/bluez-utils sys-auth/pambase[consolekit]
+0
+mirror://kernel/linux/bluetooth/bluez-4.34.tar.gz
+
+http://bluez.sourceforge.net/
+GPL-2 LGPL-2.1
+Bluetooth Tools and System Daemons for Linux
+amd64 ~arm ~hppa ~ppc ~ppc64 ~sh ~sparc x86
+autotools eutils libtool multilib portability toolchain-funcs
+alsa cups debug doc gstreamer old-daemons test-programs usb
+
+
+
+2
+
+configure install postinst prepare
+
+
+
+
+

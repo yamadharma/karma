@@ -1,0 +1,22 @@
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
+>=sys-devel/gdb-6.0 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+http://overlays.gentoo.org/svn/proj/gnustep/downloads/projectcenter-0.4.3_p25340.tar.bz2
+
+http://www.gnustep.org/experience/ProjectCenter.html
+GPL-2
+An IDE for GNUstep.
+amd64 x86 ~ppc
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

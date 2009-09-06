@@ -1,0 +1,22 @@
+|| ( ( x11-libs/libSM x11-libs/libX11 ) virtual/x11 )
+|| ( ( x11-libs/libSM x11-libs/libX11 ) virtual/x11 )
+0
+http://www.isi.edu/nsnam/dist/xgraph-12.1.tar.gz
+
+http://www.isi.edu/nsnam/xgraph/
+as-is
+X11 Plotting Utility
+amd64 ~ppc ~ppc-macos sparc x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+install unpack
+
+
+
+
+

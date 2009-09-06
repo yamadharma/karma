@@ -1,0 +1,22 @@
+dev-lang/perl
+dev-lang/perl
+0
+http://search.cpan.org/CPAN/authors/id/I/IL/ILYAM/Data-Dumper-2.121.tar.gz
+
+http://search.cpan.org/~ilyam/Data-Dumper-2.121/Dumper.pm
+Artistic
+Stringified perl data structures, suitable for both printing and eval
+x86 amd64
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+kernel_linux? ( >=sys-fs/e2fsprogs-1.19 ) ncurses? ( >=sys-libs/ncurses-5.2-r5 ) pam? ( >=sys-libs/pam-0.78-r3 net-nds/portmap ) gpm? ( >=sys-libs/gpm-1.19.3 ) slang? ( >=sys-libs/slang-1.4.2 ) x86? ( 7zip? ( >=app-arch/p7zip-4.16 ) ) amd64? ( 7zip? ( >=app-arch/p7zip-4.16 ) ) !app-misc/mc dev-util/pkgconfig
+kernel_linux? ( >=sys-fs/e2fsprogs-1.19 ) ncurses? ( >=sys-libs/ncurses-5.2-r5 ) pam? ( >=sys-libs/pam-0.78-r3 net-nds/portmap ) gpm? ( >=sys-libs/gpm-1.19.3 ) slang? ( >=sys-libs/slang-1.4.2 ) x86? ( 7zip? ( >=app-arch/p7zip-4.16 ) ) amd64? ( 7zip? ( >=app-arch/p7zip-4.16 ) ) !app-misc/mc
+0
+http://mc.linuxinside.com/Releases/mc-4.1.40-pre9.tar.bz2
+
+http://mc.linuxinside.com/cgi-bin/dir.cgi
+GPL-2
+GNU Midnight Commander cli-based file manager. 4.1.x branch
+amd64 x86
+eutils flag-o-matic multilib pam portability toolchain-funcs
+7zip gpm nls ncurses pam slang
+
+
+virtual/editor
+
+
+compile install postinst unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=dev-libs/nss-3.11.4 >=dev-libs/nspr-4.6.4 >=dev-libs/svrcore-4.0.3 >=dev-libs/mozldap-6.0.2 >=dev-libs/adminutil-1.1.5 >=dev-libs/cyrus-sasl-2.1.19 >=dev-libs/icu-3.4 >=sys-libs/db-4.2.52 >=net-analyzer/net-snmp-5.1.2 sys-apps/lm_sensors app-arch/bzip2 dev-libs/openssl sys-apps/tcp-wrappers sys-libs/pam sys-libs/zlib app-misc/mime-types >=www-servers/apache-2.0 www-apache/mod_restartd www-apache/mod_nss www-apache/mod_admserv >=app-admin/fedora-ds-admin-console-1.1.0 >=app-admin/fedora-ds-console-1.1.0 =www-servers/apache-2* =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+=www-servers/apache-2*
+0
+http://directory.fedoraproject.org/sources/fedora-ds-admin-1.1.6.tar.bz2
+
+http://directory.fedora.redhat.com/
+GPL-2-with-exceptions
+Fedora Directory Server (admin)
+amd64 x86
+autotools depend.apache eutils libtool multilib portability toolchain-funcs
+ipv6 debug
+
+
+
+
+
+compile install setup unpack
+
+
+
+
+

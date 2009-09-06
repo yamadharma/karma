@@ -1,0 +1,22 @@
+
+dev-lang/perl >=app-forensics/sleuthkit-2 sys-apps/grep sys-apps/file
+0
+mirror://sourceforge/autopsy/autopsy-2.10.tar.gz
+
+http://www.sleuthkit.org/autopsy/
+GPL-2
+A graphical interface to the digital forensic analysis tools in The Sleuth Kit.
+amd64 ~arm ~ppc ~s390 ~sparc x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

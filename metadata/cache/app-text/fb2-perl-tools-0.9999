@@ -1,0 +1,22 @@
+dev-util/subversion net-misc/rsync
+dev-perl/XML-Parser dev-perl/XML-Writer dev-perl/libintl-perl dev-perl/Compress-Zlib dev-perl/Archive-Zip
+0
+
+
+http://fb2-perl-tools.sourceforge.net
+GPL-2
+Project for creating set of utilities to manage collection of FictionBook2 files
+alpha amd64 arm hppa ia64 ppc ppc64 s390 ~sh sparc ~x86
+eutils multilib portability subversion toolchain-funcs
+
+
+
+
+
+
+preinst unpack
+
+
+
+
+

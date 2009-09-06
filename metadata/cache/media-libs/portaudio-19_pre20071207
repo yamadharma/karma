@@ -1,0 +1,22 @@
+alsa? ( media-libs/alsa-lib ) jack? ( >=media-sound/jack-audio-connection-kit-0.100.0 )
+alsa? ( media-libs/alsa-lib ) jack? ( >=media-sound/jack-audio-connection-kit-0.100.0 )
+18
+http://www.portaudio.com/archives/pa_stable_v19_20071207.tar.gz
+
+http://www.portaudio.com
+as-is
+An open-source cross platform audio API.
+amd64 x86
+eutils flag-o-matic multilib portability toolchain-funcs
+alsa +cxx debug jack oss
+
+
+
+
+
+compile install
+
+
+
+
+

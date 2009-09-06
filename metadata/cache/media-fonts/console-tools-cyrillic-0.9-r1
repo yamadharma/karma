@@ -1,0 +1,22 @@
+gnustep? gnustep-base/gnustep-env X? media-fonts/chkfontpath
+
+0
+ftp://ftp.45.free.net/pub/fonts/linux/console-tools-cyrillic-0.9.tar.gz
+
+http://www.45.free.net/~vitus
+GPL-2
+Base class for applying patches.
+x86 ppc sparc sparc64
+eutils extrafiles fonts kbd multilib patch portability toolchain-funcs
+daemontools X gnustep
+
+
+
+
+
+compile install postinst postrm prerm unpack
+
+
+
+
+

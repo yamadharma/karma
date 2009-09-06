@@ -1,0 +1,22 @@
+~app-emulation/qemu-softmmu-0.10.0 !<=app-emulation/qemu-0.7.0 ~app-emulation/qemu-user-0.10.0
+~app-emulation/qemu-softmmu-0.10.0 !<=app-emulation/qemu-0.7.0 ~app-emulation/qemu-user-0.10.0
+0
+
+
+http://fabrice.bellard.free.fr/qemu/
+GPL-2
+qemu emulator and abi wrapper meta ebuild
+amd64 ~ppc x86
+
+
+
+
+
+
+
+-
+
+
+
+
+

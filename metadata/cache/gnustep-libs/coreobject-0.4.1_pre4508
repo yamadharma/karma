@@ -1,0 +1,22 @@
+virtual/postgresql-base gnustep-libs/etoile-serialize >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-util/subversion net-misc/rsync
+virtual/postgresql-base gnustep-libs/etoile-serialize >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 ) >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+
+
+http://www.etoile-project.org
+BSD
+A framework for describing and organizing model objects
+amd64 ~ppc x86
+etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs
+debug doc debug doc
+
+
+
+2
+
+compile configure install postinst preinst prepare setup unpack
+
+
+
+
+

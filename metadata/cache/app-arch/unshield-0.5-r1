@@ -1,0 +1,22 @@
+>=sys-libs/zlib-1.1.4
+>=sys-libs/zlib-1.1.4
+0
+mirror://sourceforge/synce/unshield-0.5.tar.gz
+
+http://synce.sourceforge.net/synce/unshield.php
+MIT
+InstallShield CAB file extractor.
+amd64 ~hppa ~ppc x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+install unpack
+
+
+
+
+

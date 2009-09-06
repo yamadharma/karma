@@ -1,0 +1,22 @@
+>=app-shells/bash-3.2 virtual/python dev-util/bzr
+>=dev-util/bzr-0.18_rc1 virtual/python
+0
+
+
+https://launchpad.net/bzr-bisect/
+GPL-2
+Bazaar plugin that finds when source code was introduced into a branch via a binary search.
+x86 amd64
+bzr distutils eutils multilib portability python toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+dev-lang/perl X? ( x11-apps/mkfontdir media-fonts/encodings ) gnustep? ( >=gnustep-base/mknfonts-0.5-r1 ) media-libs/fontconfig
+dev-lang/perl
+0
+ftp://ftp.gnome.ru/fonts/urw/release/urw-fonts-1.0.7pre44.tar.bz2
+
+
+GPL-2,LGPL,LPPL-1.2
+URW fonts cyrillized by Valek Filippov
+x86 amd64
+eutils font multilib portability toolchain-funcs
+gnustep X
+
+
+
+
+
+install postinst postrm setup
+
+
+
+
+

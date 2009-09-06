@@ -1,0 +1,22 @@
+>=dev-java/sun-jdk-1.4.2.05 >=www-servers/tomcat-5.0.27 >=dev-db/postgresql-7.4 >=dev-java/jdbc3-postgresql-7.4 >=dev-java/log4j-1.2 >=net-analyzer/rrdtool-1.0.40 >=net-misc/curl-7.11 >=dev-perl/Getopt-Mixed-1.008 >=dev-java/ant-tasks-1.6.2
+>=dev-java/sun-jdk-1.4.2.05 >=www-servers/tomcat-5.0.27 >=dev-db/postgresql-7.4 >=dev-java/jdbc3-postgresql-7.4 >=dev-java/log4j-1.2 >=net-analyzer/rrdtool-1.0.40 >=net-misc/curl-7.11 >=dev-perl/Getopt-Mixed-1.008 >=dev-java/ant-tasks-1.6.2
+0
+http://friends.grandiosa.net/~alexh/opennms-source-1.2.8-1.tar.gz
+nomirror
+http://opennms.org
+GPL-2
+OpenNMS is a higly robust and flexible NMS tool
+x86 amd64
+eutils multilib portability toolchain-funcs
+doc
+
+
+
+
+
+compile config install postinst postrm preinst prerm setup unpack
+
+
+
+
+

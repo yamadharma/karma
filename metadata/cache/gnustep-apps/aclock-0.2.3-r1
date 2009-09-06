@@ -1,0 +1,22 @@
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+http://www.linuks.mine.nu/aclock/aclock-0.2.3.tar.gz
+
+http://www.linuks.mine.nu/aclock/
+GPL-2
+Analog dockapp clock for GNUstep
+amd64 ~ppc x86
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

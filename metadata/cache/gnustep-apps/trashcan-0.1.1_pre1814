@@ -1,0 +1,22 @@
+gnustep-base/gnustep-env gnustep-libs/xwindowserverkit || ( ( x11-libs/libXt ) virtual/x11 ) dev-util/subversion net-misc/rsync
+gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 ) gnustep-libs/xwindowserverkit || ( ( x11-libs/libXt ) virtual/x11 )
+0
+
+
+http://www.etoile-project.org
+GPL-2
+TrashCan is a trash can implementation of freedesktop trash specification.
+~ppc x86 amd64
+eutils flag-o-matic gnustep gnustep-funcs multilib portability subversion toolchain-funcs
+debug profile doc
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

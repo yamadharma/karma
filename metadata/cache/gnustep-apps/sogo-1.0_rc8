@@ -1,0 +1,22 @@
+gnustep-libs/sope =www-servers/apache-2*
+gnustep-libs/sope dev-db/postgresql =www-servers/apache-2*
+0
+http://www.inverse.ca/downloads/SOGo/Sources/SOGo-1.0rc8.tar.gz
+
+http://sogo.opengroupware.org/
+GPL-2
+groupware server built around OpenGroupware.org and the SOPE application server
+x86 amd64
+depend.apache eutils flag-o-matic gnustep-base multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

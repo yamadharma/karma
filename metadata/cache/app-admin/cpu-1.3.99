@@ -1,0 +1,22 @@
+sys-apps/shadow sys-libs/cracklib ldap? net-nds/openldap
+sys-apps/shadow sys-libs/cracklib ldap? net-nds/openldap
+0
+mirror://sourceforge/cpu/cpu-1.3.99.tar.gz
+
+http://cpu.sf.net/
+GPL-2
+Interactive adduser script
+x86 ppc sparc ~alpha
+
+ldap
+
+
+
+
+
+compile install
+
+
+
+
+

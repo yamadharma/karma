@@ -1,0 +1,22 @@
+media-libs/audiofile arts? ( kde-base/arts ) esd? ( media-sound/esound ) flac? ( media-libs/flac ) mad? ( media-libs/libid3tag media-libs/libmad ) musepack? ( media-libs/libmpcdec ) modplug? ( media-libs/libmodplug ) timidity? ( media-sound/timidity++ ) vorbis? ( >=media-libs/libogg-1.1.2 >=media-libs/libvorbis-1.0.1-r2 ) media-libs/musicbrainz >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
+media-libs/audiofile arts? ( kde-base/arts ) esd? ( media-sound/esound ) flac? ( media-libs/flac ) mad? ( media-libs/libid3tag media-libs/libmad ) musepack? ( media-libs/libmpcdec ) modplug? ( media-libs/libmodplug ) timidity? ( media-sound/timidity++ ) vorbis? ( >=media-libs/libogg-1.1.2 >=media-libs/libvorbis-1.0.1-r2 ) media-libs/musicbrainz >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+http://organact.mine.nu/~wolfgang/cynthiune/Cynthiune-0.9.5.tar.gz
+
+http://organact.mine.nu/~wolfgang/cynthiune
+GPL-2
+Free software and romantic music player for GNUstep.
+amd64 ~ppc x86
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+arts esd flac mad modplug musepack timidity vorbis debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

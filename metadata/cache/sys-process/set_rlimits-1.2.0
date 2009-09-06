@@ -1,0 +1,22 @@
+
+
+0
+http://www.physics.adelaide.edu.au/~jwoithe/set_rlimits-1.2.0.tgz
+nomirror
+http://www.physics.adelaide.edu.au/~jwoithe
+GPLv2
+Give unpriviledged users access to realtime scheduling
+x86 ppc amd64
+multilib toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

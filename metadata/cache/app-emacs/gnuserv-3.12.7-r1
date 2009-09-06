@@ -1,0 +1,22 @@
+>=virtual/emacs-21
+|| ( ~app-emacs/gnuserv-programs-3.12.7 >=app-editors/xemacs-21.4.20 ) >=virtual/emacs-21
+0
+http://meltin.net/hacks/emacs/src/gnuserv-3.12.7.tar.gz
+
+http://meltin.net/hacks/emacs/
+GPL-2
+Attach to an already running Emacs
+~x86
+elisp elisp-common eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

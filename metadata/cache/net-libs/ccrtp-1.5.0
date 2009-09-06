@@ -1,0 +1,22 @@
+>=dev-cpp/commoncpp2-1.3.0 dev-libs/libgcrypt >=dev-util/pkgconfig-0.9.0 doc? ( app-doc/doxygen )
+>=dev-cpp/commoncpp2-1.3.0 dev-libs/libgcrypt
+0
+mirror://gnu/ccrtp/ccrtp-1.5.0.tar.gz
+
+http://www.gnu.org/software/ccrtp/
+GPL-2
+GNU ccRTP is an implementation of RTP, the real-time transport protocol from the IETF
+amd64 ~ppc ~ppc64 x86
+
+doc
+
+
+
+
+
+install postinst
+
+
+
+
+

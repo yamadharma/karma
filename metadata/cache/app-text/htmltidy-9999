@@ -1,0 +1,22 @@
+=sys-devel/automake-1.5* >=sys-devel/autoconf-2.61 sys-devel/libtool dev-util/cvs
+
+0
+http://tidy.sourceforge.net/docs/tidy_docs_051020.tgz xml? ( http://www.eecs.umich.edu/~ppadala/projects/tidy/html2db.tar.gz )
+
+http://tidy.sourceforge.net/
+GPL-2
+Tidy the layout and correct errors in HTML and XML documents
+alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sh sparc x86 ~x86-fbsd
+autotools cvs eutils libtool multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install unpack
+
+
+
+
+

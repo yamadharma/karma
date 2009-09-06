@@ -1,0 +1,22 @@
+|| ( ( x11-libs/libICE x11-libs/libXext x11-libs/libSM iontruetype? ( x11-libs/libXft ) ) virtual/x11 ) dev-util/pkgconfig app-misc/run-mailcap >=dev-lang/lua-5.1.1 doc? ( dev-tex/latex2html virtual/tex-base )
+|| ( ( x11-libs/libICE x11-libs/libXext x11-libs/libSM iontruetype? ( x11-libs/libXft ) ) virtual/x11 ) dev-util/pkgconfig app-misc/run-mailcap >=dev-lang/lua-5.1.1 doc? ( dev-tex/latex2html virtual/tex-base )
+0
+http://iki.fi/tuomov/dl/ion-3-20080411.tar.gz mirror://gentoo/ion3-scripts-20071123.tar.bz2 mirror://gentoo/ion3-mod-xrandr-20070410.tar.bz2 mirror://gentoo/ion3-mod-ionflux-20070410.tar.bz2 doc? ( mirror://gentoo/ion3-doc-20070426.tar.bz2 )
+
+http://www.iki.fi/tuomov/ion/
+LGPL-2.1
+A tiling tabbed window manager designed with keyboard users in mind
+amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86
+eutils flag-o-matic multilib portability toolchain-funcs
+unicode iontruetype doc
+
+
+
+
+
+compile install postinst unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+
+net-misc/rsync app-arch/bzip2 dev-perl/Digest-SHA1 dev-perl/LockFile-Simple dev-perl/Compress-Zlib dev-perl/libwww-perl
+0
+mirror://sourceforge/debmirror/debmirror_20070123.tar.gz
+
+http://apt-mirror.sf.net
+GPL-2
+ECLiPt FTP mirroring tool
+~x86 ~amd64 ~ppc
+
+
+
+
+
+
+
+compile install
+
+
+
+
+

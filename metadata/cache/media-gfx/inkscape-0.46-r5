@@ -1,0 +1,22 @@
+>=virtual/poppler-glib-0.8.3[cairo] dev-cpp/glibmm >=dev-cpp/gtkmm-2.10.0 >=dev-libs/boehm-gc-6.4 dev-libs/boost >=dev-libs/glib-2.6.5 >=dev-libs/libsigc++-2.0.12 >=dev-libs/libxml2-2.6.20 >=dev-libs/libxslt-1.0.15 dev-libs/popt dev-python/lxml dev-python/pyxml media-gfx/imagemagick media-libs/fontconfig >=media-libs/freetype-2 media-libs/libpng x11-libs/libXft >=x11-libs/gtk+-2.10.7 >=x11-libs/pango-1.4.0 gnome? ( >=gnome-base/gnome-vfs-2.0 ) lcms? ( >=media-libs/lcms-1.14 ) perl? ( dev-perl/XML-Parser dev-perl/XML-XQL ) spell? ( app-text/gtkspell ) sys-devel/gettext dev-util/pkgconfig x11-libs/libX11 >=dev-util/intltool-0.29 >=sys-apps/sed-4
+>=virtual/poppler-glib-0.8.3[cairo] dev-cpp/glibmm >=dev-cpp/gtkmm-2.10.0 >=dev-libs/boehm-gc-6.4 dev-libs/boost >=dev-libs/glib-2.6.5 >=dev-libs/libsigc++-2.0.12 >=dev-libs/libxml2-2.6.20 >=dev-libs/libxslt-1.0.15 dev-libs/popt dev-python/lxml dev-python/pyxml media-gfx/imagemagick media-libs/fontconfig >=media-libs/freetype-2 media-libs/libpng x11-libs/libXft >=x11-libs/gtk+-2.10.7 >=x11-libs/pango-1.4.0 gnome? ( >=gnome-base/gnome-vfs-2.0 ) lcms? ( >=media-libs/lcms-1.14 ) perl? ( dev-perl/XML-Parser dev-perl/XML-XQL ) spell? ( app-text/gtkspell ) dev-python/numpy dia? ( app-office/dia ) postscript? ( >=media-gfx/pstoedit-3.44[plotutils] media-gfx/skencil ) wmf? ( media-libs/libwmf )
+0
+mirror://sourceforge/inkscape/inkscape-0.46.tar.gz
+test
+http://www.inkscape.org/
+GPL-2 LGPL-2.1
+A SVG based generic vector-drawing program
+amd64 hppa ppc ppc64 sparc x86
+eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability toolchain-funcs
+dia doc gnome inkjar jabber lcms mmx perl postscript spell wmf debug
+
+
+
+2
+
+compile configure install postinst postrm preinst prepare setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=sys-libs/db-3.2 >=dev-libs/openssl-0.9.7
+>=sys-libs/db-3.2 >=dev-libs/openssl-0.9.7
+0
+ftp://ftp.iu.hio.no/pub/cfengine/cfengine-2.1.20.tar.gz
+
+http://www.iu.hio.no/cfengine/
+GPL-2
+An agent/software robot and a high level policy language for building expert systems to administrate and configure large computer networks
+amd64 ~arm ~ppc sparc x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst
+
+
+
+
+

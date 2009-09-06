@@ -1,0 +1,22 @@
+x11-libs/libXtst x11-libs/libXmu x11-libs/libXaw x11-libs/Xaw3d x11-misc/imake x11-misc/gccmakedep x11-proto/xproto x11-proto/inputproto app-text/rman x11-proto/xextproto
+x11-libs/libXtst x11-libs/libXmu x11-libs/libXaw x11-libs/Xaw3d
+0
+http://homepage3.nifty.com/tsato/xvkbd/xvkbd-3.0.tar.gz
+
+http://homepage3.nifty.com/tsato/xvkbd/
+GPL-2
+virtual keyboard for X window system
+amd64 ~ppc x86
+
+
+
+
+
+
+
+compile install
+
+
+
+
+

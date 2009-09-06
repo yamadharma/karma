@@ -1,0 +1,22 @@
+virtual/glibc
+virtual/glibc
+0
+http://la-samhna.de/archive/samhain_signed-1.7.11.tar.gz
+nostrip
+http://la-samhna.de/samhain/
+GPL-2
+Open Source File Integrity Checker and IDS (local use monitoring agent)
+x86 ~ppc ~sparc ~alpha
+eutils extrafiles multilib portability toolchain-funcs
+doc static daemontools
+
+
+
+
+
+compile install postinst unpack
+
+
+
+
+

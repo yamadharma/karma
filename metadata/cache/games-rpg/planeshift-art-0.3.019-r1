@@ -1,0 +1,22 @@
+
+>=games-rpg/planeshift-0.3.019
+0
+http://dev.gentooexperimental.org/~loux/distfiles/PlaneShift_CBV0.3.019-x86.bin http://dev.gentooexperimental.org/~loux/distfiles/bronzedoors.zip
+
+http://www.planeshift.it/
+PlaneShift
+Virtual fantasy world MMORPG
+amd64 x86
+base eutils games multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+virtual/libc sys-fs/fuse
+virtual/libc sys-fs/fuse
+0
+http://swtch.com/plan9port/plan9port-20090305.tgz ftp://quenix2.dyndns.org/FreeBSD/ports/distfiles/plan9port-20090305.tgz http://pdos.lcs.mit.edu/~rsc/scat.tgz http://pdos.lcs.mit.edu/~rsc/software/plan9/pgw.tar.bz2 http://pdos.lcs.mit.edu/~rsc/software/plan9/roget.tar.bz2
+
+http://swtch.com/plan9port
+LucentPL-1.02
+Port of the bulk of the Plan9 software build environment to Unix
+x86 sparc alpha ia64 s390 ppc amd64
+eutils multilib portability toolchain-funcs
+X
+
+
+
+
+
+compile install postinst unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+dev-libs/libxml2 >=app-text/build-docbook-catalog-1.1
+dev-libs/libxml2 >=app-text/build-docbook-catalog-1.1
+0
+mirror://sourceforge/docbook/docbook-xsl-1.72.0.tar.bz2
+
+http://wiki.docbook.org/topic/DocBookXslStylesheets
+BSD
+XSL Stylesheets for Docbook
+~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd
+
+
+
+
+
+
+
+install postinst postrm
+
+
+
+
+

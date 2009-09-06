@@ -1,0 +1,22 @@
+dev-perl/Compress-Zlib app-arch/zip app-arch/unzip
+dev-perl/Compress-Zlib app-arch/zip app-arch/unzip
+0
+mirror://cpan/modules/by-module/Archive/Archive-Zip-1.05.tar.gz
+
+
+Artistic
+Perl program to create, manipulate, read, and write Zip archive files
+x86 ppc sparc sparc64
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

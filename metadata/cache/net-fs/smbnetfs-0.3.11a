@@ -1,0 +1,22 @@
+>=sys-fs/fuse-2.3 >=net-fs/samba-3.0.21
+>=sys-fs/fuse-2.3 >=net-fs/samba-3.0.21
+0
+mirror://sourceforge/smbnetfs/smbnetfs-0.3.11a.tar.bz2
+
+http://sourceforge.net/projects/smbnetfs
+GPL-2
+A Linux filesystem that allow you to use samba/microsoft network in the same manner as the network neighborhood in Microsoft Windows.
+x86 amd64
+
+
+
+
+
+
+
+install postinst
+
+
+
+
+

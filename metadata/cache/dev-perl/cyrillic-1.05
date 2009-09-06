@@ -1,0 +1,22 @@
+
+dev-perl/Unicode-Map8 dev-perl/Unicode-String
+0
+http://www.cpan.org/modules/by-module/Convert/cyrillic-1.05.tar.gz
+
+http://www.cpan.org/modules/by-module/Convert/cyrillic-1.05.readme
+Artistic
+Cyrillic Software Suite
+x86 amd64 ~alpha ~arm ~hppa ~mips ~ppc ~sparc
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

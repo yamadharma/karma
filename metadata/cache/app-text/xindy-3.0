@@ -1,0 +1,22 @@
+virtual/latex-base >=dev-lisp/clisp-2.44.1-r1 || ( dev-texlive/texlive-langcyrillic app-text/ptex ) sys-devel/flex
+virtual/latex-base >=dev-lisp/clisp-2.44.1-r1 || ( dev-texlive/texlive-langcyrillic app-text/ptex )
+0
+mirror://sourceforge/xindy/xindy-kernel-3.0.tar.gz mirror://sourceforge/xindy/xindy-2.3.tar.gz
+
+http://www.xindy.org/
+GPL-2
+A Flexible Indexing System
+alpha amd64 ia64 ppc x86
+multilib toolchain-funcs
+doc
+
+
+
+2
+
+compile install
+
+
+
+
+

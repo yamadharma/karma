@@ -1,0 +1,22 @@
+>=dev-python/pygtk-2.8 >=dev-python/gnome-python-2.12 >=gnome-base/nautilus-2.6 >=gnome-base/eel-2.6
+>=dev-python/pygtk-2.8 >=dev-python/gnome-python-2.12 >=gnome-base/nautilus-2.6 >=gnome-base/eel-2.6
+0
+mirror://gnome/sources/nautilus-python/0.5/nautilus-python-0.5.0.tar.bz2
+
+http://www.gnome.org/
+GPL-2
+Python bindings for the Nautilus file manager.
+x86 amd64
+gnome.org
+
+
+
+
+
+
+compile install
+
+
+
+
+

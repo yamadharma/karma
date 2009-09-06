@@ -1,0 +1,22 @@
+|| ( virtual/emacs virtual/xemacs ) dev-lang/perl
+|| ( virtual/emacs virtual/xemacs ) dev-lang/perl
+0
+mirror://sourceforge/ecf/tiny-tools-2007.0507.tar.bz2
+
+http://tiny-tools.sourceforge.net
+GPL
+Emacs Tiny Tools is a collection of libraries and packages
+x86 amd64
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install
+
+
+
+
+

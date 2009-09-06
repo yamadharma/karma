@@ -1,0 +1,22 @@
+>=sys-fs/fuse-2.2_pre3 >=dev-libs/glib-2.4.2
+>=sys-fs/fuse-2.2_pre3 >=dev-libs/glib-2.4.2
+0
+mirror://sourceforge/fuse/sshfs-fuse-1.0.tar.gz
+
+http://fuse.sourceforge.net/
+GPL-2
+Fuse-filesystem utilizing the sftp service.
+~x86 ~amd64
+
+
+
+
+
+
+
+install
+
+
+
+
+

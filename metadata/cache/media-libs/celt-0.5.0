@@ -1,0 +1,22 @@
+media-libs/libogg
+media-libs/libogg
+0
+http://downloads.us.xiph.org/releases/celt/celt-0.5.0.tar.gz
+
+http://www.celt-codec.org/
+BSD
+The CELT ultra-low delay audio codec
+amd64 x86
+base eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

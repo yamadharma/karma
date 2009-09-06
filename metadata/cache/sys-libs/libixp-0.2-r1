@@ -1,0 +1,22 @@
+
+
+0
+http://libs.suckless.org/download/libixp-0.2.tar.gz
+
+http://libs.suckless.org/
+MIT
+Standalone client/server 9P library
+amd64 ~ppc64 x86
+eutils flag-o-matic multilib portability toolchain-funcs
+
+
+
+
+
+
+install unpack
+
+
+
+
+

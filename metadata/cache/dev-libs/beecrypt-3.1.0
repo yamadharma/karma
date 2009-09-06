@@ -1,0 +1,22 @@
+python? ( =dev-lang/python-2.2* ) !<app-arch/rpm-4.2.1
+python? ( =dev-lang/python-2.2* ) !<app-arch/rpm-4.2.1
+0
+mirror://sourceforge/beecrypt/beecrypt-3.1.0.tar.gz
+
+http://sourceforge.net/projects/beecrypt
+LGPL-2
+Beecrypt is a general-purpose cryptography library.
+~x86 ~ppc ~sparc ~alpha ~mips
+
+python
+
+
+
+
+
+compile install
+
+
+
+
+

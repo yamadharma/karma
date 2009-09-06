@@ -1,0 +1,22 @@
+virtual/libc
+virtual/libc
+0
+http://www.lallafa.de/bp/files/pgmfindclip-1.13.tgz
+
+http://www.lallafa.de/bp/pgmfindclip.html
+GPL-2
+automatically find a clipping border for a sequence of pgm images
+amd64 ~ppc x86
+
+
+
+
+
+
+
+compile install
+
+
+
+
+

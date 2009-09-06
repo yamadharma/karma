@@ -1,0 +1,22 @@
+
+~net-fs/openafs-kernel-1.5.56 pam? ( sys-libs/pam ) kerberos? ( virtual/krb5 )
+0
+http://openafs.org/dl/1.5.56/openafs-1.5.56-src.tar.bz2 doc? ( http://openafs.org/dl/1.5.56/openafs-1.5.56-doc.tar.bz2 ) mirror://gentoo/openafs-gentoo-0.14.tar.bz2
+
+http://www.openafs.org/
+IBM openafs-krb5 openafs-krb5-a APSL-2 sun-rpc
+The OpenAFS distributed file system
+~amd64 ~ppc ~ppc64 ~x86
+eutils flag-o-matic multilib pam portability toolchain-funcs versionator
+debug kerberos pam doc
+
+
+
+
+
+compile install postinst preinst unpack
+
+
+
+
+

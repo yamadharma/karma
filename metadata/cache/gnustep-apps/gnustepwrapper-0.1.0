@@ -1,0 +1,22 @@
+gnustep-base/gnustep-env
+gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 )
+0
+ftp://ftp.raffael.ch/software/GNUstepWrapper/GNUstepWrapper-0.1.0.tar.gz
+
+ftp://ftp.raffael.ch/software/GNUstepWrapper/
+GPL-2
+An Application for displaying and navigating in PDF documents.
+x86 ~ppc
+eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
+debug profile doc
+
+
+
+
+
+compile install postinst setup
+
+
+
+
+

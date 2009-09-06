@@ -1,0 +1,22 @@
+preview-latex? ( !dev-tex/preview-latex app-text/dvipng ) >=virtual/emacs-21 virtual/latex-base >=sys-apps/texinfo-4.2-r5 =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+preview-latex? ( !dev-tex/preview-latex app-text/dvipng ) >=virtual/emacs-21 virtual/latex-base
+0
+mirror://gnu/auctex/auctex-11.83.tar.gz
+
+http://www.gnu.org/software/auctex
+GPL-2
+AUCTeX is an extensible package that supports writing and formatting TeX files
+amd64 ~ppc ~sparc x86
+autotools base elisp elisp-common eutils latex-package libtool multilib portability toolchain-funcs
+preview-latex
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

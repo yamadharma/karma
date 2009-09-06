@@ -1,0 +1,22 @@
+
+app-misc/screen
+0
+http://pubwww.fhzh.ch/~mgloor/data/screenie-1.30.0.tar.gz
+
+http://pubwww.fhzh.ch/~mgloor/screenie.html
+GPL-2
+Screenie is a small and lightweight GNU screen(1) frontend that is designed to be a session handler that simplifies the process of administrating detached jobs by providing an interactive menu.
+amd64 ~ia64 ~sparc x86
+
+
+
+
+
+
+
+install
+
+
+
+
+

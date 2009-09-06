@@ -1,0 +1,22 @@
+media-libs/libsdl media-libs/sdl-net zlib? ( sys-libs/zlib ) app-arch/unzip
+media-libs/libsdl media-libs/sdl-net zlib? ( sys-libs/zlib )
+0
+mirror://gentoo/freecnc++-0.2.1.31072003-src.tar.bz2 nocd? ( ftp://ftp.westwood.com/pub/cc1/previews/demo/cc1demo1.zip ) nocd? ( ftp://ftp.westwood.com/pub/cc1/previews/demo/cc1demo2.zip )
+
+http://freecnc-sf.holarse.net/
+GPL-2
+SDL-rewrite of the classical real time strategy hit Command & Conquer
+~ppc x86 amd64
+base eutils flag-o-matic games multilib portability toolchain-funcs
+zlib nocd
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

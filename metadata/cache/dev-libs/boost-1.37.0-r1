@@ -1,0 +1,22 @@
+icu? ( >=dev-libs/icu-3.3 ) expat? ( dev-libs/expat ) mpi? ( sys-cluster/openmpi ) sys-libs/zlib python? ( virtual/python ) !!<=dev-libs/boost-1.35.0-r2 >=app-admin/eselect-boost-0.3 dev-util/boost-build:1.37 >=app-shells/bash-3.2
+icu? ( >=dev-libs/icu-3.3 ) expat? ( dev-libs/expat ) mpi? ( sys-cluster/openmpi ) sys-libs/zlib python? ( virtual/python ) !!<=dev-libs/boost-1.35.0-r2 >=app-admin/eselect-boost-0.3
+1.37
+mirror://sourceforge/boost/boost_1_37_0.tar.bz2 mirror://gentoo/boost-patches-1.37.0-1.tbz2 http://www.gentoo.org/~dev-zero/distfiles/boost-patches-1.37.0-1.tbz2
+
+http://www.boost.org/
+freedist Boost-1.0
+Boost Libraries for C++
+~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86
+check-reqs eutils flag-o-matic multilib portability python toolchain-funcs versionator
+debug doc +eselect expat icu mpi python tools
+
+
+
+2
+
+compile configure install postinst prepare setup test
+
+
+
+
+

@@ -1,0 +1,22 @@
+virtual/latex-base >=virtual/emacs-21 virtual/latex-base >=sys-apps/texinfo-4.2-r5
+virtual/latex-base >=virtual/emacs-21 virtual/latex-base
+0
+mirror://gnu/reftex/reftex-4.33.tar.gz
+
+http://www.gnu.org/software/auctex/
+GPL-3 FDL-1.2
+Extended support for writing, formatting and using (La)TeX, Texinfo and BibTeX files
+amd64 ~ppc ~ppc64 ~sparc x86
+base elisp elisp-common eutils latex-package multilib portability toolchain-funcs
+preview-latex
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

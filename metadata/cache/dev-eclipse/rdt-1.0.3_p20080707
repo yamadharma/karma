@@ -1,0 +1,22 @@
+=dev-java/gnu-regexp-1* >=dev-java/jruby-1.1.2 >=virtual/jdk-1.5 doc? ( dev-java/ant-trax dev-java/saxon:6.5 ) >=dev-java/java-config-2.1.6 >=sys-apps/portage-2.1.2.7 app-arch/lzma-utils >=dev-java/javatoolkit-0.3.0 =dev-eclipse/extensions-base-3.4
+=dev-java/gnu-regexp-1* >=dev-java/jruby-1.1.2 >=virtual/jre-1.5 >=dev-java/java-config-2.1.6 >=sys-apps/portage-2.1.2.7 =dev-eclipse/extensions-base-3.4
+3.4
+http://dev.gentooexperimental.org/~chewi/distfiles/rdt-1.0.3_p20080707.tar.lzma
+
+http://rubyeclipse.sourceforge.net/
+CPL-1.0
+An open source Ruby IDE for the Eclipse platform
+~amd64
+base eclipse-ext-2 eutils java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+doc elibc_FreeBSD
+
+
+
+1
+
+compile install preinst setup unpack
+
+
+
+
+

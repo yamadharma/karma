@@ -1,0 +1,22 @@
+app-arch/unzip app-arch/zip virtual/motif >=virtual/jdk-1.6 >=dev-java/sun-jdk-1.7.0.0_alpha23 x11-libs/libXmu x11-libs/libXrandr x11-libs/libXt x11-proto/inputproto x11-proto/xextproto x11-proto/xproto x11-proto/xineramaproto net-print/cups media-libs/alsa-lib media-libs/libpng x11-libs/libX11 x11-libs/libXext x11-libs/libXi x11-libs/libXinerama x11-libs/libXtst fontconfig? ( media-libs/fontconfig ) >=dev-java/java-config-2.1.6 =dev-java/java-config-2*
+media-libs/alsa-lib media-libs/libpng x11-libs/libX11 x11-libs/libXext x11-libs/libXi x11-libs/libXinerama x11-libs/libXtst fontconfig? ( media-libs/fontconfig ) doc? ( =dev-java/java-sdk-docs-1.6.0* ) >=dev-java/java-config-2.1.6 =dev-java/java-config-2*
+1.7
+http://www.java.net/download/openjdk/jdk7/promoted/b23//openjdk-7-ea-src-b23-30_oct_2007.zip
+
+https://openjdk.dev.java.net/
+GPL-2-with-linking-exception sun-prerelease-jdk7
+Open Source JDK
+amd64 x86
+eutils fdo-mime java-pkg-2 java-utils-2 java-vm-2 multilib pax-utils portability toolchain-funcs versionator
+doc examples fontconfig elibc_FreeBSD
+
+
+
+
+
+compile install postinst postrm preinst prerm setup unpack
+
+
+
+
+

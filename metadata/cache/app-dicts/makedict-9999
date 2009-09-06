@@ -1,0 +1,22 @@
+>=dev-libs/glib-2.6.0 >=dev-util/cmake-2.4 dev-libs/expat dev-lang/python sys-libs/zlib >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) dev-util/subversion net-misc/rsync
+>=dev-libs/glib-2.6.0 >=dev-util/cmake-2.4 dev-libs/expat dev-lang/python sys-libs/zlib
+0
+
+
+http://xdxf.sf.net/
+GPL-2
+Based on the subversion eclass
+
+base cmake-utils eutils flag-o-matic multilib portability subversion toolchain-funcs
+
+
+
+
+
+
+compile install preinst test unpack
+
+
+
+
+

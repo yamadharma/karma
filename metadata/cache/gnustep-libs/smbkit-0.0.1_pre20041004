@@ -1,0 +1,22 @@
+net-fs/samba dev-util/cvs
+net-fs/samba
+0
+
+
+http://www.gnustep.org
+GPL-2
+GNUstep SMBKit Library
+x86
+cvs eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
+debug profile doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

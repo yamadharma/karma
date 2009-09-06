@@ -1,0 +1,22 @@
+kernel_linux? ( virtual/linux-sources )
+>=sys-fs/udev-104
+0
+
+
+http://goron.de/~froese/
+public-domain
+Tool for controlling Logitech MX Revolution mouses
+amd64 x86
+linux-info multilib toolchain-funcs versionator
+
+
+
+
+
+
+compile install postinst setup
+
+
+
+
+

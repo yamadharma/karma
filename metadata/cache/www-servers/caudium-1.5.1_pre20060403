@@ -1,0 +1,22 @@
+>=dev-lang/pike-7.6.36 perl? >=dev-lang/perl-5.8 dev-libs/expat app-text/sablotron dev-libs/openssl sys-devel/gnuconfig
+>=dev-lang/pike-7.6.36 perl? >=dev-lang/perl-5.8 dev-libs/expat app-text/sablotron dev-libs/openssl
+0
+ftp://ftp.caudium.net/caudium/snapshot/1.5/caudium-1.5.1-20060403-cvs.tar.bz2
+
+http://www.caudium.net/
+GPL-2 | LGPL-2.1 | MPL-1.1
+Caudium Web Server
+~x86 ~amd64
+eutils gnuconfig multilib portability toolchain-funcs
+perl
+
+
+
+
+
+compile config install
+
+
+
+
+

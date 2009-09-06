@@ -1,0 +1,22 @@
+|| ( >=www-client/mozilla-firefox-3.5 >=www-client/mozilla-firefox-bin-3.5 >=www-client/seamonkey-bin-2.0_alpha3 >=www-client/seamonkey-2.0_alpha3 >=mail-client/mozilla-thunderbird-bin-3.0_beta2 >=mail-client/mozilla-thunderbird-3.0_beta2 ) >=net-libs/xulrunner-1.9.1 >=dev-libs/nss-3.12 >=dev-libs/nspr-4.7.1 app-arch/unzip
+|| ( >=www-client/mozilla-firefox-3.5 >=www-client/mozilla-firefox-bin-3.5 >=www-client/seamonkey-bin-2.0_alpha3 >=www-client/seamonkey-2.0_alpha3 >=mail-client/mozilla-thunderbird-bin-3.0_beta2 >=mail-client/mozilla-thunderbird-3.0_beta2 ) >=net-libs/xulrunner-1.9.1 >=dev-libs/nss-3.12 >=dev-libs/nspr-4.7.1
+0
+http://hg.mozilla.org/labs/weave/archive/0.6pre3.tar.gz -> mozilla-weave-0.6_pre3.tar.gz
+
+http://labs.mozilla.com/projects/weave/
+|| ( MPL-1.1 GPL-2 LGPL-2.1 )
+Mozilla Labs prototype for online services into Firefox
+amd64 ~ppc x86
+eutils mozextension multilib portability toolchain-funcs
+
+
+
+
+2
+
+compile install postinst prepare
+
+
+
+
+

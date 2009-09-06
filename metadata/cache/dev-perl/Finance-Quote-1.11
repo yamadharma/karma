@@ -1,0 +1,22 @@
+dev-perl/libwww-perl dev-perl/HTML-TableExtract dev-lang/perl
+dev-perl/libwww-perl dev-perl/HTML-TableExtract dev-lang/perl
+0
+mirror://cpan/authors/id/P/PJ/PJF/Finance-Quote-1.11.tar.gz
+
+http://search.cpan.org/~pjf/Finance-Quote-1.11/
+|| ( Artistic GPL-2 )
+The Perl Finance-Quote Module
+~alpha amd64 ia64 ~ppc sparc x86
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

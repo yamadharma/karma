@@ -1,0 +1,22 @@
+x11-libs/qt:4 >=net-p2p/gnunet-0.8.0c
+x11-libs/qt:4 >=net-p2p/gnunet-0.8.0c
+0
+http://gnunet.org/download/gnunet-qt-0.8.0c.tar.gz
+
+http://gnunet.org/
+GPL-2
+Qt Graphical front end for GNUnet.
+amd64 ~ppc64 x86
+base eutils flag-o-matic multilib portability qt4 toolchain-funcs versionator
+
+
+
+
+
+
+compile install setup unpack
+
+
+
+
+

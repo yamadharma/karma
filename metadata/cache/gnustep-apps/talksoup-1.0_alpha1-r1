@@ -1,0 +1,22 @@
+>=gnustep-libs/netclasses-1.05 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
+>=gnustep-libs/netclasses-1.05 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+mirror://sourceforge/talksoup/TalkSoup-1.0alpha.tar.bz2
+
+http://talksoup.aeruder.net/
+GPL-1
+IRC client for GNUstep
+amd64 x86
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

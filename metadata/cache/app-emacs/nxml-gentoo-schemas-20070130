@@ -1,0 +1,22 @@
+
+app-emacs/nxml-mode
+0
+
+
+http://farragut.flameeyes.is-a-geek.org/
+GPL-2
+Extension for nxml-mode with Gentoo-specific schemas
+amd64 ~x86-fbsd x86
+elisp-common
+
+
+
+
+
+
+compile install setup unpack
+
+
+
+
+

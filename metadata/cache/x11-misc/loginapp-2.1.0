@@ -1,0 +1,22 @@
+>=x11-wm/windowmaker-0.65.1 gnustep-base/gnustep-make
+>=x11-wm/windowmaker-0.65.1
+0
+http://largo.windowmaker.org/files/Login.app/Login.app-2.1.0-Alpha-3.tar.gz
+
+http://largo.windowmaker.org/Login.app
+GPL-2
+XDM like graphical login program
+x86
+eutils multilib patch portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+media-libs/libpng media-libs/libsdl media-libs/sdl-image media-libs/sdl-mixer media-libs/sdl-net media-libs/sdl-ttf sys-libs/zlib
+media-libs/libpng media-libs/libsdl media-libs/sdl-image media-libs/sdl-mixer media-libs/sdl-net media-libs/sdl-ttf sys-libs/zlib
+0
+mirror://sourceforge/widelands/widelands-b9half-source.tar.bz2
+
+http://widelands.sourceforge.net/
+GPL-2
+A game similar to Settlers 2
+amd64 ~ppc x86
+base eutils flag-o-matic games multilib portability toolchain-funcs
+debug nls
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

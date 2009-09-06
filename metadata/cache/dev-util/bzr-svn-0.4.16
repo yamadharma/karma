@@ -1,0 +1,22 @@
+>=dev-util/bzr-1.10_rc1 || ( >=dev-lang/python-2.5 >=dev-python/pysqlite-2 ) >=dev-libs/apr-1 >=dev-util/subversion-1.4.0 >=app-shells/bash-3.2 virtual/python
+virtual/python
+0
+http://samba.org/~jelmer/bzr/bzr-svn-0.4.16.tar.gz
+
+http://bazaar-vcs.org/BzrForeignBranches/Subversion
+GPL-2
+Bazaar plugin that adds support for foreign Subversion repositories.
+x86 amd64
+distutils eutils multilib portability python toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+
+
+0
+mirror://debian/pool/main/a/aplus-fsf/aplus-fsf_4.20.2.orig.tar.gz mirror://debian/pool/main/a/aplus-fsf/aplus-fsf_4.20.2-5.diff.gz
+
+http://www.aplusdev.org
+GPL
+A+ is an array-oriented programming language
+~alpha amd64 ~ppc ~sparc x86
+elisp-common eutils multilib portability toolchain-funcs versionator
+emacs
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

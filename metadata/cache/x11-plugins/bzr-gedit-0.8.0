@@ -1,0 +1,22 @@
+>=dev-lang/python-2.4 >=dev-python/pygtk-2.8 >=dev-util/bzr-1.0_rc1
+>=dev-lang/python-2.4 >=dev-python/pygtk-2.8 >=dev-util/bzr-1.0_rc1 >=app-editors/gedit-2.13 bzr-gtk? ( >=dev-util/bzr-gtk-0.93 )
+0
+http://edge.launchpad.net/bzr-gedit/0.80/0.80/+download/bzr-gedit.0.80.tgz
+
+https://launchpad.net/bzr-gedit/
+GPL-2
+gedit plugin: Bazaar integration
+x86 amd64
+eutils multilib portability toolchain-funcs versionator
++bzr-gtk
+
+
+
+1
+
+install setup unpack
+
+
+
+
+

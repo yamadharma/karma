@@ -1,0 +1,22 @@
+virtual/emacs emacs-w3? ( app-emacs/w3 ) >=virtual/emacs-21
+virtual/emacs emacs-w3? ( app-emacs/w3 ) >=virtual/emacs-21
+0
+http://quimby.gnus.org/gnus/dist/gnus-5.10.6.tar.gz
+
+http://www.gnus.org/
+GPL-2
+The Gnus newsreader and mail-reader
+x86 ~ppc alpha sparc ~amd64
+elisp elisp-common eutils multilib portability toolchain-funcs
+emacs-w3
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=virtual/jdk-1.4 >=dev-java/ant-core-1.4.1
+>=virtual/jre-1.4
+0
+mirror://sourceforge/freecol/freecol-0.4.0-src.tar.gz
+
+http://freecol.sf.net
+GPL-2
+An open source clone of the game Colonization
+~ppc x86 amd64
+base eutils games multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

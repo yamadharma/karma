@@ -1,0 +1,22 @@
+>=net-libs/libpcap-0.8.3-r1 >=dev-db/mysql-4* net-firewall/iptables
+>=net-libs/libpcap-0.8.3-r1 >=dev-db/mysql-4* net-firewall/iptables
+0
+mirror://sourceforge/netams/netams-3.3.0.tar.gz
+
+http://www.netams.com/
+BSD
+This system for count and control traffic in your ip net
+x86 amd64
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst
+
+
+
+
+

@@ -1,0 +1,22 @@
+net-libs/libtelepathy dev-util/subversion net-misc/rsync
+net-libs/libtelepathy
+0
+
+
+http://telepathy.freedesktop.org/wiki/TelepathySharp
+LGPL-2
+Telepathy C# bindings
+x86 amd64
+eutils mono multilib portability subversion toolchain-funcs
+
+
+
+
+
+
+install preinst unpack
+
+
+
+
+

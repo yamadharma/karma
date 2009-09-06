@@ -1,0 +1,22 @@
+virtual/emacs >=virtual/emacs-21
+virtual/emacs >=virtual/emacs-21
+0
+ftp://ftp.ibiblio.org/pub/packages/editors/xemacs/emacs-w3/w3-4.0pre.47.tar.gz
+
+http://www.cs.indiana.edu/elisp/w3/docs.html
+GPL-2
+full-featured web browser written entirely in Emacs LISP
+x86
+elisp elisp-common eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

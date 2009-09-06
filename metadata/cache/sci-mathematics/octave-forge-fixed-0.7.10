@@ -1,0 +1,22 @@
+>=sci-mathematics/octave-3.0.0 || ( >=sys-apps/coreutils-6.10-r1 sys-apps/mktemp )
+>=sci-mathematics/octave-3.0.0
+0
+mirror://sourceforge/octave/fixed-0.7.10.tar.gz
+
+http://octave.sourceforge.net/fixed/index.html
+GPL-2
+Fixed point real and complex matrix toolbox.
+~amd64 ~x86
+eutils multilib octave-forge portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst prerm unpack
+
+
+
+
+

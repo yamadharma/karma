@@ -1,0 +1,22 @@
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+mirror://sourceforge/netclasses/netclasses-1.06.tar.bz2
+
+http://netclasses.aeruder.net/
+GPL-2 LGPL-2.1
+An asynchronous networking library for GNUstep
+amd64 x86
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

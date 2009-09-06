@@ -1,0 +1,22 @@
+>=sys-devel/libtool-1.4.1 >=dev-libs/glib-2.0.0 media-libs/libmpeg2 nls? ( virtual/libintl ) gtk? ( >=x11-libs/gtk+-2.6.10 ) zlib? ( sys-libs/zlib ) vorbis? ( >=media-libs/libvorbis-1.0_beta4 )
+
+0
+http://gnunet.org/libextractor/download/libextractor-0.5.22.tar.gz
+test
+http://www.gnunet.org/libextractor/
+LGPL-2.1
+A simple library for keyword extraction
+amd64 ~ppc ~ppc64 ~sparc x86
+eutils libtool multilib portability toolchain-funcs
+gtk nls vorbis zlib
+
+
+
+2
+
+compile install prepare
+
+
+
+
+

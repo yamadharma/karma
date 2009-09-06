@@ -1,0 +1,22 @@
+sys-devel/gcc sys-devel/flex dev-util/yacc >=sys-libs/ncurses-5.2 >=media-libs/freetype-2.0.0 X? ( virtual/x11 dev-lang/tcl dev-lang/tk ) opengl? ( virtual/opengl ) cups? ( net-print/cups ) !app-emulation/winex-transgaming
+sys-devel/gcc sys-devel/flex dev-util/yacc >=sys-libs/ncurses-5.2 >=media-libs/freetype-2.0.0 X? ( virtual/x11 dev-lang/tcl dev-lang/tk ) opengl? ( virtual/opengl ) cups? ( net-print/cups ) !app-emulation/winex-transgaming
+0
+mirror://gentoo/winex-20021123.tar.bz2 mirror://gentoo/winex-20021123-fake_windows.tar.bz2 mirror://gentoo/winex-20021123-misc.tar.bz2
+
+http://www.transgaming.com/
+Aladdin
+distribution of Wine with enhanced DirectX for gaming
+x86 -ppc -sparc
+base eutils multilib portability toolchain-funcs
+cups opengl
+
+
+
+
+
+compile install postinst unpack
+
+
+
+
+

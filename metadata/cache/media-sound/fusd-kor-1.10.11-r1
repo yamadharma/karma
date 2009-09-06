@@ -1,0 +1,22 @@
+media-sound/jack-audio-connection-kit kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/modutils ) sys-apps/sed dev-util/subversion net-misc/rsync
+media-sound/jack-audio-connection-kit kernel_linux? ( virtual/modutils )
+0
+
+
+http://fort.xdas.com/~kor/oss2jack/
+GPL-2
+Stackable unification file system, which can appear to merge the contents of several directories
+x86 amd64
+eutils linux-info linux-mod multilib portability subversion toolchain-funcs versionator
+doc kernel_linux
+
+
+
+
+
+compile install postinst postrm preinst setup unpack
+
+
+
+
+

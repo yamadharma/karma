@@ -1,0 +1,22 @@
+virtual/libc sys-apps/gawk sys-apps/grep sys-devel/libtool sys-devel/gcc
+virtual/libc
+0
+mirror://sourceforge/ktoblzcheck/ktoblzcheck-1.10.tar.gz
+
+http://ktoblzcheck.sourceforge.net/
+GPL-2
+Library to check account numbers and bank codes of German banks
+~alpha amd64 ~ia64 ~ppc ~sparc x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install
+
+
+
+
+

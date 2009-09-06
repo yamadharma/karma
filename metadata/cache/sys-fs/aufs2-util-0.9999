@@ -1,0 +1,22 @@
+>=dev-util/git-1.6
+!sys-fs/aufs-utils
+0
+
+
+http://aufs.sourceforge.net/
+GPL-2
+Userspace utilities for aufs2
+x86 amd64
+eutils git multilib portability toolchain-funcs
+
+
+
+
+2
+
+compile install prepare unpack
+
+
+
+
+

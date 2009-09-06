@@ -1,0 +1,22 @@
+virtual/linux-sources
+virtual/linux-sources
+0
+mirror://sourceforge/ms-sys/ms-sys-1.1.0.tgz
+
+http://ms-sys.sourceforge.net/
+GPL-2
+Linux program for writing Microsoft compatible boot records
+x86
+
+
+
+
+
+
+
+compile install
+
+
+
+
+

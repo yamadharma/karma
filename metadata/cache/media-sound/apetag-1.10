@@ -1,0 +1,22 @@
+
+dev-lang/python
+0
+http://muth.org/Robert/Apetag/apetag.1.10.tar.gz
+
+http://muth.org/Robert/Apetag/
+GPL-3
+Command-line ape 2.0 tagger
+amd64 x86
+base eutils multilib portability toolchain-funcs
+
+
+
+
+1
+
+compile install unpack
+
+
+
+
+

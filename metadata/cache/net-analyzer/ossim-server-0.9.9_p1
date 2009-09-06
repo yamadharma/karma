@@ -1,0 +1,22 @@
+>=dev-libs/glib-2.9.0 >=gnome-extra/libgda-1.2.0 >=net-libs/gnet-2.0.7 >=dev-libs/libxml2-2.6.22
+>=dev-libs/glib-2.9.0 >=gnome-extra/libgda-1.2.0 >=net-libs/gnet-2.0.7 >=dev-libs/libxml2-2.6.22
+0
+mirror://sourceforge/os-sim/os-sim-0.9.9p1.tar.gz
+
+http://www.ossim.net/
+BSD
+Open Source Security Information Management - Server
+x86 amd64
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst setup
+
+
+
+
+

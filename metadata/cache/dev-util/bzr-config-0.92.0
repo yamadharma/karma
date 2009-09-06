@@ -1,0 +1,22 @@
+>=dev-lang/python-2.4 >=dev-util/bzr-0.14 >=app-shells/bash-3.2 virtual/python
+>=dev-lang/python-2.4 >=dev-util/bzr-0.14 virtual/python
+0
+https://launchpad.net/bzr-config/trunk/0.92.0/+download/bzr-config-0.92.0.zip
+
+https://launchpad.net/bzr-config
+GPL-2
+GUI utility for configuring Bazaar settings.
+x86 amd64
+distutils eutils multilib portability python toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+dev-libs/nettle dev-libs/gmp media-libs/giflib bzip2? ( app-arch/bzip2 ) fftw? ( sci-libs/fftw ) gdbm? ( sys-libs/gdbm ) gtk? ( =x11-libs/gtk+-1.2* ) jpeg? ( media-libs/jpeg ) kerberos? ( virtual/krb5 ) mysql? ( virtual/mysql ) opengl? ( virtual/opengl virtual/glut ) pcre? ( dev-libs/libpcre ) pdf? ( media-libs/pdflib ) scanner? ( media-gfx/sane-backends ) sdl? ( media-libs/libsdl media-libs/sdl-mixer ) ssl? ( dev-libs/openssl ) svg? ( gnome-base/librsvg ) tiff? ( media-libs/tiff ) truetype? ( media-libs/freetype ) zlib? ( sys-libs/zlib )
+
+0
+ftp://ftp.caudium.net/pike/7.6/pike-7.6.103.tar.gz
+
+http://pike.ida.liu.se/
+GPL-2 LGPL-2.1 MPL-1.1
+Pike programming language and runtime
+amd64 ppc x86
+
+bzip2 debug doc fftw gdbm gtk hardened jpeg kerberos mime mysql opengl pcre pdf scanner sdl ssl svg tiff truetype zlib
+
+
+
+
+
+compile install
+
+
+
+
+

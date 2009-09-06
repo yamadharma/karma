@@ -1,0 +1,22 @@
+sys-apps/gawk dev-lang/perl X? ( || ( x11-apps/bdftopcf virtual/x11 ) ) X? ( x11-apps/mkfontdir media-fonts/encodings ) gnustep? ( >=gnustep-base/mknfonts-0.5-r1 ) media-libs/fontconfig
+
+0
+http://www.is-vn.bg/hamster/terminus-font-4.26.tar.gz
+
+http://www.is-vn.bg/hamster/jimmy-en.html
+GPL-2
+A clean fixed font for the console and X11
+x86 ~ppc ~sparc ~alpha ~mips ~hppa ~ia64 amd64 ~ppc64
+eutils font multilib portability toolchain-funcs
+X gnustep X
+
+
+
+
+
+compile install postinst postrm setup
+
+
+
+
+

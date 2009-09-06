@@ -1,0 +1,22 @@
+gnustep-base/gnustep-env gnustep-apps/gworkspace dev-util/cvs net-misc/openssh
+gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 ) gnustep-apps/gworkspace
+0
+
+
+http://www.gnustep.it/enrico/gworkspace/
+GPL-2
+A recycler for GNUstep.
+x86 ~ppc
+cvs eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
+debug profile doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

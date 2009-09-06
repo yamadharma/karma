@@ -1,0 +1,22 @@
+>=dev-lang/python-1.5.2 >=app-shells/bash-3.2 >=dev-lang/python-1.5.2 >=app-shells/bash-3.2 virtual/python
+>=dev-lang/python-1.5.2 >=dev-lang/python-1.5.2 virtual/python
+0
+mirror://sourceforge/scons/scons-0.97.tar.gz
+
+http://www.scons.org/
+as-is
+Extensible Python-based build utility
+alpha amd64 hppa ia64 ~mips ppc ppc64 sparc x86 ~x86-fbsd
+distutils eutils multilib portability python toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm unpack
+
+
+
+
+

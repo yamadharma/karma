@@ -1,0 +1,22 @@
+>=dev-libs/libpcre-3.9 pam? ( sys-libs/pam )
+>=dev-libs/libpcre-3.9 pam? ( sys-libs/pam ) virtual/inetd
+0
+http://www-dt.e-technik.uni-dortmund.de/~ma/leafnode/beta/leafnode-2.0.0.alpha20041227a.tar.bz2
+
+http://www-dt.e-technik.uni-dortmund.de/~ma/leafnode/beta/
+LGPL-2.1
+A USENET software package designed for small sites
+~x86 ~ppc ~sparc
+eutils flag-o-matic multilib portability toolchain-funcs
+ipv6 pam
+
+
+
+
+
+compile install postinst
+
+
+
+
+

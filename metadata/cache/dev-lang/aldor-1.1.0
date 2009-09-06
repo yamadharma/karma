@@ -1,0 +1,22 @@
+emacs? ( virtual/emacs ) dev-util/byacc emacs? ( app-text/noweb doc? ( virtual/tetex ) ) dev-util/subversion net-misc/rsync
+emacs? ( virtual/emacs )
+0
+doc? ( http://aldor.org/docs/aldorug.pdf.gz http://aldor.org/docs/libaldor.pdf.gz http://aldor.org/docs/tutorial.pdf.gz ftp://ftp-sop.inria.fr/cafe/software/algebra/algebra.html.tar.gz ) emacs? ( http://www.risc.uni-linz.ac.at/people/hemmecke/aldor/aldor.el.nw )
+
+http://www.aldor.org/
+aldor-2
+Aldor - programming language with a two-level type system
+x86 amd64
+elisp-common eutils multilib portability subversion toolchain-funcs
+doc emacs
+
+
+
+2
+
+compile install postinst preinst prepare prerm setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+dev-lang/perl
+dev-lang/perl
+0
+mirror://cpan/authors/id/A/AN/ANTRO/PDF-111.tgz
+
+http://search.cpan.org/~antro/
+Artistic
+The PDF library is a proposed library for access the information contained inside a PDF file
+amd64 ~ppc ~ppc64 x86
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+virtual/latex-base virtual/ghostscript >=dev-scheme/guile-1.4 media-libs/freetype x11-libs/libXext imlib? ( media-libs/imlib2 ) jpeg? ( || ( media-gfx/imagemagick media-gfx/jpeg2ps ) ) svg? ( || ( media-gfx/inkscape gnome-base/librsvg ) ) netpbm? ( media-libs/netpbm ) spell? ( || ( >=app-text/ispell-3.2 >=app-text/aspell-0.5 ) ) x11-proto/xproto
+virtual/latex-base virtual/ghostscript >=dev-scheme/guile-1.4 media-libs/freetype x11-libs/libXext imlib? ( media-libs/imlib2 ) jpeg? ( || ( media-gfx/imagemagick media-gfx/jpeg2ps ) ) svg? ( || ( media-gfx/inkscape gnome-base/librsvg ) ) netpbm? ( media-libs/netpbm ) spell? ( || ( >=app-text/ispell-3.2 >=app-text/aspell-0.5 ) )
+0
+ftp://ftp.texmacs.org/pub/TeXmacs/targz/TeXmacs-1.0.6.14-src.tar.gz ftp://ftp.texmacs.org/pub/TeXmacs/targz/TeXmacs-600dpi-fonts.tar.gz
+
+http://www.texmacs.org/
+GPL-2
+Wysiwyg text processor with high-quality maths
+amd64 x86
+eutils multilib portability toolchain-funcs
+imlib jpeg svg netpbm spell
+
+
+
+
+
+compile install setup unpack
+
+
+
+
+

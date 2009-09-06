@@ -1,0 +1,22 @@
+dev-util/scons dev-libs/log4cpp dev-libs/boost >=media-gfx/graphviz-2.8 media-libs/sdl-net media-libs/freetype media-libs/devil media-libs/gigi dev-util/subversion net-misc/rsync
+dev-util/scons dev-libs/log4cpp dev-libs/boost >=media-gfx/graphviz-2.8 media-libs/sdl-net media-libs/freetype media-libs/devil media-libs/gigi
+0
+
+
+http://www.freeorion.org/
+GPL-2
+FreeOrion brings nation building to a galactic scale with its full-featured grand campaign and in-game racial histories, in addition to the classic 4X model of galactic conquest and tactical combat.
+amd64 x86
+eutils multilib portability subversion toolchain-funcs
+fmod
+
+
+
+
+
+compile install preinst unpack
+
+
+
+
+

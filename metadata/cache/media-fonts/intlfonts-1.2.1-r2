@@ -1,0 +1,22 @@
+X? ( x11-apps/mkfontdir media-fonts/encodings ) gnustep? ( >=gnustep-base/mknfonts-0.5-r1 ) media-libs/fontconfig
+
+0
+ftp://ftp.gnu.org/pub/gnu/intlfonts/intlfonts-1.2.1.tar.gz
+
+http://www.gnu.org/directory/intlfonts.html
+GPL-2
+International X11 fixed fonts
+alpha amd64 arm ia64 ppc s390 sh sparc x86 ~x86-fbsd
+eutils font multilib portability toolchain-funcs
+X bdf gnustep X
+
+
+
+
+
+compile install postinst postrm setup
+
+
+
+
+

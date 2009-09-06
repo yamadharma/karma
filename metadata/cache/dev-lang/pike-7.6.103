@@ -1,0 +1,22 @@
+crypt? ( dev-libs/nettle ) zlib? ( sys-libs/zlib ) pdf? ( media-libs/pdflib ) gdbm? ( sys-libs/gdbm ) java? ( virtual/jdk ) scanner? ( media-gfx/sane-backends ) mysql? ( dev-db/mysql ) postgres? ( dev-db/postgresql ) gif? ( media-libs/giflib ) truetype? ( media-libs/freetype ) jpeg? ( media-libs/jpeg ) tiff? ( media-libs/tiff ) kerberos? ( virtual/krb5 ) opengl? ( virtual/opengl virtual/glut ) ffmpeg? ( media-video/ffmpeg ) sdl? ( media-libs/libsdl ) fftw? ( =sci-libs/fftw-2* ) crypt? ( dev-libs/nettle ) perl? ( dev-lang/perl ) svg? ( gnome-base/librsvg ) pcre? ( dev-libs/libpcre ) sdl? ( media-libs/libsdl media-libs/sdl-mixer ) ssl? ( dev-libs/openssl ) dev-libs/gmp >=sys-apps/sed-4
+crypt? ( dev-libs/nettle ) zlib? ( sys-libs/zlib ) pdf? ( media-libs/pdflib ) gdbm? ( sys-libs/gdbm ) java? ( virtual/jdk ) scanner? ( media-gfx/sane-backends ) mysql? ( dev-db/mysql ) postgres? ( dev-db/postgresql ) gif? ( media-libs/giflib ) truetype? ( media-libs/freetype ) jpeg? ( media-libs/jpeg ) tiff? ( media-libs/tiff ) kerberos? ( virtual/krb5 ) opengl? ( virtual/opengl virtual/glut ) ffmpeg? ( media-video/ffmpeg ) sdl? ( media-libs/libsdl ) fftw? ( =sci-libs/fftw-2* ) crypt? ( dev-libs/nettle ) perl? ( dev-lang/perl ) svg? ( gnome-base/librsvg ) pcre? ( dev-libs/libpcre ) sdl? ( media-libs/libsdl media-libs/sdl-mixer ) ssl? ( dev-libs/openssl ) dev-libs/gmp
+0
+ftp://ftp.caudium.net/pike/7.6/pike-7.6.103.tar.gz
+
+http://pike.ida.liu.se/
+GPL-2 LGPL-2.1 MPL-1.1
+Pike programming language and runtime
+x86 ppc amd64
+eutils fixheadtails flag-o-matic multilib portability toolchain-funcs
+crypt debug doc fftw gdbm gif java jpeg mysql oci8 odbc opengl pdf postgres scanner sdl tiff truetype zlib perl ffmpeg svg kerberos bzip2 pcre gmp mime mmx
+
+
+
+
+
+compile install unpack
+
+
+
+
+

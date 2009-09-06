@@ -1,0 +1,22 @@
+|| ( ( x11-libs/libX11 x11-libs/libXmu x11-libs/libXpm ) virtual/x11 )
+|| ( ( x11-libs/libX11 x11-libs/libXmu x11-libs/libXpm ) virtual/x11 ) x11-misc/xscreensaver
+0
+http://www.cosmosx.org/cosmos-1.0.tgz http://www.jwz.org/xscreensaver/xscreensaver-5.00.tar.gz
+
+http://www.cosmosx.org/
+GPL-1
+Draws fireworks and zooming, fading flares
+x86 amd64
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

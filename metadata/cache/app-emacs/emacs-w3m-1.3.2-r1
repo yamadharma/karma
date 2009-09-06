@@ -1,0 +1,22 @@
+virtual/emacs >=net-www/w3m-0.3 >=virtual/emacs-21
+virtual/emacs >=net-www/w3m-0.3 >=virtual/emacs-21
+0
+http://emacs-w3m.namazu.org/emacs-w3m-1.3.2.tar.gz
+
+http://emacs-w3m.namazu.org
+GPL-2
+emacs-w3m is interface program of w3m on Emacs.
+x86
+elisp elisp-common eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

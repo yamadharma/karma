@@ -1,0 +1,22 @@
+gnustep? gnustep-base/gnustep-env X? media-fonts/chkfontpath
+
+0
+mirror://debian/pool/main/t/ttf-freefont/ttf-freefont_20031008-1.tar.gz
+
+http://www.nongnu.org/freefont/ http://alioth.debian.org/projects/freefont
+GPL-2
+Free UCS Outline Fonts
+~x86 ~sparc ~ppc
+eutils extrafiles fonts multilib patch portability toolchain-funcs
+X gnustep daemontools X gnustep
+
+
+
+
+
+compile install postinst postrm prerm unpack
+
+
+
+
+

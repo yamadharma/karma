@@ -1,0 +1,22 @@
+kde? ( x11-libs/wxGTK:2.8[X,-odbc] || ( kde-base/konqueror kde-base/kdebase-meta kde-base/kdebase ) ) wxwidgets? ( x11-libs/wxGTK:2.8[X,-odbc] )
+kde? ( x11-libs/wxGTK:2.8[X,-odbc] || ( kde-base/konqueror kde-base/kdebase-meta kde-base/kdebase ) ) wxwidgets? ( x11-libs/wxGTK:2.8[X,-odbc] )
+0
+mirror://sourceforge/p7zip/p7zip_9.04_src_all.tar.bz2
+
+http://p7zip.sourceforge.net/
+LGPL-2.1
+Port of 7-Zip archiver for Unix
+~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd
+eutils multilib portability toolchain-funcs wxwidgets
+doc kde static wxwidgets
+
+
+
+2
+
+compile install prepare setup test
+
+
+
+
+

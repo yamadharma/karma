@@ -1,0 +1,22 @@
+>=dev-util/scons-0.98 x11-libs/libXt x11-proto/inputproto >=dev-libs/openssl-0.9.6 ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20070616-r1 media-libs/x264 ) jpeg? ( media-libs/jpeg ) media-libs/tiff >=dev-lang/python-2.4 nls? ( >=media-libs/freetype-2.0 virtual/libintl >=media-libs/ftgl-2.1 ) openal? ( media-libs/openal media-libs/freealut ) openexr? ( media-libs/openexr ) png? ( media-libs/libpng ) >=media-libs/libsdl-1.2 virtual/opengl >=app-shells/bash-3.2
+>=dev-libs/openssl-0.9.6 ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20070616-r1 media-libs/x264 ) jpeg? ( media-libs/jpeg ) media-libs/tiff >=dev-lang/python-2.4 nls? ( >=media-libs/freetype-2.0 virtual/libintl >=media-libs/ftgl-2.1 ) openal? ( media-libs/openal media-libs/freealut ) openexr? ( media-libs/openexr ) png? ( media-libs/libpng ) >=media-libs/libsdl-1.2 virtual/opengl
+0
+http://download.blender.org/source/blender-2.46.tar.gz
+
+http://www.blender.org/
+|| ( GPL-2 BL )
+3D Creation/Animation/Publishing System
+amd64 ~ppc ~ppc64 ~sparc x86
+eutils flag-o-matic multilib portability python toolchain-funcs
+blender-game ffmpeg jpeg nls openal openexr png verse
+
+
+
+
+
+compile install preinst unpack
+
+
+
+
+

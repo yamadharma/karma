@@ -1,0 +1,22 @@
+sys-devel/libtool =dev-dotnet/gtk-sharp-2.12* =dev-dotnet/gnome-sharp-2.24* =dev-dotnet/gtk-sharp-gapi-2.12* >=gnome-base/gnome-panel-2.26 >=dev-lang/mono-2.0.1 >=sys-apps/sed-4 >=dev-util/pkgconfig-0.23 >=app-shells/bash-3.1
+=dev-dotnet/gtk-sharp-2.12* =dev-dotnet/gnome-sharp-2.24* >=gnome-base/gnome-panel-2.26 >=dev-lang/mono-2.0.1
+2
+mirror://gnome/sources/gnome-desktop-sharp/2.26/gnome-desktop-sharp-2.26.0.tar.bz2
+test
+http://www.mono-project.com/GtkSharp
+LGPL-2.1
+GtkSharp's gnome-panel module of the gnome-desktop-sharp tarball
+x86 amd64
+autotools base eutils gtk-sharp-module libtool mono multilib portability toolchain-funcs versionator
+debug
+
+
+
+2
+
+compile configure install prepare unpack
+
+
+
+
+

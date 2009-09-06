@@ -1,0 +1,22 @@
+>=virtual/jdk-1.4 >=dev-lang/tcl-8.4.5 >=virtual/jre-1.4 >=dev-java/java-config-2.1.6
+>=dev-lang/tcl-8.4.5 >=virtual/jre-1.4 >=dev-java/java-config-2.1.6
+0
+mirror://sourceforge/tcljava/jacl1.4.0.tar.gz
+
+http://tcljava.sourceforge.net
+BSD
+Jacl is an implementation of Tcl written in Java.
+amd64 ~ia64 ppc ppc64 x86 ~x86-fbsd
+base eutils java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+doc elibc_FreeBSD
+
+
+
+
+
+compile install preinst setup test unpack
+
+
+
+
+

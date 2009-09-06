@@ -1,0 +1,22 @@
+
+net-misc/curl >=media-libs/cal3d-0.11 >=dev-games/crystalspace-ps-1.1-r26888 >=dev-games/cel-ps-1.1-r2766 server? ( virtual/mysql )
+0
+http://dev.gentooexperimental.org/~loux/distfiles/planeshift-0.3.019-r1.tar.bz2
+
+http://www.planeshift.it/
+|| ( GPL-2 Planeshift )
+Virtual fantasy world MMORPG
+x86 amd64
+base eutils games multilib portability toolchain-funcs
+server static debug maxoptimization debug nochatbubbles
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

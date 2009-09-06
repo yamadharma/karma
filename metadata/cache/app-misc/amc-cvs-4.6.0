@@ -1,0 +1,22 @@
+>=sys-apps/e2fsprogs-1.19 ncurses? ( >=sys-libs/ncurses-5.2-r5 ) =dev-libs/glib-2* >=sys-libs/pam-0.72 dev-util/pkgconfig gpm? ( >=sys-libs/gpm-1.19.3 ) slang? ( >=sys-libs/slang-1.4.2 ) samba? ( virtual/samba ) X? ( virtual/x11 ) dev-util/cvs
+>=sys-apps/e2fsprogs-1.19 ncurses? ( >=sys-libs/ncurses-5.2-r5 ) =dev-libs/glib-2* >=sys-libs/pam-0.72 dev-util/pkgconfig gpm? ( >=sys-libs/gpm-1.19.3 ) slang? ( >=sys-libs/slang-1.4.2 ) samba? ( virtual/samba ) X? ( virtual/x11 )
+0
+
+
+http://www.MPlayerHQ.hu/~arpi/amc
+GPL-2
+AMC (originally Advanced Midnight Commander) is branch of the well-known Midnight Commander
+x86
+cvs eutils multilib portability toolchain-funcs
+gpm nls samba ldap ssl ncurses X slang
+
+
+
+
+
+compile install unpack
+
+
+
+
+

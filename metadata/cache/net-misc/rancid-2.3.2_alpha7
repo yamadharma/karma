@@ -1,0 +1,22 @@
+>=dev-tcltk/expect-5.40
+>=dev-tcltk/expect-5.40
+0
+ftp://ftp.shrubbery.net/pub/rancid/rancid-2.3.2a7.tar.gz
+nomirror
+http://www.shrubbery.net/rancid/
+GPL-2
+Really Awesome New Cisco confIg Differ
+~x86 ~amd64
+versionator
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

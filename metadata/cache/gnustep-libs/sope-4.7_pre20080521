@@ -1,0 +1,22 @@
+gnustep-base/gnustep-base dev-libs/libxml2 net-nds/openldap mysql? ( virtual/mysql ) postgres? ( virtual/postgresql-base ) sqlite? ( >=dev-db/sqlite-3 ) =www-servers/apache-2*
+gnustep-base/gnustep-base dev-libs/libxml2 net-nds/openldap mysql? ( virtual/mysql ) postgres? ( virtual/postgresql-base ) sqlite? ( >=dev-db/sqlite-3 ) =www-servers/apache-2*
+0
+http://download.opengroupware.org/nightly/sources/trunk/sope-trunk-r1621-200805211100.tar.gz
+
+http://sope.opengroupware.org/en/index.html
+LGPL-2
+an extensive set of frameworks which form a complete Web application server environment
+amd64 x86
+apache-module depend.apache eutils flag-o-matic gnustep-base multilib portability toolchain-funcs
+mysql +postgres sqlite debug doc
+
+
+
+1
+
+compile install postinst setup unpack
+
+
+
+
+

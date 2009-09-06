@@ -1,0 +1,22 @@
+>=dev-libs/glib-2 sys-devel/gettext sys-libs/ncurses sys-libs/readline gtk? ( >=x11-libs/gtk+-2 ) ssl? ( dev-libs/openssl ) rcc? ( app-i18n/librcc ) >=dev-util/pkgconfig-0.9
+>=dev-libs/glib-2 sys-devel/gettext sys-libs/ncurses sys-libs/readline gtk? ( >=x11-libs/gtk+-2 ) ssl? ( dev-libs/openssl ) rcc? ( app-i18n/librcc )
+0
+http://www.gftp.org/gftp-2.0.18.tar.bz2
+
+http://www.gftp.org
+GPL-2
+Gnome based FTP Client
+~alpha amd64 ~ppc ~ppc64 ~sparc x86
+eutils multilib portability toolchain-funcs
+gtk ssl rcc
+
+
+
+
+
+compile install unpack
+
+
+
+
+

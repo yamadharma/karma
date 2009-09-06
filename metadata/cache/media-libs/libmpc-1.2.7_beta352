@@ -1,0 +1,22 @@
+
+
+0
+http://files.musepack.net/source/libmpc-r352.tar.bz2
+
+http://www.musepack.net
+BSD
+Musepack decoder library
+~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd
+
+
+
+
+
+
+
+compile install
+
+
+
+
+

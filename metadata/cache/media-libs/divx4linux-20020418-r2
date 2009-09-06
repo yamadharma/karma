@@ -1,0 +1,22 @@
+virtual/glibc
+virtual/glibc
+0
+http://download.divx.com/divx/divx4linux501-20020418.tgz
+nostrip
+http://www.divx.com/
+DIVX
+Binary release of DivX Codec 5.0.1
+~x86 -ppc -sparc
+
+
+
+
+
+
+
+install
+
+
+
+
+

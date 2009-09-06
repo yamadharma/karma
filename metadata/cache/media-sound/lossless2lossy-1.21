@@ -1,0 +1,22 @@
+
+ape? ( media-sound/mac ) flac? ( media-libs/flac ) mp3? ( media-sound/lame ) vorbis? ( media-libs/libvorbis ) wavpack? ( media-sound/wavpack ) media-sound/id3v2
+0
+http://downloads.sourceforge.net/lossless2lossy/lossless2lossy-v1.21.gz
+
+http://lossless2lossy.sourceforge.net/
+GPL-2
+A conversion script for mass converting your music collection from one format to another
+amd64 x86 ~sparc
+
+ape flac mp3 vorbis wavpack
+
+
+
+
+
+install unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+media-libs/devil media-libs/freetype dev-libs/boost media-libs/sdl-net ogre? ( dev-games/ogre ) ois? ( dev-games/ois ) sdl? ( media-libs/libsdl ) dev-util/scons dev-util/subversion net-misc/rsync
+media-libs/devil media-libs/freetype dev-libs/boost media-libs/sdl-net ogre? ( dev-games/ogre ) ois? ( dev-games/ois ) sdl? ( media-libs/libsdl )
+0
+
+
+http://gigi.sourceforge.net/
+LGPL-2.1
+GiGi is a small, efficient, and feature-rich C++ GUI for SDL and OpenGL. It is uses frame-based rendering and has fully customizable graphics, making it ideal for use in low- or high-frame rate applications and games.
+amd64 x86
+eutils multilib portability subversion toolchain-funcs
+ogre ois sdl
+
+
+
+2
+
+compile install preinst prepare unpack
+
+
+
+
+

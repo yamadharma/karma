@@ -1,0 +1,22 @@
+!build? ( sys-apps/sed >=sys-devel/binutils-2.11.90.0.31 )
+!build? ( >=sys-libs/ncurses-5.2 sys-devel/make ) virtual/dev-manager
+2.6.20-r1
+mirror://kernel/linux/kernel/v2.6/linux-2.6.20.tar.bz2
+binchecks strip
+http://www.kernel.org/ http://www.gentoo.org/
+GPL-2
+KLK Sources with OpenVZ support.
+~x86 ~amd64
+eutils kernel-2 multilib portability toolchain-funcs versionator
+symlink build
+
+
+virtual/linux-sources virtual/alsa
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

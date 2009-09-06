@@ -1,0 +1,22 @@
+dev-libs/libical >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
+dev-libs/libical >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+http://coyote.octets.fr/pub/gnustep/SimpleAgenda-0.25.tar.gz
+
+http://coyote.octets.fr/pub/gnustep/
+GPL-2
+a simple calender and agenda application
+amd64 x86
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

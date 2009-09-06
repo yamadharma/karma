@@ -1,0 +1,22 @@
+sys-libs/zlib sys-apps/acl !sys-fs/mtd
+sys-libs/zlib sys-apps/acl !sys-fs/mtd
+0
+mirror://gentoo/mtd-utils-snapshot-20060907.tar.bz2
+
+http://sources.redhat.com/jffs2/
+GPL-2
+MTD userspace tools, based on GIT snapshot from upstream
+amd64 ~arm ~mips ~ppc x86
+eutils flag-o-matic multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

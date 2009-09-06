@@ -1,0 +1,22 @@
+>=dev-perl/IO-stringy-2.108 dev-perl/MIME-Base64 dev-perl/libnet dev-perl/URI dev-perl/Digest-MD5 dev-perl/libwww-perl dev-perl/HTML-Tagset dev-perl/HTML-Parser dev-perl/MailTools
+>=dev-perl/IO-stringy-2.108 dev-perl/MIME-Base64 dev-perl/libnet dev-perl/URI dev-perl/Digest-MD5 dev-perl/libwww-perl dev-perl/HTML-Tagset dev-perl/HTML-Parser dev-perl/MailTools
+0
+http://www.mimedefang.org/static/MIME-tools-5.411a-RP-Patched-02.tar.gz
+
+http://www.cpan.org/modules/by-module/MIME/ERYQ/MIME-tools-5.411a.readme http://www.mimedefang.org
+Artistic
+A Perl module for parsing and creating MIME entities
+x86 ppc sparc alpha
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

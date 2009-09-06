@@ -1,0 +1,22 @@
+virtual/libc dev-lang/perl
+virtual/libc dev-lang/perl
+0
+http://udpcast.linux.lu/download/udpcast-20051223.tar.gz
+
+http://udpcast.linux.lu/
+GPL-2 BSD
+Multicast file transfer tool
+x86 amd64
+eutils flag-o-matic multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

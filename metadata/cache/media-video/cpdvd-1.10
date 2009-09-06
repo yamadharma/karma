@@ -1,0 +1,22 @@
+
+>=media-video/transcode-0.6.2 >=dev-lang/perl-5.8.0-r12 >=media-video/cpvts-1.2
+0
+http://www.lallafa.de/bp/files/cpdvd-1.10.gz
+
+http://www.lallafa.de/bp/cpdvd.html
+GPL-2
+transfer a DVD title to your harddisk with ease on Linux
+amd64 ~ppc x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install setup
+
+
+
+
+

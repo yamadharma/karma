@@ -1,0 +1,22 @@
+dev-libs/openssl ortp? ( >=net-libs/ortp-0.7.1 ilbc? ( dev-libs/ilbc-rfc3951 ) speex? ( media-libs/speex ) ) dev-util/pkgconfig =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+dev-libs/openssl ortp? ( >=net-libs/ortp-0.7.1 ilbc? ( dev-libs/ilbc-rfc3951 ) speex? ( media-libs/speex ) )
+0
+mirror://sourceforge/libjingle/libjingle-0.4.0.tar.gz
+
+http://libjingle.sourceforge.net/
+BSD
+Google's jabber voice extension library modified by Tapioca
+
+autotools eutils libtool multilib portability toolchain-funcs
+speex ilbc ortp
+
+
+
+
+
+compile install unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=media-libs/raptor-0.9.12 >=media-libs/ladspa-sdk-1.12 dev-util/pkgconfig
+>=media-libs/raptor-0.9.12 >=media-libs/ladspa-sdk-1.12
+0
+mirror://sourceforge/lrdf/liblrdf-0.4.0.tar.gz
+
+http://lrdf.sourceforge.net
+GPL-2
+A library for the manipulation of RDF file in LADSPA plugins
+x86 ~sparc ~ppc amd64 ~ppc-macos ~ppc64
+
+
+
+
+
+
+
+install
+
+
+
+
+

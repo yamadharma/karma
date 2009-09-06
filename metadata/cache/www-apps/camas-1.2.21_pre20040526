@@ -1,0 +1,22 @@
+www-servers/caudium
+www-servers/caudium
+0
+ftp://ftp.caudium.net/caudium/camas/camas-1.2.21-20040526-cvs.tar.bz2
+
+http://www.caudium.net/
+GPL-2 | LGPL-2.1 | MPL-1.1
+CAMAS or CAudium Mail Access System, a webmail for the Caudium webserver
+x86 amd64
+eutils multilib portability toolchain-funcs
+doc
+
+
+
+
+
+compile install
+
+
+
+
+

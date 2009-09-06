@@ -1,0 +1,22 @@
+>=x11-libs/gtk+-2.8.0:2 >=dev-libs/glib-2.6.0:2 >=gnome-base/libgnomeui-2.4.0 >=gnome-base/libgnome-2.4.0 >=gnome-base/gnome-vfs-2.0.0 virtual/fam chm? ( >=dev-libs/chmlib-0.39 ) exif? ( >=media-gfx/exiv2-0.14 ) gsf? ( >=gnome-extra/libgsf-1.12.0 ) taglib? ( >=media-libs/taglib-1.4 ) python? ( >=dev-lang/python-2.4 ) gnome-base/gnome-common dev-util/intltool dev-util/pkgconfig >=sys-apps/sed-4 dev-util/subversion net-misc/rsync =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+>=x11-libs/gtk+-2.8.0:2 >=dev-libs/glib-2.6.0:2 >=gnome-base/libgnomeui-2.4.0 >=gnome-base/libgnome-2.4.0 >=gnome-base/gnome-vfs-2.0.0 virtual/fam chm? ( >=dev-libs/chmlib-0.39 ) exif? ( >=media-gfx/exiv2-0.14 ) gsf? ( >=gnome-extra/libgsf-1.12.0 ) taglib? ( >=media-libs/taglib-1.4 ) python? ( >=dev-lang/python-2.4 )
+0
+
+
+http://www.nongnu.org/gcmd/
+GPL-2
+A full featured, dual-pane file manager for Gnome2
+
+autotools eutils fdo-mime flag-o-matic gnome.org gnome2 gnome2-utils libtool multilib portability subversion toolchain-funcs
+doc chm exif gsf taglib python debug
+
+
+
+1
+
+compile install postinst postrm preinst setup unpack
+
+
+
+
+

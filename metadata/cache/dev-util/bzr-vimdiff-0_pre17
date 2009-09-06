@@ -1,0 +1,22 @@
+>=app-shells/bash-3.2 dev-util/bzr
+|| ( app-editors/vim app-editors/gvim )
+0
+
+
+https://launchpad.net/bzr-dbus
+GPL-2
+Plugin that provides integration between bzr and D-Bus.
+x86 amd64
+bzr eutils multilib portability python toolchain-funcs
+
+
+
+
+
+
+install setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+virtual/libc net-libs/libpcap sys-libs/zlib X? ( virtual/x11 x11-libs/openmotif )
+virtual/libc net-libs/libpcap sys-libs/zlib X? ( virtual/x11 x11-libs/openmotif )
+0
+ftp://ftp.auckland.ac.nz/pub/iawg/NeTraMet/beta-versions/NeTraMet51b3.tar.gz
+
+http://www2.auckland.ac.nz/net/NeTraMet/
+GPL-2
+NeTraMet is a network accounting meter.
+x86
+
+X ipv6
+
+
+
+
+
+compile install
+
+
+
+
+

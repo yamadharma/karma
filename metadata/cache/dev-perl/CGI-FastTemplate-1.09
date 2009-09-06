@@ -1,0 +1,22 @@
+
+
+0
+http://www.cpan.org/modules/by-module/CGI/CGI-FastTemplate-1.09.tar.gz
+
+http://www.cpan.org/modules/by-module/CGI
+Artistic | GPL-2
+CGI::FastTemplate manages templates and parses templates replacing variable names with values
+x86 ppc sparc alpha
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

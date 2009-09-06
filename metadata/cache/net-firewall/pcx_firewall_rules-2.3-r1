@@ -1,0 +1,22 @@
+>=net-firewall/pcx_firewall-2.17 >=dev-libs/libxml2-2.4.11 >=dev-perl/XML-SAX-0.10 >=dev-perl/XML-LibXML-1.40
+>=net-firewall/pcx_firewall-2.17 >=dev-libs/libxml2-2.4.11 >=dev-perl/XML-SAX-0.10 >=dev-perl/XML-LibXML-1.40 net-firewall/iptables
+0
+mirror://sourceforge/pcxfirewall/pcx_firewall_rules-2.3.tar.gz
+
+http://pcxfirewall.sourceforge.net/
+GPL-2
+Rules for PCX-Firewall
+x86
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

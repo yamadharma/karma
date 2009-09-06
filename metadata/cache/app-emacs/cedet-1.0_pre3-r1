@@ -1,0 +1,22 @@
+virtual/emacs !app-emacs/semantic !app-emacs/eieio !app-emacs/speedbar >=virtual/emacs-21
+virtual/emacs !app-emacs/semantic !app-emacs/eieio !app-emacs/speedbar >=virtual/emacs-21
+0
+mirror://sourceforge/cedet/cedet-1.0pre3.tar.gz
+
+http://cedet.sourceforge.net/
+GPL-2
+CEDET: Collection of Emacs Development Tools
+x86 ~ppc amd64 ~ppc-macos
+elisp elisp-common eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

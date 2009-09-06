@@ -1,0 +1,22 @@
+apache2? ( >=www-servers/apache-2.0.0 ) !apache2? ( >=www-servers/apache-1.3.0 ) mysql? ( >=dev-db/mysql-3.23.0 ) postgres? ( >=dev-db/postgres-7.0) >=dev-php/adodb-1.2 php5? ( >=dev-lang/php-5.0 ) !php5? ( >=dev-lang/php-4.0.4 ) >=net-analyzer/snort-1.7 >=my/logsnorter-0.2 php5? ( >=dev-php5/jpgraph-1.8 ) !php5? ( >=dev-php4/jpgraph-1.8 ) >=my/phplot-4.4.6 >=media-libs/gd-1.8.0
+apache2? ( >=www-servers/apache-2.0.0 ) !apache2? ( >=www-servers/apache-1.3.0 ) mysql? ( >=dev-db/mysql-3.23.0 ) postgres? ( >=dev-db/postgres-7.0) >=dev-php/adodb-1.2 php5? ( >=dev-lang/php-5.0 ) !php5? ( >=dev-lang/php-4.0.4 ) >=net-analyzer/snort-1.7 >=my/logsnorter-0.2 php5? ( >=dev-php5/jpgraph-1.8 ) !php5? ( >=dev-php4/jpgraph-1.8 ) >=my/phplot-4.4.6 >=media-libs/gd-1.8.0
+0
+http://acidlab.sourceforge.net/acid-0.9.6b23.tar.gz
+
+http://acidlab.sourceforge.net
+GPL-2
+SNORT ACID - Analysis Console for Intrusion Databases
+~x86
+eutils multilib portability toolchain-funcs
+apache2 php5 mysql postgres
+
+
+
+
+
+install postinst
+
+
+
+
+

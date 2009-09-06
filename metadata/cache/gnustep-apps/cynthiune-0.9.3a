@@ -1,0 +1,22 @@
+gnustep-base/gnustep-env media-libs/libid3tag media-libs/libmad oggvorbis? ( media-libs/libogg media-libs/libvorbis ) mikmod? ( media-plugins/modplugxmms ) flac? ( media-libs/flac ) esd? ( media-sound/esound )
+gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 )
+0
+http://organact.mine.nu/~wolfgang/cynthiune/Cynthiune-0.9.3a.tar.gz
+
+http://organact.mine.nu/~wolfgang/cynthiune
+GPL-2
+Free software and romantic music player for GNUstep.
+x86
+eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
+oggvorbis mikmod flac esd debug profile doc
+
+
+
+
+
+compile install postinst setup
+
+
+
+
+

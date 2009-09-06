@@ -1,0 +1,22 @@
+>=net-libs/ccrtp-1.5.0 >=dev-cpp/commoncpp2-1.5.1 || ( dev-libs/libgcrypt >=dev-libs/openssl-0.9.8 ) >=dev-util/pkgconfig-0.9.0
+>=net-libs/ccrtp-1.5.0 >=dev-cpp/commoncpp2-1.5.1 || ( dev-libs/libgcrypt >=dev-libs/openssl-0.9.8 )
+0
+mirror://gnu/ccrtp/libzrtpcpp-0.9.0.tar.gz
+
+http://www.gnu.org/software/ccrtp/
+GPL-2
+GNU RTP stack for the zrtp protocol specification developed by Phil Zimmermen
+amd64 ~ppc ~ppc64 x86
+
+
+
+
+
+
+
+install
+
+
+
+
+

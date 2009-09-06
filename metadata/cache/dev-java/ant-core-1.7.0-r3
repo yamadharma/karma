@@ -1,0 +1,22 @@
+>=virtual/jdk-1.4 !<dev-java/ant-tasks-1.7.0 !<dev-java/ant-1.7.0 !dev-java/ant-optional source? ( app-arch/zip ) >=dev-java/java-config-2.1.6 >=dev-java/javatoolkit-0.3.0-r2
+>=virtual/jdk-1.4 !<dev-java/ant-tasks-1.7.0 !<dev-java/ant-1.7.0 !dev-java/ant-optional >=dev-java/java-config-2.1.6
+0
+mirror://apache/ant/source/apache-ant-1.7.0-src.tar.bz2 mirror://gentoo/ant-1.7.0-gentoo.tar.bz2
+
+http://ant.apache.org/
+Apache-2.0
+Java-based build tool similar to 'make' that uses XML configuration files.
+amd64 ~ppc ~ppc64 x86
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+doc source elibc_FreeBSD elibc_FreeBSD
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

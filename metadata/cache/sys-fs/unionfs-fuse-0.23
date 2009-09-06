@@ -1,0 +1,22 @@
+sys-fs/fuse
+sys-fs/fuse
+0
+http://podgorny.cz/unionfs-fuse/releases/unionfs-fuse-0.23.tar.bz2
+
+http://podgorny.cz/unionfs-fuse
+BSD
+A FUSE-based implementation of unionfs
+amd64 x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+2
+
+install
+
+
+
+
+

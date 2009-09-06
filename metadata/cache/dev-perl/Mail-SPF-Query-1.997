@@ -1,0 +1,22 @@
+>=dev-perl/Net-DNS-0.46 dev-perl/Net-CIDR-Lite dev-perl/Sys-Hostname-Long dev-perl/URI
+>=dev-perl/Net-DNS-0.46 dev-perl/Net-CIDR-Lite dev-perl/Sys-Hostname-Long dev-perl/URI
+0
+mirror://cpan/authors/id/F/FR/FREESIDE/Mail-SPF-Query-1.997.tar.gz
+
+http://search.cpan.org/~freeside/Mail-SPF-Query-1.997/
+Artistic
+query Sender Policy Framework for an IP,email,helo
+x86 ~ppc
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

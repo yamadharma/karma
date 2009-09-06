@@ -1,0 +1,22 @@
+media-libs/freetype || ( ( x11-libs/libXpm x11-libs/libICE x11-libs/libSM x11-libs/libXext x11-libs/libXrender x11-libs/libX11 ) virtual/x11 ) png? ( >=media-libs/libpng-1.2.5 ) jpeg? ( >=media-libs/jpeg-6b ) gif? ( >=media-libs/giflib-4.1.0 ) tiff? ( >=media-libs/tiff-3.5.7 ) !x11-wm/afterstep =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+media-libs/freetype || ( ( x11-libs/libXpm x11-libs/libICE x11-libs/libSM x11-libs/libXext x11-libs/libXrender x11-libs/libX11 ) virtual/x11 ) png? ( >=media-libs/libpng-1.2.5 ) jpeg? ( >=media-libs/jpeg-6b ) gif? ( >=media-libs/giflib-4.1.0 ) tiff? ( >=media-libs/tiff-3.5.7 )
+0
+ftp://ftp.afterstep.org/stable/libAfterImage/libAfterImage-1.07.tar.bz2
+
+http://www.afterstep.org/afterimage/index.php
+LGPL-2
+Afterstep's standalone generic image manipulation library
+amd64 ~hppa ~mips ~ppc ~ppc64 ~sparc x86
+autotools eutils libtool multilib portability toolchain-funcs
+gif jpeg mmx nls png tiff
+
+
+
+
+
+compile install unpack
+
+
+
+
+

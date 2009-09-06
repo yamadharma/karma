@@ -1,0 +1,22 @@
+>=dev-lang/perl-5.6* net-firewall/iptables
+dev-lang/perl
+0
+mirror://sourceforge/pcxfirewall/pcx_firewall-2.16.tar.gz
+
+http://pcxfirewall.sourceforge.net/
+GPL-2
+Command line util for managing firewall rules
+x86
+
+
+
+
+
+
+
+install
+
+
+
+
+

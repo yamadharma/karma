@@ -1,0 +1,22 @@
+>=x11-libs/gtk+-2.6.0 dev-util/pkgconfig virtual/linux-sources kernel_linux? ( virtual/linux-sources ) >=sys-apps/sed-4
+>=x11-libs/gtk+-2.6.0 gnome? ( x11-libs/gksu ) kde? ( kde-base/kdesu )
+0
+http://cbbk.free.fr/bonrom/files/RutilTv0.16.tar.gz
+
+http://cbbk.free.fr/bonrom/
+GPL-2
+Manage wireless interfaces, particularly Ralink devices
+x86 amd64
+eutils gnome2-utils linux-info multilib portability toolchain-funcs versionator
+builtin-launcher debug gnome kde
+
+
+
+
+
+compile install postinst setup
+
+
+
+
+

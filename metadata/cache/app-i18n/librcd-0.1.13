@@ -1,0 +1,22 @@
+=sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+
+0
+http://dside.dyndns.org/files/rusxmms/librcd-0.1.13.tar.bz2
+
+
+GPL-2
+LibRCD is Russian Encoding Detection Library
+x86 amd64
+autotools eutils libtool multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

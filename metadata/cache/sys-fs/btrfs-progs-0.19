@@ -1,0 +1,22 @@
+debug-utils? ( dev-python/matplotlib ) acl? ( sys-apps/acl sys-fs/e2fsprogs )
+debug-utils? ( dev-python/matplotlib ) acl? ( sys-apps/acl sys-fs/e2fsprogs )
+0
+http://www.kernel.org/pub/linux/kernel/people/mason/btrfs/btrfs-progs-0.19.tar.bz2
+
+http://btrfs.wiki.kernel.org/
+GPL-2
+Btrfs filesystem utilities
+~amd64 ~x86
+eutils multilib portability toolchain-funcs
+acl debug-utils
+
+
+
+
+
+compile install postinst unpack
+
+
+
+
+

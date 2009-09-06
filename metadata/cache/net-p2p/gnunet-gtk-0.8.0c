@@ -1,0 +1,22 @@
+>=x11-libs/gtk+-2.6.0 >=net-p2p/gnunet-0.8.0c >=gnome-base/libglade-2.0 x11-libs/libgksu =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+>=x11-libs/gtk+-2.6.0 >=net-p2p/gnunet-0.8.0c >=gnome-base/libglade-2.0 x11-libs/libgksu
+0
+http://gnunet.org/download/gnunet-gtk-0.8.0c.tar.gz
+
+http://gnunet.org/
+GPL-2
+Graphical front end for GNUnet.
+amd64 ~ppc64 x86
+autotools eutils libtool multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=app-pda/libopensync-0.38 >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=app-pda/libopensync-0.38
+0
+http://www.opensync.org/download/releases/0.38/libopensync-plugin-file-0.38.tar.bz2
+
+http://www.opensync.org/
+LGPL-2.1
+OpenSync File Plugin
+~amd64 ~ppc ~x86
+base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install test unpack
+
+
+
+
+

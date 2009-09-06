@@ -1,0 +1,22 @@
+>=sys-devel/autoconf-2.59 =sys-devel/automake-1.9* doc? ( app-doc/doxygen )
+
+0
+http://download.berlios.de/libwrapiter/libwrapiter-1.0.0.tar.bz2
+
+http://libwrapiter.berlios.de/
+BSD
+C++ template library for avoiding exposing privates via iterators
+~alpha amd64 ~hppa ~mips ~ppc ~sparc x86
+
+doc
+
+
+
+
+
+compile install test
+
+
+
+
+

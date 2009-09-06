@@ -1,0 +1,22 @@
+dev-perl/glib-perl dev-perl/IO-Socket-SSL dev-perl/Net-SSLeay dev-perl/Event
+dev-perl/glib-perl dev-perl/IO-Socket-SSL dev-perl/Net-SSLeay dev-perl/Event
+0
+mirror://cpan/modules/by-module/Event/Event-RPC-0.90.tar.gz
+
+http://www.exit1.org/Event-RPC/
+GPL-2
+Event based transparent Client/Server RPC framework
+amd64 ia64 ~ppc ~ppc64 sparc x86
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

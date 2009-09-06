@@ -1,0 +1,22 @@
+net-nds/openldap sasl? ( dev-libs/cyrus-sasl ) kerberos? ( virtual/krb5 ) !sys-auth/nss_ldap
+net-nds/openldap sasl? ( dev-libs/cyrus-sasl ) kerberos? ( virtual/krb5 ) !sys-auth/nss_ldap
+0
+http://arthurdejong.org/nss-ldapd/nss-ldapd-0.6.11.tar.gz
+
+http://arthurdejong.org/nss-ldapd http://ch.tudelft.nl/~arthur/nss-ldapd/
+LGPL-2.1
+NSS module for name lookups using LDAP
+amd64 x86
+multilib toolchain-funcs
+debug kerberos sasl
+
+
+
+
+
+compile install postinst
+
+
+
+
+

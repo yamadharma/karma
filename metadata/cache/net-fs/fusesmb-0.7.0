@@ -1,0 +1,22 @@
+>=sys-fs/fuse-2.2 >=net-fs/samba-3
+>=sys-fs/fuse-2.2 >=net-fs/samba-3 >=dev-lang/python-2.3
+0
+http://hannibal.lr-s.tudelft.nl/~vincent/fusesmb/download/fusesmb-0.7.0.tar.gz
+
+http://hannibal.lr-s.tudelft.nl/~vincent/fusesmb/
+GPL-2
+A tool for mounting the network neighbourhood.
+x86 amd64 ~alpha ~ppc ~sparc
+extrafiles
+daemontools
+
+
+
+
+
+compile install
+
+
+
+
+

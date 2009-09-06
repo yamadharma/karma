@@ -1,0 +1,22 @@
+>=dev-db/qdbm-1.8.37 || ( chasen? ( app-text/chasen ) mecab? ( app-text/mecab ) kakasi? ( app-i18n/kakasi ) ) zlib? ( sys-libs/zlib )
+>=dev-db/qdbm-1.8.37 || ( chasen? ( app-text/chasen ) mecab? ( app-text/mecab ) kakasi? ( app-i18n/kakasi ) ) zlib? ( sys-libs/zlib )
+0
+mirror://sourceforge/estraier/estraier-1.2.29.tar.gz
+
+http://estraier.sourceforge.net/
+GPL-2
+a personal full-text search system
+amd64 ~ppc ~ppc64 ~sparc x86
+
+chasen debug kakasi mecab zlib
+
+
+
+
+
+compile install unpack
+
+
+
+
+

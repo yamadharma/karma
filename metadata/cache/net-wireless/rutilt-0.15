@@ -1,0 +1,22 @@
+>=x11-libs/gtk+-2.6.0 || ( virtual/linux-sources sys-kernel/linux-headers )
+>=x11-libs/gtk+-2.6.0 || ( virtual/linux-sources sys-kernel/linux-headers ) gksu? ( x11-libs/gksu ) kdesu? ( kde-base/kdesu )
+0
+http://cbbk.free.fr/bonrom/files/RutilTv0.15.tar.gz
+
+http://cbbk.free.fr/bonrom/
+GPL-2
+Manage wireless interfaces, particularly Ralink devices
+x86 amd64
+eutils multilib portability toolchain-funcs
+gksu kdesu
+
+
+
+
+
+compile install
+
+
+
+
+

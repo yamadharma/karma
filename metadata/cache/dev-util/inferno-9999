@@ -1,0 +1,22 @@
+virtual/libc dev-util/subversion net-misc/rsync
+virtual/libc
+0
+
+
+http://www.vitanuova.com/inferno/index.html http://code.google.com/p/inferno-os/
+GPL-2
+Inferno Distributed Operating System
+x86 amd64
+eutils flag-o-matic multilib portability subversion toolchain-funcs
+X
+
+
+
+2
+
+compile install postinst preinst prepare unpack
+
+
+
+
+

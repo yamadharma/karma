@@ -1,0 +1,22 @@
+>=dev-p9p/duat-6 >=sys-devel/icemake-9 doc? ( app-doc/doxygen )
+>=dev-p9p/duat-6
+0
+http://kyuba.org/files/dev9-2.tar.bz2
+
+http://kyuba.org/dev9
+MIT
+udev/devfs workalike, based on Duat
+~ppc x86 amd64
+icemake multilib toolchain-funcs
+doc debug combine non-fhs dynamic static
+
+
+
+2
+
+compile install test
+
+
+
+
+

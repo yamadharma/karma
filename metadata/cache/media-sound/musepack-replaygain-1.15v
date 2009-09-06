@@ -1,0 +1,22 @@
+esd? ( media-sound/esound ) media-libs/id3lib x86? ( dev-lang/nasm ) x86-fbsd? ( dev-lang/nasm ) amd64? ( dev-lang/nasm )
+esd? ( media-sound/esound ) media-libs/id3lib
+0
+http://files.musepack.net/source/mpcsv7-src-1.15v.tar.bz2
+
+http://www.musepack.net
+LGPL-2.1
+Musepack replaygain tool
+amd64 x86 ~x86-fbsd
+eutils flag-o-matic multilib portability toolchain-funcs
+static 16bit esd
+
+
+
+
+
+compile install unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+gnutls? ( net-libs/gnutls ) ssl? ( !gnutls? ( dev-libs/openssl ) ) ldap? ( net-nds/openldap ) idn? ( net-dns/libidn ) ares? ( net-dns/c-ares ) kerberos? ( virtual/krb5 ) krb4? ( app-crypt/kth-krb ) test? ( sys-apps/diffutils dev-lang/perl )
+gnutls? ( net-libs/gnutls ) ssl? ( !gnutls? ( dev-libs/openssl ) ) ldap? ( net-nds/openldap ) idn? ( net-dns/libidn ) ares? ( net-dns/c-ares ) kerberos? ( virtual/krb5 ) krb4? ( app-crypt/kth-krb )
+0
+http://curl.haxx.se/download/curl-7.15.0.tar.bz2
+
+http://curl.haxx.se/
+MIT X11
+A Client that groks URLs
+alpha amd64 hppa ppc ppc64 sparc x86
+eutils multilib portability toolchain-funcs
+ssl ipv6 ldap ares gnutls idn kerberos krb4 test
+
+
+
+
+
+compile install unpack
+
+
+
+
+

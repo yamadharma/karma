@@ -1,0 +1,22 @@
+virtual/latex-base >=sys-apps/texinfo-4.2-r5
+virtual/latex-base
+0
+ftp://ftp.tex.ac.uk/tex-archive/biblio/bibtex/8-bit/bt371src.zip ftp://ftp.tex.ac.uk/tex-archive/biblio/bibtex/8-bit/bt371csf.zip
+
+ftp://ftp.dante.de/tex-archive/help/Catalogue/entries/bibtex8bit.html
+GNU
+LaTeX package and fonts used to set the euro (currency) symbol.
+x86 ~ppc
+base eutils latex-package multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm unpack
+
+
+
+
+

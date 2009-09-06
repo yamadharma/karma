@@ -1,0 +1,22 @@
+gnome? ( >=gdm-2.4.0.0 ) kde? ( >=kdebase-3.0.2 ) x11-base/xfree app-admin/tftp-hpa sys-apps/xinetd net-misc/dhcp net-fs/nfs-utils
+gnome? ( >=gdm-2.4.0.0 ) kde? ( >=kdebase-3.0.2 ) x11-base/xfree app-admin/tftp-hpa sys-apps/xinetd net-misc/dhcp net-fs/nfs-utils
+0
+mirror://sourceforge/ltsp/ltsp_core-3.0.7-i386.tgz mirror://sourceforge/ltsp/ltsp_kernel-3.0.5-i386.tgz mirror://sourceforge/ltsp/ltsp_x_core-3.0.1-i386.tgz mirror://sourceforge/ltsp/ltsp_x_fonts-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_3dlabs-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_8514-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_agx-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_fbdev-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_i128-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_mach32-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_mach64-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_mach8-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_mono-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_p9000-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_s3-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_s3v-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_svga-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_vga16-3.0.0-i386.tgz mirror://sourceforge/ltsp/ltsp_x336_w32-3.0.0-i386.tgz
+
+http://www.ltsp.org/
+GPL-2
+LTSP - Linux Terminal Server Project
+x86
+
+gnome kde
+
+
+
+
+
+install postinst
+
+
+
+
+

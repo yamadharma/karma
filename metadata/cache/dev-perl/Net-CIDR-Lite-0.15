@@ -1,0 +1,22 @@
+
+
+0
+mirror://cpan/authors/id/D/DO/DOUGW/Net-CIDR-Lite-0.15.tar.gz
+
+http://search.cpan.org/~dougw/Net-CIDR-Lite-0.15/
+Artistic
+Perl extension for merging IPv4 or IPv6 CIDR addresses
+x86 ~ppc
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

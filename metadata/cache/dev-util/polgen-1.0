@@ -1,0 +1,22 @@
+>=dev-lang/python-2.2.3 selinux? ( sys-libs/libselinux )
+>=dev-lang/python-2.2.3 selinux? ( sys-libs/libselinux )
+0
+http://ccache.samba.org/ftp/ccache/polgen-1.0.tar.gz
+
+http://ccache.samba.org/
+GPL-2
+This package contains polgen, a collection of scripts and tools developed by the MITRE corporation to automate the SELinux policy generation process.
+x86 amd64 ~ppc ~sparc ~alpha ~hppa
+eutils multilib portability toolchain-funcs
+doc selinux
+
+
+
+
+
+compile install
+
+
+
+
+

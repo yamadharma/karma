@@ -1,0 +1,22 @@
+>=dev-perl/Class-MethodMaker-2 dev-lang/perl
+>=dev-perl/Class-MethodMaker-2 dev-lang/perl
+0
+mirror://cpan/authors/id/D/DF/DFARALDO/Shell-EnvImporter-1.04.tar.gz
+
+http://search.cpan.org/~dfaraldo
+|| ( Artistic GPL-2 )
+Perl extension for importing environment variable changes from external commands or shell scripts
+amd64 ~hppa ~ia64 ~mips ~ppc ~ppc64 sparc x86
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+

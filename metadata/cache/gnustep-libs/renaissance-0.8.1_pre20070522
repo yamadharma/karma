@@ -1,0 +1,22 @@
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+http://overlays.gentoo.org/svn/proj/gnustep/downloads/renaissance-0.8.1_pre20070522.tar.bz2
+
+http://www.gnustep.it/Renaissance/index.html
+LGPL-2.1
+GNUstep Renaissance allows to describe user interfaces XML files
+amd64 x86
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+

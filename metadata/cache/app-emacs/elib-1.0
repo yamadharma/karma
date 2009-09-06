@@ -1,0 +1,22 @@
+virtual/emacs >=virtual/emacs-21
+virtual/emacs >=virtual/emacs-21
+0
+http://jdee.sunsite.dk/elib-1.0.tar.gz
+
+http://jdee.sunsite.dk
+GPL-2
+The Emacs Lisp Library
+amd64 ppc ~ppc-macos x86
+elisp elisp-common eutils multilib portability toolchain-funcs
+
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

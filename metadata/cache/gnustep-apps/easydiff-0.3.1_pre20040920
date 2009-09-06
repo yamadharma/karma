@@ -1,0 +1,22 @@
+gnustep-base/gnustep-env
+gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 )
+0
+mirrror://gentoo/easydiff-0.3.1_pre20040920.tar.gz
+
+http://www.collaboration-world.com/easydiff/
+GPL-2
+GNUstep app that lets you easily see the differences between two text files.
+~x86
+eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
+debug profile doc
+
+
+
+
+
+compile install postinst setup
+
+
+
+
+

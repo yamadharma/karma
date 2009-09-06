@@ -1,0 +1,22 @@
+X? ( x11-apps/mkfontdir media-fonts/encodings ) gnustep? ( >=gnustep-base/mknfonts-0.5-r1 ) media-libs/fontconfig
+
+0
+ftp://ftp.gnome.ru/fonts/urw/release/urw-fonts-1.0.7pre40.tar.bz2
+
+
+GPL-2,LGPL
+Cyrillized free URW fonts
+x86 amd64
+eutils font gnustep-funcs multilib nfont portability toolchain-funcs
+X gnustep gnustep X gnustep
+
+
+
+
+
+install postinst postrm setup
+
+
+
+
+

@@ -1,0 +1,22 @@
+virtual/emacs >=virtual/emacs-21
+virtual/emacs crypt? ( app-emacs/mailcrypt ) >=virtual/emacs-21
+0
+http://bbdb.sourceforge.net/bbdb-2.34.tar.gz http://www.mit.edu/afs/athena/contrib/emacs-contrib/Fin/point-at.el http://www.mit.edu/afs/athena/contrib/emacs-contrib/Fin/dates.el
+
+http://bbdb.sourceforge.net/
+GPL-2 as-is
+The Big Brother Database
+x86 ~amd64
+elisp elisp-common eutils multilib portability toolchain-funcs
+crypt
+
+
+
+
+
+compile install postinst postrm setup unpack
+
+
+
+
+

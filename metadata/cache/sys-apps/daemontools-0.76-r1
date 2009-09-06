@@ -1,0 +1,22 @@
+virtual/glibc
+virtual/glibc
+0
+http://cr.yp.to/daemontools/daemontools-0.76.tar.gz
+
+http://cr.yp.to/daemontools.html
+freedist
+Collection of tools for managing UNIX services
+x86 ppc sparc sparc64
+
+
+
+
+
+
+
+compile install unpack
+
+
+
+
+

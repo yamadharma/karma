@@ -1,0 +1,22 @@
+>=gnustep-base/gnustep-gui-0.8.5 gnustep-base/gnustep-make gnustep-base/gnustep-base sys-devel/gcc virtual/libc
+>=gnustep-base/gnustep-gui-0.8.5 virtual/libc
+0
+http://www.gnustep.it/Renaissance/Download/Renaissance-0.7.0.tar.gz
+
+http://www.gnustep.org
+LGPL-2.1
+GNUstep xml-based UI toolkit
+x86 ~ppc
+gnustep-old
+
+
+
+
+
+
+compile install
+
+
+
+
+
