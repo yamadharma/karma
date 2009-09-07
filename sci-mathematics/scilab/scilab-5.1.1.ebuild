@@ -106,7 +106,7 @@ src_configure() {
 }
 
 src_compile() {
-	emake|| die "emake failed"
+	emake -j1 || die "emake failed"
 	
 	if use doc; then
 		emake doc

@@ -1,4 +1,4 @@
-kernel_linux? ( virtual/linux-sources ) kernel_FreeBSD? ( sys-freebsd/freebsd-sources sys-freebsd/freebsd-mk-defs ) !x11-base/x11-drm kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/modutils ) sys-apps/sed =sys-devel/automake-1.7* >=sys-devel/autoconf-2.61 sys-devel/libtool >=dev-util/git-1.6
+kernel_linux? ( virtual/linux-sources ) kernel_FreeBSD? ( sys-freebsd/freebsd-sources sys-freebsd/freebsd-mk-defs ) !x11-base/x11-drm kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources ) =sys-devel/automake-1.7* >=sys-devel/autoconf-2.61 sys-devel/libtool >=dev-util/git-1.6
 kernel_linux? ( virtual/modutils )
 0
 
