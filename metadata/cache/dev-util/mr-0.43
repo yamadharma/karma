@@ -1,0 +1,22 @@
+dev-lang/perl
+dev-lang/perl dev-perl/libwww-perl dev-perl/HTML-Parser
+0
+mirror://debian/pool/main/m/mr/mr_0.43.tar.gz
+
+http://kitenet.net/~joey/code/mr/
+GPL-2
+Multiple Repository management tool
+~amd64 ~x86
+
+
+
+
+
+
+
+install
+
+
+
+
+
