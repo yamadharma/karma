@@ -140,8 +140,8 @@ src_prepare() {
 	eend 0
 
 	# Gentoo-specific patches for libtool compatibility
-	epatch "${FILESDIR}/${PN}-2.7.0-r1-remove-libltdl-from-main.patch"
-	epatch "${FILESDIR}/${PN}-2.8.0-libtool.patch"
+#	epatch "${FILESDIR}/${PN}-2.7.0-r1-remove-libltdl-from-main.patch"
+#	epatch "${FILESDIR}/${PN}-2.8.0-libtool.patch"
 
 	# Gentoo-specific patch
 	epatch "${FILESDIR}/${PN}-2.8.2-FLAGS.patch"
@@ -175,12 +175,12 @@ src_prepare() {
 
 	my_examine_components
 
-	ebegin "Removing provided libtool/libltdl"
-	rm -R ./main/libltdl \
-	&& rm config.guess config.sub install-sh ltmain.sh \
-	&& rm */config.guess */config.sub */install-sh */ltmain.sh \
-	|| die "removing libtool failed"
-	eend 0
+#	ebegin "Removing provided libtool/libltdl"
+#	rm -R ./main/libltdl \
+#	&& rm config.guess config.sub install-sh ltmain.sh \
+#	&& rm */config.guess */config.sub */install-sh */ltmain.sh \
+#	|| die "removing libtool failed"
+#	eend 0
 
 	ebegin "Reducing eautoreconf"
 	# Keep synchronized with myconf in src_compile
