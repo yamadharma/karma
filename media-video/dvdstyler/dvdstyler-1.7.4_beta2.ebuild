@@ -38,10 +38,12 @@ PDEPEND=">=app-cdr/dvdisaster-0.71.0"
 
 S=${WORKDIR}/${MY_P}
 
-src_prepare() {
-	epatch "${FILESDIR}"/${P}-link_to_wxgtk_adv.patch
-	eautoreconf
-}
+MAKEOPTS="-j1"
+
+#src_prepare() {
+#	epatch "${FILESDIR}"/${P}-link_to_wxgtk_adv.patch
+#	eautoreconf
+#}
 
 src_configure() {
 	export WX_GTK_VER="2.8"
