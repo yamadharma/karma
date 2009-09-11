@@ -14,7 +14,7 @@ debug gnome
 
 2
 
-configure install prepare
+configure install
 
 
 
