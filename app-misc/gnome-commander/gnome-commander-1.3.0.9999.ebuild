@@ -12,7 +12,7 @@ HOMEPAGE="http://www.nongnu.org/gcmd/"
 ESVN_REPO_URI="svn://svn.gnome.org/svn/gnome-commander/branches/gcmd-1-3"
 SRC_URI=""
 
-KEYWORDS=""
+# KEYWORDS="amd64 x86"
 
 LICENSE="GPL-2"
 
