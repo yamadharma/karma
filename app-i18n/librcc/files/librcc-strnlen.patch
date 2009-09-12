@@ -1,0 +1,11 @@
+--- orig/src/rccstring.h
++++ mod/src/rccstring.h
+@@ -40,7 +40,7 @@
+ 
+ #ifdef HAVE_STRNLEN
+ # ifndef strnlen
+-int strnlen(const char *str, size_t size);
++size_t strnlen(const char *str, size_t size);
+ # endif /* !strnlen */
+ #else
+ int rccStrnlen(const char *str, size_t size);

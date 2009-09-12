@@ -20,13 +20,14 @@ DEPEND="app-i18n/librcd
 
 src_unpack() {
     unpack ${P}.tar.bz2
-#    cd "${S}"
+    cd "${S}"
 #    epatch "${FILESDIR}"/rcc-debug.patch || die
+    epatch "${FILESDIR}"/librcc-strnlen.patch || die
 
 # We are doing this because of ugly automake-wrapper which forces usage of 
 # automake version refered in Makefile.in's. And librcc-0.2.8 is prepared with 
 # 1.9 while 1.10 is standard now.
-    cd ${P}
+#    cd ${P}
     rm -f `find . -name Makefile.in`
     rm -f configure
     rm -f aclocal.m4
