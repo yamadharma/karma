@@ -6,18 +6,18 @@ EAPI="2"
 
 WANT_AUTOCONF=latest
 WANT_AUTOMAKE=latest
-inherit eutils autotools depend.php subversion
+inherit eutils autotools depend.php
 
 DESCRIPTION="Lightweight high-performance web server"
 HOMEPAGE="http://www.lighttpd.net/"
-ESVN_REPO_URI="svn://svn.lighttpd.net/lighttpd/trunk@{${PV##*_pre}}"
-ESVN_PROJECT="lighttpd"
-SVN_BOOTSTRAP="NOCONFIGURE=1 ./autogen.sh"
+SRC_URI="http://www.lighttpd.net/download/${P/_pre/snap-r}.tar.bz2"
 
 LICENSE="BSD"
 SLOT="0"
-# KEYWORDS="amd64 x86"
+KEYWORDS="amd64 x86"
 IUSE="bzip2 doc fastcgi gdbm ipv6 ldap lua minimal memcache mysql postgres pcre php rrdtool ssl test webdav xattr"
+
+S=${WORKDIR}/${P%%_pre*}
 
 # cherokee block should be resolved properly
 # http://bugs.gentoo.org/show_bug.cgi?id=224781
