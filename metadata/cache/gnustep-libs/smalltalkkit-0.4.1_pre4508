@@ -5,7 +5,7 @@ http://www.sqlite.org/sqlite-3.6.2.tar.gz
 
 http://www.etoile-project.org
 BSD
-\ufffd\ufffdtoil\ufffd\ufffd's Pragmatic Smalltalk, a Smalltalk JIT compiler which generates code binary-compatible with Objective-C
+Étoilé's Pragmatic Smalltalk, a Smalltalk JIT compiler which generates code binary-compatible with Objective-C
 amd64 ~ppc x86
 etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs
 debug doc

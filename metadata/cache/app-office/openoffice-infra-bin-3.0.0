@@ -5,7 +5,7 @@ x86? ( http://download.i-rs.ru/pub/openoffice/3.0.0/ru/OOo_3.0.0_LinuxIntel_ru_i
 strip
 http://www.i-rs.ru/
 LGPL-2
-\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd OpenOffice \ufffd\ufffd\ufffd\ufffd \ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd \ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd-\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd
+Сборка OpenOffice от компании Инфра-ресурс
 amd64 x86
 eutils fdo-mime multilib portability toolchain-funcs
 gnome java kde

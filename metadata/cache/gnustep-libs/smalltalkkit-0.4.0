@@ -5,7 +5,7 @@ http://download.gna.org/etoile/etoile-0.4.0.tar.gz http://www.sqlite.org/sqlite-
 
 http://www.etoile-project.org
 BSD
-\ufffd\ufffdtoil\ufffd\ufffd's Pragmatic Smalltalk, a Smalltalk JIT compiler which generates code binary-compatible with Objective-C
+Étoilé's Pragmatic Smalltalk, a Smalltalk JIT compiler which generates code binary-compatible with Objective-C
 amd64 ~ppc x86
 eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
 debug doc

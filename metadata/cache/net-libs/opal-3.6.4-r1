@@ -1,0 +1,22 @@
+>=net-libs/ptlib-2.0.0[stun,debug=,audio?,dtmf?,ipv6?,ldap?,ssl?,video?,vxml?,wav?,xml?] >=media-libs/speex-1.2_beta fax? ( net-libs/ptlib[asn] ) h323? ( net-libs/ptlib[asn] ) ivr? ( net-libs/ptlib[xml,vxml] ) java? ( >=virtual/jre-1.4 ) plugins? ( dev-libs/ilbc-rfc3951 media-sound/gsm capi? ( net-dialup/capi4k-utils ) celt? ( >=media-libs/celt-0.5.0 ) ffmpeg? ( >=media-video/ffmpeg-0.4.7[encode] ) ixj? ( sys-kernel/linux-headers ) sbc? ( media-libs/libsamplerate ) theora? ( media-libs/libtheora ) x264? ( >=media-video/ffmpeg-0.4.7 media-libs/x264 ) ) srtp? ( net-libs/libsrtp ) dev-util/pkgconfig >=sys-devel/gcc-3 java? ( swig? ( dev-lang/swig ) >=virtual/jdk-1.4 ) =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool java? ( >=dev-java/java-config-2.1.6 )
+>=net-libs/ptlib-2.0.0[stun,debug=,audio?,dtmf?,ipv6?,ldap?,ssl?,video?,vxml?,wav?,xml?] >=media-libs/speex-1.2_beta fax? ( net-libs/ptlib[asn] ) h323? ( net-libs/ptlib[asn] ) ivr? ( net-libs/ptlib[xml,vxml] ) java? ( >=virtual/jre-1.4 ) plugins? ( dev-libs/ilbc-rfc3951 media-sound/gsm capi? ( net-dialup/capi4k-utils ) celt? ( >=media-libs/celt-0.5.0 ) ffmpeg? ( >=media-video/ffmpeg-0.4.7[encode] ) ixj? ( sys-kernel/linux-headers ) sbc? ( media-libs/libsamplerate ) theora? ( media-libs/libtheora ) x264? ( >=media-video/ffmpeg-0.4.7 media-libs/x264 ) ) srtp? ( net-libs/libsrtp ) java? ( >=dev-java/java-config-2.1.6 )
+0
+mirror://sourceforge/opalvoip/opal-3.6.4.tar.bz2 doc? ( mirror://sourceforge/opalvoip/opal-3.6.4-htmldoc.tar.bz2 )
+
+http://www.opalvoip.org/
+MPL-1.0
+C++ class library normalising numerous telephony protocols
+~amd64 ~ppc ~x86
+autotools eutils java-pkg-opt-2 java-utils-2 libtool multilib portability toolchain-funcs versionator
++audio capi celt debug doc dtmf examples fax ffmpeg h224 h281 h323 iax ipv6 ivr ixj java ldap lid +plugins sbc sip sipim srtp ssl stats swig theora +video vpb vxml wav x264 x264-static xml elibc_FreeBSD java
+
+
+
+2
+
+compile configure install postinst preinst prepare setup
+
+
+
+
+

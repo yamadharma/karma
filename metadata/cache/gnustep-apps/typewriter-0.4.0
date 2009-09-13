@@ -5,7 +5,7 @@ http://download.gna.org/etoile/etoile-0.4.0.tar.gz
 
 http://www.etoile-project.org
 BSD
-Etoil\ufffd\ufffd general text editor for plain and rich format text
+Etoilé general text editor for plain and rich format text
 amd64 ~ppc x86
 eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
 debug doc
