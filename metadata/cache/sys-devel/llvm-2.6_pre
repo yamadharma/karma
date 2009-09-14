@@ -1,0 +1,22 @@
+>=dev-lang/perl-5.6 >=sys-devel/make-3.79 >=sys-devel/gcc-3.4 !=sys-devel/gcc-4.1.1 x86? ( !=sys-devel/gcc-3.4.0 !=sys-devel/gcc-3.4.2 ) amd64? ( !=sys-devel/gcc-3.4.6 )
+dev-lang/perl
+0
+http://llvm.org/prereleases/2.6/llvm-2.6.tar.gz
+mirror
+http://llvm.org/
+UoI-NCSA
+Low Level Virtual Machine
+~amd64 ~ppc ~x86
+eutils multilib portability toolchain-funcs
+debug alltargets
+
+
+
+
+
+compile install setup unpack
+
+
+
+
+
