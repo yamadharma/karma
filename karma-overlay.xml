@@ -1,15 +1,15 @@
 <?xml version="1.0" ?>
 <layman>
   <overlay
-       name="karma" 
+       name="karma"
        src="http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/karma"
        type="bzr"
        status  = "unofficial">
 
      <link>  </link>
 
-     <description> 
-     </description> 
+     <description>
+     </description>
   </overlay>
   <overlay
        name="karma-profiles"
