@@ -1,0 +1,22 @@
+>=media-libs/taglib-1.6 >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=media-libs/taglib-1.6
+0
+http://www.kollide.net/~jefferai/taglib-extras-1.0.0.tar.gz
+
+http://developer.kde.org/~wheeler/taglib.html
+GPL-2
+Unofficial taglib plugins maintained by the Amarok team
+~amd64 ~x86
+base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs
+debug kde
+
+
+
+2
+
+compile configure install prepare test unpack
+
+
+
+
+
