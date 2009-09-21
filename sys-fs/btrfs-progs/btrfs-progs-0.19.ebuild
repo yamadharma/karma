@@ -76,7 +76,7 @@ src_install() {
 pkg_postinst() {
 	ewarn "WARNING: This version of btrfs-progs corresponds to and should only"
 	ewarn "         be used with the version of btrfs included in the"
-	ewarn "         Linux kernel (2.6.30 and above)."
+	ewarn "         Linux kernel (2.6.29-rc2 and above)."
 	ewarn ""
 	ewarn "         This version should NOT be used with earlier versions"
 	ewarn "         of the standaline btrfs module!"
