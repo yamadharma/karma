@@ -6,73 +6,79 @@ EAPI=2
 
 inherit eutils alternatives flag-o-matic toolchain-funcs multilib
 
-PATCH_VER=2
+PATCH_VER=5
 
-# The slot of this binary compat version of libperl.so
-PERLSLOT="1"
-
-IUSE="berkdb debug gdbm ithreads"
-IUSE="${IUSE} doc build"
-COMMON_DEPEND="berkdb? ( sys-libs/db )
-	gdbm? ( >=sys-libs/gdbm-1.8.3 )"
-
-SLOT="0"
-
-DEPEND="${COMMON_DEPEND}
-	elibc_FreeBSD? ( sys-freebsd/freebsd-mk-defs )
-	!<perl-core/File-Spec-0.87
-	!<perl-core/Test-Simple-0.47-r1"
-RDEPEND="${COMMON_DEPEND}"
-PDEPEND=">=app-admin/perl-cleaner-1.03"
+PERL_OLDVERSEN="5.10.0"
 
 SHORT_PV="${PV%.*}"
 MY_P="perl-${PV/_rc/-RC}"
 MY_PV="${PV%_rc*}"
+
 DESCRIPTION="Larry Wall's Practical Extraction and Report Language"
+
 S="${WORKDIR}/${MY_P}"
 SRC_URI="mirror://cpan/src/${MY_P}.tar.bz2
 	http://dev.gentoo.org/~tove/files/${MY_P}-${PATCH_VER}.tar.bz2"
 HOMEPAGE="http://www.perl.org/"
 
 LICENSE="|| ( Artistic GPL-2 )"
+SLOT="0"
 #KEYWORDS=""
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~sparc-fbsd ~x86-fbsd"
-PERL_OLDVERSEN="5.10.0"
+IUSE="berkdb build debug doc gdbm ithreads"
+
+COMMON_DEPEND="berkdb? ( sys-libs/db )
+	gdbm? ( >=sys-libs/gdbm-1.8.3 )
+	>=sys-devel/libperl-5.10.1-r10
+	app-arch/bzip2
+	sys-libs/zlib"
+DEPEND="${COMMON_DEPEND}
+	elibc_FreeBSD? ( sys-freebsd/freebsd-mk-defs )"
+RDEPEND="${COMMON_DEPEND}"
+PDEPEND=">=app-admin/perl-cleaner-1.03"
 
 dual_scripts() {
-	# - perl-core/Archive-Tar
-	src_remove_dual_scripts 1.52 ptar ptardiff
-	# - perl-core/Digest-SHA
-	src_remove_dual_scripts 5.47 shasum
-	# - perl-core/CPAN
-	src_remove_dual_scripts 1.9402 cpan
-	# - perl-core/CPANPLUS
-	src_remove_dual_scripts 0.88 cpanp cpan2dist cpanp-run-perl
-	# - perl-core/Encode
-	src_remove_dual_scripts 2.35 enc2xs piconv
-	# - perl-core/ExtUtils-MakeMaker
-	src_remove_dual_scripts 6.55_02 instmodsh
-	# - perl-core/Module-Build
-	src_remove_dual_scripts 0.34_02 config_data
-	# - perl-core/Module-CoreList
-	src_remove_dual_scripts 2.18 corelist
-	# - perl-core/PodParser
-	src_remove_dual_scripts 1.37 pod2usage podchecker podselect
-	# - perl-core/Test-Harness
-	src_remove_dual_scripts 3.17 prove
+	src_remove_dual_scripts perl-core/Archive-Tar        1.52    ptar ptardiff
+	src_remove_dual_scripts perl-core/Digest-SHA         5.47    shasum
+	src_remove_dual_scripts perl-core/CPAN               1.9402  cpan
+	src_remove_dual_scripts perl-core/CPANPLUS           0.88    cpanp cpan2dist cpanp-run-perl
+	src_remove_dual_scripts perl-core/Encode             2.35    enc2xs piconv
+	src_remove_dual_scripts perl-core/ExtUtils-MakeMaker 6.55_02 instmodsh
+	src_remove_dual_scripts perl-core/Module-Build       0.34_02 config_data
+	src_remove_dual_scripts perl-core/Module-CoreList    2.18    corelist
+	src_remove_dual_scripts perl-core/PodParser          1.37    pod2usage podchecker podselect
+	src_remove_dual_scripts perl-core/Test-Harness       3.17    prove
 }
 
 pkg_setup() {
 	LIBPERL="libperl$(get_libname ${MY_PV})"
 
 	if use ithreads ; then
+		ewarn "THREADS WARNING:"
 		ewarn "PLEASE NOTE: You are compiling ${MY_P} with"
 		ewarn "interpreter-level threading enabled."
 		ewarn "Threading is not supported by all applications "
 		ewarn "that compile against perl. You use threading at "
 		ewarn "your own discretion. "
+		echo
 		epause 5
 	fi
+	if has_version dev-lang/perl ; then
+		# doesnot work
+		#if ! has_version dev-lang/perl[ithreads=,debug=] ; then
+		#if ! has_version dev-lang/perl[ithreads=] || ! has_version dev-lang/perl[debug=] ; then
+		if (   use ithreads && ! has_version dev-lang/perl[ithreads]   ) || \
+		   ( ! use ithreads &&   has_version dev-lang/perl[ithreads]   ) || \
+		   (   use debug    && ! has_version dev-lang/perl[debug]      ) || \
+		   ( ! use debug    &&   has_version dev-lang/perl[debug]      ) ; then
+			ewarn "TOGGLED USE-FLAGS WARNING:"
+			ewarn "You changed one of the use-flags ithreads or debug."
+			ewarn "You must rebuild all perl-modules installed."
+			ewarn "Use: perl-cleaner --all"
+			epause
+		fi
+	fi
+	dual_scripts
 }
 
 src_prepare() {
@@ -102,7 +108,7 @@ src_configure() {
 	# This flag makes compiling crash in interesting ways
 	filter-flags "-malign-double"
 	# Fixes bug #97645
-	use ppc && filter-flags -mpowerpc-gpopt
+	use ppc && filter-flags "-mpowerpc-gpopt"
 	# Fixes bug #143895 on gcc-4.1.1
 	filter-flags "-fsched2-use-superblocks"
 
@@ -114,6 +120,21 @@ src_configure() {
 	use sparc && myconf -Ud_longdbl
 
 	export LC_ALL="C"
+
+	# 266337
+	export BUILD_BZIP2=0
+	export BZIP2_INCLUDE=/usr/include
+	export BZIP2_LIB=/usr/$(get_libdir)
+	cat <<-EOF > "${S}/ext/Compress-Raw-Zlib/config.in"
+		BUILD_ZLIB = False
+		INCLUDE = /usr/include
+		LIB = /usr/$(get_libdir)
+
+		OLD_ZLIB = False
+		GZIP_OS_CODE = AUTO_DETECT
+	EOF
+
+	export OTHERLDFLAGS="${LDFLAGS}"
 
 	case ${CHOST} in
 		*-freebsd*)   osname="freebsd" ;;
@@ -132,6 +153,9 @@ src_configure() {
 	else
 		myarch=${CHOST}
 		myarch="${myarch%%-*}-${osname}"
+	fi
+	if use debug ; then
+		myarch="${myarch}-debug"
 	fi
 
 	# allow either gdbm to provide ndbm (in <gdbm/ndbm.h>) or db1
@@ -157,7 +181,7 @@ src_configure() {
 	fi
 
 	if use debug ; then
-		append-cflags="-g"
+		append-cflags "-g"
 		myconf -DDEBUGGING
 	fi
 
@@ -176,7 +200,7 @@ src_configure() {
 		-Duseshrplib \
 		-Darchname="${myarch}" \
 		-Dcc="$(tc-getCC)" \
-		-Dccflags="${CFLAGS}" \
+		-Doptimize="${CFLAGS}" \
 		-Dscriptdir=/usr/bin \
 		-Dprefix='/usr' \
 		-Dvendorprefix='/usr' \
@@ -193,6 +217,9 @@ src_configure() {
 		-Dd_semctl_semun \
 		-Dinc_version_list="$inclist" \
 		-Dcf_by='Gentoo' \
+		-Dmyhostname='localhost' \
+		-Dperladmin='root@localhost' \
+		-Dinstallusrbinperl='n' \
 		-Ud_csh \
 		-Uusenm \
 		"${myconf[@]}" || die "Unable to configure"
@@ -200,25 +227,14 @@ src_configure() {
 
 src_test() {
 #	use elibc_uclibc && export MAKEOPTS="${MAKEOPTS} -j1"
-	TEST_JOBS=$(echo -j1 ${MAKEOPTS} | sed 's/.*\(-j[[:space:]]*\|--jobs=\)\([[:digit:]]\+\).*/\2/' ) \
+	TEST_JOBS=$(echo -j1 ${MAKEOPTS} | sed -r 's/.*(-j[[:space:]]*|--jobs=)([[:digit:]]+).*/\2/' ) \
 		make -j1 test_harness || die "test failed"
 }
 
 src_install() {
 	export LC_ALL="C"
-	src_install_perl
-}
-
-src_install_perl() {
 	local i
-
-#	# Need to do this, else apps do not link to dynamic version of
-#	# the library ...
 	local coredir="/usr/$(get_libdir)/perl5/${MY_PV}/${myarch}${mythreading}/CORE"
-#	dodir ${coredir}
-#	dosym ../../../../../$(get_libdir)/${LIBPERL} ${coredir}/${LIBPERL}
-#	dosym ../../../../../$(get_libdir)/${LIBPERL} ${coredir}/libperl$(get_libname ${PERLSLOT})
-#	dosym ../../../../../$(get_libdir)/${LIBPERL} ${coredir}/libperl$(get_libname)
 
 	# Fix for "stupid" modules and programs
 	dodir /usr/$(get_libdir)/perl5/site_perl/${MY_PV}/${myarch}${mythreading}
@@ -230,7 +246,6 @@ src_install_perl() {
 	make DESTDIR="${D}" ${installtarget} || die "Unable to make ${installtarget}"
 
 	rm "${D}"/usr/bin/perl
-	#TODO: eselect?
 	ln -s perl${MY_PV} "${D}"/usr/bin/perl
 
 	dolib.so "${D}"/${coredir}/${LIBPERL} || die
@@ -241,7 +256,7 @@ src_install_perl() {
 	dosym ../../../../../$(get_libdir)/${LIBPERL} ${coredir}/libperl$(get_libname ${SHORT_PV})
 	dosym ../../../../../$(get_libdir)/${LIBPERL} ${coredir}/libperl$(get_libname)
 
-	rm -r "${D}"/usr/share/man/man3 || die "Unable to remove module man pages"
+	rm -rf "${D}"/usr/share/man/man3 || die "Unable to remove module man pages"
 #	cp -f utils/h2ph utils/h2ph_patched
 #	epatch "${FILESDIR}"/${PN}-h2ph-ansi-header.patch
 #
@@ -370,15 +385,23 @@ cleaner_msg() {
 }
 
 src_remove_dual_scripts() {
-	local i ver ff
-	ver="$1"
-	shift
+	local i pkg ver ff
+	pkg="$1"
+	ver="$2"
+	shift 2
 	if has "${EBUILD_PHASE:-none}" "postinst" "postrm" ;then
 		for i in "$@" ; do
 			ff=`echo ${ROOT}/usr/share/man/man1/${i}-${ver}-${P}.1*`
 			ff=${ff##*.1}
-			alternatives_auto_makesym "/usr/bin/${i}" "/usr/bin/${i}-*"
-			alternatives_auto_makesym "/usr/share/man/man1/${i}.1${ff}" "/usr/share/man/man1/${i}-*"
+			alternatives_auto_makesym "/usr/bin/${i}" "/usr/bin/${i}-[0-9]*"
+			alternatives_auto_makesym "/usr/share/man/man1/${i}.1${ff}" "/usr/share/man/man1/${i}-[0-9]*"
+		done
+	elif has "${EBUILD_PHASE:-none}" "setup" ; then
+		for i in "$@" ; do
+			if [[ -f /usr/bin/${i} && ! -h /usr/bin/${i} ]] ; then
+				ewarn "You must reinstall $pkg !"
+				break
+			fi
 		done
 	else
 		for i in "$@" ; do
@@ -392,7 +415,8 @@ src_remove_dual_scripts() {
 src_remove_extra_files() {
 	local prefix="./usr" # ./ is important
 	local bindir="${prefix}/bin"
-	local perlroot="${prefix}/$(get_libdir)/perl5" # perl installs per-arch dirs
+	local libdir="${prefix}/$(get_libdir)"
+	local perlroot="${libdir}/perl5" # perl installs per-arch dirs
 	local prV="${perlroot}/${MY_PV}"
 	local prVA="${prV}/${myarch}${mythreading}"
 
@@ -404,6 +428,9 @@ src_remove_extra_files() {
 	${bindir}/perl
 	${bindir}/perl${MY_PV}
 	${bindir}/pod2man
+	${libdir}/${LIBPERL}
+	${libdir}/libperl$(get_libname)
+	${libdir}/libperl$(get_libname ${SHORT_PV})
 	${prV}/attributes.pm
 	${prV}/AutoLoader.pm
 	${prV}/autouse.pm
