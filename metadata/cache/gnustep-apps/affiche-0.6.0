@@ -1,5 +1,5 @@
->=gnustep-base/gnustep-gui-0.8.5 gnustep-base/gnustep-make gnustep-base/gnustep-base sys-devel/gcc virtual/libc
->=gnustep-base/gnustep-gui-0.8.5 virtual/libc
+>=gnustep-base/gnustep-gui-0.8.5 gnustep-base/gnustep-make gnustep-base/gnustep-base sys-devel/gcc
+>=gnustep-base/gnustep-gui-0.8.5
 0
 http://www.collaboration-world.com/affiche.data/releases/Stable/Affiche-0.6.0.tar.gz
 

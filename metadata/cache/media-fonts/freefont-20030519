@@ -1,5 +1,5 @@
-media-gfx/pfaedit gnustep? gnustep-base/gnustep-env X? media-fonts/chkfontpath
-media-gfx/pfaedit
+gnustep? gnustep-base/gnustep-env X? media-fonts/chkfontpath
+
 0
 mirror://debian/pool/main/t/ttf-freefont/ttf-freefont_20030519-1.tar.gz
 
