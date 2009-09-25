@@ -7,13 +7,13 @@ EAPI=2
 inherit multilib
 
 LLVM_GCC_VERSION=4.2
-MY_PV=${LLVM_GCC_VERSION}-${PV/_pre}
+MY_PV=${LLVM_GCC_VERSION}-${PV/_pre2}
 LLVM_GCC_PREFIX=usr/$(get_libdir)/${PN}/${MY_PV}
 
 DESCRIPTION="LLVM C front-end"
 HOMEPAGE="http://llvm.org"
 #SRC_URI="http://llvm.org/releases/${PV}/${PN}-${MY_PV}.source.tar.gz"
-SRC_URI="http://llvm.org/prereleases/${PV/_pre}/${PN}-${MY_PV}.source.tar.gz"
+SRC_URI="http://llvm.org/prereleases/${PV/_pre*}/pre-release${PV/*_pre}/${PN}-${MY_PV}.source.tar.gz -> ${P}.source.tar.gz"
 
 LICENSE="GPL-2"
 SLOT=0
