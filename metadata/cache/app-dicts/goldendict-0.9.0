@@ -12,9 +12,9 @@ base eutils multilib portability qt4 toolchain-funcs versionator
 
 
 
+2
 
-
-compile install setup unpack
+compile configure install prepare setup unpack
 
 
 

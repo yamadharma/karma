@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit qt4 eutils
 
 DESCRIPTION="Feature-rich dictionary lookup program"
@@ -24,9 +26,8 @@ RDEPEND="dev-libs/libzip
 	>=app-text/hunspell-1.2"
 
 
-src_unpack(){
-	unpack ${A}
-	cd ${S}
+src_prepare() {
+	epatch ${FILESDIR}/gcc-4.4-fix.patch
 }
 
 src_compile() {
