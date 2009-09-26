@@ -1,0 +1,13 @@
+diff -ru semantik-0.7.3.orig/work/semantik-0.7.3/wscript semantik-0.7.3/work/semantik-0.7.3/wscript
+--- semantik-0.7.3.orig/work/semantik-0.7.3/wscript	2009-04-26 15:50:03.000000000 +0200
++++ semantik-0.7.3/work/semantik-0.7.3/wscript	2009-05-12 08:58:14.000000000 +0200
+@@ -244,9 +244,6 @@ def set_options(opt):
+ 	opt.add_option('--use64', action='store_true', default=False, help='set the installation into lib+64 (configuration)')
+ 
+ def post_build(bld):
+-	if Options.commands['install']:
+-		try: os.popen('/sbin/ldconfig 2> /dev/null')
+-		except: pass
+ 	if Options.options.exe:
+ 		#os.popen('export LD_LIBRARY_PATH=build/default/:$LD_LIBRARY_PATH; PATH=plugins:$PATH build/default/src/semantik')
+ 		os.popen('LD_LIBRARY_PATH=build/default/:$LD_LIBRARY_PATH build/default/src/semantik --style plastique')

@@ -23,6 +23,10 @@ RDEPEND=">=x11-libs/qt-4.2
         >=dev-lang/python-2.4.2"
 S=${WORKDIR}/${P}
 
+src_prepare () {
+	epatch ${FILESDIR}/${P}-wscript_ldconfig.patch
+}
+
 src_configure() {
 	./waf configure --prefix=/usr/ || die
 }
