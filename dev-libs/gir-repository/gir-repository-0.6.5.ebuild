@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="atk avahi babl dbus gconf gnome-keyring gstreamer +gtk gtksourceview gupnp
 libnotify libsoup libunique libwnck pango poppler vte webkit"
 
-RDEPEND=">=dev-libs/gobject-introspection-0.6.3"
+RDEPEND=">=dev-libs/gobject-introspection-0.6.4"
 DEPEND="${RDEPEND}
 	atk? ( >=dev-libs/atk-1.12.0 )
 	avahi? ( >=net-dns/avahi-0.6 )
@@ -81,3 +81,10 @@ pkg_setup() {
 	"
 }
 
+src_prepare() {
+	gnome2_src_prepare
+
+	epatch "${FILESDIR}/${P}-fix-worlds-worst-automagic-configure.patch"
+
+	eautoreconf
+}
