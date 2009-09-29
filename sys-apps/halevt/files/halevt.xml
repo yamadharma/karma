@@ -28,7 +28,7 @@ Upon insertion, they are mounted and recorded by hvmount.
 to mount the device. This allows regular users to read the device.
 !-->
 <halevt:Device match="hal.block.device &amp; hal.block.is_volume = true &amp; (hal.volume.policy.should_mount = true | ((! hal.volume.policy.should_mount = false) &amp; (hal.block.storage_device.hal.storage.policy.should_mount = true | ((! hal.block.storage_device.hal.storage.policy.should_mount = false)  &amp; hal.block.storage_device.hal.storage.removable = true))))">
-   <halevt:Insertion exec="hvmount mount -u $hal.udi$ -d $hal.block.device$"/>
+   <halevt:Insertion exec="hvmount mount -u $hal.udi$ -d $hal.block.device$ -s -m 002"/>
 </halevt:Device>
 
 <!--
@@ -69,7 +69,7 @@ that aren't already mounted and mount and register them.
 !-->
 
 <halevt:Device match="hal.block.device &amp; hal.block.is_volume = true &amp; hal.volume.is_mounted = false &amp; (hal.volume.policy.should_mount = true | ((! hal.volume.policy.should_mount = false) &amp; (hal.block.storage_device.hal.storage.policy.should_mount = true | ((! hal.block.storage_device.hal.storage.policy.should_mount = false)  &amp; hal.block.storage_device.hal.storage.removable = true))))">
-   <halevt:OnInit exec="hvmount mount -u $hal.udi$ -d $hal.block.device$"/>
+   <halevt:OnInit exec="hvmount mount -u $hal.udi$ -d $hal.block.device$ -s -m 002"/>
 </halevt:Device>
 
 <!-- 
