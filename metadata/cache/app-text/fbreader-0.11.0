@@ -1,14 +1,14 @@
 dev-libs/expat >=dev-libs/liblinebreak-1.0 net-misc/curl dev-libs/fribidi app-arch/bzip2 qt4? ( || ( x11-libs/qt-gui:4 =x11-libs/qt-4.3* ) ) qt3? ( =x11-libs/qt-3* ) gtk? ( >=x11-libs/gtk+-2.4 )
 dev-libs/expat >=dev-libs/liblinebreak-1.0 net-misc/curl dev-libs/fribidi app-arch/bzip2 qt4? ( || ( x11-libs/qt-gui:4 =x11-libs/qt-4.3* ) ) qt3? ( =x11-libs/qt-3* ) gtk? ( >=x11-libs/gtk+-2.4 )
 0
-http://www.fbreader.org/fbreader-sources-0.10.7.tgz
+http://www.fbreader.org/fbreader-sources-0.11.0.tgz
 
 http://www.fbreader.org/
 GPL-2
 E-Book Reader. Supports many e-book formats.
-amd64 x86
-
-qt3 qt4 gtk debug
+~amd64 ~ppc ~x86
+confutils eutils multilib portability toolchain-funcs
+qt3 +qt4 gtk debug
 
 
 
