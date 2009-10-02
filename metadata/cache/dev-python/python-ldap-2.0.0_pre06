@@ -1,4 +1,4 @@
-virtual/python >=net-nds/openldap-2.0.11 >=app-shells/bash-3.2 virtual/python
+virtual/python >=net-nds/openldap-2.0.11 >=app-admin/eselect-python-20090804 >=app-shells/bash-3.2 virtual/python
 virtual/python >=net-nds/openldap-2.0.11 virtual/python
 0
 mirror://sourceforge/python-ldap/python-ldap-2.0.0pre05.tar.gz

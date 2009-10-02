@@ -1,4 +1,4 @@
-nls? ( sys-devel/gettext ) >=app-shells/bash-3.2
+nls? ( sys-devel/gettext ) >=app-admin/eselect-python-20090804 >=app-shells/bash-3.2
 >=dev-python/pygtk-2.0
 0
 http://www.pixelbeat.org/fslint/fslint-2.28.tar.gz

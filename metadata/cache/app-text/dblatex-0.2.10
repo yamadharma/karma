@@ -1,4 +1,4 @@
-|| ( ( app-text/texlive dev-texlive/texlive-latexextra dev-texlive/texlive-mathextra dev-texlive/texlive-xetex ) >=app-text/texlive-3 ) dev-libs/libxslt app-text/docbook-xml-dtd dev-texlive/texlive-pictures >=app-shells/bash-3.2 virtual/python
+|| ( ( app-text/texlive dev-texlive/texlive-latexextra dev-texlive/texlive-mathextra dev-texlive/texlive-xetex ) >=app-text/texlive-3 ) dev-libs/libxslt app-text/docbook-xml-dtd dev-texlive/texlive-pictures >=app-admin/eselect-python-20090804 >=app-shells/bash-3.2 virtual/python
 || ( ( app-text/texlive dev-texlive/texlive-latexextra dev-texlive/texlive-mathextra dev-texlive/texlive-xetex ) >=app-text/texlive-3 ) dev-libs/libxslt app-text/docbook-xml-dtd dev-texlive/texlive-pictures virtual/python
 0
 mirror://sourceforge/dblatex/dblatex-0.2.10.tar.bz2

@@ -1,4 +1,4 @@
->=dev-lang/python-2.4 !build? ( >=sys-apps/sed-4.0.5 ) doc? ( app-text/xmlto ~app-text/docbook-xml-dtd-4.4 ) epydoc? ( >=dev-python/epydoc-2.0 ) >=app-shells/bash-3.2
+>=dev-lang/python-2.4 !build? ( >=sys-apps/sed-4.0.5 ) doc? ( app-text/xmlto ~app-text/docbook-xml-dtd-4.4 ) epydoc? ( >=dev-python/epydoc-2.0 ) >=app-admin/eselect-python-20090804 >=app-shells/bash-3.2
 >=dev-lang/python-2.4 !build? ( >=sys-apps/sed-4.0.5 >=app-shells/bash-3.2_p17 >=app-admin/eselect-news-20071201 ) elibc_FreeBSD? ( sys-freebsd/freebsd-bin ) elibc_glibc? ( >=sys-apps/sandbox-1.2.17 !mips? ( >=sys-apps/sandbox-1.2.18.1-r2 ) ) elibc_uclibc? ( >=sys-apps/sandbox-1.2.17 !mips? ( >=sys-apps/sandbox-1.2.18.1-r2 ) ) >=app-misc/pax-utils-0.1.17 selinux? ( >=dev-python/python-selinux-2.16 )
 0
 mirror://gentoo/portage-2.2_rc15.tar.bz2 http://dev.gentoo.org/~zmedico/portage/archives/portage-2.2_rc15.tar.bz2 linguas_pl? ( mirror://gentoo/portage-man-pl-2.1.2.tar.bz2 http://dev.gentoo.org/~zmedico/portage/archives/portage-man-pl-2.1.2.tar.bz2 ) mirror://gentoo/portage-2.2_rc28.patch.bz2 http://dev.gentoo.org/~zmedico/portage/archives/portage-2.2_rc28.patch.bz2
