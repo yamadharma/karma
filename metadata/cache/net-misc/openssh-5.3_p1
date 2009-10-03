@@ -1,0 +1,22 @@
+pam? ( virtual/pam ) kerberos? ( virtual/krb5 ) selinux? ( >=sys-libs/libselinux-1.28 ) skey? ( >=sys-auth/skey-1.1.5-r1 ) ldap? ( net-nds/openldap ) libedit? ( dev-libs/libedit ) >=dev-libs/openssl-0.9.6d >=sys-libs/zlib-1.2.3 smartcard? ( dev-libs/opensc ) pkcs11? ( dev-libs/pkcs11-helper ) tcpd? ( >=sys-apps/tcp-wrappers-7.6 ) X? ( x11-apps/xauth ) userland_GNU? ( sys-apps/shadow ) dev-util/pkgconfig virtual/os-headers sys-devel/autoconf =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+pam? ( virtual/pam ) kerberos? ( virtual/krb5 ) selinux? ( >=sys-libs/libselinux-1.28 ) skey? ( >=sys-auth/skey-1.1.5-r1 ) ldap? ( net-nds/openldap ) libedit? ( dev-libs/libedit ) >=dev-libs/openssl-0.9.6d >=sys-libs/zlib-1.2.3 smartcard? ( dev-libs/opensc ) pkcs11? ( dev-libs/pkcs11-helper ) tcpd? ( >=sys-apps/tcp-wrappers-7.6 ) X? ( x11-apps/xauth ) userland_GNU? ( sys-apps/shadow ) pam? ( >=sys-auth/pambase-20081028 )
+0
+mirror://openbsd/OpenSSH/portable/openssh-5.3p1.tar.gz pkcs11? ( http://alon.barlev.googlepages.com/openssh-5.2pkcs11-0.26.tar.bz2 ) X509? ( http://roumenpetrov.info/openssh/x509-6.2.1/openssh-5.3p1+x509-6.2.1.diff.gz )
+
+http://www.openssh.org/
+as-is
+Port of OpenBSD's free SSH release
+~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86 ~x86-fbsd
+autotools eutils flag-o-matic libtool multilib pam portability toolchain-funcs
+hpn kerberos ldap libedit pam pkcs11 selinux skey smartcard static tcpd X X509
+
+
+virtual/ssh
+
+
+compile install postinst setup test unpack
+
+
+
+
+
