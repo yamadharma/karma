@@ -1,4 +1,4 @@
-virtual/krb5 >=sys-libs/pam-0.78-r2 >=app-arch/rpm2targz-9.0-r1
+virtual/krb5 >=sys-libs/pam-0.78-r2 >=app-arch/rpm2targz-9.0.0.3g
 virtual/krb5 >=sys-libs/pam-0.78-r2
 0
 mirror://fedora/development/source/SRPMS/pam_krb5-2.2.18-1.src.rpm

@@ -1,4 +1,4 @@
->=app-arch/rpm2targz-9.0-r1
+>=app-arch/rpm2targz-9.0.0.3g
 
 0
 http://mirror.centos.org/centos/5/os/SRPMS/nc-1.84-10.fc6.src.rpm
