@@ -1,12 +1,12 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/perl/perl-5.10.1.ebuild,v 1.4 2009/09/29 19:40:21 tove Exp $
 
 EAPI=2
 
 inherit eutils alternatives flag-o-matic toolchain-funcs multilib
 
-PATCH_VER=5
+PATCH_VER=7
 
 PERL_OLDVERSEN="5.10.0"
 
@@ -18,6 +18,7 @@ DESCRIPTION="Larry Wall's Practical Extraction and Report Language"
 
 S="${WORKDIR}/${MY_P}"
 SRC_URI="mirror://cpan/src/${MY_P}.tar.bz2
+	mirror://gentoo/${MY_P}-${PATCH_VER}.tar.bz2
 	http://dev.gentoo.org/~tove/files/${MY_P}-${PATCH_VER}.tar.bz2"
 HOMEPAGE="http://www.perl.org/"
 
@@ -29,13 +30,14 @@ IUSE="berkdb build debug doc gdbm ithreads"
 
 COMMON_DEPEND="berkdb? ( sys-libs/db )
 	gdbm? ( >=sys-libs/gdbm-1.8.3 )
-	>=sys-devel/libperl-5.10.1-r10
+	>=sys-devel/libperl-5.10.1
+	!!<sys-devel/libperl-5.10.1
 	app-arch/bzip2
 	sys-libs/zlib"
 DEPEND="${COMMON_DEPEND}
 	elibc_FreeBSD? ( sys-freebsd/freebsd-mk-defs )"
 RDEPEND="${COMMON_DEPEND}"
-PDEPEND=">=app-admin/perl-cleaner-1.03"
+PDEPEND=">=app-admin/perl-cleaner-2_pre090920"
 
 dual_scripts() {
 	src_remove_dual_scripts perl-core/Archive-Tar        1.52    ptar ptardiff
@@ -48,6 +50,7 @@ dual_scripts() {
 	src_remove_dual_scripts perl-core/Module-CoreList    2.18    corelist
 	src_remove_dual_scripts perl-core/PodParser          1.37    pod2usage podchecker podselect
 	src_remove_dual_scripts perl-core/Test-Harness       3.17    prove
+	src_remove_dual_scripts !perl-core/podlators          2.2.2   pod2man pod2text
 }
 
 pkg_setup() {
@@ -89,6 +92,7 @@ src_prepare() {
 
 	# pod/perltoc.pod fails
 	ln -s ${LIBPERL} libperl$(get_libname ${SHORT_PV})
+	ln -s ${LIBPERL} libperl$(get_libname )
 }
 
 myconf() {
@@ -133,8 +137,6 @@ src_configure() {
 		OLD_ZLIB = False
 		GZIP_OS_CODE = AUTO_DETECT
 	EOF
-
-	export OTHERLDFLAGS="${LDFLAGS}"
 
 	case ${CHOST} in
 		*-freebsd*)   osname="freebsd" ;;
@@ -245,13 +247,13 @@ src_install() {
 	fi
 	make DESTDIR="${D}" ${installtarget} || die "Unable to make ${installtarget}"
 
-	rm "${D}"/usr/bin/perl
+	rm -f "${D}"/usr/bin/perl
 	ln -s perl${MY_PV} "${D}"/usr/bin/perl
 
 	dolib.so "${D}"/${coredir}/${LIBPERL} || die
 	dosym ${LIBPERL} /usr/$(get_libdir)/libperl$(get_libname ${SHORT_PV}) || die
 	dosym ${LIBPERL} /usr/$(get_libdir)/libperl$(get_libname) || die
-	rm "${D}"/${coredir}/${LIBPERL}
+	rm -f "${D}"/${coredir}/${LIBPERL}
 	dosym ../../../../../$(get_libdir)/${LIBPERL} ${coredir}/${LIBPERL}
 	dosym ../../../../../$(get_libdir)/${LIBPERL} ${coredir}/libperl$(get_libname ${SHORT_PV})
 	dosym ../../../../../$(get_libdir)/${LIBPERL} ${coredir}/libperl$(get_libname)
@@ -330,7 +332,7 @@ pkg_postinst() {
 		for DIR in ${INC} ; do
 			if [[ -d "${ROOT}/${DIR}" ]] ; then
 				for file in $(find "${ROOT}/${DIR}" -name "*.ph" -type f ) ; do
-					rm "${ROOT}/${file}"
+					rm -f "${ROOT}/${file}"
 					einfo "<< ${file}"
 				done
 			fi
@@ -399,7 +401,7 @@ src_remove_dual_scripts() {
 	elif has "${EBUILD_PHASE:-none}" "setup" ; then
 		for i in "$@" ; do
 			if [[ -f /usr/bin/${i} && ! -h /usr/bin/${i} ]] ; then
-				ewarn "You must reinstall $pkg !"
+				[[ ${pkg::1} == "!" ]] || ewarn "You must reinstall $pkg !"
 				break
 			fi
 		done
