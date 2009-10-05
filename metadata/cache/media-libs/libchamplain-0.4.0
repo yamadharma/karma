@@ -1,0 +1,22 @@
+>=dev-libs/glib-2.16 >=x11-libs/cairo-1.4 >=net-libs/libsoup-2.26[gnome] media-libs/clutter:1.0 dev-db/sqlite:3 gtk? ( >=x11-libs/gtk+-2.10 media-libs/clutter-gtk ) dev-util/pkgconfig doc? ( >=dev-util/gtk-doc-1.9 ) introspection? ( >=dev-libs/gobject-introspection-0.6.3 ) >=sys-apps/sed-4 >=sys-apps/sed-4
+>=dev-libs/glib-2.16 >=x11-libs/cairo-1.4 >=net-libs/libsoup-2.26[gnome] media-libs/clutter:1.0 dev-db/sqlite:3 gtk? ( >=x11-libs/gtk+-2.10 media-libs/clutter-gtk )
+0
+mirror://gnome/sources/libchamplain/0.4/libchamplain-0.4.0.tar.bz2
+
+http://blog.pierlux.com/projects/libchamplain/en/
+LGPL-2
+Clutter based world map renderer
+~amd64 ~x86
+fdo-mime gnome.org gnome2 gnome2-la gnome2-utils libtool multilib toolchain-funcs
+gtk introspection debug debug
+
+
+
+2
+
+compile configure install postinst postrm preinst prepare setup unpack
+
+
+
+
+
