@@ -1,12 +1,12 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/php/php-5.2.8-r2.ebuild,v 1.8 2009/02/01 10:39:52 klausman Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/php/php-5.2.10.ebuild,v 1.3 2009/06/25 14:53:11 fauli Exp $
 
 CGI_SAPI_USE="discard-path force-cgi-redirect"
 APACHE2_SAPI_USE="concurrentmodphp threads"
 IUSE="cli cgi ${CGI_SAPI_USE} ${APACHE2_SAPI_USE} fastbuild"
 
-KEYWORDS="alpha amd64 ~arm hppa ~ia64 ppc ppc64 ~s390 ~sh sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~arm hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc x86 ~x86-fbsd"
 
 # NOTE: Portage doesn't support setting PROVIDE based on the USE flags
 #		that have been enabled, so we have to PROVIDE everything for now
@@ -19,11 +19,10 @@ MY_PHP_PV="${PV}"
 MY_PHP_P="php-${MY_PHP_PV}"
 PHP_PACKAGE="1"
 
-RESTRICT="nomirror"
-
 # php patch settings, general
 PHP_PATCHSET_REV="${PR/r/}"
-SUHOSIN_PATCH="suhosin-patch-${PV}-0.9.7.patch.gz"
+PHP_PATCHSET_REV="${PHP_PATCHSET_REV/2/1}"
+SUHOSIN_PATCH="suhosin-patch-${MY_PHP_PV}-0.9.7.patch.gz"
 MULTILIB_PATCH="${MY_PHP_PV}/opt/multilib-search-path.patch"
 # php patch settings, ebuild specific
 FASTBUILD_PATCH="${MY_PHP_PV}/opt/fastbuild.patch"
@@ -39,8 +38,8 @@ inherit versionator php5_2-sapi apache-module
 
 # php-fpm patch support
 IUSE="${IUSE} fpm"
-FPM_PATCH="unofficial-php-5.2.9-fpm-0.5.10.diff.gz"
-# [[ -n "${FPM_PATCH}" ]] && SRC_URI="${SRC_URI} fpm? ( http://php-fpm.anight.org/downloads/archive/php-${PV%.*}/${FPM_PATCH}.gz )"
+FPM_PATCH="php-fpm-0.6-5.2.11"
+[[ -n "${FPM_PATCH}" ]] && SRC_URI="${SRC_URI} fpm? ( http://launchpad.net/php-fpm/master/0.6/+download/${FPM_PATCH}.tar.gz )"
 
 DESCRIPTION="The PHP language runtime engine: CLI, CGI and Apache2 SAPIs."
 
@@ -149,11 +148,6 @@ src_unpack() {
 	fi
 
 	cd "${S}"
-	
-	if use fpm ; then
-		# EPATCH_OPTS="-p1 -d ${S}" epatch "${WORKDIR}/${FPM_PATCH}"
-		EPATCH_OPTS="-p1 -d ${S}" epatch "${FILESDIR}/${FPM_PATCH}"
-	fi
 
 	# Concurrent PHP Apache2 modules support
 	if use apache2 ; then
@@ -212,8 +206,7 @@ src_unpack() {
 	rm ext/spl/tests/arrayObject___construct_basic4.phpt \
 		ext/spl/tests/arrayObject___construct_basic5.phpt \
 		ext/spl/tests/arrayObject_exchangeArray_basic3.phpt \
-		ext/spl/tests/arrayObject_setFlags_basic1.phpt \
-		tests/lang/bug45392.phpt
+		ext/spl/tests/arrayObject_setFlags_basic1.phpt
 
 	# those might as well be related to suhosin
 	rm ext/session/tests/session_decode_variation3.phpt \
@@ -235,6 +228,14 @@ src_unpack() {
 	# these tests behave differently with suhosin enabled, adapting them...
 	use suhosin && sed -e 's:File(\.\./):File(..):g' -i \
 		tests/security/open_basedir*{.inc,.phpt}
+
+	if use fpm
+	then
+		(cd ${WORKDIR}; ${FPM_PATCH}/generate-fpm-patch )
+		EPATCH_OPTS="-p1 -d ${S}" epatch "${WORKDIR}/fpm.patch"
+		PHP_AUTOCONF="autoconf-2.13" ${S}/buildconf --force
+	fi
+
 }
 
 src_compile() {
@@ -281,7 +282,7 @@ src_compile_fastbuild() {
 		
 		# php-fpm patch support
 		if use fpm ; then
-			my_conf="${my_conf} --enable-fpm --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
+			my_conf="${my_conf} --with-fpm --enable-fpm --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
 		fi
 		
 		phpconfutils_extension_enable "discard-path" "discard-path" 0
@@ -457,7 +458,7 @@ src_install() {
 				# php-fpm patch support
 				if use fpm ; then
 					einfo "Installing php-fpm config"
-					FPMSRCDIR="${WORKDIR}/${P}/sapi/cgi/fpm"
+					FPMSRCDIR="${WORKDIR}/${P}/sapi/conf/fpm"
 					insinto	${PHP_INI_DIR}
 					doins "${FPMSRCDIR}/php-fpm.conf"
 					newins "${FPMSRCDIR}/php-fpm.conf" "php-fpm.conf.dist"
