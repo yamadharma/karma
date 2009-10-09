@@ -228,6 +228,14 @@ src_unpack() {
 	# these tests behave differently with suhosin enabled, adapting them...
 	use suhosin && sed -e 's:File(\.\./):File(..):g' -i \
 		tests/security/open_basedir*{.inc,.phpt}
+
+	if use fpm
+	then
+		(cd ${WORKDIR}; ${FPM_PATCH}/generate-fpm-patch )
+		EPATCH_OPTS="-p1 -d ${S}" epatch "${WORKDIR}/fpm.patch"
+		PHP_AUTOCONF="autoconf-2.13" ${S}/buildconf --force
+	fi
+
 }
 
 src_compile() {
@@ -238,17 +246,6 @@ src_compile() {
 		src_compile_fastbuild
 	else
 		src_compile_normal
-	fi
-
-	if use fpm
-	then
-		local fpm_myconf
-		fpm_myconf="${fpm_myconf} --enable-fpm --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
-		cd  ${WORKDIR}/${FPM_PATCH}
-		mkdir build
-		cd build
-		../configure --srcdir=../ --with-php-src=../../php-${PV} --with-php-build=../../php-${PV} ${fpm_myconf}
-		make || die
 	fi
 }
 
@@ -457,6 +454,18 @@ src_install() {
 				into ${destdir}
 				dobin php-cgi || die "Unable to install ${x} sapi"
 				php5_2-sapi_install_ini
+				
+				# php-fpm patch support
+				if use fpm ; then
+					einfo "Installing php-fpm config"
+					FPMSRCDIR="${WORKDIR}/${P}/sapi/conf/fpm"
+					insinto	${PHP_INI_DIR}
+					doins "${FPMSRCDIR}/php-fpm.conf"
+					newins "${FPMSRCDIR}/php-fpm.conf" "php-fpm.conf.dist"
+					einfo "Installing php-fpm initscript"
+					newinitd "${FILESDIR}/php-fpm.init" "php-fpm"
+				fi
+				
 				;;
 			apache2)
 				einfo "Installing Apache${APACHE_VERSION} SAPI"
@@ -485,24 +494,6 @@ src_install() {
 	# Install env.d files
 	newenvd "${FILESDIR}/20php5-envd" "20php5"
 	sed -e "s|/lib/|/$(get_libdir)/|g" -i "${D}/etc/env.d/20php5"
-
-	if use fpm
-	then
-		cd  ${WORKDIR}/${FPM_PATCH}/build
-		into ${destdir}
-		newbin php_fpm php-fpm
-		einfo "Installing php-fpm config"
-		FPMSRCDIR=.
-		insinto ${PHP_INI_DIR}
-		doins "${FPMSRCDIR}/php-fpm.conf"
-		newins "${FPMSRCDIR}/php-fpm.conf" "php-fpm.conf.dist"
-
-		einfo "Installing php-fpm initscript"
-		newinitd "${FILESDIR}/php-fpm.init" "php-fpm"
-		dosed -i -e "s:@destdir@:$destdir:g" /etc/init.d/php-fpm
-
-		doman php-fpm.1
-	fi
 }
 
 pkg_postinst() {
