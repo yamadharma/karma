@@ -8,8 +8,8 @@ inherit eutils flag-o-matic multilib autotools pam
 # and _p? releases.
 PARCH=${P/_/}
 
-#HPN_PATCH="${PARCH}-hpn13v6.diff.gz"
-#LDAP_PATCH="${PARCH/openssh/openssh-lpk}-0.3.11.patch.gz"
+HPN_PATCH="${PARCH}-hpn13v6-gentoo.diff.gz"
+LDAP_PATCH="${PARCH/openssh/openssh-lpk}-0.3.11.patch.gz"
 PKCS11_PATCH="${PARCH/3p1/2}pkcs11-0.26.tar.bz2"
 X509_VER="6.2.1" X509_PATCH="${PARCH}+x509-${X509_VER}.diff.gz"
 

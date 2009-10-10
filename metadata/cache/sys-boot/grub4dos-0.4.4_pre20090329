@@ -14,7 +14,7 @@ custom-cflags ncurses netboot static
 virtual/bootloader
 2
 
-compile config install postinst preinst prepare test
+compile config install postinst preinst prepare prerm test
 
 
 

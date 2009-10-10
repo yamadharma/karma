@@ -14,7 +14,7 @@ static custom-cflags doc
 virtual/bootloader
 2
 
-compile install preinst prepare
+compile install preinst prepare prerm
 
 
 

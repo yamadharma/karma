@@ -14,7 +14,7 @@ eutils mount-boot multilib portability toolchain-funcs
 virtual/bootloader
 
 
-compile install postinst preinst unpack
+compile install postinst preinst prerm unpack
 
 
 
