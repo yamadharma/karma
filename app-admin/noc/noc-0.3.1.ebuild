@@ -31,3 +31,8 @@ DEPEND=">=dev-lang/python-2.5
 	dev-python/python-creole
 	dev-python/netifaces"
 
+
+pkg_config() {
+	createuser -D -I -S noc
+	createdb -EUTF8 -Onoc noc
+}
