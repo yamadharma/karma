@@ -24,7 +24,7 @@ DEPEND=">=dev-lang/python-2.5
 	dev-python/sphinx
 	dev-python/flup
 	net-libs/libsmi
-	>=dev-python/pysnmp-4*
+	>=dev-python/pysnmp-4.1
 	dev-python/pyasn1
 	net-analyzer/fping
 	net-misc/rsync
