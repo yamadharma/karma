@@ -29,10 +29,27 @@ DEPEND=">=dev-lang/python-2.5
 	net-analyzer/fping
 	net-misc/rsync
 	dev-python/python-creole
-	dev-python/netifaces"
+	dev-python/netifaces
+	dev-util/mercurial
+	|| ( net-misc/telnet-bsd net-misc/netkit-telnetd )"
+
+pkg_setup() {
+	enewgroup noc
+	enewuser noc -1 -1 /opt/noc noc
+}
 
 
 pkg_config() {
-	createuser -D -I -S noc
-	createdb -EUTF8 -Onoc noc
+	su - postgres
+		createuser -D -I -S -R noc
+		createdb -EUTF8 -Onoc noc
+	exit
+	
+	#su - noc
+	cd /opt/noc
+	./scripts/post-update
+	
+	python manage.py syncdb 
+	python manage.py migrate
+	#exit
 }
