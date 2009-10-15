@@ -30,6 +30,7 @@ DEPEND=">=dev-lang/python-2.5
 	net-misc/rsync
 	dev-python/python-creole
 	dev-python/netifaces
+	net-dns/bind-tools
 	dev-util/mercurial
 	|| ( net-misc/telnet-bsd net-misc/netkit-telnetd )"
 
