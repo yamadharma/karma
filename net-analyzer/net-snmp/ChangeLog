@@ -1,7 +1,0 @@
-# ChangeLog for net-analyzer/net-snmp
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-  04 Nov 2008; Mario Fetka <mario.fetka@gmail.com> ChangeLog:
-  add rpm 5 patch
-
