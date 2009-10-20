@@ -1,4 +1,4 @@
-virtual/python >=dev-python/pygtk-2.4.0 >=dev-libs/glib-2.6.0 >=x11-libs/gtk+-2.4.0 >=dev-python/gnome-python-2.10.0 >=gnome-base/gnome-panel-2.13.4 >=gnome-base/libgnomeprint-2.2.0 >=gnome-base/libgnomeprintui-2.2.0 >=x11-libs/gtksourceview-1.1.90 >=x11-libs/libwnck-2.9.92 >=gnome-base/libgtop-2.13.0 >=gnome-extra/nautilus-cd-burner-2.11.1 >=gnome-extra/gnome-media-2.10.0 >=gnome-base/gconf-2.10.0 >=x11-wm/metacity-2.13.13 media-video/totem !<dev-python/gnome-python-extras-2.13 >=dev-util/pkgconfig-0.7 >=app-admin/eselect-python-20090804 >=app-shells/bash-3.2 virtual/python >=sys-apps/sed-4 >=app-admin/eselect-python-20090804 >=app-shells/bash-3.2 X? ( x11-base/xorg-server x11-apps/xhost )
+virtual/python >=dev-python/pygtk-2.4.0 >=dev-libs/glib-2.6.0 >=x11-libs/gtk+-2.4.0 >=dev-python/gnome-python-2.10.0 >=gnome-base/gnome-panel-2.13.4 >=gnome-base/libgnomeprint-2.2.0 >=gnome-base/libgnomeprintui-2.2.0 >=x11-libs/gtksourceview-1.1.90 >=x11-libs/libwnck-2.9.92 >=gnome-base/libgtop-2.13.0 >=gnome-extra/nautilus-cd-burner-2.11.1 >=gnome-extra/gnome-media-2.10.0 >=gnome-base/gconf-2.10.0 >=x11-wm/metacity-2.13.13 media-video/totem !<dev-python/gnome-python-extras-2.13 >=dev-util/pkgconfig-0.7 >=app-admin/eselect-python-20090804 >=app-shells/bash-3.2 virtual/python >=sys-apps/sed-4 >=app-admin/eselect-python-20090804 >=app-shells/bash-3.2 test? ( x11-base/xorg-server x11-apps/xhost )
 virtual/python >=dev-python/pygtk-2.4.0 >=dev-libs/glib-2.6.0 >=x11-libs/gtk+-2.4.0 >=dev-python/gnome-python-2.10.0 >=gnome-base/gnome-panel-2.13.4 >=gnome-base/libgnomeprint-2.2.0 >=gnome-base/libgnomeprintui-2.2.0 >=x11-libs/gtksourceview-1.1.90 >=x11-libs/libwnck-2.9.92 >=gnome-base/libgtop-2.13.0 >=gnome-extra/nautilus-cd-burner-2.11.1 >=gnome-extra/gnome-media-2.10.0 >=gnome-base/gconf-2.10.0 >=x11-wm/metacity-2.13.13 media-video/totem !<dev-python/gnome-python-extras-2.13 virtual/python
 0
 mirror://gnome/sources/gnome-python-desktop/2.14/gnome-python-desktop-2.14.0.tar.bz2
@@ -8,7 +8,7 @@ LGPL-2.1 GPL-2
 provides python interfacing modules for some GNOME desktop libraries
 ~alpha amd64 ~hppa ~ppc ~ppc64 ~sparc x86
 distutils eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability python toolchain-funcs virtualx
-debug X
+debug test
 
 
 
