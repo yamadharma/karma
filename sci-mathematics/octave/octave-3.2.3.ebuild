@@ -14,6 +14,7 @@ SLOT="0"
 IUSE="64bit arpack emacs readline zlib doc hdf5 curl fftw xemacs sparse static-libs framework-opengl glpk qrupdate"
 KEYWORDS="~alpha amd64 ~hppa ~ppc ~ppc64 ~sparc x86"
 
+
 RDEPEND="virtual/lapack
 	dev-libs/libpcre
 	sys-libs/ncurses
