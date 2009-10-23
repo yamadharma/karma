@@ -2,12 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/sys-auth/nss-ldapd/nss-ldapd-0.6.7-r1.ebuild,v 1.1 2009/04/02 18:50:35 cardoe Exp $
 
+EAPI="2"
+
 inherit multilib
+
+MY_PN=nss-pam-ldapd
+MY_P=${MY_PN}-${PV}
 
 DESCRIPTION="NSS module for name lookups using LDAP"
 HOMEPAGE="http://arthurdejong.org/nss-ldapd
 	http://ch.tudelft.nl/~arthur/nss-ldapd/"
-SRC_URI="http://arthurdejong.org/nss-ldapd/${P}.tar.gz"
+SRC_URI="http://arthurdejong.org/${MY_PN}/${MY_P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -20,13 +25,14 @@ DEPEND="net-nds/openldap
 		!sys-auth/nss_ldap"
 RDEPEND="${DEPEND}"
 
-src_compile() {
+S=${WORKDIR}/${MY_P}
+
+src_configure() {
 	# nss libraries always go in /lib on Gentoo
 	econf --enable-warnings --with-ldap-lib=openldap $(use_enable debug) \
 		$(use_enable sasl) $(use_enable kerberos) \
 		--libdir=/$(get_libdir) \
 		|| die "econf failed"
-	emake || die "emake failed"
 }
 
 src_install() {
@@ -42,9 +48,9 @@ src_install() {
 
 	# make an example copy
 	insinto /usr/share/nss-ldapd
-	doins nss-ldapd.conf
+	doins nslcd.conf
 
-	fperms o-r /etc/nss-ldapd.conf
+	fperms o-r /etc/nslcd.conf
 }
 
 pkg_postinst() {
