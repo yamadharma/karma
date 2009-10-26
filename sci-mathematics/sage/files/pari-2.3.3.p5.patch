@@ -1,0 +1,30 @@
+# HG changeset patch
+# User Francois Bissey <f.r.bissey@massey.ac.nz>
+# Date 1256522272 -46800
+# Node ID 3fb1438e8ca992b96c27b04bd97cf5635c7175fa
+# Parent  c611ddefd7fcfa04f2c30367138f93fb7586d22f
+patching spkg-install to use make install-foo instead of cp hacks.
+
+diff -r c611ddefd7fc -r 3fb1438e8ca9 spkg-install
+--- a/spkg-install	Sat Oct 03 05:57:30 2009 -0700
++++ b/spkg-install	Mon Oct 26 14:57:52 2009 +1300
+@@ -89,7 +89,8 @@
+         exit 1
+     fi
+ 
+-    $CP -f gp "$SAGE_LOCAL/bin/"    # avoid "make install"
++#    $CP -f gp "$SAGE_LOCAL/bin/"    # avoid "make install"
++    $MAKE install-bin
+ 
+     # Install documentation source (compressed), for use by gphelp.
+     $MKDIR -p "$SAGE_LOCAL/share/pari/doc/"
+@@ -118,7 +119,8 @@
+         exit 1
+     fi
+ 
+-    $CP -f libpari* $SAGE_LOCAL/lib/
++    $MAKE install-lib-dyn
++#    $CP -f libpari* $SAGE_LOCAL/lib/
+     cd "$CUR"
+ 
+     # On CYGWIN, need the dll for PARI to be in the same

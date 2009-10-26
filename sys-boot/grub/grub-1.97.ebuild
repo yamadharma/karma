@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -11,7 +11,7 @@ MY_PN=${PN}2
 MY_P=${MY_PN}_${MY_PV}
 DEB_PATCH_V=1
 
-S=${WORKDIR}/${MY_P/_/-}
+S=${WORKDIR}/${MY_P/_/-}.orig
 
 DESCRIPTION="GNU GRUB 2 boot loader"
 HOMEPAGE="http://www.gnu.org/software/grub/"
@@ -22,20 +22,22 @@ SRC_URI="mirror://debian/pool/main/g/${MY_PN}/${MY_P}.orig.tar.gz
 	mirror://debian/pool/main/g/${MY_PN}/${MY_P}-${DEB_PATCH_V}.diff.gz"
 # 	mirror://debian/pool/main/g/grub2-splashimages/grub2-splashimages_1.0.0.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 SLOT="0"
 # KEYWORDS="x86 amd64"
 KEYWORDS=""
-IUSE="static custom-cflags doc"
+IUSE="custom-cflags debug doc multilib static"
 
 DEPEND="!sys-boot/grub4dos
-	>=sys-libs/ncurses-5.2-r5
-	dev-libs/lzo"
+	>=sys-libs/ncurses-5.2-r5"
 PROVIDE="virtual/bootloader"
 
-RESTRICT="strip"
+# RESTRICT="strip"
 
 SPLASH_DIR=/usr/share/images/grub/
+
+export STRIP_MASK="*/grub/*/*.mod"
+QA_EXECSTACK="sbin/grub-probe sbin/grub-setup"
 
 src_prepare() {
 	cd ${WORKDIR}
@@ -51,23 +53,29 @@ src_prepare() {
 	
 	# FIXME! File missing
 	touch ${S}/docs/version.texi
+
+	./autogen.sh
 }
 
-src_compile() {
-	use amd64 && multilib_toolchain_setup x86
+src_configure() {
 	use custom-cflags || unset CFLAGS CPPFLAGS LDFLAGS
 	use static && append-ldflags -static
 
+	local libdir="/$(get_libdir)"
+	# on multilib'ed x86_64 put them in the right place
+	use amd64 && use multilib && libdir="/lib32"
+
 	econf \
-		--prefix=/ \
-		--datadir=/usr/lib \
-		|| die "econf failed"
-	emake -j1 || die "making regular stuff"
+		--sbindir=/sbin \
+		--bindir=/bin \
+		--libdir="${libdir}" \
+		$(use_enable debug grub-emu) \
+		$(use_enable debug grub-emu-usb) \
+		$(use_enable debug grub-fstest) \
+		--enable-grub-pe2elf \
+		--enable-grub-mkfont
 
-	cd ${S}/docs
-	makeinfo --force grub.texi
-	use doc && texi2pdf grub.texi 
-
+#		--enable-efiemu \
 }
 
 src_install() {
