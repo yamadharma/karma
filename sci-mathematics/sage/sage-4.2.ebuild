@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 DESCRIPTION="Math software for algebra, geometry, number theory, cryptography,
 and numerical computation."
 HOMEPAGE="http://www.sagemath.org"
@@ -11,7 +13,7 @@ inherit eutils flag-o-matic fortran
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86 ~ppc"
+KEYWORDS="~amd64 ~x86 ~ppc"
 IUSE=""
 
 DEPEND=">=sys-devel/bison-2.3"

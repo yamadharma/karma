@@ -6,8 +6,8 @@
 Correcting typo LCOAL to LOCAL in spkg-install
 
 diff -r a563085a78ce -r 5545e2dbcad8 spkg-install
---- a/spkg-install	Mon Jan 19 02:48:26 2009 -0800
-+++ b/spkg-install	Mon Oct 26 13:55:58 2009 +1300
+--- ecm-6.2.1.p0/spkg-install.orig	Mon Jan 19 02:48:26 2009 -0800
++++ ecm-6.2.1.p0/spkg-install	Mon Oct 26 13:55:58 2009 +1300
 @@ -19,7 +19,7 @@
  # remove old executable/headers/library
  echo "Removing old binary, headers and static library"
