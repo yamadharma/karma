@@ -1,4 +1,4 @@
->=dev-libs/check-0.9.5 >=dev-libs/log4c-1.2 >=dev-db/sqlite-3.4 samba? ( net-fs/samba ) sftp? ( >=net-libs/libssh-0.3.0 ) >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=dev-libs/check-0.9.5 >=dev-libs/log4c-1.2 >=dev-db/sqlite-3.4 samba? ( net-fs/samba ) sftp? ( >=net-libs/libssh-0.3.0 ) >=dev-util/cmake-2.6.2-r1userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 >=dev-libs/log4c-1.2 >=dev-db/sqlite-3.4 samba? ( net-fs/samba ) sftp? ( >=net-libs/libssh-0.3.0 )
 0
 http://www.csync.org/files/csync-0.43.0.tar.gz

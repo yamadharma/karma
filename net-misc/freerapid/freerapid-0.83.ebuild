@@ -2,11 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit eutils
 
 DESCRIPTION="FreeRapid is a simple Java downloader that supports downloading from Rapidshare and other file-sharing services."
-HOMEPAGE="http://wordrider.net/freerapid/download.html"
-SRC_URI="http://wordrider.net/download.php?file=FreeRapiD-${PV}.zip"
+HOMEPAGE="http://wordrider.net/freerapid"
+SRC_URI="http://wordrider.net/download.php?file=FreeRapiD-${PV}.zip -> ${P}.zip"
 
 LICENSE="GPL"
 KEYWORDS="x86 amd64"
@@ -27,8 +29,7 @@ pkg_setup () {
 }
 
 
-src_unpack() {
-	unpack ${A}
+src_prepare() {
 	# remove Windows and shell files
 	find "${S}" -regex '.*\.\(exe\|bat\|chm\|ico\|sh\)$' | xargs rm --verbose
 	# copy executor
