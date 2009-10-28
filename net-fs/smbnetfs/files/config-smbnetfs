@@ -1,8 +1,19 @@
 #!/bin/sh
-
-mkdir -p ~/.smb
-ln -sf /etc/samba/smb.conf ~/.smb/smb.conf
-zcat /usr/share/doc/@PF@/smbnetfs.conf.gz > ~/.smb/smbnetfs.conf
+uncat()
+{
+	local decompressor
+	case $1 in
+		*.lzma) decompressor="lzcat" ;;
+		*.bz2)  decompressor="bzcat" ;;
+		*.gz)   decompressor="zcat"  ;;
+		*)      decompressor="cat"   ;;
+	esac
+	${decompressor} $1
+}
+mkdir -pv ~/.smb
+ln -sfv /etc/samba/smb.conf ~/.smb/smb.conf
+uncat /usr/share/doc/@PF@/conf/smbnetfs.conf* > ~/.smb/smbnetfs.conf
 touch ~/.smb/smbnetfs.auth
 touch ~/.smb/smbnetfs.host
 chmod 600 ~/.smb/smbnetfs.*
+echo "You may want to alter ~/.smb/smbnetfs.conf for appropriate changes."
