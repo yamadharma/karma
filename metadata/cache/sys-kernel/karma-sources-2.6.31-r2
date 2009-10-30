@@ -6,7 +6,7 @@ binchecks strip
 http://www.kernel.org/ http://www.gentoo.org/
 GPL-2
 KLK Sources.
-x86 amd64
+
 eutils kernel-2 multilib portability toolchain-funcs versionator
 symlink build
 
