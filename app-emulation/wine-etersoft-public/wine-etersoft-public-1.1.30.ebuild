@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit multilib eutils rpm
 
-GV="0.9.1"
+GV="1.0.0-x86"
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV}/sources/wine-${PV}-alt1.src.rpm
@@ -15,7 +15,7 @@ SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV}/sources/wine-$
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86"
-IUSE="alsa cups dbus esd +gecko gnutls hal jack jpeg lcms ldap nas ncurses +opengl oss png samba scanner ssl win64 +X xcomposite xinerama xml"
+IUSE="alsa capi cups dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss png samba scanner ssl test +threads win64 X xcomposite xinerama xml"
 RESTRICT="test" #72375
 
 S=${WORKDIR}/wine-${PV}
@@ -24,8 +24,12 @@ RDEPEND=">=media-libs/freetype-2.0.0
 	media-fonts/corefonts
 	dev-lang/perl
 	dev-perl/XML-Simple
+	capi? ( net-dialup/capi4k-utils )
 	ncurses? ( >=sys-libs/ncurses-5.2 )
-	jack? ( media-sound/jack-audio-connection-kit )
+	fontconfig? ( media-libs/fontconfig )
+	gphoto2? ( media-libs/libgphoto2 )
+ 	jack? ( media-sound/jack-audio-connection-kit )
+	openal? ( media-libs/openal )
 	dbus? ( sys-apps/dbus )
 	gnutls? ( net-libs/gnutls )
 	hal? ( sys-apps/hal )
@@ -42,9 +46,11 @@ RDEPEND=">=media-libs/freetype-2.0.0
 	nas? ( media-libs/nas )
 	cups? ( net-print/cups )
 	opengl? ( virtual/opengl )
+	gsm? ( media-sound/gsm )
 	jpeg? ( media-libs/jpeg )
 	ldap? ( net-nds/openldap )
 	lcms? ( media-libs/lcms )
+	mp3? ( media-sound/mpg123 )
 	samba? ( >=net-fs/samba-3.0.25 )
 	xml? ( dev-libs/libxml2 dev-libs/libxslt )
 	scanner? ( media-gfx/sane-backends )
@@ -68,8 +74,14 @@ DEPEND="${RDEPEND}
 	sys-devel/bison
 	sys-devel/flex"
 
+src_unpack() {
+	rpm_src_unpack
+	tar xf wine-${PV}.tar
+}
+
 src_prepare() {
 	epatch "${FILESDIR}"/wine-1.1.15-winegcc.patch #260726
+	epatch_user #282735
 	sed -i '/^UPDATE_DESKTOP_DATABASE/s:=.*:=true:' tools/Makefile.in || die
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
 }
@@ -84,21 +96,31 @@ src_configure() {
 	econf \
 		--sysconfdir=/etc/wine \
 		$(use_with alsa) \
+		$(use_with capi) \
+		$(use_with lcms cms) \
 		$(use_with cups) \
+		$(use_with ncurses curses) \
 		$(use_with esd) \
+		$(use_with fontconfig) \
 		$(use_with gnutls) \
+		$(use_with gphoto2 gphoto) \
+		$(use_with gsm) \
 		$(! use dbus && echo --without-hal || use_with hal) \
 		$(use_with jack) \
 		$(use_with jpeg) \
-		$(use_with lcms cms) \
 		$(use_with ldap) \
+		$(use_with mp3 mpg123) \
 		$(use_with nas) \
 		$(use_with ncurses curses) \
+		$(use_with openal) \
+		$(use_with ncurses curses) \
 		$(use_with opengl) \
+		$(use_with ssl openssl) \
 		$(use_with oss) \
 		$(use_with png) \
+		$(use_with threads pthread) \
 		$(use_with scanner sane) \
-		$(use_with ssl openssl) \
+		$(use_enable test tests) \
 		$(use_enable win64) \
 		$(use_with X x) \
 		$(use_with xcomposite) \
