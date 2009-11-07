@@ -3,7 +3,7 @@ dev-libs/boost media-libs/jpeg media-libs/libpng media-libs/tiff sys-libs/zlib x
 0
 
 
-http://scantailor.sourceforge.net/
+https://scantailor.sourceforge.net/
 GPL-3
 Scan Tailor is an interactive post-processing tool for scanned pages
 amd64 x86
