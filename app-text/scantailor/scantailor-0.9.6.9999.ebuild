@@ -4,11 +4,13 @@
 
 EAPI="2"
 
-inherit cmake-utils
+ESVN_REPO_URI="https://scantailor.svn.sourceforge.net/svnroot/scantailor/trunk"
+
+inherit cmake-utils subversion
 
 DESCRIPTION="Scan Tailor is an interactive post-processing tool for scanned pages"
 HOMEPAGE="http://scantailor.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
+# SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
