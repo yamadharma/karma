@@ -16,7 +16,7 @@ G2CONF=""
 
 
 DEPEND=">=x11-libs/gtk+-2.4.0
-	 >=app-dicts/libtranslate-0.99
+	 >=dev-libs/libtranslate-0.99
 	 >=gnome-base/eel-2.6.0
 	 app-text/aspell"
 	 

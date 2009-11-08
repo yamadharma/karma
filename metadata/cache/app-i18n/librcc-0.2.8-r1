@@ -1,5 +1,5 @@
-app-i18n/librcd app-i18n/libguess dev-libs/libxml2 sys-libs/db app-i18n/enca app-text/aspell app-dicts/libtranslate
-app-i18n/librcd app-i18n/libguess dev-libs/libxml2 sys-libs/db app-i18n/enca app-text/aspell app-dicts/libtranslate
+app-i18n/librcd app-i18n/libguess dev-libs/libxml2 sys-libs/db app-i18n/enca app-text/aspell dev-libs/libtranslate
+app-i18n/librcd app-i18n/libguess dev-libs/libxml2 sys-libs/db app-i18n/enca app-text/aspell dev-libs/libtranslate
 0
 http://dside.dyndns.org/files/rusxmms/librcc-0.2.8.tar.bz2
 

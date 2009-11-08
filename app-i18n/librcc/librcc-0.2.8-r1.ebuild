@@ -15,7 +15,7 @@ DEPEND="app-i18n/librcd
 	sys-libs/db 
 	app-i18n/enca 
 	app-text/aspell 
-	app-dicts/libtranslate"
+	dev-libs/libtranslate"
 
 
 src_unpack() {

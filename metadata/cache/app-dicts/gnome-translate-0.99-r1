@@ -1,5 +1,5 @@
->=x11-libs/gtk+-2.4.0 >=app-dicts/libtranslate-0.99 >=gnome-base/eel-2.6.0 app-text/aspell >=sys-apps/sed-4
->=x11-libs/gtk+-2.4.0 >=app-dicts/libtranslate-0.99 >=gnome-base/eel-2.6.0 app-text/aspell
+>=x11-libs/gtk+-2.4.0 >=dev-libs/libtranslate-0.99 >=gnome-base/eel-2.6.0 app-text/aspell >=sys-apps/sed-4
+>=x11-libs/gtk+-2.4.0 >=dev-libs/libtranslate-0.99 >=gnome-base/eel-2.6.0 app-text/aspell
 0
 http://savannah.nongnu.org/download/libtranslate/gnome-translate-0.99.tar.gz
 
