@@ -4,9 +4,9 @@
 
 EAPI="2"
 
-ESVN_REPO_URI="https://scantailor.svn.sourceforge.net/svnroot/scantailor/trunk"
+EGIT_REPO_URI="git://scantailor.git.sourceforge.net/gitroot/scantailor/scantailor"
 
-inherit cmake-utils subversion
+inherit cmake-utils git
 
 DESCRIPTION="Scan Tailor is an interactive post-processing tool for scanned pages"
 HOMEPAGE="http://scantailor.sourceforge.net/"
