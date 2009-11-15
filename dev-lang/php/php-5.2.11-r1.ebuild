@@ -18,8 +18,8 @@ SLOT="5"
 MY_PHP_PV="${PV}"
 MY_PHP_P="php-${MY_PHP_PV}"
 PHP_PACKAGE="1"
-
 # php patch settings, general
+PHP_PATCHSET_URI="http://dev.gentoo.org/~cla/distfiles/php-patchset-${PVR}.tar.bz2"
 PHP_PATCHSET_REV="${PR/r/}"
 PHP_PATCHSET_REV="${PHP_PATCHSET_REV/2/1}"
 SUHOSIN_PATCH="suhosin-patch-${MY_PHP_PV}-0.9.7.patch.gz"
@@ -173,6 +173,9 @@ src_unpack() {
 	if [[ -n "${KOLAB_PATCH}" ]] ; then
 		use kolab && epatch "${WORKDIR}/${KOLAB_PATCH}"
 	fi
+
+	# Security bug #292132
+	epatch "${WORKDIR}"/${MY_PHP_PV}/gd-maxcolors.patch
 
 	# pretend to not have flex, bug 221357
 	sed -re 's:( +)PHP_SUBST\(LEX\):\1LEX="exit 0;"\n\0:' -i acinclude.m4
