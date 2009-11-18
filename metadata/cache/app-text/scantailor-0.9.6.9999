@@ -1,20 +1,20 @@
-dev-libs/boost media-libs/jpeg media-libs/libpng media-libs/tiff sys-libs/zlib x11-libs/libXrender >=x11-libs/qt-gui-4.4 >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) dev-util/subversion net-misc/rsync
+dev-libs/boost media-libs/jpeg media-libs/libpng media-libs/tiff sys-libs/zlib x11-libs/libXrender >=x11-libs/qt-gui-4.4 >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) >=dev-util/git-1.6
 dev-libs/boost media-libs/jpeg media-libs/libpng media-libs/tiff sys-libs/zlib x11-libs/libXrender >=x11-libs/qt-gui-4.4
 0
 
 
-https://scantailor.sourceforge.net/
+http://scantailor.sourceforge.net/
 GPL-3
 Scan Tailor is an interactive post-processing tool for scanned pages
 amd64 x86
-base cmake-utils eutils flag-o-matic multilib portability subversion toolchain-funcs
+base cmake-utils eutils flag-o-matic git multilib portability toolchain-funcs
 
 
 
 
 2
 
-compile configure install preinst prepare test unpack
+compile configure install prepare test unpack
 
 
 
