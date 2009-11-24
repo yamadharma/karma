@@ -15,7 +15,7 @@ SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV}/sources/wine-$
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86"
-IUSE="alsa capi cups dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss png samba scanner ssl test +threads win64 X xcomposite xinerama xml"
+IUSE="alsa capi +cups dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss png samba scanner ssl test +threads win64 X xcomposite xinerama xml"
 RESTRICT="test" #72375
 
 S=${WORKDIR}/wine-${PV}
