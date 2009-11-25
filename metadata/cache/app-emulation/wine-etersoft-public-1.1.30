@@ -8,7 +8,7 @@ LGPL-2.1
 MS Windows compatibility layer (WINE@Etersoft public edition)
 -* amd64 x86
 eutils multilib portability rpm toolchain-funcs
-alsa capi cups dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss png samba scanner ssl test +threads win64 X xcomposite xinerama xml
+alsa capi +cups dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss png samba scanner ssl test +threads win64 X xcomposite xinerama xml
 
 
 
