@@ -1,0 +1,22 @@
+x11-libs/wxGTK dev-libs/expat dev-db/sqlite:3
+x11-libs/wxGTK dev-libs/expat dev-db/sqlite:3
+0
+http://www.lintest.ru/pub/myrulib_0.15.tar.gz
+
+http://www.lintest.ru/wiki/MyRuLib
+GPL-3
+Create your own collection of e-books
+amd64 x86
+eutils multilib portability toolchain-funcs
+
+
+
+
+2
+
+install
+
+
+
+
+
