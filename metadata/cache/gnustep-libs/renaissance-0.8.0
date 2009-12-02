@@ -1,5 +1,5 @@
-gnustep-base/gnustep-env
-gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 )
+
+
 0
 http://www.gnustep.it/Renaissance/Download/Renaissance-0.8.0.tar.gz
 
@@ -7,14 +7,14 @@ http://www.gnustep.it/Renaissance/index.html
 LGPL-2.1
 GNUstep Renaissance allows you to describe your user interfaces in simple and intuitive XML files.
 x86
-eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
-doc debug profile doc
+gnustep
+doc
 
 
 
 
 
-compile install postinst setup
+install
 
 
 

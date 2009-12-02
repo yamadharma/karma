@@ -1,5 +1,5 @@
-gnustep-base/gnustep-env pdf? ( =gnustep-libs/pdfkit-0.9* ) !gnustep-apps/desktop !gnustep-apps/recycler
-gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 ) pdf? ( =gnustep-libs/pdfkit-0.9* ) !gnustep-apps/desktop !gnustep-apps/recycler
+pdf? ( =gnustep-libs/pdfkit-0.9* ) !gnustep-apps/desktop !gnustep-apps/recycler
+pdf? ( =gnustep-libs/pdfkit-0.9* ) !gnustep-apps/desktop !gnustep-apps/recycler
 0
 http://www.gnustep.it/enrico/gworkspace/gworkspace-0.8.3.tar.gz
 
@@ -7,14 +7,14 @@ http://www.gnustep.it/enrico/gworkspace/
 GPL-2
 A workspace manager for GNUstep
 ~ppc x86 amd64
-eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
-pdf doc debug profile doc
+gnustep
+pdf doc
 
 
 
 
 
-compile install postinst setup
+compile install
 
 
 

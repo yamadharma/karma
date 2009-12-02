@@ -1,5 +1,5 @@
-gnustep-base/gnustep-env doc? ( sys-apps/sed )
-gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 )
+doc? ( sys-apps/sed )
+
 0
 ftp://ftp.gnustep.org/pub/gnustep/dev-apps/gorm-1.2.0.tar.gz
 
@@ -7,14 +7,14 @@ http://www.gnustep.org/experience/Gorm.html
 GPL-2
 Gorm is a clone of the NeXTstep Interface Builder application for GNUstep.
 x86 amd64 ~ppc
-eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
-doc debug profile doc
+gnustep
+doc
 
 
 
 
 
-compile install postinst setup unpack
+unpack
 
 
 

@@ -1,5 +1,5 @@
-gnustep-base/gnustep-env pdfkit? ( =gnustep-libs/pdfkit-0.9* ) gnustep-apps/systempreferences >=dev-db/sqlite-3.2.8 !gnustep-apps/desktop !gnustep-apps/recycler dev-util/subversion net-misc/rsync
-gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 ) pdfkit? ( =gnustep-libs/pdfkit-0.9* ) gnustep-apps/systempreferences >=dev-db/sqlite-3.2.8 !gnustep-apps/desktop !gnustep-apps/recycler
+pdfkit? ( =gnustep-libs/pdfkit-0.9* ) gnustep-apps/systempreferences >=dev-db/sqlite-3.2.8 !gnustep-apps/desktop !gnustep-apps/recycler dev-util/subversion net-misc/rsync
+pdfkit? ( =gnustep-libs/pdfkit-0.9* ) gnustep-apps/systempreferences >=dev-db/sqlite-3.2.8 !gnustep-apps/desktop !gnustep-apps/recycler
 0
 
 
@@ -7,14 +7,14 @@ http://www.gnustep.it/enrico/gworkspace/
 GPL-2
 A workspace manager for GNUstep
 ~ppc x86 amd64
-eutils flag-o-matic gnustep gnustep-funcs multilib portability subversion toolchain-funcs
-pdfkit doc kernel_linux debug profile doc
+eutils gnustep multilib portability subversion toolchain-funcs
+pdfkit doc kernel_linux
 
 
 
 
 
-compile install postinst preinst setup unpack
+compile install preinst unpack
 
 
 

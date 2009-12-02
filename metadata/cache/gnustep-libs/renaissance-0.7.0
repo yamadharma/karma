@@ -1,4 +1,4 @@
->=gnustep-base/gnustep-gui-0.8.5 gnustep-base/gnustep-make gnustep-base/gnustep-base sys-devel/gcc
+>=gnustep-base/gnustep-gui-0.8.5
 >=gnustep-base/gnustep-gui-0.8.5
 0
 http://www.gnustep.it/Renaissance/Download/Renaissance-0.7.0.tar.gz
@@ -14,7 +14,7 @@ gnustep-old
 
 
 
-compile install
+compile
 
 
 

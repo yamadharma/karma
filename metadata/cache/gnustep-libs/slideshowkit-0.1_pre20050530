@@ -1,5 +1,5 @@
-gnustep-base/gnustep-env dev-util/cvs
-gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 )
+dev-util/cvs
+
 0
 
 
@@ -7,14 +7,14 @@ http://gna.org/projects/gsimageapps
 GPL-2
 Small kit to include slideshow in your application
 x86 amd64
-cvs eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
-debug profile doc
+cvs eutils gnustep multilib portability toolchain-funcs
 
 
 
 
 
-compile install postinst setup unpack
+
+unpack
 
 
 

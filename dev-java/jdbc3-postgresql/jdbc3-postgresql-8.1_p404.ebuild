@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jdbc3-postgresql/jdbc3-postgresql-8.1_p404.ebuild,v 1.1 2005/12/20 05:22:00 nichoj Exp $
 
-inherit java-pkg
+inherit java-pkg-2
 
 MY_PN="postgresql-jdbc"
 MY_PV="${PV/_p/-}"

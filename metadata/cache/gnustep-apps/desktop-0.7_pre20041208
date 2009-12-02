@@ -1,5 +1,5 @@
-gnustep-base/gnustep-env gnustep-apps/gworkspace dev-util/cvs net-misc/openssh
-gnustep-base/gnustep-env debug? ( >=sys-devel/gdb-6.0 ) doc? ( virtual/man >=sys-apps/texinfo-4.6 ) gnustep-apps/gworkspace gnustep-apps/recycler
+gnustep-apps/gworkspace dev-util/cvs net-misc/openssh
+gnustep-apps/gworkspace gnustep-apps/recycler
 0
 
 
@@ -7,14 +7,14 @@ http://www.gnustep.it/enrico/gworkspace/
 GPL-2
 A desktop manager for GNUstep.
 x86 ~ppc
-cvs eutils flag-o-matic gnustep gnustep-funcs multilib portability toolchain-funcs
-debug profile doc
+cvs eutils gnustep multilib portability toolchain-funcs
 
 
 
 
 
-compile install postinst setup unpack
+
+compile unpack
 
 
 

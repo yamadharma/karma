@@ -2,17 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jgroups/jgroups-2.2.7-r2.ebuild,v 1.1 2006/08/15 10:01:18 nelchael Exp $
 
-inherit eutils java-pkg
+inherit eutils java-pkg-opt-2
 
 DESCRIPTION="Ganttproject ... project management as free as bee(r)"
 SRC_URI="mirror://sourceforge/${PN}/${P}-src.zip"
 HOMEPAGE="http://ganttproject.sourceforge.net/"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 ~ppc x86"
+KEYWORDS="~amd64 ~ppc ~x86"
 RDEPEND=">=virtual/jre-1.4"
 
-DEPEND="=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
 	>=dev-java/ant-core-1.5
 	app-arch/unzip"
