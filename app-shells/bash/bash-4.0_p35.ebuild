@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-shells/bash/bash-4.0_p28.ebuild,v 1.3 2009/09/11 03:08:02 darkside Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-shells/bash/bash-4.0_p35.ebuild,v 1.5 2009/12/04 12:52:45 fauli Exp $
 
 EAPI="1"
 
@@ -30,14 +30,14 @@ patches() {
 }
 
 DESCRIPTION="The standard GNU Bourne again shell"
-HOMEPAGE="http://cnswww.cns.cwru.edu/~chet/bash/bashtop.html"
+HOMEPAGE="http://tiswww.case.edu/php/chet/bash/bashtop.html"
 SRC_URI="mirror://gnu/bash/${MY_P}.tar.gz $(patches)
 	$(patches ${READLINE_PLEVEL} readline ${READLINE_VER})"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86 ~sparc-fbsd ~x86-fbsd"
-IUSE="afs bashlogger examples +net nls plugins vanilla"
+KEYWORDS="~alpha amd64 ~arm hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh sparc x86 ~sparc-fbsd ~x86-fbsd"
+IUSE="afs bashlogger examples mem-scramble +net nls plugins vanilla"
 
 DEPEND=">=sys-libs/ncurses-5.2-r2
 	nls? ( virtual/libintl )"
@@ -66,6 +66,7 @@ src_unpack() {
 	cd ../..
 
 	if ! use vanilla ; then
+		sed -i '1i#define NEED_FPURGE_DECL' execute_cmd.c # needs fpurge() decl
 		epatch "${FILESDIR}"/${PN}-3.2-parallel-build.patch #189671
 		epatch "${FILESDIR}"/${PN}-4.0-ldflags-for-build.patch #211947
 		epatch "${FILESDIR}"/${PN}-4.0-negative-return.patch
@@ -116,7 +117,8 @@ src_compile() {
 		$(use_with afs) \
 		$(use_enable net net-redirections) \
 		--disable-profiling \
-		--without-gnu-malloc \
+		$(use_enable mem-scramble) \
+		$(use_with mem-scramble bash-malloc) \
 		${myconf} || die
 	emake || die "make failed"
 
