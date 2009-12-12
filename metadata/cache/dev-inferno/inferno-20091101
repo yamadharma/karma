@@ -6,7 +6,7 @@ http://www.vitanuova.com/dist/4e/inferno-20090730.tgz http://inferno-os-download
 http://inferno-os.googlecode.com/
 GPL-2
 OS Inferno New Edition (hg)
-~x86
+x86 amd64
 eutils flag-o-matic multilib portability toolchain-funcs
 hardened X doc source
 
