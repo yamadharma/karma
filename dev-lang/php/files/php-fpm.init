@@ -9,7 +9,7 @@ depend() {
 start() {
         ebegin "Starting PHP FastCGI server"
         start-stop-daemon --start --pidfile=/var/run/php-fpm.pid \
-               --exec @destdir@/bin/php-fpm
+               --exec /usr/bin/php-fpm
         eend $?
 }
 
