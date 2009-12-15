@@ -179,7 +179,7 @@ install_plugins() {
 	insinto /etc/centreon
 	doins ./plugins/src/centreon.conf
 	rm -f ./plugins/src/centreon.conf
-	dosym "${NAGIOS_PLUGINS}/centreon.conf" /etc/centreon/centreon.conf
+	dosym  /etc/centreon/centreon.conf "${NAGIOS_PLUGINS}/centreon.conf"
 
 	varsubst /etc/centreon/centreon.conf \
 		INSTALL_DIR_NAGIOS INSTALL_DIR_OREON \
