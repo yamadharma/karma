@@ -6,9 +6,11 @@ EAPI="2"
 
 inherit eutils
 
+MY_PV_ADD=U1
+
 DESCRIPTION="FreeRapid is a simple Java downloader that supports downloading from Rapidshare and other file-sharing services."
 HOMEPAGE="http://wordrider.net/freerapid"
-SRC_URI="http://wordrider.net/download.php?file=FreeRapiD-${PV}.zip -> ${P}.zip"
+SRC_URI="http://wordrider.net/download.php?file=FreeRapid-${PV}${MY_PV_ADD}.zip -> ${P}${MY_PV_ADD}.zip"
 
 LICENSE="GPL"
 KEYWORDS="x86 amd64"
@@ -20,7 +22,7 @@ DEPEND=">=virtual/jdk-1.6"
 RDEPEND=">=virtual/jre-1.6
 	app-misc/realpath"
 
-S="${WORKDIR}/FreeRapid-${PV%%0}"
+S="${WORKDIR}/FreeRapid-${PV%%0}${MY_PV_ADD/U/u}"
 INSTALLDIR="/opt/${PN}"
 
 pkg_setup () {
