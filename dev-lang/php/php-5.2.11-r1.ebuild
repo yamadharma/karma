@@ -39,6 +39,7 @@ inherit versionator php5_2-sapi apache-module
 # php-fpm patch support
 IUSE="${IUSE} fpm"
 FPM_PATCH="php-fpm-0.6-5.2.11"
+FPM_DIR="php-fpm-0.6-5.2.11"
 [[ -n "${FPM_PATCH}" ]] && SRC_URI="${SRC_URI} fpm? ( http://launchpad.net/php-fpm/master/0.6/+download/${FPM_PATCH}.tar.gz )"
 
 DESCRIPTION="The PHP language runtime engine: CLI, CGI and Apache2 SAPIs."
@@ -148,6 +149,15 @@ src_unpack() {
 	fi
 
 	cd "${S}"
+	
+	# enable php-fpm support
+	if use fpm ; 
+	then
+		cd "${WORKDIR}"
+		${FPM_DIR}/generate-fpm-patch || die "Failed to generate FPM patch"
+		cd "${S}"
+		EPATCH_OPTS="-p1 -d ${S}" epatch "${WORKDIR}/fpm.patch"
+	fi
 
 	# Concurrent PHP Apache2 modules support
 	if use apache2 ; then
@@ -243,16 +253,16 @@ src_compile() {
 		src_compile_normal
 	fi
 
-	if use fpm
-	then
-		local fpm_myconf
-		fpm_myconf="${fpm_myconf} --enable-fpm --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
-		cd  ${WORKDIR}/${FPM_PATCH}
-		mkdir build
-		cd build
-		../configure --srcdir=../ --with-php-src=../../php-${PV} --with-php-build=../../php-${PV} ${fpm_myconf}
-		make || die
-	fi
+#	if use fpm
+#	then
+#		local fpm_myconf
+#		fpm_myconf="${fpm_myconf} --with-fpm --with-libevent=shared,/usr/lib --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
+#		cd  ${WORKDIR}/${FPM_PATCH}
+#		mkdir build
+#		cd build
+#		../configure --srcdir=../ --with-php-src=../../php-${PV} --with-php-build=../../php-${PV} ${fpm_myconf}
+#		make || die
+#	fi
 }
 
 src_compile_fastbuild() {
@@ -288,7 +298,7 @@ src_compile_fastbuild() {
 		
 		# php-fpm patch support
 		if use fpm ; then
-			my_conf="${my_conf} --enable-fpm --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
+			my_conf="${my_conf} --with-fpm --with-libevent=shared,/usr/lib --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
 		fi
 		
 		phpconfutils_extension_enable "discard-path" "discard-path" 0
@@ -413,7 +423,7 @@ src_compile_normal() {
 				
 				# php-fpm patch support
 				if use fpm ; then
-					my_conf="${my_conf} --enable-fpm --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
+					my_conf="${my_conf} --with-fpm --with-libevent=shared,/usr/lib --with-fpm-conf=/etc/php/cgi-php5/php-fpm.conf --with-fpm-log=/var/log/php-fpm.log --with-fpm-pid=/var/run/php-fpm.pid"
 				fi
 				
 				phpconfutils_extension_enable "discard-path" "discard-path" 0
@@ -460,6 +470,40 @@ src_install() {
 				into ${destdir}
 				dobin php-cgi || die "Unable to install ${x} sapi"
 				php5_2-sapi_install_ini
+
+                                # php-fpm patch support
+                                if use fpm ; then
+                                        einfo "Installing php-fpm config"
+                                        FPMSRCDIR="${WORKDIR}/${P}/sapi/fpm"
+                                        into /usr
+                                        dosbin "${FPMSRCDIR}/php-fpm"
+                                        insinto ${PHP_INI_DIR}
+                                        newins "${FPMSRCDIR}/conf/php-fpm.conf.in" "php-fpm.conf"
+                                        newins "${FPMSRCDIR}/conf/php-fpm.conf.in" "php-fpm.conf.dist"
+                                        einfo "Installing php-fpm initscript"
+                                        newinitd "${FILESDIR}/php-fpm.init" "php-fpm"
+                                fi
+
+
+#	if use fpm
+#	then
+#		cd  ${WORKDIR}/${FPM_PATCH}/build
+#		FPMSRCDIR="${WORKDIR}/${P}/sapi/fpm"
+#		into /usr
+#		newbin php_fpm php-fpm
+#		einfo "Installing php-fpm config"
+#		insinto ${PHP_INI_DIR}
+#		doins "${FPMSRCDIR}/php-fpm.conf"
+#		newins "${FPMSRCDIR}/php-fpm.conf" "php-fpm.conf.dist"
+
+#		einfo "Installing php-fpm initscript"
+#		newinitd "${FILESDIR}/php-fpm.init" "php-fpm"
+#		dosed -i -e "s:@destdir@:$destdir:g" /etc/init.d/php-fpm
+#
+#		doman php-fpm.1
+#	fi
+
+
 				;;
 			apache2)
 				einfo "Installing Apache${APACHE_VERSION} SAPI"
@@ -489,23 +533,6 @@ src_install() {
 	newenvd "${FILESDIR}/20php5-envd" "20php5"
 	sed -e "s|/lib/|/$(get_libdir)/|g" -i "${D}/etc/env.d/20php5"
 
-	if use fpm
-	then
-		cd  ${WORKDIR}/${FPM_PATCH}/build
-		into ${destdir}
-		newbin php_fpm php-fpm
-		einfo "Installing php-fpm config"
-		FPMSRCDIR=.
-		insinto ${PHP_INI_DIR}
-		doins "${FPMSRCDIR}/php-fpm.conf"
-		newins "${FPMSRCDIR}/php-fpm.conf" "php-fpm.conf.dist"
-
-		einfo "Installing php-fpm initscript"
-		newinitd "${FILESDIR}/php-fpm.init" "php-fpm"
-		dosed -i -e "s:@destdir@:$destdir:g" /etc/init.d/php-fpm
-
-		doman php-fpm.1
-	fi
 }
 
 pkg_postinst() {
