@@ -1,7 +1,0 @@
-# ChangeLog for sci-libs/cxsparse
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-  30 Dec 2007; Markus Dittrich <markusle@gentoo.org> +cxsparse-2.2.0.ebuild:
-  Version bump.
-
