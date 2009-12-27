@@ -15,20 +15,19 @@ SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV}/sources/wine-$
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86"
-IUSE="alsa capi +cups dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss png samba scanner ssl test +threads win64 X xcomposite xinerama xml"
+IUSE="alsa capi +cups dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss +perl png samba scanner ssl test +threads win64 X xcomposite xinerama xml"
 RESTRICT="test" #72375
 
 S=${WORKDIR}/wine-${PV}
 
 RDEPEND=">=media-libs/freetype-2.0.0
 	media-fonts/corefonts
-	dev-lang/perl
-	dev-perl/XML-Simple
+	perl? ( dev-lang/perl dev-perl/XML-Simple )
 	capi? ( net-dialup/capi4k-utils )
 	ncurses? ( >=sys-libs/ncurses-5.2 )
 	fontconfig? ( media-libs/fontconfig )
 	gphoto2? ( media-libs/libgphoto2 )
- 	jack? ( media-sound/jack-audio-connection-kit )
+	jack? ( media-sound/jack-audio-connection-kit )
 	openal? ( media-libs/openal )
 	dbus? ( sys-apps/dbus )
 	gnutls? ( net-libs/gnutls )
@@ -143,6 +142,11 @@ src_install() {
 	if use gecko ; then
 		insinto /usr/share/wine/gecko
 		doins "${DISTDIR}"/wine_gecko-${GV}.cab || die
+	fi
+
+	if ! use perl
+	then
+		rm "${D}"/usr/bin/{wine{dump,maker},function_grep.pl} "${D}"/usr/share/man/man1/wine{dump,maker}.1 || die
 	fi
 
 #	cp "${FILESDIR}"/*.fon ${D}/usr/share/wine/fonts/
