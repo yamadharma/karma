@@ -65,6 +65,8 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/mozilla-1.9.2"
 
+QA_PRESTRIPPED="usr/$(get_libdir)/${PN}/firefox"
+
 linguas() {
         local LANG SLANG
         for LANG in ${LINGUAS}; do

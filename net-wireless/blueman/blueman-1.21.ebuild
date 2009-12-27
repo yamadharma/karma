@@ -25,7 +25,7 @@ DEPEND="${CDEPEND}
 	dev-util/pkgconfig
 	>=dev-python/pyrex-0.9.8"
 RDEPEND="${CDEPEND}
-	>=app-mobilephone/obex-data-server-0.4.4
+	app-mobilephone/obexd
 	gnome-extra/policykit-gnome
 	x11-misc/notification-daemon
 	sys-apps/dbus
