@@ -39,6 +39,7 @@ RDEPEND="
 	>=dev-php/PEAR-Net_Traceroute-0.21
 	>=dev-php/PEAR-SOAP-0.10.1
 	>=dev-php/PEAR-Validate-0.6.2
+	dev-php/PEAR-Log
 	dev-perl/Config-IniFiles
 	dev-perl/Crypt-DES
 	dev-perl/DBI
@@ -147,11 +148,11 @@ install_centreon() {
         done
 
 	# fix preinstalled smarty
-	sed -i "s:\.\./GPL_LIB/Smarty/libs/:Smarty/:" \
+	sed -i "s:\.\./GPL_LIB/Smarty/libs/:smarty/:" \
 		"${D}${OREON_PATH}/www/header.php"
 	sed -i "s:\(\(../\)\+\|$centreon_path/\)GPL_LIB/SmartyCache:/var/cache/centreon/smarty:" \
                   "${D}${OREON_PATH}/www/include/common/common-Func.php"
-	sed -i "s:$centreon_path . 'GPL_LIB/Smarty/libs/':'Smarty/':" \
+	sed -i "s:\$centreon_path . 'GPL_LIB/Smarty/libs/':'smarty/':" \
 		"${D}${OREON_PATH}/www/include/monitoring/external_cmd/popup/popup.php"
 
 
