@@ -10,7 +10,7 @@ Bazaar is a next generation distributed version control system.
 bash-completion distutils elisp-common eutils multilib portability python toolchain-funcs versionator
 curl doc emacs kerberos +sftp test bash-completion
 
-
+bash-completion? ( app-shells/bash-completion )
 
 2
 
