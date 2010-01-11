@@ -1,4 +1,4 @@
-kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
+kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
 net-wireless/wireless-tools !net-wireless/ralink-rt61 kernel_linux? ( virtual/modutils )
 0
 mirror://sourceforge/rt2400/rt61-1.1.0-b2.tar.gz

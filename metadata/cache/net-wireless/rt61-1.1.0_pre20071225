@@ -1,4 +1,4 @@
-kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources ) dev-util/cvs
+kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources ) dev-util/cvs
 net-wireless/wireless-tools !net-wireless/ralink-rt61 kernel_linux? ( virtual/modutils )
 0
 

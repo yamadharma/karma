@@ -1,6 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-devel/gettext/gettext-0.17.ebuild,v 1.14 2008/11/28 22:37:38 ulm Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-devel/gettext/gettext-0.17-r1.ebuild,v 1.1 2010/01/05 07:13:54 pva Exp $
 
 inherit flag-o-matic eutils multilib toolchain-funcs mono libtool elisp-common
 
@@ -10,14 +10,14 @@ SRC_URI="mirror://gnu/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-3 LGPL-2"
 SLOT="0"
-KEYWORDS="alpha amd64 arm hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc ~sparc-fbsd x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~sparc-fbsd ~x86-fbsd"
 IUSE="acl doc emacs nls nocxx openmp"
 
 DEPEND="virtual/libiconv
 	dev-libs/libxml2
 	sys-libs/ncurses
 	dev-libs/expat
-	acl? ( kernel_linux? ( sys-apps/acl ) )"
+	acl? ( virtual/acl )"
 PDEPEND="emacs? ( app-emacs/po-mode )"
 
 src_unpack() {
@@ -31,6 +31,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/${PN}-0.15-expat-no-dlopen.patch #146211
 	epatch "${FILESDIR}"/${PN}-0.17-open-args.patch #232081
 	epatch "${FILESDIR}"/${P}-gnuinfo.patch #249167
+	epatch "${FILESDIR}"/${P}-x-python.patch #299658
 
 	# bundled libtool seems to be broken so skip certain rpath tests
 	# http://lists.gnu.org/archive/html/bug-libtool/2005-03/msg00070.html

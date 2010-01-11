@@ -1,4 +1,4 @@
->=app-admin/eselect-python-20090804 >=app-shells/bash-3.2 virtual/python
+>=app-admin/eselect-python-20090804 virtual/python
 dev-util/bzr virtual/python
 0
 http://launchpad.net/bzr-xmloutput/trunk/0.8/+download/bzr-xmloutput-0.8.0.tar.gz

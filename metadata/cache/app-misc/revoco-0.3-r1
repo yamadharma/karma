@@ -1,4 +1,4 @@
-kernel_linux? ( virtual/linux-sources )
+
 >=sys-fs/udev-104
 0
 

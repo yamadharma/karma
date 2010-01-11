@@ -1,4 +1,4 @@
-kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources ) >=dev-util/git-1.6
+kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources ) >=dev-util/git-1.6
 net-wireless/wireless-tools net-wireless/acx-firmware kernel_linux? ( virtual/modutils )
 0
 

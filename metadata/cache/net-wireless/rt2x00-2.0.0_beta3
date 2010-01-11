@@ -1,4 +1,4 @@
->=net-wireless/ieee80211-1.1.6 kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
+>=net-wireless/ieee80211-1.1.6 kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
 >=net-wireless/ieee80211-1.1.6 net-wireless/wireless-tools kernel_linux? ( virtual/modutils )
 0
 mirror://sourceforge/rt2400/rt2x00-2.0.0-b3.tar.gz

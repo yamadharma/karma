@@ -1,4 +1,4 @@
->=x11-libs/gtk+-2.6.0 dev-util/pkgconfig virtual/linux-sources kernel_linux? ( virtual/linux-sources ) >=sys-apps/sed-4
+>=x11-libs/gtk+-2.6.0 dev-util/pkgconfig virtual/linux-sources >=sys-apps/sed-4
 >=x11-libs/gtk+-2.6.0 gnome? ( x11-libs/gksu ) kde? ( kde-base/kdesu )
 0
 http://cbbk.free.fr/bonrom/files/RutilTv0.16.tar.gz

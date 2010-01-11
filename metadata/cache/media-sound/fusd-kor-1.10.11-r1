@@ -1,4 +1,4 @@
-media-sound/jack-audio-connection-kit kernel_linux? ( virtual/linux-sources ) kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources ) dev-util/subversion net-misc/rsync
+media-sound/jack-audio-connection-kit kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources ) dev-util/subversion net-misc/rsync
 media-sound/jack-audio-connection-kit kernel_linux? ( virtual/modutils )
 0
 
