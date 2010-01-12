@@ -7,7 +7,7 @@ http://peazip.sourceforge.net/
 GPL-2
 OS-portable archiver with many formats support
 x86 amd64 -*
-eutils kde-functions multilib portability qt3 toolchain-funcs versionator
+eutils kde-functions multilib portability toolchain-funcs
 kde
 
 

@@ -14,7 +14,7 @@ kvm linguas_ru qt-static embedded-display
 
 2
 
-compile configure install postinst prepare setup unpack
+compile configure install postinst prepare setup
 
 
 

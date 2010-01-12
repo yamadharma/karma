@@ -7,7 +7,7 @@ http://sim-im.org/
 GPL-2
 Simple Instant Messenger (with KDE support). ICQ/AIM/Jabber/MSN/Yahoo.
 amd64 ppc x86
-eutils flag-o-matic kde-functions multilib portability qt3 toolchain-funcs versionator
+eutils flag-o-matic kde-functions multilib portability toolchain-funcs
 debug kde spell ssl
 
 

@@ -7,7 +7,7 @@ http://www.i-rs.ru
 LGPL-2
 OpenOffice-Infra, office suite with enhanced russinan support from Infra-Resource
 amd64 x86
-autotools check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 java-utils-2 kde-functions libtool mono multilib portability qt3 toolchain-funcs versionator
+autotools check-reqs db-use eutils fdo-mime flag-o-matic java-pkg-opt-2 java-utils-2 kde-functions libtool mono multilib portability toolchain-funcs versionator
 binfilter cups dbus debug eds gnome gstreamer gtk kde ldap mono nsplugin odk oodict opengl pam linguas_ru linguas_uk linguas_en linguas_en_US elibc_FreeBSD java
 
 

@@ -14,7 +14,7 @@ debug
 
 2
 
-compile configure install prepare setup unpack
+configure install prepare setup
 
 
 

@@ -1,5 +1,5 @@
-=x11-misc/lineakd-0.9.0_pre1* =kde-base/kdelibs-3.5* =x11-libs/qt-3* =sys-devel/automake-1.9* >=sys-devel/autoconf-2.61 sys-devel/libtool sys-devel/make dev-util/pkgconfig dev-lang/perl x11-libs/libXt x11-proto/xf86vidmodeproto xinerama? ( x11-proto/xineramaproto )
-=x11-misc/lineakd-0.9.0_pre1* =kde-base/kdelibs-3.5* =x11-libs/qt-3* xinerama? ( x11-libs/libXinerama )
+=x11-misc/lineakd-0.9.0_pre1*
+=x11-misc/lineakd-0.9.0_pre1*
 0
 mirror://sourceforge/lineak/lineak_kdeplugins-0.9.0-pre1.tar.gz
 
@@ -7,14 +7,14 @@ http://lineak.sourceforge.net/
 GPL-2
 KDE plugins for LINEAK
 amd64 ppc x86
-autotools base eutils flag-o-matic kde kde-functions libtool multilib portability qt3 toolchain-funcs versionator
-debug elibc_FreeBSD xinerama
+kde multilib toolchain-funcs
 
 
 
 
 
-compile install postinst postrm preinst setup unpack
+
+install
 
 
 
