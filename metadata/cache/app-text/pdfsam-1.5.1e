@@ -1,5 +1,5 @@
->=virtual/jdk-1.5 sys-devel/gettext app-arch/unzip dev-java/dom4j:1 dev-java/log4j dev-java/itext dev-java/jaxen:1.1 dev-java/bcmail dev-java/bcprov dev-java/jgoodies-looks:2.0 >=dev-java/java-config-2.1.6 >=sys-apps/portage-2.1.2.7 >=dev-java/ant-core-1.7.0 >=sys-apps/portage-2.1.2.7 >=dev-java/javatoolkit-0.3.0-r2
->=virtual/jre-1.5 dev-java/dom4j:1 dev-java/log4j dev-java/itext dev-java/jaxen:1.1 dev-java/bcmail dev-java/bcprov dev-java/jgoodies-looks:2.0 >=dev-java/java-config-2.1.6 >=sys-apps/portage-2.1.2.7
+>=virtual/jdk-1.5 sys-devel/gettext app-arch/unzip dev-java/dom4j:1 dev-java/log4j dev-java/itext dev-java/jaxen:1.1 dev-java/bcmail dev-java/bcprov dev-java/jgoodies-looks:2.0 >=dev-java/java-config-2.1.9-r1 >=sys-apps/portage-2.1.2.7 >=dev-java/ant-core-1.7.0 >=sys-apps/portage-2.1.2.7 >=dev-java/javatoolkit-0.3.0-r2
+>=virtual/jre-1.5 dev-java/dom4j:1 dev-java/log4j dev-java/itext dev-java/jaxen:1.1 dev-java/bcmail dev-java/bcprov dev-java/jgoodies-looks:2.0 >=dev-java/java-config-2.1.9-r1 >=sys-apps/portage-2.1.2.7
 1.4
 mirror://sourceforge/pdfsam/pdfsam-1.5.1e-out-src.zip
 

@@ -1,5 +1,5 @@
->=virtual/jdk-1.4 >=dev-lang/tcl-8.4.5 >=virtual/jre-1.4 >=dev-java/java-config-2.1.6
->=dev-lang/tcl-8.4.5 >=virtual/jre-1.4 >=dev-java/java-config-2.1.6
+>=virtual/jdk-1.4 >=dev-lang/tcl-8.4.5 >=virtual/jre-1.4 >=dev-java/java-config-2.1.9-r1
+>=dev-lang/tcl-8.4.5 >=virtual/jre-1.4 >=dev-java/java-config-2.1.9-r1
 0
 mirror://sourceforge/tcljava/jacl1.4.0.tar.gz
 

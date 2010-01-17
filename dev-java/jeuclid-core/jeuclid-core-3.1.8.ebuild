@@ -18,7 +18,9 @@ COMMON_DEPEND="
 	dev-java/commons-logging
 	dev-java/jcip-annotations
 	>=dev-java/xml-commons-external-1.3
-	>=dev-java/xmlgraphics-commons-1.3"
+	>=dev-java/xmlgraphics-commons-1.3
+	dev-java/freehep-graphics2d
+	dev-java/freehep-export"
 
 RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEPEND}"
@@ -35,8 +37,8 @@ src_unpack() {
 	cd ${S} || die
 
 	# remove support of FreeHep from JAVA files (not needed for FOP plugin)
-	rm -f src/main/java/net/sourceforge/jeuclid/converter/FreeHep*
-	epatch ${FILESDIR}/${PN}-freehep.patch
+#	rm -f src/main/java/net/sourceforge/jeuclid/converter/FreeHep*
+#	epatch ${FILESDIR}/${PN}-freehep.patch
 
 	# create directory for dependencies
 	mkdir lib || die
@@ -49,6 +51,9 @@ src_unpack() {
 	java-pkg_jar-from jcip-annotations jcip-annotations.jar
 	java-pkg_jar-from xml-commons-external-1.3 xml-apis.jar
 	java-pkg_jar-from xmlgraphics-commons-1.3 xmlgraphics-commons.jar
+	java-pkg_jar-from freehep-graphics2d freehep-graphics2d.jar
+	java-pkg_jar-from freehep-util freehep-util.jar
+	java-pkg_jar-from freehep-export freehep-export.jar
 }
 
 src_install() {

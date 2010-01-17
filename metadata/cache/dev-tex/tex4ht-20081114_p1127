@@ -1,5 +1,5 @@
->=sys-apps/sed-4 java? ( >=virtual/jdk-1.5 ) virtual/latex-base >=sys-apps/texinfo-4.2-r5 java? ( >=dev-java/java-config-2.1.6 )
-virtual/ghostscript media-gfx/imagemagick java? ( >=virtual/jre-1.5 ) virtual/latex-base java? ( >=dev-java/java-config-2.1.6 )
+>=sys-apps/sed-4 java? ( >=virtual/jdk-1.5 ) virtual/latex-base >=sys-apps/texinfo-4.2-r5 java? ( >=dev-java/java-config-2.1.9-r1 )
+virtual/ghostscript media-gfx/imagemagick java? ( >=virtual/jre-1.5 ) virtual/latex-base java? ( >=dev-java/java-config-2.1.9-r1 )
 0
 http://www.cse.ohio-state.edu/~gurari/TeX4ht/fix/tex4ht-1.0.2008_11_14_1127.tar.gz
 

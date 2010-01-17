@@ -1,5 +1,5 @@
->=virtual/jdk-1.4 j2me? ( dev-java/sun-j2me-bin ) >=dev-java/java-config-2.1.6 source? ( app-arch/zip ) >=dev-java/ant-core-1.7.0 >=dev-java/javatoolkit-0.3.0-r2
->=virtual/jre-1.4 j2me? ( dev-java/sun-j2me-bin ) >=dev-java/java-config-2.1.6 source? ( app-arch/zip )
+>=virtual/jdk-1.4 j2me? ( dev-java/sun-j2me-bin ) >=dev-java/java-config-2.1.9-r1 source? ( app-arch/zip ) >=dev-java/ant-core-1.7.0 >=dev-java/javatoolkit-0.3.0-r2
+>=virtual/jre-1.4 j2me? ( dev-java/sun-j2me-bin ) >=dev-java/java-config-2.1.9-r1 source? ( app-arch/zip )
 0
 mirror://sourceforge/proguard/proguard4.0.tar.gz
 

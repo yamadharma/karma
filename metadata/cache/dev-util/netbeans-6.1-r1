@@ -1,5 +1,5 @@
-=virtual/jdk-1.5* >=dev-java/ant-core-1.7.1_beta2 >=dev-java/java-config-2.1.6 >=sys-apps/portage-2.1.2.7 >=dev-java/ant-core-1.7.0 >=sys-apps/portage-2.1.2.7 >=dev-java/javatoolkit-0.3.0-r2
->=virtual/jdk-1.5 >=dev-java/ant-core-1.7.1_beta2 >=dev-java/java-config-2.1.6 >=sys-apps/portage-2.1.2.7
+=virtual/jdk-1.5* >=dev-java/ant-core-1.7.1_beta2 >=dev-java/java-config-2.1.9-r1 >=sys-apps/portage-2.1.2.7 >=dev-java/ant-core-1.7.0 >=sys-apps/portage-2.1.2.7 >=dev-java/javatoolkit-0.3.0-r2
+>=virtual/jdk-1.5 >=dev-java/ant-core-1.7.1_beta2 >=dev-java/java-config-2.1.9-r1 >=sys-apps/portage-2.1.2.7
 6.1
 http://dev.gentoo.org/~fordfrog/distfiles/netbeans-6.1-bundled.tar.bz2
 

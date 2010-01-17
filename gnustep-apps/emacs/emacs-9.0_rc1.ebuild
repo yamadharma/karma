@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit flag-o-matic eutils toolchain-funcs gnustep
+inherit flag-o-matic eutils toolchain-funcs gnustep-2
 
 MY_PV=${PV/_/}
 
