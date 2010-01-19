@@ -6,7 +6,7 @@ http://www.scilab.org/download/5.2.0/scilab-5.2.0-src.tar.gz
 http://www.scilab.org/
 CeCILL-2
 Scientific software package for numerical computations (Matlab lookalike)
-~amd64 ~x86
+
 autotools eutils flag-o-matic fortran java-pkg-2 java-utils-2 libtool multilib portability toolchain-funcs versionator
 +tk -scicos +umfpack +gui +fftw -pvm +gui +doc +matio -hdf5 debug elibc_FreeBSD
 
