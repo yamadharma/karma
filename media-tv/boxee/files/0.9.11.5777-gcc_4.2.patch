@@ -1,0 +1,22 @@
+diff -uNr xbmc/FileSystem/FileCurl.cpp xbmc/FileSystem/FileCurl.cpp
+--- xbmc/FileSystem/FileCurl.cpp	2009-03-04 11:19:03.000000000 +1100
++++ xbmc/FileSystem/FileCurl.cpp	2009-04-10 09:27:05.661270574 +1000
+@@ -404,7 +404,7 @@
+   if( m_ftpport.length() > 0 )
+     g_curlInterface.easy_setopt(h, CURLOPT_FTPPORT, m_ftpport.c_str());
+   else
+-    g_curlInterface.easy_setopt(h, CURLOPT_FTPPORT, NULL);
++    g_curlInterface.easy_setopt(h, CURLOPT_FTPPORT, (void*)NULL);
+ 
+   // allow curl to not use the ip address in the returned pasv response
+   if( m_ftppasvip )
+@@ -804,7 +804,7 @@
+   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_NOBODY, 0);
+   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_WRITEFUNCTION, (void*)dummy_callback);
+   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_FOLLOWLOCATION, 1);
+-  g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_WRITEDATA, NULL); /* will cause write failure*/
++  g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_WRITEDATA, (void*)NULL); /* will cause write failure*/
+   
+   char err[4096];
+   memset(err,0,4096);
+

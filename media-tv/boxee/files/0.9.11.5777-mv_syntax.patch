@@ -1,0 +1,13 @@
+diff -uNr system/rtorrent.rc.linux system/rtorrent.rc.linux
+--- system/rtorrent.rc.linux	2008-08-04 17:27:47.000000000 +1000
++++ system/rtorrent.rc.linux	2009-04-10 09:18:36.408266178 +1000
+@@ -29,7 +29,7 @@
+ # deleted.
+ schedule = watch_directory,5,5,load_start=~/.boxee/torrent/*.torrent
+ 
+-on_finished = move_complete,"execute=/bin/mv,-n,$d.get_base_path=,~/.boxee/downloads/ ;d.set_directory=~/.boxee/downloads/"
++on_finished = move_complete,"execute=/bin/mv,-u,$d.get_base_path=,~/.boxee/downloads/ ;d.set_directory=~/.boxee/downloads/"
+ 
+ # Close torrents when diskspace is low.
+ schedule = low_diskspace,5,60,close_low_diskspace=100M
+
