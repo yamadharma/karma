@@ -1,0 +1,22 @@
+app-text/crengine sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype media-fonts/corefonts app-arch/unzip x11-libs/wxGTK =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+app-text/crengine sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype media-fonts/corefonts app-arch/unzip x11-libs/wxGTK
+0
+mirror://sourceforge/crengine/cr3qt-3-0-21a.zip
+
+http://crengine.sourceforge.net/
+GPL-2
+CoolReader
+x86 amd64 arm
+autotools eutils libtool multilib portability toolchain-funcs
+
+
+
+
+2
+
+configure install prepare
+
+
+
+
+

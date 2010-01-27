@@ -33,7 +33,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	epatch ${FILESDIR}/loses_precision.patch
+#	epatch ${FILESDIR}/loses_precision.patch
 	NOCONFIGURE=1 ./autogen.sh
 }
 
