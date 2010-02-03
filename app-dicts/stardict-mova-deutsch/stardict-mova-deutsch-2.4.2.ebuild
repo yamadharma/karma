@@ -12,7 +12,7 @@ HOMEPAGE="http://stardict.sourceforge.net/Dictionaries_dictd-www.mova.org.php"
 KEYWORDS="amd64 ppc sparc x86"
 IUSE=""
 
-RDEPEND=">=app-dicts/stardict-${PV}"
+RDEPEND=">=app-text/stardict-${PV}"
 
 src_compile() {
 	cd ${S}

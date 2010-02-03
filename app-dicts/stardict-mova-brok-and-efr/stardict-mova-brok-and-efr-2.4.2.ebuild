@@ -6,7 +6,7 @@ DICT_SUFFIX="brok_and_efr"
 
 inherit stardict
 
-RDEPEND=">=app-dicts/stardict-${PV}"
+RDEPEND=">=app-text/stardict-${PV}"
 
 DESCRIPTION="Stardict Dictionary for Mova.org's Dictionary"
 HOMEPAGE="http://stardict.sourceforge.net/Dictionaries_dictd-www.mova.org.php"

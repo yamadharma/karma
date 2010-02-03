@@ -11,7 +11,7 @@ SLOT="0"
 KEYWORDS="x86 amd64"
 IUSE=""
 
-DEPEND="!<app-dicts/stardict-3.0.1-r2"
+DEPEND="!<app-text/stardict-3.0.1-r2"
 RDEPEND=""
 
 src_install() {
