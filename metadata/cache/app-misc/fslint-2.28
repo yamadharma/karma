@@ -1,5 +1,5 @@
 nls? ( sys-devel/gettext ) >=app-admin/eselect-python-20090804
->=dev-python/pygtk-2.0
+>=dev-python/pygtk-2.0 >=app-admin/eselect-python-20090804
 0
 http://www.pixelbeat.org/fslint/fslint-2.28.tar.gz
 

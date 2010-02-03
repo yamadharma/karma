@@ -1,5 +1,5 @@
 >=dev-lang/python-2.2 >=app-admin/eselect-python-20090804 virtual/python
->=dev-lang/python-2.2 >=sys-apps/sandbox-1.2.12 virtual/python
+>=dev-lang/python-2.2 >=sys-apps/sandbox-1.2.12 >=app-admin/eselect-python-20090804 virtual/python
 0
 http://gentooexperimental.org/~ferringb/confcache/confcache-0.4.2.tar.bz2
 
