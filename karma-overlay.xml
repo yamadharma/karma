@@ -1,25 +1,21 @@
 <?xml version="1.0" ?>
-<layman>
-  <overlay
-       name="karma"
-       src="http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/karma"
-       type="bzr"
-       status  = "unofficial">
-
-     <link>  </link>
-
-     <description>
-     </description>
-  </overlay>
-  <overlay
-       name="karma-profiles"
-       src="http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/profiles"
-       type="bzr"
-       status  = "unofficial">
-
-     <link> </link>
-
-     <description>
-     </description>
-   </overlay>
-</layman>
+<repositories version="1.0">
+  <repo quality="experimental" status="unofficial">
+    <name>karma</name>
+    <description>Karma overlay</description>
+    <homepage>http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay</homepage>
+    <owner>
+      <email>yamadharma@gmail.com</email>
+    </owner>
+    <source type="bzr">http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/karma</source>
+  </repo>
+  <repo quality="experimental" status="unofficial">
+    <name>karma-profiles</name>
+    <description>Karma overlay profiles</description>
+    <homepage>http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay</homepage>
+    <owner>
+      <email>yamadharma@gmail.com</email>
+    </owner>
+    <source type="bzr">http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/profiles</source>
+  </repo>
+</repositories>
