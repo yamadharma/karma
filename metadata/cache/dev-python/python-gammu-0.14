@@ -7,7 +7,7 @@ http://www.cihar.com/gammu/python/
 GPL-2
 Python bindings for Gammu
 amd64 ~ia64 ~ppc x86
-distutils eutils multilib portability python toolchain-funcs
+distutils multilib python toolchain-funcs
 
 
 

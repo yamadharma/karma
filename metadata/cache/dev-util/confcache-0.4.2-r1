@@ -7,7 +7,7 @@ http://gentooexperimental.org/~ferringb/confcache/
 GPL-2
 global autoconf cache manager
 ~alpha amd64 ~hppa ~ppc ~sparc x86
-distutils eutils multilib portability python toolchain-funcs
+distutils multilib python toolchain-funcs
 
 
 

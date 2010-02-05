@@ -7,7 +7,7 @@ https://launchpad.net/bzr-config
 GPL-2
 GUI utility for configuring Bazaar settings.
 x86 amd64
-distutils eutils multilib portability python toolchain-funcs
+distutils multilib python toolchain-funcs
 
 
 

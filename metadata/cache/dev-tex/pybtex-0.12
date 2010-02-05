@@ -7,7 +7,7 @@ http://pybtex.sourceforge.net/
 GPL-3
 BibTeX-compatible bibliography processor in Python
 x86 amd64
-distutils eutils multilib portability python toolchain-funcs
+distutils multilib python toolchain-funcs
 doc examples
 
 

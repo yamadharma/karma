@@ -7,7 +7,7 @@ http://gentooexperimental.org/~shillelagh/
 public-domain
 Automates commit and QA procedures for Gentoo ebuild repositories
 amd64 x86
-distutils eutils multilib portability python toolchain-funcs
+distutils multilib python toolchain-funcs
 doc subversion
 
 

@@ -7,7 +7,7 @@ http://dblatex.sourceforge.net/
 GPL-2
 Transform DocBook using TeX macros
 x86 amd64
-distutils eutils multilib portability python toolchain-funcs
+distutils multilib python toolchain-funcs
 
 
 

@@ -7,7 +7,7 @@ http://bazaar-vcs.org/XMLOutput
 GPL-2
 A Bazaar plugin that provides a option to generate XML output for builtins commands.
 x86 amd64
-distutils eutils multilib portability python toolchain-funcs versionator
+distutils multilib python toolchain-funcs versionator
 
 
 
