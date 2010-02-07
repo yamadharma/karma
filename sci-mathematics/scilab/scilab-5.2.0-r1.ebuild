@@ -115,6 +115,10 @@ src_install() {
 	#install icon
 	newicon icons/scilab.xpm scilab.xpm
 	make_desktop_entry ${PN} "Scilab" ${PN}
+
+	# Hack
+	cd  ${D}/usr/share/scilab/modules
+	for i in *; do cd $i; dosym /usr/lib/scilab/ .libs; cd ..; done
 }
 
 pkg_postinst() {
