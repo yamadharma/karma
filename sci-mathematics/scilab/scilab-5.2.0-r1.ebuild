@@ -48,7 +48,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/${P}-no-redef-exp10.patch
 
 	epatch "${FILESDIR}"/scilab-java-heap.patch
-	epatch "${FILESDIR}"/bug_5496.diff
+	epatch "${FILESDIR}"/bug_5496.patch
 
 	#add the correct java directories to the config file
 	sed \
