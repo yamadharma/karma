@@ -100,9 +100,9 @@ src_configure() {
 
 src_compile() {
 	emake || die "emake failed"
-	if use doc; then
-		emake doc || die "emake failed"
-	fi
+#	if use doc; then
+#		emake doc || die "emake failed"
+#	fi
 }
 
 src_install() {
