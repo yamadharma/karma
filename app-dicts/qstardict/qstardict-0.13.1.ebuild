@@ -16,10 +16,12 @@ IUSE="dbus nls pronounce"
 
 RDEPEND="dbus? ( || ( x11-libs/qt-gui:4[dbus] <x11-libs/qt-4.4.0:4[dbus] ) )
 		!dbus? ( || ( x11-libs/qt-gui:4 <=x11-libs/qt-4.4.0:4 ) )
-		pronounce? ( app-dicts/wyabdcrealpeopletts
-					media-sound/sox )
 		>=dev-libs/glib-2.0"
 DEPEND="${RDEPEND}"
+
+#		pronounce? ( app-dicts/wyabdcrealpeopletts
+#					media-sound/sox )
+
 
 src_unpack() {
 	unpack ${A}
