@@ -49,6 +49,7 @@ src_prepare() {
 
 	epatch "${FILESDIR}"/scilab-java-heap.patch
 	epatch "${FILESDIR}"/bug_5496.patch
+	epatch "${FILESDIR}"/scilab-5.1.1-libpathfix.patch
 
 	#add the correct java directories to the config file
 	sed \
@@ -117,8 +118,8 @@ src_install() {
 	make_desktop_entry ${PN} "Scilab" ${PN}
 
 	# Hack
-	cd  ${D}/usr/share/scilab/modules
-	for i in *; do cd $i; dosym /usr/lib/scilab/ .libs; cd ..; done
+#	cd  ${D}/usr/share/scilab/modules
+#	for i in *; do cd $i; dosym /usr/lib/scilab/ .libs; cd ..; done
 }
 
 pkg_postinst() {
