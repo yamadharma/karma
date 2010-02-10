@@ -1,4 +1,4 @@
-sys-libs/zlib rcc? ( app-i18n/librcc ) doc? ( app-doc/doxygen ) =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+sys-libs/zlib rcc? ( app-i18n/librcc ) doc? ( app-doc/doxygen ) =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
 sys-libs/zlib rcc? ( app-i18n/librcc )
 0
 mirror://sourceforge/id3lib/id3lib-3.8.3.tar.gz

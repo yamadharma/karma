@@ -1,4 +1,4 @@
-sys-devel/libtool =dev-dotnet/gtk-sharp-2.12* =dev-dotnet/gnome-sharp-2.24* =dev-dotnet/gtk-sharp-gapi-2.12* >=gnome-base/gnome-panel-2.26 >=dev-lang/mono-2.0.1 >=sys-apps/sed-4 >=dev-util/pkgconfig-0.23 >=app-shells/bash-3.1
+>=sys-devel/libtool-2.2.6b =dev-dotnet/gtk-sharp-2.12* =dev-dotnet/gnome-sharp-2.24* =dev-dotnet/gtk-sharp-gapi-2.12* >=gnome-base/gnome-panel-2.26 >=dev-lang/mono-2.0.1 >=sys-apps/sed-4 >=dev-util/pkgconfig-0.23 >=app-shells/bash-3.1
 =dev-dotnet/gtk-sharp-2.12* =dev-dotnet/gnome-sharp-2.24* >=gnome-base/gnome-panel-2.26 >=dev-lang/mono-2.0.1
 2
 mirror://gnome/sources/gnome-desktop-sharp/2.26/gnome-desktop-sharp-2.26.0.tar.bz2

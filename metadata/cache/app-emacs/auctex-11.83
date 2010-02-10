@@ -1,4 +1,4 @@
-preview-latex? ( !dev-tex/preview-latex app-text/dvipng ) >=virtual/emacs-21 virtual/latex-base >=sys-apps/texinfo-4.2-r5 =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 sys-devel/libtool
+preview-latex? ( !dev-tex/preview-latex app-text/dvipng ) >=virtual/emacs-21 virtual/latex-base >=sys-apps/texinfo-4.2-r5 =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
 preview-latex? ( !dev-tex/preview-latex app-text/dvipng ) >=virtual/emacs-21 virtual/latex-base
 0
 mirror://gnu/auctex/auctex-11.83.tar.gz
