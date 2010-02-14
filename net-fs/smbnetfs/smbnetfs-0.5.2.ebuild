@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 MY_P=${P/_/-}
 S=${WORKDIR}/${MY_P}
 
