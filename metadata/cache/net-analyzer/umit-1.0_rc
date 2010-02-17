@@ -1,5 +1,5 @@
->=x11-libs/gtk+-2.6 >=dev-python/pygtk-2.6 >=dev-python/pysqlite-2.0 dev-python/psyco >=app-admin/eselect-python-20090804 virtual/python
->=x11-libs/gtk+-2.6 >=dev-python/pygtk-2.6 >=dev-python/pysqlite-2.0 dev-python/psyco >=app-admin/eselect-python-20090804 virtual/python
+>=x11-libs/gtk+-2.6 >=dev-python/pygtk-2.6 >=dev-python/pysqlite-2.0 dev-python/psyco >=app-admin/eselect-python-20091230 virtual/python
+>=x11-libs/gtk+-2.6 >=dev-python/pygtk-2.6 >=dev-python/pysqlite-2.0 dev-python/psyco >=app-admin/eselect-python-20091230 virtual/python
 0
 mirror://sourceforge/umit/umit-1.0RC.tar.bz2
 

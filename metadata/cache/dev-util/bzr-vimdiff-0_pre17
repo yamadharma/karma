@@ -1,5 +1,5 @@
->=app-admin/eselect-python-20090804 dev-util/bzr
-|| ( app-editors/vim app-editors/gvim ) >=app-admin/eselect-python-20090804
+>=app-admin/eselect-python-20091230 dev-util/bzr
+|| ( app-editors/vim app-editors/gvim ) >=app-admin/eselect-python-20091230
 0
 
 

@@ -1,5 +1,5 @@
-dev-lang/python sys-libs/ncurses >=app-admin/eselect-python-20090804 >=dev-lang/python-2.3 virtual/python
-dev-lang/python sys-libs/ncurses >=app-admin/eselect-python-20090804 >=dev-lang/python-2.3 virtual/python
+dev-lang/python sys-libs/ncurses >=app-admin/eselect-python-20091230 >=dev-lang/python-2.3 virtual/python
+dev-lang/python sys-libs/ncurses >=app-admin/eselect-python-20091230 >=dev-lang/python-2.3 virtual/python
 0
 http://www.terra.es/personal7/inigoserna/lfm/lfm-2.0.tar.gz
 

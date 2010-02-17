@@ -1,5 +1,5 @@
->=app-admin/eselect-python-20090804 >=dev-lang/python-1.5.2 >=app-admin/eselect-python-20090804 >=dev-lang/python-1.5.2 virtual/python
->=app-admin/eselect-python-20090804 >=dev-lang/python-1.5.2 >=app-admin/eselect-python-20090804 >=dev-lang/python-1.5.2 virtual/python
+>=app-admin/eselect-python-20091230 >=dev-lang/python-1.5.2 >=app-admin/eselect-python-20091230 >=dev-lang/python-1.5.2 virtual/python
+>=app-admin/eselect-python-20091230 >=dev-lang/python-1.5.2 >=app-admin/eselect-python-20091230 >=dev-lang/python-1.5.2 virtual/python
 0
 mirror://sourceforge/scons/scons-0.97.tar.gz
 
