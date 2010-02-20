@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-RDEPEND="virtual/poppler
+RDEPEND="app-text/poppler
 	x11-libs/cairo[svg]"
 DEPEND="${RDEPEND}"
 
