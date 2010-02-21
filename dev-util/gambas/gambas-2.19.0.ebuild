@@ -34,7 +34,7 @@ COMMON_DEPEND="
 	odbc?	( >=dev-db/unixODBC-2.2.12 )
 	opengl?	( >=media-libs/mesa-7.0.2 )
 	pcre?	( >=dev-libs/libpcre-7.6-r1 )
-	pdf?	( >=virtual/poppler-0.5.3 )
+	pdf?	( >=app-text/poppler-0.12.3-r3 )
 	postgres?	( >=virtual/postgresql-base-8.2 )
 	qt3? ( x11-libs/qt:3 )
 	sdl?	(
