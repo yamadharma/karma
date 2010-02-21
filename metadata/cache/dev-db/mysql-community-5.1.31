@@ -8,7 +8,7 @@ GPL-2
 A fast, multi-threaded, multi-user SQL database server.
 
 autotools eutils flag-o-matic gnuconfig libtool multilib mysql mysql_fx portability toolchain-funcs versionator
-big-tables debug embedded minimal perl selinux ssl static latin1 cluster extraengine max-idx-128 pbxt community profiling
+big-tables debug embedded minimal perl selinux ssl static test latin1 cluster extraengine max-idx-128 community profiling pbxt
 
 perl? ( >=dev-perl/DBD-mysql-2.9004 ) =virtual/mysql-5.1
 
