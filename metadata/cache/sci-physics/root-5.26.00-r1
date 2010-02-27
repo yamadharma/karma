@@ -1,0 +1,22 @@
+>=dev-lang/cfortran-4.4-r2 dev-libs/libpcre >=media-libs/ftgl-2.1.3_rc5 media-libs/libpng media-libs/jpeg media-libs/giflib media-libs/glew media-libs/tiff sys-apps/shadow x11-libs/libXpm x11-libs/libXft afs? ( >=net-fs/openafs-1.4.7 ) clarens? ( dev-libs/xmlrpc-c ) emacs? ( virtual/emacs ) fftw? ( sci-libs/fftw:3.0 ) geant4? ( sci-physics/geant:4 ) kerberos? ( virtual/krb5 ) ldap? ( net-nds/openldap ) math? ( >=sci-libs/gsl-1.8 ) mysql? ( virtual/mysql ) odbc? ( || ( dev-db/libiodbc dev-db/unixODBC ) ) opengl? ( virtual/opengl virtual/glu ) oracle? ( dev-db/oracle-instantclient-basic ) postgres? ( virtual/postgresql-base ) pythia6? ( sci-physics/pythia:6 ) pythia8? ( sci-physics/pythia:8 ) python? ( dev-lang/python ) qt4? ( x11-libs/qt-gui:4 x11-libs/qt-opengl:4 x11-libs/qt-qt3support:4 x11-libs/qt-xmlpatterns:4 ) ruby? ( dev-lang/ruby dev-ruby/rubygems ) ssl? ( dev-libs/openssl ) xml? ( dev-libs/libxml2 ) dev-util/pkgconfig
+>=dev-lang/cfortran-4.4-r2 dev-libs/libpcre >=media-libs/ftgl-2.1.3_rc5 media-libs/libpng media-libs/jpeg media-libs/giflib media-libs/glew media-libs/tiff sys-apps/shadow x11-libs/libXpm x11-libs/libXft afs? ( >=net-fs/openafs-1.4.7 ) clarens? ( dev-libs/xmlrpc-c ) emacs? ( virtual/emacs ) fftw? ( sci-libs/fftw:3.0 ) geant4? ( sci-physics/geant:4 ) kerberos? ( virtual/krb5 ) ldap? ( net-nds/openldap ) math? ( >=sci-libs/gsl-1.8 ) mysql? ( virtual/mysql ) odbc? ( || ( dev-db/libiodbc dev-db/unixODBC ) ) opengl? ( virtual/opengl virtual/glu ) oracle? ( dev-db/oracle-instantclient-basic ) postgres? ( virtual/postgresql-base ) pythia6? ( sci-physics/pythia:6 ) pythia8? ( sci-physics/pythia:8 ) python? ( dev-lang/python ) qt4? ( x11-libs/qt-gui:4 x11-libs/qt-opengl:4 x11-libs/qt-qt3support:4 x11-libs/qt-xmlpatterns:4 ) ruby? ( dev-lang/ruby dev-ruby/rubygems ) ssl? ( dev-libs/openssl ) xml? ( dev-libs/libxml2 ) xinetd? ( sys-apps/xinetd )
+0
+ftp://root.cern.ch/root/root_v5.26.00.source.tar.gz mirror://gentoo/root-5.26.00-patches-p02.tar.bz2 doc? ( ftp://root.cern.ch/root/doc/Users_Guide_5_26.pdf ftp://root.cern.ch/root/doc/RooFit_Users_Manual_2.91-33.pdf http://tmva.sourceforge.net/docu/TMVAUsersGuide.pdf -> TMVAUsersGuide-v4.pdf )
+
+http://root.cern.ch/
+LGPL-2.1
+C++ data analysis framework and interpreter from CERN
+~amd64 ~hppa ~sparc ~x86
+base elisp-common eutils fdo-mime flag-o-matic multilib portability qt4 toolchain-funcs versionator
+afs cint7 clarens doc emacs examples fftw geant4 kerberos ldap +math mysql odbc +opengl openmp oracle postgres pythia6 pythia8 python +reflex ruby qt4 ssl xft xml xinetd xrootd
+
+
+
+2
+
+compile configure install postinst postrm prepare setup unpack
+
+
+
+
+
