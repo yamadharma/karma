@@ -1,5 +1,5 @@
-dev-python/setuptools test? ( dev-python/nose dev-python/pyparsing dev-python/pyyaml ) >=app-admin/eselect-python-20091230 >=dev-lang/python-2.5 virtual/python
-dev-python/pyparsing dev-python/pyyaml >=app-admin/eselect-python-20091230 >=dev-lang/python-2.5 virtual/python
+dev-python/setuptools test? ( dev-python/nose dev-python/pyparsing dev-python/pyyaml ) >=app-admin/eselect-python-20091230 >=dev-lang/python-2.5 dev-lang/python
+dev-python/pyparsing dev-python/pyyaml >=app-admin/eselect-python-20091230 >=dev-lang/python-2.5 dev-lang/python
 0
 http://pypi.python.org/packages/source/p/pybtex/pybtex-0.12.tar.bz2
 
