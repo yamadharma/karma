@@ -1,7 +1,7 @@
 sys-devel/gnuconfig =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b ssl? ( >=dev-libs/openssl-0.9.6d ) userland_GNU? ( sys-process/procps ) >=sys-apps/sed-4 >=sys-apps/texinfo-4.7-r1 >=sys-libs/readline-4.1 >=sys-libs/zlib-1.2.3 !dev-db/mysql >=dev-util/cmake-2.4.3
 ssl? ( >=dev-libs/openssl-0.9.6d ) userland_GNU? ( sys-process/procps ) >=sys-apps/sed-4 >=sys-apps/texinfo-4.7-r1 >=sys-libs/readline-4.1 >=sys-libs/zlib-1.2.3 !dev-db/mysql !minimal? ( dev-db/mysql-init-scripts ) selinux? ( sec-policy/selinux-mysql )
 0
-mirror://mysql/Downloads/MySQL-5.1/mysql-5.1.31.tar.gz mirror://gentoo/mysql-extras-20081211.tar.bz2 http://g3nt8.org/patches/mysql-extras-20081211.tar.bz2 http://dev.gentoo.org/~robbat2/distfiles/mysql-extras-20081211.tar.bz2 pbxt? ( mirror://sourceforge/pbxt/pbxt-0.9.8-beta.tar.gz )
+mirror://mysql/Downloads/MySQL-5.1/mysql-5.1.31.tar.gz mirror://gentoo/mysql-extras-20081211.tar.bz2 http://g3nt8.org/patches/mysql-extras-20081211.tar.bz2 http://dev.gentoo.org/~robbat2/distfiles/mysql-extras-20081211.tar.bz2 pbxt? ( http://www.primebase.org/download/pbxt-0.9.8-beta.tar.gz mirror://sourceforge/pbxt/pbxt-0.9.8-beta.tar.gz )
 
 http://www.mysql.com/
 GPL-2
