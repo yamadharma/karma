@@ -1,0 +1,28 @@
+#!/sbin/runscript
+# chkconfig: 345 20 80
+# description: init.d script for headless openoffice.org (Gentoo)
+# processname: soffice
+# source function library
+
+RETVAL=0
+SOFFICE_ARGS='-accept="socket,host=localhost,port=8100;urp" -headless -nologo -nofirststartwizard'
+SOFFICE_PIDFILE=/var/run/soffice.bin.pid
+
+OOO_HOME=/usr/bin
+SOFFICE_PATH=$OOO_HOME/soffice
+
+start() {
+       ebegin "Starting OpenOffice headless server"
+       $SOFFICE_PATH $SOFFICE_ARGS &
+       [ $? -eq 0 ] && echo "  * Success started" || echo "  * Faild to start"
+       pidof soffice.bin > $SOFFICE_PIDFILE
+       sleep 5
+       eend $?
+}
+
+stop() {
+       ebegin "Stopping OpenOffice"
+       killall -9 soffice.bin
+       eend $?
+}
+

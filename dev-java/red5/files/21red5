@@ -1,1 +1,1 @@
-CONFIG_PROTECT="/opt/red5/conf"
+CONFIG_PROTECT="/usr/lib/red5/conf"

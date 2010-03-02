@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit java-utils-2 java-pkg-2 java-ant-2
 
 MY_P=${P/_/}
@@ -9,27 +11,31 @@ S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Open Source Flash Server written in Java"
 HOMEPAGE="http://osflash.org/red5"
-SRC_URI="http://dl.fancycode.com/red5/${PV}/src/${MY_P}.tar.gz"
+SRC_URI="http://www.red5.org/downloads/0_9/${MY_P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="1"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc examples source"
 DEPEND=">=virtual/jdk-1.5
-	>=dev-java/ant-core-1.5"
+	>=dev-java/ant-core-1.5
+	>=dev-java/ant-ivy-2.1.0"
 RDEPEND=">=virtual/jdk-1.5"
 
-RED5_HOME=/opt/red5
+RED5_HOME=/usr/lib/red5
 
 pkg_setup() {
 	enewgroup red5
 	enewuser red5 -1 -1 ${RED5_HOME} red5
 }
 
-src_compile() {
+src_prepare() {
 	echo >> build.properties
 	echo "java.target_version=$(java-pkg_get-vm-version)" >> build.properties
-	sed -i -r "s/<conf (.*)$/<conf defaultCache=\"${S//\//\\/}\/.ivy\/cache\" \1/" ivyconfig.xml
-	eant
+#	sed -i -r "s/<conf (.*)$/<conf defaultCache=\"${S//\//\\/}\/.ivy\/cache\" \1/" ivyconfig.xml
+}
+
+src_compile() {
+	eant dist
 }
 
 src_install() {
