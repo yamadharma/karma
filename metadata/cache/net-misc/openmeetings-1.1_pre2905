@@ -1,0 +1,22 @@
+
+dev-java/sun-jdk dev-java/jython || ( app-office/openoffice app-office/openoffice-bin ) media-gfx/imagemagick virtual/ghostscript media-gfx/swftools media-video/ffmpeg media-sound/sox postgres? ( virtual/postgresql-server dev-java/jdbc-postgresql ) mysql? ( virtual/mysql dev-java/jdbc-mysql )
+0
+http://openmeetings.googlecode.com/files/openmeetings_1_1_r2905.zip
+
+http://code.google.com/p/openmeetings/
+GPL-2
+Open-Source Web-Conferencing
+x86 amd64
+eutils multilib portability toolchain-funcs
+mysql postgres
+
+
+
+2
+
+install setup
+
+
+
+
+

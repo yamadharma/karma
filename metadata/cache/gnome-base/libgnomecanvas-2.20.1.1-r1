@@ -1,4 +1,4 @@
->=x11-libs/gtk+-2.13 >=media-libs/libart_lgpl-2.3.8 >=x11-libs/pango-1.0.1 >=gnome-base/libglade-2 sys-devel/gettext >=dev-util/intltool-0.35 >=dev-util/pkgconfig-0.18 doc? ( >=dev-util/gtk-doc-1 ) test? ( x11-base/xorg-server x11-apps/xhost ) >=sys-apps/sed-4
+>=x11-libs/gtk+-2.13 >=media-libs/libart_lgpl-2.3.8 >=x11-libs/pango-1.0.1 >=gnome-base/libglade-2 sys-devel/gettext >=dev-util/intltool-0.35 >=dev-util/pkgconfig-0.18 doc? ( >=dev-util/gtk-doc-1 ) test? ( !prefix? ( x11-base/xorg-server ) x11-apps/xhost ) >=sys-apps/sed-4
 >=x11-libs/gtk+-2.13 >=media-libs/libart_lgpl-2.3.8 >=x11-libs/pango-1.0.1 >=gnome-base/libglade-2
 0
 mirror://gnome/sources/libgnomecanvas/2.20/libgnomecanvas-2.20.1.1.tar.bz2
