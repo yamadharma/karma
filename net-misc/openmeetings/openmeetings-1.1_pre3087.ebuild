@@ -31,7 +31,8 @@ RDEPEND="dev-java/sun-jdk
 	mysql? ( virtual/mysql 
 		dev-java/jdbc-mysql )"
 
-S=${WORKDIR}/openmeetings_${MY_PV}
+# S=${WORKDIR}/openmeetings_${MY_PV}
+S=${WORKDIR}/red5
 
 RED5_HOME=/usr/lib/red5
 
@@ -63,6 +64,17 @@ src_install() {
 #		dodoc doc/*
 #	fi
 #	rm -rf doc
+
+	keepdir /var/log/red5
+	fowners red5:red5 /var/log/red5
+	rm -rf ${D}/${RED5_HOME}/log
+	dosym /var/log/red5 ${RED5_HOME}/log
+
+	keepdir /var/lib/red5/webapps/openmeetings/upload
+	fowners red5:red5 /var/lib/red5/webapps/openmeetings/upload
+	rm -rf ${D}/${RED5_HOME}/webapps/openmeetings/upload
+	dosym /var/lib/red5/webapps/openmeetings/upload ${RED5_HOME}/webapps/openmeetings/upload
+
 
 #	keepdir /var/lib/red5-webapps
 #	fowners red5:red5 /var/lib/red5-webapps/

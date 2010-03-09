@@ -3,15 +3,38 @@
 # Distributed under the terms of the GNU General Public License, v2
 # $Header: $
 
+# JAVA options
+# You can set JAVA_OPTS to add additional options if you want
+# Set up logging options
+LOGGING_OPTS="-Dlogback.ContextSelector=org.red5.logging.LoggingContextSelector -Dcatalina.useNaming=true"
+# Set up security options
+SECURITY_OPTS="-Djava.security.debug=failure"
+export JAVA_OPTS="$LOGGING_OPTS $SECURITY_OPTS $JAVA_OPTS"
+
+if [ -z "$RED5_MAINCLASS" ]; then
+  export RED5_MAINCLASS=org.red5.server.Bootstrap
+fi
+
+# Jython options
+JYTHON="-Dpython.home=lib"
+
+export RED5_CLASSPATH="${RED5_HOME}/boot.jar:${RED5_HOME}/conf:${CLASSPATH}"
+
+
+
 depend() {
 	need net
 	use dns logger postgresql mysql
 }
 
 start()	{
+	JAVA_HOME=$(java-config -O)
+	[ -n "${GENTOO_VM}" ] && JAVA_HOME=$(java-config --select-vm="${GENTOO_VM}" -O)
+	export JAVA_HOME
+	
 	ebegin "Starting Red5"
-        cd /usr/lib/red5
-	su -s /bin/bash -c "/usr/bin/nohup /usr/lib/red5/red5.sh &" ${RED5_USER}
+	local cmdline="${JAVA_HOME}/bin/java \"$JYTHON\" -Dred5.root=\"${RED5_HOME}\" $JAVA_OPTS -cp \"${RED5_CLASSPATH}\" \"$RED5_MAINCLASS\" $RED5_OPTS"
+	su - ${RED5_USER} -c "${cmdline} >/dev/null 2>/dev/null &"
 	eend $?
 }
 

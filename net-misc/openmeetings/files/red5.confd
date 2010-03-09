@@ -1,2 +1,3 @@
 # Red5's User
 RED5_USER=red5
+RED5_HOME=/usr/lib/red5

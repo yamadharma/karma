@@ -5,14 +5,15 @@
 # source function library
 
 RETVAL=0
-SOFFICE_ARGS='-accept="socket,host=localhost,port=8100;urp" -headless -nologo -nofirststartwizard'
+SOFFICE_ARGS="-headless -nologo -nofirststartwizard -accept=socket,host=localhost,port=8100;urp;StarOffice.ServiceManage"
 SOFFICE_PIDFILE=/var/run/soffice.bin.pid
 
-OOO_HOME=/usr/bin
-SOFFICE_PATH=$OOO_HOME/soffice
+OOO_HOME=/usr/lib/openoffice/program
+SOFFICE_PATH=$OOO_HOME/soffice.bin
 
 start() {
        ebegin "Starting OpenOffice headless server"
+       unset DISPLAY
        $SOFFICE_PATH $SOFFICE_ARGS &
        [ $? -eq 0 ] && echo "  * Success started" || echo "  * Faild to start"
        pidof soffice.bin > $SOFFICE_PIDFILE
