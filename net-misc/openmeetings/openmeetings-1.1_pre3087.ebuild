@@ -24,7 +24,7 @@ RDEPEND="dev-java/sun-jdk
 	media-gfx/imagemagick
 	virtual/ghostscript
 	media-gfx/swftools
-	media-video/ffmpeg
+	media-video/ffmpeg[mp3]
 	media-sound/sox
 	postgres? ( virtual/postgresql-server 
 		dev-java/jdbc-postgresql )
@@ -71,9 +71,18 @@ src_install() {
 	dosym /var/log/red5 ${RED5_HOME}/log
 
 	keepdir /var/lib/red5/webapps/openmeetings/upload
+	keepdir /var/lib/red5/webapps/openmeetings/uploadtemp
 	fowners red5:red5 /var/lib/red5/webapps/openmeetings/upload
+	fowners red5:red5 /var/lib/red5/webapps/openmeetings/uploadtemp
+
 	rm -rf ${D}/${RED5_HOME}/webapps/openmeetings/upload
 	dosym /var/lib/red5/webapps/openmeetings/upload ${RED5_HOME}/webapps/openmeetings/upload
+
+	rm -rf ${D}/${RED5_HOME}/webapps/openmeetings/uploadtemp
+	dosym /var/lib/red5/webapps/openmeetings/upload ${RED5_HOME}/webapps/openmeetings/uploadtemp
+
+	mv ${D}/${RED5_HOME}/webapps/openmeetings/streams  ${D}/var/lib/red5/webapps/openmeetings
+	dosym /var/lib/red5/webapps/openmeetings/streams ${RED5_HOME}/webapps/openmeetings/streams
 
 
 #	keepdir /var/lib/red5-webapps
