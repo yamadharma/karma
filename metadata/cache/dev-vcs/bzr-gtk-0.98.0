@@ -1,0 +1,22 @@
+>=dev-vcs/bzr-1.6_rc1 >=dev-python/pygtk-2.8 nautilus? ( dev-python/nautilus-python ) >=dev-python/pycairo-1.0 >=app-admin/eselect-python-20091230 >=dev-lang/python-2.4 >=app-admin/eselect-python-20091230 >=dev-lang/python-2.4 dev-lang/python
+>=dev-vcs/bzr-1.6_rc1 >=dev-python/pygtk-2.8 nautilus? ( dev-python/nautilus-python ) >=dev-python/pycairo-1.0 gnome-keyring? ( dev-python/gnome-keyring-python ) gpg? ( app-crypt/seahorse ) sourceview? ( dev-python/pygtksourceview gconf? ( dev-python/gconf-python ) ) >=app-admin/eselect-python-20091230 >=dev-lang/python-2.4 >=app-admin/eselect-python-20091230 >=dev-lang/python-2.4 dev-lang/python
+0
+http://launchpad.net/bzr-gtk/trunk/0.98.0/+download/bzr-gtk-0.98.0.tar.gz
+
+http://bazaar-vcs.org/bzr-gtk
+GPL-2
+A GTK+ interfaces to most Bazaar operations
+~amd64 ~x86
+distutils multilib python toolchain-funcs
+gconf gnome-keyring gpg +sourceview libnotify nautilus
+
+
+
+1
+
+compile install postinst postrm unpack
+
+
+
+
+

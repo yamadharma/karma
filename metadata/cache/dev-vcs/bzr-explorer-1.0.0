@@ -1,0 +1,22 @@
+>=app-admin/eselect-python-20091230 dev-lang/python
+>=dev-vcs/bzr-1.14 >=dev-vcs/qbzr-0.13 gtk? ( dev-vcs/bzr-gtk ) >=app-admin/eselect-python-20091230 dev-lang/python
+0
+http://launchpad.net/bzr-explorer/1.0/1.0.0/+download/bzr-explorer-1.0.0.tar.gz
+
+https://launchpad.net/bzr-explorer
+GPL-2
+A high level interface to all commonly used Bazaar features
+~x86
+distutils multilib python toolchain-funcs versionator
+gtk
+
+
+
+
+
+compile install postinst postrm unpack
+
+
+
+
+

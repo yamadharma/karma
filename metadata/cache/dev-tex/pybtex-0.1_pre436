@@ -1,4 +1,4 @@
->=app-admin/eselect-python-20091230 dev-lang/python dev-util/bzr
+>=app-admin/eselect-python-20091230 dev-lang/python >=dev-vcs/bzr-1.5
 dev-python/pyparsing >=app-admin/eselect-python-20091230 dev-lang/python
 0
 
