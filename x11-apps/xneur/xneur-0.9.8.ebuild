@@ -9,15 +9,16 @@ HOMEPAGE="http://www.xneur.ru"
 SRC_URI="http://dists.xneur.ru/release-${PV}/tgz/${P}.tar.bz2"
 
 LICENSE="GPL-2"
-KEYWORDS="~amd64 x86"
-IUSE="pcre aspell openal gstreamer"
+KEYWORDS="amd64 x86"
+IUSE="pcre +aspell openal gstreamer libnotify"
 DEPEND="x11-base/xorg-x11
 	media-libs/imlib2
 	x11-libs/xosd
 	pcre? ( dev-libs/libpcre )
 	aspell? ( app-text/aspell )
 	openal? ( media-libs/openal )
-	gstreamer? ( media-libs/gstreamer )"
+	gstreamer? ( media-libs/gstreamer )
+	libnotify? ( x11-libs/libnotify )"
 
 RESTRICT="mirror"
 
@@ -25,6 +26,8 @@ S=${WORKDIR}/${P}
 SLOT="0"
 
 src_compile() {
+	local myconf
+	myconf="${myconf} `use_with libnotify`"
 
 	if ! use pcre; then 
 	    myconf="${myconf} --without-pcre"
@@ -50,5 +53,5 @@ src_compile() {
 }
 
 src_install() {
-        emake DESTDIR=${D} install || die "install failed"
+	emake DESTDIR=${D} install || die "install failed"
 }
