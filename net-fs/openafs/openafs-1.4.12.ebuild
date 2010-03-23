@@ -1,19 +1,19 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs/openafs-1.5.34.ebuild,v 1.2 2008/12/26 11:26:21 klausman Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs/openafs-1.4.11.ebuild,v 1.2 2010/02/06 10:50:02 ulm Exp $
 
 inherit flag-o-matic eutils toolchain-funcs versionator pam
 
-PATCHVER=0.14
+PATCHVER=0.15
 DESCRIPTION="The OpenAFS distributed file system"
 HOMEPAGE="http://www.openafs.org/"
 SRC_URI="http://openafs.org/dl/${PV}/${P}-src.tar.bz2
 	doc? ( http://openafs.org/dl/${PV}/${P}-doc.tar.bz2 )
 	mirror://gentoo/${PN}-gentoo-${PATCHVER}.tar.bz2"
 
-LICENSE="IBM openafs-krb5 openafs-krb5-a APSL-2 sun-rpc"
+LICENSE="IBM BSD openafs-krb5-a APSL-2 sun-rpc"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="debug kerberos pam doc"
 
 RDEPEND="~net-fs/openafs-kernel-${PV}
@@ -23,16 +23,23 @@ RDEPEND="~net-fs/openafs-kernel-${PV}
 PATCHDIR=${WORKDIR}/gentoo/patches/$(get_version_component_range 1-2)
 CONFDIR=${WORKDIR}/gentoo/configs
 SCRIPTDIR=${WORKDIR}/gentoo/scripts
-EPATCH_EXCLUDE="001_all_compiler-settings.patch"
 
 src_unpack() {
 	unpack ${A}; cd "${S}"
 
 	# Apply patches to apply chosen compiler settings, fix the hardcoded paths
 	# to be more FHS friendly, and the fix the incorrect typecasts for va_arg
-	EPATCH_SUFFIX="patch" epatch ${PATCHDIR}
+	EPATCH_SUFFIX="patch" \
+	EPATCH_EXCLUDE="012_all_kbuild.patch" \
+		epatch ${PATCHDIR}
 
-	sed -i 's/^[ \t]*XCFLAGS.*//' src/cf/osconf.m4
+	# disable XCFLAGS override
+	sed -i 's/^[ \t]*XCFLAGS.*/:/' src/cf/osconf.m4
+	# disable compiler choice override
+	sed -i 's/^[ \t]\+\(CC\|CCOBJ\|MT_CC\)="[^ ]*\(.*\)"/\1="${CC}\2"/' src/cf/osconf.m4
+
+	# fix autoconf cludge (bug #218234)
+	sed -i 's/^AC_\(AIX\|MINIX\)$//' acinclude.m4
 
 	./regen.sh || die "Failed: regenerating configure script"
 }
@@ -44,7 +51,7 @@ src_compile() {
 		myconf="--with-krb5-conf=$(type -p krb5-config)"
 	fi
 
-	# fix linux version at 2.6
+	# AFS_SYSKVERS: fix linux version at 2.6
 	AFS_SYSKVERS=26 \
 	XCFLAGS="${CFLAGS}" \
 	econf \
@@ -53,6 +60,7 @@ src_compile() {
 		--enable-largefile-fileserver \
 		--enable-supergroups \
 		--disable-kernel-module \
+		--disable-strip-binaries \
 		${myconf} || die econf
 
 	emake -j1 all_nolibafs || die "Build failed"
