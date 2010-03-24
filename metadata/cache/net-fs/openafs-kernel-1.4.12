@@ -1,12 +1,12 @@
 kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
 kernel_linux? ( virtual/modutils )
 0
-http://openafs.org/dl/openafs/1.5.56/openafs-1.5.56-src.tar.bz2 mirror://gentoo/openafs-gentoo-0.14.tar.bz2
+http://openafs.org/dl/1.4.12/openafs-1.4.12-src.tar.bz2 mirror://gentoo/openafs-gentoo-0.16.tar.bz2
 
 http://www.openafs.org/
-IBM openafs-krb5 openafs-krb5-a APSL-2 sun-rpc
+IBM BSD openafs-krb5-a APSL-2 sun-rpc
 The OpenAFS distributed file system kernel module
-~amd64 ~ppc ~ppc64 ~x86
+~amd64 ~ppc ~ppc64 ~sparc ~x86
 eutils linux-info linux-mod multilib portability toolchain-funcs versionator
 kernel_linux
 
