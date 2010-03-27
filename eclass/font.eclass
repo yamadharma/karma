@@ -235,6 +235,8 @@ font_src_install() {
 	for commondoc in COPYRIGHT README NEWS AUTHORS BUGS ChangeLog; do
 		[[ -s ${commondoc} ]] && dodoc ${commondoc}
 	done
+
+	dosym ${FONTDIR} ${FONTDIR_ROOT}/${FONT_PN}
 }
 
 # @FUNCTION: font_pkg_setup
