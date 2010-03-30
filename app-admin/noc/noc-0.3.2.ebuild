@@ -31,7 +31,7 @@ DEPEND=">=dev-lang/python-2.5
 	dev-python/python-creole
 	dev-python/netifaces
 	net-dns/bind-tools
-	dev-util/mercurial
+	dev-vcs/mercurial
 	|| ( net-misc/telnet-bsd net-misc/netkit-telnetd )"
 
 pkg_setup() {

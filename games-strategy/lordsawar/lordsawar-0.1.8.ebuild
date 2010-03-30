@@ -21,6 +21,7 @@ DEPEND="dev-util/pkgconfig
 	>=dev-cpp/gtkmm-2.4
     >=dev-cpp/libglademm-2.4
     media-libs/sdl-image
+    dev-libs/libtar
     sound? ( media-libs/sdl-mixer[vorbis] )
     >=net-libs/gnet-2
     >=dev-libs/libsigc++-2
