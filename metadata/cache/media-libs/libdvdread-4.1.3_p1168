@@ -1,4 +1,4 @@
-!<=media-libs/libdvdnav-4.1.2 css? ( media-libs/libdvdcss ) =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+!<=media-libs/libdvdnav-4.1.2 css? ( media-libs/libdvdcss ) || ( sys-devel/automake ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
 !<=media-libs/libdvdnav-4.1.2 css? ( media-libs/libdvdcss )
 0
 mirror://gentoo/libdvdread-4.1.3_p1168.tar.bz2

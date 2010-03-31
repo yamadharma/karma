@@ -1,4 +1,4 @@
-x11-libs/gtk+ >=x11-libs/libwnck-2.24.1 >=dev-lang/vala-0.5.5 >=gnome-base/gnome-panel-2.24.1 >=gnome-base/gnome-menus-2.24.1 >=sys-apps/sed-4 dev-util/subversion net-misc/rsync =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+x11-libs/gtk+ >=x11-libs/libwnck-2.24.1 >=dev-lang/vala-0.5.5 >=gnome-base/gnome-panel-2.24.1 >=gnome-base/gnome-menus-2.24.1 >=sys-apps/sed-4 dev-util/subversion net-misc/rsync || ( sys-devel/automake ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
 x11-libs/gtk+ >=x11-libs/libwnck-2.24.1 >=dev-lang/vala-0.5.5 >=gnome-base/gnome-panel-2.24.1 >=gnome-base/gnome-menus-2.24.1
 0
 

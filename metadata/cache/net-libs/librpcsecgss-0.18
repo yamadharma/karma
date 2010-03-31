@@ -1,4 +1,4 @@
-|| ( net-libs/libgssglue >=app-crypt/heimdal-1.0 ) dev-util/pkgconfig =sys-devel/automake-1.10* >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+|| ( net-libs/libgssglue >=app-crypt/heimdal-1.0 ) dev-util/pkgconfig || ( sys-devel/automake ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
 || ( net-libs/libgssglue >=app-crypt/heimdal-1.0 )
 0
 http://www.citi.umich.edu/projects/nfsv4/linux/librpcsecgss/librpcsecgss-0.18.tar.gz
