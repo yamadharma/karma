@@ -4,7 +4,7 @@
 mirror://kernel/linux/kernel/v2.6/linux-2.6.29.tar.bz2 mirror://sourceforge/klk/karma-ws-2.6.29.tar.lzma
 binchecks strip
 http://www.kernel.org/ http://www.gentoo.org/
-GPL-2
+GPL-2 freedist
 KLK Sources.
 ~x86 ~amd64
 eutils kernel-2 multilib portability toolchain-funcs versionator
