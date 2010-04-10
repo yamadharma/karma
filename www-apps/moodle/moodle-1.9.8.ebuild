@@ -9,7 +9,7 @@ HOMEPAGE="http://moodle.org/"
 SRC_URI="http://download.moodle.org/stable19/${P}.tgz"
 
 LICENSE="GPL-2"
-KEYWORDS="~x86"
+KEYWORDS="x86 amd64"
 IUSE="ldap mysql postgres"
 
 DEPEND=""
