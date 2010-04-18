@@ -7,7 +7,7 @@ http://download.mpsna.de/opensource/PortageXS/
 GPL-2
 Portage abstraction layer for perl
 ~alpha amd64 ~hppa ~ia64 ~ppc sparc x86
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-helper perl-module portability toolchain-funcs
 minimal
 
 

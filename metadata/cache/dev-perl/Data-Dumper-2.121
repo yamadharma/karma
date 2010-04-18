@@ -7,7 +7,7 @@ http://search.cpan.org/~ilyam/Data-Dumper-2.121/Dumper.pm
 Artistic
 Stringified perl data structures, suitable for both printing and eval
 x86 amd64
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-helper perl-module portability toolchain-funcs
 
 
 

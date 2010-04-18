@@ -7,7 +7,7 @@ http://systeminstaller.sourceforge.net/
 GPL-2
 System Installer is an installation tool which is designed to build Linux images
 x86 amd64
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-helper perl-module portability toolchain-funcs
 
 
 

@@ -7,7 +7,7 @@ http://search.cpan.org/~dfaraldo
 || ( Artistic GPL-2 )
 Perl extension for importing environment variable changes from external commands or shell scripts
 amd64 ~hppa ~ia64 ~mips ~ppc ~ppc64 sparc x86
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-helper perl-module portability toolchain-funcs
 
 
 
