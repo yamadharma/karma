@@ -79,7 +79,7 @@ src_install() {
 	dosym /var/lib/red5/webapps/openmeetings/upload ${RED5_HOME}/webapps/openmeetings/upload
 
 	rm -rf ${D}/${RED5_HOME}/webapps/openmeetings/uploadtemp
-	dosym /var/lib/red5/webapps/openmeetings/upload ${RED5_HOME}/webapps/openmeetings/uploadtemp
+	dosym /var/lib/red5/webapps/openmeetings/uploadtemp ${RED5_HOME}/webapps/openmeetings/uploadtemp
 
 	mv ${D}/${RED5_HOME}/webapps/openmeetings/streams  ${D}/var/lib/red5/webapps/openmeetings
 	dosym /var/lib/red5/webapps/openmeetings/streams ${RED5_HOME}/webapps/openmeetings/streams
