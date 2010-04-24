@@ -7,7 +7,7 @@ http://www.cpan.org/modules/by-module/Mail/MailTools-1.58.readme
 Artistic
 Basic mail modules for Perl
 x86 ppc sparc sparc64
-base eutils multilib perl-helper perl-module portability toolchain-funcs
+base eutils multilib perl-module portability toolchain-funcs
 
 
 

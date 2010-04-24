@@ -7,7 +7,7 @@ http://www.cpan.org/modules/by-module/CGI
 Artistic | GPL-2
 CGI::FastTemplate manages templates and parses templates replacing variable names with values
 x86 ppc sparc alpha
-base eutils multilib perl-helper perl-module portability toolchain-funcs
+base eutils multilib perl-module portability toolchain-funcs
 
 
 
