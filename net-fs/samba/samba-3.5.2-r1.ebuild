@@ -1,10 +1,10 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/samba/samba-3.5.2.ebuild,v 1.2 2010/04/08 10:05:23 patrick Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/samba/samba-3.5.2-r1.ebuild,v 1.2 2010/05/11 11:27:47 patrick Exp $
 
 EAPI="2"
 
-inherit pam confutils versionator multilib
+inherit pam confutils versionator multilib eutils
 
 MY_PV=${PV/_/}
 MY_P="${PN}-${MY_PV}"
@@ -95,6 +95,8 @@ src_prepare() {
 	sed -i \
 		-e 's|LDSHFLAGS="|LDSHFLAGS="\\${LDFLAGS} |g' \
 		configure || die "sed failed"
+
+	cd "${S}/../" && epatch "${FILESDIR}"/${PV}-backport-fix-*
 }
 
 src_configure() {
@@ -276,7 +278,7 @@ src_install() {
 		dosbin ${prog} || die "installing ${prog} failed"
 		doman ../docs/manpages/${prog/bin\/}* || die "doman failed"
 	done
-	dobin ${BINPROGS} || die "installing binaries failed"
+
 	for prog in ${BINPROGS} ; do
 		dobin ${prog} || die "installing ${prog} failed"
 		doman ../docs/manpages/${prog/bin\/}* || die "doman failed"
