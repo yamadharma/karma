@@ -17,5 +17,5 @@ IUSE=""
 
 DEPEND=">=gnustep-base/gnustep-gui-0.16.0
 	>=gnustep-libs/etoile-foundation-${PV}
-	sys-devel/llvm-2.5"
+	sys-devel/llvm"
 RDEPEND="${DEPEND}"
