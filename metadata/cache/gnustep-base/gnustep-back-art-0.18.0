@@ -1,0 +1,22 @@
+doc? ( virtual/texi2dvi dev-tex/latex2html app-text/texi2html ) ~gnustep-base/gnustep-gui-0.18.0 opengl? ( virtual/opengl virtual/glu ) x11-libs/libICE x11-libs/libSM x11-libs/libX11 x11-libs/libXext x11-libs/libXi x11-libs/libXmu x11-libs/libXt x11-libs/libXft x11-libs/libXrender dev-libs/expat media-libs/fontconfig >=media-libs/freetype-2.1.9 >=media-libs/libart_lgpl-2.3 >=gnustep-base/mknfonts-0.5-r1 media-fonts/dejavu !gnustep-base/gnustep-back-cairo !gnustep-base/gnustep-back-xlib
+doc? ( virtual/texi2dvi dev-tex/latex2html app-text/texi2html ) ~gnustep-base/gnustep-gui-0.18.0 opengl? ( virtual/opengl virtual/glu ) x11-libs/libICE x11-libs/libSM x11-libs/libX11 x11-libs/libXext x11-libs/libXi x11-libs/libXmu x11-libs/libXt x11-libs/libXft x11-libs/libXrender dev-libs/expat media-libs/fontconfig >=media-libs/freetype-2.1.9 >=media-libs/libart_lgpl-2.3 >=gnustep-base/mknfonts-0.5-r1 media-fonts/dejavu !gnustep-base/gnustep-back-cairo !gnustep-base/gnustep-back-xlib
+0
+ftp://ftp.gnustep.org/pub/gnustep/core/gnustep-back-0.18.0.tar.gz
+
+http://www.gnustep.org
+LGPL-2.1
+libart_lgpl back-end component for the GNUstep GUI Library
+~alpha ~amd64 ~ppc ~sparc ~x86 ~amd64-linux ~x86-linux ~x86-solaris
+eutils flag-o-matic gnustep-base multilib portability toolchain-funcs
+opengl xim debug doc
+
+
+
+
+
+compile install postinst setup unpack
+
+
+
+
+
