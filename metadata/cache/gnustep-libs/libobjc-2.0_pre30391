@@ -1,0 +1,22 @@
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-util/subversion net-misc/rsync
+>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+0
+
+
+http://www.gnustep.org
+GPL-3
+GNUstep Objective-C Runtime
+amd64 ~ppc x86
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs
+debug doc
+
+
+
+
+
+compile install postinst preinst setup unpack
+
+
+
+
+

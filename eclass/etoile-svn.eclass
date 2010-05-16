@@ -14,9 +14,9 @@ INHERITED="$INHERITED $ECLASS"
 
 ESVN_PROJECT=etoile
 
-ESVN_OPTIONS="-r${PV/*_pre}"
-ESVN_REPO_URI="http://svn.gna.org/svn/etoile/trunk/Etoile"
-ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/etoile"
+# ESVN_OPTIONS="-r${PV/*_pre}"
+ESVN_REPO_URI="http://svn.gna.org/svn/etoile/trunk/Etoile@${PV/*_pre}"
+# ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR-${DISTDIR}}/svn-src/etoile"
 
 
 HOMEPAGE="http://www.etoile-project.org"
