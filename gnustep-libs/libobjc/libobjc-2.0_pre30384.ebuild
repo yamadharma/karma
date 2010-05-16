@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="3"
+
 inherit gnustep-2 subversion
 
 ESVN_PROJECT=libobjc2
@@ -16,3 +18,8 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64 ~ppc x86"
 IUSE=""
+
+src_prepare() {
+# Fix bug
+	echo "libobjc_HEADER_FILES += slot.h" >> GNUmakefile
+}
