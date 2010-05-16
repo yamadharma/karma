@@ -1,0 +1,1 @@
+/usr/portage/local/layman/science/eclass/octave-forge.eclass
