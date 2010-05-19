@@ -12,9 +12,9 @@ debug doc
 
 
 
+3
 
-
-compile install postinst preinst setup unpack
+compile configure install postinst preinst prepare setup unpack
 
 
 
