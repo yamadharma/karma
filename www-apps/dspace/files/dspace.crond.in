@@ -1,0 +1,10 @@
+# Send out subscription e-mails at 01:00 every day
+0 1 * * *  @DSPACE_DIR@/bin/sub-daily
+# Run the media filter at 02:00 every day
+0 2 * * *  @DSPACE_DIR@/bin/filter-media
+# Run the checksum checker at 03:00
+0 3 * * *  @DSPACE_DIR@/bin/checker -lp
+# Mail the results to the sysadmin at 04:00
+0 4 * * *  @DSPACE_DIR@/bin/dsrun org.dspace.checker.DailyReportEmailer -c
+
+

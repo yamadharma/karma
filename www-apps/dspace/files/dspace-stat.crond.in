@@ -1,0 +1,5 @@
+# Run stat analyses
+0 1 * * * @DSPACE_DIR@/bin/stat-general
+0 1 * * * @DSPACE_DIR@/bin/stat-monthly
+0 2 * * * @DSPACE_DIR@/bin/stat-report-general
+0 2 * * * @DSPACE_DIR@/bin/stat-report-monthly
