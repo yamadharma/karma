@@ -4,38 +4,44 @@
 
 inherit flag-o-matic eutils
 
-DESCRIPTION="OS Inferno New Edition (hg)"
+DESCRIPTION="OS Inferno Fourth Edition"
 HOMEPAGE="http://inferno-os.googlecode.com/"
-SRC_URI="http://www.vitanuova.com/dist/4e/inferno-20090730.tgz
-	http://inferno-os-downloads.googlecode.com/files/acme-sac-fonts-20090624.209.tar.bz2"
+SRC_URI="http://www.vitanuova.com/dist/4e/inferno-20100120.tgz
+	http://inferno-os-downloads.googlecode.com/files/acme-sac-fonts-20090624.209.tar.bz2
+	http://inferno-re2.googlecode.com/files/inferno-re2-1.0.0.tgz
+	"
 
 LICENSE="GPL-2"
 SLOT=0
-KEYWORDS="x86 amd64"
-IUSE="hardened X doc source"
+KEYWORDS="~x86 ~amd64"
+IUSE="hardened X doc source +re2"
 
 RDEPEND=""
 
 DEPEND="${RDEPEND}
 	hardened? ( sys-apps/paxctl )
-	dev-util/mercurial
+	dev-vcs/mercurial
 	!dev-inferno/inferno-font-bh
+	re2? ( dev-libs/libre2 )
 	"
 
 S="${WORKDIR}/${PN}"
 
 src_unpack() {
-	unpack inferno-20090730.tgz
+	unpack inferno-20100120.tgz
 	cd "${S}"
-	rm fonts/LICENCE
-	hg pull	-r 7717b1cd5b	|| die
+	hg pull	-r 33c429f6b1	|| die
 	hg update				|| die
 	unpack "acme-sac-fonts-20090624.209.tar.bz2"
+
+	if use re2; then
+		unpack "inferno-re2-1.0.0.tgz"
+		epatch "re2wrap.patch"
+	fi
 
 	epatch "${FILESDIR}/issue-122-csendalt.patch"
 	epatch "${FILESDIR}/issue-147-wait.patch"
 	epatch "${FILESDIR}/acme-fonts.patch"
-	epatch "${FILESDIR}/spree-mkfile.patch"
 }
 
 src_compile() {
@@ -62,6 +68,8 @@ src_compile() {
 }
 
 src_install() {
+	export PORTAGE_COMPRESS=""	# don't bzip man pages
+
 	if ! use X ; then
 		cp "${S}"/Linux/386/bin/emu{-g,}
 	fi
@@ -92,15 +100,5 @@ src_install() {
 
 	# Setup the path environment
 	doenvd "${FILESDIR}/20inferno"
-}
-
-pkg_postinst() {
-	# Unpack man pages (packed by doins)
-	find "${ROOT}"/usr/inferno/man/ -name '*.bz2' -exec bzip2 -f -d {} \;
-}
-
-pkg_prerm() {
-	# Pack man pages back (origianlly packed by doins then unpacked in postinst)
-	find "${ROOT}"/usr/inferno/man/ -type f -exec bzip2 -f {} \;
 }
 
