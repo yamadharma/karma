@@ -28,7 +28,7 @@ DEPEND="dev-util/pkgconfig
     >=dev-libs/expat-2.0"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${P/_pre*/}"
+S="${WORKDIR}/${P/_/-}"
 
 src_configure() {
 	egamesconf \
