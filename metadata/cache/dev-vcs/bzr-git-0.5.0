@@ -1,0 +1,22 @@
+>=app-admin/eselect-python-20091230 dev-lang/python
+>=dev-python/dulwich-0.5.0 >=dev-vcs/bzr-1.15_rc1 >=app-admin/eselect-python-20091230 dev-lang/python
+0
+http://samba.org/~jelmer/bzr/bzr-git-0.5.0.tar.gz
+
+http://bazaar-vcs.org/BzrForeignBranches/Git
+GPL-2
+Support for Git branches in Bazaar
+~x86 ~amd64
+distutils multilib python toolchain-funcs
+
+
+
+
+2
+
+compile install postinst postrm prepare
+
+
+
+
+

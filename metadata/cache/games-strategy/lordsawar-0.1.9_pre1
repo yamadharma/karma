@@ -1,7 +1,7 @@
 dev-util/pkgconfig dev-libs/boost nls? ( sys-devel/gettext ) >=dev-cpp/gtkmm-2.4 >=dev-cpp/libglademm-2.4 media-libs/sdl-image dev-libs/libtar sound? ( media-libs/sdl-mixer[vorbis] ) >=net-libs/gnet-2 >=dev-libs/libsigc++-2 >=dev-libs/expat-2.0
 dev-util/pkgconfig dev-libs/boost nls? ( sys-devel/gettext ) >=dev-cpp/gtkmm-2.4 >=dev-cpp/libglademm-2.4 media-libs/sdl-image dev-libs/libtar sound? ( media-libs/sdl-mixer[vorbis] ) >=net-libs/gnet-2 >=dev-libs/libsigc++-2 >=dev-libs/expat-2.0
 0
-http://download.savannah.gnu.org/releases/lordsawar/lordsawar-0.1.8.tar.gz
+http://download.savannah.gnu.org/releases/lordsawar/lordsawar-0.1.9-pre1.tar.gz
 
 http://www.lordsawar.com/
 GPL-2
