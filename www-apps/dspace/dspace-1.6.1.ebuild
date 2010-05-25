@@ -9,10 +9,13 @@ SLOT=0
 inherit eutils
 
 MY_P=${P}-src-release
+LANG_PV=1.4.2
+LANG_P=dspace-language-pack-${LANG_PV//./_}
 
 DESCRIPTION="DSpace open source software enables open sharing of content that spans organizations, continents and time"
 HOMEPAGE="http://www.dspace.org/"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2
+	mirror://sourceforge/${PN}/${LANG_P}.tgz"
 
 LICENSE="GPL-2"
 KEYWORDS="x86 amd64"
@@ -31,6 +34,7 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_P}"
 
 DSPACE_DIR=/var/lib/dspace
+DSPACE_SRC_DIR=/var/lib/dspace-source
 
 src_prepare() {
 #	sed -i -e "s:^dspace.dir =.*$:dspace.dir = /usr/lib/dspace:g" \
@@ -75,11 +79,19 @@ src_install() {
 	use tomcat && chown -R tomcat:tomcat ${D}${DSPACE_DIR}
 	use resin && chown -R resin:resin ${D}${DSPACE_DIR}
 
-	use tomcat && (cd ${D}${DSPACE_DIR}/webapps/; for i in *; do dosym ${DSPACE_DIR}/webapps/${i} /usr/share/tomcat-6/webapps/; done )
-	use resin && (cd ${D}${DSPACE_DIR}/webapps/; for i in *; do dosym ${DSPACE_DIR}/webapps/${i} /usr/lib/resin/webapps/; done )
+	use tomcat && (cd ${D}${DSPACE_DIR}/webapps/; for i in *; do dosym ${DSPACE_DIR}/webapps/${i} /var/lib/tomcat-6/webapps/; done )
+	use resin && (cd ${D}${DSPACE_DIR}/webapps/; for i in *; do dosym ${DSPACE_DIR}/webapps/${i} /var/lib/resin/webapps/; done )
+
+	mv ${D}${DSPACE_DIR} ${D}${DSPACE_SRC_DIR}
 }
 
 pkg_postinst() {
+	if [ -d "${DSPACE_DIR}" ]
+	then
+		cd ${DSPACE_SRC_DIR}
+		ant update
+	fi
+
 	use tomcat && chown -R tomcat:tomcat ${DSPACE_DIR}
 	use resin && chown -R resin:resin ${DSPACE_DIR}
 }
@@ -87,4 +99,7 @@ pkg_postinst() {
 pkg_config() {
 	createuser -U postgres -d -A -P dspace
 	createdb -U dspace -E UNICODE dspace
+
+	cd ${DSPACE_SRC_DIR}
+	ant fresh_install
 }
