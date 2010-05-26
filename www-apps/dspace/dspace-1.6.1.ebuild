@@ -9,13 +9,10 @@ SLOT=0
 inherit eutils
 
 MY_P=${P}-src-release
-LANG_PV=1.4.2
-LANG_P=dspace-language-pack-${LANG_PV//./_}
 
 DESCRIPTION="DSpace open source software enables open sharing of content that spans organizations, continents and time"
 HOMEPAGE="http://www.dspace.org/"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2
-	mirror://sourceforge/${PN}/${LANG_P}.tgz"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 KEYWORDS="x86 amd64"
@@ -34,15 +31,9 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_P}"
 
 DSPACE_DIR=/var/lib/dspace
-DSPACE_SRC_DIR=/var/lib/dspace-source
+DSPACE_SRC_DIR=/usr/share/dspace-source
 
 src_prepare() {
-#	sed -i -e "s:^dspace.dir =.*$:dspace.dir = /usr/lib/dspace:g" \
-#		-e "s:^assetstore.dir .*:assetstore.dir = /var/lib/dspace/assetstore:g" \
-#		-e "s:^log.dir =.*:log.dir = /var/log/dspace:g" \
-#		-e "s:^search.dir =.*:search.dir = /var/lib/dspace/search:g" \
-#		${S}/dspace/config/dspace.cfg
-
 	sed -i -e "s:^dspace.dir =.*$:dspace.dir = ${DSPACE_DIR}:g" \
 		${S}/dspace/config/dspace.cfg
 }
@@ -52,21 +43,9 @@ src_compile() {
 }
 
 src_install() {
-#	cd ${S}/dspace/target/${P}-build.dir
-#	ant \
-#		-Ddspace.dir=${D}/usr/lib/dspace \
-#		-Dassetstore.dir=${D}/var/lib/dspace/assetstore \
-#		-Dlog.dir=${D}/var/log/dspace \
-#		-Dsearch.dir=${D}/var/lib/dspace/search \
-#		fresh_install
-
 	dodir ${DSPACE_DIR}
 	cp -R ${S}/dspace/target/${P}-build.dir/* ${D}${DSPACE_DIR}
 	chmod +x ${D}${DSPACE_DIR}/bin/*
-
-#	keepdir /var/lib/dspace/assetstore
-#	keepdir /var/lib/dspace/search
-#	keepdir /var/log/dspace
 
 	dodir /etc
 	mv ${D}${DSPACE_DIR}/config ${D}/etc/dspace
