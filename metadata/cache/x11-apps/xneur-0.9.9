@@ -1,20 +1,20 @@
-x11-base/xorg-x11 media-libs/imlib2 x11-libs/xosd pcre? ( dev-libs/libpcre ) aspell? ( app-text/aspell ) openal? ( media-libs/openal ) gstreamer? ( media-libs/gstreamer ) libnotify? ( x11-libs/libnotify )
-x11-base/xorg-x11 media-libs/imlib2 x11-libs/xosd pcre? ( dev-libs/libpcre ) aspell? ( app-text/aspell ) openal? ( media-libs/openal ) gstreamer? ( media-libs/gstreamer ) libnotify? ( x11-libs/libnotify )
+sys-libs/zlib >=x11-libs/libX11-1.1 x11-libs/libXtst gstreamer? ( >=media-libs/gstreamer-0.10.6 ) !gstreamer? ( openal? ( >=media-libs/freealut-1.0.1 ) !openal? ( aplay? ( >=media-sound/alsa-utils-1.0.17 ) ) ) pcre? ( >=dev-libs/libpcre-5.0 ) spell? ( app-text/aspell ) xosd? ( x11-libs/xosd ) libnotify? ( >=x11-libs/libnotify-0.4.0 ) gstreamer? ( media-libs/gst-plugins-good media-plugins/gst-plugins-alsa ) nls? ( sys-devel/gettext ) >=dev-util/pkgconfig-0.20 || ( =sys-devel/automake-1.11* =sys-devel/automake-1.10* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+sys-libs/zlib >=x11-libs/libX11-1.1 x11-libs/libXtst gstreamer? ( >=media-libs/gstreamer-0.10.6 ) !gstreamer? ( openal? ( >=media-libs/freealut-1.0.1 ) !openal? ( aplay? ( >=media-sound/alsa-utils-1.0.17 ) ) ) pcre? ( >=dev-libs/libpcre-5.0 ) spell? ( app-text/aspell ) xosd? ( x11-libs/xosd ) libnotify? ( >=x11-libs/libnotify-0.4.0 )
 0
 http://dists.xneur.ru/release-0.9.9/tgz/xneur-0.9.9.tar.bz2
-mirror
-http://www.xneur.ru
+
+http://www.xneur.ru/
 GPL-2
-Replacement for Punto Switcher
-amd64 x86
-
-pcre +aspell openal gstreamer libnotify
-
-
+In-place conversion of text typed in with a wrong keyboard layout (Punto Switcher replacement)
+~amd64 ~x86
+autotools eutils libtool multilib portability toolchain-funcs
+aplay debug gstreamer libnotify nls openal xosd pcre +spell
 
 
 
-compile install
+2
+
+configure install postinst prepare
 
 
 
