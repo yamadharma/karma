@@ -7,8 +7,8 @@ inherit flag-o-matic eutils toolchain-funcs versionator pam
 PATCHVER=0.15
 DESCRIPTION="The OpenAFS distributed file system"
 HOMEPAGE="http://www.openafs.org/"
-SRC_URI="http://openafs.org/dl/${PV}/${P}-src.tar.bz2
-	doc? ( http://openafs.org/dl/${PV}/${P}-doc.tar.bz2 )
+SRC_URI="http://openafs.org/dl/$(get_version_component_range 1-3)/${P}-src.tar.bz2
+	doc? ( http://openafs.org/dl/$(get_version_component_range 1-3)/${P}-doc.tar.bz2 )
 	mirror://gentoo/${PN}-gentoo-${PATCHVER}.tar.bz2"
 
 LICENSE="IBM BSD openafs-krb5-a APSL-2 sun-rpc"

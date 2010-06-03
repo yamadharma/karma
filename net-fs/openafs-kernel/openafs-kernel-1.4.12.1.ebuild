@@ -10,7 +10,7 @@ MY_P=${MY_PN}-${PV}
 S=${WORKDIR}/${MY_P}
 DESCRIPTION="The OpenAFS distributed file system kernel module"
 HOMEPAGE="http://www.openafs.org/"
-SRC_URI="http://openafs.org/dl/${PV}/${MY_P}-src.tar.bz2
+SRC_URI="http://openafs.org/dl/$(get_version_component_range 1-3)/${MY_P}-src.tar.bz2
 	mirror://gentoo/${MY_PN}-gentoo-${PATCHVER}.tar.bz2"
 
 LICENSE="IBM BSD openafs-krb5-a APSL-2 sun-rpc"
