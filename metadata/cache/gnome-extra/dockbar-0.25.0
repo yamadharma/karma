@@ -1,0 +1,22 @@
+dev-python/pygobject dev-python/pygtk dev-python/gconf-python dev-python/libgnome-python dev-python/gnome-applets-python dev-python/gnome-vfs-python dev-python/libwnck-python dev-python/dbus-python dev-python/pyxdg
+dev-python/pygobject dev-python/pygtk dev-python/gconf-python dev-python/libgnome-python dev-python/gnome-applets-python dev-python/gnome-vfs-python dev-python/libwnck-python dev-python/dbus-python dev-python/pyxdg
+0
+https://launchpad.net/dockbar/vanilla/0.25.0/+download/dockbar-0.25.tar.gz
+
+https://launchpad.net/dockbar
+GPL-3
+Gnome taskbar applet with groupping and group manipulation
+~amd64 ~x86
+eutils multilib portability toolchain-funcs versionator
+
+
+
+
+3
+
+install
+
+
+
+
+
