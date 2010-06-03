@@ -40,5 +40,5 @@ src_install() {
 	insinto /usr/share/${PN}/themes
 	doins share/${PN}/themes/* || die "doins failed"
 
-	dodoc README Changelog Theming* || die "dodoc failed"
+	dodoc README Changelog
 }
