@@ -39,8 +39,7 @@ RDEPEND="app-admin/gnome-system-tools
 	net-print/gutenprint
 	sys-apps/readahead-list
 	sys-power/acpid
-	||( sys-process/vixie-cron sys-process/fcron )
-	x11-apps/notify-osd
+	|| ( sys-process/vixie-cron sys-process/fcron )
 	x11-misc/rss-glx
 	x11-misc/xdg-user-dirs
 	x11-misc/xdg-user-dirs-gtk
@@ -48,7 +47,7 @@ RDEPEND="app-admin/gnome-system-tools
 	x11-themes/human-netbook-theme
 	x11-themes/tangerine-icon-theme
 	x11-wm/maximus
-	extras? ( app-office/openoffice-bin
+	extras? ( app-office/openoffice
 		app-portage/eix
 		app-portage/gentoolkit
 		app-portage/gentoolkit-dev
@@ -60,7 +59,7 @@ RDEPEND="app-admin/gnome-system-tools
 		dev-java/sun-jre-bin
 		dev-lang/ruby 
 		dev-util/strace 
-		mail-client/mozilla-thunderbird-bin
+		mail-client/mozilla-thunderbird
 		media-gfx/gimp
 		media-gfx/inkscape
 		media-sound/rhythmbox 
@@ -72,7 +71,7 @@ RDEPEND="app-admin/gnome-system-tools
 		net-misc/ntp
 		net-misc/tightvnc
 		net-misc/whois
-		www-client/mozilla-firefox-bin
+		www-client/mozilla-firefox
 		www-plugins/adobe-flash
 		x11-plugins/pidgin-facebookchat )
 	developer? ( dev-util/cvs
