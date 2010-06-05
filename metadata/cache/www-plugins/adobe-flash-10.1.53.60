@@ -1,0 +1,22 @@
+>=app-arch/rpm2targz-9.0.0.3g
+x11-libs/gtk+:2 media-libs/fontconfig dev-libs/nss net-misc/curl >=sys-libs/glibc-2.4 || ( media-fonts/freefont-ttf media-fonts/corefonts ) !www-plugins/libflashsupport
+0
+!debug? ( http://download.macromedia.com/pub/labs/flashplayer10/flashplayer10_1_rc6_linux_052510.tar.gz ) debug? ( http://download.macromedia.com/pub/labs/flashplayer10/flashplayer10_1_rc6_debug_linux_052510.tar.gz )
+strip mirror
+http://www.adobe.com/
+AdobeFlash-10
+Adobe Flash Player
+-* ~x86
+eutils multilib nsplugins portability rpm toolchain-funcs
+debug
+
+
+
+1
+
+install postinst setup unpack
+
+
+
+
+
