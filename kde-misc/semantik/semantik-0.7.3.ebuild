@@ -12,15 +12,19 @@ SRC_URI="http://freehackers.org/~tnagy/${P}.tar.bz2"
 
 LICENSE="QPL"
 SLOT="0"
-KEYWORDS="x86 amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-DEPEND=">=x11-libs/qt-4.2
-	>=dev-lang/python-2.3
-	>=dev-lang/swig-1.3.31
-	dev-lang/ocaml"
-RDEPEND=">=x11-libs/qt-4.2
-        >=dev-lang/python-2.4.2"
+DEPEND="
+	dev-lang/ocaml
+	dev-lang/python
+"
+RDEPEND="
+	x11-libs/qt-core
+	x11-libs/qt-gui
+	x11-libs/qt-xmlpatterns
+	dev-lang/python[xml]
+"
 S=${WORKDIR}/${P}
 
 src_prepare () {

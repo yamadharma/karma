@@ -1,9 +1,0 @@
---- GNS3/Config/System.py    2007-07-27 09:43:47.000000000 +0200
-+++ GNS3/Config/System.py  2007-09-18 13:06:04.885554423 +0200
-@@ -24,4 +24,4 @@
- 
- 
- class SystemConfig(ConfigObject):
--    
-+       pass    
-
