@@ -4,24 +4,26 @@
 
 EAPI="2"
 
-inherit multilib eutils rpm
+AUTOTOOLS_AUTO_DEPEND="no"
+inherit rpm eutils flag-o-matic multilib autotools
 
+pulse_patches() { echo "$1"/winepulse-{0.36,0.35-configure.ac,0.36-winecfg}.patch ; }
 GV="1.0.0-x86"
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
-SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV}/sources/wine-${PV}-alt1.src.rpm
-	gecko? ( mirror://sourceforge/wine/wine_gecko-${GV}.cab )"
+SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV/_/-}/sources/wine-${PV}-alt1.src.rpm
+	gecko? ( mirror://sourceforge/wine/wine_gecko-${GV}.cab )
+	pulseaudio? ( `pulse_patches http://art.ified.ca/downloads/winepulse` )"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="-* amd64 x86"
-IUSE="alsa capi +cups dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss +perl png samba scanner ssl test +threads win64 X xcomposite xinerama xml"
+KEYWORDS="-* amd64 x86 ~x86-fbsd"
+IUSE="alsa capi cups custom-cflags dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss +perl png pulseaudio samba scanner ssl test +threads truetype win64 X xcomposite xinerama xml"
 RESTRICT="test" #72375
 
 S=${WORKDIR}/wine-${PV}
 
-RDEPEND=">=media-libs/freetype-2.0.0
-	media-fonts/corefonts
+RDEPEND="truetype? ( >=media-libs/freetype-2.0.0 media-fonts/corefonts )
 	perl? ( dev-lang/perl dev-perl/XML-Simple )
 	capi? ( net-dialup/capi4k-utils )
 	ncurses? ( >=sys-libs/ncurses-5.2 )
@@ -45,6 +47,7 @@ RDEPEND=">=media-libs/freetype-2.0.0
 	nas? ( media-libs/nas )
 	cups? ( net-print/cups )
 	opengl? ( virtual/opengl )
+	pulseaudio? ( media-sound/pulseaudio ${AUTOTOOLS_DEPEND} )
 	gsm? ( media-sound/gsm )
 	jpeg? ( media-libs/jpeg )
 	ldap? ( net-nds/openldap )
@@ -57,13 +60,15 @@ RDEPEND=">=media-libs/freetype-2.0.0
 	png? ( media-libs/libpng )
 	win64? ( >=sys-devel/gcc-4.4.0 )
 	!win64? ( amd64? (
+		truetype? ( >=app-emulation/emul-linux-x86-xlibs-2.1 )
 		X? (
 			>=app-emulation/emul-linux-x86-xlibs-2.1
 			>=app-emulation/emul-linux-x86-soundlibs-2.1
 		)
 		app-emulation/emul-linux-x86-baselibs
 		>=sys-kernel/linux-headers-2.6
-	) )"
+	) )
+	xcomposite? ( x11-libs/libXcomposite )"
 DEPEND="${RDEPEND}
 	X? (
 		x11-proto/inputproto
@@ -79,6 +84,10 @@ src_unpack() {
 }
 
 src_prepare() {
+	if use pulseaudio ; then
+		EPATCH_OPTS=-p1 epatch `pulse_patches "${DISTDIR}"`
+		eautoreconf
+	fi
 	epatch "${FILESDIR}"/wine-1.1.15-winegcc.patch #260726
 	epatch_user #282735
 	sed -i '/^UPDATE_DESKTOP_DATABASE/s:=.*:=true:' tools/Makefile.in || die
@@ -118,8 +127,10 @@ src_configure() {
 		$(use_with oss) \
 		$(use_with png) \
 		$(use_with threads pthread) \
+		$(use_with pulseaudio pulse) \
 		$(use_with scanner sane) \
 		$(use_enable test tests) \
+		$(use_with truetype freetype) \
 		$(use_enable win64) \
 		$(use_with X x) \
 		$(use_with xcomposite) \
@@ -159,3 +170,8 @@ src_install() {
 	fperms g+w /var/lib/wine
 	fowners root:wineadmin /var/lib/wine
 }
+
+pkg_postinst() {
+	paxctl -psmr "${ROOT}"/usr/bin/wine{,-preloader} 2>/dev/null #255055
+}
+
