@@ -10,7 +10,7 @@ inherit eutils autotools depend.php
 
 DESCRIPTION="Lightweight high-performance web server"
 HOMEPAGE="http://www.lighttpd.net/"
-SRC_URI="http://www.lighttpd.net/download/${P/_pre/snap-r}.tar.bz2"
+SRC_URI="http://download.lighttpd.net/lighttpd/snapshots-1.5/${P/_pre/-r}.tar.bz2"
 
 LICENSE="BSD"
 SLOT="0"
@@ -30,7 +30,7 @@ RDEPEND="
 	lua?      ( >=dev-lang/lua-5.1 )
 	memcache? ( dev-libs/libmemcache )
 	mysql?    ( >=virtual/mysql-4.0 )
-	postgres? ( virtual/postgresql-base )
+	postgres? ( dev-db/postgresql-base )
 	pcre?     ( >=dev-libs/libpcre-3.1 )
 	fastcgi?  (
 		www-servers/spawn-fcgi

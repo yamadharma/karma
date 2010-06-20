@@ -1,0 +1,22 @@
+sci-libs/modglue sci-mathematics/lie dev-libs/gmp[-nocxx] dev-libs/libpcre X? ( >=x11-libs/gtk+-2.0 >=dev-cpp/gtkmm-2.4 app-text/dvipng ) doc? ( || ( app-text/texlive-core dev-tex/pdftex ) )
+sci-libs/modglue sci-mathematics/lie dev-libs/gmp[-nocxx] dev-libs/libpcre X? ( >=x11-libs/gtk+-2.0 >=dev-cpp/gtkmm-2.4 app-text/dvipng ) doc? ( || ( app-text/texlive-core dev-tex/pdftex ) ) virtual/latex-base dev-tex/mh
+0
+http://cadabra.phi-sci.com/cadabra-1.25.tar.gz
+mirror
+http://cadabra.phi-sci.com
+GPL-2
+Field-theory motivated computer algebra system
+~x86
+eutils multilib portability toolchain-funcs
+doc examples X
+
+
+
+2
+
+compile configure install postinst postrm prepare
+
+
+
+
+
