@@ -1,4 +1,4 @@
-sys-libs/zlib app-arch/bzip2 ssl? ( dev-libs/openssl ) fcgi? ( dev-libs/fcgi ) gtk2? ( =x11-libs/gtk+-2* glade? ( gnome-base/libglade ) ) mysql? ( dev-db/mysql ) postgres? ( dev-db/libpq ) oracle? ( dev-db/oracle-instantclient-basic ) odbc? ( dev-db/libiodbc ) dev-libs/expat dev-util/cvs
+sys-libs/zlib app-arch/bzip2 ssl? ( dev-libs/openssl ) fcgi? ( dev-libs/fcgi ) gtk2? ( =x11-libs/gtk+-2* glade? ( gnome-base/libglade ) ) mysql? ( dev-db/mysql ) postgres? ( dev-db/libpq ) oracle? ( dev-db/oracle-instantclient-basic ) odbc? ( dev-db/libiodbc ) dev-libs/expat dev-vcs/cvs
 
 0
 

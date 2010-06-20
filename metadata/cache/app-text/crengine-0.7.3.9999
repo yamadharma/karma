@@ -1,4 +1,4 @@
-sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype media-fonts/corefonts app-arch/unzip x11-libs/wxGTK dev-util/cvs
+sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype media-fonts/corefonts app-arch/unzip x11-libs/wxGTK dev-vcs/cvs
 sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype media-fonts/corefonts app-arch/unzip x11-libs/wxGTK
 0
 

@@ -1,4 +1,4 @@
->=dev-libs/glib-2 sys-libs/ncurses sys-libs/readline >=sys-devel/flex-2.5.0 >=sys-devel/bison-1.35 gnome? ( >=x11-libs/gtk+-2 >=gnome-base/libglade-2 >=gnome-base/libgnomeui-2 ) odbc? ( >=dev-db/unixODBC-2.0 ) dev-util/cvs
+>=dev-libs/glib-2 sys-libs/ncurses sys-libs/readline >=sys-devel/flex-2.5.0 >=sys-devel/bison-1.35 gnome? ( >=x11-libs/gtk+-2 >=gnome-base/libglade-2 >=gnome-base/libgnomeui-2 ) odbc? ( >=dev-db/unixODBC-2.0 ) dev-vcs/cvs
 >=dev-libs/glib-2 sys-libs/ncurses sys-libs/readline >=sys-devel/flex-2.5.0 >=sys-devel/bison-1.35 gnome? ( >=x11-libs/gtk+-2 >=gnome-base/libglade-2 >=gnome-base/libgnomeui-2 ) odbc? ( >=dev-db/unixODBC-2.0 )
 0
 

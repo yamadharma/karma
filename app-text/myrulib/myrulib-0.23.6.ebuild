@@ -24,5 +24,5 @@ RDEPEND="
 DEPEND="$RDEPEND"
 
 src_install() {
-	einstall DESTDIR=${D} || die
+	einstall || die
 }

@@ -1,4 +1,4 @@
-virtual/emacs dev-lang/perl >=virtual/emacs-21 dev-util/cvs
+virtual/emacs dev-lang/perl >=virtual/emacs-21 dev-vcs/cvs
 virtual/emacs dev-lang/perl >=virtual/emacs-21
 0
 

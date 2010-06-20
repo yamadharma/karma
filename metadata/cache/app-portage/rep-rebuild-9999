@@ -1,4 +1,4 @@
-dev-util/cvs
+dev-vcs/cvs
 dev-perl/PortageXS app-portage/gentoolkit dev-lang/perl
 0
 
