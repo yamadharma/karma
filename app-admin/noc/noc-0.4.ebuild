@@ -16,7 +16,7 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.5
-	>=virtual/postgresql-server-8.1
+	>=dev-db/postgresql-server-8.1
 	dev-python/setuptools
 	dev-python/psycopg:2
 	dev-python/south
@@ -54,3 +54,4 @@ pkg_config() {
 	python manage.py migrate
 	#exit
 }
+
