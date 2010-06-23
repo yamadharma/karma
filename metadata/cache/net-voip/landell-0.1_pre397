@@ -1,4 +1,4 @@
-dev-util/subversion net-misc/rsync
+dev-vcs/subversion net-misc/rsync
 net-im/tapiocad gnome-base/gconf media-libs/farsight media-libs/gstreamer >=media-libs/gst-plugins-base-0.10.5 >=dev-dotnet/gecko-sharp-0.11 dev-dotnet/tapioca-sharp
 0
 

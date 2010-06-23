@@ -1,4 +1,4 @@
-dev-lang/mono net-libs/libtelepathy dev-dotnet/ndesk-dbus gnome-base/gnome-common dev-util/subversion net-misc/rsync
+dev-lang/mono net-libs/libtelepathy dev-dotnet/ndesk-dbus gnome-base/gnome-common dev-vcs/subversion net-misc/rsync
 dev-lang/mono net-libs/libtelepathy dev-dotnet/ndesk-dbus gnome-base/gnome-common
 0
 

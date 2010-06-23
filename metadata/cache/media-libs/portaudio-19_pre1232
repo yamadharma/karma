@@ -1,4 +1,4 @@
-alsa? ( >=media-libs/alsa-lib-0.9 ) jack? ( >=media-sound/jack-audio-connection-kit-0.100.0 ) dev-util/subversion net-misc/rsync
+alsa? ( >=media-libs/alsa-lib-0.9 ) jack? ( >=media-sound/jack-audio-connection-kit-0.100.0 ) dev-vcs/subversion net-misc/rsync
 virtual/libc alsa? ( >=media-libs/alsa-lib-0.9 ) jack? ( >=media-sound/jack-audio-connection-kit-0.100.0 )
 2
 

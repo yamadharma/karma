@@ -1,4 +1,4 @@
-net-libs/libtelepathy dev-util/subversion net-misc/rsync
+net-libs/libtelepathy dev-vcs/subversion net-misc/rsync
 net-libs/libtelepathy
 0
 

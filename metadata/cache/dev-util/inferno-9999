@@ -1,4 +1,4 @@
-virtual/libc dev-util/subversion net-misc/rsync
+virtual/libc dev-vcs/subversion net-misc/rsync
 virtual/libc
 0
 

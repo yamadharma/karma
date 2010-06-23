@@ -1,4 +1,4 @@
-media-libs/devil media-libs/freetype dev-libs/boost media-libs/sdl-net ogre? ( dev-games/ogre ) ois? ( dev-games/ois ) sdl? ( media-libs/libsdl ) dev-util/scons dev-util/subversion net-misc/rsync
+media-libs/devil media-libs/freetype dev-libs/boost media-libs/sdl-net ogre? ( dev-games/ogre ) ois? ( dev-games/ois ) sdl? ( media-libs/libsdl ) dev-util/scons dev-vcs/subversion net-misc/rsync
 media-libs/devil media-libs/freetype dev-libs/boost media-libs/sdl-net ogre? ( dev-games/ogre ) ois? ( dev-games/ois ) sdl? ( media-libs/libsdl )
 0
 

@@ -1,4 +1,4 @@
-gnustep-libs/xwindowserverkit || ( ( x11-libs/libXt ) virtual/x11 ) >=dev-libs/glib-2 >=media-libs/fontconfig-2 >=dev-libs/libxml2-2.0 >=media-libs/freetype-2.0 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-util/subversion net-misc/rsync
+gnustep-libs/xwindowserverkit || ( ( x11-libs/libXt ) virtual/x11 ) >=dev-libs/glib-2 >=media-libs/fontconfig-2 >=dev-libs/libxml2-2.0 >=media-libs/freetype-2.0 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-vcs/subversion net-misc/rsync
 gnustep-libs/xwindowserverkit || ( ( x11-libs/libXt ) virtual/x11 ) >=dev-libs/glib-2 >=media-libs/fontconfig-2 >=dev-libs/libxml2-2.0 >=media-libs/freetype-2.0 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
 0
 

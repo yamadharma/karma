@@ -1,4 +1,4 @@
-gnustep-libs/steptalk >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-util/subversion net-misc/rsync
+gnustep-libs/steptalk >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-vcs/subversion net-misc/rsync
 gnustep-libs/steptalk >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
 0
 

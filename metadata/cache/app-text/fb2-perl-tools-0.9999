@@ -1,4 +1,4 @@
-dev-util/subversion net-misc/rsync
+dev-vcs/subversion net-misc/rsync
 dev-perl/XML-Parser dev-perl/XML-Writer dev-perl/libintl-perl dev-perl/Compress-Zlib dev-perl/Archive-Zip
 0
 

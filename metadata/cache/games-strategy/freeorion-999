@@ -1,4 +1,4 @@
-dev-util/scons dev-libs/log4cpp dev-libs/boost >=media-gfx/graphviz-2.8 media-libs/sdl-net media-libs/freetype media-libs/devil media-libs/gigi dev-util/subversion net-misc/rsync
+dev-util/scons dev-libs/log4cpp dev-libs/boost >=media-gfx/graphviz-2.8 media-libs/sdl-net media-libs/freetype media-libs/devil media-libs/gigi dev-vcs/subversion net-misc/rsync
 dev-util/scons dev-libs/log4cpp dev-libs/boost >=media-gfx/graphviz-2.8 media-libs/sdl-net media-libs/freetype media-libs/devil media-libs/gigi
 0
 
