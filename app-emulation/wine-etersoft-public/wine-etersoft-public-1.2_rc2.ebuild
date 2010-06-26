@@ -5,7 +5,8 @@
 EAPI="2"
 
 AUTOTOOLS_AUTO_DEPEND="no"
-inherit rpm eutils flag-o-matic multilib autotools
+inherit eutils flag-o-matic multilib autotools
+# rpm
 
 pulse_patches() { echo "$1"/winepulse-{0.36,0.35-configure.ac,0.36-winecfg}.patch ; }
 GV="1.0.0-x86"
@@ -76,11 +77,19 @@ DEPEND="${RDEPEND}
 		x11-proto/xf86vidmodeproto
 	)
 	sys-devel/bison
-	sys-devel/flex"
+	sys-devel/flex
+	app-arch/alien"
+
+#src_unpack() {
+#	rpm_src_unpack
+#	tar xf wine-${PV}.tar
+#}
 
 src_unpack() {
-	rpm_src_unpack
+	alien -t ${DISTDIR}/wine-${PV}-alt1.src.rpm
+	tar xf wine-${PV}.tgz
 	tar xf wine-${PV}.tar
+	rm wine-${PV}.tgz wine-${PV}.tar
 }
 
 src_prepare() {
