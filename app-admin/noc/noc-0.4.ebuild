@@ -16,6 +16,9 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.5
+	dev-python/django
+	dev-python/jinja
+	dev-python/pygments
 	>=dev-db/postgresql-server-8.1
 	dev-python/setuptools
 	dev-python/psycopg:2
