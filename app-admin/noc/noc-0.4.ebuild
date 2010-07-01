@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="3"
 
 inherit distutils eutils
 
@@ -58,3 +58,7 @@ pkg_config() {
 	#exit
 }
 
+src_prepare() {
+	# Dirty hack
+	mkdir -p contrib/src/docutils/test/test_transforms/test
+}

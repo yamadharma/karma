@@ -23,7 +23,8 @@ RDEPEND="${DEPEND}
 	dev-lang/perl
 	dev-perl/AppConfig
 	net-misc/rsync
-	sys-fs/mtools"
+	sys-fs/mtools
+	app-admin/systemconfigurator"
 
 src_compile () 
 {
