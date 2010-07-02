@@ -1,0 +1,22 @@
+dev-lang/perl dev-perl/AppConfig dev-lang/perl[-build]
+dev-lang/perl dev-perl/AppConfig dev-lang/perl[-build]
+0
+mirror://sourceforge/systemconfig/systemconfigurator-2.2.11.tar.gz
+
+http://sisuite.org/systemconfig/
+GPL-2
+Provide a consistent API for the configuration of system related items
+amd64 x86
+base eutils multilib perl-module portability toolchain-funcs
+
+
+
+
+3
+
+compile configure install prepare test unpack
+
+
+
+
+
