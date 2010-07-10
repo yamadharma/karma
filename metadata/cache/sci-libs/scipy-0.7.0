@@ -1,4 +1,4 @@
->=dev-python/numpy-1.2 virtual/cblas virtual/lapack umfpack? ( sci-libs/umfpack ) dev-util/pkgconfig test? ( dev-python/nose ) umfpack? ( dev-lang/swig ) >=app-admin/eselect-python-20091230 >=dev-lang/python-2.4 dev-lang/python || ( =sys-devel/automake-1.11* =sys-devel/automake-1.10* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+>=dev-python/numpy-1.2 virtual/cblas virtual/lapack umfpack? ( sci-libs/umfpack ) dev-util/pkgconfig test? ( dev-python/nose ) umfpack? ( dev-lang/swig ) >=app-admin/eselect-python-20091230 >=dev-lang/python-2.4 dev-lang/python || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
 >=dev-python/numpy-1.2 virtual/cblas virtual/lapack umfpack? ( sci-libs/umfpack ) dev-python/imaging >=app-admin/eselect-python-20091230 >=dev-lang/python-2.4 dev-lang/python
 0
 mirror://sourceforge/scipy/scipy-0.7.0.tar.gz
