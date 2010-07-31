@@ -7,7 +7,7 @@ http://goron.de/~froese/
 public-domain
 Tool for controlling Logitech MX Revolution mouses
 amd64 x86
-linux-info multilib toolchain-funcs versionator
+eutils linux-info multilib portability toolchain-funcs versionator
 
 
 
