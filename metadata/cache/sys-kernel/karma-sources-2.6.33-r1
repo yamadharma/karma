@@ -1,7 +1,7 @@
 !build? ( sys-apps/sed >=sys-devel/binutils-2.11.90.0.31 )
 !build? ( >=sys-libs/ncurses-5.2 sys-devel/make )
 2.6.33-r1
-mirror://kernel/linux/kernel/v2.6/linux-2.6.33.tar.bz2 deblob? ( http://www.fsfla.org/svnwiki/selibre/linux-libre//download/releases/LATEST-2.6.33.N/deblob-2.6.33 ) mirror://sourceforge/klk/karma-ws-2.6.33-r1.tar.lzma
+mirror://kernel/linux/kernel/v2.6/linux-2.6.33.tar.bz2 deblob? ( http://www.fsfla.org/svnwiki/selibre/linux-libre//download/releases/LATEST-2.6.33.N/deblob-2.6.33 mirror://gentoo/deblob-check-2.6.33 ) mirror://sourceforge/klk/karma-ws-2.6.33-r1.tar.lzma
 binchecks strip
 http://www.kernel.org/ http://www.gentoo.org/ http://www.fsfla.org/svnwiki/selibre/linux-libre/
 GPL-2 !deblob? ( freedist )
@@ -14,7 +14,7 @@ symlink build deblob
 virtual/linux-sources virtual/alsa
 
 
-compile install postinst preinst setup unpack
+compile install postinst preinst setup test unpack
 
 
 
