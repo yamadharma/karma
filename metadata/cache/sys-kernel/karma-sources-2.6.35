@@ -6,7 +6,7 @@ binchecks strip
 http://www.kernel.org/ http://www.gentoo.org/ http://www.fsfla.org/svnwiki/selibre/linux-libre/
 GPL-2 !deblob? ( freedist )
 KLK Sources.
-x86 amd64
+
 eutils kernel-2 multilib portability toolchain-funcs versionator
 symlink build deblob
 
