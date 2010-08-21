@@ -1,6 +1,6 @@
---- acinclude.m4.orig	2008-08-31
-+++ acinclude.m4	2008-08-31
-@@ -194,17 +194,6 @@
+--- acinclude.m4.orig	2010-03-01 19:09:54.000000000 +0100
++++ acinclude.m4	2010-03-01 19:12:02.000000000 +0100
+@@ -193,17 +193,6 @@
  
    AM_CONDITIONAL(DEBUG, test "$gambas_debug" = yes)
  
@@ -15,15 +15,15 @@
 -
 -  AM_CONDITIONAL(OPTIMIZE, test "$gambas_optimization" = yes)
 -
-   AM_CFLAGS="$AM_CFLAGS -pipe -Wall -Wno-unused-value -fsigned-char"
-   AM_CXXFLAGS="$AM_CXXFLAGS -pipe -Wall -fno-exceptions -Wno-unused-value -fsigned-char"
+   AM_CFLAGS="$AM_CFLAGS -pipe -Wall -Wno-unused-value -Wcast-align -fsigned-char"
+   AM_CXXFLAGS="$AM_CXXFLAGS -pipe -Wall -fno-exceptions -Wno-unused-value -Wcast-align -fsigned-char"
  
-@@ -229,18 +218,7 @@
+@@ -228,19 +217,6 @@
  
    dnl ---- Optimization flags
    
 -  if test "x$gambas_optimization" = "xyes"; then
-     AM_CFLAGS_OPT="$AM_CFLAGS -O3"
+-    AM_CFLAGS_OPT="$AM_CFLAGS -O3"
 -    AM_CFLAGS="$AM_CFLAGS -Os"
 -    AM_CXXFLAGS="$AM_CXXFLAGS -Os -fno-omit-frame-pointer"
 -  else
@@ -34,6 +34,7 @@
 -
 -  CFLAGS=""
 -  CXXFLAGS=""
-   
+-  
    AC_SUBST(AM_CFLAGS)
    AC_SUBST(AM_CFLAGS_OPT)
+   AC_SUBST(AM_CXXFLAGS)

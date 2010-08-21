@@ -1,5 +1,5 @@
---- app/Makefile.am.orig	2008-12-15
-+++ app/Makefile.am	2008-12-15
+--- app/Makefile.am.orig	2010-08-02 15:11:45.169682455 +0200
++++ app/Makefile.am		2010-08-02 15:18:38.927710924 +0200
 @@ -1,36 +1,54 @@
  EXTRA_DIST = reconf src spec mime
  
@@ -18,7 +18,7 @@
 -	
 -	@echo "Installing the scripter..."
 -	@ln -s gbs$(GAMBAS_VERSION).gambas $(DESTDIR)$(bindir)/gbs$(GAMBAS_VERSION) || true
--	@ln -s gbw$(GAMBAS_VERSION).gambas $(DESTDIR)$(bindir)/gbs$(GAMBAS_VERSION) || true
+-	@ln -s gbs$(GAMBAS_VERSION).gambas $(DESTDIR)$(bindir)/gbw$(GAMBAS_VERSION) || true
 -	@if test x"$(XDG_UTILS)" != x; then \
 +	@echo "=== Installing the development environment ==="; \
 +	echo
@@ -74,11 +74,10 @@
  dist-hook:
  	@(cd $(distdir)/src; \
 
-
-
 Hide details 
 
 Change log
+r5 by lalebarde on August 02, 2010    diff -u
 r4 by wavilen on Apr 12, 2010   Diff 
 initial importGo to: 	 
 
@@ -87,6 +86,3 @@ Project members, sign in to write a code review
 Older revisions
 All revisions of this file 
 
-File info
-Size: 3361 bytes, 75 lines
-View raw file
