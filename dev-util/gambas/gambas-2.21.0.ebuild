@@ -169,12 +169,12 @@ src_prepare() {
 
 
 	#epatch "${FILESDIR}/${PN}-2.9.0-app_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.21.0-app_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-comp_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-examples_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-help_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-main_Makefile.am.patch"
-	epatch "${FILESDIR}/${PN}-2.9.0-component.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.21.0-app_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-comp_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-examples_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-help_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-main_Makefile.am.patch"
+#	epatch "${FILESDIR}/${PN}-2.9.0-component.am.patch"
 
 
 	ebegin "Applying sed remove-dist_gblib_DATA-patch"
