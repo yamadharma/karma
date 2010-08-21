@@ -1,0 +1,22 @@
+dev-util/pkgconfig >=dev-libs/libsigc++-2.0
+>=dev-libs/libsigc++-2.0
+0
+http://cadabra.phi-sci.com/modglue-1.16.tar.gz
+mirror
+http://cadabra.phi-sci.com
+GPL-2
+C++ library for handling of multiple co-processes
+~x86
+eutils multilib portability toolchain-funcs
+doc
+
+
+
+3
+
+configure install postinst prepare
+
+
+
+
+
