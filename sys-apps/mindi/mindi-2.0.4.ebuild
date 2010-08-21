@@ -15,7 +15,7 @@ RDEPEND=">=app-arch/bzip2-0.9
 		sys-devel/binutils
 		sys-fs/dosfstools
 		sys-apps/mindi-busybox
-		sys-apps/parted
+		sys-block/parted
 		sys-apps/gawk"
 
 src_install() {
