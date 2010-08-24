@@ -14,7 +14,7 @@ nls doc
 
 
 
-compile install postinst setup unpack
+compile install unpack
 
 
 
