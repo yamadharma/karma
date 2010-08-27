@@ -2,23 +2,25 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=3
+
 inherit bzr distutils multilib
 
 DESCRIPTION="A tiling tabbed window manager designed with keyboard users in mind"
 HOMEPAGE="https://launchpad.net/ami"
-EBZR_REPO_URI="lp:///~yamadharma/ami/"
+EBZR_REPO_URI="lp:ami"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86"
-IUSE=""
+IUSE="doc"
 DEPEND="
 	|| (
 		(
 			x11-libs/libICE
 			x11-libs/libXext
 			x11-libs/libSM
-			x11-libs/libXft 
+			x11-libs/libXft
 		)
 		virtual/x11
 	)

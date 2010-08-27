@@ -1,0 +1,22 @@
+virtual/opengl app-arch/bzip2 app-arch/unrar app-arch/unzip app-arch/zip app-i18n/enca dev-lang/python:2.4 dev-libs/boost dev-libs/fribidi dev-libs/libcdio[-minimal] dev-libs/libpcre dev-libs/lzo >=dev-python/pysqlite-2 media-libs/a52dec media-libs/alsa-lib aac? ( media-libs/faac ) media-libs/faad2 media-libs/flac media-libs/fontconfig media-libs/freetype media-libs/glew media-libs/jasper media-libs/jbigkit media-libs/jpeg:0 >=media-libs/libass-0.9.7 media-libs/libdca css? ( media-libs/libdvdcss ) media-libs/libmad media-libs/libmms media-libs/libmpeg2 media-libs/libogg media-libs/libsamplerate media-libs/libsdl[audio,opengl,video,X] alsa? ( media-libs/libsdl[alsa] ) media-libs/libvorbis media-libs/sdl-gfx media-libs/sdl-image[gif,jpeg,png] media-libs/sdl-mixer media-libs/sdl-sound media-libs/tiff pulseaudio? ( media-sound/pulseaudio ) media-sound/wavpack media-video/ffmpeg avahi? ( net-dns/avahi ) net-misc/curl || ( >=net-fs/samba-3.4.6[smbclient] <net-fs/samba-3.3 ) sys-apps/dbus sys-apps/hal sys-libs/zlib virtual/mysql x11-apps/xdpyinfo x11-apps/mesa-progs vdpau? ( || ( x11-libs/libvdpau >=x11-drivers/nvidia-drivers-180.51 ) media-video/ffmpeg[vdpau] ) x11-libs/libXinerama xrandr? ( x11-libs/libXrandr ) x11-libs/libXrender x11-proto/xineramaproto dev-util/cmake x86? ( dev-lang/nasm ) >=app-admin/eselect-python-20091230 || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+virtual/opengl app-arch/bzip2 app-arch/unrar app-arch/unzip app-arch/zip app-i18n/enca dev-lang/python:2.4 dev-libs/boost dev-libs/fribidi dev-libs/libcdio[-minimal] dev-libs/libpcre dev-libs/lzo >=dev-python/pysqlite-2 media-libs/a52dec media-libs/alsa-lib aac? ( media-libs/faac ) media-libs/faad2 media-libs/flac media-libs/fontconfig media-libs/freetype media-libs/glew media-libs/jasper media-libs/jbigkit media-libs/jpeg:0 >=media-libs/libass-0.9.7 media-libs/libdca css? ( media-libs/libdvdcss ) media-libs/libmad media-libs/libmms media-libs/libmpeg2 media-libs/libogg media-libs/libsamplerate media-libs/libsdl[audio,opengl,video,X] alsa? ( media-libs/libsdl[alsa] ) media-libs/libvorbis media-libs/sdl-gfx media-libs/sdl-image[gif,jpeg,png] media-libs/sdl-mixer media-libs/sdl-sound media-libs/tiff pulseaudio? ( media-sound/pulseaudio ) media-sound/wavpack media-video/ffmpeg avahi? ( net-dns/avahi ) net-misc/curl || ( >=net-fs/samba-3.4.6[smbclient] <net-fs/samba-3.3 ) sys-apps/dbus sys-apps/hal sys-libs/zlib virtual/mysql x11-apps/xdpyinfo x11-apps/mesa-progs vdpau? ( || ( x11-libs/libvdpau >=x11-drivers/nvidia-drivers-180.51 ) media-video/ffmpeg[vdpau] ) x11-libs/libXinerama xrandr? ( x11-libs/libXrandr ) x11-libs/libXrender >=app-admin/eselect-python-20091230
+0
+mirror://sourceforge/xbmc/xbmc-9.11.tar.gz
+
+http://xbmc.org/
+GPL-2
+XBMC is a free and open source media-player and entertainment hub
+~amd64 ~x86
+autotools eutils flag-o-matic libtool multilib portability python toolchain-funcs
+aac alsa altivec avahi css debug joystick midi profile pulseaudio sse sse2 vdpau xrandr
+
+
+
+2
+
+configure install postinst prepare unpack
+
+
+
+
+

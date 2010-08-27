@@ -1,6 +1,6 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-text/calibre/calibre-0.7.5.ebuild,v 1.1 2010/06/26 23:50:42 zmedico Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-text/calibre/calibre-0.7.13.ebuild,v 1.1 2010/08/08 03:07:52 zmedico Exp $
 
 EAPI=3
 PYTHON_DEPEND=2:2.6
