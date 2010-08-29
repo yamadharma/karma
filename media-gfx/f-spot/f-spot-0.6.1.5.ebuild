@@ -13,7 +13,7 @@ HOMEPAGE="http://f-spot.org"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="beagle"
+IUSE="beagle flickr"
 
 RDEPEND=">=dev-lang/mono-2.0
 	>=gnome-base/libgnome-2.2
