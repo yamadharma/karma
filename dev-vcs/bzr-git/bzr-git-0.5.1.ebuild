@@ -12,7 +12,7 @@ SRC_URI="http://samba.org/~jelmer/bzr/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86"
 IUSE=""
 
 # Check info.py for dulwich and bzr version dependency info.
