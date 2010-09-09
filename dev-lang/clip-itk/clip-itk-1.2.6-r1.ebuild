@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=3
 
 inherit eutils
 
 AUX_PR=""
 #MY_P=clip-prg.32-64-2009.252-${PV}${AUX_PR}
-MY_P=clip-prg.32-64-2010.048-1.2.6.03.00
+MY_P=clip-prg.32-64-2010.233-1.2.6.04.01
 
 DOC_V=1.2.0
 
@@ -24,6 +24,8 @@ LICENSE="GPL-2"
 IUSE="doc linguas_en linguas_ru"
 SLOT="0"
 
+RESTRICT=nomirror
+
 # S=${WORKDIR}/${MY_P}
 S=${WORKDIR}/clip-prg.32-64
 
@@ -37,8 +39,6 @@ src_configure() {
 }
 
 src_compile_() {
-	mkdir ${S}/build
-#	
 	export CLIPROOT=/usr/lib/clip
 	export CLIP_LOCALE_ROOT=${S}/build/${CLIPROOT}
 #	make system 
