@@ -26,6 +26,10 @@ SLOT="0"
 
 RESTRICT=nomirror
 
+DEPEND="app-misc/banner
+	virtual/libiconv"
+RDEPEND=""
+
 # S=${WORKDIR}/${MY_P}
 S=${WORKDIR}/clip-prg.32-64
 
@@ -34,8 +38,9 @@ src_prepare() {
 }
 
 src_configure() {
-#	yes | ./configure local
-	yes | ./local.sh
+	yes | ./configure local
+#	yes | ./local.sh
+#	./configure local
 }
 
 src_compile_() {

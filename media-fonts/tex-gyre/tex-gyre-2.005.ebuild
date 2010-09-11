@@ -19,7 +19,7 @@ IUSE="latex"
 
 SUPPLIER="public"
 S=${WORKDIR}/
-FONT_S=${S}/fonts/opentype/${SUPPLIER}/${PN}
+# FONT_S=${S}/fonts/opentype/${SUPPLIER}/${PN}
 FONT_SUFFIX="otf"
 
 src_install() {
