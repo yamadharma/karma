@@ -100,15 +100,18 @@ src_install() {
 	# remove unused files
 #	rm -f "${HB_BIN_INSTALL}"/{hbdict*.hit,gharbour,harbour-link}
 
-	dodoc ChangeLog || die
-	if ! has nodoc ${FEATURES} && use doc; then
-		dodoc doc/*.txt || die
-		strip-linguas en es
-		for LNG in ${LINGUAS}; do
-			docinto "${LNG}"
-			dodoc doc/${LNG}/*.txt || die
-		done
-		docinto ct
-		dodoc doc/en/ct/*.txt || die
-	fi
+	doman ${S}/doc/man/*
+
+	dodoc ChangeLog INSTALL TODO
+
+#	if ! has nodoc ${FEATURES} && use doc; then
+#		dodoc doc/*.txt || die
+#		strip-linguas en es
+#		for LNG in ${LINGUAS}; do
+#			docinto "${LNG}"
+#			dodoc doc/${LNG}/*.txt || die
+#		done
+#		docinto ct
+#		dodoc doc/en/ct/*.txt || die
+#	fi
 }
