@@ -1,0 +1,12 @@
+--- a/Makefile.am	2010-09-17 13:55:52.458461237 +0400
++++ b/Makefile.am.new	2010-09-17 13:56:57.985578997 +0400
+@@ -32,8 +32,7 @@ distclean-local::
+ 
+ if CONFIG_KERNEL
+ install-data-local:
+-	destname=zfs-$(ZFS_META_VERSION)/$(LINUX_VERSION); \
+-	instdest=$(DESTDIR)/usr/src/$$destname; \
++	instdest=$(DESTDIR)/${includedir}/zfs-linux; \
+ 	echo "$(ZFS_META_VERSION)" >$$instdest/zfs.release; \
+ 	for instfile in $(noinst_HEADERS) module/$(LINUX_SYMBOLS); do \
+ 		$(INSTALL) -D $$instfile $$instdest/$$instfile; \

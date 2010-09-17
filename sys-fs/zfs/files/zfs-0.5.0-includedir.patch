@@ -1,0 +1,28 @@
+diff --git a/Makefile.am b/Makefile.am
+index 642254d..d2200ce 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -30,8 +30,7 @@ distclean-local::
+ 
+ if CONFIG_KERNEL
+ install-data-local:
+-	destname=zfs-$(ZFS_META_VERSION)/$(LINUX_VERSION); \
+-	instdest=$(DESTDIR)/usr/src/$$destname; \
++	instdest=$(DESTDIR)/${includedir}/zfs-linux; \
+ 	echo "${ZFS_META_VERSION}" >$$instdest/zfs.release; \
+ 	for instfile in $(noinst_HEADERS) module/$(LINUX_SYMBOLS); do \
+ 		$(INSTALL) -D $$instfile $$instdest/$$instfile; \
+diff --git a/module/Makefile.in b/module/Makefile.in
+index b41a539..304840e 100644
+--- a/module/Makefile.in
++++ b/module/Makefile.in
+@@ -22,8 +22,7 @@ modules_install:
+ 		INSTALL_MOD_DIR=addon/zfs $@
+ 	find ${DESTDIR}/lib/modules/ -name 'modules.*' | xargs ${RM}
+ 	# Install the required headers in to the kernel source
+-	destname=zfs-@ZFS_META_VERSION@/@LINUX_VERSION@; \
+-	instdest=$(DESTDIR)/usr/src/$$destname; \
++	instdest=$(DESTDIR)/@prefix@/@includedir@/zfs-linux; \
+ 	(find . -mindepth 3 -name '*.h' | xargs -Ihdr sh -c \
+ 	 "DEST=hdr && install -D hdr $$instdest/\$${DEST#*/*/*/}") || exit 1
+ 
