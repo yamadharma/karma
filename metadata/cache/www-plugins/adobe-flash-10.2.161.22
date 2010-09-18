@@ -1,0 +1,22 @@
+>=app-arch/rpm2targz-9.0.0.3g
+x86? ( x11-libs/gtk+:2 media-libs/fontconfig dev-libs/nss net-misc/curl >=sys-libs/glibc-2.4 ) amd64? ( multilib? ( 64bit? ( x11-libs/gtk+:2 media-libs/fontconfig dev-libs/nss net-misc/curl >=sys-libs/glibc-2.4 ) 32bit? ( >=app-emulation/emul-linux-x86-gtklibs-20100409-r1 app-emulation/emul-linux-x86-soundlibs ) ) !multilib? ( x11-libs/gtk+:2 media-libs/fontconfig dev-libs/nss net-misc/curl >=sys-libs/glibc-2.4 ) ) || ( media-fonts/liberation-fonts media-fonts/corefonts )
+0
+x86? ( http://download.macromedia.com/pub/labs/flashplayer10/flashplayer_square_p1_32bit_linux_091510.tar.gz ) amd64? ( multilib? ( 32bit? ( http://download.macromedia.com/pub/labs/flashplayer10/flashplayer_square_p1_32bit_linux_091510.tar.gz ) 64bit? ( http://download.macromedia.com/pub/labs/flashplayer10/flashplayer_square_p1_64bit_linux_091510.tar.gz ) ) !multilib? ( http://download.macromedia.com/pub/labs/flashplayer10/flashplayer_square_p1_64bit_linux_091510.tar.gz ) )
+strip mirror
+http://www.adobe.com/
+AdobeFlash-10.2
+Adobe Flash Player
+-* ~amd64 ~x86
+eutils multilib nsplugins portability rpm toolchain-funcs
+multilib +32bit +64bit
+
+
+
+2
+
+compile install postinst setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=sys-devel/spl-0.4.9 >=virtual/linux-sources-2.6.32 =sys-devel/automake-1.11* >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
+>=sys-devel/spl-0.4.9 >=virtual/linux-sources-2.6.32 !sys-fs/zfs-fuse kernel_linux? ( virtual/modutils )
+0
+http://github.com/downloads/behlendorf/zfs/zfs-0.5.1.tar.gz
+
+http://wiki.github.com/behlendorf/zfs/
+CDDL GPL-2
+Native ZFS for Linux
+
+autotools eutils libtool linux-info linux-mod multilib portability toolchain-funcs versionator
+kernel_linux
+
+
+
+2
+
+compile configure install postinst postrm preinst prepare setup
+
+
+
+
+
