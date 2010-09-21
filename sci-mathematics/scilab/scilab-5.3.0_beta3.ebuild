@@ -3,55 +3,70 @@
 # $Header: $
 
 EAPI=2
-inherit eutils autotools java-pkg-2
+inherit eutils autotools java-pkg-2 check-reqs flag-o-matic
+
+MY_PV=${PV/_beta/-beta-}
+MY_P="${PN}-${MY_PV}"
+S="${WORKDIR}/${MY_P}"
 
 DESCRIPTION="Scientific software package for numerical computations"
 LICENSE="CeCILL-2"
-SRC_URI="http://www.scilab.org/download/${PV}/${P}-src.tar.gz"
 HOMEPAGE="http://www.scilab.org/"
+SRC_URI="http://www.scilab.org/download/${MY_PV}/${MY_P}-src.tar.gz"
 
 SLOT="0"
-IUSE="doc fftw +gui hdf5 +matio mpi scicos tk +umfpack"
+IUSE="doc fftw +gui hdf5 +matio nls tk +umfpack xcos"
 KEYWORDS="~amd64 ~x86"
 
+# hdf5 is required to compile (and use) xcos
+# doc generation and xcos is disabled if gui is disabled
+# see http://wiki.scilab.org/Description_of_configure_options
+
+# http://wiki.scilab.org/Dependencies_of_Scilab_5.X
 RDEPEND="virtual/lapack
 	tk? ( dev-lang/tk )
-	scicos? ( dev-lang/ocaml )
+	xcos? ( dev-lang/ocaml )
 	umfpack? ( sci-libs/umfpack )
 	gui? ( >=virtual/jre-1.5
 		dev-java/commons-logging
-		dev-java/flexdock
-		dev-java/gluegen
-		dev-java/jeuclid-core
-		dev-java/jlatexmath
-		dev-java/jgraphx
+		>=dev-java/flexdock-0.5.2
+		>=dev-java/jeuclid-core-3.1
+		>=dev-java/jlatexmath-0.9.2
+		>=dev-java/jlatexmath-fop-0.9.2
+		~dev-java/jgraphx-1.4.0.2
 		dev-java/jogl
 		dev-java/jgoodies-looks
-		dev-java/skinlf
 		dev-java/jrosetta
 		dev-java/javahelp
-		hdf5? ( dev-java/hdf-java[mpi=] ) )
+		dev-java/fop
+		>=dev-java/batik-1.7
+		hdf5? ( dev-java/hdf-java ) )
 	fftw? ( sci-libs/fftw:3.0 )
 	matio? ( sci-libs/matio )
-	hdf5? ( sci-libs/hdf5[mpi=] )"
+	hdf5? ( ~sci-libs/hdf5-1.8.4 )"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	doc? (
-		~dev-java/batik-1.7
-		dev-java/fop
 		~dev-java/saxon-6.5.5
 		app-text/docbook-xsl-stylesheets )"
 
+pkg_setup() {
+	CHECKREQS_MEMORY="512"
+	java-pkg-2_pkg_setup
+
+	# temp
+	filter-ldflags -Wl,--as-needed --as-needed
+}
+
 src_prepare() {
-	# avoid redefinition of exp10
-	epatch "${FILESDIR}"/${P}-no-redef-exp10.patch
+	# Increases java heap to 512M when available, when building docs
+	check_reqs_conditional && epatch "${FILESDIR}"/java-heap.patch
+	# fix scilib path
+	epatch "${FILESDIR}"/scilib-fix.patch
 
-	epatch "${FILESDIR}"/scilab-java-heap.patch
-	epatch "${FILESDIR}"/bug_5496.patch
-	epatch "${FILESDIR}"/scilab-5.1.1-libpathfix.patch
 
-	#add the correct java directories to the config file
+	# add the correct java directories to the config file
 	sed \
 		-i "/^.DEFAULT_JAR_DIR/{s|=.*|=\"$(echo $(ls -d /usr/share/*/lib))\"|}" \
 		m4/java.m4 || die
@@ -68,16 +83,21 @@ src_prepare() {
 		etc/librarypath.xml || die
 	eautoreconf
 	java-pkg-2_src_prepare
+
+	# even with hdf-java path in librarypath.xml libjhdf5.so is not detected...
+	epatch "${FILESDIR}"/jhdf5-configure.patch
 }
 
 src_configure() {
 	local myopts
 	use doc && myopts="--with-docbook=/usr/share/sgml/docbook/xsl-stylesheets"
+	# javac complained about (j)hdf
+	use hdf5 && myopts="$myopts --with-hdf5-library=`java-config -i hdf-java`"
 	export JAVA_HOME=$(java-config -O)
 	export BLAS_LIBS="$(pkg-config --libs blas)"
 	export LAPACK_LIBS="$(pkg-config --libs lapack)"
 	# mpi is only used for hdf5 i/o
-	if use mpi && use hdf5; then
+	if use hdf5 && has_version sci-libs/hdf5[mpi]; then
 		export CC=mpicc
 		export CXX=mpicxx
 		export FC=mpif90
@@ -86,24 +106,25 @@ src_configure() {
 	econf \
 		--disable-rpath \
 		--without-pvm \
-		$(use_with scicos) \
-		$(use_with tk) \
+		$(use_enable doc build-help) \
+		$(use_enable nls) \
+		$(use_enable nls build-localization) \
 		$(use_with fftw) \
 		$(use_with gui)\
 		$(use_with gui javasci)\
-		$(use_with matio) \
-		$(use_with scicos) \
-		$(use_with umfpack) \
-		$(use_enable doc build-help) \
 		$(use_with hdf5) \
+		$(use_with matio) \
+		$(use_with umfpack) \
+		$(use_with tk) \
+		$(use_with xcos scicos) \
 		${myopts}
 }
 
 src_compile() {
 	emake || die "emake failed"
-#	if use doc; then
-#		emake doc || die "emake failed"
-#	fi
+	if use doc; then
+		emake doc || die "emake failed"
+	fi
 }
 
 src_install() {
@@ -116,10 +137,6 @@ src_install() {
 	#install icon
 	newicon icons/scilab.xpm scilab.xpm
 	make_desktop_entry ${PN} "Scilab" ${PN}
-
-	# Hack
-#	cd  ${D}/usr/share/scilab/modules
-#	for i in *; do cd $i; dosym /usr/lib/scilab/ .libs; cd ..; done
 }
 
 pkg_postinst() {

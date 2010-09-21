@@ -6,8 +6,8 @@
  
 -<!-- Set Java Heap space to 256mb -->
 -<option value="-Xmx256m"/>
-+<!-- Set Java Heap space to 1024mb -->
-+<option value="-Xmx1024m"/>
++<!-- Set Java Heap space to 512mb -->
++<option value="-Xmx512m"/>
  
  <option value="-Dapple.laf.useScreenMenuBar=true" os="macosx" />
  
