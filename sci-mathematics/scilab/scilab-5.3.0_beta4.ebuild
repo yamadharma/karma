@@ -33,7 +33,7 @@ RDEPEND="virtual/lapack
 		>=dev-java/jeuclid-core-3.1
 		>=dev-java/jlatexmath-0.9.2
 		>=dev-java/jlatexmath-fop-0.9.2
-		~dev-java/jgraphx-1.4.0.2
+		=dev-java/jgraphx-1.4*
 		dev-java/jogl
 		dev-java/jgoodies-looks
 		dev-java/jrosetta
@@ -44,6 +44,8 @@ RDEPEND="virtual/lapack
 	fftw? ( sci-libs/fftw:3.0 )
 	matio? ( sci-libs/matio )
 	hdf5? ( ~sci-libs/hdf5-1.8.4 )"
+
+# ~dev-java/jgraphx-1.4.0.2
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig

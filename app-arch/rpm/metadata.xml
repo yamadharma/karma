@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>no-herd</herd>
+<maintainer>
+  <email>sochotnicky@gentoo.org</email>
+</maintainer>
+<use>
+  <flag name='capabilities'>Add support for capabilities (<pkg>sys-libs/libcap</pkg>)</flag>
+</use>
+</pkgmetadata>
