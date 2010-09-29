@@ -1,0 +1,22 @@
+dev-lang/php[cli,pcre,simplexml] dev-vcs/cvs
+dev-lang/php[cli,pcre,simplexml]
+0
+
+
+http://drupal.org/project/drush
+GPL-2
+Drupal-centric shell. Simplifies Drupal installation/management
+amd64 x86
+cvs eutils multilib portability toolchain-funcs
+examples
+
+
+
+2
+
+install prepare unpack
+
+
+
+
+

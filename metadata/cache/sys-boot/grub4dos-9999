@@ -1,0 +1,22 @@
+!sys-boot/grub ncurses? ( >=sys-libs/ncurses-5.2-r5 amd64? ( app-emulation/emul-linux-x86-baselibs ) ) || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b dev-vcs/subversion net-misc/rsync
+!sys-boot/grub ncurses? ( >=sys-libs/ncurses-5.2-r5 amd64? ( app-emulation/emul-linux-x86-baselibs ) )
+0
+
+
+https://gna.org/projects/grub4dos
+GPL-2
+GRUB4DOS is an universal boot loader based on GNU GRUB
+amd64 x86 ~x86-fbsd
+autotools eutils flag-o-matic libtool mount-boot multilib portability subversion toolchain-funcs
+custom-cflags ncurses netboot static
+
+
+virtual/bootloader
+2
+
+compile config install postinst preinst prepare prerm test unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=virtual/jdk-1.5 app-arch/unzip >=dev-java/java-config-2.1.9-r1 source? ( app-arch/zip ) >=dev-java/ant-core-1.7.0 >=dev-java/javatoolkit-0.3.0-r2
+>=virtual/jre-1.5 >=dev-java/java-config-2.1.9-r1 source? ( app-arch/zip )
+0
+http://www.jgraph.com/downloads/jgraphx/archive/jgraphx-1_4_1_0.zip -> jgraphx-1.4.1.0.zip
+
+http://www.jgraph.com
+as-is
+Open-source graph component for Java
+~amd64 ~x86
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+doc examples source elibc_FreeBSD doc source elibc_FreeBSD
+
+
+
+2
+
+compile configure install preinst prepare setup
+
+
+
+
+
