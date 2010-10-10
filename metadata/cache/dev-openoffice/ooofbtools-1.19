@@ -1,9 +1,9 @@
 virtual/ooo
 sys-apps/coreutils virtual/ooo
 0
-http://extensions.services.openoffice.org/files/1174/3/OOoFBTools-1.3.1.zip
+http://ooofbtools.googlecode.com/files/OOoFBTools-1.19.zip
 
-http://extensions.services.openoffice.org/project/ooofbtools
+http://extensions.services.openoffice.org/project/ooofbtools https://code.google.com/p/ooofbtools/
 GPL-2
 The cross platform OpenOffice.org extension OOo FBTools used to convert to and processing eBooks in FictionBook2 format
 ~alpha amd64 ~hppa ~ia64 ppc ~ppc64 sparc x86 ~x86-fbsd
