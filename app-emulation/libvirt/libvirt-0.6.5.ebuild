@@ -22,24 +22,26 @@ RDEPEND="sys-libs/readline
 	>=net-libs/gnutls-1.0.25
 	dev-lang/python
 	sys-fs/sysfsutils
-	net-analyzer/netcat-openbsd
+	net-analyzer/netcat6
 	avahi? ( >=net-dns/avahi-0.6 )
 	hal? ( >=sys-apps/hal-0.5.9 )
 	iscsi? ( sys-block/open-iscsi )
-	kvm? ( app-emulation/kvm )
-	lvm? ( sys-fs/lvm2 )
+ 	lvm? ( sys-fs/lvm2 )
 	network? ( net-misc/bridge-utils net-dns/dnsmasq net-firewall/iptables )
 	numa? ( sys-process/numactl )
 	openvz? ( sys-kernel/openvz-sources )
-	parted? ( >=sys-apps/parted-1.8 )
-	policykit? ( >=sys-auth/policykit-0.6 )
-	qemu? ( >=app-emulation/qemu-0.10.0 )
-	sasl? ( dev-libs/cyrus-sasl )
+ 	policykit? ( >=sys-auth/policykit-0.6 )
+ 	sasl? ( dev-libs/cyrus-sasl )
 	selinux? ( sys-libs/libselinux )
 	virtualbox? ( || ( >=app-emulation/virtualbox-ose-2.2.0 >=app-emulation/virtualbox-bin-2.2.0 ) )
 	xen? ( app-emulation/xen-tools app-emulation/xen )"
+#	kvm? ( app-emulation/kvm )
+#	qemu? ( >=app-emulation/qemu-0.10.0 )
+#	parted? ( >=sys-apps/parted-1.8 )
+
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
+	
 
 pkg_setup() {
 	confutils_require_any lxc kvm openvz qemu uml virtualbox xen
