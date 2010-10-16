@@ -1,0 +1,22 @@
+dev-lang/perl
+dev-lang/perl dev-perl/List-MoreUtils dev-perl/Sys-SigAction dev-perl/Devel-Symdump dev-perl/Acme-Damn
+0
+mirror://cpan/authors/id/R/RY/RYBSKEJ/forks-0.33.tar.gz
+
+http://search.cpan.org/dist/forks/
+|| ( Artistic GPL-1 GPL-2 GPL-3 )
+drop-in replacement for Perl threads using fork()
+~amd64 ~x86
+base eutils multilib perl-module portability toolchain-funcs
+test
+
+
+
+
+
+compile install postinst postrm preinst prerm setup test unpack
+
+
+
+
+
