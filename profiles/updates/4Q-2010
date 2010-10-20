@@ -1,4 +1,5 @@
 move media-gfx/unpaper app-text/unpaper
 move dev-perl/gtk2-imageview dev-perl/Gtk2-ImageView
+move media-gfx/pdf2djvu app-text/pdf2djvu
 
 
