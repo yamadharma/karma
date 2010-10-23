@@ -1,0 +1,22 @@
+>=dev-util/cmake-2.6.2 imagemagick? ( media-gfx/imagemagick ) >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) >=dev-vcs/bzr-1.5
+imagemagick? ( media-gfx/imagemagick )
+0
+
+
+https://launchpad.net/cuneiform-linux
+BSD
+An enterprise quality OCR engine developed in USSR/Russia in the 90's.
+~amd64 ~x86
+base bzr cmake-utils eutils flag-o-matic multilib portability toolchain-funcs versionator
+debug +imagemagick
+
+
+
+2
+
+compile configure install prepare test unpack
+
+
+
+
+

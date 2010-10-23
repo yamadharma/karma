@@ -1,0 +1,22 @@
+dev-lang/erlang
+dev-lang/erlang
+0
+http://yaws.hyber.org/download/yaws-1.89.tar.gz
+
+http://yaws.hyber.org/
+BSD
+Yaws is a high performance HTTP 1.1 web server.
+~x86 ~ppc ~sparc ~amd64
+eutils multilib portability toolchain-funcs
+
+
+
+virtual/httpd-basic virtual/httpd-cgi
+2
+
+install postinst
+
+
+
+
+
