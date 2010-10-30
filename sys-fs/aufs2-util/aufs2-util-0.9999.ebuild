@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit eutils git
+inherit eutils git toolchain-funcs
 
 EGIT_REPO_URI="http://git.c3sl.ufpr.br/pub/scm/aufs/aufs2-util.git"
 
@@ -20,7 +20,8 @@ IUSE=""
 RDEPEND="!sys-fs/aufs-utils"
 
 src_compile() {
-	emake KDIR=/usr/src/linux || die
+#	emake KDIR=/usr/src/linux || die
+	emake CC=$(tc-getCC) AR=$(tc-getAR) KDIR=/usr/src/linux C_INCLUDE_PATH="${S}"/include CFLAGS="-I/usr/src/linux/include -I./libau" || die
 }
 
 src_install() {

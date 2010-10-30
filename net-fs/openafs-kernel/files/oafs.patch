@@ -1,0 +1,4152 @@
+diff --git a/acinclude.m4 b/acinclude.m4
+index e7a5cc4..f94205a 100644
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -348,7 +348,11 @@ case $system in
+ 		MKAFS_OSTYPE=NBSD
+ 		AC_MSG_RESULT(nbsd)
+ 		;;
+-	*-openbsd*)
++	x86_64-*-openbsd*)
++		MKAFS_OSTYPE=OBSD
++		AC_MSG_RESULT(amd64_obsd)
++		;;
++	i386-*-openbsd*)
+ 		MKAFS_OSTYPE=OBSD
+ 		AC_MSG_RESULT(i386_obsd)
+ 		;;
+@@ -372,6 +376,12 @@ else
+ 			vm=${v#*.}
+ 			AFS_SYSNAME="i386_obsd${vM}${vm}"
+ 			;;
++		x86_64-*-openbsd?.?)
++			v=${host#*openbsd}
++			vM=${v%.*}
++			vm=${v#*.}
++			AFS_SYSNAME="amd64_obsd${vM}${vm}"
++			;;
+ 		i?86-*-freebsd?.*)
+ 			v=${host#*freebsd}
+ 			vM=${v%.*}
+@@ -747,6 +757,7 @@ case $AFS_SYSNAME in *_linux* | *_umlinux*)
+ 		 LINUX_DEFINES_FOR_EACH_PROCESS
+ 		 LINUX_DEFINES_PREV_TASK
+ 		 LINUX_FS_STRUCT_SUPER_HAS_ALLOC_INODE
++		 LINUX_FS_STRUCT_SUPER_HAS_EVICT_INODE
+ 		 LINUX_FS_STRUCT_SUPER_BLOCK_HAS_S_BDI
+ 		 LINUX_STRUCT_BDI_HAS_NAME
+ 	         LINUX_FS_STRUCT_ADDRESS_SPACE_HAS_PAGE_LOCK
+@@ -771,6 +782,7 @@ case $AFS_SYSNAME in *_linux* | *_umlinux*)
+ 	  	 LINUX_IOP_I_PUT_LINK_TAKES_COOKIE
+ 	  	 LINUX_DOP_D_REVALIDATE_TAKES_NAMEIDATA
+ 	  	 LINUX_FOP_F_FLUSH_TAKES_FL_OWNER_T
++		 LINUX_FOP_F_FSYNC_TAKES_DENTRY
+ 	  	 LINUX_AOP_WRITEBACK_CONTROL
+ 		 LINUX_FS_STRUCT_FOP_HAS_FLOCK
+ 		 LINUX_FS_STRUCT_FOP_HAS_SENDFILE
+@@ -817,6 +829,7 @@ case $AFS_SYSNAME in *_linux* | *_umlinux*)
+ 		 LINUX_STRUCT_CTL_TABLE_HAS_CTL_NAME
+ 		 LINUX_HAVE_IGET
+ 		 LINUX_HAVE_I_SIZE_READ
++		 LINUX_HAVE_INODE_SETATTR
+ 		 LINUX_FS_STRUCT_NAMEIDATA_HAS_PATH
+ 	         LINUX_EXPORTS_INIT_MM
+                  LINUX_EXPORTS_SYS_CHDIR
+@@ -910,6 +923,9 @@ case $AFS_SYSNAME in *_linux* | *_umlinux*)
+ 		 if test "x$ac_cv_linux_fs_struct_super_has_alloc_inode" = "xyes" ; then
+ 		  AC_DEFINE(STRUCT_SUPER_HAS_ALLOC_INODE, 1, [define if your struct super_operations has alloc_inode])
+ 		 fi
++		 if test "x$ac_cv_linux_fs_struct_super_has_evict_inode" = "xyes" ; then
++		  AC_DEFINE(STRUCT_SUPER_OPERATIONS_HAS_EVICT_INODE, 1, [define if your struct super_operations has evict_inode])
++		 fi
+ 		 if test "x$ac_cv_linux_fs_struct_address_space_has_page_lock" = "xyes"; then 
+ 		  AC_DEFINE(STRUCT_ADDRESS_SPACE_HAS_PAGE_LOCK, 1, [define if your struct address_space has page_lock])
+ 		 fi
+diff --git a/configure-libafs.in b/configure-libafs.in
+index 9b06807..b015068 100644
+--- a/configure-libafs.in
++++ b/configure-libafs.in
+@@ -1,8 +1,8 @@
+ AC_INIT(src/libafs/Makefile.common.in)
+-AM_INIT_AUTOMAKE(openafs-libafs,1.4.12.1)
++AM_INIT_AUTOMAKE(openafs-libafs,1.4.12)
+ AC_CONFIG_HEADER(src/config/afsconfig.h)
+-MACOS_VERSION=1.4.12f1
+-LINUX_PKGVER=1.4.12.1
++MACOS_VERSION=1.4.12
++LINUX_PKGVER=1.4.12
+ LINUX_PKGREL=1.1
+ #LINUX_PKGREL=0.pre4
+ 
+diff --git a/configure.in b/configure.in
+index 60bb28e..b34daaf 100644
+--- a/configure.in
++++ b/configure.in
+@@ -1,8 +1,8 @@
+ AC_INIT(src/config/stds.h)
+-AM_INIT_AUTOMAKE(openafs,1.4.12.1)
++AM_INIT_AUTOMAKE(openafs,1.4.12)
+ AC_CONFIG_HEADER(src/config/afsconfig.h)
+-MACOS_VERSION=1.4.12f1
+-LINUX_PKGVER=1.4.12.1
++MACOS_VERSION=1.4.12
++LINUX_PKGVER=1.4.12
+ LINUX_PKGREL=1.1
+ #LINUX_PKGREL=0.pre3
+ 
+diff --git a/doc/man-pages/pod1/fs_listquota.pod b/doc/man-pages/pod1/fs_listquota.pod
+index dd589db..85a00b8 100644
+diff --git a/doc/man-pages/pod1/fs_quota.pod b/doc/man-pages/pod1/fs_quota.pod
+index d944509..d5c6afa 100644
+diff --git a/doc/man-pages/pod1/fs_setquota.pod b/doc/man-pages/pod1/fs_setquota.pod
+index f0cd853..2a2af3e 100644
+diff --git a/doc/man-pages/pod1/fs_setvol.pod b/doc/man-pages/pod1/fs_setvol.pod
+index 8540f7b..f09afbd 100644
+diff --git a/doc/man-pages/pod1/vos.pod b/doc/man-pages/pod1/vos.pod
+index feef451..11b6984 100644
+diff --git a/doc/man-pages/pod1/vos_copy.pod b/doc/man-pages/pod1/vos_copy.pod
+index a9cbfe6..6d29145 100644
+diff --git a/doc/man-pages/pod1/vos_create.pod b/doc/man-pages/pod1/vos_create.pod
+index 6033960..e7b6b3d 100644
+diff --git a/doc/man-pages/pod1/vos_examine.pod b/doc/man-pages/pod1/vos_examine.pod
+index cea4c87..4f5d00a 100644
+diff --git a/doc/man-pages/pod1/vos_move.pod b/doc/man-pages/pod1/vos_move.pod
+index 3acb354..fa92333 100644
+diff --git a/doc/man-pages/pod1/vos_partinfo.pod b/doc/man-pages/pod1/vos_partinfo.pod
+index d3b436c..5439064 100644
+diff --git a/src/afs/LINUX/osi_compat.h b/src/afs/LINUX/osi_compat.h
+index bcbb42a..078c6c3 100644
+--- a/src/afs/LINUX/osi_compat.h
++++ b/src/afs/LINUX/osi_compat.h
+@@ -51,32 +51,6 @@ afs_posix_test_lock(struct file *fp, struct file_lock *flp) {
+ #endif
+ }
+ 
+-#ifdef DCACHE_NFSFS_RENAMED
+-static inline void
+-afs_linux_clear_nfsfs_renamed(struct dentry *dp) {
+-    spin_lock(&dp->d_lock);
+-    dp->d_flags &= ~DCACHE_NFSFS_RENAMED;
+-    spin_unlock(&dp->d_lock);
+-}
+-
+-static inline void
+-afs_linux_set_nfsfs_renamed(struct dentry *dp) {
+-    spin_lock(&dp->d_lock);
+-    dp->d_flags |= DCACHE_NFSFS_RENAMED;
+-    spin_unlock(&dp->d_lock);
+-}
+-#else
+-static inline void afs_linux_clear_nfsfs_renamed(void) { return; }
+-static inline void afs_linux_set_nfsfs_renamed(void) { return; }
+-#endif
+-
+-#ifndef HAVE_KERNEL_HLIST_UNHASHED
+-static void
+-hlist_unhashed(const struct hlist_node *h) {
+-    return (!h->pprev == NULL);
+-}
+-#endif
+-
+ #if defined(WRITEPAGE_ACTIVATE)
+ #define AOP_WRITEPAGE_ACTIVATE WRITEPAGE_ACTIVATE
+ #endif
+@@ -136,4 +110,32 @@ init_once_func(void * foo) {
+ #define KALLOC_TYPE GFP_KERNEL
+ #endif
+ 
++#ifdef LINUX_KEYRING_SUPPORT
++# ifndef KEY_ALLOC_NOT_IN_QUOTA
++#  define KEY_ALLOC_NOT_IN_QUOTA 1
++# endif
++# ifndef KEY_ALLOC_IN_QUOTA
++#  define KEY_ALLOC_IN_QUOTA 0
++# endif
++#endif
+ #endif
++
++static inline int
++afs_inode_setattr(struct osi_file *afile, struct iattr *newattrs) {
++
++    int code = 0;
++    struct inode *inode = OSIFILE_INODE(afile);
++#if !defined(HAVE_LINUX_INODE_SETATTR)
++    code = inode->i_op->setattr(afile->filp->f_dentry, newattrs);
++#elif defined(INODE_SETATTR_NOT_VOID)
++#if defined(AFS_LINUX26_ENV)
++    if (inode->i_op && inode->i_op->setattr)
++	code = inode->i_op->setattr(afile->filp->f_dentry, newattrs);
++    else
++#endif
++	code = inode_setattr(inode, newattrs);
++#else
++    inode_setattr(inode, newattrs);
++#endif
++    return code;
++}
+diff --git a/src/afs/LINUX/osi_file.c b/src/afs/LINUX/osi_file.c
+index 1f9e8cf..1fc583b 100644
+--- a/src/afs/LINUX/osi_file.c
++++ b/src/afs/LINUX/osi_file.c
+@@ -21,6 +21,7 @@
+ #if !defined(HAVE_IGET)
+ #include "h/exportfs.h"
+ #endif
++#include "osi_compat.h"
+ 
+ int afs_osicred_initialized = 0;
+ struct AFS_UCRED afs_osi_cred;
+@@ -237,17 +238,7 @@ osi_UFSTruncate(register struct osi_file *afile, afs_int32 asize)
+     lock_kernel();
+     code = inode_change_ok(inode, &newattrs);
+     if (!code)
+-#ifdef INODE_SETATTR_NOT_VOID
+-#if defined(AFS_LINUX26_ENV)
+-	if (inode->i_op && inode->i_op->setattr)
+-	    code = inode->i_op->setattr(afile->filp->f_dentry, &newattrs);
+-	else
+-#endif
+-	    code = inode_setattr(inode, &newattrs);
+-#else
+-        inode_setattr(inode, &newattrs);
+-#endif
+-    unlock_kernel();
++	code = afs_inode_setattr(afile, &newattrs);
+     if (!code)
+ 	truncate_inode_pages(&inode->i_data, asize);
+ #else
+diff --git a/src/afs/LINUX/osi_groups.c b/src/afs/LINUX/osi_groups.c
+index d5ef035..fc82463 100644
+--- a/src/afs/LINUX/osi_groups.c
++++ b/src/afs/LINUX/osi_groups.c
+@@ -338,9 +338,9 @@ setpag(cred_t **cr, afs_uint32 pagvalue, afs_uint32 *newpag,
+ #ifdef LINUX_KEYRING_SUPPORT
+     if (code == 0) {
+ 
+-	(void) install_session_keyring(NULL);
++	code = install_session_keyring(NULL);
+ 
+-	if (current_session_keyring()) {
++	if (code == 0 && current_session_keyring()) {
+ 	    struct key *key;
+ 	    key_perm_t perm;
+ 
+@@ -348,17 +348,22 @@ setpag(cred_t **cr, afs_uint32 pagvalue, afs_uint32 *newpag,
+ 	    perm |= KEY_USR_VIEW | KEY_USR_SEARCH;
+ 
+ #if defined(KEY_ALLOC_NEEDS_STRUCT_TASK)
+-	    key = key_alloc(&key_type_afs_pag, "_pag", 0, 0, current, perm, 1);
++	    key = key_alloc(&key_type_afs_pag, "_pag", 0, 0, current,
++			    perm, KEY_ALLOC_NOT_IN_QUOTA);
+ #elif defined(KEY_ALLOC_NEEDS_CRED)
+-	    key = key_alloc(&key_type_afs_pag, "_pag", 0, 0, current_cred(), perm, 1);
++	    key = key_alloc(&key_type_afs_pag, "_pag", 0, 0, current_cred(),
++			    perm, KEY_ALLOC_NOT_IN_QUOTA);
+ #else
+-	    key = key_alloc(&key_type_afs_pag, "_pag", 0, 0, perm, 1);
++	    key = key_alloc(&key_type_afs_pag, "_pag", 0, 0, perm,
++			    KEY_ALLOC_NOT_IN_QUOTA);
+ #endif
+ 
+ 	    if (!IS_ERR(key)) {
+ 		key_instantiate_and_link(key, (void *) newpag, sizeof(afs_uint32),
+ 					 current_session_keyring(), NULL);
+ 		key_put(key);
++	    } else {
++		code = PTR_ERR(key);
+ 	    }
+ 	}
+     }
+diff --git a/src/afs/LINUX/osi_module.c b/src/afs/LINUX/osi_module.c
+index ed9be8a..de8da52 100644
+--- a/src/afs/LINUX/osi_module.c
++++ b/src/afs/LINUX/osi_module.c
+@@ -134,8 +134,12 @@ static int c_show(struct seq_file *m, void *p)
+ 		if (!tc->cellHosts[j]) break;
+ 
+ 		addr = tc->cellHosts[j]->addr->sa_ip;
++#if defined(NIPQUAD)
+ 		seq_printf(m, "%u.%u.%u.%u #%u.%u.%u.%u\n",
+ 			   NIPQUAD(addr), NIPQUAD(addr));
++#else
++		seq_printf(m, "%pI4 #%pI4\n", &addr, &addr);
++#endif
+ 	}
+ 
+ 	return 0;
+diff --git a/src/afs/LINUX/osi_vfsops.c b/src/afs/LINUX/osi_vfsops.c
+index 7305736..e46c3eb 100644
+--- a/src/afs/LINUX/osi_vfsops.c
++++ b/src/afs/LINUX/osi_vfsops.c
+@@ -140,20 +140,22 @@ afs_read_super(struct super_block *sb, void *data, int silent)
+     sb->s_blocksize_bits = 10;
+     sb->s_magic = AFS_VFSMAGIC;
+     sb->s_op = &afs_sops;	/* Super block (vfs) ops */
++#if defined(AFS_LINUX26_ENV)
+     /* used for inodes backing_dev_info field, also */
+     afs_backing_dev_info = osi_Alloc(sizeof(struct backing_dev_info));
+-#if defined(HAVE_BDI_INIT)
++# if defined(HAVE_BDI_INIT)
+     bdi_init(afs_backing_dev_info);
+-#endif
+-#if defined(STRUCT_BDI_HAS_NAME)
++# endif
++# if defined(STRUCT_BDI_HAS_NAME)
+     afs_backing_dev_info->name = "openafs";
+-#endif
++# endif
+     afs_backing_dev_info->ra_pages = 0;
+-#if defined (STRUCT_SUPER_BLOCK_HAS_S_BDI)
++# if defined (STRUCT_SUPER_BLOCK_HAS_S_BDI)
+     sb->s_bdi = afs_backing_dev_info;
+     /* The name specified here will appear in the flushing thread name - flush-afs */
+     bdi_register(afs_backing_dev_info, NULL, "afs");
+-#endif
++# endif
++#endif /* AFS_LINUX26_ENV */
+ #if defined(MAX_NON_LFS)
+ #ifdef AFS_64BIT_CLIENT
+ #if !defined(MAX_LFS_FILESIZE)
+@@ -340,6 +342,25 @@ afs_destroy_inodecache(void)
+ }
+ #endif
+ 
++#if defined(STRUCT_SUPER_OPERATIONS_HAS_EVICT_INODE)
++static void
++afs_evict_inode(struct inode *ip)
++{
++    struct vcache *vcp = VTOAFS(ip);
++
++    if (vcp->vlruq.prev || vcp->vlruq.next)
++	osi_Panic("inode freed while on LRU");
++    if (vcp->hnext)
++	osi_Panic("inode freed while still hashed");
++
++    truncate_inode_pages(&ip->i_data, 0);
++    end_writeback(ip);
++
++#if !defined(STRUCT_SUPER_HAS_ALLOC_INODE)
++    afs_osi_Free(ip->u.generic_ip, sizeof(struct vcache));
++#endif
++}
++#else
+ static void
+ afs_clear_inode(struct inode *ip)
+ {
+@@ -354,6 +375,7 @@ afs_clear_inode(struct inode *ip)
+     afs_osi_Free(ip->u.generic_ip, sizeof(struct vcache));
+ #endif
+ }
++#endif
+ 
+ /* afs_put_super
+  * Called from unmount to release super_block. */
+@@ -380,10 +402,12 @@ afs_put_super(struct super_block *sbp)
+ #endif
+ 
+     osi_linux_verify_alloced_memory();
+-#if defined(HAVE_BDI_INIT)
++#if defined(AFS_LINUX26_ENV)
++# if defined(HAVE_BDI_INIT)
+     bdi_destroy(afs_backing_dev_info);
+-#endif
++# endif
+     osi_Free(afs_backing_dev_info, sizeof(struct backing_dev_info));
++#endif /* AFS_LINUX26_ENV */
+     AFS_GUNLOCK();
+ 
+     sbp->s_dev = 0;
+@@ -452,7 +476,11 @@ struct super_operations afs_sops = {
+   .alloc_inode =	afs_alloc_inode,
+   .destroy_inode =	afs_destroy_inode,
+ #endif
++#if defined(STRUCT_SUPER_OPERATIONS_HAS_EVICT_INODE)
++  .evict_inode =	afs_evict_inode,
++#else
+   .clear_inode =	afs_clear_inode,
++#endif
+   .put_super =		afs_put_super,
+   .statfs =		afs_statfs,
+ #if !defined(AFS_LINUX24_ENV)
+diff --git a/src/afs/LINUX/osi_vnodeops.c b/src/afs/LINUX/osi_vnodeops.c
+index 55190d7..ebabc72 100644
+--- a/src/afs/LINUX/osi_vnodeops.c
++++ b/src/afs/LINUX/osi_vnodeops.c
+@@ -447,8 +447,10 @@ afs_linux_release(struct inode *ip, struct file *fp)
+ }
+ 
+ static int
+-#if defined(AFS_LINUX24_ENV)
++#if defined(AFS_LINUX24_ENV) && defined(FOP_FSYNC_TAKES_DENTRY)
+ afs_linux_fsync(struct file *fp, struct dentry *dp, int datasync)
++#elif defined(AFS_LINUX24_ENV)
++afs_linux_fsync(struct file *fp, int datasync)
+ #else
+ afs_linux_fsync(struct file *fp, struct dentry *dp)
+ #endif
+@@ -1815,11 +1817,12 @@ afs_linux_commit_write(struct file *file, struct page *page, unsigned offset,
+ 
+     code = afs_linux_writepage_sync(file->f_dentry->d_inode, page,
+                                     offset, to - offset);
+-#if !defined(AFS_LINUX26_ENV)
+-    kunmap(page);
+-#endif
++#if defined(AFS_LINUX26_ENV)
+     if (code == WRITEPAGE_ACTIVATE)
+ 	code = -EIO;
++#else
++    kunmap(page);
++#endif
+ 
+     return code;
+ }
+diff --git a/src/afs/OBSD/osi_groups.c b/src/afs/OBSD/osi_groups.c
+index cb8e1d9..e26088f 100644
+--- a/src/afs/OBSD/osi_groups.c
++++ b/src/afs/OBSD/osi_groups.c
+@@ -81,6 +81,16 @@ setpag(struct proc *proc, struct ucred **cred, afs_uint32 pagvalue,
+ 
+     AFS_STATCNT(setpag);
+     ngroups = afs_getgroups(*cred, NGROUPS, gidset);
++    /*
++     * If the group list is empty, use the task's primary group as the group
++     * list. Otherwise, when setting the PAG, group 0 will be set to arbitrary
++     * gibberish and the PAG, which starts at group offset 1, will not be
++     * properly set because the group count will be wrong (2 instead of 3).
++     */
++    if (ngroups == 0) {
++	gidset[0] = (*cred)->cr_gid;
++	ngroups = 1;
++    }
+     if (afs_get_pag_from_groups(gidset[1], gidset[2]) == NOPAG) {
+ 	/* We will have to shift grouplist to make room for pag */
+ 	if (ngroups + 2 > NGROUPS) {
+diff --git a/src/afs/OBSD/osi_machdep.h b/src/afs/OBSD/osi_machdep.h
+index 3864ff1..02d9f45 100644
+--- a/src/afs/OBSD/osi_machdep.h
++++ b/src/afs/OBSD/osi_machdep.h
+@@ -86,7 +86,7 @@ extern void osi_obsd_Free(void *p, size_t asize);
+   free((p), (mflags))
+ #else
+ #define BSD_KMALLOC MALLOC
+-#define BSD_KFREE KFREE
++#define BSD_KFREE FREE
+ #endif /* AFS_OBSD42_ENV */
+ 
+ /* proc, cred */
+diff --git a/src/afs/SOLARIS/osi_machdep.h b/src/afs/SOLARIS/osi_machdep.h
+index e750732..58b0aa6 100644
+--- a/src/afs/SOLARIS/osi_machdep.h
++++ b/src/afs/SOLARIS/osi_machdep.h
+@@ -56,7 +56,23 @@ local_osi_Time()
+ #undef afs_osi_Alloc_NoSleep
+ extern void *afs_osi_Alloc_NoSleep(size_t size);
+ 
+-#define osi_vnhold(avc, r)  do { VN_HOLD(AFSTOV(avc)); } while(0)
++#ifdef AFS_SUN58_ENV
++# define osi_vnhold(avc, r)  do {    \
++    struct vnode *vp = AFSTOV(avc); \
++    uint_t prevcount;               \
++                                    \
++    mutex_enter(&vp->v_lock);       \
++    prevcount = vp->v_count++;      \
++    mutex_exit(&vp->v_lock);        \
++                                    \
++    if (prevcount == 0) {           \
++	VFS_HOLD(afs_globalVFS);    \
++    }                               \
++} while(0)
++#else /* !AFS_SUN58_ENV */
++# define osi_vnhold(avc, r)  do { VN_HOLD(AFSTOV(avc)); } while(0)
++#endif /* !AFS_SUN58_ENV */
++
+ #define gop_rdwr(rw,gp,base,len,offset,segflg,ioflag,ulimit,cr,aresid) \
+   vn_rdwr((rw),(gp),(base),(len),(offset),(segflg),(ioflag),(ulimit),(cr),(aresid))
+ #define gop_lookupname(fnamep,segflg,followlink,compvpp) \
+diff --git a/src/afs/SOLARIS/osi_vfsops.c b/src/afs/SOLARIS/osi_vfsops.c
+index 389fa3b..e20bea8 100644
+--- a/src/afs/SOLARIS/osi_vfsops.c
++++ b/src/afs/SOLARIS/osi_vfsops.c
+@@ -24,7 +24,9 @@
+ #endif
+ #include <sys/kobj.h>
+ 
+-
++#ifdef AFS_SUN58_ENV
++# include <sys/mount.h>
++#endif
+ 
+ struct vfs *afs_globalVFS = 0;
+ struct vcache *afs_globalVp = 0;
+@@ -77,6 +79,8 @@ int
+ afs_unmount(struct vfs *afsp, struct AFS_UCRED *credp)
+ #endif
+ {
++    struct vcache *rootvp = NULL;
++
+     AFS_GLOCK();
+     AFS_STATCNT(afs_unmount);
+ 
+@@ -88,13 +92,59 @@ afs_unmount(struct vfs *afsp, struct AFS_UCRED *credp)
+         AFS_GUNLOCK();
+         return (EPERM);
+     }
++
++#ifdef AFS_SUN58_ENV
++    if (flag & MS_FORCE) {
++	AFS_GUNLOCK();
++	return ENOTSUP;
++    }
++
++    /* We should have one reference from the caller, and one reference for the
++     * root vnode; any more and someone is still referencing something */
++    if (afsp->vfs_count > 2) {
++	AFS_GUNLOCK();
++	return EBUSY;
++    }
++
++    /* The root vnode should have one ref for the mount; any more, and someone
++     * else is using the root vnode */
++    if (afs_globalVp && VREFCOUNT_GT(afs_globalVp, 1)) {
++	AFS_GUNLOCK();
++	return EBUSY;
++    }
++
++    afsp->vfs_flag |= VFS_UNMOUNTED;
++#endif /* AFS_SUN58_ENV */
++
++    /* release the root vnode, which should be the last reference to us
++     * besides the caller of afs_unmount */
++    rootvp = afs_globalVp;
++    afs_globalVp = NULL;
++    AFS_RELE(rootvp);
++
++#ifndef AFS_SUN58_ENV
++    /* shutdown now, since afs_freevfs() will not be called */
+     afs_globalVFS = 0;
+     afs_shutdown();
++#endif /* !AFS_SUN58_ENV */
+ 
+     AFS_GUNLOCK();
+     return 0;
+ }
+ 
++#ifdef AFS_SUN58_ENV
++void
++afs_freevfs(struct vfs *afsp)
++{
++    AFS_GLOCK();
++
++    afs_globalVFS = 0;
++    afs_shutdown();
++
++    AFS_GUNLOCK();
++}
++#endif /* AFS_SUN58_ENV */
++
+ int
+ afs_root(struct vfs *afsp, struct vnode **avpp)
+ {
+@@ -265,7 +315,7 @@ static const fs_operation_def_t afs_vfsops_template[] = {
+     VFSNAME_SYNC,		{ .vfs_sync = afs_sync },
+     VFSNAME_VGET,		{ .vfs_vget = afs_vget },
+     VFSNAME_MOUNTROOT,  	{ .vfs_mountroot = afs_mountroot },
+-    VFSNAME_FREEVFS,		{ .vfs_freevfs = fs_freevfs },
++    VFSNAME_FREEVFS,		{ .vfs_freevfs = afs_freevfs },
+     NULL,			NULL
+ };
+ struct vfsops *afs_vfsopsp;
+@@ -279,7 +329,7 @@ const fs_operation_def_t afs_vfsops_template[] = {
+     VFSNAME_SYNC,		afs_sync,
+     VFSNAME_VGET,		afs_vget,
+     VFSNAME_MOUNTROOT,  	afs_mountroot,
+-    VFSNAME_FREEVFS,		fs_freevfs,
++    VFSNAME_FREEVFS,		afs_freevfs,
+     NULL,			NULL
+ };
+ struct vfsops *afs_vfsopsp;
+@@ -294,7 +344,7 @@ struct vfsops Afs_vfsops = {
+     afs_mountroot,
+     afs_swapvp,
+ #if defined(AFS_SUN58_ENV)
+-    fs_freevfs,
++    afs_freevfs,
+ #endif
+ };
+ #endif
+diff --git a/src/afs/SOLARIS/osi_vnodeops.c b/src/afs/SOLARIS/osi_vnodeops.c
+index 9fcb026..2f9d335 100644
+--- a/src/afs/SOLARIS/osi_vnodeops.c
++++ b/src/afs/SOLARIS/osi_vnodeops.c
+@@ -1923,6 +1923,10 @@ afs_inactive(struct vcache *avc, struct AFS_UCRED *acred)
+ 	avc->opens = avc->execsOrWriters = 0;
+ 
+     afs_InactiveVCache(avc, acred);
++
++#ifdef AFS_SUN58_ENV
++    VFS_RELE(afs_globalVFS);
++#endif
+ }
+ 
+ void
+diff --git a/src/afs/VNOPS/afs_vnop_flock.c b/src/afs/VNOPS/afs_vnop_flock.c
+index f3d33e7..f569b87 100644
+--- a/src/afs/VNOPS/afs_vnop_flock.c
++++ b/src/afs/VNOPS/afs_vnop_flock.c
+@@ -539,24 +539,8 @@ int afs_lockctl(struct vcache * avc, struct AFS_FLOCK * af, int acmd,
+ #else
+ 	) {
+ #endif
+-    /* this next check is safer when left out, but more applications work
+-     * with it in.  However, they fail in race conditions.  The question is
+-     * what to do for people who don't have source to their application;
+-     * this way at least, they can get work done */
+-#ifdef AFS_LINUX24_ENV
+-    if (af->l_len == OFFSET_MAX)
+-	af->l_len = 0;		/* since some systems indicate it as EOF */
+-#else
+-    if (af->l_len == 0x7fffffff)
+-	af->l_len = 0;		/* since some systems indicate it as EOF */
+-#ifdef AFS_LINUX_64BIT_KERNEL
+-    if (af->l_len == LONG_MAX)
+-	af->l_len = 0;		/* since some systems indicate it as EOF */
+-#endif
+-#endif
+-    /* Java VMs ask for l_len=(long)-1 regardless of OS/CPU; bottom 32 bits
+-     * sometimes get masked off by OS */
+-    if ((sizeof(af->l_len) == 8) && (af->l_len == 0x7ffffffffffffffe))
++    /* Java VMs ask for l_len=(long)-1 regardless of OS/CPU */
++    if ((sizeof(af->l_len) == 8) && (af->l_len == 0x7fffffffffffffffLL))
+ 	af->l_len = 0;
+     /* next line makes byte range locks always succeed,
+      * even when they should block */
+diff --git a/src/afs/afs.h b/src/afs/afs.h
+index 635fa42..800ef00 100644
+--- a/src/afs/afs.h
++++ b/src/afs/afs.h
+@@ -75,7 +75,7 @@ extern int afs_shuttingdown;
+ #define	PIGGYSIZE	1350	/* max piggyback size */
+ #define	MAXVOLS		128	/* max vols we can store */
+ #define	MAXSYSNAME	128	/* max sysname (i.e. @sys) size */
+-#define MAXNUMSYSNAMES	16	/* max that current constants allow */
++#define MAXNUMSYSNAMES	32	/* max that current constants allow */
+ #define	NOTOKTIMEOUT	(2*3600)	/* time after which to timeout conns sans tokens */
+ #define	NOPAG		0xffffffff
+ #define AFS_NCBRS	300	/* max # of call back return entries */
+diff --git a/src/afs/afs_osi.c b/src/afs/afs_osi.c
+index 01800d6..72131a2 100644
+--- a/src/afs/afs_osi.c
++++ b/src/afs/afs_osi.c
+@@ -483,7 +483,7 @@ afs_osi_Free(void *x, size_t asize)
+     osi_linux_free(x);
+ #elif defined(AFS_FBSD_ENV)
+     osi_fbsd_free(x);
+-#elif defined(AFS_OBSD44_ENV)
++#elif defined(AFS_OBSD_ENV)
+     osi_obsd_Free(x, asize);
+ #else
+     AFS_KFREE((struct osimem *)x, asize);
+diff --git a/src/afs/afs_vcache.c b/src/afs/afs_vcache.c
+index 201bae7..8f94329 100644
+--- a/src/afs/afs_vcache.c
++++ b/src/afs/afs_vcache.c
+@@ -1084,6 +1084,14 @@ afs_NewVCache(struct VenusFid *afid, struct server *serverp)
+     tvc->vmh = tvc->segid = NULL;
+     tvc->credp = NULL;
+ #endif
++
++#ifdef AFS_SUN58_ENV
++    /* Normally we do this in osi_vnhold when we notice the ref count went from
++     * 0 -> 1. But here we just set the refcount to 1, so we need to explicitly
++     * VFS_HOLD here. */
++    VFS_HOLD(afs_globalVFS);
++#endif /* AFS_SUN58_ENV */
++
+ #ifdef AFS_BOZONLOCK_ENV
+ #if	defined(AFS_SUN5_ENV)
+     rw_init(&tvc->rwlock, "vcache rwlock", RW_DEFAULT, NULL);
+diff --git a/src/afsmonitor/afsmon-output.c b/src/afsmonitor/afsmon-output.c
+index c3d2250..55d4bc8 100644
+--- a/src/afsmonitor/afsmon-output.c
++++ b/src/afsmonitor/afsmon-output.c
+@@ -380,7 +380,7 @@ Print_fs_FullPerfInfo(a_fs_Results)
+     afs_int32 numLongs;		/*# longwords received */
+     struct fs_stats_FullPerfStats *fullPerfP;	/*Ptr to full perf stats */
+     char *printableTime;	/*Ptr to printable time string */
+-
++    time_t probeTime;
+ 
+     numLongs = a_fs_Results->data.AFS_CollData_len;
+     if (numLongs != fullPerfLongs) {
+@@ -391,7 +391,8 @@ Print_fs_FullPerfInfo(a_fs_Results)
+ 	return;
+     }
+ 
+-    printableTime = ctime((time_t *) & (a_fs_Results->probeTime));
++    probeTime = a_fs_Results->probeTime;
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+     fullPerfP = (struct fs_stats_FullPerfStats *)
+ 	(a_fs_Results->data.AFS_CollData_val);
+@@ -440,6 +441,7 @@ afsmon_fsOutput(a_outfile, a_detOutput)
+     afs_int32 numLongs;		/* longwords in result */
+     afs_int32 *currLong;	/* ptr to longwords in result */
+     int i;
++    time_t probeTime;
+ 
+     if (afsmon_debug) {
+ 	fprintf(debugFD, "[ %s ] Called, a_outfile= %s, a_detOutput= %d\n",
+@@ -455,7 +457,8 @@ afsmon_fsOutput(a_outfile, a_detOutput)
+     }
+ 
+     /* get the probe time and strip the \n at the end */
+-    printTime = ctime((time_t *) & (xstat_fs_Results.probeTime));
++    probeTime = xstat_fs_Results.probeTime;
++    printTime = ctime(&probeTime);
+     printTime[strlen(printTime) - 1] = '\0';
+     hostname = xstat_fs_Results.connP->hostName;
+ 
+@@ -700,6 +703,7 @@ Print_cm_PerfInfo()
+     afs_int32 numLongs;		/*# longwords received */
+     struct afs_stats_CMPerf *perfP;	/*Ptr to performance stats */
+     char *printableTime;	/*Ptr to printable time string */
++    time_t probeTime;
+ 
+     numLongs = xstat_cm_Results.data.AFSCB_CollData_len;
+     if (numLongs != perfLongs) {
+@@ -709,7 +713,8 @@ Print_cm_PerfInfo()
+ 	return;
+     }
+ 
+-    printableTime = ctime((time_t *) & (xstat_cm_Results.probeTime));
++    probeTime = xstat_cm_Results.probeTime;
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+     perfP = (struct afs_stats_CMPerf *)
+ 	(xstat_cm_Results.data.AFSCB_CollData_val);
+@@ -926,7 +931,7 @@ Print_cm_FullPerfInfo()
+     static afs_int32 fullPerfLongs = (sizeof(struct afs_stats_CMFullPerf) >> 2);	/*Correct #longs */
+     afs_int32 numLongs;		/*# longs actually received */
+     struct afs_stats_CMFullPerf *fullP;	/*Ptr to full perf info */
+-
++    time_t probeTime;
+     char *printableTime;	/*Ptr to printable time string */
+ 
+     numLongs = xstat_cm_Results.data.AFSCB_CollData_len;
+@@ -938,7 +943,8 @@ Print_cm_FullPerfInfo()
+ 	return;
+     }
+ 
+-    printableTime = ctime((time_t *) & (xstat_cm_Results.probeTime));
++    probeTime = xstat_cm_Results.probeTime;
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+     fullP = (struct afs_stats_CMFullPerf *)
+ 	(xstat_cm_Results.data.AFSCB_CollData_val);
+@@ -1020,6 +1026,7 @@ afsmon_cmOutput(a_outfile, a_detOutput)
+     afs_int32 numLongs;		/* longwords in result */
+     afs_int32 *currLong;	/* ptr to longwords in result */
+     int i;
++    time_t probeTime;
+ 
+     if (afsmon_debug) {
+ 	fprintf(debugFD, "[ %s ] Called, a_outfile= %s, a_detOutput= %d\n",
+@@ -1036,7 +1043,8 @@ afsmon_cmOutput(a_outfile, a_detOutput)
+     }
+ 
+     /* get the probe time and strip the \n at the end */
+-    printTime = ctime((time_t *) & (xstat_cm_Results.probeTime));
++    probeTime = xstat_cm_Results.probeTime;
++    printTime = ctime(&probeTime);
+     printTime[strlen(printTime) - 1] = '\0';
+     hostname = xstat_cm_Results.connP->hostName;
+ 
+diff --git a/src/afsmonitor/afsmon-parselog.c b/src/afsmonitor/afsmon-parselog.c
+index 645c525..f6ce239 100644
+--- a/src/afsmonitor/afsmon-parselog.c
++++ b/src/afsmonitor/afsmon-parselog.c
+@@ -318,7 +318,7 @@ Print_fs_FullPerfInfo(a_fs_Results)
+     long numLongs;		/*# longwords received */
+     struct fs_stats_FullPerfStats *fullPerfP;	/*Ptr to full perf stats */
+     char *printableTime;	/*Ptr to printable time string */
+-
++    time_t probeTime;
+ 
+     numLongs = a_fs_Results->data.AFS_CollData_len;
+     if (numLongs != fullPerfLongs) {
+@@ -327,7 +327,8 @@ Print_fs_FullPerfInfo(a_fs_Results)
+ 	return;
+     }
+ 
+-    printableTime = ctime(&(a_fs_Results->probeTime));
++    probeTime = a_fs_Results->probeTime;
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+     fullPerfP = (struct fs_stats_FullPerfStats *)
+ 	(a_fs_Results->data.AFS_CollData_val);
+diff --git a/src/afsweb/apache_afs_weblog.c b/src/afsweb/apache_afs_weblog.c
+index 8468e05..491ea7f 100644
+--- a/src/afsweb/apache_afs_weblog.c
++++ b/src/afsweb/apache_afs_weblog.c
+@@ -91,7 +91,7 @@ get_time()
+     char *time_string;
+ 
+     t = time(NULL);
+-    time_string = (char *)ctime((time_t *) & t);
++    time_string = (char *)ctime(&t);
+     time_string[strlen(time_string) - 1] = '\0';
+     return (time_string);
+ }
+diff --git a/src/budb/struct_ops.c b/src/budb/struct_ops.c
+index 34d9384..a6babd0 100644
+--- a/src/budb/struct_ops.c
++++ b/src/budb/struct_ops.c
+@@ -35,11 +35,11 @@
+  */
+ 
+ void
+-printDbHeader(ptr)
+-     struct DbHeader *ptr;
++printDbHeader(struct DbHeader *ptr)
+ {
++    time_t created = ptr->created;
+     printf("version = %d\n", ptr->dbversion);
+-    printf("created = %s", ctime((time_t *) & ptr->created));
++    printf("created = %s", ctime(&created));
+     printf("cell = %s\n", ptr->cell);
+     printf("lastDumpId = %u\n", ptr->lastDumpId);
+     printf("lastInstanceId = %d\n", ptr->lastInstanceId);
+@@ -47,10 +47,9 @@ printDbHeader(ptr)
+ }
+ 
+ void
+-printDump(fid, dptr)
+-     FILE *fid;
+-     struct dump *dptr;
++printDump(FILE *fid, struct dump *dptr)
+ {
++    time_t created = dptr->created;
+     fprintf(fid, "id = %u\n", dptr->id);
+     fprintf(fid, "idHashChain = %d\n", dptr->idHashChain);
+     fprintf(fid, "name = %s\n", dptr->dumpName);
+@@ -59,7 +58,7 @@ printDump(fid, dptr)
+     fprintf(fid, "nameHashChain = %d\n", dptr->nameHashChain);
+     fprintf(fid, "flags = 0x%x\n", dptr->flags);
+     fprintf(fid, "parent = %u\n", dptr->parent);
+-    fprintf(fid, "created = %s", ctime((time_t *) & dptr->created));
++    fprintf(fid, "created = %s", ctime(&created));
+     fprintf(fid, "nVolumes = %d\n", dptr->nVolumes);
+     /* printTapeSet(&dptr->tapes); */
+     fprintf(fid, "firstTape = %d\n", dptr->firstTape);
+@@ -68,9 +67,9 @@ printDump(fid, dptr)
+ }
+ 
+ void
+-printDumpEntry(deptr)
+-     struct budb_dumpEntry *deptr;
++printDumpEntry(struct budb_dumpEntry *deptr)
+ {
++    time_t created = deptr->created;
+     printf("id = %u\n", deptr->id);
+     printf("Initial id = %u\n", deptr->initialDumpID);
+     printf("Appended id = %u\n", deptr->appendedDumpID);
+@@ -95,7 +94,7 @@ printDumpEntry(deptr)
+     printf("volumeSet = %s\n", deptr->volumeSetName);
+     printf("dump path = %s\n", deptr->dumpPath);
+     printf("name = %s\n", deptr->name);
+-    printf("created = %s", ctime((time_t *) & deptr->created));
++    printf("created = %s", ctime(&created));
+     printf("nVolumes = %d\n", deptr->nVolumes);
+ 
+     printTapeSet(&deptr->tapes, (deptr->flags & BUDB_DUMP_XBSA_NSS));
+@@ -158,14 +157,13 @@ printStructDumpHeader(ptr)
+ }
+ 
+ int
+-printTape(fid, tptr)
+-     FILE *fid;
+-     struct tape *tptr;
++printTape(FILE *fid, struct tape *tptr)
+ {
++    time_t written = tptr->written;
+     fprintf(fid, "name = %s\n", tptr->name);
+     fprintf(fid, "nameHashChain = %d\n", tptr->nameHashChain);
+     fprintf(fid, "flags = 0x%x\n", tptr->flags);
+-    fprintf(fid, "written = %s", ctime((time_t *) & tptr->written));
++    fprintf(fid, "written = %s", ctime(&written));
+     fprintf(fid, "nMBytes = %d\n", tptr->nMBytes);
+     fprintf(fid, "nBytes = %d\n", tptr->nBytes);
+     fprintf(fid, "nFiles = %d\n", tptr->nFiles);
+@@ -180,9 +178,11 @@ printTape(fid, tptr)
+ }
+ 
+ int
+-printTapeEntry(teptr)
+-     struct budb_tapeEntry *teptr;
++printTapeEntry(struct budb_tapeEntry *teptr)
+ {
++    time_t written = teptr->written;
++    time_t expires = teptr->expires;
++
+     printf("name = %s\n", teptr->name);
+     printf("flags = 0x%x", teptr->flags);
+     if (teptr->flags & BUDB_TAPE_TAPEERROR)
+@@ -198,8 +198,8 @@ printTapeEntry(teptr)
+     if (teptr->flags & BUDB_TAPE_WRITTEN)
+ 	printf(": Successful");
+     printf("\n");
+-    printf("written = %s", ctime((time_t *) & teptr->written));
+-    printf("expires = %s", cTIME((time_t *) & teptr->expires));
++    printf("written = %s", ctime(&written));
++    printf("expires = %s", cTIME(&expires));
+     printf("kBytes Tape Used = %u\n", teptr->useKBytes);
+     printf("nMBytes Data = %d\n", teptr->nMBytes);
+     printf("nBytes  Data = %d\n", teptr->nBytes);
+@@ -229,9 +229,9 @@ printTapeSet(tsptr, nss)
+ }
+ 
+ int
+-printVolumeEntry(veptr)
+-     struct budb_volumeEntry *veptr;
++printVolumeEntry(struct budb_volumeEntry *veptr)
+ {
++    time_t clone = veptr->clone;
+     printf("name = %s\n", veptr->name);
+     printf("flags = 0x%x", veptr->flags);
+     if (veptr->flags & BUDB_VOL_TAPEERROR)
+@@ -253,7 +253,7 @@ printVolumeEntry(veptr)
+     printf("tapeSeq = %d\n", veptr->tapeSeq);
+ 
+     printf("position = %d\n", veptr->position);
+-    printf("clone = %s", ctime((time_t *) & veptr->clone));
++    printf("clone = %s", ctime(&clone));
+     printf("startByte = %d\n", veptr->startByte);
+     printf("nBytes = %d\n", veptr->nBytes);
+     printf("seq = %d\n", veptr->seq);
+@@ -264,17 +264,17 @@ printVolumeEntry(veptr)
+ }
+ 
+ int
+-printVolFragment(fid, vfptr)
+-     FILE *fid;
+-     struct volFragment *vfptr;
++printVolFragment(FILE *fid, struct volFragment *vfptr)
+ {
++    time_t clone = vfptr->clone;
++    time_t incTime = vfptr->incTime;
+     fprintf(fid, "vol = %d\n", vfptr->vol);
+     fprintf(fid, "sameNameChain = %d\n", vfptr->sameNameChain);
+     fprintf(fid, "tape = %d\n", vfptr->tape);
+     fprintf(fid, "sameTapeChain = %d\n", vfptr->sameTapeChain);
+     fprintf(fid, "position = %d\n", vfptr->position);
+-    fprintf(fid, "clone = %s", ctime((time_t *) & vfptr->clone));
+-    fprintf(fid, "incTime = %s", ctime((time_t *) & vfptr->incTime));
++    fprintf(fid, "clone = %s", ctime(&clone));
++    fprintf(fid, "incTime = %s", ctime(&incTime));
+     fprintf(fid, "startByte = %d\n", vfptr->startByte);
+     fprintf(fid, "nBytes = %d\n", vfptr->nBytes);
+     fprintf(fid, "flags = %d\n", vfptr->flags);
+diff --git a/src/cf/linux-test4.m4 b/src/cf/linux-test4.m4
+index 2677f04..5eabaa9 100644
+--- a/src/cf/linux-test4.m4
++++ b/src/cf/linux-test4.m4
+@@ -467,6 +467,18 @@ printk("%p\n", _super.alloc_inode);],
+   AC_MSG_RESULT($ac_cv_linux_fs_struct_super_has_alloc_inode)])
+ 
+ 
++AC_DEFUN([LINUX_FS_STRUCT_SUPER_HAS_EVICT_INODE], [
++  AC_MSG_CHECKING([for evict_inode in struct super_operations])
++  AC_CACHE_VAL([ac_cv_linux_fs_struct_super_has_evict_inode], [
++    AC_TRY_KBUILD(
++[#include <linux/fs.h>],
++[struct super_operations _super;
++printk("%p\n", _super.evict_inode);],
++      ac_cv_linux_fs_struct_super_has_evict_inode=yes,
++      ac_cv_linux_fs_struct_super_has_evict_inode=no)])
++  AC_MSG_RESULT($ac_cv_linux_fs_struct_super_has_evict_inode)])
++
++
+ AC_DEFUN([LINUX_KERNEL_POSIX_LOCK_FILE_WAIT_ARG], [
+   AC_MSG_CHECKING([for 3rd argument in posix_lock_file found in new kernels])
+   AC_CACHE_VAL([ac_cv_linux_kernel_posix_lock_file_wait_arg], [
+@@ -722,9 +734,10 @@ AC_DEFUN([LINUX_STATFS_TAKES_DENTRY], [
+     AC_TRY_KBUILD(
+ [#include <linux/fs.h>
+ #include <linux/statfs.h>],
+-[
+-extern int vfs_statfs(struct dentry *, struct kstatfs *);
+-],
++[struct super_block _sb;
++struct dentry _dentry;
++struct kstatfs _kstatfs;
++(void)_sb.s_op->statfs(&_dentry, &_kstatfs);],
+       ac_cv_linux_statfs_takes_dentry=yes,
+       ac_cv_linux_statfs_takes_dentry=no)])
+   AC_MSG_RESULT($ac_cv_linux_statfs_takes_dentry)])
+@@ -929,6 +942,23 @@ fl_owner_t id;
+       ac_cv_linux_func_f_flush_takes_fl_owner_t=no)])
+   AC_MSG_RESULT($ac_cv_linux_func_f_flush_takes_fl_owner_t)])
+ 
++AC_DEFUN([LINUX_FOP_F_FSYNC_TAKES_DENTRY], [
++  AC_MSG_CHECKING([whether file_operations.fsync takes a dentry argument])
++  AC_CACHE_VAL([ac_cv_linux_func_f_fsync_takes_dentry], [
++    AC_TRY_KBUILD(
++[#include <linux/fs.h>],
++[struct inode _inode;
++struct file _file;
++struct dentry _d;
++(void)_inode.i_fop->fsync(&_file, &_d, 0);],
++      ac_cv_linux_func_f_fsync_takes_dentry=yes,
++      ac_cv_linux_func_f_fsync_takes_dentry=no)])
++  AC_MSG_RESULT($ac_cv_linux_func_f_fsync_takes_dentry)
++  if test "x$ac_cv_linux_func_f_fsync_takes_dentry" = "xyes"; then
++    AC_DEFINE([FOP_FSYNC_TAKES_DENTRY], 1, [define if your fops.fsync takes an dentry argument])
++  fi
++])
++
+ AC_DEFUN([LINUX_HAVE_KMEM_CACHE_T], [
+   AC_MSG_CHECKING([whether kmem_cache_t exists])
+   AC_CACHE_VAL([ac_cv_linux_have_kmem_cache_t], [
+@@ -1261,3 +1291,19 @@ _bdi.name = NULL;],
+   if test "x$ac_cv_linux_struct_bdi_has_name" = "xyes"; then
+     AC_DEFINE([STRUCT_BDI_HAS_NAME], 1, [define if struct backing_dev_info has a name member])
+   fi])
++
++AC_DEFUN([LINUX_HAVE_INODE_SETATTR], [
++  AC_MSG_CHECKING([for linux inode_setattr()])
++  AC_CACHE_VAL([ac_cv_linux_inode_setattr], [
++    save_CPPFLAGS="$CPPFLAGS"
++    CPPFLAGS="$CPPFLAGS -Werror-implicit-function-declaration"
++    AC_TRY_KBUILD(
++[#include <linux/fs.h>],
++[inode_setattr(NULL);],
++      ac_cv_linux_inode_setattr=yes,
++      ac_cv_linux_inode_setattr=no)
++    CPPFLAGS="$save_CPPFLAGS"])
++  AC_MSG_RESULT($ac_cv_linux_inode_setattr)
++  if test "x$ac_cv_linux_inode_setattr" = "xyes"; then
++    AC_DEFINE([HAVE_LINUX_INODE_SETATTR], 1, [define if your kernel has inode_setattr()])
++  fi])
+diff --git a/src/config/afs_sysnames.h b/src/config/afs_sysnames.h
+index 08d3154..0dd45c8 100644
+--- a/src/config/afs_sysnames.h
++++ b/src/config/afs_sysnames.h
+@@ -289,6 +289,18 @@
+ #define SYS_NAME_ID_i386_dfbsd_22        3900
+ #define SYS_NAME_ID_i386_dfbsd_23        3901
+ 
++#define SYS_NAME_ID_amd64_obsd36        4005
++#define SYS_NAME_ID_amd64_obsd37        4006
++#define SYS_NAME_ID_amd64_obsd38        4007
++#define SYS_NAME_ID_amd64_obsd39        4008
++#define SYS_NAME_ID_amd64_obsd40        4009
++#define SYS_NAME_ID_amd64_obsd41        4010
++#define SYS_NAME_ID_amd64_obsd42        4011
++#define SYS_NAME_ID_amd64_obsd43        4012
++#define SYS_NAME_ID_amd64_obsd44        4013
++#define SYS_NAME_ID_amd64_obsd45        4014
++#define SYS_NAME_ID_amd64_obsd46        4015
++
+ /*
+  * Placeholder to keep system-wide standard flags since this file is included by all 
+  * files (i.e in afs/param.h)
+diff --git a/src/config/param.amd64_obsd45.h b/src/config/param.amd64_obsd45.h
+new file mode 100644
+index 0000000..84302c9
+--- /dev/null
++++ b/src/config/param.amd64_obsd45.h
+@@ -0,0 +1,75 @@
++/*
++ * Thanks to Jim Rees and University of Michigan CITI, for the initial
++ * OpenBSD porting work.
++ */
++
++#ifndef	AFS_PARAM_H
++#define	AFS_PARAM_H
++
++#ifndef IGNORE_STDS_H
++#include <sys/param.h>
++#endif
++
++#define SYS_NAME		"amd64_obsd45"
++#define SYS_NAME_ID		SYS_NAME_ID_amd64_obsd45
++
++#define AFS_XBSD_ENV		1	/* {Free,Open,Net}BSD */
++#define AFS_X86_XBSD_ENV	1
++
++#define AFS_NAMEI_ENV		1	/* User space interface to file system */
++#define AFS_64BIT_ENV		1
++#define AFS_64BITPOINTER_ENV    1
++#define AFS_64BIT_CLIENT	1
++#define AFS_64BIT_IOPS_ENV	1	/* Needed for NAMEI */
++#define AFS_OBSD_ENV		1
++#define AFS_OBSD34_ENV		1
++#define AFS_OBSD35_ENV		1
++#define AFS_OBSD36_ENV		1
++#define AFS_OBSD37_ENV		1
++#define AFS_OBSD38_ENV		1
++#define AFS_OBSD39_ENV		1
++#define AFS_OBSD40_ENV		1
++#define AFS_OBSD41_ENV		1
++#define AFS_OBSD42_ENV		1
++#define AFS_OBSD43_ENV		1
++#define AFS_OBSD44_ENV		1
++#define AFS_OBSD45_ENV		1
++#define AFS_NONFSTRANS		1
++#define AFS_VM_RDWR_ENV		1
++#define AFS_VFS_ENV		1
++#define AFS_VFSINCL_ENV		1
++
++#define FTRUNC O_TRUNC
++
++#define AFS_SYSCALL		208
++#define AFS_MOUNT_AFS		"afs"
++
++#define RXK_LISTENER_ENV	1
++#define AFS_GCPAGS	        0	/* if nonzero, garbage collect PAGs */
++#define AFS_USE_GETTIMEOFDAY    1	/* use gettimeofday to implement rx clock */
++
++#define AFSLITTLE_ENDIAN	1
++
++#ifndef IGNORE_STDS_H
++#include <afs/afs_sysnames.h>
++#endif
++
++/* Extra kernel definitions (from kdefs file) */
++#ifdef _KERNEL
++#define AFS_GLOBAL_SUNLOCK	1
++#define	AFS_SHORTGID		0	/* are group id's short? */
++
++#if	!defined(ASSEMBLER) && !defined(__LANGUAGE_ASSEMBLY__)
++enum vcexcl { NONEXCL, EXCL };
++
++#ifndef MIN
++#define MIN(A,B) ((A) < (B) ? (A) : (B))
++#endif
++#ifndef MAX
++#define MAX(A,B) ((A) > (B) ? (A) : (B))
++#endif
++
++#endif /* ! ASSEMBLER & ! __LANGUAGE_ASSEMBLY__ */
++#endif /* _KERNEL */
++
++#endif /* AFS_PARAM_H */
+diff --git a/src/config/param.amd64_obsd46.h b/src/config/param.amd64_obsd46.h
+new file mode 100644
+index 0000000..387618c
+--- /dev/null
++++ b/src/config/param.amd64_obsd46.h
+@@ -0,0 +1,76 @@
++/*
++ * Thanks to Jim Rees and University of Michigan CITI, for the initial
++ * OpenBSD porting work.
++ */
++
++#ifndef	AFS_PARAM_H
++#define	AFS_PARAM_H
++
++#ifndef IGNORE_STDS_H
++#include <sys/param.h>
++#endif
++
++#define SYS_NAME		"amd64_obsd46"
++#define SYS_NAME_ID		SYS_NAME_ID_amd64_obsd46
++
++#define AFS_XBSD_ENV		1	/* {Free,Open,Net}BSD */
++#define AFS_X86_XBSD_ENV	1
++
++#define AFS_NAMEI_ENV		1	/* User space interface to file system */
++#define AFS_64BIT_ENV		1
++#define AFS_64BITPOINTER_ENV    1
++#define AFS_64BIT_CLIENT	1
++#define AFS_64BIT_IOPS_ENV	1	/* Needed for NAMEI */
++#define AFS_OBSD_ENV		1
++#define AFS_OBSD34_ENV		1
++#define AFS_OBSD35_ENV		1
++#define AFS_OBSD36_ENV		1
++#define AFS_OBSD37_ENV		1
++#define AFS_OBSD38_ENV		1
++#define AFS_OBSD39_ENV		1
++#define AFS_OBSD40_ENV		1
++#define AFS_OBSD41_ENV		1
++#define AFS_OBSD42_ENV		1
++#define AFS_OBSD43_ENV		1
++#define AFS_OBSD44_ENV		1
++#define AFS_OBSD45_ENV		1
++#define AFS_OBSD46_ENV		1
++#define AFS_NONFSTRANS		1
++#define AFS_VM_RDWR_ENV		1
++#define AFS_VFS_ENV		1
++#define AFS_VFSINCL_ENV		1
++
++#define FTRUNC O_TRUNC
++
++#define AFS_SYSCALL		208
++#define AFS_MOUNT_AFS		"afs"
++
++#define RXK_LISTENER_ENV	1
++#define AFS_GCPAGS	        0	/* if nonzero, garbage collect PAGs */
++#define AFS_USE_GETTIMEOFDAY    1	/* use gettimeofday to implement rx clock */
++
++#define AFSLITTLE_ENDIAN	1
++
++#ifndef IGNORE_STDS_H
++#include <afs/afs_sysnames.h>
++#endif
++
++/* Extra kernel definitions (from kdefs file) */
++#ifdef _KERNEL
++#define AFS_GLOBAL_SUNLOCK	1
++#define	AFS_SHORTGID		0	/* are group id's short? */
++
++#if	!defined(ASSEMBLER) && !defined(__LANGUAGE_ASSEMBLY__)
++enum vcexcl { NONEXCL, EXCL };
++
++#ifndef MIN
++#define MIN(A,B) ((A) < (B) ? (A) : (B))
++#endif
++#ifndef MAX
++#define MAX(A,B) ((A) > (B) ? (A) : (B))
++#endif
++
++#endif /* ! ASSEMBLER & ! __LANGUAGE_ASSEMBLY__ */
++#endif /* _KERNEL */
++
++#endif /* AFS_PARAM_H */
+diff --git a/src/config/param.i386_obsd42.h b/src/config/param.i386_obsd42.h
+new file mode 100644
+index 0000000..0967a3d
+--- /dev/null
++++ b/src/config/param.i386_obsd42.h
+@@ -0,0 +1,72 @@
++/*
++ * Jim Rees, University of Michigan CITI
++ */
++
++#ifndef	AFS_PARAM_H
++#define	AFS_PARAM_H
++
++#ifndef IGNORE_STDS_H
++#include <sys/param.h>
++#endif
++
++#define SYS_NAME		"i386_obsd42"
++#define SYS_NAME_ID		SYS_NAME_ID_i386_obsd42
++
++#define AFS_XBSD_ENV		1	/* {Free,Open,Net}BSD */
++#define AFS_X86_XBSD_ENV	1
++
++#define AFS_NAMEI_ENV		1	/* User space interface to file system */
++#define AFS_64BIT_ENV		1
++#define AFS_64BIT_CLIENT	1
++#define AFS_64BIT_IOPS_ENV	1	/* Needed for NAMEI */
++#define AFS_OBSD_ENV		1
++#define AFS_OBSD34_ENV		1
++#define AFS_OBSD35_ENV		1
++#define AFS_OBSD36_ENV		1
++#define AFS_OBSD37_ENV		1
++#define AFS_OBSD38_ENV		1
++#define AFS_OBSD39_ENV		1
++#define AFS_OBSD40_ENV		1
++#define AFS_OBSD41_ENV		1
++#define AFS_OBSD42_ENV		1
++#define AFS_NONFSTRANS		1
++#define AFS_VM_RDWR_ENV		1
++#define AFS_VFS_ENV		1
++#define AFS_VFSINCL_ENV		1
++
++#define FTRUNC O_TRUNC
++
++#define AFS_SYSCALL		208
++#define AFS_MOUNT_AFS		"afs"
++
++#define RXK_LISTENER_ENV	1
++#define AFS_GCPAGS	        0	/* if nonzero, garbage collect PAGs */
++#define AFS_USE_GETTIMEOFDAY    1	/* use gettimeofday to implement rx clock */
++
++#define AFSLITTLE_ENDIAN	1
++
++#ifndef IGNORE_STDS_H
++#include <afs/afs_sysnames.h>
++#endif
++
++/* Extra kernel definitions (from kdefs file) */
++#ifdef _KERNEL
++#ifdef MULTIPROCESSOR
++#define AFS_GLOBAL_SUNLOCK	1
++#endif
++#define	AFS_SHORTGID		0	/* are group id's short? */
++
++#if	!defined(ASSEMBLER) && !defined(__LANGUAGE_ASSEMBLY__)
++enum vcexcl { NONEXCL, EXCL };
++
++#ifndef MIN
++#define MIN(A,B) ((A) < (B) ? (A) : (B))
++#endif
++#ifndef MAX
++#define MAX(A,B) ((A) > (B) ? (A) : (B))
++#endif
++
++#endif /* ! ASSEMBLER & ! __LANGUAGE_ASSEMBLY__ */
++#endif /* _KERNEL */
++
++#endif /* AFS_PARAM_H */
+diff --git a/src/config/param.i386_obsd43.h b/src/config/param.i386_obsd43.h
+new file mode 100644
+index 0000000..80f8656
+--- /dev/null
++++ b/src/config/param.i386_obsd43.h
+@@ -0,0 +1,73 @@
++/*
++ * Jim Rees, University of Michigan CITI
++ */
++
++#ifndef	AFS_PARAM_H
++#define	AFS_PARAM_H
++
++#ifndef IGNORE_STDS_H
++#include <sys/param.h>
++#endif
++
++#define SYS_NAME		"i386_obsd43"
++#define SYS_NAME_ID		SYS_NAME_ID_i386_obsd43
++
++#define AFS_XBSD_ENV		1	/* {Free,Open,Net}BSD */
++#define AFS_X86_XBSD_ENV	1
++
++#define AFS_NAMEI_ENV		1	/* User space interface to file system */
++#define AFS_64BIT_ENV		1
++#define AFS_64BIT_CLIENT	1
++#define AFS_64BIT_IOPS_ENV	1	/* Needed for NAMEI */
++#define AFS_OBSD_ENV		1
++#define AFS_OBSD34_ENV		1
++#define AFS_OBSD35_ENV		1
++#define AFS_OBSD36_ENV		1
++#define AFS_OBSD37_ENV		1
++#define AFS_OBSD38_ENV		1
++#define AFS_OBSD39_ENV		1
++#define AFS_OBSD40_ENV		1
++#define AFS_OBSD41_ENV		1
++#define AFS_OBSD42_ENV		1
++#define AFS_OBSD43_ENV		1
++#define AFS_NONFSTRANS		1
++#define AFS_VM_RDWR_ENV		1
++#define AFS_VFS_ENV		1
++#define AFS_VFSINCL_ENV		1
++
++#define FTRUNC O_TRUNC
++
++#define AFS_SYSCALL		208
++#define AFS_MOUNT_AFS		"afs"
++
++#define RXK_LISTENER_ENV	1
++#define AFS_GCPAGS	        0	/* if nonzero, garbage collect PAGs */
++#define AFS_USE_GETTIMEOFDAY    1	/* use gettimeofday to implement rx clock */
++
++#define AFSLITTLE_ENDIAN	1
++
++#ifndef IGNORE_STDS_H
++#include <afs/afs_sysnames.h>
++#endif
++
++/* Extra kernel definitions (from kdefs file) */
++#ifdef _KERNEL
++#ifdef MULTIPROCESSOR
++#define AFS_GLOBAL_SUNLOCK	1
++#endif
++#define	AFS_SHORTGID		0	/* are group id's short? */
++
++#if	!defined(ASSEMBLER) && !defined(__LANGUAGE_ASSEMBLY__)
++enum vcexcl { NONEXCL, EXCL };
++
++#ifndef MIN
++#define MIN(A,B) ((A) < (B) ? (A) : (B))
++#endif
++#ifndef MAX
++#define MAX(A,B) ((A) > (B) ? (A) : (B))
++#endif
++
++#endif /* ! ASSEMBLER & ! __LANGUAGE_ASSEMBLY__ */
++#endif /* _KERNEL */
++
++#endif /* AFS_PARAM_H */
+diff --git a/src/config/param.i386_obsd45.h b/src/config/param.i386_obsd45.h
+index c6da6d5..fb43801 100644
+--- a/src/config/param.i386_obsd45.h
++++ b/src/config/param.i386_obsd45.h
+@@ -1,5 +1,6 @@
+ /*
+- * Jim Rees, University of Michigan CITI
++ * Thanks to Jim Rees and University of Michigan CITI, for the initial
++ * OpenBSD porting work.
+  */
+ 
+ #ifndef	AFS_PARAM_H
+diff --git a/src/config/stds.h b/src/config/stds.h
+index 7380a8e..f700e08 100644
+--- a/src/config/stds.h
++++ b/src/config/stds.h
+@@ -271,8 +271,10 @@ typedef struct afsUUID afsUUID;
+ #define static_inline __inline static
+ #define hdr_static_inline(x) __inline static x
+ #elif defined(AFS_HPUX_ENV) || defined(AFS_USR_HPUX_ENV)
+-#define static_inline static __inline
+-#define hdr_static_inline(x) static __inline x
++/* The HPUX compiler can segfault on 'static __inline', so fall back to
++ * just 'static' so we can at least compile */
++#define static_inline static
++#define hdr_static_inline(x) static x
+ #elif defined(AFS_AIX_ENV) || defined(AFS_USR_AIX_ENV)
+ #define static_inline static
+ #define hdr_static_inline(x) static x
+diff --git a/src/kauth/rebuild.c b/src/kauth/rebuild.c
+index 3aff989..7d486e8 100644
+--- a/src/kauth/rebuild.c
++++ b/src/kauth/rebuild.c
+@@ -116,6 +116,9 @@ PrintEntry(index, entry)
+     char Time[100];
+     struct tm *tm_p;
+     time_t tt;
++    time_t modification_time = entry->modification_time;
++    time_t change_password_time = entry->change_password_time;
++    time_t max_ticket_lifetime = entry->max_ticket_lifetime;
+ 
+     printf("\n");
+ 
+@@ -196,12 +199,12 @@ PrintEntry(index, entry)
+ 	   (!entry->pwsums[0] && !entry->pwsums[1]) ? "yes" : "no");
+ 
+     printf("   Mod Time = %u: %s", entry->modification_time,
+-	   ctime((time_t *) & entry->modification_time));
++	   ctime(&modification_time));
+     printf("   Mod ID = %u\n", entry->modification_id);
+     printf("   Change Password Time = %u: %s", entry->change_password_time,
+-	   ctime((time_t *) & entry->change_password_time));
++	   ctime(&change_password_time));
+     printf("   Ticket lifetime = %u: %s", entry->max_ticket_lifetime,
+-	   ctime((time_t *) & entry->max_ticket_lifetime));
++	   ctime(&max_ticket_lifetime));
+     printf("   Key Version = %d\n", entry->key_version);
+ 
+     printf("   Key = ");
+diff --git a/src/package/update.c b/src/package/update.c
+index 0e74e09..08136bd 100644
+--- a/src/package/update.c
++++ b/src/package/update.c
+@@ -382,8 +382,9 @@ dochtim(CTREEPTR np, char *path)
+     tm[0].tv_usec = tm[1].tv_usec = 0;
+     if (!opt_silent) {
+ 	char *date;
++	time_t mtime = np->mtime;
+ 
+-	date = ctime((time_t *) & np->mtime);
++	date = ctime(&mtime);
+ 	date[24] = 0;
+ 	loudonly_message("utimes %s [%s]", path, date);
+     }
+diff --git a/src/packaging/RedHat/openafs-kmodtool b/src/packaging/RedHat/openafs-kmodtool
+index d776cfd..63cb9d5 100644
+--- a/src/packaging/RedHat/openafs-kmodtool
++++ b/src/packaging/RedHat/openafs-kmodtool
+@@ -40,6 +40,7 @@ get_verrel ()
+   verrel=${1:-$(uname -r)}
+   verrel=${verrel%%$knownvariants}
+   case "$verrel" in
++    *.el6*)  verrel="`echo ${verrel} | sed -e 's/^\(.*.el6[^\.]*\)\.[^\.]\+.\?$/\1/'`" ;;
+     *.fc9*)  verrel="`echo ${verrel} | sed -e 's/^\(.*.fc9[^\.]*\)\.[^\.]\+.\?$/\1/'`" ;;
+     *.fc1?*) verrel="`echo ${verrel} | sed -e 's/^\(.*.fc1[0-9][^\.]*\)\.[^\.]\+.\?$/\1/'`" ;;
+   esac
+@@ -71,13 +72,15 @@ get_rpmtemplate ()
+     local variant="${1}"
+     local dashvariant="${variant:+-${variant}}"
+     case "$verrel" in
++        *.el6*) kdep="kernel-%{_target_cpu} = ${verrel}${variant}"     ;;
+         *.EL*) kdep="kernel${dashvariant}-%{_target_cpu} = ${verrel}" ;;
+         *)     kdep="kernel-%{_target_cpu} = ${verrel}${variant}"     ;;
+     esac
+     case "$verrel" in
+-        *.fc9*) kname="${verrel}.%{_target_cpu}${variant:+.${variant}}" ;;
++        *.el6*)   kname="${verrel}.%{_target_cpu}${variant:+.${variant}}" ;;
++        *.fc9*)   kname="${verrel}.%{_target_cpu}${variant:+.${variant}}" ;;
+         *.fc1?*)  kname="${verrel}.%{_target_cpu}${variant:+.${variant}}" ;;
+-        *)      kname="${verrel}${variant}"                             ;;
++        *)        kname="${verrel}${variant}"                             ;;
+     esac
+ 
+     cat <<EOF
+diff --git a/src/packaging/RedHat/openafs.spec.in b/src/packaging/RedHat/openafs.spec.in
+index 2f47d8f..06aded9 100644
+--- a/src/packaging/RedHat/openafs.spec.in
++++ b/src/packaging/RedHat/openafs.spec.in
+@@ -102,12 +102,6 @@
+ # to distribute aklog and asetkey
+ %define krb5support %{?_without_krb5:0}%{!?_without_krb5:1}
+ 
+-%if %{krb5support}
+-%if %{?krb5config:0}%{!?krb5config:1}
+-%define krb5config /usr/kerberos/bin/krb5-config
+-%endif
+-%endif
+-
+ # Set 'bootkernelsupport' to 1 if you want to build the
+ # kernel module for Red Hat BOOT Kernels on x86.
+ %define bootkernelsupport %{?_with_bootkernel:1}%{!?_with_bootkernel:0}
+@@ -343,7 +337,7 @@ To a kernel module for your running kernel, just run:
+ %if %{build_userspace}
+ 
+ %package client
+-Requires: binutils, openafs = %{PACKAGE_VERSION}
++Requires: binutils, openafs = %{version}
+ 
+ %if %{fedorakmod}
+ Requires: %{name}-kmod >= %{version}
+@@ -365,7 +359,7 @@ This package provides basic client support to mount and manipulate
+ AFS.
+ 
+ %package server
+-Requires: openafs = %{PACKAGE_VERSION}
++Requires: openafs = %{version}
+ Summary: OpenAFS Filesystem Server
+ Group: Networking/Filesystems
+ 
+@@ -382,9 +376,9 @@ Cell.
+ %package -n dkms-%{name}
+ Summary:        DKMS-ready kernel source for AFS distributed filesystem
+ Group:          Development/Kernel
+-Provides:       openafs-kernel = %{PACKAGE_VERSION}
++Provides:       openafs-kernel = %{version}
+ %if %{fedorakmod}
+-Provides: %{name}-kmod = %{PACKAGE_VERSION}
++Provides: %{name}-kmod = %{version}
+ %endif
+ Requires(pre):  dkms
+ Requires(pre):  flex
+@@ -420,9 +414,9 @@ authentication may link against them.
+ 
+ %package authlibs-devel
+ %if %{build_authlibs}
+-Requires: openafs-authlibs = %{PACKAGE_VERSION}
++Requires: openafs-authlibs = %{version}
+ %endif
+-Requires: openafs-devel = %{PACKAGE_VERSION}
++Requires: openafs-devel = %{version}
+ Summary: OpenAFS shared library development
+ Group: Development/Filesystems
+ 
+@@ -452,7 +446,7 @@ shared libraries.
+ 
+ %package docs
+ Summary: OpenAFS user and administrator documentation
+-Requires: openafs = %{PACKAGE_VERSION}
++Requires: openafs = %{version}
+ Group: Networking/Filesystems
+ 
+ %description docs
+@@ -467,9 +461,9 @@ administrators.
+ %package kernel-source
+ Summary: OpenAFS Kernel Module source tree
+ Group: Networking/Filesystems
+-Provides: openafs-kernel = %{PACKAGE_VERSION}
++Provides: openafs-kernel = %{version}
+ %if %{fedorakmod}
+-Provides: %{name}-kmod = %{PACKAGE_VERSION}
++Provides: %{name}-kmod = %{version}
+ %endif
+ 
+ %description kernel-source
+@@ -483,7 +477,7 @@ module.
+ 
+ %package compat
+ Summary: OpenAFS client compatibility symlinks
+-Requires: openafs = %{PACKAGE_VERSION}, openafs-client = %{PACKAGE_VERSION}
++Requires: openafs = %{version}, openafs-client = %{version}
+ Group: Networking/Filesystems
+ Obsoletes: openafs-client-compat
+ 
+@@ -515,7 +509,7 @@ you are using KAserver instead of Krb5.
+ %if %{krb5support}
+ %package krb5
+ Summary: OpenAFS programs to use with krb5
+-Requires: openafs = %{PACKAGE_VERSION}
++Requires: openafs = %{version}
+ Group: Networking/Filesystems
+ BuildRequires: krb5-devel
+ 
+@@ -554,7 +548,7 @@ krb4 lookalike services.
+ Summary: OpenAFS Kernel Module (compiled for UP)
+ Release: %{modpkgrel}
+ Group: Networking/Filesystems
+-Provides: openafs-kernel = %{PACKAGE_VERSION}
++Provides: openafs-kernel = %{version}
+ %if %{kprovidesarch}
+ Requires: kernel-%{_target_cpu} = %{kversion}
+ %else
+@@ -574,7 +568,7 @@ This package provides a precompiled AFS kernel module for %{kernvers}.
+ %package kernel-smp
+ Summary: OpenAFS Kernel Module (compiled for SMP)
+ Release: %{modpkgrel}
+-Provides: openafs-kernel = %{PACKAGE_VERSION}
++Provides: openafs-kernel = %{version}
+ %if %{kprovidesarch}
+ Requires: kernel-smp-%{_target_cpu} = %{kversion}
+ %else
+@@ -595,7 +589,7 @@ This package provides a precompiled AFS kernel module for %{kernvers}.
+ %package kernel-largesmp
+ Summary: OpenAFS Kernel Module (compiled for LARGESMP)
+ Release: %{modpkgrel}
+-Provides: openafs-kernel = %{PACKAGE_VERSION}
++Provides: openafs-kernel = %{version}
+ %if %{kprovidesarch}
+ Requires: kernel-largesmp-%{_target_cpu} = %{kversion}
+ %else
+@@ -616,7 +610,7 @@ This package provides a precompiled AFS kernel module for %{kernvers}.
+ %package kernel-bigmem
+ Summary: OpenAFS Kernel Module (compiled for SMP & big memory support)
+ Release: %{modpkgrel}
+-Provides: openafs-kernel = %{PACKAGE_VERSION}
++Provides: openafs-kernel = %{version}
+ %if %{kprovidesarch}
+ Requires: kernel-bigmem-%{_target_cpu} = %{kversion}
+ %else
+@@ -637,7 +631,7 @@ This package provides a precompiled AFS kernel module for %{kernvers}.
+ %package kernel-hugemem
+ Summary: OpenAFS Kernel Module (compiled for SMP & huge memory support)
+ Release: %{modpkgrel}
+-Provides: openafs-kernel = %{PACKAGE_VERSION}
++Provides: openafs-kernel = %{version}
+ %if %{kprovidesarch}
+ Requires: kernel-hugemem-%{_target_cpu} = %{kversion}
+ %else
+@@ -862,6 +856,18 @@ fi
+ 
+ CFLAGS="$RPM_OPT_FLAGS"; export CFLAGS
+ 
++%if %{krb5support}
++%if %{?krb5config:0}%{!?krb5config:1}
++if [ -x /usr/kerberos/bin/krb5-config ] ; then
++  KRB5_CONFIG=/usr/kerberos/bin/krb5-config
++else
++  KRB5_CONFIG=/usr/bin/krb5-config
++fi
++%else
++KRB5_CONFIG="%{krb5config}"
++%endif
++%endif
++
+ ./configure --with-afs-sysname=${sysname} \
+        --prefix=%{_prefix} \
+        --libdir=%{_libdir} \
+@@ -872,7 +878,7 @@ CFLAGS="$RPM_OPT_FLAGS"; export CFLAGS
+        --with-linux-kernel-headers=${ksrc} \
+ %endif
+ %if %{krb5support}
+-	--with-krb5-conf=%{krb5config} \
++	--with-krb5-conf="$KRB5_CONFIG" \
+ %endif
+        $config_opts \
+        || exit 1
+@@ -1537,6 +1543,8 @@ dkms remove -m %{name} -v %{dkms_version} --rpm_safe_upgrade --all ||:
+ %defattr(-,root,root)
+ %{_libdir}/libafsauthent.a
+ %{_libdir}/libafsrpc.a
++%{_libdir}/libafsauthent_pic.a
++%{_libdir}/libafsrpc_pic.a
+ %if %{build_authlibs}
+ %{_libdir}/libafsauthent.so
+ %{_libdir}/libafsrpc.so
+diff --git a/src/ptserver/db_verify.c b/src/ptserver/db_verify.c
+index f1616ce..1d8d415 100644
+--- a/src/ptserver/db_verify.c
++++ b/src/ptserver/db_verify.c
+@@ -1179,9 +1179,6 @@ DumpRecreate(char map[], struct misc_data *misc)
+ 	    if ((id < 0) && (flags & PRGRP)) {
+ 		int count = 0;
+ 		afs_int32 na;
+-#if defined(SUPERGROUPS)
+-		afs_int32 ng;
+-#endif
+ 		int i;
+ 		for (i = 0; i < PRSIZE; i++) {
+ 		    afs_int32 uid = ntohl(e.entries[i]);
+@@ -1200,43 +1197,6 @@ DumpRecreate(char map[], struct misc_data *misc)
+ 				id);
+ #endif
+ 		}
+-#if defined(SUPERGROUPS)
+-#define g	(*((struct prentryg *)&e))
+-		ng = ntohl(g.nextsg);
+-		for (i = 0; i < SGSIZE; i++) {
+-		    afs_int32 uid = ntohl(g.supergroup[i]);
+-		    if (uid == 0)
+-			break;
+-		    if (uid == PRBADID)
+-			continue;
+-		    fprintf(rc, "au %d %d\n", uid, id);
+-		    count++;
+-		}
+-		while (ng) {
+-		    struct prentry c;
+-		    code = pr_Read(ng, (char *)&c, sizeof(c));
+-		    if (code)
+-			return code;
+-
+-		    if ((id == ntohl(c.id)) && (c.flags & htonl(PRCONT))) {
+-			for (i = 0; i < COSIZE; i++) {
+-			    afs_int32 uid = ntohl(c.entries[i]);
+-			    if (uid == 0)
+-				break;
+-			    if (uid == PRBADID)
+-				continue;
+-			    fprintf(rc, "au %d %d\n", uid, id);
+-			    count++;
+-			}
+-		    } else {
+-			fprintf(stderr, "Skipping continuation block at %d\n",
+-				ng);
+-			break;
+-		    }
+-		    ng = ntohl(c.next);
+-		}
+-#undef g
+-#endif /* SUPERGROUPS */
+ 		na = ntohl(e.next);
+ 		while (na) {
+ 		    struct prentry c;
+diff --git a/src/rxdebug/rxdebug.c b/src/rxdebug/rxdebug.c
+index 40e84bc..9bb1ff3 100644
+--- a/src/rxdebug/rxdebug.c
++++ b/src/rxdebug/rxdebug.c
+@@ -449,7 +449,7 @@ MainCommand(struct cmd_syndesc *as, void *arock)
+ 			    printf("\n  Received %d bytes in %d packets\n",
+ 				   tconn.secStats.bytesReceived,
+ 				   tconn.secStats.packetsReceived);
+-			    printf("  Sent %d bytes in %d packets\n",
++			    printf("  Sent %u bytes in %u packets\n",
+ 				   tconn.secStats.bytesSent,
+ 				   tconn.secStats.packetsSent);
+ 			} else
+diff --git a/src/shlibafsauthent/Makefile.in b/src/shlibafsauthent/Makefile.in
+index c2a03a8..09c11b7 100644
+--- a/src/shlibafsauthent/Makefile.in
++++ b/src/shlibafsauthent/Makefile.in
+@@ -104,9 +104,12 @@ ${DEST}/lib/${LIBAFSAUTHENT}: ${LIBAFSAUTHENT}
+ 	-ln -f -s ${LIBAFSAUTHENT} ${DEST}/lib/libafsauthent.${SHLIB_SUFFIX}
+ 	-ln -f -s ${LIBAFSAUTHENT} ${DEST}/lib/libafsauthent.${SHLIB_SUFFIX}.${LIBAFSAUTHENTMAJOR}
+ 
+-all: ${TOP_LIBDIR}/${LIBAFSAUTHENT}
++${DEST}/lib/libafsauthent_pic.a: libafsauthent_pic.a
++	${INSTALL} libafsauthent_pic.a ${DEST}/lib/libafsauthent_pic.a
+ 
+-install: ${DESTDIR}${libdir}/${LIBAFSAUTHENT}
++all: ${TOP_LIBDIR}/${LIBAFSAUTHENT} ${TOP_LIBDIR}/libafsauthent_pic.a
++
++install: ${DESTDIR}${libdir}/${LIBAFSAUTHENT} ${DESTDIR}${libdir}/libafsauthent_pic.a
+ 
+ ${LIBAFSAUTHENT}: ${LIBOBJS}
+ 	case ${SYS_NAME} in \
+@@ -120,6 +123,11 @@ ${LIBAFSAUTHENT}: ${LIBOBJS}
+ 		${SHLIB_LINKER} -o ${LIBAFSAUTHENT} ${LIBOBJS} -L${TOP_LIBDIR} -lafsrpc ${MT_LIBS};; \
+ 	esac
+ 
++libafsauthent_pic.a: ${LIBOBJS}
++	$(RM) -f $@
++	$(AR) crv $@ ${LIBOBJS}
++	$(RANLIB) $@
++
+ audit.o: ${AUDIT}/audit.c
+ 	${CCRULE}
+ 
+@@ -282,9 +290,15 @@ ${DESTDIR}${libdir}/${LIBAFSAUTHENT}: ${LIBAFSAUTHENT}
+ 	-ln -f -s ${LIBAFSAUTHENT} ${DESTDIR}${libdir}/libafsauthent.${SHLIB_SUFFIX}
+ 	-ln -f -s ${LIBAFSAUTHENT} ${DESTDIR}${libdir}/libafsauthent.${SHLIB_SUFFIX}.${LIBAFSAUTHENTMAJOR}
+ 
++${DESTDIR}${libdir}/libafsauthent_pic.a: libafsauthent_pic.a
++	${INSTALL} libafsauthent_pic.a ${DESTDIR}${libdir}/libafsauthent_pic.a
++
+ ${TOP_LIBDIR}/${LIBAFSAUTHENT}: ${LIBAFSAUTHENT}
+ 	${INSTALL} ${LIBAFSAUTHENT} ${TOP_LIBDIR}/${LIBAFSAUTHENT}
+ 	-ln -f -s ${LIBAFSAUTHENT} ${TOP_LIBDIR}/libafsauthent.${SHLIB_SUFFIX}
+ 	-ln -f -s ${LIBAFSAUTHENT} ${TOP_LIBDIR}/libafsauthent.${SHLIB_SUFFIX}.${LIBAFSAUTHENTMAJOR}
+ 
+-dest: ${DEST}/lib/${LIBAFSAUTHENT}
++${TOP_LIBDIR}/libafsauthent_pic.a: libafsauthent_pic.a
++	${INSTALL} libafsauthent_pic.a ${TOP_LIBDIR}/libafsauthent_pic.a
++
++dest: ${DEST}/lib/${LIBAFSAUTHENT} ${DEST}/lib/libafsauthent_pic.a
+diff --git a/src/shlibafsrpc/Makefile.in b/src/shlibafsrpc/Makefile.in
+index fc6871c..069115a 100644
+--- a/src/shlibafsrpc/Makefile.in
++++ b/src/shlibafsrpc/Makefile.in
+@@ -134,15 +134,18 @@ LIBOBJS = \
+ 
+ LIBAFSRPC = libafsrpc.${SHLIB_SUFFIX}.${LIBAFSRPCMAJOR}.${LIBAFSRPCMINOR}
+ 
+-all: ${TOP_LIBDIR}/${LIBAFSRPC}
++all: ${TOP_LIBDIR}/${LIBAFSRPC} ${TOP_LIBDIR}/libafsrpc_pic.a
+ 
+-install: ${DESTDIR}${libdir}/${LIBAFSRPC}
++install: ${DESTDIR}${libdir}/${LIBAFSRPC} ${DESTDIR}${libdir}/libafsrpc_pic.a
+ 
+ ${DEST}/lib/${LIBAFSRPC}: ${LIBAFSRPC}
+ 	${INSTALL} ${LIBAFSRPC} ${DEST}/lib/${LIBAFSRPC}
+ 	-ln -f -s ${LIBAFSRPC} ${DEST}/lib/libafsrpc.${SHLIB_SUFFIX}
+ 	-ln -f -s ${LIBAFSRPC} ${DEST}/lib/libafsrpc.${SHLIB_SUFFIX}.${LIBAFSRPCMAJOR}
+ 
++${DEST}/lib/libafsrpc_pic.a: libafsrpc_pic.a
++	${INSTALL} libafsrpc_pic.a ${DEST}/lib/libafsrpc_pic.a
++
+ ${LIBAFSRPC}: ${LIBOBJS}
+ 	case ${SYS_NAME} in \
+ 	rs_aix4* | rs_aix5*) \
+@@ -157,6 +160,11 @@ ${LIBAFSRPC}: ${LIBOBJS}
+ 		${SHLIB_LINKER} -o ${LIBAFSRPC} ${LIBOBJS} ${MT_LIBS};; \
+ 	esac
+ 
++libafsrpc_pic.a: ${LIBOBJS}
++	$(RM) -f $@
++	$(AR) crv $@ ${LIBOBJS}
++	$(RANLIB) $@
++
+ rx_event.o: ${RX}/rx_event.c
+ 	${CCRULE}
+ 
+@@ -418,10 +426,15 @@ ${DESTDIR}${libdir}/${LIBAFSRPC}: ${LIBAFSRPC}
+ 	-ln -f -s ${LIBAFSRPC} ${DESTDIR}${libdir}/libafsrpc.${SHLIB_SUFFIX}
+ 	-ln -f -s ${LIBAFSRPC} ${DESTDIR}${libdir}/libafsrpc.${SHLIB_SUFFIX}.${LIBAFSRPCMAJOR}
+ 
++${DESTDIR}${libdir}/libafsrpc_pic.a: libafsrpc_pic.a
++	${INSTALL} libafsrpc_pic.a ${DESTDIR}${libdir}/libafsrpc_pic.a
++
+ ${TOP_LIBDIR}/${LIBAFSRPC}: ${LIBAFSRPC}
+ 	${INSTALL} ${LIBAFSRPC} ${TOP_LIBDIR}/${LIBAFSRPC}
+ 	-ln -f -s ${LIBAFSRPC} ${TOP_LIBDIR}/libafsrpc.${SHLIB_SUFFIX}
+ 	-ln -f -s ${LIBAFSRPC} ${TOP_LIBDIR}/libafsrpc.${SHLIB_SUFFIX}.${LIBAFSRPCMAJOR}
+ 
+-dest: ${DEST}/lib/${LIBAFSRPC}
++${TOP_LIBDIR}/libafsrpc_pic.a: libafsrpc_pic.a
++	${INSTALL} libafsrpc_pic.a ${TOP_LIBDIR}/libafsrpc_pic.a
+ 
++dest: ${DEST}/lib/${LIBAFSRPC} ${DEST}/lib/libafsrpc_pic.a
+diff --git a/src/tests/dumptool.c b/src/tests/dumptool.c
+index 9356549..decf80b 100644
+--- a/src/tests/dumptool.c
++++ b/src/tests/dumptool.c
+@@ -314,6 +314,7 @@ main(int argc, char *argv[])
+     struct winsize win;
+     FILE *f;
+     int fd;
++    time_t tmv;
+ 
+ #ifdef RESIDENCY
+     for (i = 0; i < RS_MAXRESIDENCIES; i++) {
+@@ -486,9 +487,12 @@ main(int argc, char *argv[])
+ 	    printf(" needsSalvaged");
+ 	printf("\n");
+ 	printf("\tuniquifier = %lu\n", vol.uniquifier);
+-	printf("\tCreation date = %s", ctime((time_t *) & vol.creationDate));
+-	printf("\tLast access date = %s", ctime((time_t *) & vol.accessDate));
+-	printf("\tLast update date = %s", ctime((time_t *) & vol.updateDate));
++	tmv = vol.creationDate;
++	printf("\tCreation date = %s", ctime(&tmv));
++	tmv = vol.accessDate;
++	printf("\tLast access date = %s", ctime(&tmv));
++	tmv = vol.updateDate;
++	printf("\tLast update date = %s", ctime(&tmv));
+ 	printf("\tVolume owner = %lu\n", vol.owner);
+     }
+ 
+diff --git a/src/ubik/recovery.c b/src/ubik/recovery.c
+index 33b95a3..581abe4 100644
+--- a/src/ubik/recovery.c
++++ b/src/ubik/recovery.c
+@@ -207,6 +207,7 @@ ReplayLog(register struct ubik_dbase *adbase)
+ 			     sizeof(afs_int32));
+ 	if (code != sizeof(afs_int32))
+ 	    break;
++	opcode = ntohl(opcode);
+ 	if (opcode == LOGNEW) {
+ 	    /* handle begin trans */
+ 	    tpos += sizeof(afs_int32);
+@@ -231,7 +232,7 @@ ReplayLog(register struct ubik_dbase *adbase)
+ 	    if (code != 3 * sizeof(afs_int32))
+ 		break;
+ 	    /* otherwise, skip over the data bytes, too */
+-	    tpos += buffer[2] + 3 * sizeof(afs_int32);
++	    tpos += ntohl(buffer[2]) + 3 * sizeof(afs_int32);
+ 	} else {
+ 	    ubik_dprint("corrupt log opcode (%d) at position %d\n", opcode,
+ 			tpos);
+@@ -250,6 +251,7 @@ ReplayLog(register struct ubik_dbase *adbase)
+ 				 sizeof(afs_int32));
+ 	    if (code != sizeof(afs_int32))
+ 		break;
++	    opcode = ntohl(opcode);
+ 	    if (opcode == LOGNEW) {
+ 		/* handle begin trans */
+ 		tpos += sizeof(afs_int32);
+diff --git a/src/venus/fstrace.c b/src/venus/fstrace.c
+index a3f6bce..389578b 100644
+--- a/src/venus/fstrace.c
++++ b/src/venus/fstrace.c
+@@ -278,6 +278,7 @@ DisplayRecord(outFilep, alp, rsize)
+     int status;
+     int printed;		/* did we print the string yet? */
+     afs_int32 *tlp;
++    time_t tmv;
+ 
+     /* decode parameters */
+     temp = alp[0];		/* type encoded in low-order 24 bits, t0 high */
+@@ -347,7 +348,8 @@ DisplayRecord(outFilep, alp, rsize)
+ #endif /* AFS_SGI64_ENV */
+ 	    break;
+ 	case ICL_TYPE_UNIXDATE:
+-	    printfParms[pfpix++] = (long)ctime((time_t *) & alp[pix]);
++	    tmv = alp[pix];
++	    printfParms[pfpix++] = (long)ctime(&tmv);
+ 	    break;
+ 	default:
+ 	    printf("DisplayRecord: Bad type %d in decode switch.\n", type);
+@@ -443,8 +445,9 @@ DisplayRecord(outFilep, alp, rsize)
+     }
+     if (!printed) {
+ 	if (alp[1] == ICL_INFO_TIMESTAMP) {
++	    tmv = alp[4];
+ 	    fprintf(outFilep, "time %d.%06d, pid %u: %s\n", alp[3] / 1000000,
+-		    alp[3] % 1000000, alp[2], ctime((time_t *) & alp[4]));
++		    alp[3] % 1000000, alp[2], ctime(&tmv));
+ 	} else {
+ 	    fprintf(outFilep, "raw op %d, time %d.%06d, pid %u\n", alp[1],
+ 		    alp[3] / 1000000, alp[3] % 1000000, alp[2]);
+@@ -493,8 +496,9 @@ DisplayRecord(outFilep, alp, rsize)
+ 		    fprintf(outFilep, "p%d:%s ", i, (char *)&alp[pix]);
+ 		    break;
+ 		case ICL_TYPE_UNIXDATE:
++		    tmv = alp[pix];
+ 		    fprintf(outFilep, "p%d:%s ", i,
+-			    ctime((time_t *) & alp[pix]));
++			    ctime(&tmv));
+ 		    break;
+ 		default:
+ 		    printf
+diff --git a/src/viced/afsfileprocs.c b/src/viced/afsfileprocs.c
+index 92338b4..d5f6633 100644
+--- a/src/viced/afsfileprocs.c
++++ b/src/viced/afsfileprocs.c
+@@ -7469,7 +7469,8 @@ StoreData_RXStyle(Volume * volptr, Vnode * targetptr, struct AFSFid * Fid,
+ 	FDH_SYNC(fdP);
+     }
+     if (errorCode) {
+-	afs_fsize_t nfSize = (afs_fsize_t) FDH_SIZE(fdP);
++	afs_sfsize_t nfSize = FDH_SIZE(fdP);
++	assert(nfSize >= 0);
+ 	/* something went wrong: adjust size and return */
+ 	VN_SET_LEN(targetptr, nfSize);	/* set new file size. */
+ 	/* changed_newTime is tested in StoreData to detemine if we
+diff --git a/src/viced/callback.c b/src/viced/callback.c
+index 4b5d04d..ceaacf7 100644
+--- a/src/viced/callback.c
++++ b/src/viced/callback.c
+@@ -292,8 +292,6 @@ static int MultiBreakVolumeCallBack(struct host *host, int isheld,
+ 				    struct VCBParams *parms);
+ static int MultiBreakVolumeLaterCallBack(struct host *host, int isheld,
+ 					 struct VCBParams *parms);
+-static int lih_r(register struct host *host, register int held,
+-		 register struct host *hostp);
+ static int GetSomeSpace_r(struct host *hostp, int locked);
+ static int ClearHostCallbacks_r(struct host *hp, int locked);
+ 
+@@ -1577,68 +1575,88 @@ CleanupTimedOutCallBacks_r(void)
+     return (ntimedout > 0);
+ }
+ 
+-static struct host *lih_host;
+-static int lih_host_held;
++/**
++ * parameters to pass to lih*_r from h_Enumerate_r when trying to find a host
++ * from which to clear callbacks.
++ */
++struct lih_params {
++    /**
++     * Points to the least interesting host found; try to clear callbacks on
++     * this host after h_Enumerate_r(lih*_r)'ing.
++     */
++    struct host *lih;
+ 
+-static int
+-lih_r(register struct host *host, register int held,
+-      register struct host *hostp)
+-{
+-    if (host->cblist
+-	&& ((hostp && host != hostp) || (!held && !h_OtherHolds_r(host)))
+-	&& (!lih_host || host->ActiveCall < lih_host->ActiveCall)) {
+-	if (lih_host != NULL && lih_host_held) {
+-	    h_Release_r(lih_host);
+-	}
+-	lih_host = host;
+-	lih_host_held = !held;
+-	held = 1;
+-    }
+-    return held;
+-}
++    /**
++     * The last host we got from lih*_r, but we couldn't clear its callbacks
++     * for some reason. Choose the next-best host after this one (with the
++     * current lih*_r, this means to only select hosts that have an ActiveCall
++     * newer than lastlih).
++     */
++    struct host *lastlih;
++
++    /**
++     * 1 if lih was held, 0 if it was not and should be released.
++     */
++    int lih_held;
++};
+ 
+ /* This version does not allow 'host' to be selected unless its ActiveCall 
+- * is newer than 'hostp' which is the host with the oldest ActiveCall from
+- * the last pass (if it is provided).  We filter out any hosts that are
+- * are held by other threads.
++ * is newer than 'params->lastlih' which is the host with the oldest
++ * ActiveCall from the last pass (if it is provided).  We filter out any hosts
++ * that are are held by other threads.
++ *
++ * There is a small problem here, but it may not be easily fixable. Say we
++ * select some host A, and give it back to GetSomeSpace_r. GSS_r for some
++ * reason cannot clear the callbacks on A, and so calls us again with
++ * lastlih = A. Suppose there is another host B that has the same ActiveCall
++ * time as A. We will now skip over host B, since
++ * 'hostB->ActiveCall > hostA->ActiveCall' is not true. This could result in
++ * us prematurely going to the GSS_r 2nd or 3rd pass, and making us a little
++ * inefficient. This should be pretty rare, though, except perhaps in cases
++ * with very small numbers of hosts.
++ *
++ * Also filter out any hosts with HOSTDELETED set. h_Enumerate_r should in
++ * theory not give these to us anyway, but be paranoid.
+  */
+ static int
+-lih0_r(register struct host *host, register int held,
+-      register struct host *hostp)
++lih0_r(struct host *host, int held, void *rock)
+ {
++    struct lih_params *params = (struct lih_params *)rock;
++
+     if (host->cblist
+-	&& (hostp && host != hostp) 
++	&& (!(host->hostFlags & HOSTDELETED))
+ 	&& (!held && !h_OtherHolds_r(host))
+-	&& (!lih_host || host->ActiveCall < lih_host->ActiveCall) 
+-	&& (!hostp || host->ActiveCall > hostp->ActiveCall)) {
+-	if (lih_host != NULL && lih_host_held) {
+-	    h_Release_r(lih_host);
++	&& (!params->lih || host->ActiveCall < params->lih->ActiveCall)
++	&& (!params->lastlih || host->ActiveCall > params->lastlih->ActiveCall)) {
++
++	if (params->lih && !params->lih_held) {
++	    h_Release_r(params->lih); /* release prev host */
+ 	}
+-	lih_host = host;
+-	lih_host_held = !held;
++
++	params->lih = host;
++	params->lih_held = held;
+ 	held = 1;
+     }
+     return held;
+ }
+ 
+-/* This version does not allow 'host' to be selected unless its ActiveCall 
+- * is newer than 'hostp' which is the host with the oldest ActiveCall from
+- * the last pass (if it is provided).  In this second varient, we do not 
+- * prevent held hosts from being selected.
+- */
++/* same as lih0_r, except we do not prevent held hosts from being selected. */
+ static int
+-lih1_r(register struct host *host, register int held,
+-      register struct host *hostp)
++lih1_r(struct host *host, int held, void *rock)
+ {
++    struct lih_params *params = (struct lih_params *)rock;
++
+     if (host->cblist
+-	&& (hostp && host != hostp) 
+-	&& (!lih_host || host->ActiveCall < lih_host->ActiveCall) 
+-	&& (!hostp || host->ActiveCall > hostp->ActiveCall)) {
+-	if (lih_host != NULL && lih_host_held) {
+-	    h_Release_r(lih_host);
++	&& (!(host->hostFlags & HOSTDELETED))
++	&& (!params->lih || host->ActiveCall < params->lih->ActiveCall)
++	&& (!params->lastlih || host->ActiveCall > params->lastlih->ActiveCall)) {
++
++	if (params->lih && !params->lih_held) {
++	    h_Release_r(params->lih); /* release prev host */
+ 	}
+-	lih_host = host;
+-	lih_host_held = !held;
++
++	params->lih = host;
++	params->lih_held = held;
+ 	held = 1;
+     }
+     return held;
+@@ -1659,8 +1677,10 @@ extern struct host *hostList;
+ static int
+ GetSomeSpace_r(struct host *hostp, int locked)
+ {
+-    register struct host *hp, *hp1, *hp2;
++    struct host *hp;
++    struct lih_params params;
+     int i = 0;
++    int lastlih_held = 1;
+ 
+     cbstuff.GotSomeSpaces++;
+     ViceLog(5,
+@@ -1671,38 +1691,43 @@ GetSomeSpace_r(struct host *hostp, int locked)
+     }
+ 
+     i = 0;
+-    hp1 = NULL;
+-    hp2 = hostList;
++    params.lastlih = NULL;
++
+     do {
+-	lih_host = 0;
+-	h_Enumerate_r(i == 0 ? lih0_r : lih1_r, hp2, (char *)hp1);
+-	hp = lih_host;
++	params.lih = NULL;
++
++	h_Enumerate_r(i == 0 ? lih0_r : lih1_r, hostList, &params);
++
++	hp = params.lih;
++	if (params.lastlih && !lastlih_held) {
++	    h_Release_r(params.lastlih);
++	    lastlih_held = 1;
++	}
++	params.lastlih = NULL;
++
+ 	if (hp) {
+-	    /* set in lih_r! private copy before giving up H_LOCK */
+-	    int lih_host_held2=lih_host_held;   
++	    /* note that 'hp' was held by lih*_r; we will need to release it */
+ 	    cbstuff.GSS4++;
+ 	    if ((hp != hostp) && !ClearHostCallbacks_r(hp, 0 /* not locked or held */ )) {
+-		if (lih_host_held2)
++		if (!params.lih_held) {
+ 		    h_Release_r(hp);
++		}
+ 		return 0;
+ 	    }
+-	    if (lih_host_held2) {
+-		h_Release_r(hp);
+-		hp = NULL;
+-	    }
+-	    hp1 = hp;
+-	    hp2 = hostList;
++
++	    params.lastlih = hp;
++	    lastlih_held = params.lih_held;
++	    /* params.lastlih will be released on the next iteration, after
++	     * h_Enumerate_r */
++
+ 	} else {
+ 	    /*
+ 	     * Next time try getting callbacks from any host even if
+-	     * it's deleted (that's actually great since we can freely
+-	     * remove its callbacks) or it's held since the only other
+-	     * option is starvation for the file server (i.e. until the
+-	     * callback timeout arrives).
++	     * it's held, since the only other option is starvation for
++	     * the file server (i.e. until the callback timeout arrives).
+ 	     */
+ 	    i++;
+-	    hp1 = NULL;
+-	    hp2 = hostList;
++	    params.lastlih = NULL;
+ 	    cbstuff.GSS1++;
+ 	    ViceLog(5,
+ 		    ("GSS: Try harder for longest inactive host cnt= %d\n",
+@@ -2159,10 +2184,10 @@ MultiBreakCallBackAlternateAddress_r(struct host *host,
+ 	    if (host->callback_rxcon)
+ 		rx_DestroyConnection(host->callback_rxcon);
+ 	    host->callback_rxcon = conns[multi_i];
+-            hashDelete_r(host->host, host->port, host);
++            h_DeleteHostFromAddrHashTable_r(host->host, host->port, host);
+ 	    host->host = interfaces[multi_i].addr;
+ 	    host->port = interfaces[multi_i].port;
+-            hashInsert_r(host->host, host->port, host);
++            h_AddHostToAddrHashTable_r(host->host, host->port, host);
+ 	    connSuccess = conns[multi_i];
+ 	    rx_SetConnDeadTime(host->callback_rxcon, 50);
+ 	    rx_SetConnHardDeadTime(host->callback_rxcon, AFS_HARDDEADTIME);
+@@ -2252,11 +2277,11 @@ MultiProbeAlternateAddress_r(struct host *host)
+ 	    H_LOCK;
+ 	    if (host->callback_rxcon)
+ 		rx_DestroyConnection(host->callback_rxcon);
+-            hashDelete_r(host->host, host->port, host);
++            h_DeleteHostFromAddrHashTable_r(host->host, host->port, host);
+ 	    host->callback_rxcon = conns[multi_i];
+ 	    host->host = interfaces[multi_i].addr;
+ 	    host->port = interfaces[multi_i].port;
+-            hashInsert_r(host->host, host->port, host);
++            h_AddHostToAddrHashTable_r(host->host, host->port, host);
+ 	    connSuccess = conns[multi_i];
+ 	    rx_SetConnDeadTime(host->callback_rxcon, 50);
+ 	    rx_SetConnHardDeadTime(host->callback_rxcon, AFS_HARDDEADTIME);
+diff --git a/src/viced/host.c b/src/viced/host.c
+index 77f66c9..84ddac0 100644
+--- a/src/viced/host.c
++++ b/src/viced/host.c
+@@ -10,7 +10,6 @@
+ #include <afsconfig.h>
+ #include <afs/param.h>
+ 
+-
+ #include <stdio.h>
+ #include <errno.h>
+ #include <string.h>
+@@ -503,15 +502,17 @@ h_Release_r(register struct host *host)
+ 	if (!h_OtherHolds_r(host)) {
+ 	    /* must avoid masking this until after h_OtherHolds_r runs
+ 	     * but it should be run before h_TossStuff_r */
+-	    (host)->holds[h_holdSlot()] &= ~h_holdbit();
++	    h_Decrement_r(host);
+ 	    if ((host->hostFlags & HOSTDELETED)
+ 		|| (host->hostFlags & CLIENTDELETED)) {
+ 		h_TossStuff_r(host);
+ 	    }
+-	} else
+-	    (host)->holds[h_holdSlot()] &= ~h_holdbit();
+-    } else
+-	(host)->holds[h_holdSlot()] &= ~h_holdbit();
++	} else {
++	    h_Decrement_r(host);
++	}
++    } else {
++	h_Decrement_r(host);
++    }
+ 
+     return 0;
+ }
+@@ -766,7 +767,7 @@ h_Alloc_r(register struct rx_connection *r_con)
+     host->host = rxr_HostOf(r_con);
+     host->port = rxr_PortOf(r_con);
+ 
+-    hashInsert_r(host->host, host->port, host);
++    h_AddHostToAddrHashTable_r(host->host, host->port, host);
+ 
+     if (consolePort == 0) {	/* find the portal number for console */
+ #if	defined(AFS_OSF_ENV)
+@@ -887,12 +888,10 @@ h_LookupUuid_r(afsUUID * uuidp)
+ 	assert(host);
+ 	if (!(host->hostFlags & HOSTDELETED) && host->interface
+ 	    && afs_uuid_equal(&host->interface->uuid, uuidp)) {
+-	    break;
++	    return host;
+ 	}
+-	host = NULL;
+     }
+-    return host;
+-
++    return NULL;
+ }				/*h_Lookup */
+ 
+ 
+@@ -913,23 +912,39 @@ h_TossStuff_r(register struct host *host)
+ {
+     register struct client **cp, *client;
+     int i;
++    int code;
+ 
+-    /* if somebody still has this host held */
+-    for (i = 0; (i < h_maxSlots) && (!(host)->holds[i]); i++);
+-    if (i != h_maxSlots)
+-	return;
++    /* make sure host doesn't go away over h_NBLock_r */
++    h_Hold_r(host);
++
++    code = h_NBLock_r(host);
++
++    /* don't use h_Release_r, since that may call h_TossStuff_r again */
++    h_Decrement_r(host);
+ 
+     /* if somebody still has this host locked */
+-    if (h_NBLock_r(host) != 0) {
++    if (code != 0) {
+ 	char hoststr[16];
+ 	ViceLog(0,
+-		("Warning:  h_TossStuff_r failed; Host %s:%d was locked.\n",
+-		 afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
++		("Warning:  h_TossStuff_r failed; Host 0x%lx (%s:%d) was locked.\n",
++		 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
+ 	return;
+     } else {
+ 	h_Unlock_r(host);
+     }
+ 
++    /* if somebody still has this host held */
++    /* we must check this _after_ h_NBLock_r, since h_NBLock_r can drop and
++     * reacquire H_LOCK */
++    for (i = 0; (i < h_maxSlots) && (!(host)->holds[i]); i++);
++    if (i != h_maxSlots) {
++	char hoststr[16];
++	ViceLog(0,
++		("Warning:  h_TossStuff_r failed; Host 0x%lx (%s:%d) was held.\n",
++		 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
++	return;
++    }
++
+     /* ASSUMPTION: rxi_FreeConnection() does not yield */
+     for (cp = &host->FirstClient; (client = *cp);) {
+ 	if ((host->hostFlags & HOSTDELETED) || client->deleted) {
+@@ -938,8 +953,8 @@ h_TossStuff_r(register struct host *host)
+ 	    if (code < 0) {
+ 		char hoststr[16];
+ 		ViceLog(0,
+-			("Warning: h_TossStuff_r failed: Host %s:%d client %x was locked.\n",
+-			 afs_inet_ntoa_r(host->host, hoststr),
++			("Warning: h_TossStuff_r failed: Host 0x%lx (%s:%d) client %x was locked.\n",
++			 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 			 ntohs(host->port), client));
+ 		return;
+ 	    }
+@@ -947,8 +962,8 @@ h_TossStuff_r(register struct host *host)
+ 	    if (client->refCount) {
+ 		char hoststr[16];
+ 		ViceLog(0,
+-			("Warning: h_TossStuff_r failed: Host %s:%d client %x refcount %d.\n",
+-			 afs_inet_ntoa_r(host->host, hoststr),
++			("Warning: h_TossStuff_r failed: Host 0x%lx (%s:%d) client %x refcount %d.\n",
++			 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 			 ntohs(host->port), client, client->refCount));
+ 		/* This is the same thing we do if the host is locked */
+ 		ReleaseWriteLock(&client->lock);
+@@ -970,9 +985,7 @@ h_TossStuff_r(register struct host *host)
+     host->hostFlags &= ~CLIENTDELETED;
+ 
+     if (host->hostFlags & HOSTDELETED) {
+-        register struct h_AddrHashChain **ahp, *ath;
+ 	register struct rx_connection *rxconn;
+-	afsUUID *uuidp;
+ 	struct AddrPort hostAddrPort;
+ 	int i;
+ 
+@@ -991,44 +1004,22 @@ h_TossStuff_r(register struct host *host)
+ 
+ 	/* if alternate addresses do not exist */
+ 	if (!(host->interface)) {
+-	    for (ahp = &hostAddrHashTable[h_HashIndex(host->host)]; (ath = *ahp);
+-		 ahp = &ath->next) {
+-		assert(ath->hostPtr);
+-		if (ath->hostPtr == host) {
+-		    *ahp = ath->next;
+-		    free(ath);
+-		    break;
+-		}
+-	    }
++	    h_DeleteHostFromAddrHashTable_r(host->host, host->port, host);
+ 	} else {
+-            register struct h_UuidHashChain **uhp, *uth;
+-	    /* delete the hash entry for the UUID */
+-	    uuidp = &host->interface->uuid;
+-	    for (uhp = &hostUuidHashTable[h_UuidHashIndex(uuidp)]; (uth = *uhp);
+-		 uhp = &uth->next) {
+-		assert(uth->hostPtr);
+-		if (uth->hostPtr == host) {
+-		    *uhp = uth->next;
+-		    free(uth);
+-		    break;
+-		}
+-	    }
+-	    /* delete the hash entry for each alternate addresses */
++	    h_DeleteHostFromUuidHashTable_r(host);
++	    h_DeleteHostFromAddrHashTable_r(host->host, host->port, host);
++	    /* delete the hash entry for each valid alternate addresses */
+ 	    for (i = 0; i < host->interface->numberOfInterfaces; i++) {
+ 		hostAddrPort = host->interface->interface[i];
+-
+-                if (!hostAddrPort.valid)
+-                    continue;
+-
+-		for (ahp = &hostAddrHashTable[h_HashIndex(hostAddrPort.addr)]; (ath = *ahp);
+-		     ahp = &ath->next) {
+-		    assert(ath->hostPtr);
+-		    if (ath->hostPtr == host) {
+-			*ahp = ath->next;
+-			free(ath);
+-			break;
+-		    }
+-		}
++		/*
++		 * if the interface addr/port is the primary, we already
++		 * removed it.  If the addr/port is not valid, its not
++		 * in the hash table.
++		 */
++		if (hostAddrPort.valid &&
++		    (host->host != hostAddrPort.addr ||
++		     host->port != hostAddrPort.port))
++		    h_DeleteHostFromAddrHashTable_r(hostAddrPort.addr, hostAddrPort.port, host);
+ 	    }
+ 	    free(host->interface);
+ 	    host->interface = NULL;
+@@ -1184,65 +1175,124 @@ h_Enumerate_r(int (*proc) (), struct host *enumstart, char *param)
+ 
+ /* inserts a new HashChain structure corresponding to this UUID */
+ void
+-hashInsertUuid_r(struct afsUUID *uuid, struct host *host)
++h_AddHostToUuidHashTable_r(struct afsUUID *uuid, struct host *host)
+ {
+     int index;
+     struct h_UuidHashChain *chain;
++    char uuid1[128], uuid2[128];
++    char hoststr[16];
+ 
+     /* hash into proper bucket */
+     index = h_UuidHashIndex(uuid);
+ 
+     /* don't add the same entry multiple times */
+     for (chain = hostUuidHashTable[index]; chain; chain = chain->next) {
++	if (!chain->hostPtr)
++	    continue;
++
+ 	if (chain->hostPtr->interface && 
+-	    afs_uuid_equal(&chain->hostPtr->interface->uuid, uuid))
++	    afs_uuid_equal(&chain->hostPtr->interface->uuid, uuid)) {
++	    if (LogLevel >= 125) {
++		afsUUID_to_string(&chain->hostPtr->interface->uuid, uuid1, 127);
++		afsUUID_to_string(uuid, uuid2, 127);
++		ViceLog(125, ("h_AddHostToUuidHashTable_r: host 0x%lx (uuid %s) exists as %s:%d (uuid %s)\n",
++                             (unsigned long) host, uuid1,
++                             afs_inet_ntoa_r(chain->hostPtr->host, hoststr), 
++                             ntohs(chain->hostPtr->port), uuid2));
++	    }
+ 	    return;
++	}
+     }
+ 
+     /* insert into beginning of list for this bucket */
+     chain = (struct h_UuidHashChain *)malloc(sizeof(struct h_UuidHashChain));
+     if (!chain) {
+-	ViceLog(0, ("Failed malloc in hashInsertUuid_r\n"));
++	ViceLog(0, ("Failed malloc in h_AddHostToUuidHashTable_r\n"));
+ 	assert(0);
+     }
+-    assert(chain);
+     chain->hostPtr = host;
+     chain->next = hostUuidHashTable[index];
+     hostUuidHashTable[index] = chain;
++    if (LogLevel < 125)
++	return;
++    afsUUID_to_string(uuid, uuid2, 127);
++    ViceLog(125, 
++            ("h_AddHostToUuidHashTable_r: host 0x%lx (%s:%d) added as uuid %s\n",
++             (unsigned long) host, afs_inet_ntoa_r(chain->hostPtr->host, hoststr),
++             ntohs(chain->hostPtr->port), uuid2));
+ }
+ 
++/* deletes a HashChain structure corresponding to this host */
++int
++h_DeleteHostFromUuidHashTable_r(struct host *host)
++{
++    int index;
++    register struct h_UuidHashChain **uhp, *uth;
++    char uuid1[128];
++    char hoststr[16];
++ 
++    if (!host->interface)
++	return 0;
++ 
++    /* hash into proper bucket */
++    index = h_UuidHashIndex(&host->interface->uuid);
++     
++    if (LogLevel >= 125)
++	afsUUID_to_string(&host->interface->uuid, uuid1, 127);
++    for (uhp = &hostUuidHashTable[index]; (uth = *uhp); uhp = &uth->next) {
++	assert(uth->hostPtr);
++	if (uth->hostPtr == host) {
++	    ViceLog(125, 
++                    ("h_DeleteHostFromUuidHashTable_r: host 0x%lx (uuid %s %s:%d)\n",
++                     (unsigned long) host, uuid1, afs_inet_ntoa_r(host->host, hoststr),
++                     ntohs(host->port)));
++	    *uhp = uth->next;
++	    free(uth);
++	    return 1;
++	}
++    }
++    ViceLog(125, 
++            ("h_DeleteHostFromUuidHashTable_r: host 0x%lx (uuid %s %s:%d) not found\n",
++             (unsigned long) host, uuid1, afs_inet_ntoa_r(host->host, hoststr),
++             ntohs(host->port)));
++    return 0;
++}
+ 
+ /* inserts a new HashChain structure corresponding to this address */
+ void
+-hashInsert_r(afs_uint32 addr, afs_uint16 port, struct host *host)
++h_AddHostToAddrHashTable_r(afs_uint32 addr, afs_uint16 port, struct host *host)
+ {
+     int index;
+     struct h_AddrHashChain *chain;
+     int found = 0;
+-    char hoststr[16]; 
++    char hoststr[16], hoststr2[16]; 
+   
+     /* hash into proper bucket */
+     index = h_HashIndex(addr);
+ 
+     /* don't add the same entry multiple times */
+     for (chain = hostAddrHashTable[index]; chain; chain = chain->next) {
+-	if (chain->addr == addr && chain->port == port) {
+-	    if (chain->hostPtr == host)
+-		found = 1;
+-	    else if (!(host->hostFlags & HOSTDELETED))
+-		ViceLog(125, ("Addr %s:%d assigned to %x and %x.\n",
+-			    afs_inet_ntoa_r(addr, hoststr), ntohs(port),
+-			    host, chain));
++	if (chain->hostPtr == host) {
++	    if (chain->addr != addr || chain->port != port) {
++		ViceLog(0, 
++                       ("h_AddHostToAddrHashTable_r: host 0x%lx exists as %s:%d when adding %s:%d\n",
++                        (unsigned long) host, afs_inet_ntoa_r(chain->addr, hoststr),
++                        ntohs(chain->port), afs_inet_ntoa_r(addr, hoststr2), 
++                        ntohs(port)));
++	    } else
++		ViceLog(125, 
++                       ("h_AddHostToAddrHashTable_r: host 0x%lx (%s:%d) already hashed\n",
++                        (unsigned long) host, afs_inet_ntoa_r(chain->addr, hoststr),
++                        ntohs(chain->port)));
++           
++	    return;
+ 	}
+     }
+ 
+-    if (found)
+-	return;
+-
+     /* insert into beginning of list for this bucket */
+     chain = (struct h_AddrHashChain *)malloc(sizeof(struct h_AddrHashChain));
+     if (!chain) {
+-	ViceLog(0, ("Failed malloc in hashInsert_r\n"));
++	ViceLog(0, ("Failed malloc in h_AddHostToAddrHashTable_r\n"));
+ 	assert(0);
+     }
+     chain->hostPtr = host;
+@@ -1250,13 +1300,14 @@ hashInsert_r(afs_uint32 addr, afs_uint16 port, struct host *host)
+     chain->addr = addr;
+     chain->port = port;
+     hostAddrHashTable[index] = chain;
++    ViceLog(125, ("h_AddHostToAddrHashTable_r: host 0x%lx added as %s:%d\n",
++                  (unsigned long) host, afs_inet_ntoa_r(addr, hoststr), ntohs(port)));
+ }
+ 
+ /*
+- * This is called with host locked and held. At this point, the
+- * hostAddrHashTable should not have entries for the alternate
+- * interfaces. This function has to insert these entries in the
+- * hostAddrHashTable.
++ * This is called with host locked and held. 
++ * It is called to either validate or add an additional interface
++ * address/port on the specified host.  
+  *
+  * All addresses are in network byte order.
+  */
+@@ -1279,22 +1330,25 @@ addInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port)
+     for (i = 0; i < number; i++) {
+ 	if (host->interface->interface[i].addr == addr &&
+             host->interface->interface[i].port == port) {
+-	    ViceLog(125, ("addInterfaceAddr : host %x (%s:%d) addr %s:%d : found, valid: %d\n",
+-			  host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port),
+-			  afs_inet_ntoa_r(addr, hoststr2), ntohs(port),
+-			  host->interface->interface[i].valid));
++	    ViceLog(125, 
++                   ("addInterfaceAddr : found host 0x%lx (%s:%d) adding %s:%d%s\n",
++                    (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
++                    ntohs(host->port), afs_inet_ntoa_r(addr, hoststr2), 
++                    ntohs(port), host->interface->interface[i].valid ? "" : 
++                    ", validating"));
+ 
+ 	    if (host->interface->interface[i].valid == 0) {
+-		hashInsert_r(addr, port, host);
+ 		host->interface->interface[i].valid = 1;
++		h_AddHostToAddrHashTable_r(addr, port, host);
+ 	    }
+ 	    return 0;
+         }
+     }
+ 
+-    ViceLog(125, ("addInterfaceAddr : host %x (%s:%d) addr %s:%d : not found, adding\n",
+-		  host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port),
+-		  afs_inet_ntoa_r(addr, hoststr2), ntohs(port)));
++    ViceLog(125, ("addInterfaceAddr : host 0x%lx (%s:%d) adding %s:%d\n",
++                 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
++                 ntohs(host->port), afs_inet_ntoa_r(addr, hoststr2), 
++                 ntohs(port)));
+     
+     interface = (struct Interface *)
+ 	malloc(sizeof(struct Interface) + (sizeof(struct AddrPort) * number));
+@@ -1306,9 +1360,12 @@ addInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port)
+     interface->uuid = host->interface->uuid;
+     for (i = 0; i < number; i++)
+ 	interface->interface[i] = host->interface->interface[i];
++
++    /* Add the new valid interface */
+     interface->interface[number].addr = addr;
+     interface->interface[number].port = port;
+     interface->interface[number].valid = 1;
++    h_AddHostToAddrHashTable_r(addr, port, host);
+     free(host->interface);
+     host->interface = interface;
+ 
+@@ -1317,10 +1374,7 @@ addInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port)
+ 
+ 
+ /*
+- * This is called with host locked and held. At this point, the
+- * hostAddrHashTable should not be having entries for the alternate
+- * interfaces. This function has to insert these entries in the
+- * hostAddrHashTable.
++ * This is called with host locked and held.
+  *
+  * All addresses are in network byte order.
+  */
+@@ -1329,16 +1383,16 @@ removeInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port)
+ {
+     int i;
+     int number;
+-    int found;
+     struct Interface *interface;
+     char hoststr[16], hoststr2[16];
+ 
+     assert(host);
+     assert(host->interface);
+ 
+-    ViceLog(125, ("removeInterfaceAddr : host %x (%s:%d) addr %s:%d\n", 
+-		   host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port), 
+-		   afs_inet_ntoa_r(addr, hoststr2), ntohs(port)));
++    ViceLog(125, ("removeInterfaceAddr : host 0x%lx (%s:%d) addr %s:%d\n",
++                 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
++                 ntohs(host->port), afs_inet_ntoa_r(addr, hoststr2), 
++                 ntohs(port)));
+ 
+     /*
+      * Make sure this address is on the list of known addresses
+@@ -1346,26 +1400,62 @@ removeInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port)
+      */
+     interface = host->interface;
+     number = host->interface->numberOfInterfaces;
+-    for (i = 0, found = 0; i < number && !found; i++) {
+-	if (interface->interface[i].addr == addr &&
+-	    interface->interface[i].port == port) {
+-	    found = 1;
+-            interface->interface[i].valid = 0;
+-	}
+-    }
+-    if (found) {
+-	number--;
+-	for (; i < number; i++) {
+-	    interface->interface[i] = interface->interface[i+1];
++    for (i = 0; i < number; i++) {
++        if (interface->interface[i].addr == addr &&
++            interface->interface[i].port == port) {
++	    if (interface->interface[i].valid)
++		h_DeleteHostFromAddrHashTable_r(addr, port, host);
++	    number--;
++	    for (; i < number; i++) {
++		interface->interface[i] = interface->interface[i+1];
++	    }
++	    interface->numberOfInterfaces = number;
++	    return 0;
+ 	}
+-	interface->numberOfInterfaces = number;
+-    }
++    }  
++    /* not found */
++    return 0;
++}
++
++/*
++ * This is called with host locked and held.
++ *
++ * All addresses are in network byte order.
++ */
++int
++invalidateInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port)
++{
++    int i;
++    int number;
++    struct Interface *interface;
++    char hoststr[16], hoststr2[16];
++
++    assert(host);
++    assert(host->interface);
++    
++    ViceLog(125, ("invalidateInterfaceAddr : host 0x%lx (%s:%d) addr %s:%d\n",
++                 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
++                 ntohs(host->port), afs_inet_ntoa_r(addr, hoststr2), 
++                 ntohs(port)));
+ 
+     /*
+-     * Remove the hash table entry for this address
++     * Make sure this address is on the list of known addresses
++     * for this host.
+      */
+-    hashDelete_r(addr, port, host);
+-
++    interface = host->interface;
++    number = host->interface->numberOfInterfaces;
++    for (i = 0; i < number; i++) {
++	if (interface->interface[i].addr == addr &&
++            interface->interface[i].port == port) {
++	    if (interface->interface[i].valid) {
++		h_DeleteHostFromAddrHashTable_r(addr, port, host);
++		interface->interface[i].valid = 0;
++	    }
++	    return 0;
++	}
++    }
++    
++    /* not found */
+     return 0;
+ }
+ 
+@@ -1383,62 +1473,53 @@ removeAddress_r(struct host *host, afs_uint32 addr, afs_uint16 port)
+ {
+     int i;
+     char hoststr[16], hoststr2[16];
++    struct rx_connection *rxconn;
+ 
+-    if (!host->interface) {
++    if (!host->interface || host->interface->numberOfInterfaces == 1) {
+         if (host->host == addr && host->port == port) {
+             ViceLog(25,
+-                    ("Removing only address for host %x (%s:%d), deleting host.\n",
+-                     host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
++                    ("Removing only address for host 0x%lx (%s:%d), deleting host.\n",
++                     (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
+             host->hostFlags |= HOSTDELETED;
++            /* 
++             * Do not remove the primary addr/port from the hash table.
++             * It will be ignored due to the HOSTDELETED flag and will
++             * be removed when h_TossStuff_r() cleans up the HOSTDELETED
++             * host.  Removing it here will only result in a search for 
++             * the host/addr/port in the hash chain which will fail.
++             */
++	} else {
++            ViceLog(0,
++                    ("Removing address that does not belong to host 0x%lx (%s:%d).\n",
++                     (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
+         }
+     } else {
+-        removeInterfaceAddr_r(host, host->host, host->port);
+-        if (host->interface->numberOfInterfaces == 0) {
+-            ViceLog(25,
+-                     ("Removed only address for host %x (%s:%d), no alternate interfaces, deleting host.\n",
+-                       host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
+-            host->hostFlags |= HOSTDELETED;
+-        } else {
++	if (host->host == addr && host->port == port)  {
++	    removeInterfaceAddr_r(host, addr, port);
+ 
+             for (i=0; i < host->interface->numberOfInterfaces; i++) {
+                 if (host->interface->interface[i].valid) {
+                     ViceLog(25,
+-                             ("Removed address for host %x (%s:%d), new primary interface %s:%d.\n",
+-                               host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port),
++                             ("Removed address for host 0x%lx (%s:%d), new primary interface %s:%d.\n",
++                               (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port),
+                                afs_inet_ntoa_r(host->interface->interface[i].addr, hoststr2), 
+                                ntohs(host->interface->interface[i].port)));
+                     host->host = host->interface->interface[i].addr;
+                     host->port = host->interface->interface[i].port;
+-                    hashInsert_r(host->host, host->port, host);
++                    h_AddHostToAddrHashTable_r(host->host, host->port, host);
+                     break;
+                 }
+             }
+ 
+             if (i == host->interface->numberOfInterfaces) {
+                 ViceLog(25,
+-                         ("Removed only address for host %x (%s:%d), no valid alternate interfaces, deleting host.\n",
+-                           host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
++                         ("Removed only address for host 0x%lx (%s:%d), no valid alternate interfaces, deleting host.\n",
++                          (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
+                 host->hostFlags |= HOSTDELETED;
++		/* addr/port was removed from the hash table */
++		host->host = 0;
++		host->port = 0;
+             } else {
+-                struct rx_connection *rxconn;
+-
+-                rxconn = host->callback_rxcon;
+-                host->callback_rxcon = NULL;
+-
+-                if (rxconn) {
+-                    struct client *client;
+-                    /*
+-                    * If rx_DestroyConnection calls h_FreeConnection we will
+-                    * deadlock on the host_glock_mutex. Work around the problem
+-                    * by unhooking the client from the connection before
+-                    * destroying the connection.
+-                    */
+-                    client = rx_GetSpecific(rxconn, rxcon_client_key);
+-                    rx_SetSpecific(rxconn, rxcon_client_key, (void *)0);
+-                    rx_DestroyConnection(rxconn);
+-		    rxconn = NULL;
+-                }
+-
+                 if (!sc)
+                     sc = rxnull_NewClientSecurityObject();
+                 host->callback_rxcon =
+@@ -1446,6 +1527,9 @@ removeAddress_r(struct host *host, afs_uint32 addr, afs_uint16 port)
+                 rx_SetConnDeadTime(host->callback_rxcon, 50);
+                 rx_SetConnHardDeadTime(host->callback_rxcon, AFS_HARDDEADTIME);
+             }
++	} else {
++	    /* not the primary addr/port, just invalidate it */
++	    invalidateInterfaceAddr_r(host, addr, port);
+         }
+     }
+ 
+@@ -1527,8 +1611,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+              * waited for the lock. */
+ 	    h_Unlock_r(host);
+ 	    ViceLog(125,
+-		    ("Host %s:%d starting h_Lookup again\n",
+-		     afs_inet_ntoa_r(host->host, hoststr),
++		    ("Host 0x%lx (%s:%d) starting h_Lookup again\n",
++		     (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 		     ntohs(host->port)));
+ 	    if (!*heldp)
+ 		h_Release_r(host);
+@@ -1594,8 +1678,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 		 * that we maintain some extra callback state information */
+ 		if (host->interface) {
+ 		    ViceLog(0,
+-			    ("Host %x (%s:%d) used to support WhoAreYou, deleting.\n",
+-			     host, 
++			    ("Host 0x%lx (%s:%d) used to support WhoAreYou, deleting.\n",
++			     (unsigned long) host,
+ 			     afs_inet_ntoa_r(host->host, hoststr),
+ 			     ntohs(host->port)));
+ 		    host->hostFlags |= HOSTDELETED;
+@@ -1646,8 +1730,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+                     removeAddress_r(host, haddr, hport);
+ 		} else {
+ 		    ViceLog(25,
+-			    ("Uuid doesn't match host %x (%s:%d).\n",
+-			     host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
++			    ("Uuid doesn't match host 0x%lx (%s:%d).\n",
++			     (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
+ 		    
+ 		    removeAddress_r(host, host->host, host->port);
+ 		}
+@@ -1684,8 +1768,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+                      * callback connection, and destroy the old one.
+                      */
+                     struct rx_connection *rxconn;
+-                    ViceLog(0,("CB: ProbeUuid for host %x (%s:%d) failed %d\n",
+-			       host, 
++                    ViceLog(0,("CB: ProbeUuid for host 0x%lx (%s:%d) failed %d\n",
++			       (unsigned long) host,
+ 			       afs_inet_ntoa_r(host->host, hoststr),
+ 			       ntohs(host->port),code2));
+ 		    /*
+@@ -1736,8 +1820,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 		goto gethost_out;
+ 	    } else {
+ 		ViceLog(0,
+-			("CB: WhoAreYou failed for host %x (%s:%d), error %d\n",
+-			 host, afs_inet_ntoa_r(host->host, hoststr),
++			("CB: WhoAreYou failed for host 0x%lx (%s:%d), error %d\n",
++			 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 			 ntohs(host->port), code));
+ 		host->hostFlags |= VENUSDOWN;
+ 	    }
+@@ -1754,14 +1838,14 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 	if (!(host->hostFlags & ALTADDR)) {
+ 	    /* another thread is doing the initialisation */
+ 	    ViceLog(125,
+-		    ("Host %s:%d waiting for host-init to complete\n",
+-		     afs_inet_ntoa_r(host->host, hoststr),
++		    ("Host 0x%lx (%s:%d) waiting for host-init to complete\n",
++		     (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 		     ntohs(host->port)));
+ 	    h_Lock_r(host);
+ 	    h_Unlock_r(host);
+ 	    ViceLog(125,
+-		    ("Host %s:%d starting h_Lookup again\n",
+-		     afs_inet_ntoa_r(host->host, hoststr),
++		    ("Host 0x%lx (%s:%d) starting h_Lookup again\n",
++		     (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 		     ntohs(host->port)));
+ 	    if (!*heldp)
+ 		h_Release_r(host);
+@@ -1782,8 +1866,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 	    if (host->interface)
+ 		afsUUID_to_string(&host->interface->uuid, uuid2, 127);
+ 	    ViceLog(0,
+-		    ("CB: new identity for host %s:%d, deleting(%x %x %s %s)\n",
+-		     afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port),
++		    ("CB: new identity for host 0x%lx (%s:%d), deleting(%x %x %s %s)\n",
++		     (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port),
+ 		     identP->valid, host->interface,
+ 		     identP->valid ? uuid1 : "",
+ 		     host->interface ? uuid2 : ""));
+@@ -1829,8 +1913,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 		if (!pident)
+ 		    rx_SetSpecific(tcon, rxcon_ident_key, identP);
+ 		ViceLog(25,
+-			("Host %s:%d does not support WhoAreYou.\n",
+-			 afs_inet_ntoa_r(host->host, hoststr),
++			("Host 0x%lx (%s:%d) does not support WhoAreYou.\n",
++			 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 			 ntohs(host->port)));
+ 		code = 0;
+ 	    } else if (code == 0) {
+@@ -1850,8 +1934,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 		if (!pident)
+ 		    rx_SetSpecific(tcon, rxcon_ident_key, identP);
+ 		ViceLog(25,
+-			("WhoAreYou success on %s:%d\n",
+-			 afs_inet_ntoa_r(host->host, hoststr),
++			("WhoAreYou success on 0x%lx (%s:%d)\n",
++			 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 			 ntohs(host->port)));
+ 	    }
+ 	    if (code == 0 && !identP->valid) {
+@@ -1906,8 +1990,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 			     * MultiProbeAlternateAddress_r() will remove the
+ 			     * alternate interfaces that do not have the same
+ 			     * Uuid. */
+-			    ViceLog(0,("CB: ProbeUuid for %s:%d failed %d\n",
+-					 afs_inet_ntoa_r(oldHost->host, hoststr),
++			    ViceLog(0,("CB: ProbeUuid for 0x%lx (%s:%d) failed %d\n",
++                                        (unsigned long) oldHost, afs_inet_ntoa_r(oldHost->host, hoststr),
+ 					 ntohs(oldHost->port),code2));
+ 			    MultiProbeAlternateAddress_r(oldHost);
+                             probefail = 1;
+@@ -1927,8 +2011,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 			struct rx_connection *rxconn;
+ 
+ 			ViceLog(25,
+-				("CB: Host %x (%s:%d) has new addr %s:%d\n",
+-				  oldHost, 
++				("CB: Host 0x%lx (%s:%d) has new addr %s:%d\n",
++                                  (unsigned long) oldHost,
+                                   afs_inet_ntoa_r(oldHost->host, hoststr2),
+ 				  ntohs(oldHost->port),
+                                   afs_inet_ntoa_r(haddr, hoststr),
+@@ -1947,23 +2031,24 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 			     */
+ 			    removeInterfaceAddr_r(oldHost, oldHost->host, oldHost->port);
+ 			} else {
+-			    int i, found;
++			    int i;
+ 			    struct Interface *interface = oldHost->interface;
+ 			    int number = oldHost->interface->numberOfInterfaces;
+-			    for (i = 0, found = 0; i < number; i++) {
++			    for (i = 0; i < number; i++) {
+ 				if (interface->interface[i].addr == haddr &&
+ 				    interface->interface[i].port != hport) {
+-				    found = 1;
++				    /* 
++				     * We have just been contacted by a client
++				     * that has been seen from behind a NAT 
++				     * and at least one other address.
++				     */
++				    removeInterfaceAddr_r(oldHost, haddr, 
++					interface->interface[i].port);
+ 				    break;
+ 				}
+ 			    }
+-			    if (found) {
+-				/* We have just been contacted by a client that has been
+-				 * seen from behind a NAT and at least one other address.
+-				 */
+-				removeInterfaceAddr_r(oldHost, haddr, interface->interface[i].port);
+-			    }
+ 			}
++			h_AddHostToAddrHashTable_r(haddr, hport, oldHost);
+ 			oldHost->host = haddr;
+ 			oldHost->port = hport;
+ 			rxconn = oldHost->callback_rxcon;
+@@ -1982,7 +2067,7 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 		    /* the new host is held and locked */
+ 		} else {
+ 		    /* This really is a new host */
+-		    hashInsertUuid_r(&identP->uuid, host);
++		    h_AddHostToUuidHashTable_r(&identP->uuid, host);
+ 		    cb_conn = host->callback_rxcon;
+ 		    rx_GetConnection(cb_conn);		
+ 		    H_UNLOCK;
+@@ -1994,8 +2079,8 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 		    H_LOCK;
+ 		    if (code == 0) {
+ 			ViceLog(25,
+-				("InitCallBackState3 success on %s:%d\n",
+-				 afs_inet_ntoa_r(host->host, hoststr),
++				("InitCallBackState3 success on 0x%lx (%s:%d)\n",
++				 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
+ 				 ntohs(host->port)));
+ 			assert(interfValid == 1);
+ 			initInterfaceAddr_r(host, &interf);
+@@ -2004,13 +2089,13 @@ h_GetHost_r(struct rx_connection *tcon, int *heldp)
+ 	    }
+ 	    if (code) {
+ 		ViceLog(0,
+-			("CB: RCallBackConnectBack failed for host %x (%s:%d)\n",
+-			 host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
++			("CB: RCallBackConnectBack failed for host 0x%lx (%s:%d)\n",
++			 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
+ 		host->hostFlags |= VENUSDOWN;
+ 	    } else {
+ 		ViceLog(125,
+-			("CB: RCallBackConnectBack succeeded for host %x (%s:%d)\n",
+-			 host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
++			("CB: RCallBackConnectBack succeeded for host 0x%lx (%s:%d)\n",
++			 (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr), ntohs(host->port)));
+ 		host->hostFlags |= RESETDONE;
+ 	    }
+ 	}
+@@ -2358,8 +2443,8 @@ h_FindClient_r(struct rx_connection *tcon)
+ 	    if (code) {
+ 		char hoststr[16];
+ 		ViceLog(0,
+-			("pr_GetCPS failed(%d) for user %d, host %s:%d\n",
+-			 code, viceid, afs_inet_ntoa_r(client->host->host,
++			("pr_GetCPS failed(%d) for user %d, host 0x%lx (%s:%d)\n",
++			 code, viceid, (unsigned long) client->host, afs_inet_ntoa_r(client->host->host,
+ 						       hoststr),
+ 			 ntohs(client->host->port)));
+ 
+@@ -2582,8 +2667,10 @@ h_PrintClient(register struct host *host, int held, StreamHandle_t * file)
+     char tmpStr[256];
+     char tbuffer[32];
+     char hoststr[16];
++    time_t LastCall, expTime;
+ 
+     H_LOCK;
++    LastCall = host->LastCall;
+     if (host->hostFlags & HOSTDELETED) {
+ 	H_UNLOCK;
+ 	return held;
+@@ -2592,11 +2679,12 @@ h_PrintClient(register struct host *host, int held, StreamHandle_t * file)
+ 		       "Host %s:%d down = %d, LastCall %s",
+ 		       afs_inet_ntoa_r(host->host, hoststr),
+ 		       ntohs(host->port), (host->hostFlags & VENUSDOWN),
+-		       afs_ctime((time_t *) & host->LastCall, tbuffer,
++		       afs_ctime(&LastCall, tbuffer,
+ 				 sizeof(tbuffer)));
+     (void)STREAM_WRITE(tmpStr, strlen(tmpStr), 1, file);
+     for (client = host->FirstClient; client; client = client->next) {
+ 	if (!client->deleted) {
++                expTime = client->expTime;
+ 		(void)afs_snprintf(tmpStr, sizeof tmpStr,
+ 				   "    user id=%d,  name=%s, sl=%s till %s",
+ 				   client->ViceId, h_UserName(client),
+@@ -2604,8 +2692,7 @@ h_PrintClient(register struct host *host, int held, StreamHandle_t * file)
+ 				   authClass ? "Authenticated" :
+ 				   "Not authenticated",
+ 				   client->
+-				   authClass ? afs_ctime((time_t *) & client->
+-							 expTime, tbuffer,
++				   authClass ? afs_ctime(&expTime, tbuffer,
+ 							 sizeof(tbuffer))
+ 				   : "No Limit\n");
+ 		(void)STREAM_WRITE(tmpStr, strlen(tmpStr), 1, file);
+@@ -3012,7 +3099,7 @@ CheckHost(register struct host *host, int held)
+ 		     * back state, because break delayed callbacks (called when a
+ 		     * message is received from the workstation) will always send a 
+ 		     * break all call backs to the workstation if there is no
+-		     *callback.
++		     * callback.
+ 		     */
+ 		}
+ 	    } else {
+@@ -3105,7 +3192,7 @@ CheckHost_r(register struct host *host, int held, char *dummy)
+ 		     * back state, because break delayed callbacks (called when a
+ 		     * message is received from the workstation) will always send a 
+ 		     * break all call backs to the workstation if there is no
+-		     *callback.
++		     * callback.
+ 		     */
+ 		}
+ 	    } else {
+@@ -3178,9 +3265,8 @@ h_CheckHosts()
+ 
+ /*
+  * This is called with host locked and held. At this point, the
+- * hostAddrHashTable should not have any entries for the alternate
+- * interfaces. This function has to insert these entries in the
+- * hostAddrHashTable.
++ * hostAddrHashTable has an entry for the primary addr/port inserted
++ * by h_Alloc_r().  No other interfaces should be considered valid.
+  *
+  * The addresses in the interfaceAddr list are in host byte order.
+  */
+@@ -3298,7 +3384,8 @@ initInterfaceAddr_r(struct host *host, struct interfaceAddr *interf)
+ 	 * are coming from fully connected hosts (no NAT/PATs)
+ 	 */
+ 	interface->interface[i].port = port7001;
+-        interface->interface[i].valid = 1;      /* valid until a conflict is found */
++	interface->interface[i].valid = 
++	    (interf->addr_in[i] == myAddr && port7001 == myPort) ? 1 : 0;
+     }
+ 
+     interface->uuid = interf->uuid;
+@@ -3306,13 +3393,15 @@ initInterfaceAddr_r(struct host *host, struct interfaceAddr *interf)
+     assert(!host->interface);
+     host->interface = interface;
+ 
+-    afsUUID_to_string(&interface->uuid, uuidstr, 127);
+-
+-    ViceLog(125, ("--- uuid %s\n", uuidstr));
+-    for (i = 0; i < host->interface->numberOfInterfaces; i++) {
+-	ViceLog(125, ("--- alt address %s:%d\n", 
+-		       afs_inet_ntoa_r(host->interface->interface[i].addr, hoststr),
+-		       ntohs(host->interface->interface[i].port)));
++    if (LogLevel >= 125) {
++	afsUUID_to_string(&interface->uuid, uuidstr, 127);
++       
++	ViceLog(125, ("--- uuid %s\n", uuidstr));
++	for (i = 0; i < host->interface->numberOfInterfaces; i++) {
++	    ViceLog(125, ("--- alt address %s:%d\n", 
++		afs_inet_ntoa_r(host->interface->interface[i].addr, hoststr),
++		ntohs(host->interface->interface[i].port)));
++	}
+     }
+ 
+     return 0;
+@@ -3321,24 +3410,32 @@ initInterfaceAddr_r(struct host *host, struct interfaceAddr *interf)
+ /* deleted a HashChain structure for this address and host */
+ /* returns 1 on success */
+ int
+-hashDelete_r(afs_uint32 addr, afs_uint16 port, struct host *
+-				host)
++h_DeleteHostFromAddrHashTable_r(afs_uint32 addr, afs_uint16 port, 
++                               struct host *host)
+ {
+-    int flag = 0;
++    char hoststr[16];
+     register struct h_AddrHashChain **hp, *th;
+ 
+-    for (hp = &hostAddrHashTable[h_HashIndex(addr)]; (th = *hp);) {
++    if (addr == 0 && port == 0)
++	return 1;
++
++    for (hp = &hostAddrHashTable[h_HashIndex(addr)]; (th = *hp); 
++	hp = &th->next) {
+ 	assert(th->hostPtr);
+ 	if (th->hostPtr == host && th->addr == addr && th->port == port) {
++	    ViceLog(125, ("h_DeleteHostFromAddrHashTable_r: host 0x%lx (%s:%d)\n",
++                         (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
++                         ntohs(host->port)));
+ 	    *hp = th->next;
+ 	    free(th);
+-	    flag = 1;
+-	    break;
+-	} else {
+-	    hp = &th->next;
+-	}
++	    return 1;
++        }
+     }
+-    return flag;
++    ViceLog(125, 
++           ("h_DeleteHostFromAddrHashTable_r: host 0x%lx (%s:%d) not found\n",
++            (unsigned long) host, afs_inet_ntoa_r(host->host, hoststr),
++            ntohs(host->port)));
++    return 0;
+ }
+ 
+ 
+@@ -3355,9 +3452,9 @@ printInterfaceAddr(struct host *host, int level)
+     if (host->interface) {
+ 	/* check alternate addresses */
+ 	number = host->interface->numberOfInterfaces;
+-        if (number == 0)
++        if (number == 0) {
+             ViceLog(level, ("no-addresses "));
+-        else {
++        } else {
+             for (i = 0; i < number; i++)
+                 ViceLog(level, ("%s:%d ", afs_inet_ntoa_r(host->interface->interface[i].addr, hoststr),
+                                 ntohs(host->interface->interface[i].port)));
+diff --git a/src/viced/host.h b/src/viced/host.h
+index 473600e..d209009 100644
+--- a/src/viced/host.h
++++ b/src/viced/host.h
+@@ -176,6 +176,7 @@ extern char *h_UserName(struct client *client);
+ #define h_holdbit()  ( 1<<h_holdIndex() )
+ 
+ #define h_Hold_r(host)   ((host)->holds[h_holdSlot()] |= h_holdbit())
++#define h_Decrement_r(host) ((host)->holds[h_holdSlot()] &= ~h_holdbit())
+ extern int h_Release(register struct host *host);
+ extern int h_Release_r(register struct host *host);
+ 
+@@ -207,8 +208,6 @@ extern struct host *h_Alloc(register struct rx_connection *r_con);
+ extern struct host *h_Alloc_r(register struct rx_connection *r_con);
+ extern int h_Lookup_r(afs_uint32 hostaddr, afs_uint16 hport,
+ 			       int *heldp, struct host **hostp);
+-extern void   hashInsert_r(afs_uint32 addr, afs_uint16 port, 
+-			   struct host* host);
+ extern struct host *h_LookupUuid_r(afsUUID * uuidp);
+ extern void h_Enumerate(int (*proc) (), char *param);
+ extern struct host *h_GetHost_r(struct rx_connection *tcon, int *heldp);
+@@ -222,9 +221,9 @@ extern void h_PrintClients();
+ extern void h_GetWorkStats();
+ extern void h_flushhostcps(register afs_uint32 hostaddr,
+ 			   register afs_uint16 hport);
+-extern void hashInsertUuid_r(struct afsUUID *uuid, struct host *host);
+-extern void hashInsert_r(afs_uint32 addr, afs_uint16 port, struct host *host);
+-extern int hashDelete_r(afs_uint32 addr, afs_uint16 port, struct host *host);
++extern void h_AddHostToUuidHashTable_r(struct afsUUID *uuid, struct host *host);
++extern void h_AddHostToAddrHashTable_r(afs_uint32 addr, afs_uint16 port, struct host *host);
++extern int h_DeleteHostFromAddrHashTable_r(afs_uint32 addr, afs_uint16 port, struct host *host);
+ extern int initInterfaceAddr_r(struct host *host, struct interfaceAddr *interf);
+ extern int addInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port);
+ extern int removeInterfaceAddr_r(struct host *host, afs_uint32 addr, afs_uint16 port);
+diff --git a/src/vlserver/vlclient.c b/src/vlserver/vlclient.c
+index c18874c..7a1146b 100644
+--- a/src/vlserver/vlclient.c
++++ b/src/vlserver/vlclient.c
+@@ -1313,8 +1313,9 @@ dump_stats(stats, vital_header)
+ {
+     int i;
+     char strg[30];
++    time_t start_time = stats->start_time;
+ 
+-    strncpy(strg, ctime((time_t *) & stats->start_time), sizeof(strg));
++    strncpy(strg, ctime(&start_time), sizeof(strg));
+     strg[strlen(strg) - 1] = 0;
+     printf("Dynamic statistics stats (starting time: %s):\n", strg);
+     printf("OpcodeName\t# Requests\t# Aborts\n");
+diff --git a/src/vol/vnode.c b/src/vol/vnode.c
+index 6968aab..e098cae 100644
+--- a/src/vol/vnode.c
++++ b/src/vol/vnode.c
+@@ -379,10 +379,10 @@ VAllocVnode_r(Error * ec, Volume * vp, VnodeType type)
+ #endif /* AFS_PTHREAD_ENV */
+ 	/* Sanity check:  is this vnode really not in use? */
+ 	{
+-	    int size;
++	    afs_sfsize_t size;
+ 	    IHandle_t *ihP = vp->vnodeIndex[class].handle;
+ 	    FdHandle_t *fdP;
+-	    off_t off = vnodeIndexOffset(vcp, vnodeNumber);
++	    afs_foff_t off = vnodeIndexOffset(vcp, vnodeNumber);
+ 
+ 	    VOL_UNLOCK;
+ 	    fdP = IH_OPEN(ihP);
+@@ -671,7 +671,8 @@ VPutVnode(Error * ec, register Vnode * vnp)
+ void
+ VPutVnode_r(Error * ec, register Vnode * vnp)
+ {
+-    int writeLocked, offset;
++    int writeLocked;
++    afs_foff_t offset;
+     VnodeClass class;
+     struct VnodeClassInfo *vcp;
+     int code;
+@@ -859,7 +860,7 @@ VVnodeWriteToRead_r(Error * ec, register Vnode * vnp)
+ 	} else {
+ 	    IHandle_t *ihP = vp->vnodeIndex[class].handle;
+ 	    FdHandle_t *fdP;
+-	    off_t off = vnodeIndexOffset(vcp, vnp->vnodeNumber);
++	    afs_foff_t off = vnodeIndexOffset(vcp, vnp->vnodeNumber);
+ 	    VOL_UNLOCK;
+ 	    fdP = IH_OPEN(ihP);
+ 	    if (fdP == NULL)
+diff --git a/src/vol/vol-info.c b/src/vol/vol-info.c
+index 201bc93..656ec3a 100644
+--- a/src/vol/vol-info.c
++++ b/src/vol/vol-info.c
+@@ -480,15 +480,16 @@ HandleVolume(struct DiskPartition64 *dp, char *name)
+ 
+ 	if (dheader) {
+ 	    FdHandle_t *fdP;
+-	    int size = 0;
+-	    int code;
++	    afs_sfsize_t size = 0;
++	    afs_sfsize_t code;
+ 
+ 	    if (afs_fstat(fd, &stat) == -1) {
+ 		perror("stat");
+ 		exit(1);
+ 	    }
+ 	    if (!dsizeOnly && !saveinodes) {
+-		printf("Volume header (size = %d):\n", size = stat.st_size);
++		size = stat.st_size;
++		printf("Volume header (size = %d):\n", (int)size);
+ 		printf("\tstamp\t= 0x%x\n", header.stamp.version);
+ 		printf("\tVolId\t= %u\n", header.id);
+ 	    }
+@@ -510,7 +511,7 @@ HandleVolume(struct DiskPartition64 *dp, char *name)
+ 	    if (!dsizeOnly && !saveinodes) {
+ 		printf("\tparent\t= %u\n", header.parent);
+ 		printf("\tInfo inode\t= %s (size = %d)\n",
+-		       PrintInode(NULL, header.volumeInfo), code);
++		       PrintInode(NULL, header.volumeInfo), (int)code);
+ 	    }
+ 
+ 	    IH_INIT(ih, dp->device, header.parent, header.smallVnodeIndex);
+@@ -529,7 +530,7 @@ HandleVolume(struct DiskPartition64 *dp, char *name)
+ 	    size += code;
+ 	    if (!dsizeOnly && !saveinodes) {
+ 		printf("\tSmall inode\t= %s (size = %d)\n",
+-		       PrintInode(NULL, header.smallVnodeIndex), code);
++		       PrintInode(NULL, header.smallVnodeIndex), (int)code);
+ 	    }
+ 
+ 	    IH_INIT(ih, dp->device, header.parent, header.largeVnodeIndex);
+@@ -548,9 +549,9 @@ HandleVolume(struct DiskPartition64 *dp, char *name)
+ 	    size += code;
+ 	    if (!dsizeOnly && !saveinodes) {
+ 		printf("\tLarge inode\t= %s (size = %d)\n",
+-		       PrintInode(NULL, header.largeVnodeIndex), code);
++		       PrintInode(NULL, header.largeVnodeIndex), (int)code);
+ #ifndef AFS_NT40_ENV
+-		printf("Total aux volume size = %d\n\n", size);
++		printf("Total aux volume size = %d\n\n", (int)size);
+ #endif
+ 	    }
+ #ifdef AFS_NAMEI_ENV
+@@ -570,8 +571,8 @@ HandleVolume(struct DiskPartition64 *dp, char *name)
+ 	    size += code;
+ 	    if (!dsizeOnly && !saveinodes) {
+ 		printf("\tLink inode\t= %s (size = %d)\n",
+-		       PrintInode(NULL, header.linkTable), code);
+-		printf("Total aux volume size = %d\n\n", size);
++		       PrintInode(NULL, header.linkTable), (int)code);
++		printf("Total aux volume size = %d\n\n", (int)size);
+ 	    }
+ #endif
+ 	    Vauxsize = size;
+diff --git a/src/vol/vol-salvage.c b/src/vol/vol-salvage.c
+index c1cb2fb..cc055aa 100644
+--- a/src/vol/vol-salvage.c
++++ b/src/vol/vol-salvage.c
+@@ -188,6 +188,9 @@ Vnodes with 0 inode pointers in RW volumes are now deleted.
+ #include "viceinode.h"
+ #include "salvage.h"
+ #include "volinodes.h"		/* header magic number, etc. stuff */
++#include <afs/acl.h>
++#include <afs/prs_fs.h>
++
+ #ifdef AFS_NT40_ENV
+ #include <pthread.h>
+ #endif
+@@ -326,8 +329,8 @@ struct VolumeSummary {		/* Volume summary an entry for each
+ 
+ struct VnodeInfo {
+     IHandle_t *handle;		/* Inode containing this index */
+-    int nVnodes;		/* Total number of vnodes in index */
+-    int nAllocatedVnodes;	/* Total number actually used */
++    afs_sfsize_t nVnodes;		/* Total number of vnodes in index */
++    afs_sfsize_t nAllocatedVnodes;	/* Total number actually used */
+     int volumeBlockCount;	/* Total number of blocks used by volume */
+     Inode *inodes;		/* Directory only */
+     struct VnodeEssence {
+@@ -2618,8 +2621,9 @@ SalvageIndex(Inode ino, VnodeClass class, int RW,
+     StreamHandle_t *file;
+     struct VnodeClassInfo *vcp;
+     afs_sfsize_t size;
++    afs_sfsize_t nVnodes;
+     afs_fsize_t vnodeLength;
+-    int vnodeIndex, nVnodes;
++    int vnodeIndex;
+     afs_ino_str_t stmp1, stmp2;
+     IHandle_t *handle;
+     FdHandle_t *fdP;
+@@ -2825,11 +2829,14 @@ SalvageIndex(Inode ino, VnodeClass class, int RW,
+ 			}
+ 			if (VNDISK_GET_INO(vnode)) {
+ 			    if (!Showmode) {
+-				Log("Vnode %d (unique %u): corresponding inode %s is missing; vnode deleted, vnode mod time=%s", vnodeNumber, vnode->uniquifier, PrintInode(NULL, VNDISK_GET_INO(vnode)), ctime((time_t *) & (vnode->serverModifyTime)));
++				time_t serverModifyTime = vnode->serverModifyTime;
++				Log("Vnode %d (unique %u): corresponding inode %s is missing; vnode deleted, vnode mod time=%s", vnodeNumber, vnode->uniquifier, PrintInode(NULL, VNDISK_GET_INO(vnode)), ctime(&serverModifyTime));
+ 			    }
+ 			} else {
+-			    if (!Showmode)
+-				Log("Vnode %d (unique %u): bad directory vnode (no inode number listed); vnode deleted, vnode mod time=%s", vnodeNumber, vnode->uniquifier, ctime((time_t *) & (vnode->serverModifyTime)));
++			    if (!Showmode) {
++				time_t serverModifyTime = vnode->serverModifyTime;
++				Log("Vnode %d (unique %u): bad directory vnode (no inode number listed); vnode deleted, vnode mod time=%s", vnodeNumber, vnode->uniquifier, ctime(&serverModifyTime));
++                            }
+ 			}
+ 			memset(vnode, 0, vcp->diskSize);
+ 			vnodeChanged = 1;
+@@ -3169,7 +3176,8 @@ JudgeEntry(struct DirSummary *dir, char *name, VnodeId vnodeNumber,
+ 	    Log("FOUND suid/sgid file: %s/%s (%u.%u %05o) author %u (vnode %u dir %u)\n", dir->name ? dir->name : "??", name, vnodeEssence->owner, vnodeEssence->group, vnodeEssence->modeBits, vnodeEssence->author, vnodeNumber, dir->vnodeNumber);
+ 	if (/* ShowMounts && */ (vnodeEssence->type == vSymlink)
+ 	    && !(vnodeEssence->modeBits & 0111)) {
+-	    int code, size;
++	    int code;
++	    afs_sfsize_t size;
+ 	    char buf[1025];
+ 	    IHandle_t *ihP;
+ 	    FdHandle_t *fdP;
+@@ -3459,6 +3467,372 @@ SalvageDir(char *name, VolumeId rwVid, struct VnodeInfo *dirVnodeInfo,
+     return;
+ }
+ 
++/**
++ * Get a new FID that can be used to create a new file.
++ *
++ * @param[in] volHeader vol header for the volume
++ * @param[in] class     what type of vnode we'll be creating (vLarge or vSmall)
++ * @param[out] afid     the FID that we can use (only Vnode and Unique are set)
++ * @param[inout] maxunique  max uniquifier for all vnodes in the volume;
++ *                          updated to the new max unique if we create a new
++ *                          vnode
++ */
++static void
++GetNewFID(VolumeDiskData *volHeader, VnodeClass class, AFSFid *afid,
++          Unique *maxunique)
++{
++    int i;
++    for (i = 0; i < vnodeInfo[class].nVnodes; i++) {
++	if (vnodeInfo[class].vnodes[i].type == vNull) {
++	    break;
++	}
++    }
++    if (i == vnodeInfo[class].nVnodes) {
++	/* no free vnodes; make a new one */
++	vnodeInfo[class].nVnodes++;
++	vnodeInfo[class].vnodes = realloc(vnodeInfo[class].vnodes,
++	                                  sizeof(struct VnodeEssence) * (i+1));
++	vnodeInfo[class].vnodes[i].type = vNull;
++    }
++
++    afid->Vnode = bitNumberToVnodeNumber(i, class);
++
++    if (volHeader->uniquifier < (*maxunique + 1)) {
++	/* header uniq is bad; it will get bumped by 2000 later */
++	afid->Unique = *maxunique + 1 + 2000;
++	(*maxunique)++;
++    } else {
++	/* header uniq seems okay; just use that */
++	afid->Unique = *maxunique = volHeader->uniquifier++;
++    }
++}
++
++/**
++ * Create a vnode for a README file explaining not to use a recreated-root vol.
++ *
++ * @param[in] volHeader vol header for the volume
++ * @param[in] alinkH    ihandle for i/o for the volume
++ * @param[in] vid       volume id
++ * @param[inout] maxunique  max uniquifier for all vnodes in the volume;
++ *                          updated to the new max unique if we create a new
++ *                          vnode
++ * @param[out] afid     FID for the new readme vnode
++ * @param[out] ainode   the inode for the new readme file
++ *
++ * @return operation status
++ *  @retval 0 success
++ *  @retval -1 error
++ */
++static int
++CreateReadme(VolumeDiskData *volHeader, IHandle_t *alinkH,
++             VolumeId vid, Unique *maxunique, AFSFid *afid, Inode *ainode)
++{
++    Inode readmeinode;
++    struct VnodeDiskObject *rvnode = NULL;
++    afs_sfsize_t bytes;
++    IHandle_t *readmeH = NULL;
++    struct VnodeEssence *vep;
++    afs_fsize_t length;
++    time_t now = time(NULL);
++
++    /* Try to make the note brief, but informative. Only administrators should
++     * be able to read this file at first, so we can hopefully assume they
++     * know what AFS is, what a volume is, etc. */
++    char readme[] =
++"This volume has been salvaged, but has lost its original root directory.\n"
++"The root directory that exists now has been recreated from orphan files\n"
++"from the rest of the volume. This recreated root directory may interfere\n"
++"with old cached data on clients, and there is no way the salvager can\n"
++"reasonably prevent that. So, it is recommended that you do not continue to\n"
++"use this volume, but only copy the salvaged data to a new volume.\n"
++"Continuing to use this volume as it exists now may cause some clients to\n"
++"behave oddly when accessing this volume.\n"
++"\n\t -- Your friendly neighborhood OpenAFS salvager\n";
++    /* ^ the person reading this probably just lost some data, so they could
++     * use some cheering up. */
++
++    /* -1 for the trailing NUL */
++    length = sizeof(readme) - 1;
++
++    GetNewFID(volHeader, vSmall, afid, maxunique);
++
++    vep = &vnodeInfo[vSmall].vnodes[vnodeIdToBitNumber(afid->Vnode)];
++
++    /* create the inode and write the contents */
++    readmeinode = IH_CREATE(alinkH, fileSysDevice, fileSysPath, 0, vid,
++                            afid->Vnode, afid->Unique, 1);
++    if (!VALID_INO(readmeinode)) {
++	Log("CreateReadme: readme IH_CREATE failed\n");
++	goto error;
++    }
++
++    IH_INIT(readmeH, fileSysDevice, vid, readmeinode);
++    bytes = IH_IWRITE(readmeH, 0, readme, length);
++    IH_RELEASE(readmeH);
++
++    if (bytes != length) {
++	Log("CreateReadme: IWRITE failed (%d/%d)\n", (int)bytes,
++	    (int)sizeof(readme));
++	goto error;
++    }
++
++    /* create the vnode and write it out */
++    rvnode = malloc(SIZEOF_SMALLDISKVNODE);
++    if (!rvnode) {
++	Log("CreateRootDir: error alloc'ing memory\n");
++	goto error;
++    }
++
++    rvnode->type = vFile;
++    rvnode->cloned = 0;
++    rvnode->modeBits = 0777;
++    rvnode->linkCount = 1;
++    VNDISK_SET_LEN(rvnode, length);
++    rvnode->uniquifier = afid->Unique;
++    rvnode->dataVersion = 1;
++    VNDISK_SET_INO(rvnode, readmeinode);
++    rvnode->unixModifyTime = rvnode->serverModifyTime = now;
++    rvnode->author = 0;
++    rvnode->owner = 0;
++    rvnode->parent = 1;
++    rvnode->group = 0;
++    rvnode->vnodeMagic = VnodeClassInfo[vSmall].magic;
++
++    bytes = IH_IWRITE(vnodeInfo[vSmall].handle,
++                      vnodeIndexOffset(&VnodeClassInfo[vSmall], afid->Vnode),
++                      (char*)rvnode, SIZEOF_SMALLDISKVNODE);
++
++    if (bytes != SIZEOF_SMALLDISKVNODE) {
++	Log("CreateReadme: IH_IWRITE failed (%d/%d)\n", (int)bytes,
++	    (int)SIZEOF_SMALLDISKVNODE);
++	goto error;
++    }
++
++    /* update VnodeEssence for new readme vnode */
++    vnodeInfo[vSmall].nAllocatedVnodes++;
++    vep->count = 0;
++    vep->blockCount = nBlocks(length);
++    vnodeInfo[vSmall].volumeBlockCount += vep->blockCount;
++    vep->parent = rvnode->parent;
++    vep->unique = rvnode->uniquifier;
++    vep->modeBits = rvnode->modeBits;
++    vep->InodeNumber = VNDISK_GET_INO(rvnode);
++    vep->type = rvnode->type;
++    vep->author = rvnode->author;
++    vep->owner = rvnode->owner;
++    vep->group = rvnode->group;
++
++    free(rvnode);
++    rvnode = NULL;
++
++    vep->claimed = 1;
++    vep->changed = 0;
++    vep->salvaged = 1;
++    vep->todelete = 0;
++
++    *ainode = readmeinode;
++
++    return 0;
++
++ error:
++    if (IH_DEC(alinkH, readmeinode, vid)) {
++	Log("CreateReadme (recovery): IH_DEC failed\n");
++    }
++
++    if (rvnode) {
++	free(rvnode);
++	rvnode = NULL;
++    }
++
++    return -1;
++}
++
++/**
++ * create a root dir for a volume that lacks one.
++ *
++ * @param[in] volHeader vol header for the volume
++ * @param[in] alinkH    ihandle for disk access for this volume group
++ * @param[in] vid       volume id we're dealing with
++ * @param[out] rootdir  populated with info about the new root dir
++ * @param[inout] maxunique  max uniquifier for all vnodes in the volume;
++ *                          updated to the new max unique if we create a new
++ *                          vnode
++ *
++ * @return operation status
++ *  @retval 0  success
++ *  @retval -1 error
++ */
++static int
++CreateRootDir(VolumeDiskData *volHeader, IHandle_t *alinkH, VolumeId vid,
++              struct DirSummary *rootdir, Unique *maxunique)
++{
++    FileVersion dv;
++    int decroot = 0, decreadme = 0;
++    AFSFid did, readmeid;
++    afs_fsize_t length;
++    Inode rootinode;
++    struct VnodeDiskObject *rootvnode = NULL;
++    struct acl_accessList *ACL;
++    Inode *ip;
++    afs_sfsize_t bytes;
++    struct VnodeEssence *vep;
++    Inode readmeinode;
++    time_t now = time(NULL);
++
++    if (!vnodeInfo[vLarge].vnodes && !vnodeInfo[vSmall].vnodes) {
++	Log("Not creating new root dir; volume appears to lack any vnodes\n");
++	goto error;
++    }
++
++    if (!vnodeInfo[vLarge].vnodes) {
++	/* We don't have any large vnodes in the volume; allocate room
++	 * for one so we can recreate the root dir */
++	vnodeInfo[vLarge].nVnodes = 1;
++	vnodeInfo[vLarge].vnodes = calloc(1, sizeof(struct VnodeEssence));
++	vnodeInfo[vLarge].inodes = calloc(1, sizeof(Inode));
++
++	assert(vnodeInfo[vLarge].vnodes);
++	assert(vnodeInfo[vLarge].inodes);
++    }
++
++    vep = &vnodeInfo[vLarge].vnodes[vnodeIdToBitNumber(1)];
++    ip = &vnodeInfo[vLarge].inodes[vnodeIdToBitNumber(1)];
++    if (vep->type != vNull) {
++	Log("Not creating new root dir; existing vnode 1 is non-null\n");
++	goto error;
++    }
++
++    if (CreateReadme(volHeader, alinkH, vid, maxunique, &readmeid, &readmeinode)) {
++	goto error;
++    }
++    decreadme = 1;
++
++    /* set the DV to a very high number, so it is unlikely that we collide
++     * with a cached DV */
++    dv = 1 << 30;
++
++    rootinode = IH_CREATE(alinkH, fileSysDevice, fileSysPath, 0, vid, 1, 1, dv);
++    if (!VALID_INO(rootinode)) {
++	Log("CreateRootDir: IH_CREATE failed\n");
++	goto error;
++    }
++    decroot = 1;
++
++    SetSalvageDirHandle(&rootdir->dirHandle, vid, fileSysDevice, rootinode);
++    did.Volume = vid;
++    did.Vnode = 1;
++    did.Unique = 1;
++    if (MakeDir(&rootdir->dirHandle, (afs_int32*)&did, (afs_int32*)&did)) {
++	Log("CreateRootDir: MakeDir failed\n");
++	goto error;
++    }
++    if (Create(&rootdir->dirHandle, "README.ROOTDIR", &readmeid)) {
++	Log("CreateRootDir: Create failed\n");
++	goto error;
++    }
++    DFlush();
++    length = Length(&rootdir->dirHandle);
++    DZap((void *)&rootdir->dirHandle);
++
++    /* create the new root dir vnode */
++    rootvnode = malloc(SIZEOF_LARGEDISKVNODE);
++    if (!rootvnode) {
++	Log("CreateRootDir: malloc failed\n");
++	goto error;
++    }
++
++    /* only give 'rl' permissions to 'system:administrators'. We do this to
++     * try to catch the attention of an administrator, that they should not
++     * be writing to this directory or continue to use it. */
++    ACL = VVnodeDiskACL(rootvnode);
++    ACL->size = sizeof(struct acl_accessList);
++    ACL->version = ACL_ACLVERSION;
++    ACL->total = 1;
++    ACL->positive = 1;
++    ACL->negative = 0;
++    ACL->entries[0].id = -204; /* system:administrators */
++    ACL->entries[0].rights = PRSFS_READ | PRSFS_LOOKUP;
++
++    rootvnode->type = vDirectory;
++    rootvnode->cloned = 0;
++    rootvnode->modeBits = 0777;
++    rootvnode->linkCount = 2;
++    VNDISK_SET_LEN(rootvnode, length);
++    rootvnode->uniquifier = 1;
++    rootvnode->dataVersion = dv;
++    VNDISK_SET_INO(rootvnode, rootinode);
++    rootvnode->unixModifyTime = rootvnode->serverModifyTime = now;
++    rootvnode->author = 0;
++    rootvnode->owner = 0;
++    rootvnode->parent = 0;
++    rootvnode->group = 0;
++    rootvnode->vnodeMagic = VnodeClassInfo[vLarge].magic;
++
++    /* write it out to disk */
++    bytes = IH_IWRITE(vnodeInfo[vLarge].handle,
++	      vnodeIndexOffset(&VnodeClassInfo[vLarge], 1),
++	      (char*)rootvnode, SIZEOF_LARGEDISKVNODE);
++
++    if (bytes != SIZEOF_LARGEDISKVNODE) {
++	/* just cast to int and don't worry about printing real 64-bit ints;
++	 * a large disk vnode isn't anywhere near the 32-bit limit */
++	Log("CreateRootDir: IH_IWRITE failed (%d/%d)\n", (int)bytes,
++	    (int)SIZEOF_LARGEDISKVNODE);
++	goto error;
++    }
++
++    /* update VnodeEssence for the new root vnode */
++    vnodeInfo[vLarge].nAllocatedVnodes++;
++    vep->count = 0;
++    vep->blockCount = nBlocks(length);
++    vnodeInfo[vLarge].volumeBlockCount += vep->blockCount;
++    vep->parent = rootvnode->parent;
++    vep->unique = rootvnode->uniquifier;
++    vep->modeBits = rootvnode->modeBits;
++    vep->InodeNumber = VNDISK_GET_INO(rootvnode);
++    vep->type = rootvnode->type;
++    vep->author = rootvnode->author;
++    vep->owner = rootvnode->owner;
++    vep->group = rootvnode->group;
++
++    free(rootvnode);
++    rootvnode = NULL;
++
++    vep->claimed = 0;
++    vep->changed = 0;
++    vep->salvaged = 1;
++    vep->todelete = 0;
++
++    /* update DirSummary for the new root vnode */
++    rootdir->vnodeNumber = 1;
++    rootdir->unique = 1;
++    rootdir->haveDot = 1;
++    rootdir->haveDotDot = 1;
++    rootdir->rwVid = vid;
++    rootdir->copied = 0;
++    rootdir->parent = 0;
++    rootdir->name = strdup(".");
++    rootdir->vname = volHeader->name;
++    rootdir->ds_linkH = alinkH;
++
++    *ip = rootinode;
++
++    return 0;
++
++ error:
++    if (decroot && IH_DEC(alinkH, rootinode, vid)) {
++	Log("CreateRootDir (recovery): IH_DEC (root) failed\n");
++    }
++    if (decreadme && IH_DEC(alinkH, readmeinode, vid)) {
++	Log("CreateRootDir (recovery): IH_DEC (readme) failed\n");
++    }
++    if (rootvnode) {
++	free(rootvnode);
++	rootvnode = NULL;
++    }
++    return -1;
++}
++
+ int
+ SalvageVolume(register struct InodeSummary *rwIsp, IHandle_t * alinkH)
+ {
+@@ -3482,6 +3856,7 @@ SalvageVolume(register struct InodeSummary *rwIsp, IHandle_t * alinkH)
+     VnodeId LFVnode, ThisVnode;
+     Unique LFUnique, ThisUnique;
+     char npath[128];
++    int newrootdir = 0;
+ 
+     vid = rwIsp->volSummary->header.id;
+     IH_INIT(h, fileSysDevice, vid, rwIsp->volSummary->header.volumeInfo);
+@@ -3511,6 +3886,18 @@ SalvageVolume(register struct InodeSummary *rwIsp, IHandle_t * alinkH)
+ 	return 0;
+     }
+ 
++    if (!rootdirfound && (orphans == ORPH_ATTACH) && !Testing) {
++
++	Log("Cannot find root directory for volume %u; attempting to create "
++	    "a new one\n", vid);
++
++	code = CreateRootDir(&volHeader, alinkH, vid, &rootdir, &maxunique);
++	if (code == 0) {
++	    rootdirfound = 1;
++	    newrootdir = 1;
++	}
++    }
++
+     /* Parse each vnode looking for orphaned vnodes and
+      * connect them to the tree as orphaned (if requested).
+      */
+@@ -3532,8 +3919,20 @@ SalvageVolume(register struct InodeSummary *rwIsp, IHandle_t * alinkH)
+ 	     */
+ 	    if (class == vLarge) {	/* directory vnode */
+ 		pv = vnodeIdToBitNumber(vep->parent);
+-		if (vnodeInfo[vLarge].vnodes[pv].unique != 0)
+-		    vnodeInfo[vLarge].vnodes[pv].count++;
++		if (vnodeInfo[vLarge].vnodes[pv].unique != 0) {
++		    if (vep->parent == 1 && newrootdir) {
++			/* this vnode's parent was the volume root, and
++			 * we just created the volume root. So, the parent
++			 * dir didn't exist during JudgeEntry, so the link
++			 * count was not inc'd there, so don't dec it here.
++			 */
++
++			 /* noop */
++
++		    } else {
++			vnodeInfo[vLarge].vnodes[pv].count++;
++		    }
++		}
+ 	    }
+ 
+ 	    if (!rootdirfound)
+@@ -3731,6 +4130,12 @@ SalvageVolume(register struct InodeSummary *rwIsp, IHandle_t * alinkH)
+ 	volHeader.uniquifier = (maxunique + 1 + 2000);
+     }
+ 
++    if (newrootdir) {
++	Log("*** WARNING: Root directory recreated, but volume is fragile! "
++	    "Only use this salvaged volume to copy data to another volume; "
++	    "do not continue to use this volume (%u) as-is.\n", vid);
++    }
++
+     /* Turn off the inUse bit; the volume's been salvaged! */
+     volHeader.inUse = 0;	/* clear flag indicating inUse@last crash */
+     volHeader.needsSalvaged = 0;	/* clear 'damaged' flag */
+diff --git a/src/vol/volume.c b/src/vol/volume.c
+index 503dda2..fee2f09 100644
+--- a/src/vol/volume.c
++++ b/src/vol/volume.c
+@@ -979,6 +979,20 @@ attach2(Error * ec, char *path, register struct VolumeHeader * header,
+ 	    V_inUse(vp) = 1;
+ 	    V_offlineMessage(vp)[0] = '\0';
+ 	}
++	if (!V_inUse(vp)) {
++	    *ec = VNOVOL;
++	    /* mimic e.g. GetVolume errors */
++	    if (!V_blessed(vp))
++		Log("Volume %u offline: not blessed\n", V_id(vp));
++	    else if (!V_inService(vp))
++		Log("Volume %u offline: not in service\n", V_id(vp));
++	    else {
++		Log("Volume %u offline: needs salvage\n", V_id(vp));
++		*ec = VOFFLINE;
++	    }
++	    VPutVolume_r(vp);
++	    vp = NULL;
++	}
+     }
+ 
+     return vp;
+@@ -1581,7 +1595,7 @@ GetBitmap(Error * ec, Volume * vp, VnodeClass class)
+ {
+     StreamHandle_t *file;
+     int nVnodes;
+-    int size;
++    afs_sfsize_t size;
+     struct VnodeClassInfo *vcp = &VnodeClassInfo[class];
+     struct vnodeIndex *vip = &vp->vnodeIndex[class];
+     struct VnodeDiskObject *vnode;
+diff --git a/src/volser/dumpstuff.c b/src/volser/dumpstuff.c
+index f8ff68d..f2584db 100644
+--- a/src/volser/dumpstuff.c
++++ b/src/volser/dumpstuff.c
+@@ -45,6 +45,7 @@
+ #include "dump.h"
+ #include <afs/fssync.h>
+ #include <afs/acl.h>
++#include <afs/com_err.h>
+ #include "volser.h"
+ #include "volint.h"
+ 
+@@ -1011,9 +1012,9 @@ DumpVnodeIndex(register struct iod *iodp, Volume * vp, VnodeClass class,
+     struct VnodeDiskObject *vnode = (struct VnodeDiskObject *)buf;
+     StreamHandle_t *file;
+     FdHandle_t *fdP;
+-    int size;
++    afs_sfsize_t size, nVnodes;
+     int flag;
+-    register int vnodeIndex, nVnodes;
++    register int vnodeIndex;
+ 
+     fdP = IH_OPEN(vp->vnodeIndex[class].handle);
+     assert(fdP != NULL);
+@@ -1137,7 +1138,7 @@ ProcessIndex(Volume * vp, VnodeClass class, afs_int32 ** Bufp, int *sizep,
+     int i, nVnodes, offset, code, index = 0;
+     afs_int32 *Buf;
+     int cnt = 0;
+-    int size;
++    afs_sfsize_t size;
+     StreamHandle_t *afile;
+     FdHandle_t *fdP;
+     struct VnodeClassInfo *vcp = &VnodeClassInfo[class];
+@@ -1873,9 +1874,9 @@ SizeDumpVnodeIndex(register struct iod *iodp, Volume * vp, VnodeClass class,
+     struct VnodeDiskObject *vnode = (struct VnodeDiskObject *)buf;
+     StreamHandle_t *file;
+     FdHandle_t *fdP;
+-    int size;
++    afs_sfsize_t size, nVnodes;
+     int flag;
+-    register int vnodeIndex, nVnodes;
++    register int vnodeIndex;
+ 
+     fdP = IH_OPEN(vp->vnodeIndex[class].handle);
+     assert(fdP != NULL);
+diff --git a/src/volser/vol-dump.c b/src/volser/vol-dump.c
+index eff4561..aad0ead 100644
+--- a/src/volser/vol-dump.c
++++ b/src/volser/vol-dump.c
+@@ -775,7 +775,7 @@ DumpVnodeIndex(int dumpfd, Volume * vp, VnodeClass class, afs_int32 fromtime,
+     struct VnodeDiskObject *vnode = (struct VnodeDiskObject *)buf;
+     StreamHandle_t *file;
+     FdHandle_t *fdP;
+-    int size;
++    afs_sfsize_t size;
+     int flag;
+     int offset = 0;
+     register int vnodeIndex, nVnodes = 0;
+diff --git a/src/volser/volprocs.c b/src/volser/volprocs.c
+index 48cd7a0..6b15476 100644
+--- a/src/volser/volprocs.c
++++ b/src/volser/volprocs.c
+@@ -95,7 +95,7 @@ VolSetIdsTypes(), VolSetDate(), VolSetFlags();
+ 
+ /* this call unlocks all of the partition locks we've set */
+ int 
+-VPFullUnlock()
++VPFullUnlock_r(void)
+ {
+     register struct DiskPartition64 *tp;
+     for (tp = DiskPartitionList; tp; tp = tp->next) {
+@@ -107,6 +107,16 @@ VPFullUnlock()
+     return 0;
+ }
+ 
++int
++VPFullUnlock(void)
++{
++    int code;
++    VOL_LOCK;
++    code = VPFullUnlock_r();
++    VOL_UNLOCK;
++    return code;
++}
++
+ /* get partition id from a name */
+ afs_int32
+ PartitionID(char *aname)
+@@ -2642,7 +2652,7 @@ VolMonitor(struct rx_call *acid, transDebugEntries *transInfo)
+ {
+     transDebugInfo *pntr;
+     afs_int32 allocSize = 50;
+-    struct volser_trans *tt, *allTrans;
++    struct volser_trans *tt, *nt, *allTrans;
+ 
+     transInfo->transDebugEntries_val =
+ 	(transDebugInfo *) malloc(allocSize * sizeof(transDebugInfo));
+@@ -2655,9 +2665,8 @@ VolMonitor(struct rx_call *acid, transDebugEntries *transInfo)
+     allTrans = TransList();
+     if (allTrans == (struct volser_trans *)0)
+ 	goto done;		/*no active transactions */
+-    for (tt = allTrans; tt; tt = tt->next) {	/*copy relevant info into pntr */
+-        THOLD(tt);  /* do not delete tt while copying info */
+-        VTRANS_UNLOCK;
++    for (tt = allTrans; tt; tt = nt) {	/*copy relevant info into pntr */
++	nt = tt->next;
+         VTRANS_OBJ_LOCK(tt);
+ 	pntr->tid = tt->tid;
+ 	pntr->time = tt->time;
+@@ -2694,8 +2703,6 @@ VolMonitor(struct rx_call *acid, transDebugEntries *transInfo)
+ 	    /*set pntr to right position */
+ 	}
+ 
+-        TRELE(tt);
+-        VTRANS_LOCK;
+     }
+ done:
+     VTRANS_UNLOCK;
+diff --git a/src/volser/vsprocs.c b/src/volser/vsprocs.c
+index 38571e8..6354000 100644
+--- a/src/volser/vsprocs.c
++++ b/src/volser/vsprocs.c
+@@ -3688,8 +3688,10 @@ UV_ReleaseVolume(afs_int32 afromvol, afs_int32 afromserver,
+ 
+ 	    if (fromdate == 0)
+ 		fprintf(STDOUT, " (full release)");
+-	    else
+-		fprintf(STDOUT, " (as of %.24s)", ctime((time_t *)&fromdate));
++	    else {
++	        tmv = fromdate;
++		fprintf(STDOUT, " (as of %.24s)", ctime(&tmv));
++	    }
+ 	    fprintf(STDOUT, ".\n");
+ 	    fflush(STDOUT);
+ 	}
+@@ -3943,6 +3945,7 @@ UV_DumpVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
+     struct rx_call *fromcall = (struct rx_call *)0;
+     afs_int32 fromtid = 0, rxError = 0, rcode = 0;
+     afs_int32 code, error = 0, retry = 0;
++    time_t tmv = fromdate;
+ 
+     if (setjmp(env))
+ 	ERROR_EXIT(EPIPE);
+@@ -3955,7 +3958,7 @@ UV_DumpVolume(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
+ 	VEPRINT("Full Dump ...\n");
+     } else {
+ 	VEPRINT1("Incremental Dump (as of %.24s)...\n",
+-		ctime((time_t *) & fromdate));
++		ctime(&tmv));
+     }
+ 
+     /* get connections to the servers */
+@@ -4033,6 +4036,7 @@ UV_DumpClonedVolume(afs_int32 afromvol, afs_int32 afromserver,
+     afs_int32 code = 0, vcode = 0, error = 0;
+     afs_int32 clonevol = 0;
+     char vname[64];
++    time_t tmv = fromdate;
+ 
+     if (setjmp(env))
+ 	ERROR_EXIT(EPIPE);
+@@ -4045,7 +4049,7 @@ UV_DumpClonedVolume(afs_int32 afromvol, afs_int32 afromserver,
+ 	VEPRINT("Full Dump ...\n");
+     } else {
+ 	VEPRINT1("Incremental Dump (as of %.24s)...\n",
+-		ctime((time_t *) & fromdate));
++		ctime(&tmv));
+     }
+ 
+     /* get connections to the servers */
+@@ -7122,6 +7126,7 @@ UV_GetSize(afs_int32 afromvol, afs_int32 afromserver, afs_int32 afrompart,
+     struct rx_connection *aconn = (struct rx_connection *)0;
+     afs_int32 tid = 0, rcode = 0;
+     afs_int32 code, error = 0;
++    time_t tmv = fromdate;
+ 
+ 
+     /* get connections to the servers */
+diff --git a/src/xstat/xstat_cm_test.c b/src/xstat/xstat_cm_test.c
+index b332565..a81c090 100644
+--- a/src/xstat/xstat_cm_test.c
++++ b/src/xstat/xstat_cm_test.c
+@@ -124,13 +124,13 @@ PrintCallInfo()
+     int numInt32s;		/*# int32words returned */
+     afs_int32 *currInt32;	/*Ptr to current afs_int32 value */
+     char *printableTime;	/*Ptr to printable time string */
+-
++    time_t probeTime = xstat_cm_Results.probeTime;
+     /*
+      * Just print out the results of the particular probe.
+      */
+     numInt32s = xstat_cm_Results.data.AFSCB_CollData_len;
+     currInt32 = (afs_int32 *) (xstat_cm_Results.data.AFSCB_CollData_val);
+-    printableTime = ctime((time_t *) & (xstat_cm_Results.probeTime));
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+ 
+     printf
+@@ -156,8 +156,9 @@ print_cmCallStats()
+     static char rn[] = "print_cmCallStats";	/*Routine name */
+     char *printableTime;	/*Ptr to printable time string */
+     struct afs_CMStats *cmp;
++    time_t probeTime = xstat_cm_Results.probeTime;
+ 
+-    printableTime = ctime((time_t *) & (xstat_cm_Results.probeTime));
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+ 
+     printf
+@@ -794,6 +795,7 @@ PrintPerfInfo()
+     afs_int32 numInt32s;	/*# int32words received */
+     struct afs_stats_CMPerf *perfP;	/*Ptr to performance stats */
+     char *printableTime;	/*Ptr to printable time string */
++    time_t probeTime = xstat_cm_Results.probeTime;
+ 
+     numInt32s = xstat_cm_Results.data.AFSCB_CollData_len;
+     if (numInt32s != perfInt32s) {
+@@ -803,7 +805,7 @@ PrintPerfInfo()
+ 	return;
+     }
+ 
+-    printableTime = ctime((time_t *) & (xstat_cm_Results.probeTime));
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+     perfP = (struct afs_stats_CMPerf *)
+ 	(xstat_cm_Results.data.AFSCB_CollData_val);
+@@ -1025,6 +1027,7 @@ PrintFullPerfInfo()
+     struct afs_stats_CMFullPerf *fullP;	/*Ptr to full perf info */
+ 
+     char *printableTime;	/*Ptr to printable time string */
++    time_t probeTime = xstat_cm_Results.probeTime;
+ 
+     numInt32s = xstat_cm_Results.data.AFSCB_CollData_len;
+     if (numInt32s != fullPerfInt32s) {
+@@ -1034,7 +1037,7 @@ PrintFullPerfInfo()
+ 	return;
+     }
+ 
+-    printableTime = ctime((time_t *) & (xstat_cm_Results.probeTime));
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+     fullP = (struct afs_stats_CMFullPerf *)
+ 	(xstat_cm_Results.data.AFSCB_CollData_val);
+diff --git a/src/xstat/xstat_fs_test.c b/src/xstat/xstat_fs_test.c
+index df6b47d..00d64dc 100644
+--- a/src/xstat/xstat_fs_test.c
++++ b/src/xstat/xstat_fs_test.c
+@@ -113,13 +113,14 @@ PrintCallInfo()
+     int numInt32s;		/*# int32words returned */
+     afs_int32 *currInt32;	/*Ptr to current afs_int32 value */
+     char *printableTime;	/*Ptr to printable time string */
++    time_t probeTime = xstat_fs_Results.probeTime;
+ 
+     /*
+      * Just print out the results of the particular probe.
+      */
+     numInt32s = xstat_fs_Results.data.AFS_CollData_len;
+     currInt32 = (afs_int32 *) (xstat_fs_Results.data.AFS_CollData_val);
+-    printableTime = ctime((time_t *) & (xstat_fs_Results.probeTime));
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+ 
+     printf("AFS_XSTATSCOLL_CALL_INFO (coll %d) for FS %s\n[Probe %d, %s]\n\n",
+@@ -414,6 +415,7 @@ PrintFullPerfInfo()
+     struct fs_stats_FullPerfStats *fullPerfP;	/*Ptr to full perf stats */
+     char *printableTime;	/*Ptr to printable time
+ 				 * string */
++    time_t probeTime = xstat_fs_Results.probeTime;
+ 
+     numInt32s = xstat_fs_Results.data.AFS_CollData_len;
+     if (numInt32s != fullPerfInt32s) {
+@@ -422,7 +424,7 @@ PrintFullPerfInfo()
+ 	return;
+     }
+ 
+-    printableTime = ctime((time_t *) & (xstat_fs_Results.probeTime));
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+     fullPerfP = (struct fs_stats_FullPerfStats *)
+ 	(xstat_fs_Results.data.AFS_CollData_val);
+@@ -465,6 +467,7 @@ PrintPerfInfo()
+     afs_int32 numInt32s;	/*# int32words received */
+     struct afs_PerfStats *perfP;	/*Ptr to performance stats */
+     char *printableTime;	/*Ptr to printable time string */
++    time_t probeTime = xstat_fs_Results.probeTime;
+ 
+     numInt32s = xstat_fs_Results.data.AFS_CollData_len;
+     if (numInt32s != perfInt32s) {
+@@ -473,7 +476,7 @@ PrintPerfInfo()
+ 	return;
+     }
+ 
+-    printableTime = ctime((time_t *) & (xstat_fs_Results.probeTime));
++    printableTime = ctime(&probeTime);
+     printableTime[strlen(printableTime) - 1] = '\0';
+     perfP = (struct afs_PerfStats *)
+ 	(xstat_fs_Results.data.AFS_CollData_val);
