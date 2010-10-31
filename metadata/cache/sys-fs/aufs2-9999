@@ -1,0 +1,22 @@
+dev-vcs/git[curl] >=dev-vcs/git-1.6
+
+0
+
+
+http://aufs.sourceforge.net/
+GPL-2
+An entirely re-designed and re-implemented Unionfs.
+
+eutils git linux-info multilib portability toolchain-funcs versionator
+doc kernel-patch
+
+
+
+3
+live
+compile configure install postinst prepare setup unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+>=sys-fs/fuse-2.7.0
+>=sys-fs/fuse-2.7.0
+0
+http://mhddfs.uvw.ru/downloads/mhddfs_0.1.37.tar.gz
+
+http://mhddfs.uvw.ru/ http://svn.uvw.ru/mhddfs/trunk/README
+GPL-3
+Fuse multi harddrive filesystem
+~amd64
+eutils multilib portability toolchain-funcs
+suid
+
+
+
+
+
+install postinst
+
+
+
+
+
