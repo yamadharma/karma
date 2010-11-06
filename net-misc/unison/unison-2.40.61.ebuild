@@ -30,10 +30,10 @@ SRC_URI="http://www.cis.upenn.edu/~bcpierce/unison/download/releases/${P}/${P}.t
 	doc? ( http://www.cis.upenn.edu/~bcpierce/unison/download/releases/${P}/${P}-manual.pdf
 		http://www.cis.upenn.edu/~bcpierce/unison/download/releases/${P}/${P}-manual.html )"
 
-src_prepare() {
+#src_prepare() {
 #	epatch "${FILESDIR}/${PN}-2.27.57-as-needed.patch"
-	epatch "${FILESDIR}/${PN}-mymap.patch"
-}
+#	epatch "${FILESDIR}/${PN}-mymap.patch"
+#}
 
 src_compile() {
 	local myconf
@@ -58,6 +58,8 @@ src_compile() {
 
 	use ocamlopt || myconf="$myconf NATIVE=false"
 
+	# hack???
+	make mkProjectInfo
 	# Discard cflags as it will try to pass them to ocamlc...
 	emake $myconf CFLAGS="" buildexecutable || die "error making unsion"
 }
