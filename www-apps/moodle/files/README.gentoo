@@ -1,7 +1,0 @@
-${PN} was installed into ${MY_INSTALLDIR}
-open http://YOUR_WWW_ROOT_PATH/${PN}/install.php to setup ${PN}
-normally, YOUR_WWW_ROOT_PATH is the top page of your website,
-such as http://www.example.org/, in that case, open
-http://www.example.org/${PN}/install.php
-
-see http://moodle.org/doc/?frame=install.html for more info.
