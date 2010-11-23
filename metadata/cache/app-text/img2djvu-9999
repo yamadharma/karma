@@ -1,5 +1,5 @@
 >=dev-vcs/git-1.6
-app-text/djvu media-gfx/imagemagick app-text/ocrodjvu
+app-text/djvu app-text/minidjvu media-gfx/imagemagick app-text/ocrodjvu
 0
 
 
