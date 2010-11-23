@@ -31,7 +31,7 @@ src_install() {
 	mv ${D}/usr/lib* ${D}/usr/$(get_libdir)/
 
 	doman doc/minidjvu.1
-	doman -i18n=ru_RU.UTF-8 doc/ru/minidjvu.1
+	doman -i18n=ru doc/ru/minidjvu.1
 
 	dodoc README NEWS INSTALL
 
