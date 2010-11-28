@@ -1,0 +1,12 @@
+diff -Naur nautilus-dropbox-0.6.2.orig/dropbox.in nautilus-dropbox-0.6.2/dropbox.in
+--- nautilus-dropbox-0.6.2.orig/dropbox.in	2010-04-09 04:04:10.000000000 +0900
++++ nautilus-dropbox-0.6.2/dropbox.in	2010-06-24 12:33:31.000000000 +0900
+@@ -845,7 +845,7 @@
+     if u".config" in contents:
+         autostart_dir = os.path.join(home_dir, u".config", u"autostart")
+         autostart_link = os.path.join(autostart_dir, u"%s.desktop" % "dropbox") #BUILD_KEY.lower()
+-        desktop_file = u"/usr/local/share/applications/%s.desktop" % "dropbox" #BUILD_KEY.lower()
++        desktop_file = u"@datadir@/applications/%s.desktop" % "dropbox" #BUILD_KEY.lower()
+         if should_autostart:
+             if os.path.exists(desktop_file):
+                 if not os.path.exists(autostart_dir):
