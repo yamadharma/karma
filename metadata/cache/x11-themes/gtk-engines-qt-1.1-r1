@@ -7,7 +7,7 @@ http://gtk-qt.ecs.soton.ac.uk
 GPL-2
 GTK+2 Qt4 Theme Engine
 amd64 ~ppc ~ppc64 x86
-base cmake-utils eutils flag-o-matic kde4-base kde4-functions multilib portability toolchain-funcs versionator
+base cmake-utils eutils flag-o-matic kde4-base kde4-functions multilib portability toolchain-funcs versionator virtualx
 gnome linguas_bg linguas_cs linguas_de linguas_es linguas_fr linguas_it linguas_nn linguas_ru linguas_sv linguas_tr aqua kdeenablefinal
 
 
