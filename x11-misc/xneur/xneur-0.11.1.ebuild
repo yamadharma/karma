@@ -13,7 +13,7 @@ SRC_URI="http://dists.xneur.ru/release-${PV}/tgz/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="aplay debug gstreamer libnotify nls openal xosd pcre +spell"
+IUSE="aplay debug gstreamer keylogger libnotify nls openmp openal xosd pcre +spell"
 
 COMMON_DEPEND="sys-libs/zlib
 	>=x11-libs/libX11-1.1
@@ -25,11 +25,12 @@ COMMON_DEPEND="sys-libs/zlib
 			aplay? ( >=media-sound/alsa-utils-1.0.17 ) ) )
 	libnotify? ( >=x11-libs/libnotify-0.4.0 )
 	pcre? ( >=dev-libs/libpcre-5.0 )
-	spell? ( app-text/aspell )
+	spell? ( app-text/enchant )
 	xosd? ( x11-libs/xosd )"
 RDEPEND="${COMMON_DEPEND}
 	gstreamer? ( media-libs/gst-plugins-good
 		media-plugins/gst-plugins-alsa )
+	openmp? ( sys-devel/gcc[openmp] )
 	nls? ( virtual/libintl )"
 DEPEND="${COMMON_DEPEND}
 	>=dev-util/pkgconfig-0.20
@@ -65,9 +66,10 @@ src_configure() {
 		$(use_with debug) \
 		$(use_enable nls) \
 		$(use_with pcre) \
-		$(use_with spell aspell) \
+		$(use_with spell) \
 		$(use_with xosd) \
-		$(use_with libnotify)
+		$(use_with libnotify) \
+		$(use_with keylogger)
 }
 
 src_install() {
@@ -82,4 +84,7 @@ pkg_postinst() {
 	ewarn "If you upgraded from <=xneur-0.9.3, you need to remove"
 	ewarn "dictionary files in the home directory:"
 	ewarn " $ rm ~/.xneur/{ru,en,be,etc.}/dict"
+
+	ewarn
+	ewarn "Note: if xneur became slow, try to comment out AddBind options in config file."
 }

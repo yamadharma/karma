@@ -15,7 +15,7 @@ LICENSE="GUST-FONT-LICENSE"
 
 SLOT="0"
 KEYWORDS="x86"
-IUSE="latex"
+IUSE="latex doc"
 
 SUPPLIER="public"
 S=${WORKDIR}/
@@ -54,7 +54,14 @@ src_install() {
 		fi
 	fi
 
+	cd "${S}/fonts/opentype/public/tex-gyre"
 	font_src_install
+
+	if ( use doc )
+	then
+		dodir /usr/share/doc/${PF}
+		cp -R ${S}/doc/fonts/tex-gyre ${D}/usr/share/doc/${PF}
+	fi
 }
 
 pkg_postinst() {
