@@ -12,7 +12,7 @@ if [ "${PV##*.}" = "9999" ]; then
 	ECVS_MODULE="contributions/modules/drush"
 	S=${WORKDIR}/${ECVS_MODULE}
 else
-	SRC_URI="http://ftp.drupal.org/files/projects/${PN}-All-Versions-${PV}.tar.gz"
+	SRC_URI="http://ftp.drupal.org/files/projects/${PN}-All-versions-${PV/_/-}.tar.gz"
 	S=${WORKDIR}/${PN}
 fi
 
@@ -22,7 +22,7 @@ HOMEPAGE="http://drupal.org/project/drush"
 
 LICENSE="GPL-2"
 SLOT="0"
-# KEYWORDS="amd64 x86"
+KEYWORDS="amd64 x86"
 IUSE="examples"
 
 DEPEND="dev-lang/php[cli,pcre,simplexml]"
