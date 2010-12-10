@@ -1,0 +1,22 @@
+>=app-admin/webapp-config-1.50.15
+>=dev-lang/php-4.3.0[mysql?,postgres?,imap?,ldap?,odbc?,ctype,curl,gd,iconv,ssl,tokenizer,xml,xmlrpc,zlib] virtual/httpd-php virtual/cron >=app-admin/webapp-config-1.50.15
+2.0
+http://download.moodle.org/stable20/moodle-2.0.tgz
+
+http://moodle.org
+GPL-2
+The Moodle Course Management System
+~alpha ~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86
+eutils multilib portability toolchain-funcs versionator webapp
+mysql postgres imap ldap odbc vhosts vhosts
+
+
+
+2
+
+install postinst prepare prerm setup
+
+
+
+
+

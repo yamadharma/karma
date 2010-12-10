@@ -1,0 +1,22 @@
+dev-lang/php dev-lang/php
+dev-lang/php dev-lang/php
+0
+mirror://sourceforge/tcpdf/tcpdf_5_9_029.zip
+
+http://www.tcpdf.org/
+LGPL-3.0
+TCPDF is a FLOSS PHP class for generating PDF documents.
+amd64 x86
+depend.php eutils multilib php-lib-r1 phpconfutils portability toolchain-funcs
+examples
+
+
+
+
+
+install
+
+
+
+
+

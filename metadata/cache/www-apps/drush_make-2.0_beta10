@@ -1,0 +1,22 @@
+dev-lang/php[cli,pcre,simplexml]
+dev-lang/php[cli,pcre,simplexml] www-apps/drush
+0
+http://ftp.drupal.org/files/projects/drush_make-6.x-2.0-beta10.tar.gz
+
+http://drupal.org/project/drush_make
+GPL-2
+Drush Make
+amd64 x86
+
+
+
+
+
+2
+
+install prepare
+
+
+
+
+

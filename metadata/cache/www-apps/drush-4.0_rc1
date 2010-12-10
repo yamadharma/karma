@@ -1,20 +1,20 @@
-dev-lang/php[cli,pcre,simplexml] dev-vcs/cvs
+dev-lang/php[cli,pcre,simplexml]
 dev-lang/php[cli,pcre,simplexml]
 0
-
+http://ftp.drupal.org/files/projects/drush-All-versions-4.0-rc1.tar.gz
 
 http://drupal.org/project/drush
 GPL-2
 Drupal-centric shell. Simplifies Drupal installation/management
+amd64 x86
 
-cvs eutils multilib portability toolchain-funcs
 examples
 
 
 
 2
 
-install prepare unpack
+install prepare
 
 
 

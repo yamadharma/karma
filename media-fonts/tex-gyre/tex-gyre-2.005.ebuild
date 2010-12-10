@@ -14,7 +14,7 @@ SRC_URI="${HOMEPAGE}/whole/${MY_P}.zip"
 LICENSE="GUST-FONT-LICENSE"
 
 SLOT="0"
-KEYWORDS="x86"
+KEYWORDS="x86 amd64"
 IUSE="latex doc"
 
 SUPPLIER="public"

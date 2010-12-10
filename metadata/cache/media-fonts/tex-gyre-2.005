@@ -6,9 +6,9 @@ http://www.gust.org.pl/projects/e-foundry/tex-gyre/whole/tg-2.005bas.zip
 http://www.gust.org.pl/projects/e-foundry/tex-gyre
 GUST-FONT-LICENSE
 Fonts extending freely available URW fonts.
-x86
+x86 amd64
 base eutils font latex-package multilib portability toolchain-funcs
-latex gnustep X
+latex doc gnustep X
 
 
 
