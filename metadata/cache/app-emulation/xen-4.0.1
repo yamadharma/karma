@@ -1,0 +1,22 @@
+
+|| ( sys-boot/grub sys-boot/grub-static )
+0
+http://bits.xensource.com/oss-xen/release/4.0.1/xen-4.0.1.tar.gz
+test
+http://xen.org/
+GPL-2
+The Xen virtual machine monitor
+~amd64 ~x86
+eutils flag-o-matic mount-boot multilib portability toolchain-funcs
+debug custom-cflags pae acm flask xsm
+
+~app-emulation/xen-tools-4.0.1
+
+
+
+compile install postinst preinst prerm setup unpack
+
+
+
+
+
