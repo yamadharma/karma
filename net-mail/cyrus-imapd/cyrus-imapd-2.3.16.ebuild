@@ -1,65 +1,62 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-mail/cyrus-imapd/cyrus-imapd-2.3.1.ebuild,v 1.2 2006/02/20 06:13:37 langthang Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-mail/cyrus-imapd/cyrus-imapd-2.3.16.ebuild,v 1.1 2009/12/31 09:29:16 dertobi123 Exp $
 
-inherit eutils ssl-cert gnuconfig fixheadtails
+EAPI=1
+
+inherit autotools db-use eutils flag-o-matic ssl-cert fixheadtails pam multilib
+
+MY_P=${P/_/}
 
 DESCRIPTION="The Cyrus IMAP Server."
 HOMEPAGE="http://asg.web.cmu.edu/cyrus/imapd/"
-SRC_URI="ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/${P}.tar.gz
-        http://email.uoa.gr/download/cyrus/${P}/${P}-autocreate-0.10-0.diff
-        http://email.uoa.gr/download/cyrus/${P}/${P}-autosievefolder-0.6-0.diff"
-LIBWRAP_PATCH_VER="2.2.10"
-DRAC_PATCH_VER="2.3.1"
+SRC_URI="ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/${MY_P}.tar.gz
+	http://email.uoa.gr/download/cyrus/${P}/${P}-autocreate-0.10-0.diff
+	http://email.uoa.gr/download/cyrus/${P}/${P}-autosieve-0.6.0.diff"
+LIBWRAP_PATCH_VER="2.2"
 
 LICENSE="as-is"
 SLOT="0"
-KEYWORDS="x86 ~sparc amd64 ~ppc ~hppa ~ppc64"
-IUSE="afs drac idled kerberos pam snmp ssl tcpd unsupported_8bit"
+KEYWORDS="~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="idled kerberos nntp pam replication +sieve snmp ssl tcpd"
 
 PROVIDE="virtual/imapd"
 RDEPEND=">=sys-libs/db-3.2
 	>=dev-libs/cyrus-sasl-2.1.13
-	afs? ( >=net-fs/openafs-1.2.2 )
 	pam? (
 			virtual/pam
 			>=net-mail/mailbase-1
 		)
 	kerberos? ( virtual/krb5 )
-	snmp? ( net-analyzer/net-snmp )
+	snmp? ( >=net-analyzer/net-snmp-5.2.2-r1 )
 	ssl? ( >=dev-libs/openssl-0.9.6 )
 	tcpd? ( >=sys-apps/tcp-wrappers-7.6 )
-	drac? ( >=mail-client/drac-1.12-r1 )"
+	nntp? ( !net-nntp/leafnode )"
 
 DEPEND="$RDEPEND
 	sys-devel/libtool
 	>=sys-devel/autoconf-2.58
 	sys-devel/automake"
 
+RDEPEND="$RDEPEND
+	!virtual/imapd"
+
 new_net-snmp_check() {
 	# tcpd USE flag check. Bug #68254.
-	local i
-	for i in net-analyzer/ucd-snmp net-analyzer/net-snmp; do
-		if use tcpd ; then
-			if has_version $i && ! built_with_use $i tcpd ; then
-				eerror "You are emerging this package with USE=\"tcpd\""
-				eerror "but ${i} has been emerged with USE=\"-tcpd\""
-				fail_msg $i
-			fi
-		else
-			if has_version $i && built_with_use $i tcpd ; then
-				eerror "You are emerging this package with USE=\"-tcpd\""
-				eerror "but ${i} has been emerged with USE=\"tcpd\""
-				fail_msg $i
-			fi
+	if use tcpd ; then
+		if has_version net-analyzer/net-snmp && ! built_with_use net-analyzer/net-snmp tcpd ; then
+			eerror "You are emerging this package with USE=\"tcpd\""
+			eerror "but \"net-analyzer/net-snmp\" has been emerged with USE=\"-tcpd\""
+			fail_msg
 		fi
-	done
-	# DynaLoader check. Bug #67411 
-	if built_with_use net-analyzer/net-snmp minimal ; then
-		eerror "If you want to emerge this package with \"snmp\" USE flag"
-		eerror "reemerge \"net-snmp\" without \"minimal\" USE flag"
-		die "see error message above"
+	else
+		if has_version net-analyzer/net-snmp && built_with_use net-analyzer/net-snmp tcpd ; then
+			eerror "You are emerging this package with USE=\"-tcpd\""
+			eerror "but \"net-analyzer/net-snmp\" has been emerged with USE=\"tcpd\""
+			fail_msg
+		fi
 	fi
+	# DynaLoader check. Bug #67411
 
 	if [ -x "$(type -p net-snmp-config)" ]; then
 		einfo "$(type -p net-snmp-config) is found and executable."
@@ -90,51 +87,29 @@ new_net-snmp_check() {
 }
 
 fail_msg() {
-	local i
-	i=$1
 	eerror "enable "snmp" USE flag for this package requires"
-	eerror "that ${i} and this package both build with"
+	eerror "that net-analyzer/net-snmp and this package both build with"
 	eerror "\"tcpd\" or \"-tcpd\". Bug #68254"
 	die "sanity check failed."
 }
 
 pkg_setup() {
-	if use snmp; then
-		new_net-snmp_check
-	fi
-
+	use snmp && new_net-snmp_check
 	enewuser cyrus -1 -1 /usr/cyrus mail
 }
 
+S=${WORKDIR}/${MY_P}
 
 src_unpack() {
 	unpack ${A} && cd "${S}"
 
-	ht_fix_file ${S}/imap/xversion.sh
+	ht_fix_file "${S}"/imap/xversion.sh
 
-	# Add unsupported patch wrt #18706 and #80630
-	use unsupported_8bit && epatch "${FILESDIR}/${PN}-unsupported-8bit.patch"
-
-	# Add drac database support.
-	if use drac ; then
-		# better check for drac. Bug #79442.
-		epatch "${FILESDIR}/${PN}-${DRAC_PATCH_VER}-drac.patch"
-		epatch "${S}/contrib/drac_auth.patch"
-	fi
+	# Fix prestripped binaries
+	epatch "${FILESDIR}/${PN}-strip.patch"
 
 	# Add libwrap defines as we don't have a dynamicly linked library.
-	if use tcpd ; then
-		epatch "${FILESDIR}/${PN}-${LIBWRAP_PATCH_VER}-libwrap.patch"
-	fi
-
-	# DB4 detection and versioned symbols.
-	# The new cyrus-imapd has a new DB detection.
-	# Hopefully we don't need this patch anymore.
-	# epatch "${FILESDIR}/${P}-db4.patch"
-
-	# email.uoa.gr patches
-	epatch "${DISTDIR}/${P}-autocreate-0.10-0.diff"
-	epatch "${DISTDIR}/${P}-autosievefolder-0.6-0.diff" 
+	use tcpd && epatch "${FILESDIR}/${PN}-${LIBWRAP_PATCH_VER}-libwrap.patch"
 
 	# Fix master(8)->cyrusmaster(8) manpage.
 	for i in `grep -rl -e 'master\.8' -e 'master(8)' "${S}"` ; do
@@ -148,58 +123,80 @@ src_unpack() {
 		-e "s:master:cyrusmaster:g" \
 		man/cyrusmaster.8 || die "sed failed"
 
+	# Remove unwanted m4 files
+	rm "cmulocal/ax_path_bdb.m4" || die "Failed to remove cmulocal/ax_path_bdb.m4"
+
+	# email.uoa.gr patches
+	epatch "${DISTDIR}/${P}-autocreate-0.10-0.diff"
+	epatch "${DISTDIR}/${P}-autosievefolder-0.6-0.diff"
+
 	# Recreate configure.
-	export WANT_AUTOCONF="2.5"
-	gnuconfig_update
-	rm -rf configure config.h.in autom4te.cache || die
-	ebegin "Recreating configure"
-	sh SMakefile &>/dev/null || die "SMakefile failed"
-	eend $?
+	WANT_AUTOCONF="2.5"
+	AT_M4DIR="cmulocal" eautoreconf
 
 	# When linking with rpm, you need to link with more libraries.
 	sed -i -e "s:lrpm:lrpm -lrpmio -lrpmdb:" configure || die "sed failed"
+
 }
 
 src_compile() {
 	local myconf
-	myconf="${myconf} $(use_with afs)"
-	myconf="${myconf} $(use_with drac)"
 	myconf="${myconf} $(use_with ssl openssl)"
 	myconf="${myconf} $(use_with snmp ucdsnmp)"
 	myconf="${myconf} $(use_with tcpd libwrap)"
-	myconf="${myconf} $(use_enable kerberos gssapi)"
+	myconf="${myconf} $(use_enable kerberos gssapi) $(use_enable kerberos krb5afspts)"
 	myconf="${myconf} $(use_enable idled)"
+	myconf="${myconf} $(use_enable nntp)"
+	myconf="${myconf} $(use_enable replication)"
+
+	if use kerberos; then
+		myconf="${myconf} --with-krb=$(krb5-config --prefix) --with-krbdes=no"
+	else
+		myconf="${myconf} --with-krb=no"
+	fi
 
 	econf \
 		--enable-murder \
 		--enable-listext \
 		--enable-netscapehack \
-		--with-extraident=Gentoo \
-		--with-service-path=/usr/lib/cyrus \
+		--with-service-path=/usr/$(get_libdir)/cyrus \
 		--with-cyrus-user=cyrus \
 		--with-cyrus-group=mail \
 		--with-com_err=yes \
-		--with-auth=unix \
 		--without-perl \
-		--disable-cyradm \
+		--with-bdb=$(db_libname) \
 		${myconf} || die "econf failed"
 
 	# needed for parallel make. Bug #72352.
-	cd ${S}/imap
+	cd "${S}"/imap
 	emake xversion.h || die "emake xversion.h failed"
 
-	cd ${S}
-	emake || die "compile problem"
+	# -j1 for #222529
+	cd "${S}"
+	emake -j1 || die "compile problem"
 }
 
 src_install() {
+	local SUBDIRS
+
+	if use sieve; then
+		SUBDIRS="master imap imtest timsieved notifyd sieve"
+	else
+		SUBDIRS="master imap imtest"
+	fi
+
 	dodir /usr/bin /usr/lib
-	for subdir in master imap imtest timsieved notifyd sieve; do
+	for subdir in ${SUBDIRS}; do
 		make -C "${subdir}" DESTDIR="${D}" install || die "make install failed"
 	done
 
 	# Link master to cyrusmaster (postfix has a master too)
 	dosym /usr/lib/cyrus/master /usr/lib/cyrus/cyrusmaster
+
+	if ! use nntp ; then
+		rm man/fetchnews.8 man/syncnews.8 man/nntpd.8 man/nntptest.1
+		rm "${D}"/usr/bin/nntptest
+	fi
 
 	doman man/*.[0-8]
 	dodoc COPYRIGHT README*
@@ -214,13 +211,6 @@ src_install() {
 	newinitd "${FILESDIR}/cyrus.rc6" cyrus
 	newconfd "${FILESDIR}/cyrus.confd" cyrus
 	newpamd "${FILESDIR}/cyrus.pam-include" sieve
-
-	if use ssl ; then
-		SSL_ORGANIZATION="${SSL_ORGANIZATION:-Cyrus IMAP Server}"
-		insinto /etc/ssl/cyrus
-		docert server
-		fowners cyrus:mail /etc/ssl/cyrus/server.{key,pem}
-	fi
 
 	for subdir in imap/{,db,log,msg,proc,socket,sieve} spool/imap/{,stage.} ; do
 		keepdir "/var/${subdir}"
@@ -237,42 +227,36 @@ src_install() {
 }
 
 pkg_postinst() {
-	ewarn "*****NOTE*****"
-	ewarn "If you're upgrading from versions prior to 2.2.2_BETA"
-	ewarn "be sure to read the following thoroughly:"
-	ewarn "http://asg.web.cmu.edu/cyrus/download/imapd/install-upgrade.html"
-	ewarn "*****NOTE*****"
-	echo
+	# do not install server.{key,pem) if they are exist.
+	use ssl && {
+		if [ ! -f "${ROOT}"etc/ssl/cyrus/server.key ]; then
+			install_cert /etc/ssl/cyrus/server
+			chown cyrus:mail "${ROOT}"etc/ssl/cyrus/server.{key,pem}
+	fi
+	}
 
-	ewarn "If you change the fs-type of /var/imap or"
-	ewarn "/var/spool/imap you should read step 9 of"
-	ewarn "/usr/share/doc/${P}/html/install-configure.html."
-	echo
-
-	enewuser cyrus -1 -1 /usr/cyrus mail
-
-	if df -T /var/imap | grep -q ' ext[23] ' ; then
+	if df -T /var/imap | grep -q ' ext2 ' ; then
 		ebegin "Making /var/imap/user/* and /var/imap/quota/* synchronous."
 		chattr +S /var/imap/{user,quota}{,/*}
 		eend $?
 	fi
 
-	if df -T /var/spool/imap | grep -q ' ext[23] ' ; then
+	if df -T /var/spool/imap | grep -q ' ext2 ' ; then
 		ebegin "Making /var/spool/imap/* synchronous."
 		chattr +S /var/spool/imap{,/*}
 		eend $?
 	fi
 
 	ewarn "If the queue directory of the mail daemon resides on an ext2"
-	ewarn "or ext3 filesystem you need to set it manually to update"
+	ewarn "filesystem you need to set it manually to update"
 	ewarn "synchronously. E.g. 'chattr +S /var/spool/mqueue'."
 	echo
 
-	einfo "For correct logging add the following to /etc/syslog.conf:"
-	einfo "    local6.*         /var/log/imapd.log"
-	einfo "    auth.debug       /var/log/auth.log"
+	elog "For correct logging add the following to /etc/syslog.conf:"
+	elog "    local6.*         /var/log/imapd.log"
+	elog "    auth.debug       /var/log/auth.log"
 	echo
 
-	ewarn "You have to add user cyrus to the sasldb2. Do this with:"
-	ewarn "    saslpasswd2 cyrus"
+	elog "You have to add user cyrus to the sasldb2. Do this with:"
+	elog "    saslpasswd2 cyrus"
 }
