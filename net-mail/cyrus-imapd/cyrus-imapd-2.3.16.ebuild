@@ -128,7 +128,7 @@ src_unpack() {
 
 	# email.uoa.gr patches
 	epatch "${DISTDIR}/${P}-autocreate-0.10-0.diff"
-	epatch "${DISTDIR}/${P}-autosievefolder-0.6-0.diff"
+	epatch "${DISTDIR}/${P}-autosieve-0.6.0.diff"
 
 	# Recreate configure.
 	WANT_AUTOCONF="2.5"
