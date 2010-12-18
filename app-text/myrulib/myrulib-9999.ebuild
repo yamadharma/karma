@@ -5,16 +5,21 @@
 EAPI=2
 WX_GTK_VER="2.8"
 
-inherit eutils
+inherit eutils git
 
 DESCRIPTION="Create your own collection of e-books"
 HOMEPAGE="http://www.lintest.ru/wiki/MyRuLib"
-SRC_URI="http://www.lintest.ru/pub/${P/-/_}.tar.gz"
+EGIT_REPO_URI="git://github.com/lintest/${PN}"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE=""
+KEYWORDS=""
+IUSE="+stable"
+
+if use stable; then
+	EGIT_BRANCH="stable"
+	EGIT_COMMIT="stable"
+fi
 
 RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}[X]
@@ -30,6 +35,9 @@ src_prepare() {
 		sources/Expat \
 		sources/SQLite3 \
 	|| die
+
+	# fix upstream
+	chmod +x configure
 }
 
 src_configure() {
