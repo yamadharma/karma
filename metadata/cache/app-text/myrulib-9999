@@ -1,0 +1,22 @@
+x11-libs/wxGTK:2.8[X] >=dev-libs/expat-2 dev-db/sqlite:3 >=dev-vcs/git-1.6
+x11-libs/wxGTK:2.8[X] >=dev-libs/expat-2 dev-db/sqlite:3
+0
+
+
+http://www.lintest.ru/wiki/MyRuLib
+GPL-3
+Create your own collection of e-books
+
+eutils git multilib portability toolchain-funcs
++stable
+
+
+
+2
+
+configure install prepare unpack
+
+
+
+
+
