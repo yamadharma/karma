@@ -1,0 +1,22 @@
+www-client/firefox dev-util/pkgconfig dev-vcs/subversion net-misc/rsync app-arch/unzip
+www-client/firefox dev-util/pkgconfig
+0
+
+
+http://code.google.com/p/google-gears/
+BSD
+Google Gears
+~amd64 ~x86
+eutils mozextension multilib portability subversion toolchain-funcs
+debug
+
+
+
+2
+
+install preinst prepare unpack
+
+
+
+
+
