@@ -1,0 +1,22 @@
+media-libs/libsdl media-libs/sdl-mixer media-libs/sdl-image media-libs/sdl-ttf sys-libs/zlib media-video/ffmpeg dev-libs/boost || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b dev-vcs/subversion net-misc/rsync
+media-libs/libsdl media-libs/sdl-mixer media-libs/sdl-image media-libs/sdl-ttf sys-libs/zlib media-video/ffmpeg dev-libs/boost
+0
+mirror://sourceforge/vcmi/vcmi_083.zip
+
+http://vcmi.sf.net
+GPL-2
+VCMI Project - Heroes 3: WoG recreated
+amd64 x86
+autotools eutils libtool multilib portability subversion toolchain-funcs
+
+
+
+
+3
+
+configure install preinst prepare unpack
+
+
+
+
+
