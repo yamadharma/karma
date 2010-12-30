@@ -12,7 +12,7 @@ if [ "${PV##*.}" = "9999" ]; then
 	ECVS_MODULE="contributions/modules/drush"
 	S=${WORKDIR}/${ECVS_MODULE}
 else
-	SRC_URI="http://ftp.drupal.org/files/projects/${PN}-All-versions-${PV/_/-}.tar.gz"
+	SRC_URI="http://ftp.drupal.org/files/projects/${PN}-6.x-${PV/_/-}.tar.gz"
 	S=${WORKDIR}/${PN}
 fi
 
@@ -38,11 +38,12 @@ src_install() {
 
 	dodoc README.txt || die
 
-	doins -r includes commands drush.php drush.api.php drush.info || die
+	doins -r includes commands drush.php drush.info || die
 
 	doexe drush || die
 
 	dosym /usr/share/drush/drush /usr/bin/drush || die
 
 	use examples && cp -R examples ${D}/usr/share/doc/${PF}
+	use doc && cp -R doc/* ${D}/usr/share/doc/${PF}
 }
