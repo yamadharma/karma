@@ -2,7 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-NEED_PYTHON=2.3
+EAPI="3"
+
+PYTHON_DEPEND="2"
 
 inherit distutils
 
