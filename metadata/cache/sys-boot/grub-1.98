@@ -14,7 +14,7 @@ custom-cflags debug truetype multislot static
 virtual/bootloader
 
 
-compile install postinst preinst prerm unpack
+compile install postinst postrm preinst prerm unpack
 
 
 
