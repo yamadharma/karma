@@ -9,7 +9,7 @@ SUPPORT_PYTHON_ABIS="1"
 inherit distutils
 
 DESCRIPTION="djvusmooth is a graphical editor for DjVu documents"
-HOMEPAGE="http://jwilk.net/software/djvusmooth"
+HOMEPAGE="http://jwilk.net/software/ocrodjvu"
 SRC_URI="http://pypi.python.org/packages/source/o/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-2"
