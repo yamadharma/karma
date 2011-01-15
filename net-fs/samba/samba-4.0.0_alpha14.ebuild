@@ -69,12 +69,13 @@ src_configure() {
 		--with-privatedir=/var/lib/samba/private \
 		--disable-rpath \
 		--disable-rpath-install \
-		--bundled-libraries=ldb,tdb,talloc,tevent,NONE \
-		--builtin-libraries=replace \
 		--nopyc \
 		--nopyo \
 		$(use_enable gnutls) \
 		|| die "configure failed"
+
+#		--bundled-libraries=ldb,tdb,talloc,tevent,NONE \
+#		--builtin-libraries=replace \
 }
 
 src_compile() {
