@@ -12,7 +12,7 @@ if [ "${PV##*.}" = "9999" ]; then
 	ECVS_MODULE="contributions/modules/drush"
 	S=${WORKDIR}/${ECVS_MODULE}
 else
-	SRC_URI="http://ftp.drupal.org/files/projects/${PN}-6.x-${PV/_/-}.tar.gz"
+	SRC_URI="http://ftp.drupal.org/files/projects/${PN}-All-versions-${PV/_/-}.tar.gz"
 	S=${WORKDIR}/${PN}
 fi
 
