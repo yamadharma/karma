@@ -1,4 +1,4 @@
->=app-pda/libopensync-0.38 >=dev-util/cmake-2.6.2-r1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=app-pda/libopensync-0.38 >=dev-util/cmake-2.8.1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 >=app-pda/libopensync-0.38
 0
 http://www.opensync.org/download/releases/0.38/libopensync-plugin-file-0.38.tar.bz2

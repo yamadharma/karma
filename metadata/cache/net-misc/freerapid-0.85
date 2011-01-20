@@ -1,7 +1,7 @@
 >=virtual/jdk-1.6
 >=virtual/jre-1.6 app-misc/realpath
 0
-http://wordrider.net/download.php?file=FreeRapid-0.83U1.zip -> freerapid-0.83U1.zip
+http://wordrider.net/download.php?file=FreeRapid-0.85u1.zip -> FreeRapid-0.85u1.zip
 nomirror
 http://wordrider.net/freerapid
 GPL
