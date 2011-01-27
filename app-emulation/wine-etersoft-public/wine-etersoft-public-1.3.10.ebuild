@@ -8,18 +8,21 @@ AUTOTOOLS_AUTO_DEPEND="no"
 inherit eutils flag-o-matic multilib autotools
 # rpm
 
-pulse_patches() { echo "$1"/winepulse-{0.36,0.35-configure.ac,0.36-winecfg}.patch ; }
-GV="1.0.0-x86"
+pulse_patches() { echo "$1"/winepulse-{0.39,configure.ac-1.3.10,0.38-winecfg}.patch ; }
+GV="1.1.0"
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
 SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV/_/-}/sources/wine-${PV}-alt1.src.rpm
-	gecko? ( mirror://sourceforge/wine/wine_gecko-${GV}.cab )
+	gecko? (
+		mirror://sourceforge/wine/wine_gecko-${GV}-x86.cab
+		win64? ( mirror://sourceforge/wine/wine_gecko-${GV}-x86_64.cab )
+	)
 	pulseaudio? ( `pulse_patches http://art.ified.ca/downloads/winepulse` )"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86 ~x86-fbsd"
-IUSE="alsa capi cups custom-cflags dbus esd fontconfig gecko gnutls gphoto2 gsm hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss +perl png pulseaudio samba scanner ssl test +threads truetype win64 X xcomposite xinerama xml"
+IUSE="alsa capi cups custom-cflags dbus esd fontconfig gecko gnutls gphoto2 gsm gstreamer hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss +perl png pulseaudio samba scanner ssl test +threads +truetype +win32 +win64 X xcomposite xinerama xml"
 RESTRICT="test" #72375
 
 S=${WORKDIR}/wine-${PV}
@@ -34,6 +37,7 @@ RDEPEND="truetype? ( >=media-libs/freetype-2.0.0 media-fonts/corefonts )
 	openal? ( media-libs/openal )
 	dbus? ( sys-apps/dbus )
 	gnutls? ( net-libs/gnutls )
+	gstreamer? ( media-libs/gstreamer media-libs/gst-plugins-base )
 	hal? ( sys-apps/hal )
 	X? (
 		x11-libs/libXcursor
@@ -103,13 +107,12 @@ src_prepare() {
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
 }
 
-src_configure() {
-	export LDCONFIG=/bin/true
+do_configure() {
+	local builddir="${WORKDIR}/wine$1"
+	mkdir -p "${builddir}"
+	pushd "${builddir}" >/dev/null
 
-	use amd64 && ! use win64 && multilib_toolchain_setup x86
-
-	# XXX: should check out these flags too:
-	#	audioio capi fontconfig freetype gphoto
+	ECONF_SOURCE=${S} \
 	econf \
 		--sysconfdir=/etc/wine \
 		$(use_with alsa) \
@@ -122,6 +125,7 @@ src_configure() {
 		$(use_with gnutls) \
 		$(use_with gphoto2 gphoto) \
 		$(use_with gsm) \
+		$(use_with gstreamer) \
 		$(! use dbus && echo --without-hal || use_with hal) \
 		$(use_with jack) \
 		$(use_with jpeg) \
@@ -151,26 +155,43 @@ src_configure() {
 	emake -j1 depend || die "depend"
 }
 
+src_configure() {
+	export LDCONFIG=/bin/true
+	use custom-cflags || strip-flags
+
+	if use win64 ; then
+		do_configure 64 --enable-win64
+		use win32 && ABI=x86 do_configure 32 --with-wine64=../wine64
+	else
+		ABI=x86 do_configure 32 --disable-win64
+	fi
+}
+
 src_compile() {
-	emake all || die "all"
+	local b
+	for b in 64 32 ; do
+		local builddir="${WORKDIR}/wine${b}"
+		[[ -d ${builddir} ]] || continue
+		emake -C "${builddir}" all || die
+	done
 }
 
 src_install() {
-	make DESTDIR="${D}" initdir=/etc/init.d sysconfdir=/etc install || die
+	local b
+	for b in 64 32 ; do
+		local builddir="${WORKDIR}/wine${b}"
+		[[ -d ${builddir} ]] || continue
+		emake -C "${builddir}" install DESTDIR="${D}" || die
+	done
 	dodoc ANNOUNCE AUTHORS README
-
 	if use gecko ; then
 		insinto /usr/share/wine/gecko
-		doins "${DISTDIR}"/wine_gecko-${GV}.cab || die
+		doins "${DISTDIR}"/wine_gecko-${GV}-x86.cab || die
+		use win64 && { doins "${DISTDIR}"/wine_gecko-${GV}-x86_64.cab || die ; }
 	fi
-
-	if ! use perl
-	then
+	if ! use perl ; then
 		rm "${D}"/usr/bin/{wine{dump,maker},function_grep.pl} "${D}"/usr/share/man/man1/wine{dump,maker}.1 || die
 	fi
-
-#	cp "${FILESDIR}"/*.fon ${D}/usr/share/wine/fonts/
-#	cp "${FILESDIR}"/*.ttf ${D}/usr/share/wine/fonts/
 
 	rm -f ${D}/etc/init.d/*
 	newinitd ${FILESDIR}/wine.initd wine
