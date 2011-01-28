@@ -178,6 +178,14 @@ src_compile() {
 
 src_install() {
 	local b
+
+	cd ${S}/tools
+	for b in 64 32 ; do
+		[[ -d "${WORKDIR}/wine${b}" ]] || continue
+		cp udev.rules wine.desktop "${WORKDIR}/wine${b}/tools"
+	done
+	cd ${S}
+
 	for b in 64 32 ; do
 		local builddir="${WORKDIR}/wine${b}"
 		[[ -d ${builddir} ]] || continue
