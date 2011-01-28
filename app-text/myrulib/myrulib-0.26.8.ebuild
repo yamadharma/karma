@@ -9,7 +9,7 @@ inherit eutils
 
 DESCRIPTION="Create your own collection of e-books"
 HOMEPAGE="http://www.lintest.ru/wiki/MyRuLib"
-SRC_URI="http://www.lintest.ru/pub/${P/-/_}.tar.gz"
+SRC_URI="http://www.lintest.ru/pub/${P}.tar.bz2"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -19,9 +19,8 @@ IUSE=""
 RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}[X]
 	>=dev-libs/expat-2
-	dev-db/sqlite:3
-	"
-# TODO dev-db/wxSQLite3 (sunrise overlay)
+	dev-db/sqlite:3"
+#	dev-db/wxSQLite3
 DEPEND="${RDEPEND}"
 
 src_prepare() {
