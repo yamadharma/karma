@@ -32,8 +32,7 @@ RDEPEND="virtual/lapack
 		>=dev-java/flexdock-0.5.2
 		>=dev-java/jeuclid-core-3.1
 		>=dev-java/jlatexmath-0.9.2
-		>=dev-java/jlatexmath-fop-0.9.2
-		=dev-java/jgraphx-1.4*
+		=dev-java/jgraphx-1.4.1.0
 		dev-java/jogl
 		dev-java/jgoodies-looks
 		dev-java/jrosetta
@@ -45,11 +44,10 @@ RDEPEND="virtual/lapack
 	matio? ( sci-libs/matio )
 	hdf5? ( ~sci-libs/hdf5-1.8.4 )"
 
-# ~dev-java/jgraphx-1.4.0.2
-
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	doc? (
+		>=dev-java/jlatexmath-fop-0.9.2
 		~dev-java/saxon-6.5.5
 		app-text/docbook-xsl-stylesheets )"
 
@@ -133,7 +131,7 @@ src_install() {
 	emake DESTDIR="${D}" install || die "emake install failed"
 
 	# install docs
-	dodoc ACKNOWLEDGEMENTS CHANGES README_Unix RELEASE_NOTES \
+	dodoc ACKNOWLEDGEMENTS CHANGES_5.3.X README_Unix RELEASE_NOTES_5.3.X \
 		Readme_Visual.txt || die "failed to install docs"
 
 	#install icon
