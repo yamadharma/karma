@@ -51,7 +51,7 @@ src_prepare(){
 	# Hack for OOo-3
 	mkdir -p openoffice/program/classes
 	cd openoffice/program/classes
-	find /usr/lib/openoffice -name "*.jar" -exec ln -snf {} . \;
+	find "${OOO_ROOT_DIR}" -name "*.jar" -exec ln -snf {} . \;
 	
 	sed -i -e "s:W2LPATH=.*:W2LPATH=/usr/$(get_libdir)/${PN}:" ${S_DISTRO}/w2l || die "Sed failed"
 }
@@ -83,13 +83,13 @@ src_install() {
 		dodoc ${S}/samples/config/*
 	fi
 
-	insinto /usr/$(get_libdir)/openoffice/share/extension/install
+	insinto "${OOO_EXT_DIR}"
 	for i in ${OOO_EXTENSIONS}
 	do
 		doins ${S_TARGETLIB}/${i}
 	done
 	
-	if use doc 
+	if use doc
         then
 	#	dohtml -r doc
 		cd ${S_DISTRO}

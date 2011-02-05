@@ -10,10 +10,18 @@ inherit eutils multilib
 # list of extentions
 # OOO_EXTENSIONS="" 
 
-OOO_ROOT_DIR="/usr/$(get_libdir)/openoffice"
+openoffice-ext_pkg_setup() {
+if ( has_version "app-office/openoffice" || has_version "app-office/openoffice-bin" )
+then
+	OOO_ROOT_DIR="/usr/$(get_libdir)/openoffice"
+elif ( has_version "app-office/libreoffice" || has_version "app-office/libreoffice-bin" )
+then
+	OOO_ROOT_DIR="/usr/$(get_libdir)/libreoffice"
+fi
 OOO_PROGRAM_DIR="${OOO_ROOT_DIR}/program"
 UNOPKG="${OOO_PROGRAM_DIR}/unopkg"
 OOO_EXT_DIR="${OOO_ROOT_DIR}/share/extension/install"
+}
 
 DEPEND="virtual/ooo"
 RDEPEND="virtual/ooo"
@@ -69,4 +77,4 @@ openoffice-ext_pkg_prerm() {
 	done
 }
 
-EXPORT_FUNCTIONS src_install pkg_postinst pkg_prerm
+EXPORT_FUNCTIONS src_install pkg_postinst pkg_prerm pkg_setup
