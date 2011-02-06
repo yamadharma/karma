@@ -7,7 +7,7 @@ http://www.padl.com/OSS/pam_ldap.html
 || ( GPL-2 LGPL-2 )
 PAM LDAP Module
 alpha amd64 hppa ~mips ppc ppc64 sparc x86
-autotools eutils libtool multilib pam portability toolchain-funcs
+autotools eutils flag-o-matic libtool multilib pam portability toolchain-funcs
 ssl sasl
 
 

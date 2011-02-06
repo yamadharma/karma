@@ -7,7 +7,7 @@ http://www.eyrie.org/~eagle/software/pam-krb5/
 || ( BSD-2 GPL-2 )
 Kerberos 5 PAM Authentication Module
 amd64 ppc sparc x86
-eutils multilib pam portability toolchain-funcs
+eutils flag-o-matic multilib pam portability toolchain-funcs
 doc
 
 
