@@ -20,7 +20,7 @@ IUSE="mysql postgres"
 DEPEND=""
 RDEPEND="dev-java/sun-jdk
 	dev-java/jython
-	|| ( app-office/openoffice app-office/openoffice-bin )
+	virtual/ooo
 	media-gfx/imagemagick
 	virtual/ghostscript
 	media-gfx/swftools

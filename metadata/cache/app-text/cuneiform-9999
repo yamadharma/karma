@@ -1,4 +1,4 @@
->=dev-util/cmake-2.6.2 imagemagick? ( media-gfx/imagemagick ) >=dev-util/cmake-2.8.1 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) >=dev-vcs/bzr-1.5
+>=dev-util/cmake-2.6.2 imagemagick? ( media-gfx/imagemagick ) >=dev-util/cmake-2.8.1 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) >=dev-vcs/bzr-2.0.1
 imagemagick? ( media-gfx/imagemagick )
 0
 

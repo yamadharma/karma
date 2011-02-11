@@ -1,4 +1,4 @@
-|| ( ( x11-libs/libICE x11-libs/libXext x11-libs/libSM x11-libs/libXft ) virtual/x11 ) dev-util/pkgconfig app-misc/run-mailcap >=dev-lang/lua-5.1.1 x11-terms/rxvt-unicode doc? ( dev-tex/latex2html virtual/tex-base ) >=dev-vcs/bzr-1.5 >=app-admin/eselect-python-20091230 dev-lang/python
+|| ( ( x11-libs/libICE x11-libs/libXext x11-libs/libSM x11-libs/libXft ) virtual/x11 ) dev-util/pkgconfig app-misc/run-mailcap >=dev-lang/lua-5.1.1 x11-terms/rxvt-unicode doc? ( dev-tex/latex2html virtual/tex-base ) >=dev-vcs/bzr-2.0.1 >=app-admin/eselect-python-20091230 dev-lang/python
 || ( ( x11-libs/libICE x11-libs/libXext x11-libs/libSM x11-libs/libXft ) virtual/x11 ) dev-util/pkgconfig app-misc/run-mailcap >=dev-lang/lua-5.1.1 x11-terms/rxvt-unicode doc? ( dev-tex/latex2html virtual/tex-base ) >=app-admin/eselect-python-20091230 dev-lang/python
 0
 
