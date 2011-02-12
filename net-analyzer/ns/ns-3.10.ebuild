@@ -2,15 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="3"
 
-inherit eutils 
+inherit eutils
 
-NSC_PV=0.4.1
+NSC_PV=0.5.2
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.nsnam.org"
-SRC_URI="http://www.nsnam.org/releases/${P}.tar.bz2
+SRC_URI="http://www.nsnam.org/releases/ns-allinone-${PV}.tar.bz2
 	http://research.wand.net.nz/software/nsc/nsc-${NSC_PV}.tar.bz2"
 
 LICENSE="GPL-2"

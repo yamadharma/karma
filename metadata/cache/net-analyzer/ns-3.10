@@ -1,7 +1,7 @@
 dev-lang/python dev-python/pygccxml doc? ( app-doc/doxygen )
 dev-lang/python dev-python/pygccxml
 3
-http://www.nsnam.org/releases/ns-3.2.1.tar.bz2 http://research.wand.net.nz/software/nsc/nsc-0.4.1.tar.bz2
+http://www.nsnam.org/releases/ns-allinone-3.10.tar.bz2 http://research.wand.net.nz/software/nsc/nsc-0.5.2.tar.bz2
 
 http://www.nsnam.org
 GPL-2
@@ -12,7 +12,7 @@ doc examples
 
 
 
-2
+3
 
 compile configure install prepare
 

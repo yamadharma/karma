@@ -1,5 +1,5 @@
 
-dev-java/sun-jdk dev-java/jython || ( app-office/openoffice app-office/openoffice-bin ) media-gfx/imagemagick virtual/ghostscript media-gfx/swftools media-video/ffmpeg[mp3] media-sound/sox postgres? ( virtual/postgresql-server dev-java/jdbc-postgresql ) mysql? ( virtual/mysql dev-java/jdbc-mysql )
+dev-java/sun-jdk dev-java/jython virtual/ooo media-gfx/imagemagick virtual/ghostscript media-gfx/swftools media-video/ffmpeg[mp3] media-sound/sox postgres? ( virtual/postgresql-server dev-java/jdbc-postgresql ) mysql? ( virtual/mysql dev-java/jdbc-mysql )
 0
 http://openmeetings.googlecode.com/files/openmeetings_1_1_r3087.zip
 
