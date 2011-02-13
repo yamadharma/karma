@@ -1,7 +1,7 @@
 >=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 >=dev-tcltk/otcl-1.11 >=dev-tcltk/tclcl-1.17 virtual/libpcap debug? ( =dev-lang/perl-5* >=sci-visualization/xgraph-12.1 >=dev-libs/dmalloc-4.8.2 >=dev-tcltk/tcl-debug-2.0 ) doc? ( virtual/latex-base virtual/ghostscript dev-tex/latex2html )
 >=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 >=dev-tcltk/otcl-1.11 >=dev-tcltk/tclcl-1.17 virtual/libpcap debug? ( =dev-lang/perl-5* >=sci-visualization/xgraph-12.1 >=dev-libs/dmalloc-4.8.2 >=dev-tcltk/tcl-debug-2.0 )
 0
-mirror://sourceforge/nsnam/ns-2.34.tar.gz
+mirror://sourceforge/nsnam/ns-2.33.tar.gz
 
 http://www.isi.edu/nsnam/ns/
 BSD as-is
@@ -12,9 +12,9 @@ doc debug
 
 
 
-3
 
-compile install prepare test
+
+compile install test unpack
 
 
 
