@@ -31,6 +31,7 @@ RDEPEND=">=dev-perl/gtk2-perl-1.143-r1
 	dev-perl/forks
 	dev-perl/Test-Perl-Critic
 	virtual/perl-Archive-Tar
+	dev-perl/Log-Log4perl
 	media-gfx/imagemagick[perl]
 	media-gfx/sane-backends
 	media-libs/tiff
