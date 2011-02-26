@@ -1,0 +1,22 @@
+dev-libs/glib:2 dev-libs/boost[python] >=dev-python/pyrex-0.9.6.4 dev-python/pygtk:2 dev-python/pygobject:2 >=net-libs/webkit-gtk-1.1.15 >=sys-apps/sed-4 >=app-admin/eselect-python-20091230 || ( =dev-lang/python-2.7* =dev-lang/python-2.6* ) >=app-admin/eselect-python-20091230 || ( =dev-lang/python-2.7* =dev-lang/python-2.6* )
+dev-libs/glib:2 dev-libs/boost[python] >=dev-python/pyrex-0.9.6.4 dev-python/pygtk:2 dev-python/pygobject:2 >=net-libs/webkit-gtk-1.1.15 libnotify? ( dev-python/notify-python ) || ( dev-lang/python[sqlite] dev-python/pysqlite:2 ) dev-python/dbus-python dev-python/pycairo >=dev-python/pywebkitgtk-1.1.5 dev-python/pycurl dev-python/gconf-python dev-python/gst-python:0.10 net-libs/rb_libtorrent[python] media-plugins/gst-plugins-meta:0.10[theora?,vorbis?] =media-plugins/gst-plugins-pango-0.10* faad? ( =media-plugins/gst-plugins-faad-0.10* ) mp3? ( =media-plugins/gst-plugins-mad-0.10* ) musepack? ( =media-plugins/gst-plugins-musepack-0.10* ) x264? ( =media-plugins/gst-plugins-x264-0.10* ) xvid? ( =media-plugins/gst-plugins-xvid-0.10* ) ffmpeg? ( >media-video/ffmpeg-0.6[faac?,mp3?,theora?,vorbis?,x264?,xvid?] ) theora? ( media-video/ffmpeg2theora ) >=app-admin/eselect-python-20091230 || ( =dev-lang/python-2.7* =dev-lang/python-2.6* ) >=app-admin/eselect-python-20091230 || ( =dev-lang/python-2.7* =dev-lang/python-2.6* )
+0
+http://ftp.osuosl.org/pub/pculture.org/miro/src/miro-3.5.1.tar.gz
+
+http://www.getmiro.com/
+GPL-2
+Open source video player and podcast client
+~amd64 ~x86
+distutils fdo-mime gnome2-utils multilib python toolchain-funcs
+libnotify faac faad +ffmpeg mp3 musepack theora vorbis x264 xvid
+
+
+
+2
+
+compile install postinst postrm preinst prepare
+
+
+
+
+
