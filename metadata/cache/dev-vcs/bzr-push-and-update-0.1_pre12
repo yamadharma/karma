@@ -12,9 +12,9 @@ bzr eutils multilib portability python toolchain-funcs
 
 
 
+3
 
-
-install setup unpack
+install prepare setup unpack
 
 
 
