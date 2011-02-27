@@ -22,7 +22,7 @@ DEPEND="${RDEPEND}
 	>=dev-lang/perl-5.6
 	dev-perl/XML-Parser
 	>=dev-util/intltool-0.21
-	|| ( net-analyzer/netcat net-analyzer/netcat-openbsd )"
+	|| ( net-analyzer/netcat6 net-analyzer/netcat-openbsd )"
 
 src_prepare() {
 	# net-analyzer/netcat needs -q0 instead of --close
