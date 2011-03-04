@@ -1,0 +1,22 @@
+dev-libs/libxml2 aac? ( media-libs/faac media-libs/faad2 ) aften? ( media-libs/aften[cxx] ) alsa? ( media-libs/alsa-lib ) amr? ( media-libs/opencore-amr ) dts? ( media-libs/libdca ) mp3? ( media-sound/lame ) esd? ( media-sound/esound ) jack? ( media-sound/jack-audio-connection-kit ) libsamplerate? ( media-libs/libsamplerate ) pulseaudio? ( media-sound/pulseaudio ) sdl? ( media-libs/libsdl ) truetype? ( media-libs/freetype:2 media-libs/fontconfig ) vorbis? ( media-libs/libvorbis ) x264? ( media-libs/x264 ) xv? ( x11-libs/libXv ) xvid? ( media-libs/xvid ) gtk? ( x11-libs/gtk+:2 ) qt4? ( x11-libs/qt-gui:4 ) nls? ( sys-devel/gettext ) dev-util/pkgconfig >=dev-util/cmake-2.8.1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+dev-libs/libxml2 aac? ( media-libs/faac media-libs/faad2 ) aften? ( media-libs/aften[cxx] ) alsa? ( media-libs/alsa-lib ) amr? ( media-libs/opencore-amr ) dts? ( media-libs/libdca ) mp3? ( media-sound/lame ) esd? ( media-sound/esound ) jack? ( media-sound/jack-audio-connection-kit ) libsamplerate? ( media-libs/libsamplerate ) pulseaudio? ( media-sound/pulseaudio ) sdl? ( media-libs/libsdl ) truetype? ( media-libs/freetype:2 media-libs/fontconfig ) vorbis? ( media-libs/libvorbis ) x264? ( media-libs/x264 ) xv? ( x11-libs/libXv ) xvid? ( media-libs/xvid ) gtk? ( x11-libs/gtk+:2 ) qt4? ( x11-libs/qt-gui:4 )
+2
+mirror://sourceforge/avidemux/avidemux_2.5.4.tar.gz
+
+http://fixounet.free.fr/avidemux
+GPL-2
+Video editor designed for simple cutting, filtering and encoding tasks
+~amd64 ~ppc ~x86
+base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs
++aac +aften +alsa amr +dts esd jack libsamplerate +mp3 nls oss pulseaudio +sdl +truetype +vorbis +x264 +xv +xvid gtk +qt4 linguas_bg linguas_ca linguas_cs linguas_de linguas_el linguas_es linguas_fr linguas_it linguas_ja linguas_pt_BR linguas_ru linguas_sr linguas_sr@latin linguas_tr linguas_zh_TW
+
+
+
+2
+
+compile configure install prepare test unpack
+
+
+
+
+
