@@ -31,7 +31,8 @@ RDEPEND="virtual/lapack
 		dev-java/commons-logging
 		>=dev-java/flexdock-0.5.2
 		>=dev-java/jeuclid-core-3.1
-		>=dev-java/jlatexmath-0.9.2
+		>=dev-java/jlatexmath-0.9.4
+		>=dev-java/jlatexmath-fop-0.9.4
 		=dev-java/jgraphx-1.4.1.0
 		dev-java/jogl
 		dev-java/jgoodies-looks
@@ -64,6 +65,7 @@ src_prepare() {
 	check_reqs_conditional && epatch "${FILESDIR}"/java-heap.patch
 	# fix scilib path
 	epatch "${FILESDIR}"/scilib-fix.patch
+	epatch "${FILESDIR}"/scilib-fix-java_home.patch
 
 
 	# add the correct java directories to the config file
