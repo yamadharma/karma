@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: Exp $
 
+EAPI=2
+
 inherit eutils autotools virtualx
 
 PRERELEASE_DATE="${PV##*_pre}"
