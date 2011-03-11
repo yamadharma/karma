@@ -37,6 +37,8 @@ DEPEND="${COMMON_DEPEND}
 	nls? ( sys-devel/gettext )"
 
 src_prepare() {
+	has_version ">=x11-libs/libnotify-0.7" && epatch "${FILESDIR}"/libnotify-0.7.patch
+
 	# Fixes error/warning: no newline at end of file
 	find -name '*.c' -exec sed -i -e '${/[^ ]/s:$:\n:}' {} + || die
 	rm -f m4/{lt~obsolete,ltoptions,ltsugar,ltversion,libtool}.m4 \
