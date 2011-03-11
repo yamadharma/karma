@@ -6,7 +6,7 @@ EAPI="3"
 GCONF_DEBUG="no"
 PYTHON_DEPEND="2:2.4"
 
-inherit eutils gnome2 python
+inherit eutils gnome2 python autotools
 
 DESCRIPTION="Applets for the GNOME Desktop and Panel"
 HOMEPAGE="http://www.gnome.org/"
@@ -85,6 +85,8 @@ pkg_setup() {
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-libnotify-0.7.patch
 	epatch "${FILESDIR}"/add-dbus-glib.patch
+
+	eautoreconf
 
 	gnome2_src_prepare
 
