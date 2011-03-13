@@ -1,0 +1,22 @@
+>=dev-libs/libpcre-5.0 sys-libs/zlib >=x11-libs/libX11-1.1 x11-libs/libXtst gstreamer? ( >=media-libs/gstreamer-0.10.6 ) !gstreamer? ( openal? ( >=media-libs/freealut-1.0.1 ) !openal? ( aplay? ( >=media-sound/alsa-utils-1.0.17 ) ) ) libnotify? ( >=x11-libs/libnotify-0.4.0 ) spell? ( app-text/enchant ) xosd? ( x11-libs/xosd ) >=dev-util/pkgconfig-0.20 openmp? ( sys-devel/gcc[openmp] ) nls? ( sys-devel/gettext ) || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+>=dev-libs/libpcre-5.0 sys-libs/zlib >=x11-libs/libX11-1.1 x11-libs/libXtst gstreamer? ( >=media-libs/gstreamer-0.10.6 ) !gstreamer? ( openal? ( >=media-libs/freealut-1.0.1 ) !openal? ( aplay? ( >=media-sound/alsa-utils-1.0.17 ) ) ) libnotify? ( >=x11-libs/libnotify-0.4.0 ) spell? ( app-text/enchant ) xosd? ( x11-libs/xosd ) gstreamer? ( media-libs/gst-plugins-good media-plugins/gst-plugins-alsa ) nls? ( virtual/libintl )
+0
+http://dists.xneur.ru/release-0.12.0/tgz/xneur-0.12.0.tar.bz2
+
+http://www.xneur.ru/
+GPL-2
+In-place conversion of text typed in with a wrong keyboard layout (Punto Switcher replacement)
+~amd64 ~x86
+autotools eutils libtool multilib portability toolchain-funcs
+aplay debug gstreamer keylogger libnotify nls openal openmp xosd +spell
+
+
+
+2
+
+configure install postinst prepare
+
+
+
+
+
