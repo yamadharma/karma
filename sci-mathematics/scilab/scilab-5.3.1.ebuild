@@ -41,6 +41,7 @@ RDEPEND="virtual/lapack
 		dev-java/fop
 		>=dev-java/batik-1.7
 		hdf5? ( dev-java/hdf-java ) )
+	dev-java/commons-beanutils
 	fftw? ( sci-libs/fftw:3.0 )
 	matio? ( sci-libs/matio )
 	hdf5? ( ~sci-libs/hdf5-1.8.4 )"
