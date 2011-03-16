@@ -15,7 +15,7 @@ SRC_URI="http://openmeetings.googlecode.com/files/openmeetings_${MY_PV}.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
-#KEYWORDS="x86 amd64"
+KEYWORDS="x86 amd64"
 IUSE="mysql postgres openoffice"
 DEPEND=""
 RDEPEND="dev-java/sun-jdk
