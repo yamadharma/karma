@@ -7,7 +7,7 @@ http://www.gnome.org
 LGPL-2
 GNOME Virtual Filesystem Layer
 ~amd64 ~arm ~x86
-autotools bash-completion eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability toolchain-funcs
+autotools bash-completion eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability toolchain-funcs versionator
 archive avahi bluetooth cdda doc fuse gdu gnome gnome-keyring gphoto2 hal +http samba +udev bash-completion
 
 bash-completion? ( app-shells/bash-completion )

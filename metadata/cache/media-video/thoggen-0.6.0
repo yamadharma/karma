@@ -7,7 +7,7 @@ http://thoggen.net/
 GPL-2
 DVD ripper, based on GStreamer and Gtk+
 amd64 ~ppc x86
-fdo-mime gnome.org gnome2 gnome2-utils libtool multilib toolchain-funcs
+eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability toolchain-funcs versionator
 debug
 
 

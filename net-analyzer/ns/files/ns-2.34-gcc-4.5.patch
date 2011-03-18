@@ -1,0 +1,27 @@
+diff -Naurp ns-allinone-2.35-RC7/ns-2.35/mobile/nakagami.cc ns-allinone-2.35-RC7.new/ns-2.35/mobile/nakagami.cc
+--- ns-allinone-2.35-RC7/ns-2.35/mobile/nakagami.cc	2010-09-06 03:33:02.000000000 +0400
++++ ns-allinone-2.35-RC7.new/ns-2.35/mobile/nakagami.cc	2011-03-18 14:45:05.791551223 +0300
+@@ -180,9 +180,9 @@ double Nakagami::Pr(PacketStamp *t, Pack
+  		double resultPower;
+  		
+         if (int_m == m) {
+- 			resultPower = ErlangRandomVariable::ErlangRandomVariable(Pr/m, int_m).value();
++ 			resultPower = ErlangRandomVariable(Pr/m, int_m).value();
+  		} else {
+- 			resultPower = GammaRandomVariable::GammaRandomVariable(m, Pr/m).value();
++ 			resultPower = GammaRandomVariable(m, Pr/m).value();
+  		}
+  		return resultPower;
+ 	}
+diff -Naurp ns-allinone-2.35-RC7/ns-2.35/tools/ranvar.cc ns-allinone-2.35-RC7.new/ns-2.35/tools/ranvar.cc
+--- ns-allinone-2.35-RC7/ns-2.35/tools/ranvar.cc	2010-09-06 03:33:04.000000000 +0400
++++ ns-allinone-2.35-RC7.new/ns-2.35/tools/ranvar.cc	2011-03-18 14:44:38.926712502 +0300
+@@ -216,7 +216,7 @@ double GammaRandomVariable::value()
+ 	// ACM Transactions on mathematical software, Vol. 26, No. 3, Sept. 2000
+ 	if (alpha_ < 1) {
+ 		double u = rng_->uniform(1.0);
+-		return GammaRandomVariable::GammaRandomVariable(1.0 + alpha_, beta_).value() * pow (u, 1.0 / alpha_);
++		return GammaRandomVariable(1.0 + alpha_, beta_).value() * pow (u, 1.0 / alpha_);
+ 	}
+ 	
+ 	double x, v, u;
