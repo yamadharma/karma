@@ -11,7 +11,7 @@ eutils kernel-2 multilib portability toolchain-funcs versionator
 symlink build deblob
 
 !build? ( virtual/dev-manager )
-virtual/linux-sources virtual/alsa
+virtual/linux-sources
 
 
 compile install postinst preinst setup test unpack
