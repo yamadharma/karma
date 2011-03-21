@@ -21,7 +21,7 @@ SLOT="0"
 KEYWORDS="amd64 ppc x86"
 IUSE="doc"
 
-RDEPEND=">=x11-libs/fltk-1.3:1.1[opengl]"
+RDEPEND=">=x11-libs/fltk-1.3:1[opengl]"
 DEPEND="${RDEPEND}
 	>=dev-lang/swig-2.0.1"
 
