@@ -15,7 +15,7 @@ SRC_URI="http://openmeetings.googlecode.com/files/openmeetings_${MY_PV}.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86 amd64"
+# KEYWORDS="x86 amd64"
 IUSE="mysql postgres openoffice"
 DEPEND=""
 RDEPEND="dev-java/sun-jdk
@@ -78,7 +78,8 @@ src_install() {
 	mv ${D}/${RED5_HOME}/webapps/openmeetings/conf ${D}/etc/red5/webapps/openmeetings/
 	rm -rf ${D}/${RED5_HOME}/webapps/openmeetings/conf
 	dosym /etc/red5/webapps/openmeetings/conf ${RED5_HOME}/webapps/openmeetings/conf
-
+	mv ${D}/${RED5_HOME}/webapps/openmeetings/config.xml ${D}/etc/red5/webapps/openmeetings/
+	dosym /etc/red5/webapps/openmeetings/config.xml ${RED5_HOME}/webapps/openmeetings/config.xml
 
 	fowners -R red5:red5 ${RED5_HOME}
 }
