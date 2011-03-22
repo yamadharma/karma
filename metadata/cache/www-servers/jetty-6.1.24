@@ -1,0 +1,22 @@
+dev-java/tomcat-servlet-api:2.5 || ( >=dev-java/maven-2.0.6 >=dev-java/maven-bin-2.0.6 ) >=virtual/jre-1.5 >=dev-java/java-config-2.1.9-r1
+dev-java/tomcat-servlet-api:2.5 ant-tasks? ( dev-java/ant ) >=dev-java/slf4j-api-1.3.1 >=dev-java/sun-javamail-1.4 >=dev-java/jta-1.0.1 >=java-virtuals/jaf-1.1 >=virtual/jdk-1.5 >=dev-java/java-config-2.1.9-r1
+6
+http://dist.codehaus.org/jetty/jetty-6.1.24/jetty-6.1.24-src.zip
+
+http://jetty.codehaus.org/
+Apache-2.0
+Jetty Web Server; Java Servlet container
+~amd64 ~x86
+eutils java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+ant-tasks client ldap ssl stats elibc_FreeBSD
+
+
+
+2
+
+compile install preinst prepare setup
+
+
+
+
+
