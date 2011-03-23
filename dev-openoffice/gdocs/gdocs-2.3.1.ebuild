@@ -13,8 +13,6 @@ HOMEPAGE="http://code.google.com/p/ooo2gd/
 SRC_URI="http://ooo2gd.googlecode.com/files/${P/-/_}.oxt"
 SLOT="0"
 
-RDEPEND=">=virtual/ooo-3.0"
-
 KEYWORDS="~alpha amd64 ~hppa ~ia64 ppc ~ppc64 sparc x86 ~x86-fbsd"
 
 S=${WORKDIR}
