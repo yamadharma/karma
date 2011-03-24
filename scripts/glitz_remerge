@@ -3,8 +3,8 @@
 if [ -d /usr/lib64 ]
 then
     cd /usr/lib64
-    grep -r "lglitz" *.la | awk -F ":" '{print "/usr/lib64/" $1}' | xargs emerge -vb --keep-going
+    grep -r "lglitz" *.la | awk -F ":" '{print "/usr/lib64/" $1}' | xargs emerge -v --keep-going
 else
     cd /usr/lib
-    grep -r "lglitz" *.la | awk -F ":" '{print "/usr/lib/" $1}' | xargs emerge -vb --keep-going
+    grep -r "lglitz" *.la | awk -F ":" '{print "/usr/lib/" $1}' | xargs emerge -v --keep-going
 fi
