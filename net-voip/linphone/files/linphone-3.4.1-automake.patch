@@ -1,0 +1,66 @@
+diff -Naur linphone-3.4.1.orig/Makefile.am linphone-3.4.1/Makefile.am
+--- linphone-3.4.1.orig/Makefile.am	2011-02-15 23:36:43.000000000 +0300
++++ linphone-3.4.1/Makefile.am	2011-03-01 15:48:40.979130856 +0300
+@@ -31,13 +31,13 @@
+ 		share/sounds/linphone/rings/rock.wav
+ 
+ 
+-INSTALLDIR=$(shell cd $(top_builddir) && pwd)/linphone-install
++INSTALLDIR=`cd $(top_builddir) && pwd`/linphone-install
+ INSTALLDIR_WITH_PREFIX=$(INSTALLDIR)/$(prefix)
+-ZIPFILE=$(shell cd $(top_builddir) && pwd)/$(PACKAGE)-win32-$(VERSION).zip
++ZIPFILE=`cd $(top_builddir) && pwd`/$(PACKAGE)-win32-$(VERSION).zip
+ ZIP_EXCLUDED=include lib \
+ 		$(OPTIONAL_SOUNDS)
+ 
+-SDK_ZIPFILE=$(shell cd $(top_builddir) && pwd)/lib$(PACKAGE)-win32-$(VERSION).zip
++SDK_ZIPFILE=`cd $(top_builddir) && pwd`/lib$(PACKAGE)-win32-$(VERSION).zip
+ SDK_EXCLUDED= \
+ 	bin/linphone.exe \
+ 	lib/*.la \
+@@ -51,11 +51,11 @@
+ GTK_PREFIX=/
+ GTK_THEME=Outcrop
+ GTK_FILELIST=gtk+-2.22.1.filelist
+-GTK_FILELIST_PATH=$(shell cd $(top_srcdir) && pwd)/$(GTK_FILELIST)
++GTK_FILELIST_PATH=`cd $(top_srcdir) && pwd/$(GTK_FILELIST)
+ LINPHONEDEPS_FILELIST=linphone-deps.filelist
+-WINBINDIST_FILES=$(shell cat $(top_srcdir)/$(LINPHONEDEPS_FILELIST))
++WINBINDIST_FILES=`cat $(top_srcdir)/$(LINPHONEDEPS_FILELIST)`
+ ISS_SCRIPT=linphone.iss
+-ISS_SCRIPT_PATH=$(shell cd $(top_srcdir) && pwd)/$(ISS_SCRIPT)
++ISS_SCRIPT_PATH=`cd $(top_srcdir) && pwd`/$(ISS_SCRIPT)
+ #path to Inno Setup 5 compiler
+ ISCC=ISCC.exe
+ PACKAGE_WIN32_FILELIST=$(PACKAGE)-win32.filelist
+@@ -180,9 +180,9 @@
+ 
+ Portfile:	$(top_srcdir)/scripts/Portfile.tmpl dist
+ 	sed -e 's/\@VERSION\@/$(LINPHONE_VERSION)/g' \
+-	  -e 's/\@LINPHONE_MD5\@/$(shell md5sum linphone-$(VERSION).tar.gz | awk {'print $$1'})/' < $< > $@
++	  -e 's/\@LINPHONE_MD5\@/`md5sum linphone-$(VERSION).tar.gz | awk {'print $$1'}`/' < $< > $@
+ 
+ Portfile-devel:	$(top_srcdir)/scripts/Portfile-devel.tmpl dist
+ 	sed -e 's/\@VERSION\@/$(LINPHONE_VERSION)/g' \
+-	  -e 's/\@LINPHONE_MD5\@/$(shell md5sum linphone-$(VERSION).tar.gz | awk {'print $$1'})/' < $< > $@
++	  -e 's/\@LINPHONE_MD5\@/`md5sum linphone-$(VERSION).tar.gz | awk {'print $$1'}`/' < $< > $@
+ 
+diff -Naur linphone-3.4.1.orig/coreapi/help/Makefile.am linphone-3.4.1/coreapi/help/Makefile.am
+--- linphone-3.4.1.orig/coreapi/help/Makefile.am	2010-12-01 13:03:09.000000000 +0300
++++ linphone-3.4.1/coreapi/help/Makefile.am	2011-03-01 15:42:27.592531504 +0300
+@@ -15,7 +15,7 @@
+ doc_html_DATA = $(top_builddir)/coreapi/help/doc/html/html.tar
+ 
+ $(doc_html_DATA): $(top_builddir)/coreapi/help/doc/html/index.html
+-	cd $(<D) && tar cf html.tar *
++	cd $(top_builddir)/coreapi/help/doc/html && tar cf html.tar *
+ 
+ $(top_builddir)/coreapi/help/doc/html/index.html: $(SOURCES) Doxyfile Makefile.am
+ 	rm -rf doc
+diff -Naur linphone-3.4.1.orig/m4/Makefile.am linphone-3.4.1/m4/Makefile.am
+--- linphone-3.4.1.orig/m4/Makefile.am	2010-01-25 12:28:43.000000000 +0300
++++ linphone-3.4.1/m4/Makefile.am	2011-03-01 15:54:15.149478950 +0300
+@@ -1,2 +1,2 @@
+-EXTRA_DIST= $(shell cd $(srcdir) && ls *.m4)
++EXTRA_DIST= `cd $(srcdir) && ls *.m4`
+ 
