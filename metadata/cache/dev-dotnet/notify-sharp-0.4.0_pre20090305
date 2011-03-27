@@ -1,0 +1,22 @@
+>=dev-lang/mono-1.1.13 >=dev-dotnet/gtk-sharp-2.10.1 >=dev-dotnet/ndesk-dbus-0.6 >=dev-dotnet/dbus-sharp-glib-0.4 >=x11-libs/libnotify-0.4.5 doc? ( virtual/monodoc ) || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+>=dev-lang/mono-1.1.13 >=dev-dotnet/gtk-sharp-2.10.1 >=dev-dotnet/ndesk-dbus-0.6 >=dev-dotnet/dbus-sharp-glib-0.4 >=x11-libs/libnotify-0.4.5
+0
+mirror://gentoo/notify-sharp-20090305.tar.bz2
+
+http://www.ndesk.org/NotifySharp
+as-is
+a C# client implementation for Desktop Notifications
+~amd64 ~x86
+autotools eutils libtool mono multilib portability toolchain-funcs
+doc
+
+
+
+4
+
+configure prepare
+
+
+
+
+
