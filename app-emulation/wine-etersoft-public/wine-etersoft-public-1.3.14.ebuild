@@ -8,7 +8,7 @@ AUTOTOOLS_AUTO_DEPEND="no"
 inherit eutils flag-o-matic multilib autotools
 # rpm
 
-pulse_patches() { echo "$1"/winepulse-{0.39,configure.ac-1.3.10,0.38-winecfg}.patch ; }
+pulse_patches() { echo "$1"/winepulse-{0.39,configure.ac-1.3.10,winecfg-1.3.11}.patch ; }
 GV="1.1.0"
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
@@ -22,7 +22,7 @@ SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV/_/-}/sources/wi
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86 ~x86-fbsd"
-IUSE="alsa capi cups custom-cflags dbus esd fontconfig gecko gnutls gphoto2 gsm gstreamer hal jack jpeg lcms ldap mp3 nas ncurses openal opengl oss +perl png pulseaudio samba scanner ssl test +threads +truetype +win32 win64 X xcomposite xinerama xml"
+IUSE="alsa capi cups custom-cflags dbus esd fontconfig gecko gnutls gphoto2 gsm gstreamer hal jack jpeg lcms ldap mousewarp mp3 nas ncurses nls openal opengl oss +perl png pulseaudio samba scanner ssl test +threads +truetype +win32 win64 X xcomposite xinerama xml"
 RESTRICT="test" #72375
 
 S=${WORKDIR}/wine-${PV}
@@ -58,6 +58,7 @@ RDEPEND="truetype? ( >=media-libs/freetype-2.0.0 media-fonts/corefonts )
 	ldap? ( net-nds/openldap )
 	lcms? ( media-libs/lcms )
 	mp3? ( media-sound/mpg123 )
+	nls? ( sys-devel/gettext )
 	samba? ( >=net-fs/samba-3.0.25 )
 	xml? ( dev-libs/libxml2 dev-libs/libxslt )
 	scanner? ( media-gfx/sane-backends )
@@ -97,6 +98,7 @@ src_unpack() {
 }
 
 src_prepare() {
+	use mousewarp && epatch "${FILESDIR}"/wine-1.3.14-mouse-warp.patch
 	if use pulseaudio ; then
 		EPATCH_OPTS=-p1 epatch `pulse_patches "${DISTDIR}"`
 		eautoreconf
@@ -132,6 +134,7 @@ do_configure() {
 		$(use_with ldap) \
 		$(use_with mp3 mpg123) \
 		$(use_with nas) \
+		$(use_with nls gettextpo) \
 		$(use_with ncurses curses) \
 		$(use_with openal) \
 		$(use_with ncurses curses) \
