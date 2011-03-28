@@ -185,7 +185,7 @@ src_install() {
 	cd ${S}/tools
 	for b in 64 32 ; do
 		[[ -d "${WORKDIR}/wine${b}" ]] || continue
-		cp udev.rules wine.desktop "${WORKDIR}/wine${b}/tools"
+		cp udev*.rules wine.desktop "${WORKDIR}/wine${b}/tools"
 	done
 	cd ${S}
 

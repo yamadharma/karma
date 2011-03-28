@@ -1,0 +1,22 @@
+dev-lang/mono >=dev-dotnet/ndesk-dbus-0.7 dev-util/pkgconfig
+dev-lang/mono >=dev-dotnet/ndesk-dbus-0.7
+0
+https://github.com/downloads/mono/dbus-sharp/dbus-sharp-glib-0.5.0.tar.gz
+
+https://github.com/mono/dbus-sharp
+MIT
+D-Bus for .NET: GLib integration module
+~amd64 ~x86
+mono multilib toolchain-funcs
+
+
+
+
+4
+
+setup
+
+
+
+
+
