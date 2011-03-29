@@ -1,0 +1,22 @@
+
+net-misc/wget
+0
+x86? ( http://dl-web.dropbox.com/u/17/dropbox-lnx.x86-1.0.20.tar.gz ) amd64? ( http://dl-web.dropbox.com/u/17/dropbox-lnx.x86_64-1.0.20.tar.gz )
+mirror strip
+http://dropbox.com/
+EULA
+Dropbox daemon (pretends to be GUI-less).
+~amd64 ~x86
+
+
+
+
+
+3
+
+install postinst unpack
+
+
+
+
+
