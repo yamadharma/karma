@@ -1,0 +1,36 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/dropbox/files/dropbox.init-1.0,v 1.4 2007/04/04 13:35:25 cardoe Exp $
+
+depend() {
+    need localmount net
+    after bootmisc
+}
+
+start() {
+    ebegin "Starting dropbox..."
+    for dbuser in $DROPBOX_USERS; do
+        start-stop-daemon -S -b -m --pidfile /var/run/dropbox-$dbuser.pid -o -N $NICENESS -c $dbuser -v -e HOME="/home/$dbuser" -x /home/$dbuser/.dropbox-dist/dropboxd
+    done
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping dropbox..."
+    for dbuser in $DROPBOX_USERS; do
+        start-stop-daemon --stop --pidfile /var/run/dropbox-$dbuser.pid
+    done
+    eend $?
+}
+
+status() {
+    for dbuser in $DROPBOX_USERS; do
+        if [ -e /var/run/dropbox-$dbuser.pid ] ; then
+            echo "dropboxd for USER $dbuser: running."
+        else
+            echo "dropboxd for USER $dbuser: not running."
+        fi
+    done
+    eend $?
+}
