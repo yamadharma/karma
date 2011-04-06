@@ -4,17 +4,8 @@
 
 EAPI="2"
 
-if [ "${PV##*.}" = "9999" ]; then
-	inherit cvs
-	ECVS_SERVER="cvs.drupal.org:/cvs/drupal-contrib"
-	ECVS_USER="anonymous"
-	ECVS_PASS="anonymous"
-	ECVS_MODULE="contributions/modules/drush"
-	S=${WORKDIR}/${ECVS_MODULE}
-else
-	SRC_URI="http://ftp.drupal.org/files/projects/${PN}-All-versions-${PV/_/-}.tar.gz"
-	S=${WORKDIR}/${PN}
-fi
+SRC_URI="http://ftp.drupal.org/files/projects/${PN}-7.x-${PV}.tar.gz"
+S=${WORKDIR}/${PN}
 
 DESCRIPTION="Drupal-centric shell. Simplifies Drupal installation/management"
 HOMEPAGE="http://drupal.org/project/drush"
@@ -25,12 +16,9 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE="examples"
 
-DEPEND="dev-lang/php[cli,pcre,simplexml]"
+#DEPEND="dev-lang/php[cli,simplexml]"
+DEPEND="dev-lang/php[cli,simplexml] dev-php/pear"
 RDEPEND="${DEPEND}"
-
-src_prepare() {
-	find . -name "CVS" -exec rm -rf {} \;
-}
 
 src_install() {
 	insinto /usr/share/drush
@@ -45,5 +33,4 @@ src_install() {
 	dosym /usr/share/drush/drush /usr/bin/drush || die
 
 	use examples && cp -R examples ${D}/usr/share/doc/${PF}
-	use doc && cp -R doc/* ${D}/usr/share/doc/${PF}
 }

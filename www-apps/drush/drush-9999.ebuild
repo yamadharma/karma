@@ -22,15 +22,11 @@ HOMEPAGE="http://drupal.org/project/drush"
 
 LICENSE="GPL-2"
 SLOT="0"
-# KEYWORDS="amd64 x86"
+KEYWORDS="amd64 x86"
 IUSE="examples"
 
-DEPEND="dev-lang/php[cli,pcre,simplexml]"
+DEPEND="dev-lang/php[cli,simplexml]"
 RDEPEND="${DEPEND}"
-
-src_prepare() {
-	find . -name "CVS" -exec rm -rf {} \;
-}
 
 src_install() {
 	insinto /usr/share/drush
@@ -38,7 +34,7 @@ src_install() {
 
 	dodoc README.txt || die
 
-	doins -r includes commands drush.php drush.api.php drush.info || die
+	doins -r includes commands drush.php drush.info || die
 
 	doexe drush || die
 
