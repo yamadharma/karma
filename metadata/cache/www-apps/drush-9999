@@ -1,5 +1,5 @@
-dev-lang/php[cli,pcre,simplexml] dev-vcs/cvs
-dev-lang/php[cli,pcre,simplexml]
+dev-lang/php[cli,simplexml] dev-vcs/cvs
+dev-lang/php[cli,simplexml]
 0
 
 
@@ -14,7 +14,7 @@ examples
 
 2
 
-install prepare unpack
+install unpack
 
 
 
