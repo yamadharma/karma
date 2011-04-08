@@ -20,7 +20,7 @@ IUSE="doc debug"
 
 RDEPEND="!net-analyzer/nam
 	!sci-visualization/xgraph
-	virtual/libpcap
+	net-libs/libpcap
 	debug? (	=dev-lang/perl-5*
 				>=sci-visualization/xgraph-12.1
 				>=dev-libs/dmalloc-4.8.2
