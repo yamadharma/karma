@@ -200,8 +200,8 @@ src_prepare() {
 
 	ebegin "Removing provided libtool/libltdl"
 	rm config.guess config.sub install-sh ltmain.sh \
-	&& rm */config.guess */config.sub */install-sh */ltmain.sh \
-	|| die "removing libtool failed"
+	&& rm */config.guess */config.sub */install-sh */ltmain.sh #\
+#	|| die "removing libtool failed"
 	eend 0
 
 
