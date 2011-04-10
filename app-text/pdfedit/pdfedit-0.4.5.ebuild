@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 
 inherit qt3
 
@@ -15,7 +15,7 @@ LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 
 IUSE="doc"
-RDEPEND="=x11-libs/qt-3*
+RDEPEND="=x11-libs/qt-meta:3
 	media-libs/t1lib"
 DEPEND="${RDEPEND}
 	dev-libs/boost

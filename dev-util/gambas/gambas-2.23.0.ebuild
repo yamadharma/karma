@@ -44,7 +44,7 @@ COMMON_DEPEND="
 	pcre?	( >=dev-libs/libpcre-7.6-r1 )
 	pdf?	( >=app-text/poppler-0.12.3-r3 )
 	postgres?	( >=dev-db/postgresql-base-8.2 )
-	qt3? ( x11-libs/qt:3 )
+	qt3? ( x11-libs/qt-meta:3 )
 	sdl?	(
 		>=media-libs/sdl-image-1.2.6-r1
 		>=media-libs/sdl-mixer-1.2.7
