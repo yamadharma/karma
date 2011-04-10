@@ -1,0 +1,22 @@
+
+>=gnome-base/gnome-core-libs-3.0.0[cups?] >=gnome-base/gnome-core-apps-3.0.0[cups?,bluetooth,cdr?] >=gnome-base/gnome-extra-apps-3.0.0 gnome-base/gdm >=x11-wm/mutter-3.0.0 >=gnome-base/gnome-shell-3.0.0 >=x11-themes/gnome-backgrounds-3.0.0 >=x11-themes/gnome-icon-theme-extras-3.0.0 x11-themes/sound-theme-freedesktop fallback? ( >=gnome-base/gnome-fallback-3.0.0 )
+2.0
+
+
+http://www.gnome.org/
+as-is
+Meta package for GNOME 3
+~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86
+
++cdr cups +extras +fallback
+
+>=gnome-base/gvfs-1.8.0[gdu]
+
+4
+
+-
+
+
+
+
+
