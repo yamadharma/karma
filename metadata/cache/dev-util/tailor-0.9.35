@@ -1,7 +1,7 @@
 dev-lang/python >=app-admin/eselect-python-20091230 dev-lang/python
 dev-lang/python >=app-admin/eselect-python-20091230 dev-lang/python
 0
-http://darcs.arstecnica.it/tailor-0.9.20.tar.gz
+http://darcs.arstecnica.it/tailor/tailor-0.9.35.tar.gz
 
 http://darcs.net/DarcsWiki/Tailor
 GPL-2
@@ -12,9 +12,9 @@ distutils multilib python toolchain-funcs
 
 
 
+3
 
-
-compile install postinst postrm unpack
+compile install postinst postrm prepare
 
 
 
