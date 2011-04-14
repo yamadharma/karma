@@ -1,7 +1,7 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-inherit gst-plugins-bad
+inherit gst-plugins-good
 
 KEYWORDS="amd64 x86"
 
