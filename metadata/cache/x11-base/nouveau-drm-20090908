@@ -1,5 +1,5 @@
-virtual/linux-sources !x11-base/x11-drm kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
-virtual/linux-sources !x11-base/x11-drm kernel_linux? ( virtual/modutils )
+virtual/linux-sources !x11-base/x11-drm kernel_linux? ( sys-apps/module-init-tools ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
+virtual/linux-sources !x11-base/x11-drm kernel_linux? ( sys-apps/module-init-tools )
 0
 http://omploader.org/vMjh2cA/nouveau-drm-20090908.tar.gz
 
