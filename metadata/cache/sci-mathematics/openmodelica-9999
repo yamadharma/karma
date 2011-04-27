@@ -1,0 +1,22 @@
+dev-vcs/subversion net-misc/rsync || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+
+0
+
+
+http://www.openmodelica.org
+OSMC-PL
+OPENMODELICA is an open-source Modelica-based modeling and simulation environment intended for industrial and academic usage
+amd64 x86
+autotools eutils libtool multilib portability subversion toolchain-funcs
+
+
+
+
+4
+
+preinst prepare unpack
+
+
+
+
+
