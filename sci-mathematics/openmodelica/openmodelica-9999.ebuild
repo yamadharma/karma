@@ -24,5 +24,12 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
+DEPEND="
+	|| ( net-misc/mico net-misc/omniORB )
+	>=sys-libs/readline-5*
+	dev-db/sqlite:3
+	dev-java/antlr
+"
+
 S=${WORKDIR}
 
