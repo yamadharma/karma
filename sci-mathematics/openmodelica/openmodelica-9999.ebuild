@@ -39,16 +39,23 @@ DEPEND="
 "
 
 S=${WORKDIR}
+
 MAKEOPTS="-j1"
+
+src_prepare() {
+	echo 'INCLUDEPATH += $${COIN_INCLUDE}' >> OMNotebook/OMNotebookGUI/OMNotebookGUI.pro
+}
+
 src_configure() {
-	append-cflags -I/usr/include/coin
 	append-ldflags -L/usr/$(get_libdir)/qt4
 
 	econf \
 	--with-omniORB \
 	--with-sendData-Qt \
-	--with-qwt=/usr/include/qwt5 --without-paradiseo \
+	--with-qwt=/usr/include/qwt5 \
+	--without-paradiseo \
 	--with-Coin  \
 	|| die
 #   --with-MODPAR --with-BOOST
 }
+

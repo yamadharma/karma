@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="4"
 
-inherit eutils
+inherit eutils cmake-utils
 
 DESCRIPTION="ParadisEO is a white-box object-oriented framework dedicated to the flexible design of metaheuristics"
 HOMEPAGE="http://paradiseo.gforge.inria.fr/"

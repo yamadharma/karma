@@ -1,4 +1,4 @@
-|| ( net-misc/mico net-misc/omniORB ) >=sys-libs/readline-5* dev-db/sqlite:3 dev-java/antlr dev-vcs/subversion net-misc/rsync || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+|| ( net-misc/mico net-misc/omniORB ) dev-lang/rml sci-libs/lpsolve x11-libs/qwt:5 >=sys-libs/readline-5 dev-db/sqlite:3 dev-java/antlr media-libs/SoQt media-libs/coin dev-vcs/subversion net-misc/rsync || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
 
 0
 
@@ -7,14 +7,14 @@ http://www.openmodelica.org
 OSMC-PL
 OPENMODELICA is an open-source Modelica-based modeling and simulation environment intended for industrial and academic usage
 amd64 x86
-autotools eutils libtool multilib portability subversion toolchain-funcs
+autotools eutils flag-o-matic libtool multilib portability subversion toolchain-funcs
 
 
 
 
 4
 
-preinst prepare unpack
+configure preinst prepare unpack
 
 
 
