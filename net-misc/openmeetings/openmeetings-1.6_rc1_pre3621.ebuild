@@ -26,7 +26,7 @@ RDEPEND="dev-java/sun-jdk
 	media-gfx/swftools
 	media-video/ffmpeg[mp3]
 	media-sound/sox
-	postgres? ( virtual/postgresql-server 
+	postgres? ( dev-db/postgresql-server
 		dev-java/jdbc-postgresql )
 	mysql? ( virtual/mysql
 		dev-java/jdbc-mysql )"
