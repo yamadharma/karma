@@ -156,22 +156,21 @@ font_make_nfont() {
 		# Get additional variables
 		GNUSTEP_SH_EXPORT_ALL_VARIABLES="true"
 
-		if [ -f ${GNUSTEP_PREFIX}/System/Library/Makefiles/GNUstep.sh ] 
+		if [ -f /usr/share/GNUstep/Makefiles/GNUstep.sh ]
 		then
 			# Reset GNUstep variables
-			source "${GNUSTEP_PREFIX}"/System/Library/Makefiles/GNUstep-reset.sh
-			source "${GNUSTEP_PREFIX}"/System/Library/Makefiles/GNUstep.sh
+			source /usr/share/GNUstep/Makefiles/GNUstep-reset.sh
+			source /usr/share/GNUstep/Makefiles/GNUstep.sh
 		fi
 		
 		einfo "Generating nfonts support files"
-		dodir "${GNUSTEP_PREFIX}"/System/Library/Fonts
-		cd ${D}"${GNUSTEP_PREFIX}"/System/Library/Fonts
+		dodir "${GNUSTEP_SYSTEM_LIBRARY}/Fonts"
+		cd "${D}/${GNUSTEP_SYSTEM_LIBRARY}/Fonts"
 		for suffix in ${NFONT_SUFFIX}; do
 			set_FONTDIR ${suffix}
-			insinto "${FONTDIR}"
-			${GNUSTEP_SYSTEM_TOOLS}/mknfonts \
-			    ${D}"${FONTDIR}"/* \
-			    || die "nfonts support files creation failed"
+			sh /usr/bin/mknfonts \
+			    ${D}/${FONTDIR}/* # \
+#			    || die "nfonts support files creation failed"
 		done
 		
 		# Trim whitepsaces

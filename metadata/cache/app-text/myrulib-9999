@@ -1,20 +1,20 @@
-x11-libs/wxGTK:2.8[X] >=dev-libs/expat-2 dev-db/sqlite:3 >=dev-vcs/git-1.6
-x11-libs/wxGTK:2.8[X] >=dev-libs/expat-2 dev-db/sqlite:3
+x11-libs/wxGTK:2.8[X] >=dev-libs/faxpp-0.4 dev-db/sqlite:3[fts3] dev-util/pkgconfig >=dev-vcs/git-1.6
+x11-libs/wxGTK:2.8[X] >=dev-libs/faxpp-0.4 dev-db/sqlite:3[fts3]
 0
 
 
 http://www.lintest.ru/wiki/MyRuLib
 GPL-3
-Create your own collection of e-books
+E-book collection manager
 
-eutils git multilib portability toolchain-funcs
-+stable
-
+eutils git multilib portability toolchain-funcs wxwidgets
 
 
-2
 
-configure install prepare unpack
+
+4
+
+configure prepare unpack
 
 
 
