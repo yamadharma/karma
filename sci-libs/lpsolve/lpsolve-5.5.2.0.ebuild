@@ -24,8 +24,8 @@ S="${WORKDIR}/${MYPN}_5.5"
 PLIB=lpsolve55
 
 src_prepare() {
-	LPSOLVE_ARCH=ux32
-	LPSOLVE_ARCH=ux64
+	use x86 && LPSOLVE_ARCH=ux32
+	use amd64 && LPSOLVE_ARCH=ux64
 	sed -i \
 		-e "s|^c=.*$$|c=$(tc-getCC)|g" \
 		-e 's|^opts=.*$$|opts="${CFLAGS}"|g' \
