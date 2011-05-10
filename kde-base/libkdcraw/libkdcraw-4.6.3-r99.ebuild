@@ -5,7 +5,7 @@
 EAPI=3
 
 DIGIKAMPN=digikam
-DIGIKAMPV=2.0.0_beta4
+DIGIKAMPV=2.0.0_beta5
 
 KDE_OVERRIDE_MINIMAL="4.5.0"
 
@@ -13,7 +13,7 @@ inherit kde4-base
 
 MY_P="${DIGIKAMPN}-${DIGIKAMPV/_/-}"
 
-DESCRIPTION="Library for image plugins accross KDE applications"
+DESCRIPTION="KDE digital camera raw image library wrapper"
 HOMEPAGE="http://www.digikam.org/"
 SRC_URI="mirror://sourceforge/${DIGIKAMPN}/${MY_P}.tar.bz2"
 
@@ -22,3 +22,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 S=${WORKDIR}/${MY_P}/extra/${PN}
+
+DEPEND="
+	media-libs/lcms:0
+	virtual/jpeg
+"
+RDEPEND="${DEPEND}"
+
