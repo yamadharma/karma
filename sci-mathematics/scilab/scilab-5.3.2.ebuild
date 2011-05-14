@@ -44,7 +44,7 @@ RDEPEND="virtual/lapack
 	dev-java/commons-beanutils
 	fftw? ( sci-libs/fftw:3.0 )
 	matio? ( sci-libs/matio )
-	hdf5? ( ~sci-libs/hdf5-1.8.4 )"
+	hdf5? ( =sci-libs/hdf5-1.8.4* )"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
