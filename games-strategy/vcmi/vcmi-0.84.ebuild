@@ -4,7 +4,7 @@
 
 EAPI=3
 
-inherit autotools
+inherit autotools flag-o-matic
 
 #if [ ${PV} == 9999 ]
 #then
@@ -46,6 +46,7 @@ src_prepare() {
 }
 
 src_configure() {
+		append-ldflags -lboost_filesystem
 		econf --datadir=/usr/share/games || die
 }
 
