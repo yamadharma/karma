@@ -17,8 +17,8 @@ S=${WORKDIR}/${P/_rc/RC}
 
 RDEPEND=">=x11-libs/gtk+-2.6
 	>=dev-python/pygtk-2.6
-	>=dev-python/pysqlite-2.0
-	dev-python/psyco"
+	>=dev-python/pysqlite-2.0"
+
 DEPEND="${RDEPEND}"
 
 src_install() {
