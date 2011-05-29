@@ -23,7 +23,8 @@ DESCRIPTION="GNU GRUB 2 boot loader"
 HOMEPAGE="http://www.gnu.org/software/grub/"
 
 LICENSE="GPL-3"
-use multislot && SLOT="2" || SLOT="0"
+#use multislot && SLOT="2" || SLOT="0"
+SLOT="2"
 KEYWORDS="x86 amd64"
 IUSE="custom-cflags debug truetype multislot static extras"
 

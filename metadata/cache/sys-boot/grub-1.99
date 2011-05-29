@@ -1,0 +1,22 @@
+>=sys-libs/ncurses-5.2-r5 dev-libs/lzo truetype? ( media-libs/freetype >=media-fonts/unifont-5 ) >=sys-devel/autogen-5.10 >=dev-lang/python-2.5.2 >=dev-vcs/bzr-2.0.1
+>=sys-libs/ncurses-5.2-r5 dev-libs/lzo truetype? ( media-libs/freetype >=media-fonts/unifont-5 )
+2
+ftp://ftp.gnu.org/gnu/grub/grub-1.99.tar.gz mirror://gentoo/grub-1.99.tar.gz
+
+http://www.gnu.org/software/grub/
+GPL-3
+GNU GRUB 2 boot loader
+x86 amd64
+bzr eutils flag-o-matic mount-boot multilib portability toolchain-funcs
+custom-cflags debug truetype multislot static extras
+
+
+
+4
+
+compile install postinst postrm preinst prepare prerm unpack
+
+
+
+
+
