@@ -10,8 +10,10 @@ MY_P=${P/_/}
 S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Open Source Flash Server written in Java"
-HOMEPAGE="http://osflash.org/red5"
-SRC_URI="http://www.red5.org/downloads/0_9/${MY_P}.tar.gz"
+HOMEPAGE="http://code.google.com/p/red5
+http://osflash.org/red5"
+SRC_URI="http://trac.red5.org/downloads/0_9/${MY_P}.tar.gz
+http://www.red5.org/downloads/0_9/${MY_P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="1"
 KEYWORDS="~amd64 ~x86"
@@ -51,7 +53,9 @@ src_install() {
 		rm -f build.xml
 		rm -f build.properties
 		rm -f Makefile
+		rm src.zip
 	fi
+
 	if use doc ; then
 		dodoc doc/*
 	fi
@@ -66,6 +70,7 @@ src_install() {
 		doins -r webapps/*
 		fowners -R red5:red5 /var/lib/red5-webapps/
 	fi
+
 
 	dosym /var/lib/red5-webapps ${RED5_HOME}/webapps
 #	fowners red5:red5 ${RED5_HOME}/webapps
@@ -83,4 +88,7 @@ src_install() {
 
 	cp -rp * "${D}/${RED5_HOME}"
 	fowners -R red5:red5 ${RED5_HOME}
+
+	fperms 0750 ${RED5_HOME}/red5.sh
+	dosym ${RED5_HOME}/webapps /var/lib/red5-webapps
 }
