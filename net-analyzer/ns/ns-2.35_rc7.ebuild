@@ -83,54 +83,6 @@ src_compile() {
 	fi
 }
 
-
-src_compile_() {
-	local myconf
-	local mytclver=""
-	local i
-
-	tc-export CC CXX
-
-	# correctness is more important than speed
-	replace-flags -Os -O2
-	replace-flags -O3 -O2
-
-	use debug \
-		&& myconf="${myconf} --with-tcldebug=/usr/$(get_libdir)/tcldbg2.0" \
-		|| myconf="${myconf} --with-tcldebug=no"
-	myconf="${myconf} $(use_with debug dmalloc)"
-
-	for i in 8.4 ; do
-		einfo "Testing TCL ${i}"
-		has_version "=dev-lang/tcl-${i}*" && mytclver=${i}
-		[ "${#mytclver}" -gt 2 ] && break
-	done
-	einfo "Using TCL ${mytclver}"
-	myconf="${myconf} --with-tcl-ver=${mytclver} --with-tk-ver=${mytclver}"
-
-	econf \
-		${myconf} \
-		--mandir=/usr/share/man \
-		--enable-stl \
-		--enable-release || die "./configure failed"
-	emake CCOPT="${CFLAGS}" || die
-
-	cd "${S_NS}/indep-utils/dosdbell"
-	emake DFLAGS="${CFLAGS}" || die
-	cd "${S}/indep-utils/dosreduce"
-	${CC} ${CFLAGS} dosreduce.c -o dosreduce
-	cd "${S}/indep-utils/propagation"
-	${CXX} ${CXXFLAGS} threshold.cc -o threshold
-	cd "${S}/indep-utils/model-gen"
-	emake CFLAGS="${CFLAGS}" || die
-
-	if useq doc; then
-		einfo "Generating extra docs"
-		cd "${S}/doc"
-		yes '' | emake all
-	fi
-}
-
 src_install() {
 	cd ${S_NS}
 	dodir /usr/bin /usr/share/man/man1 /usr/share/doc/${PF} /usr/share/ns
