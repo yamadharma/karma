@@ -1,20 +1,21 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/openafs-kernel-1.4.12.1.ebuild,v 1.2 2010/06/23 18:23:59 halcy0n Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/openafs-kernel-1.6.0_pre3.ebuild,v 1.1 2011/03/20 09:58:10 stefaan Exp $
 
 EAPI="2"
 
 inherit eutils autotools linux-mod versionator toolchain-funcs
 
-PATCHVER=0.16
+MY_PV=$(delete_version_separator '_')
 MY_PN=${PN/-kernel}
-MY_P=${MY_PN}-${PV}
-MY_PV=$(get_version_component_range 1-3)
+MY_P2="${MY_PN}-${PV}"
+MY_P="${MY_PN}-${MY_PV}"
 PVER="1"
 DESCRIPTION="The OpenAFS distributed file system kernel module"
 HOMEPAGE="http://www.openafs.org/"
-SRC_URI="http://openafs.org/dl/${MY_PV}/${MY_P}-src.tar.bz2
-	mirror://gentoo/${MY_P}-patches-${PVER}.tar.bz2"
+# We always d/l the doc tarball as man pages are not USE=doc material
+SRC_URI="http://openafs.org/dl/candidate/${MY_PV}/${MY_P}-src.tar.bz2
+	mirror://gentoo/${MY_PN}-1.6.0_pre3-patches-${PVER}.tar.bz2"
 
 LICENSE="IBM BSD openafs-krb5-a APSL-2 sun-rpc"
 SLOT="0"
@@ -36,10 +37,9 @@ src_prepare() {
 	EPATCH_SUFFIX="patch" \
 	epatch "${WORKDIR}"/gentoo/patches
 
-	patch -p1 < "${FILESDIR}"/oafs.patch
-
 	# packaging is f-ed up, so we can't run automake (i.e. eautoreconf)
-	sed -i '/^a/s:^:e:' regen.sh
+	sed -i 's/^\(\s*\)a/\1ea/' regen.sh
+	: # this line makes repoman ok with not calling eautoconf etc. directly
 	skipman=1
 	. regen.sh
 }

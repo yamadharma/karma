@@ -45,9 +45,6 @@ src_unpack() {
 	else
 		unpack ${A}
 	fi
-	cd "${S}"
-#	epatch "${FILESDIR}"/${PN}-1.99-genkernel.patch #256335
-	epatch_user
 
 	# autogen.sh does more than just run autotools
 	# need to eautomake due to weirdness #296013
@@ -75,6 +72,9 @@ src_unpack() {
 }
 
 src_prepare() {
+	epatch "${FILESDIR}"/${PN}-1.99-chroot.patch # CHROOT_PATH
+	epatch_user
+
 	if ( use extras )
 	then
 		export GRUB_CONTRIB="grub-extras"
