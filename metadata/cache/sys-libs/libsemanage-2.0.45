@@ -1,0 +1,22 @@
+>=sys-libs/libsepol-2.0.41 >=sys-libs/libselinux-2.0.94 dev-libs/ustr ruby? ( dev-lang/ruby ) ruby? ( dev-lang/swig ) >=app-admin/eselect-python-20091230 python? ( dev-lang/python )
+>=sys-libs/libsepol-2.0.41 >=sys-libs/libselinux-2.0.94 dev-libs/ustr ruby? ( dev-lang/ruby ) >=app-admin/eselect-python-20091230 python? ( dev-lang/python )
+0
+http://userspace.selinuxproject.org/releases/20100525/devel/libsemanage-2.0.45.tar.gz
+test
+http://userspace.selinuxproject.org
+GPL-2
+SELinux kernel and policy management library
+amd64 x86
+multilib python toolchain-funcs
+python ruby
+
+
+
+2
+
+compile install postinst postrm prepare setup
+
+
+
+
+

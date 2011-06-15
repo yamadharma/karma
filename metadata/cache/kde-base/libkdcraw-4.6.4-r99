@@ -8,7 +8,7 @@ GPL-2
 KDE digital camera raw image library wrapper
 ~amd64 ~x86
 base cmake-utils eutils fdo-mime flag-o-matic gnome2-utils kde4-base kde4-functions multilib portability toolchain-funcs versionator virtualx
-debug kdeprefix aqua kdeenablefinal
+debug aqua kdeenablefinal
 
 
 
