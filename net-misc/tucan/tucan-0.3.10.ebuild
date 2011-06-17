@@ -13,12 +13,12 @@ SRC_URI="http://forja.rediris.es/frs/download.php/2051/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gtk"
+IUSE="gtk ocr"
 
 RDEPEND="dev-lang/python
 	gtk? ( dev-python/pygtk
 		gnome-base/librsvg )
-	app-text/tesseract
+	ocr? ( app-text/tesseract )
 	dev-python/imaging"
 
 src_compile() { :; }
@@ -27,7 +27,7 @@ src_install() {
 	emake DESTDIR="${D}"/usr install || die "emake install failed"
 	dodoc CHANGELOG README || die "dodoc failed"
 	if use gtk ; then
-		doicon media/tucan.png || die "doicon failed"
+		doicon media/scalable/tucan.svg || die "doicon failed"
 		make_desktop_entry tucan Tucan
 	fi
 }
