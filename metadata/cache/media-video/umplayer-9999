@@ -1,0 +1,22 @@
+dev-vcs/subversion net-misc/rsync
+
+0
+
+
+http://www.umplayer.com/
+GPL-3
+UMPlayer is the multimedia player that fills all your needs
+
+base eutils multilib portability qt4-r2 subversion toolchain-funcs
+
+
+
+
+3
+
+compile configure install preinst prepare unpack
+
+
+
+
+
