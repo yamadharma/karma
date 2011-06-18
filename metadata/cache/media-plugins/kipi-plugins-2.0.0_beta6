@@ -6,7 +6,7 @@ mirror://sourceforge/digikam/digikam-2.0.0-beta6.tar.bz2 handbook? ( mirror://ge
 http://www.digikam.org/
 GPL-2 handbook? ( FDL-1.2 )
 Plugins for the KDE Image Plugin Interface
-~amd64 ~x86
+
 base cmake-utils eutils fdo-mime flag-o-matic gnome2-utils kde4-base kde4-functions multilib portability toolchain-funcs versionator virtualx
 cdr calendar crypt debug expoblending handbook +imagemagick ipod mjpeg redeyes scanner opengl aqua kdeenablefinal
 

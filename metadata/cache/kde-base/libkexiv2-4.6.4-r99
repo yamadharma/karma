@@ -6,7 +6,7 @@ mirror://sourceforge/digikam/digikam-2.0.0-beta6.tar.bz2
 http://www.digikam.org/
 GPL-2
 KDE Image Plugin Interface: an exiv2 library wrapper
-~amd64 ~x86
+
 base cmake-utils eutils fdo-mime flag-o-matic gnome2-utils kde4-base kde4-functions multilib portability toolchain-funcs versionator virtualx
 debug aqua kdeenablefinal
 
