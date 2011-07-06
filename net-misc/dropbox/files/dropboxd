@@ -1,0 +1,4 @@
+#!/bin/sh
+
+DROPBOX_DIR=$( dirname $( dirname $( which $0 ) ) )
+LD_LIBRARY_PATH=$DROPBOX_DIR/lib:$LD_LIBRARY_PATH HOME=${DROPBOX_HOME:-HOME} exec $DROPBOX_DIR/lib/dropbox $@
