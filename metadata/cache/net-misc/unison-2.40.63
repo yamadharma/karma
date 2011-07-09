@@ -1,7 +1,7 @@
 >=dev-lang/ocaml-3.10.2[ocamlopt?] gtk? ( >=dev-ml/lablgtk-2.2 ) test? ( || ( dev-util/ctags virtual/emacs ) )
 gtk? ( >=dev-ml/lablgtk-2.2 || ( net-misc/x11-ssh-askpass net-misc/ssh-askpass-fullscreen ) ) !net-misc/unison:0 app-admin/eselect-unison
 2.40
-http://www.cis.upenn.edu/~bcpierce/unison/download/releases/unison-2.40.61/unison-2.40.61.tar.gz doc? ( http://www.cis.upenn.edu/~bcpierce/unison/download/releases/unison-2.40.61/unison-2.40.61-manual.pdf http://www.cis.upenn.edu/~bcpierce/unison/download/releases/unison-2.40.61/unison-2.40.61-manual.html )
+http://www.cis.upenn.edu/~bcpierce/unison/download/releases/unison-2.40.63/unison-2.40.63.tar.gz doc? ( http://www.cis.upenn.edu/~bcpierce/unison/download/releases/unison-2.40.63/unison-2.40.63-manual.pdf http://www.cis.upenn.edu/~bcpierce/unison/download/releases/unison-2.40.63/unison-2.40.63-manual.html )
 
 http://www.cis.upenn.edu/~bcpierce/unison/
 GPL-2
@@ -12,7 +12,7 @@ gtk doc static debug threads +ocamlopt test
 
 
 
-2
+4
 
 compile install postinst test
 
