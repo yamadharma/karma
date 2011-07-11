@@ -1,0 +1,43 @@
+From 18d4562c36e448551b81aac49045db45f8e9fec7 Mon Sep 17 00:00:00 2001
+From: Kent Fredric <kentfredric@gmail.com>
+Date: Wed, 11 May 2011 19:24:46 +1200
+Subject: [PATCH] GvCV_set patch from
+ http://archives.postgresql.org/pgsql-hackers/2011-04/msg01283.php
+
+---
+ postgresql-9.0.4/src/pl/plperl/plperl.c |    2 +-
+ postgresql-9.0.4/src/pl/plperl/plperl.h |    5 +++++
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/postgresql-9.0.4/src/pl/plperl/plperl.c b/postgresql-9.0.4/src/pl/plperl/plperl.c
+index 72c4dc2..5ac776c 100644
+--- a/postgresql-9.0.4/src/pl/plperl/plperl.c
++++ b/postgresql-9.0.4/src/pl/plperl/plperl.c
+@@ -874,7 +874,7 @@ plperl_trusted_init(void)
+ 		if (!isGV_with_GP(sv) || !GvCV(sv))
+ 			continue;
+ 		SvREFCNT_dec(GvCV(sv)); /* free the CV */
+-		GvCV(sv) = NULL;		/* prevent call via GV */
++    GvCV_set(sv, NULL);     /* prevent call via GV */
+ 	}
+ 	hv_clear(stash);
+ 
+diff --git a/postgresql-9.0.4/src/pl/plperl/plperl.h b/postgresql-9.0.4/src/pl/plperl/plperl.h
+index 6d58f11..1d38d9e 100644
+--- a/postgresql-9.0.4/src/pl/plperl/plperl.h
++++ b/postgresql-9.0.4/src/pl/plperl/plperl.h
+@@ -42,6 +42,11 @@
+ #undef bool
+ #endif
+ 
++/* supply GvCV_set if it's missing - ppport.h doesn't supply it, unfortunately */
++#ifndef GvCV_set
++#define GvCV_set(gv, cv)		(GvCV(gv) = cv)
++#endif
++
+ /* declare routines from plperl.c for access by .xs files */
+ HV		   *plperl_spi_exec(char *, int);
+ void		plperl_return_next(SV *);
+-- 
+1.7.5.rc3
+
