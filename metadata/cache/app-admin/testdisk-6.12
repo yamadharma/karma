@@ -1,0 +1,22 @@
+>=sys-libs/ncurses-5.2 jpeg? ( virtual/jpeg ) ntfs? ( || ( >=sys-fs/ntfsprogs-2.0.0 sys-fs/ntfs3g ) ) reiserfs? ( >=sys-fs/progsreiserfs-0.3.1_rc8 ) >=sys-fs/e2fsprogs-1.35 sys-libs/zlib
+!static? ( >=sys-libs/ncurses-5.2 jpeg? ( virtual/jpeg ) ntfs? ( || ( >=sys-fs/ntfsprogs-2.0.0 sys-fs/ntfs3g ) ) reiserfs? ( >=sys-fs/progsreiserfs-0.3.1_rc8 ) >=sys-fs/e2fsprogs-1.35 sys-libs/zlib )
+0
+http://www.cgsecurity.org/testdisk-6.12.tar.bz2
+
+http://www.cgsecurity.org/wiki/TestDisk
+GPL-2
+Checks and undeletes partitions + PhotoRec, signature based recovery tool
+~amd64 ~ppc ~x86
+eutils flag-o-matic multilib portability toolchain-funcs
+static reiserfs ntfs jpeg
+
+
+
+2
+
+configure install
+
+
+
+
+
