@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 
 inherit eutils latex-package java-pkg-2 java-ant-2 multilib openoffice-ext
 
@@ -106,5 +106,4 @@ src_install() {
 		cd ${S_DISTRO}
 		cp -R samples "${D}"/usr/share/doc/${PF} || die "Failed to copy samples"
 	fi
-	
 }
