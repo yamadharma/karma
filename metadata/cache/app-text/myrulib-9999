@@ -7,14 +7,14 @@ http://www.lintest.ru/wiki/MyRuLib
 GPL-3
 E-book collection manager
 
-base eutils git multilib portability toolchain-funcs wxwidgets
+eutils git multilib portability toolchain-funcs wxwidgets
 
 
 
 
 4
 
-compile configure install prepare unpack
+configure prepare unpack
 
 
 
