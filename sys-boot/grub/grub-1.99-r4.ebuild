@@ -53,13 +53,13 @@ src_unpack() {
 		(. ./autogen.sh) || die
 	fi
 
-	if ( use extras )
+	if use extras
 	then
 		local P_REAL
 		for i in 915resolution gpxe lua ntldr-img zfs
 		do
-			mkdir -p ${S}/grub-extras/${i}
-			cd ${S}/grub-extras/${i}
+			mkdir -p "${S}/grub-extras/${i}"
+			cd "${S}/grub-extras/${i}"
 			P_REAL=${P}
 			P=${P_REAL}/grub-extras/${i}
 			EBZR_PROJECT=grub-extras_${i}
@@ -73,9 +73,10 @@ src_unpack() {
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-1.99-chroot.patch # CHROOT_PATH
+	epatch "${FILESDIR}"/${PN}-1.99-lvm_mapper-r1.patch # lvm mapper
 	epatch_user
 
-	if ( use extras )
+	if use extras
 	then
 		export GRUB_CONTRIB="grub-extras"
 		./autogen.sh
