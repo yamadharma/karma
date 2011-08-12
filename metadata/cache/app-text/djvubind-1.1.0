@@ -1,0 +1,22 @@
+>=app-admin/eselect-python-20091230 dev-lang/python
+app-text/djvu app-text/tesseract dev-lang/python media-gfx/imagemagick cuneiform? ( app-text/cuneiform ) minidjvu? ( app-text/minidjvu ) >=app-admin/eselect-python-20091230 dev-lang/python
+0
+http://djvubind.googlecode.com/files/djvubind-1.1.0.tar.bz2
+
+http://code.google.com/p/djvubind
+GPL-3
+Creates djvu files with positional ocr, metadata, and bookmarks.
+~amd64 ~x86
+distutils multilib python toolchain-funcs
+cuneiform minidjvu
+
+
+
+3
+
+compile install postinst postrm prepare setup
+
+
+
+
+
