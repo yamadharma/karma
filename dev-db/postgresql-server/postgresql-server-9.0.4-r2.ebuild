@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-db/postgresql-server/postgresql-server-9.0.4-r1.ebuild,v 1.4 2011/07/02 15:20:47 hwoarang Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-db/postgresql-server/postgresql-server-9.0.4-r2.ebuild,v 1.2 2011/08/02 10:14:04 titanofold Exp $
 
 EAPI="3"
 PYTHON_DEPEND="python? 2"
@@ -10,12 +10,12 @@ inherit autotools eutils multilib pam prefix python versionator
 
 SLOT="$(get_version_component_range 1-2)"
 
-KEYWORDS="alpha amd64 arm ~hppa ia64 ~mips ~ppc ~ppc64 s390 sh sparc x86 ~x86-fbsd ~ppc-macos ~x86-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd ~ppc-macos ~x86-solaris"
 
 DESCRIPTION="PostgreSQL server"
 HOMEPAGE="http://www.postgresql.org/"
 SRC_URI="mirror://postgresql/source/v${PV}/postgresql-${PV}.tar.bz2
-		 http://dev.gentoo.org/~titanofold/postgresql-patches-${SLOT}-r1.tbz2
+		 http://dev.gentoo.org/~titanofold/postgresql-patches-${SLOT}-r2.tbz2
 		 http://dev.gentoo.org/~titanofold/postgresql-initscript-1.2.tbz2"
 LICENSE="POSTGRESQL"
 
@@ -59,9 +59,9 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${WORKDIR}/autoconf.patch" \
-		"${WORKDIR}/server.patch"
-	epatch "${FILESDIR}"/${P}-bool.patch
+	epatch "${WORKDIR}/autoconf.patch" "${WORKDIR}/bool.patch" \
+		"${WORKDIR}/pg_ctl-exit-status.patch" "${WORKDIR}/server.patch"
+
 	epatch "${FILESDIR}"/gvcv_set.patch
 
 	eprefixify src/include/pg_config_manual.h
@@ -80,10 +80,10 @@ src_prepare() {
 
 src_configure() {
 	# eval is needed to get along with pg_config quotation of space-rich entities.
-	eval econf "$(${EROOT%/}/usr/$(get_libdir)/postgresql-${SLOT}/bin/pg_config --configure)" \
-		--with-includes="${EROOT%/}/usr/include/postgresql-${SLOT}/" \
-		--with-libraries="${EROOT%/}/usr/$(get_libdir)/postgresql-${SLOT}/$(get_libdir)" \
-		--with-system-tzdata="${EROOT%/}/usr/share/zoneinfo" \
+	eval econf "$(${EPREFIX%/}/usr/$(get_libdir)/postgresql-${SLOT}/bin/pg_config --configure)" \
+		--with-includes="${EPREFIX%/}/usr/include/postgresql-${SLOT}/" \
+		--with-libraries="${EPREFIX%/}/usr/$(get_libdir)/postgresql-${SLOT}/$(get_libdir)" \
+		--with-system-tzdata="${EPREFIX%/}/usr/share/zoneinfo" \
 		$(use_with perl) \
 		$(use_with python) \
 		$(use_with tcl) \
