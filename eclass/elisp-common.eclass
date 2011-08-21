@@ -164,10 +164,16 @@ BYTECOMPFLAGS="-L ."
 # Output version of currently active Emacs.
 
 elisp-emacs-version() {
+	local ret
 	# The following will work for at least versions 18-23.
 	echo "(princ emacs-version)" >"${T}"/emacs-version.el
 	${EMACS} ${EMACSFLAGS} -l "${T}"/emacs-version.el
+	ret=$?
 	rm -f "${T}"/emacs-version.el
+	if [[ ${ret} -ne 0 ]]; then
+		eerror "elisp-emacs-version: Failed to run ${EMACS}"
+	fi
+	return ${ret}
 }
 
 # @FUNCTION: elisp-need-emacs
@@ -189,7 +195,7 @@ elisp-need-emacs() {
 	return 0
 }
 
-# 
+#
 EXPORT_FUNCTIONS pkg_setup
 
 SITELISPEMACS=/usr/share/emacs/site-lisp
