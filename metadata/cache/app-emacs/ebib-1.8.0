@@ -1,0 +1,22 @@
+>=virtual/emacs-21
+>=virtual/emacs-21
+0
+mirror://sourceforge/ebib/ebib-1.8.0.tar.gz
+
+http://ebib.sourceforge.net/
+GPL-2
+Visible bookmarks in buffer
+amd64 x86
+elisp elisp-common eutils multilib portability toolchain-funcs
+
+
+
+
+4
+
+compile configure install postinst postrm prepare setup unpack
+
+
+
+
+

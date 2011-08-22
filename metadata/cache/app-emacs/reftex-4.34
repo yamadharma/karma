@@ -1,7 +1,7 @@
 virtual/latex-base >=virtual/emacs-21 virtual/latex-base >=sys-apps/texinfo-4.2-r5
 virtual/latex-base >=virtual/emacs-21 virtual/latex-base
 0
-mirror://gnu/reftex/reftex-4.33.tar.gz
+mirror://gnu/reftex/reftex-4.34.tar.gz
 
 http://www.gnu.org/software/auctex/
 GPL-3 FDL-1.2
