@@ -29,6 +29,7 @@ DEPEND="${RDEPEND}
 PATCHES=(
 	"${FILESDIR}/${PN}-includes-libs-perl.patch"
 	"${FILESDIR}/${PN}-fix_wrong_linker_opts.patch"
+	"${FILESDIR}/graphite2-disable-tests.patch"
 )
 
 pkg_setup() {
@@ -64,13 +65,13 @@ src_compile() {
 	fi
 }
 
-#src_test() {
-#	cmake-utils_src_test
-#	if use perl; then
-#		cd contrib/perl
-#		perl-module_src_test
-#	fi
-#}
+src_test() {
+	cmake-utils_src_test
+	if use perl; then
+		cd contrib/perl
+		perl-module_src_test
+	fi
+}
 
 src_install() {
 	cmake-utils_src_install
