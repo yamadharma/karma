@@ -1,4 +1,4 @@
-~dev-lang/fpc-2.2.2 net-misc/rsync gtk? ( >=x11-libs/gtk+-1.0 ) gtk2? ( >=x11-libs/gtk+-2.0 ) qt? ( >=x11-libs/qt-4.0 ) || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b dev-vcs/subversion net-misc/rsync
+~dev-lang/fpc-2.2.2 net-misc/rsync gtk? ( >=x11-libs/gtk+-1.0 ) gtk2? ( >=x11-libs/gtk+-2.0 ) qt? ( >=x11-libs/qt-4.0 ) || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 sys-devel/libtool dev-vcs/subversion net-misc/rsync
 ~dev-lang/fpc-2.2.2 net-misc/rsync gtk? ( >=x11-libs/gtk+-1.0 ) gtk2? ( >=x11-libs/gtk+-2.0 ) qt? ( >=x11-libs/qt-4.0 ) !=gnome-base/librsvg-2.16.1
 0
 

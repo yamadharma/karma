@@ -1,4 +1,4 @@
-tcpd? ( sys-apps/tcp-wrappers ) sys-libs/e2fsprogs-libs || ( net-nds/rpcbind >=net-nds/portmap-5b-r6 ) !nonfsv4? ( >=dev-libs/libevent-1.0b >=net-libs/libnfsidmap-0.21-r1 kerberos? ( net-libs/librpcsecgss || ( net-libs/libgssglue virtual/krb5 ) >=app-crypt/heimdal-1.2 ) ) >=sys-apps/util-linux-2.12r-r7 || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 >=sys-devel/libtool-2.2.6b
+tcpd? ( sys-apps/tcp-wrappers ) sys-libs/e2fsprogs-libs || ( net-nds/rpcbind >=net-nds/portmap-5b-r6 ) !nonfsv4? ( >=dev-libs/libevent-1.0b >=net-libs/libnfsidmap-0.21-r1 kerberos? ( net-libs/librpcsecgss || ( net-libs/libgssglue virtual/krb5 ) >=app-crypt/heimdal-1.2 ) ) >=sys-apps/util-linux-2.12r-r7 || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 sys-devel/libtool
 tcpd? ( sys-apps/tcp-wrappers ) sys-libs/e2fsprogs-libs || ( net-nds/rpcbind >=net-nds/portmap-5b-r6 ) !nonfsv4? ( >=dev-libs/libevent-1.0b >=net-libs/libnfsidmap-0.21-r1 kerberos? ( net-libs/librpcsecgss || ( net-libs/libgssglue virtual/krb5 ) >=app-crypt/heimdal-1.2 ) )
 0
 mirror://sourceforge/nfs/nfs-utils-1.1.4.tar.bz2
