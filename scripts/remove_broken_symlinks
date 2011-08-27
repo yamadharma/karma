@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+
+dirlist="/usr/bin /usr/lib /bin /lib"
+
+for i in /usr/lib32 /usr/lib64 /lib32 /lib64
+do
+    if [[ -d ${i} ]]
+    then
+	dirlist="${dirlist} ${i}"
+    fi
+done
+
+find -L ${dirlist} -type l -print0 | xargs -0 --no-run-if-empty rm
+
