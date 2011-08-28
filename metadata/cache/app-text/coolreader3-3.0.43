@@ -1,4 +1,4 @@
-sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype wxwidgets? ( app-admin/eselect-wxwidgets >=x11-libs/wxGTK-2.8 ) qt4? ( x11-libs/qt-core:4 x11-libs/qt-gui:4 ) hyphen? ( app-arch/unzip ) >=dev-util/cmake-2.8.1 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype wxwidgets? ( app-admin/eselect-wxwidgets >=x11-libs/wxGTK-2.8 ) qt4? ( x11-libs/qt-core:4 x11-libs/qt-gui:4 ) hyphen? ( app-arch/unzip ) >=dev-util/cmake-2.8.4 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype wxwidgets? ( app-admin/eselect-wxwidgets >=x11-libs/wxGTK-2.8 ) qt4? ( x11-libs/qt-core:4 x11-libs/qt-gui:4 ) hyphen? ( app-arch/unzip ) media-fonts/corefonts
 0
 mirror://sourceforge/crengine/CoolReader3/cr3-3.0.43/cr3_3.0.43.orig.tar.gz hyphen? ( http://alreader.kms.ru/AlReader/AlReader2.Hyphen.zip )
