@@ -8,7 +8,8 @@ inherit mount-boot eutils flag-o-matic toolchain-funcs autotools
 
 if [ "${PV##*.}" = "9999" ]; then
 	inherit subversion
-	ESVN_REPO_URI="http://svn.gna.org/svn/grub4dos/trunk"
+#	ESVN_REPO_URI="http://svn.gna.org/svn/grub4dos/trunk"
+	ESVN_REPO_URI="http://grub4dos-chenall.googlecode.com/svn/trunk"
 else
 	MY_DATE=${PV#*_pre}
 	MOD=p
@@ -20,7 +21,8 @@ else
 fi
 
 DESCRIPTION="GRUB4DOS is an universal boot loader based on GNU GRUB"
-HOMEPAGE="https://gna.org/projects/grub4dos"
+HOMEPAGE="https://gna.org/projects/grub4dos
+	http://code.google.com/p/grub4dos-chenall"
 
 LICENSE="GPL-2"
 SLOT="0"
