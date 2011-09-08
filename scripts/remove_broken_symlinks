@@ -2,7 +2,7 @@
 
 
 
-dirlist="/usr/bin /usr/lib /bin /lib"
+dirlist="/usr/bin /usr/lib /bin /lib /etc/ssl/certs"
 
 for i in /usr/lib32 /usr/lib64 /lib32 /lib64
 do
