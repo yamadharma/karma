@@ -1,6 +1,6 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/xen/xen-4.0.1.ebuild,v 1.1 2010/12/03 19:09:25 patrick Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/xen/xen-3.4.2-r1.ebuild,v 1.3 2010/06/24 01:40:04 angelos Exp $
 
 inherit mount-boot flag-o-matic toolchain-funcs
 
@@ -10,11 +10,12 @@ SRC_URI="http://bits.xensource.com/oss-xen/release/${PV}/xen-${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 x86"
 IUSE="debug custom-cflags pae acm flask xsm"
 
 RDEPEND="|| ( sys-boot/grub
-		sys-boot/grub-static )"
+		sys-boot/grub-static )
+		>=sys-kernel/xen-sources-2.6.18"
 PDEPEND="~app-emulation/xen-tools-${PV}"
 
 RESTRICT="test"
@@ -51,7 +52,13 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	epatch "${FILESDIR}"/localpy27fixes.patch
+	# Fix unexport $target in xen-setup
+	epatch "${FILESDIR}/"${PN}-3.3.0-unexported-target-fix.patch
+
+	# Fix crash in xen console
+	epatch "${FILESDIR}/"${P}-dump_registers-watchdog-fix.patch
+
+	epatch "${FILESDIR}/"gcc-4.5.patch
 
 	# if the user *really* wants to use their own custom-cflags, let them
 	if use custom-cflags; then

@@ -1,0 +1,12 @@
+diff -Naurp xen-3.4.2/tools/xenstore/xs_lib.c xen-3.4.2.new/tools/xenstore/xs_lib.c
+--- xen-3.4.2/tools/xenstore/xs_lib.c	2009-11-10 18:12:57.000000000 +0300
++++ xen-3.4.2.new/tools/xenstore/xs_lib.c	2011-09-18 21:43:50.846485677 +0400
+@@ -149,7 +149,7 @@ bool xs_strings_to_perms(struct xs_permi
+ bool xs_perm_to_string(const struct xs_permissions *perm,
+                        char *buffer, size_t buf_len)
+ {
+-	switch (perm->perms) {
++	switch ((int)perm->perms) {
+ 	case XS_PERM_WRITE:
+ 		*buffer = 'w';
+ 		break;
