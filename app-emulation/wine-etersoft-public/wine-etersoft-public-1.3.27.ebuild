@@ -94,6 +94,7 @@ DEPEND="${RDEPEND}
 #}
 
 src_unpack() {
+	addwrite /var/lib/rpm
 	alien -t ${DISTDIR}/wine-${PV}-alt1.src.rpm
 	tar xf wine-${PV}.tgz
 	tar xf wine-${PV}.tar
