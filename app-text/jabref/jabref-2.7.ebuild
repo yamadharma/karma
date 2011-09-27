@@ -43,7 +43,7 @@ java_prepare() {
 	# moves jarbundler definition to where it's needed (not by us)
 	# don't call unjarlib, don't want to absorb deps
 	# failonerror in jpfcodegen
-	epatch "${FILESDIR}/${PN}-2.4-build.xml.patch"
+	epatch "${FILESDIR}/${PN}-2.7-build.xml.patch"
 
 	# bug #268252
 	java-ant_xml-rewrite -f build.xml -d -e javac -a encoding -v UTF-8
