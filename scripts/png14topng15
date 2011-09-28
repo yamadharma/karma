@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -d /usr/lib64 ]
+then
+	find /usr/lib64 -name "*.la" -exec sed -i -e "s:-lpng14:-lpng15:g" {} \;
+	find /usr/kde/3.5/lib64 -name "*.la" -exec sed -e "s:-lpng14:-lpng15:g" -i {} \;
+else
+	find /usr/lib -name "*.la" -exec sed -i -e "s:-lpng14:-lpng15:g" {} \;
+	find /usr/kde/3.5/lib -name "*.la" -exec sed -e "s:-lpng14:-lpng15:g" -i {} \;
+fi
+
+
