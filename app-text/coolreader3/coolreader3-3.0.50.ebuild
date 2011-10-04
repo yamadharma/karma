@@ -2,9 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="4"
 
 inherit cmake-utils
+
+PV_MOD=-3
 
 if [ "${PV}" == 9999 ]
 then
@@ -13,7 +15,7 @@ then
 	SRC_URI=""
 else
 	SRC_URI="mirror://sourceforge/crengine/CoolReader3/cr3-${PV}/cr3_${PV}.orig.tar.gz"
-	S=${WORKDIR}/cr3-${PV}
+	S=${WORKDIR}/cr${PV}${PV_MOD}
 fi
 
 HYP_ARCH="AlReader2.Hyphen.zip"
@@ -41,13 +43,13 @@ DEPEND="sys-libs/zlib
 RDEPEND="${DEPEND}
 	media-fonts/corefonts"
 
-src_prepare() {
-	# fix for amd64
-	if use amd64; then
-		sed -e 's/unsigned int/unsigned long/g' -i "${S}/crengine/src/lvdocview.cpp" \
-		|| die "patching lvdocview.cpp for amd64 failed"
-	fi
-}
+#src_prepare() {
+#	# fix for amd64
+#	if use amd64; then
+#		sed -e 's/unsigned int/unsigned long/g' -i "${S}/crengine/src/lvdocview.cpp" \
+#		|| die "patching lvdocview.cpp for amd64 failed"
+#	fi
+#}
 
 src_configure() {
 	CMAKE_USE_DIR="${S}"
