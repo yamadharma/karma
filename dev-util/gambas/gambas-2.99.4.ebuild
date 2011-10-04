@@ -15,7 +15,7 @@ DESCRIPTION="Gambas is a free development environment based on a Basic interpret
 HOMEPAGE="http://gambas.sourceforge.net/"
 
 
-SLOT="2"
+SLOT="3"
 MY_PN="${PN}${SLOT}"
 MY_P="${MY_PN}-${PV}"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
