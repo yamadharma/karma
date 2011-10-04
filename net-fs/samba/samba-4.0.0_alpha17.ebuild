@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -31,16 +31,14 @@ DEPEND="!net-fs/samba-libs
 	virtual/libiconv
 	>=dev-lang/python-2.4.2
 	gnutls? ( >=net-libs/gnutls-1.4.0 )
-	!sys-libs/tdb" # Conflict because of tdb binaries
-	#>=sys-libs/talloc-2.0.3 No 2.0.3 release
-	#>=sys-libs/tdb-1.2.4 No 1.2.4 release
-	#=sys-libs/tevent-0.9.9 System tevent wants system talloc
-	#=sys-libs/ldb-0.9.11 No release yet
+	>=sys-libs/tdb-1.2.8
+	>=sys-libs/talloc-2.0.4
+	>=sys-libs/tevent-0.9.10"
 RDEPEND="${DEPEND}"
 
 RESTRICT="mirror"
 
-S="${WORKDIR}/${MY_P}/source4"
+S="${WORKDIR}/${MY_P}/"
 
 WAF="${WORKDIR}/${MY_P}/buildtools/bin/waf"
 
@@ -71,11 +69,9 @@ src_configure() {
 		--disable-rpath-install \
 		--nopyc \
 		--nopyo \
+		--bundled-libraries=!tdb,!tevent,!talloc,ldb \
 		$(use_enable gnutls) \
 		|| die "configure failed"
-
-#		--bundled-libraries=ldb,tdb,talloc,tevent,NONE \
-#		--builtin-libraries=replace \
 }
 
 src_compile() {
@@ -84,8 +80,12 @@ src_compile() {
 
 src_install() {
 	DESTDIR="${D}" $WAF install || die "emake install failed"
-
 	newinitd "${FILESDIR}/samba4.initd" samba || die "newinitd failed"
+	#remove conflicting file for tevent profided by sys-libs/tevent
+	find ${D} -type f -name "_tevent.so" -exec rm '{}' \;
+
+	#create a symlink to ldb lib for linking other packages using ldb
+	dosym samba/libldb-samba4.so.0.9.22 usr/lib/libldb.so
 }
 
 src_test() {
