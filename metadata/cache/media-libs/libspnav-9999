@@ -1,0 +1,22 @@
+X? ( x11-libs/libX11 ) dev-vcs/subversion net-misc/rsync
+X? ( x11-libs/libX11 )
+0
+
+
+http://spacenav.sourceforge.net/
+BSD
+A free, compatible alternative for 3Dconnexion's 3D input SDK
+~amd64 ~x86
+eutils multilib portability subversion toolchain-funcs
++X
+
+
+
+3
+
+configure install preinst unpack
+
+
+
+
+

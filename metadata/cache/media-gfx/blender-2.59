@@ -1,0 +1,22 @@
+>=dev-util/scons-0.98 apidoc? ( dev-python/sphinx >=app-doc/doxygen-1.5.7[-nodot] ) x11-base/xorg-server virtual/jpeg media-libs/libpng x11-libs/libXi x11-libs/libX11 media-libs/tiff media-libs/libsamplerate virtual/opengl >=media-libs/freetype-2.0 virtual/libintl media-libs/glew dev-cpp/eigen:2 >=sci-physics/bullet-2.76 media-libs/libspnav iconv? ( virtual/libiconv ) zlib? ( sys-libs/zlib ) sdl? ( media-libs/libsdl[audio,joystick] ) openexr? ( media-libs/openexr ) ffmpeg? ( >=virtual/ffmpeg-0.6.90[x264,mp3,encode,theora] jpeg2k? ( >=virtual/ffmpeg-0.6.90[x264,mp3,encode,theora,jpeg2k] ) ) openal? ( >=media-libs/openal-1.6.372 ) fftw? ( sci-libs/fftw:3.0 ) jack? ( media-sound/jack-audio-connection-kit ) sndfile? ( media-libs/libsndfile ) collada? ( media-libs/opencollada ) lcms? ( media-libs/lcms ) sys-devel/gettext >=app-admin/eselect-python-20091230 =dev-lang/python-3.2*
+virtual/jpeg media-libs/libpng x11-libs/libXi x11-libs/libX11 media-libs/tiff media-libs/libsamplerate virtual/opengl >=media-libs/freetype-2.0 virtual/libintl media-libs/glew dev-cpp/eigen:2 >=sci-physics/bullet-2.76 media-libs/libspnav iconv? ( virtual/libiconv ) zlib? ( sys-libs/zlib ) sdl? ( media-libs/libsdl[audio,joystick] ) openexr? ( media-libs/openexr ) ffmpeg? ( >=virtual/ffmpeg-0.6.90[x264,mp3,encode,theora] jpeg2k? ( >=virtual/ffmpeg-0.6.90[x264,mp3,encode,theora,jpeg2k] ) ) openal? ( >=media-libs/openal-1.6.372 ) fftw? ( sci-libs/fftw:3.0 ) jack? ( media-sound/jack-audio-connection-kit ) sndfile? ( media-libs/libsndfile ) collada? ( media-libs/opencollada ) lcms? ( media-libs/lcms ) >=app-admin/eselect-python-20091230 =dev-lang/python-3.2*
+2.5
+http://download.blender.org/source/blender-2.59.tar.gz
+
+http://www.blender.org
+|| ( GPL-2 BL )
+3D Creation/Animation/Publishing System
+~amd64 ~amd64-fbsd ~ppc ~ppc64 ~x86 ~x86-fbsd
+eutils flag-o-matic multilib portability python toolchain-funcs versionator
++game-engine player +elbeem +openexr ffmpeg jpeg2k openal openmp +dds debug fftw jack apidoc sndfile lcms tweak-mode sdl sse redcode +zlib iconv contrib collada test linguas_en linguas_ar linguas_bg linguas_ca linguas_cs linguas_de linguas_el linguas_es linguas_fi linguas_fr linguas_hr linguas_it linguas_ja linguas_ko linguas_nl linguas_pl linguas_pt_BR linguas_ro linguas_ru linguas_sr linguas_sv linguas_uk linguas_zh_CN
+
+
+
+3
+
+compile configure install postinst preinst prepare setup
+
+
+
+
+

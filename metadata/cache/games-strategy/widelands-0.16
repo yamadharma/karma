@@ -1,0 +1,22 @@
+dev-games/ggz-client-libs dev-lang/lua media-libs/sdl-image[jpeg,png] media-libs/sdl-mixer[vorbis] media-libs/sdl-gfx media-libs/sdl-net media-libs/glew media-libs/sdl-ttf dev-libs/boost >=dev-util/cmake-2.8.4 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+dev-games/ggz-client-libs dev-lang/lua media-libs/sdl-image[jpeg,png] media-libs/sdl-mixer[vorbis] media-libs/sdl-gfx media-libs/sdl-net media-libs/glew media-libs/sdl-ttf
+0
+http://launchpad.net/widelands/build16/build16/+download/widelands-build16-src.tar.bz2
+
+http://www.widelands.org/
+GPL-2
+A game similar to Settlers 2
+~amd64 ~ppc ~x86
+base cmake-utils eutils flag-o-matic games multilib portability toolchain-funcs versionator
+
+
+
+
+3
+
+compile configure install postinst preinst prepare setup test unpack
+
+
+
+
+
