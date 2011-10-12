@@ -20,7 +20,8 @@ IUSE=""
 
 RDEPEND=">=dev-lang/ghc-6.12.1
 	dev-haskell/filepath
-	dev-haskell/old-time
+
 	dev-haskell/unix"
+#	dev-haskell/old-time
 DEPEND="${RDEPEND}
 		>=dev-haskell/cabal-1.6"

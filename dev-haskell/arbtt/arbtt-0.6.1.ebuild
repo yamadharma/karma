@@ -19,9 +19,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="dev-haskell/binary
-		dev-haskell/bytestring
-		dev-haskell/containers
-		dev-haskell/deepseq
 		dev-haskell/directory
 		dev-haskell/filepath
 		dev-haskell/mtl
@@ -31,7 +28,12 @@ RDEPEND="dev-haskell/binary
 		dev-haskell/unix
 		dev-haskell/utf8-string
 		dev-haskell/x11
-		dev-haskell/old-locale
-		>=dev-lang/ghc-6.10.1"
+ 		>=dev-lang/ghc-6.10.1"
+
+#		dev-haskell/old-locale
+#		dev-haskell/bytestring
+#		dev-haskell/containers
+#		dev-haskell/deepseq
+
 DEPEND="${RDEPEND}
 		>=dev-haskell/cabal-1.2"
