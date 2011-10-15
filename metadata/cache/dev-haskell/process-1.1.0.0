@@ -1,0 +1,22 @@
+>=dev-lang/ghc-6.10.1 dev-haskell/unix dev-haskell/filepath >=dev-haskell/cabal-1.6 doc? ( dev-haskell/haddock ) hscolour? ( dev-haskell/hscolour ) >=dev-haskell/cabal-1.1.4
+>=dev-lang/ghc-6.10.1 dev-haskell/unix dev-haskell/filepath dev-lang/ghc
+0
+http://hackage.haskell.org/packages/archive/process/1.1.0.0/process-1.1.0.0.tar.gz
+
+http://hackage.haskell.org/package/process
+BSD
+Process libraries
+~amd64 ~x86
+eutils ghc-package haskell-cabal multilib portability toolchain-funcs versionator
+doc hscolour profile
+
+
+
+3
+
+compile configure install postinst prerm setup test
+
+
+
+
+
