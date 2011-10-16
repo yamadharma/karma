@@ -51,9 +51,8 @@ src_configure() {
 }
 
 src_install() {
-		einstall || die
+		make install DESTDIR=${D} || die
 		dodoc INSTALL NEWS README* AUTHORS
-
 
 		dodir /usr/share/games/${PN}
 		cd ${WORKDIR}
