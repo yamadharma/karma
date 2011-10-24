@@ -21,7 +21,8 @@ fi
 HYP_ARCH="AlReader2.Hyphen.zip"
 
 DESCRIPTION="CoolReader - reader of eBook files (fb2,epub,htm,rtf,txt)"
-HOMEPAGE="http://www.coolreader.org/"
+HOMEPAGE="http://www.coolreader.org/
+	http://crengine.sourceforge.net/"
 SRC_URI="${SRC_URI}
 		 hyphen? ( http://alreader.kms.ru/AlReader/${HYP_ARCH} )"
 RESTRICT="mirror"
@@ -42,14 +43,6 @@ DEPEND="sys-libs/zlib
 	hyphen? ( app-arch/unzip )"
 RDEPEND="${DEPEND}
 	media-fonts/corefonts"
-
-#src_prepare() {
-#	# fix for amd64
-#	if use amd64; then
-#		sed -e 's/unsigned int/unsigned long/g' -i "${S}/crengine/src/lvdocview.cpp" \
-#		|| die "patching lvdocview.cpp for amd64 failed"
-#	fi
-#}
 
 src_configure() {
 	CMAKE_USE_DIR="${S}"
