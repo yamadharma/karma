@@ -3,7 +3,7 @@ sys-libs/zlib media-libs/libpng media-libs/jpeg media-libs/freetype wxwidgets? (
 0
 mirror://sourceforge/crengine/CoolReader3/cr3-3.0.50/cr3_3.0.50.orig.tar.gz hyphen? ( http://alreader.kms.ru/AlReader/AlReader2.Hyphen.zip )
 mirror
-http://www.coolreader.org/
+http://www.coolreader.org/ http://crengine.sourceforge.net/
 GPL-2
 CoolReader - reader of eBook files (fb2,epub,htm,rtf,txt)
 ~amd64 ~x86
