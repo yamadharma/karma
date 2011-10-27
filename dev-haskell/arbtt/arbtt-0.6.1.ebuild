@@ -19,16 +19,18 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="dev-haskell/binary
-		dev-haskell/directory
-		dev-haskell/filepath
+		dev-haskell/deepseq
 		dev-haskell/mtl
 		dev-haskell/parsec:3
 		dev-haskell/pcre-light
 		dev-haskell/time
-		dev-haskell/unix
 		dev-haskell/utf8-string
 		dev-haskell/x11
- 		>=dev-lang/ghc-6.10.1"
+		>=dev-lang/ghc-6.10.1"
+
+#		dev-haskell/unix
+#		dev-haskell/directory
+#		dev-haskell/filepath
 
 #		dev-haskell/old-locale
 #		dev-haskell/bytestring
