@@ -7,7 +7,7 @@ http://www.lintest.ru/wiki/MyRuLib
 GPL-3
 E-book collection manager
 
-eutils git multilib portability toolchain-funcs wxwidgets
+eutils git multilib portability toolchain-funcs user wxwidgets
 
 
 

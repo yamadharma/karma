@@ -7,7 +7,7 @@ http://pike.ida.liu.se/
 GPL-2 LGPL-2.1 MPL-1.1
 Pike programming language and runtime
 x86 ppc amd64
-eutils fixheadtails flag-o-matic multilib portability toolchain-funcs
+eutils fixheadtails flag-o-matic multilib portability toolchain-funcs user
 crypt debug doc fftw gdbm gif java jpeg mysql oci8 odbc opengl pdf postgres scanner sdl tiff truetype zlib perl ffmpeg svg kerberos bzip2 pcre gmp mime mmx
 
 

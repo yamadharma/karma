@@ -7,7 +7,7 @@ mirror://cpan/modules/by-module/Archive/Archive-Zip-1.05.tar.gz
 Artistic
 Perl program to create, manipulate, read, and write Zip archive files
 x86 ppc sparc sparc64
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-module portability toolchain-funcs user
 
 
 

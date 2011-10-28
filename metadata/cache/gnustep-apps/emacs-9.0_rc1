@@ -7,7 +7,7 @@ http://emacs-app.sourceforge.net
 GPL-2
 A Cocoa port of Emacs for MacOS X and GNUstep
 alpha amd64 arm hppa ia64 ppc ppc64 s390 ~sh sparc ~x86
-eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs user
 gif jpeg nls png spell tiff debug doc
 
 

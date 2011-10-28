@@ -7,7 +7,7 @@ http://www.xneur.ru/
 GPL-2
 In-place conversion of text typed in with a wrong keyboard layout (Punto Switcher replacement)
 ~amd64 ~x86
-autotools eutils libtool multilib portability toolchain-funcs
+autotools eutils libtool multilib portability toolchain-funcs user
 aplay debug gstreamer keylogger libnotify nls openal openmp xosd +spell
 
 

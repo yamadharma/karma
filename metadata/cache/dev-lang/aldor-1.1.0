@@ -7,7 +7,7 @@ http://www.aldor.org/
 aldor-2
 Aldor - programming language with a two-level type system
 x86 amd64
-elisp-common eutils multilib portability subversion toolchain-funcs
+elisp-common eutils multilib portability subversion toolchain-funcs user
 doc emacs
 
 

@@ -7,7 +7,7 @@ http://libs.suckless.org/
 MIT
 Standalone client/server 9P library
 amd64 ~ppc64 x86
-eutils flag-o-matic multilib portability toolchain-funcs
+eutils flag-o-matic multilib portability toolchain-funcs user
 
 
 

@@ -7,7 +7,7 @@ http://fort.xdas.com/~kor/oss2jack/
 GPL-2
 Stackable unification file system, which can appear to merge the contents of several directories
 x86 amd64
-eutils linux-info linux-mod multilib portability subversion toolchain-funcs versionator
+eutils linux-info linux-mod multilib portability subversion toolchain-funcs user versionator
 doc kernel_linux
 
 

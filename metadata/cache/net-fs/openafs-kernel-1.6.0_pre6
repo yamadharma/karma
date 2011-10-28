@@ -7,7 +7,7 @@ http://www.openafs.org/
 IBM BSD openafs-krb5-a APSL-2 sun-rpc
 The OpenAFS distributed file system kernel module
 ~amd64 ~sparc ~x86
-autotools eutils libtool linux-info linux-mod multilib portability toolchain-funcs versionator
+autotools eutils libtool linux-info linux-mod multilib portability toolchain-funcs user versionator
 kernel_linux
 
 

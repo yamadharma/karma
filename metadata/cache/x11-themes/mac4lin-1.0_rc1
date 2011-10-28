@@ -7,7 +7,7 @@ http://sourceforge.net/projects/mac4lin/
 LGPL
 Mac OS X theme for Gnome enviroment
 amd64 x86
-eutils gnome2-utils multilib portability toolchain-funcs
+eutils gnome2-utils multilib portability toolchain-funcs user
 awn grub emerald
 
 

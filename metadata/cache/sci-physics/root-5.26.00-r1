@@ -7,7 +7,7 @@ http://root.cern.ch/
 LGPL-2.1
 C++ data analysis framework and interpreter from CERN
 ~amd64 ~hppa ~sparc ~x86
-base elisp-common eutils fdo-mime flag-o-matic multilib portability qt4 toolchain-funcs versionator
+base elisp-common eutils fdo-mime flag-o-matic multilib portability qt4 toolchain-funcs user versionator
 afs cint7 clarens doc emacs examples fftw geant4 kerberos ldap +math mysql odbc +opengl openmp oracle postgres pythia6 pythia8 python +reflex ruby qt4 ssl xft xml xinetd xrootd
 
 

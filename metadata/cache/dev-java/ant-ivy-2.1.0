@@ -7,7 +7,7 @@ http://ant.apache.org/ivy
 Apache-2.0
 Ivy is a free java based dependency manager
 amd64 ppc ppc64 x86 ~x86-fbsd ~amd64-linux ~x86-linux ~x86-macos
-eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
 elibc_FreeBSD doc examples source test elibc_FreeBSD
 
 

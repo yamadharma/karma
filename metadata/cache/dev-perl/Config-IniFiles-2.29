@@ -7,7 +7,7 @@ mirror://cpan/modules/by-module/Config/Config-IniFiles-2.29.tar.gz
 Artistic
 A module for reading .ini-style configuration files
 x86 ppc sparc sparc64
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-module portability toolchain-funcs user
 
 
 

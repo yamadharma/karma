@@ -7,7 +7,7 @@ http://search.cpan.org/~gbarr/libnet-1.19/
 Artistic
 A URI Perl Module
 x86 ~amd64 ~ppc ~sparc ~alpha ~hppa ia64 ~s390 ppc64
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-module portability toolchain-funcs user
 
 
 

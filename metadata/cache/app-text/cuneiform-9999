@@ -7,7 +7,7 @@ https://launchpad.net/cuneiform-linux
 BSD
 An enterprise quality OCR engine developed in USSR/Russia in the 90's.
 ~amd64 ~x86
-base bzr cmake-utils eutils flag-o-matic multilib portability toolchain-funcs
+base bzr cmake-utils eutils flag-o-matic multilib portability toolchain-funcs user
 debug +imagemagick
 
 

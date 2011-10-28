@@ -7,7 +7,7 @@ http://jdee.sunsite.dk
 GPL-2
 The Emacs Lisp Library
 amd64 ppc ~ppc-macos x86
-elisp elisp-common eutils multilib portability toolchain-funcs
+elisp elisp-common eutils multilib portability toolchain-funcs user
 
 
 

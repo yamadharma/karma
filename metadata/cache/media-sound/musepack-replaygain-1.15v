@@ -7,7 +7,7 @@ http://www.musepack.net
 LGPL-2.1
 Musepack replaygain tool
 amd64 x86 ~x86-fbsd
-eutils flag-o-matic multilib portability toolchain-funcs
+eutils flag-o-matic multilib portability toolchain-funcs user
 static 16bit esd
 
 

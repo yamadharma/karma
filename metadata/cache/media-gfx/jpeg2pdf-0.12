@@ -7,7 +7,7 @@ http://koan.studentenweb.org/software/jpeg2pdf.html
 X11/own
 Merge JPEG files into PDF
 x86 amd64
-eutils multilib portability toolchain-funcs
+eutils multilib portability toolchain-funcs user
 
 
 

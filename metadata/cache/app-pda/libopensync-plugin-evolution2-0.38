@@ -7,7 +7,7 @@ http://www.opensync.org/
 LGPL-2.1
 OpenSync Evolution 2 Plugin
 ~amd64 ~ppc ~x86
-base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs
+base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs user
 
 
 

@@ -7,7 +7,7 @@ http://www.krasu.ru/soft/chuchelo/
 Artistic
 GTK based download manager for X.
 amd64 x86
-eutils flag-o-matic multilib portability toolchain-funcs
+eutils flag-o-matic multilib portability toolchain-funcs user
 nls esd gnome oss kde
 
 

@@ -7,7 +7,7 @@ http://sope.opengroupware.org/en/index.html
 LGPL-2
 an extensive set of frameworks which form a complete Web application server environment
 amd64 x86
-apache-module depend.apache eutils flag-o-matic gnustep-base multilib portability toolchain-funcs
+apache-module depend.apache eutils flag-o-matic gnustep-base multilib portability toolchain-funcs user
 mysql +postgres sqlite debug doc
 
 

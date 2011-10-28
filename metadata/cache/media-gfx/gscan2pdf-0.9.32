@@ -7,7 +7,7 @@ http://gscan2pdf.sourceforge.net/
 GPL-2
 Create PDF of selected pages with File/Save PDF
 ~amd64 ~x86
-base eutils multilib perl-app perl-module portability toolchain-funcs
+base eutils multilib perl-app perl-module portability toolchain-funcs user
 adf cuneiform doc djvu gocr ocropus tesseract unpaper +xdg
 
 

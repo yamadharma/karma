@@ -7,7 +7,7 @@ http://people.redhat-club.org/slavaz/trac/wiki/ProjectMc
 GPL-2
 GNU Midnight Commander cli-based file manager
 
-autotools eutils flag-o-matic libtool multilib portability subversion toolchain-funcs
+autotools eutils flag-o-matic libtool multilib portability subversion toolchain-funcs user
 +7zip -attrs +background +editor ext2undel -dnotify gpm +network nls samba +unicode +vfs X
 
 

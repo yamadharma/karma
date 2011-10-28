@@ -7,7 +7,7 @@ http://www.nsnam.org
 GPL-2
 Network Simulator
 ~x86 ~amd64
-eutils multilib portability toolchain-funcs
+eutils multilib portability toolchain-funcs user
 doc examples
 
 

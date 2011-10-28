@@ -7,7 +7,7 @@ http://aufs.sourceforge.net/
 GPL-2
 An entirely re-designed and re-implemented Unionfs.
 
-eutils git linux-info multilib portability toolchain-funcs versionator
+eutils git linux-info multilib portability toolchain-funcs user versionator
 doc kernel-patch
 
 

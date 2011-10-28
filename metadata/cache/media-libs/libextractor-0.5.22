@@ -7,7 +7,7 @@ http://www.gnunet.org/libextractor/
 LGPL-2.1
 A simple library for keyword extraction
 amd64 ~ppc ~ppc64 ~sparc x86
-eutils libtool multilib portability toolchain-funcs
+eutils libtool multilib portability toolchain-funcs user
 gtk nls vorbis zlib
 
 

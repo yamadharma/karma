@@ -7,7 +7,7 @@ http://www.etoile-project.org
 GPL-2
 AZDock is a dock for Etoile.
 ~ppc x86 amd64
-etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs
+etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs user
 debug doc
 
 

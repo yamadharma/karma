@@ -7,7 +7,7 @@ http://www.kinodv.org/
 GPL-2
 Kino is a non-linear DV editor for GNU/Linux
 ~amd64 ~ppc ~ppc64 ~sparc ~x86
-eutils flag-o-matic multilib portability toolchain-funcs
+eutils flag-o-matic multilib portability toolchain-funcs user
 alsa dvdr gpac lame gstreamer quicktime sox vorbis
 
 

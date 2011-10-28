@@ -7,7 +7,7 @@ ftp://scon155.phys.msu.su/pub/russian/psfonts
 LPPL-1.2
 PSCyr font collection
 alpha amd64 hppa mips ppc sparc x86
-base eutils latex-package multilib portability toolchain-funcs
+base eutils latex-package multilib portability toolchain-funcs user
 
 
 

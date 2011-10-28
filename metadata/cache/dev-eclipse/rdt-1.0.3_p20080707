@@ -7,7 +7,7 @@ http://rubyeclipse.sourceforge.net/
 CPL-1.0
 An open source Ruby IDE for the Eclipse platform
 ~amd64
-base eclipse-ext-2 eutils java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+base eclipse-ext-2 eutils java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
 doc elibc_FreeBSD
 
 

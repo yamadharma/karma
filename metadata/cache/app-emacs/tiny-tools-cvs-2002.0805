@@ -7,7 +7,7 @@ http://tiny-tools.sourceforge.net
 GPL-2
 Emacs Tiny Tools is a collection of libraries and packages
 x86
-cvs elisp elisp-common eutils multilib portability toolchain-funcs
+cvs elisp elisp-common eutils multilib portability toolchain-funcs user
 
 
 

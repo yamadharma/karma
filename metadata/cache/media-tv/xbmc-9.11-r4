@@ -7,7 +7,7 @@ http://xbmc.org/
 GPL-2
 XBMC is a free and open source media-player and entertainment hub
 ~amd64 ~x86
-autotools eutils flag-o-matic libtool multilib portability python toolchain-funcs
+autotools eutils flag-o-matic libtool multilib portability python toolchain-funcs user
 aac alsa altivec avahi css debug joystick midi profile pulseaudio sse sse2 vdpau xrandr
 
 

@@ -7,7 +7,7 @@ http://www.linuks.mine.nu/aclock/
 GPL-2
 Analog dockapp clock for GNUstep
 amd64 ~ppc x86
-eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs user
 debug doc
 
 

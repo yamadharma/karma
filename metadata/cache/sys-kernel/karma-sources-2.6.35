@@ -7,7 +7,7 @@ http://www.kernel.org/ http://www.gentoo.org/ http://www.fsfla.org/svnwiki/selib
 GPL-2 !deblob? ( freedist )
 KLK Sources.
 
-eutils kernel-2 multilib portability toolchain-funcs versionator
+eutils kernel-2 multilib portability toolchain-funcs user versionator
 symlink build deblob
 
 !build? ( virtual/dev-manager )

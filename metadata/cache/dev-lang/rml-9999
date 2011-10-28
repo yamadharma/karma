@@ -7,7 +7,7 @@ http://www.ida.liu.se/~pelab/rml
 OSMC-PL
 Relational Meta-Language (RML) and Tools
 amd64 x86
-autotools eutils libtool multilib portability subversion toolchain-funcs
+autotools eutils libtool multilib portability subversion toolchain-funcs user
 
 
 

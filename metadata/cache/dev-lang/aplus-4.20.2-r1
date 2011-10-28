@@ -7,7 +7,7 @@ http://www.aplusdev.org
 GPL
 A+ is an array-oriented programming language
 ~alpha amd64 ~ppc ~sparc x86
-elisp-common eutils multilib portability toolchain-funcs versionator
+elisp-common eutils multilib portability toolchain-funcs user versionator
 emacs
 
 

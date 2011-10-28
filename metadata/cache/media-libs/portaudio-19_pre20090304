@@ -7,7 +7,7 @@ http://www.portaudio.com
 as-is
 An open-source cross platform audio API.
 alpha amd64 arm hppa ia64 ppc ppc64 sh sparc x86
-eutils multilib portability subversion toolchain-funcs
+eutils multilib portability subversion toolchain-funcs user
 alsa +cxx debug jack oss
 
 

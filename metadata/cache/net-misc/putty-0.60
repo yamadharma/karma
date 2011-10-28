@@ -7,7 +7,7 @@ http://www.chiark.greenend.org.uk/~sgtatham/putty/
 MIT
 UNIX port of the famous Telnet and SSH client
 ~alpha amd64 ~ppc ~sparc x86
-eutils flag-o-matic multilib portability toolchain-funcs
+eutils flag-o-matic multilib portability toolchain-funcs user
 doc gtk ipv6
 
 

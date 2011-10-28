@@ -7,7 +7,7 @@ http://coyote.octets.fr/pub/gnustep/
 GPL-2
 a simple calender and agenda application
 amd64 x86
-eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs
+eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs user
 debug doc
 
 

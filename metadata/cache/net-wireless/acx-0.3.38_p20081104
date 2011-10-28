@@ -7,7 +7,7 @@ http://acx100.sourceforge.net/
 GPL-2 as-is
 Driver for the ACX100 and ACX111 wireless chipset (CardBus, PCI, USB)
 amd64 ~ppc x86
-eutils git linux-info linux-mod multilib portability toolchain-funcs versionator
+eutils git linux-info linux-mod multilib portability toolchain-funcs user versionator
 debug kernel_linux
 
 

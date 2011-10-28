@@ -7,7 +7,7 @@ http://www.iu.hio.no/cfengine/
 GPL-2
 An agent/software robot and a high level policy language for building expert systems to administrate and configure large computer networks
 amd64 ~arm ~ppc sparc x86
-eutils multilib portability toolchain-funcs
+eutils multilib portability toolchain-funcs user
 
 
 

@@ -7,7 +7,7 @@ http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html
 as-is
 Doug Lea's concurrency utilities provide standardized, efficient versions of utility classes commonly encountered in concurrent Java programming.
 amd64 ppc ppc64 x86
-eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
 elibc_FreeBSD doc source elibc_FreeBSD
 
 

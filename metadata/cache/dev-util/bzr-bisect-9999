@@ -7,7 +7,7 @@ https://launchpad.net/bzr-bisect/
 GPL-2
 Bazaar plugin that finds when source code was introduced into a branch via a binary search.
 x86 amd64
-bzr distutils eutils multilib portability python toolchain-funcs
+bzr distutils eutils multilib portability python toolchain-funcs user
 
 
 

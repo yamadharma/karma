@@ -7,7 +7,7 @@ http://otcl-tclcl.sourceforge.net/tclcl/
 as-is
 Tcl/C++ interface library
 ~amd64 ~ppc ~sparc ~x86
-autotools eutils libtool multilib portability toolchain-funcs
+autotools eutils libtool multilib portability toolchain-funcs user
 
 
 

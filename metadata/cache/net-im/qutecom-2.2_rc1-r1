@@ -7,7 +7,7 @@ http://www.qutecom.com/
 GPL-2
 An open source softphone
 amd64 x86
-base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs
+base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs user
 alsa debug oss portaudio xv
 
 

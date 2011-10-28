@@ -7,7 +7,7 @@ http://www.i-rs.ru/
 LGPL-2
 Сборка OpenOffice от компании Инфра-ресурс
 amd64 x86
-eutils fdo-mime multilib portability toolchain-funcs
+eutils fdo-mime multilib portability toolchain-funcs user
 gnome java kde
 
 

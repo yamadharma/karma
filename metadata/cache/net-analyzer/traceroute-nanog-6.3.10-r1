@@ -7,7 +7,7 @@ http://packages.debian.org/traceroute-nanog
 BSD
 Traceroute with AS lookup, TOS support, MTU discovery and other features
 amd64 ~ppc x86
-eutils multilib portability toolchain-funcs
+eutils multilib portability toolchain-funcs user
 
 
 

@@ -7,7 +7,7 @@ http://code.google.com/p/artscan
 GPL-3
 Cross-platform Python/PyQt4 scripted scanning and image processing
 amd64 x86
-distutils eutils mercurial multilib portability python toolchain-funcs
+distutils eutils mercurial multilib portability python toolchain-funcs user
 
 
 

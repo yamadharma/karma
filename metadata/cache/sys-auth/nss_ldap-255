@@ -7,7 +7,7 @@ http://www.padl.com/OSS/nss_ldap.html
 LGPL-2
 NSS LDAP Module
 ~alpha amd64 ~hppa ~mips ~ppc ~ppc64 ~sparc x86
-eutils fixheadtails flag-o-matic multilib portability toolchain-funcs
+eutils fixheadtails flag-o-matic multilib portability toolchain-funcs user
 debug sasl kerberos
 
 

@@ -7,7 +7,7 @@ http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/nc/
 as-is
 the network swiss army knife openbsd porting
 amd64 x86
-eutils multilib portability rpm toolchain-funcs
+eutils multilib portability rpm toolchain-funcs user
 static
 
 

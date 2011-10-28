@@ -7,7 +7,7 @@ http://www.etoile-project.org/etoile/mediawiki/index.php?title=Camaelon
 LGPL-2.1
 Camaelon allows you to load theme bundles for GNUstep.
 x86 ~ppc ~sparc ~alpha amd64
-etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs
+etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs user
 debug doc
 
 

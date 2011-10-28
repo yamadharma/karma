@@ -7,7 +7,7 @@ http://cyberdungeon.org.ru/~killy/projects/cue2tracks/
 GPL-2
 Bash script for split audio CD image files with cue sheet to tracks and write tags.
 ~x86 ~amd64
-eutils multilib portability toolchain-funcs
+eutils multilib portability toolchain-funcs user
 flake mac tta shorten wavpack mp3 vorbis
 
 

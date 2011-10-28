@@ -7,7 +7,7 @@ http://www.exit1.org/Event-ExecFlow/
 GPL-2
 High level API for event-based execution flow control
 amd64 ~ppc ~ppc64 ~sparc x86
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-module portability toolchain-funcs user
 
 
 

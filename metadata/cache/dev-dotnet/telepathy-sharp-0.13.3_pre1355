@@ -7,7 +7,7 @@ http://telepathy.freedesktop.org/wiki/TelepathySharp
 LGPL-2
 Telepathy C# bindings
 x86 amd64
-eutils mono multilib portability subversion toolchain-funcs
+eutils mono multilib portability subversion toolchain-funcs user
 
 
 

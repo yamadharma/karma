@@ -7,7 +7,7 @@ http://search.cpan.org/~pjf/Finance-Quote-1.11/
 || ( Artistic GPL-2 )
 The Perl Finance-Quote Module
 ~alpha amd64 ia64 ~ppc sparc x86
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-module portability toolchain-funcs user
 
 
 

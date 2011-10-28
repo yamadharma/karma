@@ -7,7 +7,7 @@ http://cafeconleche.org/XOM/index.html
 LGPL-2
 A new XML object model.
 amd64 ~ia64 ppc ppc64 x86 ~x86-fbsd
-eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
 elibc_FreeBSD doc examples source elibc_FreeBSD
 
 

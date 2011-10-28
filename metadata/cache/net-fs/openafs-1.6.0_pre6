@@ -7,7 +7,7 @@ http://www.openafs.org/
 IBM BSD openafs-krb5-a APSL-2 sun-rpc
 The OpenAFS distributed file system
 ~amd64 ~sparc ~x86
-autotools eutils flag-o-matic libtool multilib pam portability toolchain-funcs versionator
+autotools eutils flag-o-matic libtool multilib pam portability toolchain-funcs user versionator
 doc kerberos pam
 
 

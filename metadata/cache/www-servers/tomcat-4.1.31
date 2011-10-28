@@ -7,7 +7,7 @@ http://jakarta.apache.org/tomcat
 Apache-2.0
 Apache Servlet-2.3/JSP-1.2 Container
 x86 ppc ~sparc ~alpha amd64
-eutils multilib portability toolchain-funcs
+eutils multilib portability toolchain-funcs user
 doc jikes
 
 

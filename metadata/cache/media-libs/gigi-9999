@@ -7,7 +7,7 @@ http://gigi.sourceforge.net/
 LGPL-2.1
 GiGi is a small, efficient, and feature-rich C++ GUI for SDL and OpenGL. It is uses frame-based rendering and has fully customizable graphics, making it ideal for use in low- or high-frame rate applications and games.
 amd64 x86
-eutils multilib portability subversion toolchain-funcs
+eutils multilib portability subversion toolchain-funcs user
 ogre ois sdl
 
 

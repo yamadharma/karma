@@ -7,7 +7,7 @@ http://spacenav.sourceforge.net/
 BSD
 A free, compatible alternative for 3Dconnexion's 3D input SDK
 ~amd64 ~x86
-eutils multilib portability subversion toolchain-funcs
+eutils multilib portability subversion toolchain-funcs user
 +X
 
 

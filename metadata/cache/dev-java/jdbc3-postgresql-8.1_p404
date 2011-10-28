@@ -7,7 +7,7 @@ http://jdbc.postgresql.org/
 POSTGRESQL
 JDBC Driver for PostgreSQL
 x86 ~ppc ~sparc amd64
-eutils java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+eutils java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
 doc examples jikes source elibc_FreeBSD
 
 

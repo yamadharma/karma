@@ -7,7 +7,7 @@ http://www.isi.edu/nsnam/nam
 BSD
 Network Simulator GUI for NS
 amd64 ~ppc ~sparc x86
-eutils multilib portability toolchain-funcs
+eutils multilib portability toolchain-funcs user
 debug
 
 

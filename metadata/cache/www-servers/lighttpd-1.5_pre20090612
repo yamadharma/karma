@@ -7,7 +7,7 @@ http://www.lighttpd.net/
 BSD
 Lightweight high-performance web server
 
-autotools depend.php eutils libtool multilib phpconfutils portability subversion toolchain-funcs
+autotools depend.php eutils libtool multilib phpconfutils portability subversion toolchain-funcs user
 bzip2 doc fastcgi gdbm ipv6 ldap lua minimal memcache mysql postgres pcre php rrdtool ssl test webdav xattr
 
 

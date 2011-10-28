@@ -7,7 +7,7 @@ http://www.gnustep.org
 LGPL-2.1
 libart_lgpl back-end component for the GNUstep GUI Library
 ~alpha ~amd64 ~ppc ~sparc ~x86 ~amd64-linux ~x86-linux ~x86-solaris
-eutils flag-o-matic gnustep-base multilib portability toolchain-funcs
+eutils flag-o-matic gnustep-base multilib portability toolchain-funcs user
 opengl xim debug doc
 
 

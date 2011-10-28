@@ -7,7 +7,7 @@ https://launchpad.net/ami
 GPL-3
 A tiling tabbed window manager designed with keyboard users in mind
 amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86
-bzr distutils eutils multilib portability python toolchain-funcs
+bzr distutils eutils multilib portability python toolchain-funcs user
 doc
 
 

@@ -7,7 +7,7 @@ http://www.portaudio.com
 GPL-2
 An open-source cross platform audio API.
 ~amd64 ~hppa ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86
-eutils multilib portability subversion toolchain-funcs
+eutils multilib portability subversion toolchain-funcs user
 oss alsa jack doc nocxx
 
 

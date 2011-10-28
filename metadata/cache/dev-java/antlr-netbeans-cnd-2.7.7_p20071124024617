@@ -7,7 +7,7 @@ http://cnd.netbeans.org/
 CDDL
 Patched version of ANTLR used by Netbeans CND cluster
 amd64 x86
-eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
 elibc_FreeBSD elibc_FreeBSD
 
 

@@ -7,7 +7,7 @@ http://www.dvdstyler.de
 GPL-2
 DVDStyler is a cross-platform DVD authoring System
 ~amd64 ~ppc ~x86
-autotools eutils libtool multilib portability toolchain-funcs wxwidgets
+autotools eutils libtool multilib portability toolchain-funcs user wxwidgets
 debug gnome
 
 >=app-cdr/dvdisaster-0.71.0

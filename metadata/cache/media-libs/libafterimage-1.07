@@ -7,7 +7,7 @@ http://www.afterstep.org/afterimage/index.php
 LGPL-2
 Afterstep's standalone generic image manipulation library
 amd64 ~hppa ~mips ~ppc ~ppc64 ~sparc x86
-autotools eutils libtool multilib portability toolchain-funcs
+autotools eutils libtool multilib portability toolchain-funcs user
 gif jpeg mmx nls png tiff
 
 

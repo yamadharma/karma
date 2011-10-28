@@ -7,7 +7,7 @@ https://openjdk.dev.java.net/
 GPL-2-with-linking-exception sun-prerelease-jdk7
 Open Source JDK
 amd64 x86
-eutils fdo-mime java-pkg-2 java-utils-2 java-vm-2 multilib pax-utils portability prefix toolchain-funcs versionator
+eutils fdo-mime java-pkg-2 java-utils-2 java-vm-2 multilib pax-utils portability prefix toolchain-funcs user versionator
 doc examples fontconfig elibc_FreeBSD
 
 

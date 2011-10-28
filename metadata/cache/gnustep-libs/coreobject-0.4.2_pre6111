@@ -7,7 +7,7 @@ http://www.etoile-project.org
 BSD
 A framework for describing and organizing model objects
 amd64 ~ppc x86
-etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs
+etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs user
 debug doc debug doc
 
 

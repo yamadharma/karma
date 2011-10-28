@@ -7,7 +7,7 @@ http://fedora.redhat.com
 LGPL-2 BSD
 pam_krb5 module, taken from fedora
 x86 amd64
-eutils multilib portability rpm toolchain-funcs
+eutils multilib portability rpm toolchain-funcs user
 
 
 

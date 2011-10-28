@@ -7,7 +7,7 @@ http://www.gentoo.org/proj/en/hardened/selinux/
 GPL-2
 SELinux policy for GnuPG
 ~amd64 ~x86
-eutils multilib portability selinux-policy-2 toolchain-funcs
+eutils multilib portability selinux-policy-2 toolchain-funcs user
 
 
 

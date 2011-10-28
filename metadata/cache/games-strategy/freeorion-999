@@ -7,7 +7,7 @@ http://www.freeorion.org/
 GPL-2
 FreeOrion brings nation building to a galactic scale with its full-featured grand campaign and in-game racial histories, in addition to the classic 4X model of galactic conquest and tactical combat.
 amd64 x86
-eutils multilib portability subversion toolchain-funcs
+eutils multilib portability subversion toolchain-funcs user
 fmod
 
 

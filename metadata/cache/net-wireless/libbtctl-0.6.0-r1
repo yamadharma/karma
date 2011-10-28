@@ -7,7 +7,7 @@ http://usefulinc.com/software/gnome-bluetooth/
 GPL-2
 A GObject wrapper for Bluetooth functionality
 amd64 ppc sparc x86
-autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool mono multilib portability toolchain-funcs versionator
+autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool mono multilib portability toolchain-funcs user versionator
 mono doc debug
 
 

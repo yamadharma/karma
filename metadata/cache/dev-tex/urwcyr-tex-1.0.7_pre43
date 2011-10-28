@@ -7,7 +7,7 @@ ftp://ftp.gnome.ru/fonts/urw/release/urw-fonts-1.0.7pre43.tar.bz2 https://launch
 GPL-3
 URW fonts cyrillized by Valek Filippov
 x86 amd64
-base eutils latex-package multilib portability toolchain-funcs
+base eutils latex-package multilib portability toolchain-funcs user
 
 
 

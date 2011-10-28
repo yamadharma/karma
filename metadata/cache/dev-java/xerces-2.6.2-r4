@@ -7,7 +7,7 @@ http://xml.apache.org/xerces2-j/index.html
 Apache-1.1
 The next generation of high performance, fully compliant XML parsers in the Apache Xerces family
 amd64 ~ppc ppc64 x86
-eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs versionator
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
 elibc_FreeBSD doc examples source elibc_FreeBSD
 
 

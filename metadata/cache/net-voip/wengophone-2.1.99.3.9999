@@ -7,7 +7,7 @@ http://dev.openwengo.com
 GPL-2
 Wengophone NG is a VoIP client featuring the SIP protcol
 amd64 x86
-eutils multilib portability subversion toolchain-funcs
+eutils multilib portability subversion toolchain-funcs user
 alsa debug oss portaudio xv
 
 

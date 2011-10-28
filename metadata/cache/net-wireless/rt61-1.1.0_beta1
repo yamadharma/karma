@@ -7,7 +7,7 @@ http://rt2x00.serialmonkey.com/wiki/index.php/Main_Page
 GPL-2
 Driver for the RaLink RT61 wireless chipsets
 -* ~amd64 ~x86
-eutils linux-info linux-mod multilib portability toolchain-funcs versionator
+eutils linux-info linux-mod multilib portability toolchain-funcs user versionator
 debug kernel_linux
 
 

@@ -7,7 +7,7 @@ http://search.cpan.org/~rhandom/Net-Server-0.93/
 || ( Artistic GPL-2 )
 Extensible, general Perl server engine
 ~alpha amd64 hppa ia64 ~ppc ~ppc64 sparc x86 ~x86-fbsd
-base eutils multilib perl-module portability toolchain-funcs
+base eutils multilib perl-module portability toolchain-funcs user
 
 
 

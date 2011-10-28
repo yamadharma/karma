@@ -7,7 +7,7 @@ http://www.gohome.org/wl/index.html
 GPL-2
 wanderlust is a mail/news reader supporting IMAP4rev1 for emacsen
 x86
-elisp elisp-common eutils multilib portability toolchain-funcs
+elisp elisp-common eutils multilib portability toolchain-funcs user
 
 
 

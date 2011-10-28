@@ -7,7 +7,7 @@ http://aufs.sourceforge.net/
 GPL-2
 An entirely re-designed and re-implemented Unionfs.
 amd64 x86
-eutils linux-info linux-mod multilib portability toolchain-funcs versionator
+eutils linux-info linux-mod multilib portability toolchain-funcs user versionator
 debug fuse hinotify nfs nfsexport robr sec_perm kernel_linux
 
 
