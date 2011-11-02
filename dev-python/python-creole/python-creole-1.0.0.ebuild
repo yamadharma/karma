@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="4"
+
 inherit distutils
 
 DESCRIPTION="Open-source creole2html and html2creole converter in pure Python"
