@@ -1,7 +1,7 @@
 >=app-admin/eselect-python-20091230 dev-lang/python
 >=app-admin/eselect-python-20091230 dev-lang/python
 0
-http://pypi.python.org/packages/source/p/python-creole/python-creole-0.2.6.tar.gz
+http://pypi.python.org/packages/source/p/python-creole/python-creole-1.0.0.tar.gz
 
 http://code.google.com/p/python-creole/
 GPL
@@ -12,9 +12,9 @@ distutils multilib python toolchain-funcs
 
 
 
+4
 
-
-compile install postinst postrm unpack
+compile install postinst postrm prepare setup
 
 
 
