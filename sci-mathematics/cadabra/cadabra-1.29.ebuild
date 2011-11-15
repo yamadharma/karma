@@ -21,12 +21,12 @@ IUSE="doc examples X"
 DEPEND="
 	sci-libs/modglue
 	sci-mathematics/lie
-	dev-libs/gmp[-nocxx]
+	dev-libs/gmp[cxx]
 	dev-libs/libpcre
 	X? (
 		x11-libs/gtk+:2
 		dev-cpp/gtkmm:2.4
-		dev-cpp/pangomm
+		dev-cpp/pangomm:1.4
 		app-text/dvipng )
 	doc? ( || ( app-text/texlive-core dev-tex/pdftex ) )"
 RDEPEND="${DEPEND}
@@ -34,10 +34,8 @@ RDEPEND="${DEPEND}
 	dev-tex/mh"
 
 src_prepare(){
-	# deal with pre-stripping - note that upstream do not provide any makefile.am
-	epatch "${FILESDIR}/${PN}-1.21-no-stripping.patch"
 	# xcadabra doesn't respect LDFLAGS (cadabra does!)
-	epatch "${FILESDIR}/${P}-xcadabra-flags.patch"
+	epatch "${FILESDIR}/${PN}-1.25-xcadabra-flags.patch"
 }
 
 src_configure(){
