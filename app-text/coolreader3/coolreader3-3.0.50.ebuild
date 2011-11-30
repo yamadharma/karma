@@ -30,7 +30,7 @@ RESTRICT="mirror"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="qt4 +wxwidgets hyphen"
+IUSE="+qt4 wxwidgets +hyphen"
 
 DEPEND="sys-libs/zlib
 	media-libs/libpng
@@ -43,6 +43,23 @@ DEPEND="sys-libs/zlib
 	hyphen? ( app-arch/unzip )"
 RDEPEND="${DEPEND}
 	media-fonts/corefonts"
+
+#src_unpack() {
+#    git-2_src_unpack
+#    if 	use hyphen; then
+#	unpack ${HYP_ARCH}
+#    fi
+#}
+
+src_prepare() {
+    # fix for amd64
+#    if use amd64; then
+#	sed -e 's/unsigned int/unsigned long/g' -i "${WORKDIR}/${P}/crengine/src/lvdocview.cpp" \
+#	|| die "patching lvdocview.cpp for amd64 failed"
+#    fi
+
+    epatch "${FILESDIR}/coolreader3-libpng-1.5.patch" || die "failed while patching source for usage libpng-1.5"
+}
 
 src_configure() {
 	CMAKE_USE_DIR="${S}"
