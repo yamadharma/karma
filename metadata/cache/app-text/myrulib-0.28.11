@@ -1,7 +1,7 @@
 x11-libs/wxGTK:2.8[X] >=dev-libs/faxpp-0.4 dev-db/sqlite:3[fts3,icu?] icu? ( dev-libs/icu ) reader? ( media-libs/freetype:2 media-libs/libpng virtual/jpeg sys-libs/zlib ) dev-util/pkgconfig
 x11-libs/wxGTK:2.8[X] >=dev-libs/faxpp-0.4 dev-db/sqlite:3[fts3,icu?] icu? ( dev-libs/icu ) reader? ( media-libs/freetype:2 media-libs/libpng virtual/jpeg sys-libs/zlib )
 0
-http://launchpad.net/myrulib/trunk/0.28.10/+download/myrulib-0.28.10.tar.bz2
+http://launchpad.net/myrulib/trunk/0.28.11/+download/myrulib-0.28.11.tar.bz2
 
 http://www.lintest.ru/wiki/MyRuLib
 GPL-3

@@ -8,7 +8,7 @@ GPL-2
 CoolReader - reader of eBook files (fb2,epub,htm,rtf,txt)
 ~amd64 ~x86
 base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs user
-qt4 +wxwidgets hyphen
++qt4 wxwidgets +hyphen
 
 
 
