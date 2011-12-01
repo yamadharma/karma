@@ -1,0 +1,53 @@
+#!/bin/sh
+
+#Make multilib symlinks
+
+mount_point=$1
+
+cur_dir=`pwd`
+
+if [ "x$mount_point" == "x" ]
+    then
+    echo "Usage: $0 <mount point>"
+    exit 1    
+fi
+
+mv ${mount_point}/lib ${mount_point}/lib64
+mkdir ${mount_point}/lib32
+cd ${mount_point}
+ln -s lib64 lib
+
+mv ${mount_point}/usr/lib ${mount_point}/usr/lib64
+mkdir ${mount_point}/usr/lib32
+cd ${mount_point}/usr
+ln -s lib64 lib
+
+if [ -d "${mount_point}/usr/games" ]
+    then
+    cd ${mount_point}/usr/games
+    mv lib lib64
+    ln -s lib64 lib
+fi
+
+
+if [ -d "${mount_point}/usr/qt/3" ]
+    then
+    cd ${mount_point}/usr/qt/3
+    mv lib lib64
+    ln -s lib64 lib
+fi
+
+if [ -d "${mount_point}/usr/kde" ]
+    then
+    cd ${mount_point}/usr/kde
+    for i in *
+    do
+	cd ${mount_point}/usr/kde/$i
+	mv lib lib64
+	ln -s lib64 lib
+    done
+fi
+
+cat ${cur_dir}/files/ld.so.conf >> ${mount_point}/etc/ld.so.conf
+
+cd ${cur_dir}

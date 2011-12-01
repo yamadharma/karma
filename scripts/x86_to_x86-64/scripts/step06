@@ -1,0 +1,26 @@
+#!/bin/sh
+
+#Remove x86 packages
+
+mount_point=$1
+
+cur_dir=`pwd`
+
+if [ "x$mount_point" == "x" ]
+    then
+    echo "Usage: $0 <mount point>"
+    exit 1    
+fi
+
+chroot ${mount_point} emerge -aC x86-gcc x86-binutils x86-coreutils x86-patch x86-make x86-ncurses x86-bash x86-nano x86-sandbox
+
+if [ -d ${mount_point}/usr/lib/ccache/bin ]
+    then
+    cd ${mount_point}/usr/lib/ccache/bin
+    rm -f i?86-pc-linux-gnu*
+fi
+
+cd ${mount_point}/usr/bin
+rm -f i?86-pc-linux-gnu*
+
+cd ${cur_dir}
