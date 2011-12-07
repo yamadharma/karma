@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 
 inherit eutils
 
@@ -10,7 +10,8 @@ MY_PV_ADD=u1
 
 DESCRIPTION="FreeRapid is a simple Java downloader that supports downloading from Rapidshare and other file-sharing services."
 HOMEPAGE="http://wordrider.net/freerapid"
-SRC_URI="http://wordrider.net/download.php?file=FreeRapid-${PV}${MY_PV_ADD}.zip -> FreeRapid-${PV}${MY_PV_ADD}.zip"
+# SRC_URI="http://wordrider.net/download.php?file=FreeRapid-${PV}${MY_PV_ADD}.zip -> FreeRapid-${PV}${MY_PV_ADD}.zip"
+SRC_URI="FreeRapid-${PV}${MY_PV_ADD}.zip"
 
 LICENSE="GPL"
 KEYWORDS="x86 amd64"
@@ -49,7 +50,7 @@ src_prepare() {
 	zip -m -D "${S}/frd.jar" "logdebug.properties" "logdefault.properties" || die "Unable to reconfigure logger!"
 }
 
-src_compile() {
+src_compile_() {
 	if [ -e "${FILESDIR}/${PV}/MainApp.java" ]; then
 		einfo "Recompiling MainApp.java ..."
 		javac -cp "${S}/frd.jar" -d "${WORKDIR}" "${FILESDIR}/${PV}/MainApp.java" && \
@@ -59,6 +60,10 @@ src_compile() {
 	else
 		ewarn "No MainApp.java to recompile"
 	fi
+}
+
+src_compile() {
+	einfo "nothing to compile"
 }
 
 src_install() {
@@ -71,5 +76,5 @@ src_install() {
 
 	fowners -R root:och ${INSTALLDIR}/plugins
 	fperms 775 ${INSTALLDIR}/plugins
-	fperms 664 ${INSTALLDIR}/plugins/*
+#	fperms 664 ${INSTALLDIR}/plugins/*
 }
