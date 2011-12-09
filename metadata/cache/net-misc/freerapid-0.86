@@ -1,7 +1,7 @@
 >=virtual/jdk-1.6
 >=virtual/jre-1.6 app-misc/realpath
 0
-http://wordrider.net/download.php?file=FreeRapid-0.85u1.zip -> FreeRapid-0.85u1.zip
+FreeRapid-0.86u1.zip
 nomirror
 http://wordrider.net/freerapid
 GPL
@@ -12,7 +12,7 @@ eutils multilib portability toolchain-funcs user
 
 
 
-2
+4
 
 compile install prepare setup
 

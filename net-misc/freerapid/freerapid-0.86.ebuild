@@ -50,7 +50,7 @@ src_prepare() {
 	zip -m -D "${S}/frd.jar" "logdebug.properties" "logdefault.properties" || die "Unable to reconfigure logger!"
 }
 
-src_compile_() {
+src_compile() {
 	if [ -e "${FILESDIR}/${PV}/MainApp.java" ]; then
 		einfo "Recompiling MainApp.java ..."
 		javac -cp "${S}/frd.jar" -d "${WORKDIR}" "${FILESDIR}/${PV}/MainApp.java" && \
@@ -62,7 +62,7 @@ src_compile_() {
 	fi
 }
 
-src_compile() {
+src_compile_() {
 	einfo "nothing to compile"
 }
 
