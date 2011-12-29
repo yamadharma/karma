@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 
 inherit eutils flag-o-matic autotools
 
@@ -11,8 +11,8 @@ MY_PV="${PV/_pre/.pre}"
 
 DESCRIPTION="The IPA authentication server "
 HOMEPAGE="http://freeipa.org"
-SRC_URI="http://freeipa.org/downloads/src/freeipa-${MY_PV}.tar.gz
-	http://ftp.disconnected-by-peer.at/freeipa/1.2.x/freeipa-${MY_PV}.tar.gz"
+SRC_URI="http://freeipa.org/downloads/src/freeipa-${MY_PV}.tar.gz"
+
 
 LICENSE="GPL-2-with-exceptions"
 SLOT="0"
