@@ -73,10 +73,11 @@ src_install() {
 	export _DEFAULT_BIN_DIR=/usr/bin
 	export _DEFAULT_INC_DIR=/usr/include/harbour
 	export _DEFAULT_LIB_DIR=/usr/$(get_libdir)
+	export HB_INSTALL_ETC="${D}"/etc/harbour
 	export HB_BIN_INSTALL="${D}"/usr/bin
 	export HB_INC_INSTALL="${D}"/usr/include/harbour
 	export HB_LIB_INSTALL="${D}"/usr/$(get_libdir)
-	emake install || die
+	make install DESTDIR="${D}"/usr || die
 
 	insinto /etc/harbour
 	doins src/rtl/gtcrs/hb-charmap.def || die
@@ -114,4 +115,6 @@ src_install() {
 #		docinto ct
 #		dodoc doc/en/ct/*.txt || die
 #	fi
+
+	rm -rf ${D}/etc/ld.so.conf.d
 }
