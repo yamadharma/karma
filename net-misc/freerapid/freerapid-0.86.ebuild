@@ -20,8 +20,7 @@ RESTRICT="nomirror"
 IUSE=""
 SLOT="0"
 DEPEND=">=virtual/jdk-1.6"
-RDEPEND=">=virtual/jre-1.6
-	app-misc/realpath"
+RDEPEND=">=virtual/jre-1.6"
 
 S="${WORKDIR}/FreeRapid-${PV%%0}${MY_PV_ADD/U/u}"
 INSTALLDIR="/opt/${PN}"
