@@ -1,0 +1,28 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+DAEMON=twonkymedia
+TVMSUSER=twonkymedia
+TVMSHOME=`grep ^$TVMSUSER: /etc/passwd |cut -d: -f6`
+TVMSROOT=/opt/twonkymedia
+TVMSINI=$TVMSHOME/twonkyvision-mediaserver.ini
+TVMSBIN=$TVMSROOT/$DAEMON
+WEBDAV=$TVMSROOT/twonkywebdav
+LOGFILE=/var/log/twonkymedia/twonkymediaserver.log
+TMSOPTIONS="-ip $TVMSIP -inifile $TVMSINI -logfile $LOGFILE"
+
+start() {
+	ebegin "Starting twonky media server"
+	[ "" == "$TVMSIP" ] && { eend "Please insert your IP address into /etc/conf.d/$DAEMON" ; exit; }
+	start-stop-daemon --start --stdout $LOGFILE --stderr $LOGFILE --user $TVMSUSER --background --exec $TVMSBIN -- $TMSOPTIONS
+	start-stop-daemon --start --stdout $LOGFILE --stderr $LOGFILE --user $TVMSUSER --background --exec $WEBDAV
+	eend $?
+}
+
+stop() {
+	ebegin "Shutting down twonky media server"
+	start-stop-daemon --stop --name $DAEMON
+	start-stop-daemon --stop --name $WEBDAV
+	eend $?
+}
