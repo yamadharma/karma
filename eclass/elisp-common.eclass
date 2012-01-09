@@ -219,19 +219,19 @@ elisp-common_pkg_setup () {
     	    export SITELISPDOC=/usr/share/site-lisp/doc
     	    export SITELISPEMACS=/usr/share/emacs/site-lisp
             export SITEETC=/usr/share/site-lisp/common/etc
-    	    
-    	    export HAS_ECF=1
-	    echo !!!!!!!!!!!!ECF!!!!!!!!!!!!!!
+
+	    export HAS_ECF=1
+
 	    # Sandbox issues
-    	    for i in ${INFOPATH}
+	    for i in ${INFOPATH}
 	    do
 		addpredict ${i}
-    	    done
-	else    
+	    done
+	else
             export SITELISP=/usr/share/emacs/site-lisp
             export SITELISPEMACS=/usr/share/emacs/site-lisp
             export SITEETC=/usr/share/emacs/etc
-	    echo NOOOOOOOOOOOOOO!!!!!!!!!!!!ECF!!!!!!!!!!!!!!
+
 	    export HAS_ECF=
 	fi
 }
