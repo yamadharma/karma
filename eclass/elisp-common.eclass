@@ -198,12 +198,11 @@ elisp-need-emacs() {
 #
 EXPORT_FUNCTIONS pkg_setup
 
-SITELISPEMACS=/usr/share/emacs/site-lisp
 SITELISP=/usr/share/site-lisp/common/packages
 SITELISPROOT=/usr/share/site-lisp
 SITELISPDOC=/usr/share/site-lisp/doc
 SITELISPEMACS=/usr/share/emacs/site-lisp
-    	    
+
 HAS_ECF=1
 
 # Sandbox issues
@@ -222,6 +221,7 @@ elisp-common_pkg_setup () {
             export SITEETC=/usr/share/site-lisp/common/etc
     	    
     	    export HAS_ECF=1
+	    echo !!!!!!!!!!!!ECF!!!!!!!!!!!!!!
 	    # Sandbox issues
     	    for i in ${INFOPATH}
 	    do
@@ -231,7 +231,7 @@ elisp-common_pkg_setup () {
             export SITELISP=/usr/share/emacs/site-lisp
             export SITELISPEMACS=/usr/share/emacs/site-lisp
             export SITEETC=/usr/share/emacs/etc
-
+	    echo NOOOOOOOOOOOOOO!!!!!!!!!!!!ECF!!!!!!!!!!!!!!
 	    export HAS_ECF=
 	fi
 }
@@ -385,70 +385,48 @@ elisp-site-file-install() {
 
 # @FUNCTION: elisp-site-regen
 # @DESCRIPTION:
-# Regenerate the site-gentoo.el file, based on packages' site initialisation
-# files in the /usr/share/emacs/site-lisp/site-gentoo.d/ directory.
+# Regenerate the site-gentoo.el file, based on packages' site
+# initialisation files in the /usr/share/emacs/site-lisp/site-gentoo.d/
+# directory.
 #
-# Note: Before December 2007, site initialisation files were installed in
-# /usr/share/emacs/site-lisp/.  For backwards compatibility, this location is
-# still supported when generating site-gentoo.el.
+# Note: Before December 2007, site initialisation files were installed
+# in /usr/share/emacs/site-lisp/.  For backwards compatibility, this
+# location is still supported when generating site-gentoo.el.
 
 elisp-site-regen() {
-	local i sf line firstrun obsolete
+	local sitelisp=${ROOT}${EPREFIX}${SITELISP}
+	local sf i line null="" page=$'\f'
 	local -a sflist
-	# Work around Paludis borkage: variable T is empty in pkg_postrm
-	local tmpdir=${T:-$(mktemp -d)}
 
-	if [ ! -d "${ROOT}${SITELISP}" ]; then
-		eerror "elisp-site-regen: Directory ${SITELISP} does not exist"
+	if [[ ! -d ${sitelisp} ]]; then
+		eerror "elisp-site-regen: Directory ${sitelisp} does not exist"
 		return 1
 	fi
 
-	[ -e "${ROOT}${SITELISP}"/site-gentoo.el ] || firstrun=t
-
-	if [ "${firstrun}" ] && [ ! -e "${ROOT}${SITELISP}"/site-start.el ]; then
-		einfo "Creating default ${SITELISP}/site-start.el ..."
-		cat <<-EOF >"${tmpdir}"/site-start.el
-		;;; site-start.el
-
-		;;; Commentary:
-		;; This default site startup file is installed by elisp-common.eclass.
-		;; You may replace this file by your own site initialisation, or even
-		;; remove it completely; it will not be recreated.
-
-		;;; Code:
-		;; Load site initialisation for Gentoo-installed packages.
-		(require 'site-gentoo)
-
-		;;; site-start.el ends here
-		EOF
+	if [[ ! -d ${T} ]]; then
+		eerror "elisp-site-regen: Temporary directory ${T} does not exist"
+		return 1
 	fi
 
-	einfon "Regenerating ${SITELISP}/site-gentoo.el ..."
+	ebegin "Regenerating site-gentoo.el for GNU Emacs (${EBUILD_PHASE})"
 
-	# remove any auxiliary file (from previous run)
-	rm -f "${ROOT}${SITELISP}"/00site-gentoo.el
+	# Until January 2009, elisp-common.eclass sometimes created an
+	# auxiliary file for backwards compatibility. Remove any such file.
+	rm -f "${sitelisp}"/00site-gentoo.el
 
-	# set nullglob option, there may be a directory without matching files
-	local old_shopts=$(shopt -p nullglob)
-	shopt -s nullglob
-
-	for sf in "${ROOT}${SITELISP}"/[0-9][0-9]*-gentoo.el \
-		"${ROOT}${SITELISP}"/site-gentoo.d/[0-9][0-9]*.el
+	for sf in "${sitelisp}"/[0-9][0-9]*-gentoo.el \
+		"${sitelisp}"/site-gentoo.d/[0-9][0-9]*.el
 	do
-		[ -r "${sf}" ] || continue
+		[[ -r ${sf} ]] || continue
 		# sort files by their basename. straight insertion sort.
 		for ((i=${#sflist[@]}; i>0; i--)); do
 			[[ ${sf##*/} < ${sflist[i-1]##*/} ]] || break
 			sflist[i]=${sflist[i-1]}
 		done
 		sflist[i]=${sf}
-		# set a flag if there are obsolete files
-		[ "${sf%/*}" = "${ROOT}${SITELISP}" ] && obsolete=t
 	done
 
-	eval "${old_shopts}"
-
-	cat <<-EOF >"${tmpdir}"/site-gentoo.el
+	cat <<-EOF >"${T}"/site-gentoo.el
 	;;; site-gentoo.el --- site initialisation for Gentoo-installed packages
 
 	;;; Commentary:
@@ -458,74 +436,36 @@ elisp-site-regen() {
 	;;; Code:
 	EOF
 	# Use sed instead of cat here, since files may miss a trailing newline.
-	sed '$q' "${sflist[@]}" </dev/null >>"${tmpdir}"/site-gentoo.el
-	cat <<-EOF >>"${tmpdir}"/site-gentoo.el
+	sed '$q' "${sflist[@]}" </dev/null >>"${T}"/site-gentoo.el
+	cat <<-EOF >>"${T}"/site-gentoo.el
 
+	${page}
 	(provide 'site-gentoo)
 
-	;; Local Variables:
+	;; Local ${null}Variables:
 	;; no-byte-compile: t
+	;; buffer-read-only: t
 	;; End:
+
 	;;; site-gentoo.el ends here
 	EOF
 
-	if cmp -s "${ROOT}${SITELISP}"/site-gentoo.el "${tmpdir}"/site-gentoo.el
-	then
+	if cmp -s "${sitelisp}"/site-gentoo.el "${T}"/site-gentoo.el; then
 		# This prevents outputting unnecessary text when there
 		# was actually no change.
 		# A case is a remerge where we have doubled output.
-		echo " no changes."
+		rm -f "${T}"/site-gentoo.el
+		eend
+		einfo "... no changes."
 	else
-		mv "${tmpdir}"/site-gentoo.el "${ROOT}${SITELISP}"/site-gentoo.el
-		[ -f "${tmpdir}"/site-start.el ] \
-			&& [ ! -e "${ROOT}${SITELISP}"/site-start.el ] \
-			&& mv "${tmpdir}"/site-start.el "${ROOT}${SITELISP}"/site-start.el
-		echo
-		einfo "... ${#sflist[@]} site initialisation file(s) included."
+		mv "${T}"/site-gentoo.el "${sitelisp}"/site-gentoo.el
+		eend
+		case ${#sflist[@]} in
+			0) ewarn "... Huh? No site initialisation files found." ;;
+			1) einfo "... ${#sflist[@]} site initialisation file included." ;;
+			*) einfo "... ${#sflist[@]} site initialisation files included." ;;
+		esac
 	fi
-
-	if [ "${firstrun}" ]; then
-		echo
-		while read line; do einfo "${line:- }"; done <<-EOF
-		All site initialisation for Gentoo-installed packages is added to
-		/usr/share/emacs/site-lisp/site-gentoo.el; site-start.el is not
-		managed by Gentoo. You are responsible for all maintenance of
-		site-start.el if there is such a file.
-
-		In order for this site initialisation to be loaded for all users
-		automatically, you can add a line like this:
-
-		(require 'site-gentoo)
-
-		to /usr/share/emacs/site-lisp/site-start.el. Alternatively, that line
-		can be added by individual users to their initialisation files, or,
-		for greater flexibility, users can load individual package-specific
-		initialisation files from /usr/share/emacs/site-lisp/site-gentoo.d/.
-		EOF
-		echo
-	fi
-
-	if [ "${obsolete}" ]; then
-		echo
-		while read line; do ewarn "${line}"; done <<-EOF
-		Site-initialisation files of Emacs packages are now installed in
-		/usr/share/emacs/site-lisp/site-gentoo.d/. We strongly recommend
-		that you use app-admin/emacs-updater to rebuild the installed
-		Emacs packages.
-		EOF
-
-		# Kludge for backwards compatibility: During pkg_postrm, old versions
-		# of this eclass (saved in the VDB) won't find packages' site-init
-		# files in the new location. So we copy them to an auxiliary file
-		# that is visible to old eclass versions.
-		for sf in "${sflist[@]}"; do
-			[ "${sf%/*}" = "${ROOT}${SITELISP}/site-gentoo.d" ] \
-				&& cat "${sf}" >>"${ROOT}${SITELISP}"/00site-gentoo.el
-		done
-	fi
-
-	# cleanup
-	rm -f "${tmpdir}"/site-{gentoo,start}.el
 
 	return 0
 }
