@@ -8,7 +8,7 @@ GPL-2
 Wrapper library for world map components as marble, openstreetmap and googlemap
 ~amd64 ~x86
 base cmake-utils eutils fdo-mime flag-o-matic gnome2-utils kde4-base kde4-functions multilib portability toolchain-funcs user versionator virtualx
-aqua kdeenablefinal
+aqua
 
 
 
