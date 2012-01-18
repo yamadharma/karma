@@ -31,6 +31,9 @@ emerge -vk \
 sys-devel/gcc sys-devel/binutils sys-apps/coreutils
 
 emerge -vk \
+dev-libs/ppl dev-libs/cloog-ppl dev-libs/gmp dev-libs/mpfr dev-libs/elfutils
+
+emerge -vk \
 sys-apps/sandbox
 
 
