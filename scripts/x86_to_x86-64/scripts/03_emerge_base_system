@@ -36,4 +36,8 @@ dev-libs/ppl dev-libs/cloog-ppl dev-libs/gmp dev-libs/mpfr dev-libs/elfutils dev
 emerge -vk \
 sys-apps/sandbox
 
+emerge -vk \
+x11-misc/shared-mime-info
+
+
 
