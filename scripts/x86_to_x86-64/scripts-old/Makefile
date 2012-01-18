@@ -11,7 +11,7 @@ all:
 	touch 01 
 
 02: 01
-	./02_multilib_symlinks $(mount_point)
+	./step02 $(mount_point)
 	touch 02 
 
 03: 02

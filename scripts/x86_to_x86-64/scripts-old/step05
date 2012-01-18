@@ -1,0 +1,23 @@
+#!/bin/sh
+
+#Unpack all premaked files
+
+mount_point=$1
+
+cur_dir=`pwd`
+
+if [ "x$mount_point" == "x" ]
+    then
+    echo "Usage: $0 <mount point>"
+    exit 1    
+fi
+
+#Unpack files
+for i in ${cur_dir}/packages/All/*
+do
+    tar xjpf ${i} -C ${mount_point}
+done
+
+chroot ${mount_point} /sbin/ldconfig
+
+cd ${cur_dir}

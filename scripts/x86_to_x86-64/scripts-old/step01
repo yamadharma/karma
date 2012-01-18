@@ -1,0 +1,72 @@
+#!/bin/sh
+
+# Make needed packages from stage3-amd64-2006.0.tar.bz2
+
+stage_name=$1
+
+if [ "x${stage_name}" == "x" ]
+    then
+    echo "Usage: $0 <stage name>"
+    exit 1
+fi
+
+cur_dir=`pwd`
+
+MY_TMP_DIR=/var/tmp/migration
+
+out_dir=${MY_TMP_DIR}/packages
+
+MY_PKG_DIR=${MY_TMP_DIR}/out_packages
+
+mkdir ${MY_TMP_DIR}
+mkdir ${MY_PKG_DIR}
+
+
+cp ${stage_name} ${MY_TMP_DIR}
+cd ${MY_TMP_DIR}
+tar xjpf ${stage_name}
+
+mkdir ${cur_dir}/packages
+
+export PORTAGE_DB=${MY_TMP_DIR}/var/db/pkg
+export ROOT=${MY_TMP_DIR}
+export PKGDIR=${cur_dir}/packages
+
+for i in gcc binutils glibc coreutils patch make ncurses bash nano sandbox
+do
+    /usr/bin/quickpkg $i
+done
+
+#{{{ fix_symlinks
+
+mkdir ${out_dir}
+
+mkdir -p ${out_dir}/etc/env.d
+cp -p ${MY_TMP_DIR}/etc/env.d/04multilib ${out_dir}/etc/env.d
+
+mkdir -p ${out_dir}/usr/x86_64-pc-linux-gnu
+cp -a ${MY_TMP_DIR}/usr/x86_64-pc-linux-gnu/bin ${out_dir}/usr/x86_64-pc-linux-gnu
+cp -a ${MY_TMP_DIR}/usr/x86_64-pc-linux-gnu/lib ${out_dir}/usr/x86_64-pc-linux-gnu
+
+mkdir -p ${out_dir}/usr/bin
+cd ${MY_TMP_DIR}/usr/bin
+for i in addr2line ar as c++filt gprof ld nm objcopy objdump ranlib ranlib readelf size strings strip \
+    x86_64*  gcc* g++*
+do
+    cp -pdPf ${MY_TMP_DIR}/usr/bin/${i} ${out_dir}/usr/bin
+done
+
+cd ${out_dir}
+tar cjf ${MY_PKG_DIR}/fix_symlinks.tar.bz2 *
+cd ${MY_TMP_DIR}
+rm -rf ${out_dir}
+
+#}}}
+
+mv ${MY_PKG_DIR}/* ${cur_dir}/packages/All
+
+mkdir ${cur_dir}/files
+cp -f ${MY_TMP_DIR}/etc/ld.so.conf ${cur_dir}/files
+
+cd ${cur_dir}
+rm -rf ${MY_TMP_DIR}

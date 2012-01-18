@@ -1,0 +1,35 @@
+#!/bin/sh
+
+#Remove old glibc
+
+mount_point=$1
+
+cur_dir=`pwd`
+
+if [ "x$mount_point" == "x" ]
+    then
+    echo "Usage: $0 <mount point>"
+    exit 1    
+fi
+
+
+db_dir=`find ${mount_point}/var/db/pkg/sys-libs \( -type d -name "x86-glibc-?.*" -print \)`
+
+mkdir -p "${cur_dir}"/temp
+
+# create filelist and a basic tbz2
+gawk '{
+    if ($1 != "dir") {
+	if ($1 == "obj")
+	    NF=NF-2
+	else if ($1 == "sym")
+	    NF=NF-3
+	    print
+	}
+}' "${db_dir}"/CONTENTS | cut -f2- -d" " - | sed -e 's:^/:./:' > "${cur_dir}"/temp/filelist
+tar vjcf "${cur_dir}"/temp/glibc.tar.bz2 -C "${mount_point}" --files-from="${cur_dir}"/temp/filelist --no-recursion --remove-files
+
+rm -rf "${db_dir}"
+rm -rf "${cur_dir}"/temp
+
+cd ${cur_dir}

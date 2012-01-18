@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#emerge base system
+
+mount_point=$1
+
+cur_dir=`pwd`
+
+if [ "x$mount_point" == "x" ]
+    then
+    echo "Usage: $0 <mount point>"
+    exit 1
+fi
+
+emerge -vk \
+sys-apps/baselayout
+
+emerge -uvk \
+app-emulation/emul-linux-x86-baselibs app-emulation/emul-linux-x86-compat \
+app-emulation/emul-linux-x86-qtlibs app-emulation/emul-linux-x86-xlibs \
+app-emulation/emul-linux-x86-gtklibs app-emulation/emul-linux-x86-gtkmmlibs \
+app-emulation/emul-linux-x86-medialibs
+
+emerge -vk \
+sys-libs/glibc sys-libs/zlib
+
+emerge -vk \
+sys-apps/acl sys-apps/attr sys-libs/libcap
+
+emerge -vk \
+sys-devel/gcc sys-devel/binutils sys-apps/coreutils
+
+emerge -vk \
+sys-apps/sandbox
+
+

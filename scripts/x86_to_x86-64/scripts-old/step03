@@ -1,0 +1,52 @@
+#!/bin/sh
+
+#Rename packages
+
+mount_point=$1
+
+cur_dir=`pwd`
+
+if [ "x$mount_point" == "x" ]
+    then
+    echo "Usage: $0 <mount point>"
+    exit 1    
+fi
+
+# Rename old gcc and binutils
+for i in `find ${mount_point}/var/db/pkg \
+		\( -type d -name "gcc-?.*" -print \) ,\
+		\( -type d -name "binutils-?.*" -print \) ,\
+		\( -type d -name "glibc-?.*" -print \) ,\
+		\( -type d -name "coreutils-?.*" -print \) ,\
+		\( -type d -name "patch-?.*" -print \) ,\
+		\( -type d -name "make-?.*" -print \) ,\
+		\( -type d -name "ncurses-?.*" -print \) ,\
+		\( -type d -name "sandbox-?.*" -print \) ,\
+		\( -type d -name "bash-?.*" -print \) ,\
+		\( -type d -name "nano-?.*" -print \)` 
+do
+    cd `dirname ${i}`
+    mv `basename ${i}` x86-`basename ${i}` 
+done
+
+for i in `find ${mount_point}/var/db/pkg \
+		\( -type f -name "gcc-?.*" -print \) ,\
+		\( -type f -name "binutils-?.*" -print \) ,\
+		\( -type f -name "glibc-?.*" -print \) ,\
+		\( -type f -name "coreutils-?.*" -print \) ,\
+		\( -type f -name "patch-?.*" -print \) ,\
+		\( -type f -name "make-?.*" -print \) ,\
+		\( -type f -name "ncurses-?.*" -print \) ,\
+		\( -type f -name "sandbox-?.*" -print \) ,\
+		\( -type f -name "bash-?.*" -print \) ,\
+		\( -type f -name "nano-?.*" -print \)` 
+do
+    cd `dirname ${i}`
+    mv `basename ${i}` x86-`basename ${i}` 
+done
+
+cd ${cur_dir}
+
+#		\( -type d -name "zlib-?.*" -print \) ,\
+#		\( -type f -name "zlib-?.*" -print \) ,\		
+
