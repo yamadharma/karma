@@ -2,6 +2,6 @@
 
 emerge -e -p world |\
     awk 'BEGIN {FS = "]"}; /^\[ebuild/ {print $2}' |\
-    awk '{system("a=\"`cat /var/db/pkg/" $1 "/CBUILD`\"; if [ \"$a\" != x86_64-pc-linux-gnu ]; then emerge =" $1 "; fi")}'
+    awk '{system("a=\"`cat /var/db/pkg/" $1 "/CBUILD`\"; if [ \"$a\" != x86_64-pc-linux-gnu ]; then emerge -vkb \">=" $1 "\"; fi")}'
 
     

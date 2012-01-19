@@ -1,0 +1,17 @@
+#!/bin/sh
+
+#emerge base system
+
+mount_point=$1
+
+cur_dir=`pwd`
+
+if [ "x$mount_point" == "x" ]
+    then
+    echo "Usage: $0 <mount point>"
+    exit 1
+fi
+
+emerge -vek \
+system
+
