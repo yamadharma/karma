@@ -1,0 +1,5 @@
+#!/bin/sh
+
+emerge -e -p world |\
+    awk 'BEGIN {FS = "]"}; /^\[ebuild/ {print $2}' |\
+    awk '{system("a=\"`cat /var/db/pkg/" $1 "/CBUILD`\"; if [ \"$a\" != x86_64-pc-linux-gnu ]; then emerge -vkb " $1 ":`cat /var/db/pkg/" $1 "/SLOT`" "; fi")}'
