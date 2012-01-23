@@ -7,9 +7,14 @@ inherit eutils versionator elisp-common
 MY_PV=$(replace_version_separator 2 '-' ${PV})
 MY_P=${PN}-fsf-${MY_PV}
 
+PATCH_V=-4
+
 DESCRIPTION="A+ is an array-oriented programming language"
 HOMEPAGE="http://www.aplusdev.org"
-SRC_URI="http://www.aplusdev.org/Download/${MY_P}.tar.gz"
+# SRC_URI="http://www.aplusdev.org/Download/${MY_P}.tar.gz"
+SRC_URI="mirror://debian/pool/main/a/aplus-fsf/aplus-fsf_${PV}.orig.tar.gz
+	mirror://debian/pool/main/a/aplus-fsf/aplus-fsf_${PV}${PATCH_V}.diff.gz"
+
 
 LICENSE="GPL"
 SLOT="0"
@@ -19,9 +24,27 @@ IUSE="emacs"
 RDEPEND=""
 DEPEND="${RDEPEND}"
 
-S=${WORKDIR}/${PN}-fsf-$(get_version_component_range 1-2 ${PV})
+S=${WORKDIR}/${PN}-fsf-${PV}
 
 SITEFILE=50aplus-gentoo.el
+
+pkg_setup() {
+
+	# make sure we get no colissions
+	# setup is not the nicest place, but preinst doesn't cut it
+	for i in /usr/share/fonts/truetype/public/aplus /usr/share/fonts/pcf/public/aplus
+	do
+	    [[ -e "${i}/fonts.cache-1" ]] && rm -f "${i}/fonts.cache-1"
+	done	    
+}
+
+
+src_unpack ()
+{
+	unpack ${A}
+	cd ${S}
+	epatch ${WORKDIR}/aplus-fsf_${PV}${PATCH_V}.diff
+}
 
 src_compile () 
 {
@@ -64,15 +87,17 @@ src_install ()
 	cd ${D}/usr/share/fonts/pcf/public/aplus
 	mkfontdir \
 		-e /usr/share/fonts/encodings \
-		-e /usr/share/fonts/encodings/large 
+		-e /usr/share/fonts/encodings/large \
+		${D}/usr/share/fonts/pcf/public/aplus
 	cat Kapl.alias >> fonts.alias
 
 	cd ${D}/usr/share/fonts/truetype/public/aplus
-	mkfontscale
+	mkfontscale ${D}/usr/share/fonts/truetype/public/aplus
 	mkfontdir \
 		-e /usr/share/fonts/encodings \
-		-e /usr/share/fonts/encodings/large 
-	HOME="/root" fc-cache -f .
+		-e /usr/share/fonts/encodings/large \
+		${D}/usr/share/fonts/truetype/public/aplus
+#	HOME="/root" fc-cache -f ${D}/usr/share/fonts/truetype/public/aplus
 
 	cd ${S}	
 	

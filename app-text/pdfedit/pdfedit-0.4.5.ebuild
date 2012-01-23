@@ -15,7 +15,7 @@ LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 
 IUSE="doc"
-RDEPEND="=x11-libs/qt-meta:3
+RDEPEND="x11-libs/qt-meta:3
 	media-libs/t1lib"
 DEPEND="${RDEPEND}
 	dev-libs/boost
