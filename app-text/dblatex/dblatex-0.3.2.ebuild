@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 PYTHON_DEPEND="*"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="3.*"
@@ -28,14 +28,14 @@ DEPEND="
   dev-texlive/texlive-pictures"
 RDEPEND="${DEPEND}"
 
-src_unpack() {
-  unpack ${A}
-  cd "${S}"
-  EPATCH_SOURCE="${FILESDIR}" \
-    EPATCH_SUFFIX="patch" \
-    EPATCH_FORCE="yes" \
-    epatch
-}
+#src_unpack() {
+#  unpack ${A}
+#  cd "${S}"
+#  EPATCH_SOURCE="${FILESDIR}" \
+#    EPATCH_SUFFIX="patch" \
+#    EPATCH_FORCE="yes" \
+#    epatch
+#}
 
 src_install() {
   distutils_src_install || die "distutils install failed"
@@ -43,7 +43,7 @@ src_install() {
   newbin "${S}"/scripts/dblatex docbook2latex || die "newbin failed"
   mv "${D}"/usr/share/man/man1/dblatex.1.gz \
      "${D}"/usr/share/man/man1/docbook2latex.1.gz || die "mv dblatex.1.gz"
-  mv "${D}"/usr/share/doc/${PN}/* "${D}"/usr/share/doc/${PF} || die "mv doc"
+  mv "${D}"/usr/share/doc/${PN}/* "${D}"/usr/share/doc/${PF}
 
   einfo "This package installs its main binary as"
   einfo "  docbook2latex"
