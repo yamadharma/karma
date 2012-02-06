@@ -44,24 +44,24 @@ QA_PRESTRIPPED="
 	/opt/mendeleydesktop/$(get_libdir)/mendeleydesktop/libexec/.*
 	/opt/mendeleydesktop/$(get_libdir)/lib.*so.*"
 
-src_prepare() {
+#src_prepare() {
 	# remove bundled Qt libraries
-	rm -rf lib/mendeleydesktop/plugins \
-		|| die "failed to remove plugin directory"
-	rm lib/mendeleydesktop/libexec/qt.conf \
-		|| die "failed to remove qt configuration file"
-	rm -rf lib/qt || die "failed to remove qt libraries"
+#	rm -rf lib/mendeleydesktop/plugins \
+#		|| die "failed to remove plugin directory"
+#	rm lib/mendeleydesktop/libexec/qt.conf \
+#		|| die "failed to remove qt configuration file"
+#	rm -rf lib/qt || die "failed to remove qt libraries"
 
 	# force use of system Qt libraries
-	sed -i "s:sys\.argv\.count(\"--force-system-qt\") > 0:True:" \
-		bin/mendeleydesktop || die "failed to patch startup script"
+#	sed -i "s:sys\.argv\.count(\"--force-system-qt\") > 0:True:" \
+#		bin/mendeleydesktop || die "failed to patch startup script"
 
 	# fix library paths
-	sed -i \
-		-e "s:lib/mendeleydesktop:$(get_libdir)/mendeleydesktop:g" \
-		-e "s:MENDELEY_BASE_PATH + \"/lib/\":MENDELEY_BASE_PATH + \"/$(get_libdir)/\":g" \
-		bin/mendeleydesktop || die "failed to patch library path"
-}
+#	sed -i \
+#		-e "s:lib/mendeleydesktop:$(get_libdir)/mendeleydesktop:g" \
+#		-e "s:MENDELEY_BASE_PATH + \"/lib/\":MENDELEY_BASE_PATH + \"/$(get_libdir)/\":g" \
+#		bin/mendeleydesktop || die "failed to patch library path"
+#}
 
 src_install() {
 	# install menu
@@ -80,19 +80,22 @@ src_install() {
 	dodoc share/doc/${PN}/Readme.txt
 
 	# install binary
-	into /opt/${PN}
-	dobin bin/*
+#	into /opt/${PN}
+#	dobin bin/*
 
 	# install libraries
-	dolib.so lib/lib*.so*
+#	dolib.so lib/lib*.so*
 
 	# install programs
-	exeinto /opt/mendeleydesktop/$(get_libdir)/mendeleydesktop/libexec
-	doexe lib/mendeleydesktop/libexec/*
+#	exeinto /opt/mendeleydesktop/$(get_libdir)/mendeleydesktop/libexec
+#	doexe lib/mendeleydesktop/libexec/*
 
 	# install shared files
-	insinto /opt/${PN}/share
-	doins -r share/mendeleydesktop
+#	insinto /opt/${PN}/share
+#	doins -r share/mendeleydesktop
+
+	dodir /opt/${PN}
+	cp -r * ${D}/opt/${PN}
 
 	# make symbolic to known location
 	dosym /opt/${PN}/bin/${PN} /opt/bin/${PN}
