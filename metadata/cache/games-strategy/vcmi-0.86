@@ -1,4 +1,4 @@
-media-libs/libsdl media-libs/sdl-mixer media-libs/sdl-image media-libs/sdl-ttf sys-libs/zlib media-video/ffmpeg dev-libs/boost || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 sys-devel/libtool dev-vcs/subversion net-misc/rsync
+media-libs/libsdl media-libs/sdl-mixer media-libs/sdl-image media-libs/sdl-ttf sys-libs/zlib media-video/ffmpeg dev-libs/boost || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.68 sys-devel/libtool dev-vcs/subversion net-misc/rsync
 media-libs/libsdl media-libs/sdl-mixer media-libs/sdl-image media-libs/sdl-ttf sys-libs/zlib media-video/ffmpeg dev-libs/boost
 0
 mirror://sourceforge/vcmi/vcmi_086.zip

@@ -1,4 +1,4 @@
-x11-libs/libX11 x11-libs/libXt >=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 >=dev-tcltk/otcl-1.11 || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 sys-devel/libtool
+x11-libs/libX11 x11-libs/libXt >=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 >=dev-tcltk/otcl-1.11 || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 x11-libs/libX11 x11-libs/libXt >=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 >=dev-tcltk/otcl-1.11
 0
 mirror://sourceforge/otcl-tclcl/tclcl-src-1.19.tar.gz

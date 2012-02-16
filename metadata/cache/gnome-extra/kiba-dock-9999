@@ -1,4 +1,4 @@
->=dev-libs/glib-2.8 dev-libs/libxml2 >=gnome-base/gnome-desktop-2.8 >=x11-libs/gtk+-2.8 >=x11-libs/pango-1.10 akamaru? ( gnome-extra/akamaru ) glitz? ( >=media-libs/glitz-0.4 ) svg? ( gnome-base/librsvg ) || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.61 sys-devel/libtool >=sys-apps/sed-4 dev-vcs/subversion net-misc/rsync
+>=dev-libs/glib-2.8 dev-libs/libxml2 >=gnome-base/gnome-desktop-2.8 >=x11-libs/gtk+-2.8 >=x11-libs/pango-1.10 akamaru? ( gnome-extra/akamaru ) glitz? ( >=media-libs/glitz-0.4 ) svg? ( gnome-base/librsvg ) || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.68 sys-devel/libtool >=sys-apps/sed-4 dev-vcs/subversion net-misc/rsync
 >=dev-libs/glib-2.8 dev-libs/libxml2 >=gnome-base/gnome-desktop-2.8 >=x11-libs/gtk+-2.8 >=x11-libs/pango-1.10 akamaru? ( gnome-extra/akamaru ) glitz? ( >=media-libs/glitz-0.4 ) svg? ( gnome-base/librsvg )
 0
 
