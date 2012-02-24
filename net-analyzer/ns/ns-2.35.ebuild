@@ -22,7 +22,6 @@ RDEPEND="!net-analyzer/nam
 	!sci-visualization/xgraph
 	net-libs/libpcap
 	debug? (	=dev-lang/perl-5*
-				>=sci-visualization/xgraph-12.1
 				>=dev-libs/dmalloc-4.8.2
 				>=dev-tcltk/tcl-debug-2.0 )"
 DEPEND="${RDEPEND}
@@ -41,7 +40,7 @@ DEI80211MRVER=1.1.4
 
 src_prepare() {
 #	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/indep-utils/model-gen/Makefile"
-	has_version '>=sys-devel/gcc-4.5' && epatch ${FILESDIR}/ns-2.34-gcc-4.5.patch
+#	has_version '>=sys-devel/gcc-4.5' && epatch ${FILESDIR}/ns-2.34-gcc-4.5.patch
 
 	sed -i -e "s/^INSTALL_TARGETS = \(.*\)install-doc\(.*\)/INSTALL_TARGETS = \1 \2/g" ${S}/tk${TKVER}/unix/Makefile.in
 	sed -i -e "s/^INSTALL_TARGETS = \(.*\)install-demos\(.*\)/INSTALL_TARGETS = \1 \2/g" ${S}/tk${TKVER}/unix/Makefile.in

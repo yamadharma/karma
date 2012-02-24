@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-tcltk/tclcl/tclcl-1.19.ebuild,v 1.3 2007/05/03 15:19:16 gustavoz Exp $
 
+EAPI=4
+
 WANT_AUTOMAKE="latest"
 WANT_AUTOCONF="latest"
 
@@ -23,13 +25,13 @@ DEPEND="x11-libs/libX11
 	>=dev-lang/tk-8.4.5
 	>=dev-tcltk/otcl-1.11"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	epatch "${FILESDIR}"/${PN}-1.16-http.patch
-	epatch "${FILESDIR}"/${P}-configure-cleanup.patch
-	eautoreconf
-}
+#src_unpack() {
+#	unpack ${A}
+#	cd "${S}"
+#	epatch "${FILESDIR}"/${PN}-1.16-http.patch
+#	epatch "${FILESDIR}"/${P}-configure-cleanup.patch
+#	eautoreconf
+#}
 
 src_compile() {
 	local tclv tkv myconf
