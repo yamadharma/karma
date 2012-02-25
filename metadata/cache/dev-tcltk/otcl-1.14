@@ -1,7 +1,7 @@
 >=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.68 sys-devel/libtool test? ( !prefix? ( x11-base/xorg-server[xvfb] ) x11-apps/xhost )
->=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5
+
 0
-http://www.isi.edu/nsnam/dist/daily/otcl-20090106.tar.gz
+mirror://sourceforge/otcl-tclcl/otcl-src-1.14.tar.gz
 
 http://otcl-tclcl.sourceforge.net/otcl/
 MIT
@@ -12,9 +12,9 @@ test
 
 
 
-2
+4
 
-compile install test unpack
+compile install test
 
 
 
