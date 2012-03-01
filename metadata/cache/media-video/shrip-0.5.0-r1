@@ -7,7 +7,7 @@ http://ogmrip.sourceforge.net/
 GPL-2
 Command line tool for ripping DVDs and encoding to AVI/OGM/MKV/MP4
 ~amd64 ~x86
-autotools eutils libtool multilib portability toolchain-funcs user
+autotools eutils libtool multilib toolchain-funcs user
 debug
 
 

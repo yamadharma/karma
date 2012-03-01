@@ -7,7 +7,7 @@ http://desktop.google.com/linux/
 as-is
 Google Desktop
 -* x86 amd64
-eutils mozextension multilib portability rpm toolchain-funcs user
+eutils mozextension multilib rpm toolchain-funcs user
 firefox thunderbird
 
 

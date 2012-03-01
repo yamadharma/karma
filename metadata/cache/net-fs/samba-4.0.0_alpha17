@@ -7,7 +7,7 @@ http://www.samba.org/
 GPL-3
 Samba Server component
 ~amd64 ~x86
-confutils eutils multilib portability python toolchain-funcs user
+confutils eutils multilib python toolchain-funcs user
 gnutls fulltest
 
 

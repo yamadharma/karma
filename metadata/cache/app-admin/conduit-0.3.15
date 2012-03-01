@@ -7,7 +7,7 @@ http://www.conduit-project.org
 GPL-2
 Synchronization for GNOME
 amd64 x86
-eutils multilib portability python toolchain-funcs user versionator
+eutils multilib python toolchain-funcs user versionator
 eog nautilus totem
 
 

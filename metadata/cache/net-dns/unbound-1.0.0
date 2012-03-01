@@ -7,7 +7,7 @@ http://unbound.net
 BSD
 Validating, recursive, and caching DNS resolver
 amd64 x86
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 debug libevent static threads
 
 

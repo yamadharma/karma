@@ -7,7 +7,7 @@ https://launchpad.net/bzr-dbus
 GPL-2
 Plugin that provides integration between bzr and D-Bus.
 x86 amd64
-bzr distutils eutils multilib portability python toolchain-funcs user
+bzr distutils eutils multilib python toolchain-funcs user
 
 
 

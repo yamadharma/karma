@@ -7,7 +7,7 @@ http://www.etoile-project.org
 BSD
 Melodie is a music player for Etoile
 amd64 ~ppc x86
-eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs user
+eutils flag-o-matic gnustep-2 gnustep-base multilib toolchain-funcs user
 debug doc
 
 

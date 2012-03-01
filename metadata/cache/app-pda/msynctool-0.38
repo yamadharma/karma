@@ -7,7 +7,7 @@ http://www.opensync.org/
 GPL-2
 OpenSync msync tool
 ~amd64 ~ppc ~x86
-base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs user
+base cmake-utils eutils flag-o-matic multilib toolchain-funcs user
 
 
 

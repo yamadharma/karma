@@ -7,7 +7,7 @@ ftp://ftp.dante.de/tex-archive/help/Catalogue/entries/bibtex8bit.html
 GNU
 LaTeX package and fonts used to set the euro (currency) symbol.
 x86 ~ppc
-base eutils latex-package multilib portability toolchain-funcs user
+base eutils latex-package multilib toolchain-funcs user
 
 
 

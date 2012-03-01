@@ -7,7 +7,7 @@ http://etersoft.ru/wine
 LGPL-2.1
 MS Windows compatibility layer (WINE@Etersoft public edition)
 -* amd64 x86 ~x86-fbsd
-autotools eutils flag-o-matic libtool multilib portability toolchain-funcs user
+autotools eutils flag-o-matic libtool multilib toolchain-funcs user
 alsa capi cups custom-cflags dbus fontconfig gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls openal opencl opengl oss +perl png samba scanner ssl test +threads +truetype v4l +win32 +win64 X xcomposite xinerama xml
 
 

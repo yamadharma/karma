@@ -7,7 +7,7 @@ http://www.nongnu.org/libtranslate/gnome-translate
 GPL-2
 GNOME interface for libtranslate
 x86 amd64
-eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability toolchain-funcs user versionator
+eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib toolchain-funcs user versionator
 debug
 
 

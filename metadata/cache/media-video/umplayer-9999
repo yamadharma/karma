@@ -7,7 +7,7 @@ http://www.umplayer.com/
 GPL-3
 UMPlayer is the multimedia player that fills all your needs
 
-base eutils multilib portability qt4-r2 subversion toolchain-funcs user
+base eutils multilib qt4-r2 subversion toolchain-funcs user
 
 
 

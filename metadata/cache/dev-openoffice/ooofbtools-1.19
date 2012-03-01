@@ -7,7 +7,7 @@ http://extensions.services.openoffice.org/project/ooofbtools https://code.google
 GPL-2
 The cross platform OpenOffice.org extension OOo FBTools used to convert to and processing eBooks in FictionBook2 format
 ~alpha amd64 ~hppa ~ia64 ppc ~ppc64 sparc x86 ~x86-fbsd
-eutils multilib openoffice-ext portability toolchain-funcs user
+eutils multilib openoffice-ext toolchain-funcs user
 
 
 

@@ -7,7 +7,7 @@ http://xdxf.sf.net/
 GPL-2
 Based on the subversion eclass
 
-base cmake-utils eutils flag-o-matic multilib portability subversion toolchain-funcs user
+base cmake-utils eutils flag-o-matic multilib subversion toolchain-funcs user
 
 
 

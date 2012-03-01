@@ -7,7 +7,7 @@ http://www.vcdimager.org/
 GPL-2
 GNU VCDimager
 ~alpha amd64 ~arm hppa ~ia64 ~ppc ~ppc64 ~sh ~sparc x86
-eutils libtool multilib portability toolchain-funcs user
+eutils libtool multilib toolchain-funcs user
 xml minimal
 
 

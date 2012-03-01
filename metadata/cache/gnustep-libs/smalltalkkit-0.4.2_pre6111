@@ -7,7 +7,7 @@ http://www.etoile-project.org
 BSD
 Étoilé's Pragmatic Smalltalk, a Smalltalk JIT compiler which generates code binary-compatible with Objective-C
 amd64 ~ppc x86
-etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs user
+etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib subversion toolchain-funcs user
 debug doc
 
 

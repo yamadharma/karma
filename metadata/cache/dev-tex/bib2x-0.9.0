@@ -7,7 +7,7 @@ http://www.xandi.eu/bib2x/
 GPL
 Bib2x - The Tool For Manipulating and Converting BibTeX-Libraries
 ~amd64 ~x86
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 
 
 

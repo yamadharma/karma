@@ -7,7 +7,7 @@ http://xen.org/
 GPL-2
 The Xen virtual machine monitor
 amd64 x86
-eutils flag-o-matic mount-boot multilib portability toolchain-funcs user
+eutils flag-o-matic mount-boot multilib toolchain-funcs user
 debug custom-cflags pae acm flask xsm
 
 ~app-emulation/xen-tools-3.4.2

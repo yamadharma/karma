@@ -7,7 +7,7 @@ http://www.microsoft.com
 EULA
 A remote security scanner for Linux
 x86 amd64
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 
 
 

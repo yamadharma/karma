@@ -7,7 +7,7 @@ http://www.csync.org/
 GPL-2
 File transfer program to keep remote files into sync
 ~alpha amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd x86 ~x86-fbsd
-base cmake-utils eutils flag-o-matic multilib portability toolchain-funcs user
+base cmake-utils eutils flag-o-matic multilib toolchain-funcs user
 samba
 
 

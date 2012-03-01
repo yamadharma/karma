@@ -7,7 +7,7 @@ http://code.google.com/p/google-gears/
 BSD
 Google Gears
 ~amd64 ~x86
-eutils mozextension multilib portability subversion toolchain-funcs user
+eutils mozextension multilib subversion toolchain-funcs user
 debug
 
 

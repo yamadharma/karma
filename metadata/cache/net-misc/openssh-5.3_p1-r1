@@ -7,7 +7,7 @@ http://www.openssh.org/
 as-is
 Port of OpenBSD's free SSH release
 ~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86 ~x86-fbsd
-autotools eutils flag-o-matic libtool multilib pam portability toolchain-funcs user
+autotools eutils flag-o-matic libtool multilib pam toolchain-funcs user
 hpn kerberos ldap libedit pam pkcs11 selinux skey smartcard static tcpd X X509
 
 

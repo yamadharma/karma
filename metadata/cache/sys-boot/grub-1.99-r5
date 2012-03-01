@@ -7,7 +7,7 @@ http://www.gnu.org/software/grub/
 GPL-3
 GNU GRUB boot loader
 ~amd64 ~mips ~x86
-bzr eutils flag-o-matic mount-boot multilib pax-utils portability toolchain-funcs user
+bzr eutils flag-o-matic mount-boot multilib pax-utils toolchain-funcs user
 custom-cflags debug device-mapper efiemu nls static sdl truetype extras grub_platforms_coreboot grub_platforms_efi-32 grub_platforms_efi-64 grub_platforms_emu grub_platforms_ieee1275 grub_platforms_multiboot grub_platforms_pc grub_platforms_qemu grub_platforms_qemu-mips grub_platforms_yeeloong
 
 

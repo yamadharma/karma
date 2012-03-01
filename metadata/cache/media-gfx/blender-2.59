@@ -7,7 +7,7 @@ http://www.blender.org
 || ( GPL-2 BL )
 3D Creation/Animation/Publishing System
 ~amd64 ~amd64-fbsd ~ppc ~ppc64 ~x86 ~x86-fbsd
-eutils flag-o-matic multilib portability python toolchain-funcs user versionator
+eutils flag-o-matic multilib python toolchain-funcs user versionator
 +game-engine player +elbeem +openexr ffmpeg jpeg2k openal openmp +dds debug fftw jack apidoc sndfile lcms tweak-mode sdl sse redcode +zlib iconv contrib collada test linguas_en linguas_ar linguas_bg linguas_ca linguas_cs linguas_de linguas_el linguas_es linguas_fi linguas_fr linguas_hr linguas_it linguas_ja linguas_ko linguas_nl linguas_pl linguas_pt_BR linguas_ro linguas_ru linguas_sr linguas_sv linguas_uk linguas_zh_CN
 
 

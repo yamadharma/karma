@@ -7,7 +7,7 @@ http://www.etoile-project.org
 BSD
 Spacial file manager for the Etoile project
 x86 amd64
-etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib portability subversion toolchain-funcs user
+etoile-svn eutils flag-o-matic gnustep-2 gnustep-base multilib subversion toolchain-funcs user
 debug doc
 
 

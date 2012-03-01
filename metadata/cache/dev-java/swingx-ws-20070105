@@ -7,7 +7,7 @@ http://www.javadesktop.org/swinglabs/build/weekly/week-02-2007-01-07/swingx-ws-H
 LGPL-2
 SwingX-WS contains a set of JavaBeans for interacting with web services
 ~amd64
-eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib toolchain-funcs user versionator
 doc elibc_FreeBSD elibc_FreeBSD
 
 

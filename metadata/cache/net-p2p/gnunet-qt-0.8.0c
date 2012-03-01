@@ -7,7 +7,7 @@ http://gnunet.org/
 GPL-2
 Qt Graphical front end for GNUnet.
 amd64 ~ppc64 x86
-base eutils flag-o-matic multilib portability qt4 toolchain-funcs user versionator
+base eutils flag-o-matic multilib qt4 toolchain-funcs user versionator
 
 
 

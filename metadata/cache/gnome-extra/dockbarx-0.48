@@ -7,7 +7,7 @@ http://launchpad.net/dockbar
 GPL-3
 Gnome taskbar applet with groupping and group manipulation
 ~amd64 ~x86
-distutils eutils gnome2-utils multilib portability python toolchain-funcs user
+distutils eutils gnome2-utils multilib python toolchain-funcs user
 awn
 
 

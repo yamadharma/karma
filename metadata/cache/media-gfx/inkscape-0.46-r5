@@ -7,7 +7,7 @@ http://www.inkscape.org/
 GPL-2 LGPL-2.1
 A SVG based generic vector-drawing program
 amd64 hppa ppc ppc64 sparc x86
-eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability toolchain-funcs user versionator
+eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib toolchain-funcs user versionator
 dia doc gnome inkjar jabber lcms mmx perl postscript spell wmf debug
 
 

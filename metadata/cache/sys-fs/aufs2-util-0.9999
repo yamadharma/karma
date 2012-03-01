@@ -7,7 +7,7 @@ http://aufs.sourceforge.net/
 GPL-2
 Userspace utilities for aufs2
 x86 amd64
-eutils git multilib portability toolchain-funcs user
+eutils git multilib toolchain-funcs user
 
 
 

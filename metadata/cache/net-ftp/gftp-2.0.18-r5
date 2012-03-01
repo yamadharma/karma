@@ -7,7 +7,7 @@ http://www.gftp.org
 GPL-2
 Gnome based FTP Client
 ~alpha amd64 ~ppc ~ppc64 ~sparc x86
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 gtk ssl rcc
 
 

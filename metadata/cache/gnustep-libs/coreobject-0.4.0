@@ -7,7 +7,7 @@ http://www.etoile-project.org
 BSD
 A framework for describing and organizing model objects
 amd64 ~ppc x86
-eutils flag-o-matic gnustep-2 gnustep-base multilib portability toolchain-funcs user
+eutils flag-o-matic gnustep-2 gnustep-base multilib toolchain-funcs user
 debug doc
 
 

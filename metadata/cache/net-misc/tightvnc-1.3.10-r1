@@ -7,7 +7,7 @@ http://www.tightvnc.com/
 GPL-2
 A great client/server software package allowing remote network access to graphical desktops.
 ~alpha ~amd64 ~arm ~hppa ~mips ~ppc ~sh ~sparc ~x86 ~x86-fbsd
-eutils java-pkg-opt-2 java-utils-2 multilib portability toolchain-funcs user versionator
+eutils java-pkg-opt-2 java-utils-2 multilib toolchain-funcs user versionator
 java tcpd server elibc_FreeBSD java
 
 

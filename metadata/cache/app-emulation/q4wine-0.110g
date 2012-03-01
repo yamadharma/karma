@@ -7,7 +7,7 @@ http://sourceforge.net/projects/q4wine/
 GPL-3
 Qt4 GUI for wine
 amd64 x86
-base eutils multilib portability qt4 toolchain-funcs user versionator
+base eutils multilib qt4 toolchain-funcs user versionator
 debug
 
 

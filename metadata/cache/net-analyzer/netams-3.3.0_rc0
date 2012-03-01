@@ -7,7 +7,7 @@ http://www.netams.com/
 BSD
 This system for count and control traffic in your ip net
 x86 amd64
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 
 
 

@@ -7,7 +7,7 @@ http://www.mono-project.com/GtkSharp
 LGPL-2.1
 GtkSharp's gnome-panel module of the gnome-desktop-sharp tarball
 x86 amd64
-autotools base eutils gtk-sharp-module libtool mono multilib portability toolchain-funcs user versionator
+autotools base eutils gtk-sharp-module libtool mono multilib toolchain-funcs user versionator
 debug
 
 

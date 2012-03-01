@@ -7,7 +7,7 @@ http://wejp.k.vu/projects/xmms2/
 GPL-2
 A GTK+ 2.6 based XMMS2 client
 amd64 ~ppc ~sparc x86 ~hppa ~mips ~ppc64 ~alpha ~ia64
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 
 
 

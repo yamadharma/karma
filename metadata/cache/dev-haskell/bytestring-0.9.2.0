@@ -7,7 +7,7 @@ http://www.cse.unsw.edu.au/~dons/fps.html
 BSD
 Fast, packed, strict and lazy byte arrays with a list interface
 
-eutils ghc-package haskell-cabal multilib portability toolchain-funcs user versionator
+eutils ghc-package haskell-cabal multilib toolchain-funcs user versionator
 doc hscolour profile
 
 

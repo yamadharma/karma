@@ -7,7 +7,7 @@ http://www.cs.indiana.edu/elisp/w3/docs.html
 GPL-2
 ull-featured web browser written entirely in Emacs Lisp
 x86 sparc alpha ~ppc ~amd64
-elisp elisp-common eutils multilib portability toolchain-funcs user
+elisp elisp-common eutils multilib toolchain-funcs user
 
 
 

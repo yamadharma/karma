@@ -7,7 +7,7 @@ http://www.gnu.org/software/auctex/
 GPL-3 FDL-1.2
 Extended support for writing, formatting and using (La)TeX, Texinfo and BibTeX files
 amd64 ~ppc ~ppc64 ~sparc x86
-base elisp elisp-common eutils latex-package multilib portability toolchain-funcs user
+base elisp elisp-common eutils latex-package multilib toolchain-funcs user
 preview-latex
 
 

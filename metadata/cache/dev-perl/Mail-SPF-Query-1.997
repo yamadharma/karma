@@ -7,7 +7,7 @@ http://search.cpan.org/~freeside/Mail-SPF-Query-1.997/
 Artistic
 query Sender Policy Framework for an IP,email,helo
 x86 ~ppc
-base eutils multilib perl-module portability toolchain-funcs user
+base eutils multilib perl-module toolchain-funcs user
 
 
 

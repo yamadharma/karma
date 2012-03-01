@@ -7,7 +7,7 @@ http://ieee80211.sourceforge.net
 GPL-2
 Generic IEEE 802.11 network subsystem for Linux
 amd64 ~ppc x86
-eutils linux-info linux-mod multilib portability toolchain-funcs user versionator
+eutils linux-info linux-mod multilib toolchain-funcs user versionator
 debug kernel_linux
 
 

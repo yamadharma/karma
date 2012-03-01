@@ -7,7 +7,7 @@ http://kiba-dock.org
 GPL-2
 Kiba Dock Plugins
 x86 amd64
-autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib portability subversion toolchain-funcs user versionator
+autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib subversion toolchain-funcs user versionator
 glitz svg debug
 
 

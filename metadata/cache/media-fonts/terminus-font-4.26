@@ -7,7 +7,7 @@ http://www.is-vn.bg/hamster/jimmy-en.html
 GPL-2
 A clean fixed font for the console and X11
 x86 ~ppc ~sparc ~alpha ~mips ~hppa ~ia64 amd64 ~ppc64
-eutils font multilib portability toolchain-funcs user
+eutils font multilib toolchain-funcs user
 X gnustep X
 
 

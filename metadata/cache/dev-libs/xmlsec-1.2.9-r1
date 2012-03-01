@@ -7,7 +7,7 @@ http://www.aleksey.com/xmlsec
 MIT
 command line tool for signing, verifying, encrypting and decrypting XML
 x86 amd64 ~sparc ~ppc
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 ssl mozilla gnutls
 
 

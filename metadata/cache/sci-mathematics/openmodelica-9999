@@ -7,7 +7,7 @@ http://www.openmodelica.org
 OSMC-PL
 OPENMODELICA is an open-source Modelica-based modeling and simulation environment intended for industrial and academic usage
 amd64 x86
-autotools eutils flag-o-matic libtool multilib portability subversion toolchain-funcs user
+autotools eutils flag-o-matic libtool multilib subversion toolchain-funcs user
 
 
 

@@ -7,7 +7,7 @@ http://ygrabit.steinberg.de/~ygrabit/public_html
 STEINBERG SOFT-UND HARDWARE GMBH
 Steinberg VST Plug-Ins SDK 2.3 - win32
 amd64 x86
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 doc
 
 

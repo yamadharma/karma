@@ -7,7 +7,7 @@ http://gimpel.ath.cx/~tom/distfiles/
 GPL-2
 emul package for jack audio connection kit
 amd64
-emul-linux-x86 eutils multilib portability toolchain-funcs user versionator
+emul-linux-x86 eutils multilib toolchain-funcs user versionator
 
 
 

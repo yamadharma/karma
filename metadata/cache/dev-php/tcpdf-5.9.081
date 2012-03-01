@@ -7,7 +7,7 @@ http://www.tcpdf.org/
 LGPL-3.0
 TCPDF is a FLOSS PHP class for generating PDF documents.
 amd64 x86
-depend.php eutils multilib php-lib-r1 phpconfutils portability toolchain-funcs user
+depend.php eutils multilib php-lib-r1 phpconfutils toolchain-funcs user
 examples
 
 

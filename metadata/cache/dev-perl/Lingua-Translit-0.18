@@ -7,7 +7,7 @@ http://www.lingua-systems.com/transliteration/Lingua-Translit-Perl-module/
 || ( Artistic GPL-1 GPL-2 GPL-3 )
 Natural language text transliteration
 amd64 ia64 ~ppc sparc x86
-base eutils multilib perl-module portability toolchain-funcs user
+base eutils multilib perl-module toolchain-funcs user
 
 
 

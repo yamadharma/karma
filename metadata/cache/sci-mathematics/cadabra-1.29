@@ -7,7 +7,7 @@ http://cadabra.phi-sci.com
 GPL-2
 Field-theory motivated computer algebra system
 ~x86 ~amd64
-eutils multilib portability toolchain-funcs user
+eutils multilib toolchain-funcs user
 doc examples X
 
 

@@ -7,7 +7,7 @@ http://www.widelands.org/
 GPL-2
 A game similar to Settlers 2
 ~amd64 ~ppc ~x86
-base cmake-utils eutils flag-o-matic games multilib portability toolchain-funcs user versionator
+base cmake-utils eutils flag-o-matic games multilib toolchain-funcs user versionator
 
 
 

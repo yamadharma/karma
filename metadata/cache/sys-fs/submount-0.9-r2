@@ -7,7 +7,7 @@ http://submount.sourceforge.net/
 GPL-2
 Submount is a new attempt to solve the removable media problem for Linux.
 alpha amd64 ppc ~sparc x86
-eutils linux-info linux-mod multilib portability toolchain-funcs user versionator
+eutils linux-info linux-mod multilib toolchain-funcs user versionator
 kernel_linux
 
 

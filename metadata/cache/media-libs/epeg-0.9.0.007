@@ -7,7 +7,7 @@ http://www.enlightenment.org/
 BSD
 wicked fast jpeg thumbnail generator
 ~alpha amd64 ~ppc x86
-enlightenment eutils libtool multilib portability toolchain-funcs user
+enlightenment eutils libtool multilib toolchain-funcs user
 nls doc
 
 

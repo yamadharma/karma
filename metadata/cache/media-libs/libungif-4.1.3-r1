@@ -7,7 +7,7 @@ http://sourceforge.net/projects/libungif/
 MIT
 A library for reading and writing gif images without LZW compression
 ~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~ppc-macos ~sparc x86
-eutils libtool multilib portability toolchain-funcs user
+eutils libtool multilib toolchain-funcs user
 X
 
 

@@ -7,7 +7,7 @@ http://directory.fedoraproject.org/
 LGPL-2.1
 A Java based remote management console used for Managing Fedora Administration / Directory Server.
 amd64 x86
-eutils java-ant-2 java-pkg-2 java-utils-2 multilib portability toolchain-funcs user versionator
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib toolchain-funcs user versionator
 elibc_FreeBSD elibc_FreeBSD
 
 
