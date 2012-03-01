@@ -1,10 +1,10 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-mail/cyrus-imapd/cyrus-imapd-2.4.12.ebuild,v 1.6 2011/10/11 19:04:16 jer Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-mail/cyrus-imapd/cyrus-imapd-2.4.13.ebuild,v 1.1 2012/01/04 08:31:06 eras Exp $
 
 EAPI=4
 
-inherit db-use eutils ssl-cert pam multilib
+inherit db-use eutils ssl-cert pam multilib autotools
 
 MY_P=${P/_/}
 
@@ -14,7 +14,7 @@ SRC_URI="ftp://ftp.cyrusimap.org/cyrus-imapd/${MY_P}.tar.gz"
 
 LICENSE="as-is"
 SLOT="0"
-KEYWORDS="amd64 ~arm hppa ~ia64 ppc ppc64 sparc x86"
+KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="afs berkdb kerberos mysql nntp pam postgres replication sieve snmp sqlite ssl tcpd"
 
 RDEPEND="sys-libs/zlib
@@ -53,6 +53,9 @@ pkg_setup() {
 }
 
 src_prepare() {
+	epatch "${FILESDIR}/${P}-autocreate-0.10-0.diff"
+	epatch "${FILESDIR}/${P}-autosieve-0.6.0.diff"
+
 	# Fix master(8)->cyrusmaster(8) manpage.
 	for i in `grep -rl -e 'master\.8' -e 'master(8)' "${S}"` ; do
 		sed -i -e 's:master\.8:cyrusmaster.8:g' \
@@ -79,10 +82,7 @@ src_prepare() {
 	sed -i -e '/afs\/libcom_err.a/s:libcom_err.a:libafscom_err.a:' \
 		configure{,.in} || die
 
-	# email.uoa.gr patches
-	epatch "${FILESDIR}/${PN}-2.4.8-autocreate-0.10-0.patch"
-	epatch "${FILESDIR}/${PN}-2.4.8-autosieve-0.6.0.patch"
-
+	eautoreconf
 }
 
 src_configure() {
