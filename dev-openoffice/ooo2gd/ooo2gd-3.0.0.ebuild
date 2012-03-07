@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 
 inherit openoffice-ext
 
@@ -12,6 +12,8 @@ HOMEPAGE="http://code.google.com/p/ooo2gd/
 	http://extensions.services.openoffice.org/project/ooo2gd"
 SRC_URI="http://ooo2gd.googlecode.com/files/${P/-/_}.oxt"
 SLOT="0"
+RESTRICT="nomirror"
+
 
 KEYWORDS="~alpha amd64 ~hppa ~ia64 ppc ~ppc64 sparc x86 ~x86-fbsd"
 
