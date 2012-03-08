@@ -1,8 +1,8 @@
 virtual/ooo
 virtual/ooo
 0
-http://ooo2gd.googlecode.com/files/gdocs_2.3.1.oxt
-
+http://ooo2gd.googlecode.com/files/ooo2gd_3.0.0.oxt
+nomirror
 http://code.google.com/p/ooo2gd/ http://extensions.services.openoffice.org/project/ooo2gd
 LGPL-3
 OpenOffice.org2GoogleDocs - export & import to Google Docs, Zoho, WebDAV
@@ -12,7 +12,7 @@ eutils multilib openoffice-ext toolchain-funcs user
 
 
 
-2
+4
 
 install postinst prerm setup unpack
 
