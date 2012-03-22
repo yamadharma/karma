@@ -1,5 +1,5 @@
->=app-crypt/mit-krb5-1.1.2 >=sys-libs/e2fsprogs-libs-1.41.3-r1 >=app-admin/eselect-python-20091230 dev-lang/python
->=app-crypt/mit-krb5-1.1.2 >=sys-libs/e2fsprogs-libs-1.41.3-r1 >=app-admin/eselect-python-20091230 dev-lang/python
+>=app-crypt/mit-krb5-1.1.2 >=sys-libs/e2fsprogs-libs-1.41.3-r1 dev-lang/python
+>=app-crypt/mit-krb5-1.1.2 >=sys-libs/e2fsprogs-libs-1.41.3-r1 dev-lang/python
 0
 https://fedorahosted.org/python-krbV/attachment/wiki/Releases/python-krbV-1.0.90.tar.bz2?format=raw -> python-krbV-1.0.90.tar.bz2
 

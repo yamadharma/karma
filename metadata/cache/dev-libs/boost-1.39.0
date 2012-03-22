@@ -1,5 +1,5 @@
-icu? ( >=dev-libs/icu-3.3 ) expat? ( dev-libs/expat ) mpi? ( sys-cluster/openmpi ) sys-libs/zlib python? ( virtual/python ) !!<=dev-libs/boost-1.35.0-r2 >=app-admin/eselect-boost-0.3 dev-util/boost-build:1.39 >=app-admin/eselect-python-20091230
-icu? ( >=dev-libs/icu-3.3 ) expat? ( dev-libs/expat ) mpi? ( sys-cluster/openmpi ) sys-libs/zlib python? ( virtual/python ) !!<=dev-libs/boost-1.35.0-r2 >=app-admin/eselect-boost-0.3 >=app-admin/eselect-python-20091230
+icu? ( >=dev-libs/icu-3.3 ) expat? ( dev-libs/expat ) mpi? ( sys-cluster/openmpi ) sys-libs/zlib python? ( virtual/python ) !!<=dev-libs/boost-1.35.0-r2 >=app-admin/eselect-boost-0.3 dev-util/boost-build:1.39
+icu? ( >=dev-libs/icu-3.3 ) expat? ( dev-libs/expat ) mpi? ( sys-cluster/openmpi ) sys-libs/zlib python? ( virtual/python ) !!<=dev-libs/boost-1.35.0-r2 >=app-admin/eselect-boost-0.3
 1.39
 mirror://sourceforge/boost/boost_1_39_0.tar.bz2 mirror://gentoo/boost-patches-1.39.0-1.tbz2 http://www.gentoo.org/~dev-zero/distfiles/boost-patches-1.39.0-1.tbz2
 

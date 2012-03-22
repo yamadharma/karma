@@ -1,5 +1,5 @@
->=app-admin/eselect-python-20091230 dev-lang/python >=dev-vcs/bzr-2.0.1
->=dev-util/bzr-0.18_rc1 >=app-admin/eselect-python-20091230 dev-lang/python
+dev-lang/python >=dev-vcs/bzr-2.0.1
+>=dev-util/bzr-0.18_rc1 dev-lang/python
 0
 
 

@@ -1,5 +1,5 @@
-dev-python/Babel dev-python/PyQt4 media-gfx/imagemagick dev-python/pythonmagick >=app-admin/eselect-python-20091230 dev-lang/python dev-vcs/mercurial
-dev-python/Babel dev-python/PyQt4 media-gfx/imagemagick dev-python/pythonmagick >=app-admin/eselect-python-20091230 dev-lang/python
+dev-python/Babel dev-python/PyQt4 media-gfx/imagemagick dev-python/pythonmagick dev-lang/python dev-vcs/mercurial
+dev-python/Babel dev-python/PyQt4 media-gfx/imagemagick dev-python/pythonmagick dev-lang/python
 0
 
 

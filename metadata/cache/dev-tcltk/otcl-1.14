@@ -1,4 +1,4 @@
->=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.68 sys-devel/libtool test? ( !prefix? ( x11-base/xorg-server[xvfb] ) x11-apps/xhost )
+>=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 || ( >=sys-devel/automake-1.11.1:1.11 ) >=sys-devel/autoconf-2.68 sys-devel/libtool test? ( !prefix? ( x11-base/xorg-server[xvfb] ) x11-apps/xhost )
 
 0
 mirror://sourceforge/otcl-tclcl/otcl-src-1.14.tar.gz

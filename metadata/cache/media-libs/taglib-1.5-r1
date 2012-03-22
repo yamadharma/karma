@@ -1,4 +1,4 @@
-dev-util/pkgconfig rcc? ( app-i18n/librcc ) || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+dev-util/pkgconfig rcc? ( app-i18n/librcc ) || ( >=sys-devel/automake-1.11.1 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 
 0
 http://developer.kde.org/~wheeler/files/src/taglib-1.5.tar.gz

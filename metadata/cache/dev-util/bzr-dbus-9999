@@ -1,5 +1,5 @@
->=dev-vcs/bzr-2.0.1 >=app-admin/eselect-python-20091230 dev-lang/python
-dev-python/dbus-python dev-python/pygobject >=app-admin/eselect-python-20091230 dev-lang/python
+>=dev-vcs/bzr-2.0.1 dev-lang/python
+dev-python/dbus-python dev-python/pygobject dev-lang/python
 0
 
 

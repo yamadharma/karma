@@ -1,5 +1,5 @@
->=x11-libs/fltk-1.3:1[opengl] >=dev-lang/swig-2.0.1 >=app-admin/eselect-python-20091230 =dev-lang/python-2*
->=x11-libs/fltk-1.3:1[opengl] >=app-admin/eselect-python-20091230 =dev-lang/python-2*
+>=x11-libs/fltk-1.3:1[opengl] >=dev-lang/swig-2.0.1 =dev-lang/python-2*
+>=x11-libs/fltk-1.3:1[opengl] =dev-lang/python-2*
 0
 mirror://sourceforge/pyfltk/pyFltk-1.3.0rc1.tar.gz doc? ( http://junk.mikeasoft.com/pyfltkmanual.pdf )
 

@@ -6,7 +6,7 @@ mirror://sourceforge/xindy/xindy-kernel-3.0.tar.gz mirror://sourceforge/xindy/xi
 http://www.xindy.org/
 GPL-2
 A Flexible Indexing System
-alpha amd64 ia64 ppc x86
+
 multilib toolchain-funcs
 doc
 

@@ -1,5 +1,5 @@
->=app-admin/eselect-python-20091230 =dev-lang/python-2*
-dev-python/python-djvulibre >=app-admin/eselect-python-20091230 =dev-lang/python-2*
+=dev-lang/python-2*
+dev-python/python-djvulibre =dev-lang/python-2*
 0
 http://pypi.python.org/packages/source/d/djvusmooth/djvusmooth-0.2.10.tar.gz
 

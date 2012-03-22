@@ -1,4 +1,4 @@
->=dev-libs/glib-2.8 || ( =sys-devel/automake-1.11* ) >=sys-devel/autoconf-2.68 sys-devel/libtool >=sys-apps/sed-4 dev-vcs/subversion net-misc/rsync
+>=dev-libs/glib-2.8 || ( >=sys-devel/automake-1.11.1 ) >=sys-devel/autoconf-2.68 sys-devel/libtool >=sys-apps/sed-4 dev-vcs/subversion net-misc/rsync
 >=dev-libs/glib-2.8
 0
 

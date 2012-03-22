@@ -1,5 +1,5 @@
->=dev-libs/libxml2-2.6.12 >=dev-libs/libxslt-1.1.8 >=dev-lang/python-2 sys-devel/gettext >=dev-util/intltool-0.28 >=dev-util/pkgconfig-0.9 >=app-admin/eselect-python-20091230 >=sys-apps/sed-4
->=dev-libs/libxml2-2.6.12 >=dev-libs/libxslt-1.1.8 >=dev-lang/python-2 >=app-admin/eselect-python-20091230
+>=dev-libs/libxml2-2.6.12 >=dev-libs/libxslt-1.1.8 >=dev-lang/python-2 sys-devel/gettext >=dev-util/intltool-0.28 >=dev-util/pkgconfig-0.9 >=sys-apps/sed-4
+>=dev-libs/libxml2-2.6.12 >=dev-libs/libxslt-1.1.8 >=dev-lang/python-2
 0
 mirror://gnome/sources/gnome-doc-utils/0.6/gnome-doc-utils-0.6.0.tar.bz2
 

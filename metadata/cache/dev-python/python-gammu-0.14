@@ -1,5 +1,5 @@
-dev-util/pkgconfig >=app-mobilephone/gammu-1.07 >=app-admin/eselect-python-20091230 dev-lang/python
->=app-mobilephone/gammu-1.07 >=app-admin/eselect-python-20091230 dev-lang/python
+dev-util/pkgconfig >=app-mobilephone/gammu-1.07 dev-lang/python
+>=app-mobilephone/gammu-1.07 dev-lang/python
 0
 ftp://dl.cihar.com/python-gammu/v0/python-gammu-0.14.tar.bz2
 

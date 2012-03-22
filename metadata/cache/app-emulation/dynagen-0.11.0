@@ -1,5 +1,5 @@
->=app-admin/eselect-python-20091230 dev-lang/python
-app-emulation/dynamips >=app-admin/eselect-python-20091230 dev-lang/python
+dev-lang/python
+app-emulation/dynamips dev-lang/python
 0
 mirror://sourceforge/dyna-gen/dynagen-0.11.0.tar.gz
 
