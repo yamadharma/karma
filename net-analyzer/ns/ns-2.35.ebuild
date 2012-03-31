@@ -32,20 +32,25 @@ DEPEND="${RDEPEND}
 S=${WORKDIR}/${MY_P}
 S_NS=${S}/${PN}-${PV%%_rc*}
 
-TCLVER=8.5.8
-TKVER=8.5.8
+
+TCLVER=8.5.10
+TKVER=8.5.10
+OTCLVER=1.14
+TCLCLVER=1.20
+NSVER=2.35
 NAMVER=1.15
 XGRAPHVER=12.2
+ZLIBVER=1.2.3
 DEI80211MRVER=1.1.4
 
-src_prepare() {
+#src_prepare() {
 #	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/indep-utils/model-gen/Makefile"
 #	has_version '>=sys-devel/gcc-4.5' && epatch ${FILESDIR}/ns-2.34-gcc-4.5.patch
 
-	sed -i -e "s/^INSTALL_TARGETS = \(.*\)install-doc\(.*\)/INSTALL_TARGETS = \1 \2/g" ${S}/tk${TKVER}/unix/Makefile.in
-	sed -i -e "s/^INSTALL_TARGETS = \(.*\)install-demos\(.*\)/INSTALL_TARGETS = \1 \2/g" ${S}/tk${TKVER}/unix/Makefile.in
-	sed -i -e "s/^INSTALL_TARGETS = \(.*\)install-doc\(.*\)/INSTALL_TARGETS = \1 \2/g" ${S}/tk${TCLVER}/unix/Makefile.in
-}
+#	sed -i -e "s/^INSTALL_TARGETS = \(.*\)install-doc\(.*\)/INSTALL_TARGETS = \1 \2/g" ${S}/tk${TKVER}/unix/Makefile.in
+#	sed -i -e "s/^INSTALL_TARGETS = \(.*\)install-demos\(.*\)/INSTALL_TARGETS = \1 \2/g" ${S}/tk${TKVER}/unix/Makefile.in
+#	sed -i -e "s/^INSTALL_TARGETS = \(.*\)install-doc\(.*\)/INSTALL_TARGETS = \1 \2/g" ${S}/tk${TCLVER}/unix/Makefile.in
+#}
 
 
 src_compile() {
@@ -83,6 +88,77 @@ src_compile() {
 }
 
 src_install() {
+#	cd ${S_NS}
+#	dodir /usr/bin /usr/share/man/man1 /usr/share/doc/${PF} /usr/share/ns
+#	make DESTDIR="${D}" MANDEST=/usr/share/man BINDEST=/usr/bin install \
+#		|| die "make install failed"
+#	dobin nse
+
+#	dodoc BASE-VERSION COPYRIGHTS FILES HOWTO-CONTRIBUTE README VERSION
+#	dohtml CHANGES.html TODO.html
+
+#	cd "${S_NS}"
+#	insinto /usr/share/ns
+#	doins -r tcl
+
+#	cd "${S_NS}/indep-utils/dosdbell"
+#	dobin dosdbell dosdbellasim
+#	newdoc README README.dosdbell
+#	cd "${S_NS}/indep-utils/dosreduce"
+#	dobin dosreduce
+#	newdoc README README.dosreduce
+#	cd "${S_NS}/indep-utils/cmu-scen-gen"
+#	dobin cbrgen.tcl
+#	newdoc README README.cbrgen
+#	cd "${S_NS}/indep-utils/propagation"
+#	dobin threshold
+#	cd "${S_NS}/indep-utils/model-gen"
+#	dobin http_connect http_active
+
+#	cd ${S}/nam-${NAMVER}
+#	make DESTDIR="${D}" MANDEST=/usr/share/man BINDEST=/usr/bin install || die "make install failed"
+
+#	cd ${S}/xgraph-${XGRAPHVER}
+#	make DESTDIR="${D}" MANDEST=/usr/share/man BINDEST=/usr/bin prefix=/usr install || die "make install failed"
+
+#	cd ${S}/dei80211mr-${DEI80211MRVER}
+#	make DESTDIR="${D}" MANDEST=/usr/share/man  install || die "make install failed"
+	dodir /usr/bin
+	dodir /usr/$(get_libdir)/ns2
+	cp -RL ${S}/bin ${D}/usr/$(get_libdir)/ns2
+	for i in edriver  itm  nam  ns  sgb2alt  sgb2comns  sgb2hierns  sgb2ns xgraph
+	do
+		dosym /usr/$(get_libdir)/ns2/bin/$i /usr/bin/$i
+	done
+
+	cd ${S}/tcl$TCLVER/unix
+	make install DESTDIR=${D}/usr/$(get_libdir)/ns2
+	cd ${S}/tk$TKVER/unix
+	make install DESTDIR=${D}/usr/$(get_libdir)/ns2
+	cd ${S}
+
+
+#	dodir /usr/share
+#	mv ${S}/lib/libdei* ${D}/usr/$(get_libdir)
+#	mv ${S}/share/aclocal ${D}/usr/share
+
+#	cd ${S}/sgb
+#	make SGBDIR=${D}/usr/$(get_libdir)/sgb CWEBINPUTS=${D}/usr/$(get_libdir)/cweb LIBDIR=${D}/usr/$(get_libdir) || die "make install failed"
+
+#	dobin ${S}/gt-itm/bin/*
+#	dodoc ${S}/gt-itm/docs/*
+
+	if use doc; then
+		cd "${S_NS}/doc"
+		docinto doc
+		dodoc everything.dvi everything.ps.gz everything.html everything.pdf
+		docinto model-gen
+		cd "${S_NS}/indep-utils/model-gen"
+		dodoc *
+	fi
+}
+
+src_install_() {
 	cd ${S_NS}
 	dodir /usr/bin /usr/share/man/man1 /usr/share/doc/${PF} /usr/share/ns
 	make DESTDIR="${D}" MANDEST=/usr/share/man BINDEST=/usr/bin install \

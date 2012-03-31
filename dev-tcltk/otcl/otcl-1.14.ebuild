@@ -22,18 +22,17 @@ DEPEND=">=dev-lang/tcl-8.4.5
 # the package is not safe :-(
 MAKEOPTS="${MAKEOPTS} -j1"
 
-#src_prepare() {
-#	epatch "${FILESDIR}"/${PN}-1.11-badfreefix.patch
-#	epatch "${FILESDIR}"/${PN}-1.13-configure-cleanup.patch
-#
-#        eautoreconf
-#}
+src_prepare() {
+	epatch "${FILESDIR}"/${PN}-1.14-configure-cleanup.patch
+
+        eautoreconf
+}
 
 src_compile() {
         local tclv tkv myconf
         tclv=$(grep TCL_VER /usr/include/tcl.h | sed 's/^.*"\(.*\)".*/\1/')
         tkv=$(grep TK_VER /usr/include/tk.h | sed 's/^.*"\(.*\)".*/\1/')
-        myconf="--with-tcl-ver=${tclv} --with-tk-ver=${tkv} --with-tcl=/usr/$(get_libdir)"
+        #myconf="--with-tcl-ver=${tclv} --with-tk-ver=${tkv} --with-tcl=/usr/$(get_libdir)"
         CFLAGS="${CFLAGS} -I/usr/$(get_libdir)/tcl${tkv}/include/generic -I/usr/$(get_libdir)/tcl8.5/include/unix -DHAVE_UNISTD_H"
 
         echo myconf $myconf

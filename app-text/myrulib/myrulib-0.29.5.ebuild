@@ -18,8 +18,10 @@ IUSE="+icu reader syslog"
 
 RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}[X]
+	dev-libs/libxml2
 	>=dev-libs/faxpp-0.4
 	dev-db/sqlite:3[fts3,icu?]
+	app-arch/bzip2
 	icu? ( dev-libs/icu )
 	reader? (
 		media-libs/freetype:2
@@ -28,6 +30,7 @@ RDEPEND="
 		sys-libs/zlib
 	)
 "
+
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 "
@@ -35,6 +38,7 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	# for sure
 	rm -rf \
+		3rdparty/bzip2 \
 		3rdparty/faxpp \
 	|| die
 #		3rdparty/sqlite3 \

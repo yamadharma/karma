@@ -14,7 +14,7 @@ test
 
 4
 
-compile install test
+compile install prepare test
 
 
 
