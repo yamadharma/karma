@@ -1,4 +1,4 @@
-x11-libs/libX11 x11-libs/libXt >=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 >=dev-tcltk/otcl-1.11 || ( >=sys-devel/automake-1.11.1:1.11 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+x11-libs/libX11 x11-libs/libXt >=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 >=dev-tcltk/otcl-1.11 >=dev-util/cmake-2.8.4 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 
 0
 mirror://sourceforge/otcl-tclcl/tclcl-src-1.20.tar.gz
@@ -7,14 +7,14 @@ http://otcl-tclcl.sourceforge.net/tclcl/
 as-is
 Tcl/C++ interface library
 ~amd64 ~ppc ~sparc ~x86
-autotools eutils libtool multilib toolchain-funcs user
+base cmake-utils eutils flag-o-matic multilib toolchain-funcs user
 
 
 
 
 4
 
-compile install
+compile configure install prepare test unpack
 
 
 

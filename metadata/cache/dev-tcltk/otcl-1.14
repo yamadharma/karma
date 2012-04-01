@@ -1,5 +1,5 @@
->=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 || ( >=sys-devel/automake-1.11.1:1.11 ) >=sys-devel/autoconf-2.68 sys-devel/libtool test? ( !prefix? ( x11-base/xorg-server[xvfb] ) x11-apps/xhost )
-
+>=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5 >=dev-util/cmake-2.8.4 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=dev-lang/tcl-8.4.5 >=dev-lang/tk-8.4.5
 0
 mirror://sourceforge/otcl-tclcl/otcl-src-1.14.tar.gz
 
@@ -7,14 +7,14 @@ http://otcl-tclcl.sourceforge.net/otcl/
 MIT
 MIT Object extension to Tcl
 amd64 ~ppc ~sparc x86
-autotools eutils libtool multilib toolchain-funcs user virtualx
-test
+base cmake-utils eutils flag-o-matic multilib toolchain-funcs user
 
 
 
-4
 
-compile install prepare test
+3
+
+compile configure install prepare test unpack
 
 
 

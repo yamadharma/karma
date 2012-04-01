@@ -1,0 +1,10 @@
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+#cmakedefine PACKAGE_BUGREPORT "${PACKAGE_BUGREPORT}"
+#cmakedefine PACKAGE_NAME "${PACKAGE_NAME}"
+#cmakedefine PACKAGE_STRING "${PACKAGE_STRING}"
+#cmakedefine PACKAGE_TARNAME "${PACKAGE_TARNAME}"
+#cmakedefine PACKAGE_VERSION "${PACKAGE_VERSION}"
+#cmakedefine HAVE_SNPRINTF 1
+#cmakedefine STDC_HEADERS 1
+#endif //_CONFIG_H_

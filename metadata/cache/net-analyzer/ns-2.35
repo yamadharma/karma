@@ -14,7 +14,7 @@ doc debug
 
 3
 
-compile install prepare test
+compile install test
 
 
 

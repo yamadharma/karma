@@ -7,7 +7,8 @@ EAPI=4
 WANT_AUTOMAKE="latest"
 WANT_AUTOCONF="latest"
 
-inherit eutils autotools
+#inherit eutils autotools
+inherit cmake-utils multilib flag-o-matic
 
 MY_P="${PN}-src-${PV}"
 DESCRIPTION="Tcl/C++ interface library"
@@ -25,6 +26,25 @@ DEPEND="x11-libs/libX11
 	>=dev-lang/tk-8.4.5
 	>=dev-tcltk/otcl-1.11"
 
+
+src_prepare() {
+	cp ${FILESDIR}/CMakeLists.txt .
+	cp ${FILESDIR}/tclcl.pc.cmake .
+	cp ${FILESDIR}/config-tclcl.h.cmake .
+}
+
+src_configure() {
+#	append-flags -DHAVE_UNISTD_H
+
+	local mycmakeargs=(
+		-DLIB_INSTALL_DIR=/usr/$(get_libdir) 
+		-DINCLUDE_INSTALL_DIR=/usr/include
+	)
+	cmake-utils_src_configure
+#	cmake ${S}
+}
+
+
 #src_unpack() {
 #	unpack ${A}
 #	cd "${S}"
@@ -33,7 +53,7 @@ DEPEND="x11-libs/libX11
 #	eautoreconf
 #}
 
-src_compile() {
+src_compile_() {
 	local tclv tkv myconf
 
 	tclv=$(grep TCL_VER /usr/include/tcl.h | sed 's/^.*"\(.*\)".*/\1/')
@@ -44,7 +64,7 @@ src_compile() {
 	emake || die "emake failed"
 }
 
-src_install() {
+src_install_() {
 	dolib.a libtclcl.a
 	dobin tcl2c++
 	insinto /usr/include
