@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils toolchain-funcs flag-o-matic
+inherit eutils toolchain-funcs flag-o-matic autotools
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.isi.edu/nsnam/ns/"
@@ -12,14 +12,14 @@ SRC_URI="mirror://sourceforge/nsnam/${PN}-src-${PV}.tar.gz"
 
 LICENSE="BSD as-is"
 SLOT="0"
-#KEYWORDS="~ppc ~sparc x86 amd64"
+KEYWORDS="~ppc ~sparc x86 amd64"
 IUSE="doc debug"
 
 RDEPEND=">=dev-lang/tcl-8.4.5
 		>=dev-lang/tk-8.4.5
 		>=dev-tcltk/otcl-1.11
 		>=dev-tcltk/tclcl-1.17
-		virtual/libpcap
+		net-libs/libpcap
 		debug? (	=dev-lang/perl-5*
 					>=sci-visualization/xgraph-12.1
 					>=dev-libs/dmalloc-4.8.2
@@ -31,6 +31,9 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/indep-utils/model-gen/Makefile"
+
+	epatch ${FILESDIR}/tcltk-conf.patch
+	eautoreconf	
 }
 
 src_compile() {
@@ -68,8 +71,8 @@ src_compile() {
 	emake DFLAGS="${CFLAGS}" || die
 	cd "${S}/indep-utils/dosreduce"
 	${CC} ${CFLAGS} dosreduce.c -o dosreduce
-	cd "${S}/indep-utils/propagation"
-	${CXX} ${CXXFLAGS} threshold.cc -o threshold
+#	cd "${S}/indep-utils/propagation"
+#	${CXX} ${CXXFLAGS} threshold.cc -o threshold
 	cd "${S}/indep-utils/model-gen"
 	emake CFLAGS="${CFLAGS}" || die
 
@@ -102,8 +105,8 @@ src_install() {
 	cd "${S}/indep-utils/cmu-scen-gen"
 	dobin cbrgen.tcl
 	newdoc README README.cbrgen
-	cd "${S}/indep-utils/propagation"
-	dobin threshold
+#	cd "${S}/indep-utils/propagation"
+#	dobin threshold
 	cd "${S}/indep-utils/model-gen"
 	dobin http_connect http_active
 
