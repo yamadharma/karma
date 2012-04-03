@@ -10,8 +10,8 @@ NS_ALLINONE_PV=2.35-RC7
 
 DESCRIPTION="Network Simulator GUI for NS"
 HOMEPAGE="http://www.isi.edu/nsnam/nam"
-#SRC_URI="mirror://sourceforge/nsnam/${PN}-src-${PV}.tar.gz"
-SRC_URI="http://www.isi.edu/nsnam/dist/release/ns-allinone-${NS_ALLINONE_PV}.tar.gz"
+SRC_URI="mirror://sourceforge/nsnam/${PN}-src-${PV}.tar.gz"
+# SRC_URI="http://www.isi.edu/nsnam/dist/release/ns-allinone-${NS_ALLINONE_PV}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
