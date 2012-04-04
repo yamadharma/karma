@@ -33,7 +33,7 @@ src_prepare() {
 	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/indep-utils/model-gen/Makefile"
 
 	epatch ${FILESDIR}/tcltk-conf.patch
-	eautoreconf	
+	eautoreconf
 }
 
 src_compile() {

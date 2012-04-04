@@ -4,9 +4,9 @@
 
 EAPI="4"
 
-inherit eutils
+inherit eutils autotools
 
-NS_ALLINONE_PV=2.35-RC7
+# NS_ALLINONE_PV=2.35-RC7
 
 DESCRIPTION="Network Simulator GUI for NS"
 HOMEPAGE="http://www.isi.edu/nsnam/nam"
@@ -26,7 +26,13 @@ DEPEND="|| ( x11-libs/libXmu virtual/x11 )
 RDEPEND=">=net-analyzer/ns-2.27
 	${DEPEND}"
 
-S=${WORKDIR}/ns-allinone-${NS_ALLINONE_PV}/${P}
+# S=${WORKDIR}/ns-allinone-${NS_ALLINONE_PV}/${P}
+
+src_prepare() {
+	epatch ${FILESDIR}/tcltk-conf.patch
+	eautoreconf
+}
+
 
 src_compile() {
 	local tclver=$(best_version ">=dev-lang/tcl-8.5")

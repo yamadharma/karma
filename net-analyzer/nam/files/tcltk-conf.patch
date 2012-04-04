@@ -1,0 +1,66 @@
+diff -Naurp ns-2.35/conf/configure.in.tcl ns-2.35.new/conf/configure.in.tcl
+--- ns-2.35/conf/configure.in.tcl	2009-12-31 01:05:31.000000000 +0300
++++ ns-2.35.new/conf/configure.in.tcl	2012-04-03 12:31:32.000000000 +0400
+@@ -92,6 +92,9 @@ TCL_TCL_PLACES="../lib/tcl$TCL_HI_VERS \
+                 /usr/local/include/tcl$TCL_OLD_VERS \
+                 /usr/local/include/tcl$TCL_OLD_ALT_VERS \
+                 /usr/local/include \
++                $d/lib/tcl$TCL_HI_VERS/include \
++                $d/lib/tcl$TCL_VERS/include \
++                $d/lib/tcl$TCL_ALT_VERS/include \
+                 $prefix/include \
+ 		$prefix/lib/tcl \
+                 $x_includes/tk \
+@@ -130,6 +133,13 @@ TCL_H_PLACES=" \
+ 		/usr/local/include/tcl$TCL_HI_VERS \
+ 		/usr/local/include/tcl$TCL_ALT_VERS \
+ 		/usr/local/include \
++                /usr/include/tcl \
++                /usr/lib/tcl$TCL_VERS/include/unix \
++                /usr/lib/tcl$TCL_HI_VERS/include/unix \
++                /usr/lib/tcl$TCL_ALT_VERS/include/unix \
++                /usr/lib/tcl$TCL_VERS/include/generic \
++                /usr/lib/tcl$TCL_HI_VERS/include/generic \
++                /usr/lib/tcl$TCL_ALT_VERS/include/generic \
+ 		/import/tcl/include/tcl$TCL_VERS \
+ 		/import/tcl/include/tcl$TCL_HI_VERS \
+ 		/import/tcl/include/tcl$TCL_ALT_VERS \
+diff -Naurp ns-2.35/conf/configure.in.TclCL ns-2.35.new/conf/configure.in.TclCL
+--- ns-2.35/conf/configure.in.TclCL	2010-02-16 09:07:43.000000000 +0300
++++ ns-2.35.new/conf/configure.in.TclCL	2012-04-03 13:49:35.000000000 +0400
+@@ -24,6 +24,7 @@ TCLCL_H_PLACES="\
+                 /import/Tcl/include \
+                 /usr/local/include \
+                 /usr/contrib/include \
++                /usr/include/tclcl \
+                 /usr/include"
+ TCLCL_H_PLACES_D="$d \
+  		$d/include"
+diff -Naurp ns-2.35/conf/configure.in.tk ns-2.35.new/conf/configure.in.tk
+--- ns-2.35/conf/configure.in.tk	2009-12-31 01:05:32.000000000 +0300
++++ ns-2.35.new/conf/configure.in.tk	2012-04-03 12:33:00.000000000 +0400
+@@ -55,7 +55,10 @@ TK_TCL_PLACES=" \
+                 /usr/local/include/tk$TK_VERS \
+                 /usr/local/include/tk$TK_ALT_VERS \
+                 /usr/local/include/tk$TK_HI_VERS \
+-                /usr/local/include \ 
++                /usr/local/include \
++                /usr/lib/tk$TK_HI_VERS/include \
++                /usr/lib/tk$TK_VERS/include \
++                /usr/lib/tk$TK_ALT_VERS/include \
+                 /usr/lib64/tk$TK_VERS \
+                 /usr/lib64/tk$TK_ALT_VERS \
+                 /usr/lib64/tk$TK_HI_VERS \
+@@ -111,6 +114,12 @@ TK_H_PLACES=" \
+                 /usr/local/include/tk$TK_ALT_VERS \
+                 /usr/local/include/tk$TK_HI_VERS \
+                 /usr/local/include \
++                /usr/lib/tk$TK_VERS/include/unix \
++                /usr/lib/tk$TK_HI_VERS/include/unix \
++                /usr/lib/tk$TK_ALT_VERS/include/unix \
++                /usr/lib/tk$TK_VERS/include/generic \
++                /usr/lib/tk$TK_HI_VERS/include/generic \
++                /usr/lib/tk$TK_ALT_VERS/include/generic \
+                 /import/tk/include/tk$TK_VERS \
+                 /import/tk/include/tk$TK_ALT_VERS \
+                 /import/tk/include/tk$TK_HI_VERS \
