@@ -34,7 +34,7 @@ IUSE="+qt4 wxwidgets +hyphen"
 
 DEPEND="sys-libs/zlib
 	media-libs/libpng
-	media-libs/jpeg
+	virtual/jpeg
 	media-libs/freetype
 	wxwidgets? ( app-admin/eselect-wxwidgets
 		>=x11-libs/wxGTK-2.8 )
