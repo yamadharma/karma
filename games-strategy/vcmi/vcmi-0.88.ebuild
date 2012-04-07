@@ -6,13 +6,14 @@ EAPI=3
 
 inherit autotools flag-o-matic
 
-#if [ ${PV} == 9999 ]
-#then
+if [ ${PV} == 9999 ]
+then
 	inherit subversion
 	ESVN_REPO_URI="https://vcmi.svn.sourceforge.net/svnroot/vcmi/trunk/"
-#else
-	SRC_URI="mirror://sourceforge/${PN}/${PN}_${PV/./}.zip"
-#fi
+else
+	SRC_URI="mirror://sourceforge/${PN}/${PN}_${PV/./}.zip
+	http://download.vcmi.eu/${PN}_${PV/./}_src.tar.gz"
+fi
 
 DESCRIPTION="VCMI Project - Heroes 3: WoG recreated"
 
@@ -36,10 +37,10 @@ DEPEND="media-libs/libsdl
 
 RDEPEND="${DEPEND}"
 
-src_unpack() {
-		subversion_src_unpack
-		unpack ${A}
-}
+#src_unpack() {
+#		subversion_src_unpack
+#		unpack ${A}
+#}
 
 src_prepare() {
 		eautoreconf
