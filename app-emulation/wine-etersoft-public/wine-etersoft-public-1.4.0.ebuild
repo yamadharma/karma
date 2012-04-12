@@ -2,16 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-emulation/wine/wine-1.1.25.ebuild,v 1.2 2009/08/01 06:58:00 ssuominen Exp $
 
-EAPI="2"
+EAPI="4"
 
 AUTOTOOLS_AUTO_DEPEND="no"
-inherit eutils flag-o-matic multilib autotools
+inherit autotools eutils flag-o-matic multilib pax-utils
 # rpm
 
-GV="1.3"
+ALT=-alt2
+
+GV="1.4"
 DESCRIPTION="MS Windows compatibility layer (WINE@Etersoft public edition)"
 HOMEPAGE="http://etersoft.ru/wine"
-SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV/_/-}/sources/wine-${PV}-alt1.src.rpm
+SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV/_/-}/sources/wine-${PV}${ALT}.src.rpm
 	gecko? (
 		mirror://sourceforge/wine/wine_gecko-${GV}-x86.msi
 		win64? ( mirror://sourceforge/wine/wine_gecko-${GV}-x86_64.msi )
@@ -20,8 +22,8 @@ SRC_URI="ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/${PV/_/-}/sources/wi
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="-* amd64 x86 ~x86-fbsd"
-IUSE="alsa capi cups custom-cflags dbus fontconfig gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls openal opencl opengl oss +perl png samba scanner ssl test +threads +truetype v4l +win32 +win64 X xcomposite xinerama xml"
-RESTRICT="test" #72375
+IUSE="alsa capi cups custom-cflags elibc_glibc fontconfig gecko gnutls gphoto2 gsm gstreamer hardened jpeg lcms ldap mp3 ncurses nls odbc openal opencl opengl oss +perl png samba scanner selinux ssl test +threads +truetype udisks v4l +win32 +win64 X xcomposite xinerama xml"
+RESTRICT="test mirror" #72375
 
 S=${WORKDIR}/wine-${PV}
 
@@ -32,6 +34,7 @@ MLIB_DEPS="amd64? (
 		>=app-emulation/emul-linux-x86-soundlibs-2.1
 	)
 	mp3? ( app-emulation/emul-linux-x86-soundlibs )
+	odbc? ( app-emulation/emul-linux-x86-db )
 	openal? ( app-emulation/emul-linux-x86-sdl )
 	opengl? ( app-emulation/emul-linux-x86-opengl )
 	scanner? ( app-emulation/emul-linux-x86-medialibs )
@@ -46,7 +49,10 @@ RDEPEND="truetype? ( >=media-libs/freetype-2.0.0 media-fonts/corefonts )
 	fontconfig? ( media-libs/fontconfig )
 	gphoto2? ( media-libs/libgphoto2 )
 	openal? ( media-libs/openal )
-	dbus? ( sys-apps/dbus )
+	udisks? (
+		sys-apps/dbus
+		sys-fs/udisks:0
+	)
 	gnutls? ( net-libs/gnutls )
 	gstreamer? ( media-libs/gstreamer media-libs/gst-plugins-base )
 	X? (
@@ -68,7 +74,9 @@ RDEPEND="truetype? ( >=media-libs/freetype-2.0.0 media-fonts/corefonts )
 	lcms? ( =media-libs/lcms-1* )
 	mp3? ( >=media-sound/mpg123-1.5.0 )
 	nls? ( sys-devel/gettext )
+	odbc? ( dev-db/unixODBC )
 	samba? ( >=net-fs/samba-3.0.25 )
+	selinux? ( sec-policy/selinux-wine )
 	xml? ( dev-libs/libxml2 dev-libs/libxslt )
 	scanner? ( media-gfx/sane-backends )
 	ssl? ( dev-libs/openssl )
@@ -94,15 +102,33 @@ DEPEND="${RDEPEND}
 #}
 
 src_unpack() {
-	addwrite /var/lib/rpm
-	alien -t ${DISTDIR}/wine-${PV}-alt1.src.rpm
-	tar xf wine-${PV}.tgz
-	tar xf wine-${PV}.tar
-	rm wine-${PV}.tgz wine-${PV}.tar
+
+	if use win64 ; then
+		[[ $(( $(gcc-major-version) * 100 + $(gcc-minor-version) )) -lt 404 ]] \
+			&& die "you need gcc-4.4+ to build 64bit wine"
+	fi
+
+	if use win32 && use opencl; then
+		[[ x$(eselect opencl show) = "xintel" ]] &&
+			die "Cannot build wine[opencl,win32]: intel-ocl-sdk is 64-bit only" # 403947
+	fi
+
+	if [[ ${PV} == "9999" ]] ; then
+		git-2_src_unpack
+	else
+		addwrite /var/lib/rpm
+		alien -t ${DISTDIR}/wine-${PV}${ALT}.src.rpm
+		tar xf wine-${PV}.tgz
+		tar xf wine-${PV}.tar
+		rm wine-${PV}.tgz wine-${PV}.tar
+#		unpack ${MY_P}.tar.bz2
+	fi
+
 }
 
 src_prepare() {
 	epatch "${FILESDIR}"/wine-1.1.15-winegcc.patch #260726
+	epatch "${FILESDIR}"/wine-1.4_rc2-multilib-portage.patch #395615
 	epatch_user #282735
 	sed -i '/^UPDATE_DESKTOP_DATABASE/s:=.*:=true:' tools/Makefile.in || die
 	sed -i '/^MimeType/d' tools/wine.desktop || die #117785
@@ -196,7 +222,7 @@ src_install() {
 		use win64 && { doins "${DISTDIR}"/wine_gecko-${GV}-x86_64.msi || die ; }
 	fi
 	if ! use perl ; then
-		rm "${D}"/usr/bin/{wine{dump,maker},function_grep.pl} "${D}"/usr/share/man/man1/wine{dump,maker}.1 || die
+		rm "${D}"usr/bin/{wine{dump,maker},function_grep.pl} "${D}"usr/share/man/man1/wine{dump,maker}.1 || die
 	fi
 
 	rm -f ${D}/etc/init.d/*
@@ -205,9 +231,15 @@ src_install() {
 	keepdir /var/lib/wine
 	fperms g+w /var/lib/wine
 	fowners root:wineadmin /var/lib/wine
-}
 
-pkg_postinst() {
-	paxctl -psmr "${ROOT}"/usr/bin/wine{,-preloader} 2>/dev/null #255055
+	if use win32 || ! use win64; then
+		pax-mark psmr "${D}"usr/bin/wine{,-preloader} #255055
+	fi
+	use win64 && pax-mark psmr "${D}"usr/bin/wine64{,-preloader}
+
+	if use win64 && ! use win32; then
+		dosym /usr/bin/wine{64,} # 404331
+		dosym /usr/bin/wine{64,}-preloader
+	fi
 }
 
