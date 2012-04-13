@@ -1,0 +1,22 @@
+=dev-lang/python-2*
+|| ( app-emulation/wine-etersoft-public app-emulation/wine ) app-arch/cabextract app-arch/unzip dev-python/wxpython:2.8 || ( media-gfx/imagemagick media-gfx/graphicsmagick[imagemagick] ) net-misc/wget x11-apps/mesa-progs x11-terms/xterm =dev-lang/python-2*
+0
+http://www.playonlinux.com/script_files/PlayOnLinux/4.0.16/PlayOnLinux_4.0.16.tar.gz
+mirror
+http://playonlinux.com/
+GPL-3
+set of scripts to easily install and use Windows games and software
+~amd64 ~x86
+base eutils games multilib python toolchain-funcs user
+
+
+
+
+3
+
+compile configure install postinst postrm preinst prepare setup unpack
+
+
+
+
+
