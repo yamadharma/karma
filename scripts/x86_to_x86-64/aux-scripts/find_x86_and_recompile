@@ -5,7 +5,7 @@ emerge_opt=$1
 for i in $(grep -v x86_64-pc-linux-gnu `ls /var/db/pkg/*/*/CBUILD` | awk -F: '{print $1}' | sed -e "s:/var/db/pkg/\(.*\)/CBUILD:\1:g")
 do
 	SLOT=$(cat /var/db/pkg/"$i"/SLOT)
-	PKG=$(echo "i" | sed -s ":\(.*\)-[0-9].*:\1:g")
+	PKG=$(echo "$i" | sed -s ":\(.*\)-[0-9].*:\1:g")
 	emerge -v${emerge_opt} "$PKG":"$SLOT"
 done
 
