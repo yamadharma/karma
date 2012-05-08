@@ -6,10 +6,12 @@ EAPI=3
 
 inherit autotools flag-o-matic
 
-if [ ${PV} == 9999 ]
+if [ ${PV##*.} == 9999 ]
 then
 	inherit subversion
 	ESVN_REPO_URI="https://vcmi.svn.sourceforge.net/svnroot/vcmi/trunk/"
+	MY_PV=${PV%.*}
+	SRC_URI="mirror://sourceforge/${PN}/${PN}_${MY_PV/./}.zip"
 else
 	SRC_URI="mirror://sourceforge/${PN}/${PN}_${PV/./}.zip
 	http://download.vcmi.eu/${PN}_${PV/./}_src.tar.gz"
@@ -37,10 +39,13 @@ DEPEND="media-libs/libsdl
 
 RDEPEND="${DEPEND}"
 
-#src_unpack() {
-#		subversion_src_unpack
-#		unpack ${A}
-#}
+src_unpack() {
+		if [ ${PV##*.} == 9999 ]
+		then
+			subversion_src_unpack
+		fi
+		unpack ${A}
+}
 
 src_prepare() {
 		eautoreconf
