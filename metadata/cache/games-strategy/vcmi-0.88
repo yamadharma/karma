@@ -14,7 +14,7 @@ autotools eutils flag-o-matic libtool multilib toolchain-funcs user
 
 3
 
-configure install prepare
+configure install prepare unpack
 
 
 
