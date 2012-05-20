@@ -1,0 +1,3 @@
+move net-libs/farsight2 net-libs/farstream
+move net-libs/telepathy-farsight net-libs/telepathy-farstream
+
