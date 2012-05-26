@@ -1,0 +1,82 @@
+--- wl_agent.cpp.orig	2010-07-05 02:44:25.470266322 -0500
++++ wl_agent.cpp	2010-07-05 02:46:00.480301534 -0500
+@@ -16,7 +16,7 @@
+ 
+ #define MOVESCALE       150l
+ #define BACKMOVESCALE   100l
+-#define ANGLESCALE      20
++#define ANGLESCALE      ((20*360)/ANGLES)
+ 
+ /*
+ =============================================================================
+@@ -1159,7 +1159,7 @@
+     player->x = ((int32_t)tilex<<TILESHIFT)+TILEGLOBAL/2;
+     player->y = ((int32_t)tiley<<TILESHIFT)+TILEGLOBAL/2;
+     player->state = &s_player;
+-    player->angle = (1-dir)*90;
++    player->angle = (1-dir)*VANG90;
+     if (player->angle<0)
+         player->angle += ANGLES;
+     player->flags = FL_NEVERMARK;
+@@ -1303,17 +1303,17 @@
+ {
+     int32_t    desty;
+ 
+-    if (player->angle > 270)
++    if (player->angle > VANG270)
+     {
+-        player->angle -= (short)(tics * 3);
+-        if (player->angle < 270)
+-            player->angle = 270;
++        player->angle -= (short)(tics * ((3 * ANGLES)/360));
++        if (player->angle < VANG270)
++            player->angle = VANG270;
+     }
+-    else if (player->angle < 270)
++    else if (player->angle < VANG270)
+     {
+-        player->angle += (short)(tics * 3);
+-        if (player->angle > 270)
+-            player->angle = 270;
++        player->angle += (short)(tics * ((3 * ANGLES)/360));
++        if (player->angle > VANG270)
++            player->angle = VANG270;
+     }
+ 
+     desty = (((int32_t)player->tiley-5)<<TILESHIFT)-0x3000;
+--- wl_def.h.orig	2010-07-05 02:43:25.496264732 -0500
++++ wl_def.h	2010-07-05 02:43:48.514267532 -0500
+@@ -166,7 +166,7 @@
+ #define TILESHIFT       16l
+ #define UNSIGNEDSHIFT   8
+ 
+-#define ANGLES          360             // must be divisable by 4
++#define ANGLES          3600             // must be divisable by 4
+ #define ANGLEQUAD       (ANGLES/4)
+ #define FINEANGLES      3600
+ #define ANG90           (FINEANGLES/4)
+--- wl_draw.cpp.orig	2010-07-05 02:43:55.587264648 -0500
++++ wl_draw.cpp	2010-07-05 02:44:19.452265396 -0500
+@@ -787,9 +787,9 @@
+     viewangle = player->angle + (centerx - ob->viewx)/8;
+ 
+     if (ob->obclass == rocketobj || ob->obclass == hrocketobj)
+-        angle = (viewangle-180) - ob->angle;
++        angle = (viewangle-VANG180) - ob->angle;
+     else
+-        angle = (viewangle-180) - dirangle[ob->dir];
++        angle = (viewangle-VANG180) - dirangle[ob->dir];
+ 
+     angle+=ANGLES/16;
+     while (angle>=ANGLES)
+--- wl_game.cpp.orig	2010-07-05 02:46:05.359264462 -0500
++++ wl_game.cpp	2010-07-05 02:46:35.050263380 -0500
+@@ -1218,7 +1218,7 @@
+ ==================
+ */
+ 
+-#define DEATHROTATE 2
++#define DEATHROTATE ((2*ANGLES)/360)
+ 
+ void Died (void)
+ {

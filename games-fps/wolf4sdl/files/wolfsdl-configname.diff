@@ -1,0 +1,89 @@
+diff --git a/wl_def.h b/wl_def.h
+index 48007f5..0971507 100644
+--- a/wl_def.h
++++ b/wl_def.h
+@@ -915,7 +915,7 @@ extern  unsigned screenofs;
+ 
+ extern  boolean  startgame;
+ extern  char     str[80];
+-extern  char     configname[13];
++extern  char     configname[128];
+ 
+ //
+ // Command line parameter variables
+diff --git a/wl_main.cpp b/wl_main.cpp
+index dca0e89..6918213 100644
+--- a/wl_main.cpp
++++ b/wl_main.cpp
+@@ -73,7 +73,7 @@ boolean startgame;
+ boolean loadedgame;
+ int     mouseadjustment;
+ 
+-char    configname[13]="config.";
++char    configname[128];
+ 
+ //
+ // Command line parameter variables
+diff --git a/wl_menu.cpp b/wl_menu.cpp
+index 5591803..b25249c 100644
+--- a/wl_menu.cpp
++++ b/wl_menu.cpp
+@@ -14,6 +14,8 @@
+ #endif
+ 
+ #include "wl_def.h"
++#include <string>
++#include <errno.h>
+ #pragma hdrstop
+ 
+ extern int lastgamemusicoffset;
+@@ -3982,6 +3984,41 @@ ShootSnd (void)
+     SD_PlaySound (SHOOTSND);
+ }
+ 
++static void InitConfigname()
++{
++	if (configname[0])
++		/* already initialized */
++		return;
++	const char *home = getenv("HOME");
++	if (!home)
++	{
++		Quit("You must set $HOME.");
++		return;
++	}
++	std::string s = home;
++#define DOT_WOLF_DIR	"/.wolf4sdl"
++#ifdef SPEAR
++#define CONFIG_BASENAME	"/spear."
++#else
++#define CONFIG_BASENAME	"/wolf3d."
++#endif
++	if (s.length() > sizeof(configname) - sizeof(DOT_WOLF_DIR) - sizeof(CONFIG_BASENAME))
++	{
++		Quit("Your $HOME is too long.");
++		return;
++	}
++	s += DOT_WOLF_DIR;
++	errno = 0;
++	int r = mkdir(s.c_str(), 0755);
++	if (r != 0 && errno != EEXIST)
++	{
++		int e = errno;
++		Quit("Failed to mkdir %s: %s", s.c_str(), strerror(e));
++		return;
++	}
++	s += CONFIG_BASENAME;
++	SDL_strlcpy(configname, s.c_str(), sizeof(configname));
++}
+ 
+ ///////////////////////////////////////////////////////////////////////////
+ //
+@@ -3992,6 +4029,7 @@ void
+ CheckForEpisodes (void)
+ {
+     struct stat statbuf;
++	InitConfigname();
+ 
+ //
+ // JAPANESE VERSION

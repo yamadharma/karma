@@ -1,0 +1,431 @@
+--- wl_act2.cpp.orig	2010-07-05 01:29:08.229266848 -0500
++++ wl_act2.cpp	2010-07-05 01:29:14.774264081 -0500
+@@ -1468,7 +1468,7 @@
+     if (CheckLine(ob))                                              // got a shot at player?
+     {
+         ob->hidden = false;
+-        if ( (unsigned) US_RndT() < (tics<<3) && objfreelist)
++        if ( (int) US_RndT() < (tics<<3) && objfreelist)
+         {
+             //
+             // go into attack frame
+@@ -2389,7 +2389,7 @@
+     if (CheckLine(ob))                                              // got a shot at player?
+     {
+         ob->hidden = false;
+-        if ( (unsigned) US_RndT() < (tics<<3) && objfreelist)
++        if ( (int) US_RndT() < (tics<<3) && objfreelist)
+         {
+             //
+             // go into attack frame
+@@ -2481,7 +2481,7 @@
+     if (CheckLine(ob))                                              // got a shot at player?
+     {
+         ob->hidden = false;
+-        if ( (unsigned) US_RndT() < (tics<<3) && objfreelist)
++        if ( (int) US_RndT() < (tics<<3) && objfreelist)
+         {
+             //
+             // go into attack frame
+@@ -2573,7 +2573,7 @@
+     if (CheckLine(ob))                                              // got a shot at player?
+     {
+         ob->hidden = false;
+-        if ( (unsigned) US_RndT() < (tics<<3) && objfreelist)
++        if ( (int) US_RndT() < (tics<<3) && objfreelist)
+         {
+             //
+             // go into attack frame
+@@ -2976,7 +2976,7 @@
+     if (CheckLine(ob))                      // got a shot at player?
+     {
+         ob->hidden = false;
+-        if ( (unsigned) US_RndT() < (tics<<1) && objfreelist)
++        if ( (int) US_RndT() < (tics<<1) && objfreelist)
+         {
+             //
+             // go into attack frame
+--- wl_agent.cpp.orig	2010-07-05 01:52:43.882266222 -0500
++++ wl_agent.cpp	2010-07-05 01:59:05.022266436 -0500
+@@ -151,7 +151,7 @@
+ =
+ = ControlMovement
+ =
+-= Takes controlx,controly, and buttonstate[bt_strafe]
++= Takes controlx,controly,controlh, and buttonstate[bt_strafe]
+ =
+ = Changes the player's angle and position
+ =
+@@ -172,68 +172,18 @@
+     oldx = player->x;
+     oldy = player->y;
+ 
+-    if(buttonstate[bt_strafeleft])
+-    {
+-        angle = ob->angle + ANGLES/4;
+-        if(angle >= ANGLES)
+-            angle -= ANGLES;
+-        if(buttonstate[bt_run])
+-            Thrust(angle, RUNMOVE * MOVESCALE * tics);
+-        else
+-            Thrust(angle, BASEMOVE * MOVESCALE * tics);
+-    }
+-
+-    if(buttonstate[bt_straferight])
+-    {
+-        angle = ob->angle - ANGLES/4;
+-        if(angle < 0)
+-            angle += ANGLES;
+-        if(buttonstate[bt_run])
+-            Thrust(angle, RUNMOVE * MOVESCALE * tics );
+-        else
+-            Thrust(angle, BASEMOVE * MOVESCALE * tics);
+-    }
+-
+     //
+-    // side to side move
++    // turn
+     //
+-    if (buttonstate[bt_strafe])
+-    {
+-        //
+-        // strafing
+-        //
+-        //
+-        if (controlx > 0)
+-        {
+-            angle = ob->angle - ANGLES/4;
+-            if (angle < 0)
+-                angle += ANGLES;
+-            Thrust (angle,controlx*MOVESCALE);      // move to left
+-        }
+-        else if (controlx < 0)
+-        {
+-            angle = ob->angle + ANGLES/4;
+-            if (angle >= ANGLES)
+-                angle -= ANGLES;
+-            Thrust (angle,-controlx*MOVESCALE);     // move to right
+-        }
+-    }
+-    else
+-    {
+-        //
+-        // not strafing
+-        //
+-        anglefrac += controlx;
+-        angleunits = anglefrac/ANGLESCALE;
+-        anglefrac -= angleunits*ANGLESCALE;
+-        ob->angle -= angleunits;
+-
+-        if (ob->angle >= ANGLES)
+-            ob->angle -= ANGLES;
+-        if (ob->angle < 0)
+-            ob->angle += ANGLES;
+-
+-    }
++    anglefrac += controlh;
++    angleunits = anglefrac/ANGLESCALE;
++    anglefrac -= angleunits*ANGLESCALE;
++    ob->angle -= angleunits;
++
++    if (ob->angle >= ANGLES)
++        ob->angle -= ANGLES;
++    if (ob->angle < 0)
++        ob->angle += ANGLES;
+ 
+     //
+     // forward/backwards move
+@@ -252,6 +202,24 @@
+ 
+     if (gamestate.victoryflag)              // watching the BJ actor
+         return;
++
++    //
++    // strafing
++    //
++    if (controlx > 0)
++    {
++        angle = ob->angle - ANGLES/4;
++        if (angle < 0)
++            angle += ANGLES;
++        Thrust (angle,controlx*MOVESCALE);      // move to left
++    }
++    else if (controlx < 0)
++    {
++        angle = ob->angle + ANGLES/4;
++        if (angle >= ANGLES)
++            angle -= ANGLES;
++        Thrust (angle,-controlx*MOVESCALE);     // move to right
++    }
+ }
+ 
+ /*
+--- wl_def.h.orig	2010-07-05 01:28:05.174266076 -0500
++++ wl_def.h	2010-07-05 01:30:14.795264002 -0500
+@@ -995,7 +995,9 @@
+ */
+ 
+ #define BASEMOVE                35
++#define BASEMOVEDIAG            24
+ #define RUNMOVE                 70
++#define RUNMOVEDIAG             24
+ #define BASETURN                35
+ #define RUNTURN                 70
+ 
+@@ -1007,7 +1009,7 @@
+ 
+ extern  objtype         *player;
+ 
+-extern  unsigned        tics;
++extern  int             tics;
+ extern  int             viewsize;
+ 
+ extern  int             lastgamemusicoffset;
+@@ -1015,7 +1017,7 @@
+ //
+ // current user input
+ //
+-extern  int         controlx,controly;              // range from -100 to 100
++extern  int         controlx,controly,controlh;    // range from -100 to 100
+ extern  boolean     buttonstate[NUMBUTTONS];
+ extern  objtype     objlist[MAXACTORS];
+ extern  boolean     buttonheld[NUMBUTTONS];
+--- wl_play.cpp.orig	2010-07-05 01:28:26.048288105 -0500
++++ wl_play.cpp	2010-07-05 01:52:31.034267288 -0500
+@@ -45,13 +45,13 @@
+ //
+ // replacing refresh manager
+ //
+-unsigned tics;
++int tics;
+ 
+ //
+ // control info
+ //
+ boolean mouseenabled, joystickenabled;
+-int dirscan[4] = { sc_UpArrow, sc_RightArrow, sc_DownArrow, sc_LeftArrow };
++int dirscan[4] = { sc_W, sc_D, sc_S, sc_A }; 
+ int buttonscan[NUMBUTTONS] = { sc_Control, sc_Alt, sc_LShift, sc_Space, sc_1, sc_2, sc_3, sc_4 };
+ int buttonmouse[4] = { bt_attack, bt_strafe, bt_use, bt_nobutton };
+ int buttonjoy[32] = {
+@@ -77,7 +77,7 @@
+ //
+ // current user input
+ //
+-int controlx, controly;         // range from -100 to 100 per tic
++int controlx, controly, controlh;         // range from -100 to 100 per tic
+ boolean buttonstate[NUMBUTTONS];
+ 
+ int lastgamemusicoffset = 0;
+@@ -315,16 +315,62 @@
+ 
+ void PollKeyboardMove (void)
+ {
+-    int delta = buttonstate[bt_run] ? RUNMOVE * tics : BASEMOVE * tics;
+-
+     if (Keyboard[dirscan[di_north]])
+-        controly -= delta;
+-    if (Keyboard[dirscan[di_south]])
+-        controly += delta;
+-    if (Keyboard[dirscan[di_west]])
+-        controlx -= delta;
+-    if (Keyboard[dirscan[di_east]])
+-        controlx += delta;
++        if (Keyboard[dirscan[di_south]])
++            if (Keyboard[dirscan[di_west]])
++            {
++                if (!Keyboard[dirscan[di_east]])
++                    controlx = -BASEMOVE * tics;
++            }
++            else
++            {
++                if (Keyboard[dirscan[di_east]])
++                    controlx = BASEMOVE * tics;
++            }
++        else
++            if (Keyboard[dirscan[di_west]])
++                if (Keyboard[dirscan[di_east]])
++                    controly = (buttonstate[bt_run]) ? -RUNMOVE * tics : -BASEMOVE * tics;
++                else
++                {
++                    controlx = (buttonstate[bt_run]) ? -RUNMOVEDIAG * tics : -BASEMOVEDIAG * tics;
++                    controly = controlx;
++                }
++            else
++                if (Keyboard[dirscan[di_east]])
++                {
++                    controlx = (buttonstate[bt_run]) ? RUNMOVEDIAG * tics : BASEMOVEDIAG * tics;
++                    controly = -controlx;
++                }
++                else
++                    controly = (buttonstate[bt_run]) ? -RUNMOVE * tics : -BASEMOVE * tics;
++    else
++        if (Keyboard[dirscan[di_south]])
++            if (Keyboard[dirscan[di_west]])
++                if (Keyboard[dirscan[di_east]])
++                    controly = (buttonstate[bt_run]) ? RUNMOVE * tics : BASEMOVE * tics;
++                else
++                {
++                    controly = (buttonstate[bt_run]) ? RUNMOVEDIAG * tics : BASEMOVEDIAG * tics;
++                    controlx = -controly;
++                }
++            else
++                if (Keyboard[dirscan[di_east]])
++                {
++                    controlx = (buttonstate[bt_run]) ? RUNMOVEDIAG * tics : BASEMOVEDIAG * tics;
++                    controly = controlx;
++                }
++                else
++                    controly = (buttonstate[bt_run]) ? RUNMOVE * tics : BASEMOVE * tics;
++        else
++            if (Keyboard[dirscan[di_west]])
++            {
++                if (!Keyboard[dirscan[di_east]])
++                    controlx = -BASEMOVE * tics;
++            }
++            else
++                if (Keyboard[dirscan[di_east]])
++                    controlx = BASEMOVE * tics; 
+ }
+ 
+ 
+@@ -345,10 +391,8 @@
+         IN_CenterMouse();
+ 
+     mousexmove -= screenWidth / 2;
+-    mouseymove -= screenHeight / 2;
+ 
+-    controlx += mousexmove * 10 / (13 - mouseadjustment);
+-    controly += mouseymove * 20 / (13 - mouseadjustment);
++    controlh += (mousexmove << 4) / (13 - mouseadjustment); 
+ }
+ 
+ 
+@@ -366,16 +410,47 @@
+ 
+     IN_GetJoyDelta (&joyx, &joyy);
+ 
+-    int delta = buttonstate[bt_run] ? RUNMOVE * tics : BASEMOVE * tics;
+-
+-    if (joyx > 64 || buttonstate[bt_turnright])
+-        controlx += delta;
+-    else if (joyx < -64  || buttonstate[bt_turnleft])
+-        controlx -= delta;
+-    if (joyy > 64 || buttonstate[bt_movebackward])
+-        controly += delta;
+-    else if (joyy < -64 || buttonstate[bt_moveforward])
+-        controly -= delta;
++    if (buttonstate[bt_strafe])
++    {
++        if (joyy < -64)
++            if (joyx < -64)
++            {
++                controlx = (buttonstate[bt_run]) ? BASEMOVEDIAG * tics : RUNMOVEDIAG * tics;
++                controly = controlx;
++            }
++            else if (joyx > 64)
++            {
++                controlx = (buttonstate[bt_run]) ? BASEMOVEDIAG * tics : RUNMOVEDIAG * tics;
++                controly = -controlx;
++            }
++            else
++                controly = (buttonstate[bt_run]) ? -BASEMOVE * tics : -RUNMOVE * tics;
++        else
++            if (joyy > 64)
++                if (joyx < -64)
++                {
++                    controly = (buttonstate[bt_run]) ? BASEMOVEDIAG * tics : RUNMOVEDIAG * tics;
++                    controlx = -controly;
++                }
++                else if (joyx > 64)
++                {
++                    controlx = (buttonstate[bt_run]) ? BASEMOVEDIAG * tics : RUNMOVEDIAG * tics;
++                    controly = controlx;
++                }
++                else
++                    controly = (buttonstate[bt_run]) ? BASEMOVE * tics : RUNMOVE * tics;
++    }
++    else
++    {
++        if (joyx < -64)
++            controlh = (buttonstate[bt_run]) ? -BASEMOVE * tics : -RUNMOVE * tics;
++        else if (joyx > 64)
++            controlh = (buttonstate[bt_run]) ? BASEMOVE * tics : RUNMOVE * tics;
++        if (joyy < -64)
++            controly = (buttonstate[bt_run]) ? -BASEMOVE * tics : -RUNMOVE * tics;
++        else if (joyy > 64)
++            controly = (buttonstate[bt_run]) ? BASEMOVE * tics : RUNMOVE * tics;
++    }
+ }
+ 
+ /*
+@@ -395,7 +470,7 @@
+ 
+ void PollControls (void)
+ {
+-    int max, min, i;
++    int max, min, rmax, rmin, i;
+     byte buttonbits;
+ 
+     IN_ProcessEvents();
+@@ -422,6 +497,7 @@
+ 
+     controlx = 0;
+     controly = 0;
++    controlh = 0;
+     memcpy (buttonheld, buttonstate, sizeof (buttonstate));
+     memset (buttonstate, 0, sizeof (buttonstate));
+ 
+@@ -445,6 +521,7 @@
+ 
+         controlx *= (int) tics;
+         controly *= (int) tics;
++        controlh *= (int) tics;
+ 
+         return;
+     }
+@@ -477,6 +554,8 @@
+ //
+     max = 100 * tics;
+     min = -max;
++    rmax = max << 4;
++    rmin = -rmax;
+     if (controlx > max)
+         controlx = max;
+     else if (controlx < min)
+@@ -487,6 +566,11 @@
+     else if (controly < min)
+         controly = min;
+ 
++    if (controlh > rmax)
++        controlh = rmax;
++    else if (controlh < rmin)
++        controlh = rmin;
++
+     if (demorecord)
+     {
+         //
+@@ -494,6 +578,7 @@
+         //
+         controlx /= (int) tics;
+         controly /= (int) tics;
++        controlh /= (int) tics;
+ 
+         buttonbits = 0;
+ 
+@@ -508,6 +593,7 @@
+         *demoptr++ = buttonbits;
+         *demoptr++ = controlx;
+         *demoptr++ = controly;
++        *demoptr++ = controlh;
+ 
+         if (demoptr >= lastdemoptr - 8)
+             playstate = ex_completed;
+@@ -515,6 +601,7 @@
+         {
+             controlx *= (int) tics;
+             controly *= (int) tics;
++            controlh *= (int) tics;
+         }
+     }
+ }

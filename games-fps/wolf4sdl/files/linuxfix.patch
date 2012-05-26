@@ -1,0 +1,200 @@
+--- id_ca.cpp.orig	2010-08-02 14:04:57.783286368 -0500
++++ id_ca.cpp	2010-08-02 14:05:26.125300812 -0500
+@@ -154,7 +154,7 @@
+ 
+ boolean CA_WriteFile (const char *filename, void *ptr, int32_t length)
+ {
+-    const int handle = open(filename, O_CREAT | O_WRONLY | O_BINARY);
++    const int handle = open(filename, O_CREAT | O_WRONLY | O_BINARY, 0644);
+     if (handle == -1)
+         return false;
+ 
+--- wl_def.h.orig	2010-08-02 14:05:07.609285550 -0500
++++ wl_def.h	2010-08-02 14:05:26.125300812 -0500
+@@ -915,7 +915,8 @@
+ 
+ extern  boolean  startgame;
+ extern  char     str[80];
+-extern  char     configname[13];
++extern  char     configdir[114];
++extern  char     configname[128];
+ 
+ //
+ // Command line parameter variables
+
+--- wl_main.cpp.orig	2011-09-29 17:52:51.818654100 -0500
++++ wl_main.cpp	2011-09-29 17:53:33.957361074 -0500
+@@ -10,7 +10,7 @@
+ #pragma hdrstop
+ #include "wl_atmos.h"
+ #include <SDL_syswm.h>
+-
++#include <sys/stat.h>
+ 
+ /*
+ =============================================================================
+@@ -73,7 +73,8 @@
+ boolean loadedgame;
+ int     mouseadjustment;
+ 
+-char    configname[13]="config.";
++char    configdir[114];
++char    configname[128];
+ 
+ //
+ // Command line parameter variables
+@@ -247,6 +248,18 @@
+     fs_unlink(configname);
+ #endif
+ 
++    // Ensure configdir exists and create if necessary
++    struct stat st;
++    if (stat(configdir, &st) != 0)
++    {
++        int result = mkdir(configdir, 0755);
++        if (result != 0)
++        {
++		    Quit("Error: config file could not be saved. The configuration directory,\n'%s', could not be created.", configdir);
++            return;
++        }
++    }
++
+     const int file = open(configname, O_CREAT | O_WRONLY | O_BINARY, 0644);
+     if (file != -1)
+     {
+--- wl_menu.cpp.orig	2010-08-02 14:05:17.406299508 -0500
++++ wl_menu.cpp	2010-08-02 18:23:38.554315921 -0500
+@@ -278,7 +278,11 @@
+ static int SoundStatus = 1;
+ static int pickquick;
+ static char SaveGameNames[10][32];
+-static char SaveName[13] = "savegam?.";
++#ifdef SPEAR
++static char SaveName[13] = "spearsa?.";
++#else
++static char SaveName[13] = "wolf3ds?.";
++#endif
+ 
+ 
+ ////////////////////////////////////////////////////////////////////
+@@ -1498,6 +1502,7 @@
+     FILE *file;
+     int which, exit = 0;
+     char name[13];
++	char savepath[128];
+ 
+ 
+     strcpy (name, SaveName);
+@@ -1512,10 +1517,13 @@
+         if (SaveGamesAvail[which])
+         {
+             name[7] = which + '0';
++			strcpy(savepath, configdir);
++			strcat(savepath, "/");
++			strcat(savepath, name);
+ #ifdef _arch_dreamcast
+             DC_LoadFromVMU(name);
+ #endif
+-            file = fopen (name, "rb");
++            file = fopen (savepath, "rb");
+             fseek (file, 32, SEEK_SET);
+             loadedgame = true;
+             LoadTheGame (file, 0, 0);
+@@ -1550,11 +1558,14 @@
+         {
+             ShootSnd ();
+             name[7] = which + '0';
++			strcpy(savepath, configdir);
++			strcat(savepath, "/");
++			strcat(savepath, name);
+ 
+ #ifdef _arch_dreamcast
+             DC_LoadFromVMU(name);
+ #endif
+-            file = fopen (name, "rb");
++            file = fopen (savepath, "rb");
+             fseek (file, 32, SEEK_SET);
+ 
+             DrawLSAction (0);
+@@ -1678,6 +1689,7 @@
+     FILE *file;
+     char name[13];
+     char input[32];
++	char savepath[128];
+ 
+ 
+     strcpy (name, SaveName);
+@@ -1692,8 +1704,11 @@
+         if (SaveGamesAvail[which])
+         {
+             name[7] = which + '0';
+-            unlink (name);
+-            file = fopen (name, "wb");
++			strcpy(savepath, configdir);
++			strcat(savepath, "/");
++			strcat(savepath, name);
++            unlink (savepath);
++            file = fopen (savepath, "wb");
+ 
+             strcpy (input, &SaveGameNames[which][0]);
+ 
+@@ -1762,8 +1777,11 @@
+                 SaveGamesAvail[which] = 1;
+                 strcpy (&SaveGameNames[which][0], input);
+ 
+-                unlink (name);
+-                file = fopen (name, "wb");
++				strcpy(savepath, configdir);
++				strcat(savepath, "/");
++				strcat(savepath, name);
++                unlink (savepath);
++                file = fopen (savepath, "wb");
+ //                              _dos_write(handle,(void far *)input,32,&nwritten);
+                 fwrite (input, 32, 1, file);
+                 fseek (file, 32, SEEK_SET);
+@@ -3143,6 +3161,7 @@
+ void SetupSaveGames()
+ {
+     char name[13];
++	char savepath[128];
+ 
+ #ifdef _arch_dreamcast
+     file_t dir;
+@@ -3185,7 +3204,10 @@
+     for(int i=0; i<10; i++)
+     {
+         name[7] = '0' + i;
+-        const int handle = open(name, O_RDONLY | O_BINARY);
++		strcpy(savepath, configdir);
++		strcat(savepath, "/");
++		strcat(savepath, name);
++        const int handle = open(savepath, O_RDONLY | O_BINARY);
+         if (handle >= 0)
+         {
+             char temp[32];
+@@ -3993,6 +4015,25 @@
+ {
+     struct stat statbuf;
+ 
++    // Set config location to home directory for multi-user support
++    // Also support separate configuration files for wolf3d and sod
++    if (!getenv("HOME")) {
++        Quit("Your $HOME directory is not defined. You must set this before playing.");
++		return;
++    } else if (strlen(getenv("HOME")) > (sizeof(configdir) - 10)) {
++        Quit("Your $HOME directory path is too long. It cannot be used for saving games.");
++        return;
++    }
++    strcpy(configdir, getenv("HOME"));
++    strcat(configdir, "/.wolf4sdl");
++#ifdef SPEAR
++    strcpy(configname, configdir);
++    strcat(configname, "/spear.");
++#else
++    strcpy(configname, configdir);
++    strcat(configname, "/wolf3d.");
++#endif
++
+ //
+ // JAPANESE VERSION
+ //

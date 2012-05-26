@@ -1,0 +1,52 @@
+--- id_in.cpp.orig	2010-07-03 12:17:12.748542668 -0500
++++ id_in.cpp	2010-07-03 12:17:12.748542668 -0500
+@@ -33,6 +33,7 @@
+ // configuration variables
+ //
+ boolean MousePresent;
++boolean windowmouse;
+ 
+ 
+ // 	Global variables
+@@ -388,7 +389,7 @@
+ 
+     SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+ 
+-    if(fullscreen)
++    if(fullscreen || windowmouse)
+     {
+         GrabInput = true;
+         SDL_WM_GrabInput(SDL_GRAB_ON);
+--- id_in.h.orig	2010-07-03 12:17:29.066570615 -0500
++++ id_in.h	2010-07-03 12:17:29.066570615 -0500
+@@ -142,6 +142,7 @@
+ extern  volatile char       LastASCII;
+ extern  volatile ScanCode   LastScan;
+ extern           int        JoyNumButtons;
++extern           boolean    windowmouse;
+ 
+ 
+ // Function prototypes
+--- wl_main.cpp.orig	2010-07-03 12:18:05.223561701 -0500
++++ wl_main.cpp	2010-07-03 12:18:05.223561701 -0500
+@@ -1699,6 +1699,11 @@
+         }
+         else IFARG("--windowed")
+             fullscreen = false;
++        else IFARG("--windowed-mouse")
++        {
++            fullscreen = false;
++            windowmouse = true;
++        }
+         else IFARG("--res")
+         {
+             if(i + 2 >= argc)
+@@ -1828,7 +1833,7 @@
+             " --normal               Sets the difficulty to normal for tedlevel\n"
+             " --hard                 Sets the difficulty to hard for tedlevel\n"
+             " --nowait               Skips intro screens\n"
+-            " --windowed             Starts the game in a window\n"
++            " --windowed[-mouse]     Starts the game in a window [and grabs mouse]\n"
+             " --res <width> <height> Sets the screen resolution\n"
+             "                        (must be multiple of 320x200 or 320x240)\n"
+             " --resf <w> <h>         Sets any screen resolution >= 320x200\n"
