@@ -1,5 +1,5 @@
 >=sys-libs/ncurses-5.3 spell? ( || ( app-text/aspell app-text/ispell ) ) sys-libs/gdbm virtual/x11 gif? ( >=media-libs/giflib-4.1.0.1b ) jpeg? ( >=media-libs/jpeg-6b ) tiff? ( >=media-libs/tiff-3.5.7 ) png? ( >=media-libs/libpng-1.2.5 ) nls? ( >=sys-devel/gettext-0.11.5 ) !nosendmail? ( virtual/mta ) >=sys-devel/autoconf-2.58 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
->=sys-libs/ncurses-5.3 spell? ( || ( app-text/aspell app-text/ispell ) ) sys-libs/gdbm virtual/x11 gif? ( >=media-libs/giflib-4.1.0.1b ) jpeg? ( >=media-libs/jpeg-6b ) tiff? ( >=media-libs/tiff-3.5.7 ) png? ( >=media-libs/libpng-1.2.5 ) nls? ( >=sys-devel/gettext-0.11.5 ) !nosendmail? ( virtual/mta ) >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+>=sys-libs/ncurses-5.3 spell? ( || ( app-text/aspell app-text/ispell ) ) sys-libs/gdbm virtual/x11 gif? ( >=media-libs/giflib-4.1.0.1b ) jpeg? ( >=media-libs/jpeg-6b ) tiff? ( >=media-libs/tiff-3.5.7 ) png? ( >=media-libs/libpng-1.2.5 ) nls? ( >=sys-devel/gettext-0.11.5 ) !nosendmail? ( virtual/mta ) >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 )
 23
 mirror://sourceforge/emacs-app/emacs-23.0.0_NS-9.0rc1.tar.bz2
 

@@ -1,5 +1,5 @@
 gnustep-libs/distributedview gnustep-libs/etoile-ui gnustep-libs/iconkit gnustep-libs/inspectorkit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-vcs/subversion net-misc/rsync
-gnustep-libs/distributedview gnustep-libs/etoile-ui gnustep-libs/iconkit gnustep-libs/inspectorkit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+gnustep-libs/distributedview gnustep-libs/etoile-ui gnustep-libs/iconkit gnustep-libs/inspectorkit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 )
 0
 
 

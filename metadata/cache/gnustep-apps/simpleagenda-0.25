@@ -1,5 +1,5 @@
 dev-libs/libical >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back
-dev-libs/libical >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+dev-libs/libical >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 )
 0
 http://coyote.octets.fr/pub/gnustep/SimpleAgenda-0.25.tar.gz
 

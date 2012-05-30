@@ -1,5 +1,5 @@
 virtual/postgresql-base gnustep-libs/etoile-serialize >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-vcs/subversion net-misc/rsync
-virtual/postgresql-base gnustep-libs/etoile-serialize >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 ) >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+virtual/postgresql-base gnustep-libs/etoile-serialize >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 ) >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 )
 0
 
 

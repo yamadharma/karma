@@ -1,5 +1,5 @@
 gnustep-libs/xwindowserverkit gnustep-libs/bookmarkkit || ( ( x11-libs/libXt ) virtual/x11 ) >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-vcs/subversion net-misc/rsync
-gnustep-libs/xwindowserverkit gnustep-libs/bookmarkkit || ( ( x11-libs/libXt ) virtual/x11 ) >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+gnustep-libs/xwindowserverkit gnustep-libs/bookmarkkit || ( ( x11-libs/libXt ) virtual/x11 ) >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 )
 0
 
 

@@ -1,5 +1,5 @@
 gnustep-libs/etoile-foundation gnustep-libs/languagekit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-vcs/subversion net-misc/rsync
-gnustep-libs/etoile-foundation gnustep-libs/languagekit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+gnustep-libs/etoile-foundation gnustep-libs/languagekit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 )
 0
 http://www.sqlite.org/sqlite-3.6.2.tar.gz
 

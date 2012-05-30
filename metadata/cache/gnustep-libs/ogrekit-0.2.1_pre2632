@@ -1,5 +1,5 @@
 >=dev-libs/oniguruma-5.7.0 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-vcs/subversion net-misc/rsync
->=dev-libs/oniguruma-5.7.0 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( >=sys-devel/gdb-6.0 )
+>=dev-libs/oniguruma-5.7.0 >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 )
 0
 
 
