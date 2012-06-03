@@ -7,7 +7,8 @@ EAPI=2
 inherit eutils games
 
 DESCRIPTION="Another Free Warlords II clone"
-HOMEPAGE="http://www.lordsawar.com/"
+HOMEPAGE="http://www.lordsawar.com/
+	http://www.nongnu.org/lordsawar/"
 SRC_URI="http://download.savannah.gnu.org/releases-noredirect/${PN}/${P/_/-}.tar.gz"
 
 LICENSE="GPL-2"

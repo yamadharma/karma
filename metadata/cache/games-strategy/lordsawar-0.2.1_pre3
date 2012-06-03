@@ -3,7 +3,7 @@ dev-libs/boost dev-cpp/gtkmm:2.4 dev-cpp/libglademm dev-libs/expat dev-libs/libs
 0
 http://download.savannah.gnu.org/releases-noredirect/lordsawar/lordsawar-0.2.1-pre3.tar.gz
 
-http://www.lordsawar.com/
+http://www.lordsawar.com/ http://www.nongnu.org/lordsawar/
 GPL-2
 Another Free Warlords II clone
 ~amd64 ~x86
