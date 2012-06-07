@@ -7,7 +7,7 @@ http://sisuite.org/systemconfig/
 GPL-2
 Provide a consistent API for the configuration of system related items
 amd64 x86
-base eutils multilib perl-module toolchain-funcs user
+base eutils multilib multiprocessing perl-module toolchain-funcs user
 
 
 

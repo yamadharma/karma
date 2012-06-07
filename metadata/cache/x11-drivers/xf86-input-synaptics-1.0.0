@@ -7,7 +7,7 @@ http://cgit.freedesktop.org/xorg/driver/xf86-input-synaptics/
 MIT
 Driver for Synaptics touchpads
 amd64 ~ppc ~ppc64 x86
-autotools eutils flag-o-matic libtool linux-info multilib toolchain-funcs user versionator x-modular
+autotools eutils flag-o-matic libtool linux-info multilib multiprocessing toolchain-funcs user versionator x-modular
 hal debug
 
 

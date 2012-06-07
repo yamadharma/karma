@@ -7,7 +7,7 @@ http://untrepid.com/lsdvd/
 GPL-2
 Utility for getting info out of DVDs
 amd64 ~ppc ~ppc64 ~sparc x86
-autotools libtool multilib toolchain-funcs
+autotools libtool multilib multiprocessing toolchain-funcs
 
 
 

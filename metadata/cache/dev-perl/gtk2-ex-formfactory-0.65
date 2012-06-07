@@ -7,7 +7,7 @@ http://www.exit1.org/Gtk2-Ex-FormFactory/
 GPL-2
 Gtk2 FormFactory
 amd64 ~ia64 ~ppc ~ppc64 ~sparc x86
-base eutils multilib perl-module toolchain-funcs user
+base eutils multilib multiprocessing perl-module toolchain-funcs user
 
 
 

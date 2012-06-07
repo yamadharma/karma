@@ -7,7 +7,7 @@ http://port389.org/
 GPL-2 Apache-2.0
 389 Directory Server (admin)
 ~amd64 ~x86
-autotools depend.apache eutils libtool multilib toolchain-funcs user
+autotools depend.apache eutils libtool multilib multiprocessing toolchain-funcs user
 debug ipv6 selinux
 
 

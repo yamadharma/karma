@@ -7,7 +7,7 @@ http://www.cpan.org/modules/by-module/IO/IO-stringy-2.108.readme
 Artistic
 I/O on in-core objects like strings and arrays
 x86 ppc sparc sparc64
-base eutils multilib perl-module toolchain-funcs user
+base eutils multilib multiprocessing perl-module toolchain-funcs user
 
 
 

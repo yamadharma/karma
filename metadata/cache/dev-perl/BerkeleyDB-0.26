@@ -7,7 +7,7 @@ http://search.cpan.org/~pmqs/BerkeleyDB-0.25/
 GPL-2
 This module provides Berkeley DB interface for Perl.
 x86 ~ppc ~sparc amd64 ~alpha ppc64
-base eutils multilib perl-module toolchain-funcs user
+base eutils multilib multiprocessing perl-module toolchain-funcs user
 
 
 

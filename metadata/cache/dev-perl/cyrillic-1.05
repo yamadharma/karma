@@ -7,7 +7,7 @@ http://www.cpan.org/modules/by-module/Convert/cyrillic-1.05.readme
 Artistic
 Cyrillic Software Suite
 x86 amd64 ~alpha ~arm ~hppa ~mips ~ppc ~sparc
-base eutils multilib perl-module toolchain-funcs user
+base eutils multilib multiprocessing perl-module toolchain-funcs user
 
 
 
