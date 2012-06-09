@@ -1,4 +1,4 @@
-|| ( dev-lang/smlnj dev-lang/mlton ) dev-vcs/subversion net-misc/rsync || ( >=sys-devel/automake-1.11.1:1.11 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+|| ( dev-lang/smlnj dev-lang/mlton ) dev-vcs/subversion net-misc/rsync || ( >=sys-devel/automake-1.11.1:1.11 >=sys-devel/automake-1.12:1.12 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 || ( dev-lang/smlnj dev-lang/mlton )
 0
 

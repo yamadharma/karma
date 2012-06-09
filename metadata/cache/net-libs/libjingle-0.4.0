@@ -1,4 +1,4 @@
-dev-libs/openssl ortp? ( >=net-libs/ortp-0.7.1 ilbc? ( dev-libs/ilbc-rfc3951 ) speex? ( media-libs/speex ) ) dev-util/pkgconfig || ( >=sys-devel/automake-1.11.1 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+dev-libs/openssl ortp? ( >=net-libs/ortp-0.7.1 ilbc? ( dev-libs/ilbc-rfc3951 ) speex? ( media-libs/speex ) ) dev-util/pkgconfig || ( >=sys-devel/automake-1.11.1 >=sys-devel/automake-1.12 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 dev-libs/openssl ortp? ( >=net-libs/ortp-0.7.1 ilbc? ( dev-libs/ilbc-rfc3951 ) speex? ( media-libs/speex ) )
 0
 mirror://sourceforge/libjingle/libjingle-0.4.0.tar.gz

@@ -1,4 +1,4 @@
-elibc_glibc? ( >=sys-libs/glibc-2.3.2 ) sys-devel/gettext sys-devel/autoconf >=sys-devel/binutils-2.15.90.0.1 >=sys-devel/gcc-3.3.3 !dev-libs/libelf || ( >=sys-devel/automake-1.11.1 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+elibc_glibc? ( >=sys-libs/glibc-2.3.2 ) sys-devel/gettext sys-devel/autoconf >=sys-devel/binutils-2.15.90.0.1 >=sys-devel/gcc-3.3.3 !dev-libs/libelf || ( >=sys-devel/automake-1.11.1 >=sys-devel/automake-1.12 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 
 0
 ftp://sources.redhat.com/pub/systemtap/elfutils/elfutils-0.123.tar.gz mirror://gentoo/elfutils-0.123-patches-1.0.tar.bz2

@@ -1,4 +1,4 @@
-dev-util/gperf sys-devel/libtool || ( >=sys-devel/automake-1.11.1 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+dev-util/gperf sys-devel/libtool || ( >=sys-devel/automake-1.11.1 >=sys-devel/automake-1.12 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 dev-util/gperf sys-devel/libtool >=sys-libs/zlib-1.1.3
 0
 mirror://sourceforge/mad/libid3tag-0.15.1b.tar.gz

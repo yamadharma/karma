@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -14,12 +14,12 @@ SRC_URI="http://launchpad.net/${PN}/trunk/${PV}/+download/${P}.tar.bz2"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+icu reader syslog"
+IUSE="+icu +links reader syslog"
+RESTRICT=mirror
 
 RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}[X]
 	dev-libs/libxml2
-	>=dev-libs/faxpp-0.4
 	dev-db/sqlite:3[fts3,icu?]
 	app-arch/bzip2
 	icu? ( dev-libs/icu )
@@ -30,7 +30,6 @@ RDEPEND="
 		sys-libs/zlib
 	)
 "
-
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 "
@@ -47,8 +46,8 @@ src_prepare() {
 src_configure() {
 	econf \
 		$(use_with icu) \
+		$(use_with links) \
 		$(use_with reader) \
 		$(use_with syslog) \
-		--with-sqlite \
 		--without-strip
 }
