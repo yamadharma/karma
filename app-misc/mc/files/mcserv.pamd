@@ -1,6 +1,0 @@
-#%PAM-1.0
-auth       required	/lib/security/pam_listfile.so item=user sense=deny file=/etc/ftpusers onerr=succeed
-auth       include	system-auth
-auth       required	/lib/security/pam_shells.so
-account    include	system-auth
-session    include	system-auth
