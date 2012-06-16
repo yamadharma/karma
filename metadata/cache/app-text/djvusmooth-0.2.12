@@ -1,8 +1,8 @@
 =dev-lang/python-2*
 dev-python/python-djvulibre =dev-lang/python-2*
 0
-http://pypi.python.org/packages/source/d/djvusmooth/djvusmooth-0.2.10.tar.gz
-
+http://pypi.python.org/packages/source/d/djvusmooth/djvusmooth-0.2.12.tar.gz
+mirror
 http://jwilk.net/software/djvusmooth
 GPL-2
 djvusmooth is a graphical editor for DjVu documents

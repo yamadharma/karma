@@ -20,6 +20,7 @@ IUSE=""
 DEPEND=""
 RDEPEND="dev-python/python-djvulibre"
 RESTRICT_PYTHON_ABIS="3.*"
+RESTRICT=mirror
 
 #PYTHON_MODNAME="dns"
 DOCS="doc/changelog doc/djvusmooth.xml"
