@@ -1,3 +1,4 @@
 move net-libs/farsight2 net-libs/farstream
 move net-libs/telepathy-farsight net-libs/telepathy-farstream
+move dev-perl/Data-Dumper perl-core/Data-Dumper
 
