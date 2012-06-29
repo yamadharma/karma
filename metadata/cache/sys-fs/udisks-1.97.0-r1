@@ -1,0 +1,22 @@
+>=dev-libs/glib-2.32 >=sys-auth/polkit-0.104-r1 >=dev-libs/libatasmart-0.18 || ( >=sys-fs/udev-171-r6[gudev,hwdb] <sys-fs/udev-171[extras] ) virtual/acl introspection? ( >=dev-libs/gobject-introspection-1.30 ) systemd? ( >=sys-apps/systemd-44 ) app-text/docbook-xsl-stylesheets dev-libs/libxslt >=dev-util/gdbus-codegen-2.32 dev-util/intltool >=sys-kernel/linux-headers-3.1 virtual/pkgconfig doc? ( dev-util/gtk-doc app-text/docbook-xml-dtd:4.1.2 ) !<sys-apps/systemd-29-r4 !=sys-apps/systemd-37-r1
+>=dev-libs/glib-2.32 >=sys-auth/polkit-0.104-r1 >=dev-libs/libatasmart-0.18 || ( >=sys-fs/udev-171-r6[gudev,hwdb] <sys-fs/udev-171[extras] ) virtual/acl introspection? ( >=dev-libs/gobject-introspection-1.30 ) systemd? ( >=sys-apps/systemd-44 ) >=sys-apps/util-linux-2.20.1-r2 >=sys-block/parted-3 virtual/eject crypt? ( sys-fs/cryptsetup ) gptfdisk? ( >=sys-apps/gptfdisk-0.8 )
+2
+http://udisks.freedesktop.org/releases/udisks-1.97.0.tar.bz2
+
+http://www.freedesktop.org/wiki/Software/udisks
+GPL-2
+Daemon providing interfaces to work with storage devices
+~amd64 ~arm ~mips ~ppc ~ppc64 ~x86
+bash-completion-r1 eutils linux-info multilib systemd toolchain-funcs user versionator
+debug doc crypt +gptfdisk +introspection systemd
+
+
+
+4
+
+configure install postinst prepare setup
+
+
+
+
+
