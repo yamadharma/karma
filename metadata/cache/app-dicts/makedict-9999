@@ -5,7 +5,7 @@
 
 http://xdxf.sf.net/
 GPL-2
-Based on the subversion eclass
+XDXF based converter from any dictionary format to any
 
 base cmake-utils eutils flag-o-matic multilib subversion toolchain-funcs user
 

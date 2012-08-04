@@ -1,4 +1,4 @@
-emacs? ( virtual/emacs ) dev-util/byacc emacs? ( app-text/noweb doc? ( virtual/tetex ) ) dev-vcs/subversion net-misc/rsync
+emacs? ( virtual/emacs ) dev-util/byacc emacs? ( app-text/noweb doc? ( virtual/tetex ) ) || ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
 emacs? ( virtual/emacs )
 0
 doc? ( http://aldor.org/docs/aldorug.pdf.gz http://aldor.org/docs/libaldor.pdf.gz http://aldor.org/docs/tutorial.pdf.gz ftp://ftp-sop.inria.fr/cafe/software/algebra/algebra.html.tar.gz ) emacs? ( http://www.risc.uni-linz.ac.at/people/hemmecke/aldor/aldor.el.nw )

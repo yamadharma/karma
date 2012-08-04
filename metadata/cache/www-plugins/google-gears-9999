@@ -1,4 +1,4 @@
-www-client/firefox dev-util/pkgconfig dev-vcs/subversion net-misc/rsync app-arch/unzip
+www-client/firefox dev-util/pkgconfig || ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync app-arch/unzip
 www-client/firefox dev-util/pkgconfig
 0
 

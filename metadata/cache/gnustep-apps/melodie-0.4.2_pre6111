@@ -1,4 +1,4 @@
-media-libs/libmp4v2 gnustep-libs/coreobject gnustep-libs/etoile-ui gnustep-libs/iconkit gnustep-libs/mediakit gnustep-libs/scriptkit gnustep-libs/smalltalkkit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back dev-vcs/subversion net-misc/rsync
+media-libs/libmp4v2 gnustep-libs/coreobject gnustep-libs/etoile-ui gnustep-libs/iconkit gnustep-libs/mediakit gnustep-libs/scriptkit gnustep-libs/smalltalkkit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back || ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
 media-libs/libmp4v2 gnustep-libs/coreobject gnustep-libs/etoile-ui gnustep-libs/iconkit gnustep-libs/mediakit gnustep-libs/scriptkit gnustep-libs/smalltalkkit >=gnustep-base/gnustep-make-2.0 virtual/gnustep-back debug? ( !<sys-devel/gdb-6.0 )
 0
 

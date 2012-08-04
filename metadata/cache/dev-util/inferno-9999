@@ -1,4 +1,4 @@
-virtual/libc dev-vcs/subversion net-misc/rsync
+virtual/libc || ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
 virtual/libc
 0
 

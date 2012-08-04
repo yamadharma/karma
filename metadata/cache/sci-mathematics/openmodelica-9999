@@ -1,4 +1,4 @@
-|| ( net-misc/mico net-misc/omniORB ) dev-lang/rml sci-libs/lpsolve x11-libs/qwt:5 >=sys-libs/readline-5 dev-db/sqlite:3 dev-java/antlr media-libs/SoQt media-libs/coin dev-vcs/subversion net-misc/rsync || ( >=sys-devel/automake-1.11.1:1.11 >=sys-devel/automake-1.12:1.12 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+|| ( net-misc/mico net-misc/omniORB ) dev-lang/rml sci-libs/lpsolve x11-libs/qwt:5 >=sys-libs/readline-5 dev-db/sqlite:3 dev-java/antlr media-libs/SoQt media-libs/coin || ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync || ( >=sys-devel/automake-1.11.1:1.11 >=sys-devel/automake-1.12:1.12 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 
 0
 
