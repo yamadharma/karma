@@ -15,6 +15,7 @@ SRC_URI="http://owncloud.org/releases/${P}.tar.bz2"
 LICENSE="GPL-3"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT=mirror
 
 RDEPENDS="media-sound/mp3info
 	net-misc/curl"
