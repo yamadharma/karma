@@ -13,7 +13,7 @@ SRC_URI="http://www.sai.msu.su/apache/pdfbox/${PV}/${P}-src.zip"
 
 LICENSE="BSD"
 SLOT="0"
-# KEYWORDS="amd64 ppc x86"
+KEYWORDS="amd64 ppc x86"
 IUSE=""
 
 CDEPEND="dev-java/fontbox
@@ -31,7 +31,7 @@ DEPEND=">=virtual/jdk-1.6
 	${CDEPEND}"
 
 # missing needed files
-RESTRICT="test"
+RESTRICT="test mirror"
 
 S=${WORKDIR}/${P}/${PN}
 
@@ -49,7 +49,7 @@ src_prepare() {
 	java-pkg_jar-from bcmail
 #	java-pkg_jar-from lucene-2.1
 #	java-pkg_jar-from ant-core ant.jar
-	java-pkg_jar-from icu4j
+	java-pkg_jar-from icu4j-49
 	java-pkg_jar-from commons-logging
 	java-pkg_jar-from junit
 }

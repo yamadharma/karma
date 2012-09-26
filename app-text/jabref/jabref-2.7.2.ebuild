@@ -39,6 +39,9 @@ DEPEND=">=virtual/jdk-1.6
 
 S="${WORKDIR}/${PN}-${MY_PV}"
 
+
+RESTRICT=mirror
+
 java_prepare() {
 	# moves jarbundler definition to where it's needed (not by us)
 	# don't call unjarlib, don't want to absorb deps
