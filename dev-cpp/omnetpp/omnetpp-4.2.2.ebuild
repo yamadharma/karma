@@ -19,16 +19,15 @@ RESTRICT="mirror"
 
 RDEPEND=">=virtual/jdk-1.5.0"
 DEPEND="${RDEPEND}
-        >=dev-lang/tcl-8.4
+	>=dev-lang/tcl-8.4
 	>=dev-lang/tk-8.4
-    	dev-lang/perl
+	dev-lang/perl
 	|| ( dev-libs/libxml2 dev-libs/expat )
 	blt? ( dev-tcltk/blt )
 	mpi? ( sys-cluster/openmpi )
 	pcap? ( net-libs/libpcap )
-	doc? ( net-libs/xulrunner 
-	       media-gfx/graphviz
-	       app-doc/doxygen )"
+	doc? ( media-gfx/graphviz
+		app-doc/doxygen )"
 
 
 src_configure() {
@@ -45,7 +44,7 @@ src_configure() {
 
 src_install() {
     local dirs="bin ide images lib include"
-    dodir /opt/${P}
+    dodir /opt/${PN}
 
     #{{{ Hack
 
@@ -61,20 +60,20 @@ src_install() {
     # remove ide components for win/osx
     rm ide/win32 ide/macosx -fr
 
-    cp -pPR $dirs "${D}/opt/${P}/" || die "failed to copy files"
+    cp -pPR $dirs "${D}/opt/${PN}/" || die "failed to copy files"
 
     if use doc; then
-       cp -pPR doc "${D}/opt/${P}/" || die "failed to copy doc files"
+       cp -pPR doc "${D}/opt/${PN}/" || die "failed to copy doc files"
     fi
 
     dodoc README || die "failed to dodoc"
 
     # Makefile.inc
     sed -i 's#'"${S}"'#'"${ROOT}opt/${P}"'#g' Makefile.inc
-    cp -p "${S}/Makefile.inc" "${D}/opt/${P}/Makefile.inc"
+    cp -p "${S}/Makefile.inc" "${D}/opt/${PN}/Makefile.inc"
 
     if use example; then
-       insinto "/opt/${P}/samples"
+       insinto "/opt/${PN}/samples"
        doins -r samples/* || die "error: installing data failed"
        for x in $(find ./samples -executable -type f); do
        	   exeinto "/opt/${P}/$(dirname ${x})"
@@ -83,11 +82,11 @@ src_install() {
     fi
 
     # symbol link
-    dosym /opt/${P}/ide/omnetpp /usr/bin/omnetpp
+    dosym /opt/${PN}/ide/omnetpp /usr/bin/omnetpp
 
     dodir /etc/env.d
-    echo "LD_LIBRARY_PATH=${ROOT}opt/${P}/lib" > ${D}/etc/env.d/90omnetpp
-    echo "PATH=${ROOT}opt/${P}/bin" >> ${D}/etc/env.d/90omnetpp
+    echo "LD_LIBRARY_PATH=${ROOT}opt/${PN}/lib" > ${D}/etc/env.d/90omnetpp
+    echo "PATH=${ROOT}opt/${PN}/bin" >> ${D}/etc/env.d/90omnetpp
     echo "TCL_LIBRARY=$(whereis tcl | awk '{print $2}')" >> ${D}/etc/env.d/90omnetpp
 }
 
@@ -99,8 +98,8 @@ pkg_setup() {
 pkg_postinst() {
     elog ""
     elog "Please put following into your .bashrc"
-    elog "    export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${ROOT}opt/${P}/lib"
-    elog "    export PATH=\$PATH:${ROOT}opt/${P}/bin"
+    elog "    export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${ROOT}opt/${PN}/lib"
+    elog "    export PATH=\$PATH:${ROOT}opt/${PN}/bin"
     elog "    export TCL_LIBRARY=$(whereis tcl | awk '{print $2}')"
     elog ""
 }
