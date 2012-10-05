@@ -1,0 +1,22 @@
+>=dev-libs/glib-2.32:2 >=x11-libs/gtk+-3.2:3 >=dev-db/sqlite-3.5 >=dev-libs/libgdata-0.10 >=gnome-base/gnome-keyring-2.20.1 >=dev-libs/libical-0.43 >=net-libs/libsoup-2.38.1:2.4 >=dev-libs/libxml2-2 >=sys-libs/db-4 >=dev-libs/nspr-4.4 >=dev-libs/nss-3.9 >=app-crypt/gcr-3.4 sys-libs/zlib virtual/libiconv gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.2 >=net-libs/liboauth-0.9.4 ) introspection? ( >=dev-libs/gobject-introspection-0.9.12 ) kerberos? ( virtual/krb5 ) ldap? ( >=net-nds/openldap-2 ) weather? ( >=dev-libs/libgweather-3.5:2 ) dev-util/fix-la-relink-command dev-util/gperf >=dev-util/intltool-0.35.5 >=gnome-base/gnome-common-2 >=dev-util/gtk-doc-am-1.9 >=sys-devel/gettext-0.17 virtual/pkgconfig doc? ( >=dev-util/gtk-doc-1.14 ) vala? ( dev-lang/vala:0.18[vapigen] ) app-arch/xz-utils >=sys-apps/sed-4 =dev-lang/python-2* test? ( !prefix? ( x11-base/xorg-server[xvfb] ) x11-apps/xhost )
+>=dev-libs/glib-2.32:2 >=x11-libs/gtk+-3.2:3 >=dev-db/sqlite-3.5 >=dev-libs/libgdata-0.10 >=gnome-base/gnome-keyring-2.20.1 >=dev-libs/libical-0.43 >=net-libs/libsoup-2.38.1:2.4 >=dev-libs/libxml2-2 >=sys-libs/db-4 >=dev-libs/nspr-4.4 >=dev-libs/nss-3.9 >=app-crypt/gcr-3.4 sys-libs/zlib virtual/libiconv gnome-online-accounts? ( >=net-libs/gnome-online-accounts-3.2 >=net-libs/liboauth-0.9.4 ) introspection? ( >=dev-libs/gobject-introspection-0.9.12 ) kerberos? ( virtual/krb5 ) ldap? ( >=net-nds/openldap-2 ) weather? ( >=dev-libs/libgweather-3.5:2 ) =dev-lang/python-2*
+0
+mirror://gnome/sources/evolution-data-server/3.6/evolution-data-server-3.6.0.tar.xz
+test
+http://www.gnome.org/projects/evolution/
+LGPL-2 BSD DB
+Evolution groupware backend
+~amd64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~ia64-linux ~x86-linux ~x86-solaris
+db-use eutils fdo-mime flag-o-matic gnome.org gnome2 gnome2-utils libtool multilib python toolchain-funcs user versionator virtualx
+doc +gnome-online-accounts +introspection ipv6 ldap kerberos vala +weather test
+vala? ( introspection )
+
+
+4
+
+compile configure install postinst postrm preinst prepare setup test unpack
+
+
+
+
+
