@@ -4,7 +4,9 @@
 
 EAPI="4"
 
-inherit openoffice-ext
+OO_EXTENSIONS=(${PN}.oxt)
+
+inherit office-ext
 
 DESCRIPTION="OpenOffice.org2GoogleDocs - export & import to Google Docs, Zoho, WebDAV"
 LICENSE="LGPL-3"
@@ -18,8 +20,6 @@ RESTRICT="nomirror"
 KEYWORDS="~alpha amd64 ~hppa ~ia64 ppc ~ppc64 sparc x86 ~x86-fbsd"
 
 S=${WORKDIR}
-
-OOO_EXTENSIONS=${PN}.oxt
 
 src_unpack() {
 	cp ${DISTDIR}/${P/-/_}.oxt ${S}/${PN}.oxt
