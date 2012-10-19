@@ -1,5 +1,0 @@
-#!/bin/bash
-
-TTS_PATH=/usr/share/WyabdcRealPeopleTTS
-WORD=`line | tr A-Z a-z`
-play ${TTS_PATH}/${WORD:0:1}/${WORD}.wav
