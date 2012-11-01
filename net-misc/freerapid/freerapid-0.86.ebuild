@@ -14,7 +14,7 @@ HOMEPAGE="http://wordrider.net/freerapid"
 SRC_URI="FreeRapid-${PV}${MY_PV_ADD}.zip"
 
 LICENSE="GPL"
-KEYWORDS="x86 amd64"
+# KEYWORDS="x86 amd64"
 RESTRICT="nomirror"
 
 IUSE=""
