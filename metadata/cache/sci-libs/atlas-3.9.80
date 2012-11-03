@@ -1,5 +1,5 @@
-fortran? ( virtual/fortran ) !prefix? ( sys-power/cpufrequtils ) virtual/fortran >=app-admin/eselect-1.3.1-r1
-fortran? ( virtual/fortran ) virtual/fortran >=app-admin/eselect-1.3.1-r1 !app-admin/eselect-blas !app-admin/eselect-cblas !app-admin/eselect-lapack
+fortran? ( virtual/fortran ) !prefix? ( sys-power/cpufrequtils ) virtual/fortran >=app-admin/eselect-1.3.3-r100
+fortran? ( virtual/fortran ) virtual/fortran >=app-admin/eselect-1.3.3-r100 !app-admin/eselect-blas !app-admin/eselect-cblas !app-admin/eselect-lapack
 0
 mirror://sourceforge/math-atlas/atlas3.9.80.tar.bz2 fortran? ( lapack? ( http://www.netlib.org/lapack/lapack-3.4.1.tgz ) )
 
