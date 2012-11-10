@@ -6,7 +6,7 @@ mirror://sourceforge/vcmi/vcmi_088.zip
 http://vcmi.sf.net
 GPL-2
 VCMI Project - Heroes 3: WoG recreated
-amd64 x86
+
 autotools eutils flag-o-matic libtool multilib multiprocessing subversion toolchain-funcs user
 
 
