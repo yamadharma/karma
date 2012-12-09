@@ -20,13 +20,16 @@ IUSE="cuneiform gocr ocrad ocropus tesseract"
 DEPEND=""
 RDEPEND="dev-python/python-djvulibre
 	dev-python/lxml
-	dev-python/argparse
-	dev-python/pyicu
+ 	dev-python/pyicu
 	cuneiform? ( app-text/cuneiform )
 	gocr? ( app-text/gocr )
 	ocropus? ( app-text/ocropus )
 	tesseract? ( app-text/tesseract )
 	ocrad? ( app-text/ocrad )"
+
+#	dev-python/argparse
+
+RESTRICT="nomirror"
 
 RESTRICT_PYTHON_ABIS="3.*"
 
