@@ -14,6 +14,7 @@ LICENSE="LPPL-1.3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc examples"
+RESTRICT="mirror"
 
 RDEPEND="dev-texlive/texlive-bibtexextra"
 DEPEND="${RDEPEND}"
