@@ -1,7 +1,7 @@
 || ( virtual/emacs virtual/xemacs ) dev-lang/perl
 || ( virtual/emacs virtual/xemacs ) dev-lang/perl
 0
-mirror://sourceforge/ecf/tiny-tools-2012.0106.tar.bz2
+mirror://sourceforge/ecf/tiny-tools-2012.0711.tar.bz2
 
 http://tiny-tools.sourceforge.net
 GPL
