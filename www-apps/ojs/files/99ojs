@@ -1,0 +1,1 @@
+CONFIG_PROTECT_MASK="/var/www/localhost/htdocs/ojs/config.inc.php"

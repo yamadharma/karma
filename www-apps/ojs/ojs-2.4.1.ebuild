@@ -6,13 +6,14 @@ EAPI=2
 inherit webapp eutils depend.php
 
 
-DESCRIPTION="Open Conference Systems"
-HOMEPAGE="http://pkp.sfu.ca/ocs"
-SRC_URI="http://pkp.sfu.ca/ocs/download/${P}.tar.gz"
+DESCRIPTION="Open Journal Systems"
+HOMEPAGE="http://pkp.sfu.ca/ojs"
+SRC_URI="http://pkp.sfu.ca/ojs/download/${P}.tar.gz"
 
 LICENSE="GPL-3"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT=mirror
 
 need_httpd_cgi
 need_php_httpd
@@ -38,5 +39,5 @@ src_install() {
 
 	webapp_src_install
 
-	doenvd ${FILESDIR}/99ocs
+	doenvd ${FILESDIR}/99ojs
 }
