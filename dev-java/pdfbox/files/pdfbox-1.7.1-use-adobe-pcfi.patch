@@ -1,0 +1,45 @@
+diff -Nru /tmp/pdfbox.orig/build.xml ./build.xml
+--- /tmp/pdfbox.orig/build.xml	2012-12-25 16:47:21.159814268 +0200
++++ ./build.xml	2012-12-25 16:48:31.770926566 +0200
+@@ -223,7 +223,8 @@
+     <target name="get.adobefiles"
+             unless="adobefiles.found" depends="find.adobefiles"
+             description="Download and unpack afm and cmap files from Adobe">
+-        <antcall target="downloadfile">
++<!-- 
++            <antcall target="downloadfile">
+             <param name="sourcefile" value="${adobefiles.url}"/>
+             <param name="destfile" value="${adobefiles.jar}"/>
+         </antcall>
+@@ -239,6 +240,7 @@
+             </patternset>
+             <mapper type="flatten"/>
+         </unjar>
++ -->
+     </target>
+ 
+     <target name="find.testfiles">
+diff -Nru /tmp/pdfbox.orig/src/main/java/org/apache/pdfbox/encoding/Encoding.java ./src/main/java/org/apache/pdfbox/encoding/Encoding.java
+--- /tmp/pdfbox.orig/src/main/java/org/apache/pdfbox/encoding/Encoding.java	2012-12-25 16:47:21.249813136 +0200
++++ ./src/main/java/org/apache/pdfbox/encoding/Encoding.java	2012-12-25 16:50:33.715393515 +0200
+@@ -70,7 +70,7 @@
+     static
+     {
+         //Loads the official Adobe Glyph List
+-        loadGlyphList("org/apache/pdfbox/resources/glyphlist.txt");
++        loadGlyphList("com/adobe/pdf/pcfi/glyphlist.txt");
+         //Loads some additional glyph mappings
+         loadGlyphList("org/apache/pdfbox/resources/additional_glyphlist.txt");
+ 
+diff -Nru /tmp/pdfbox.orig/src/main/java/org/apache/pdfbox/pdmodel/font/PDFont.java ./src/main/java/org/apache/pdfbox/pdmodel/font/PDFont.java
+--- /tmp/pdfbox.orig/src/main/java/org/apache/pdfbox/pdmodel/font/PDFont.java	2012-12-25 16:47:21.225813439 +0200
++++ ./src/main/java/org/apache/pdfbox/pdmodel/font/PDFont.java	2012-12-25 16:50:58.558081202 +0200
+@@ -129,7 +129,7 @@
+     }
+ 
+     protected final static String resourceRootCMAP = "org/apache/pdfbox/resources/cmap/";
+-    private final static String resourceRootAFM = "org/apache/pdfbox/resources/afm/";
++    private final static String resourceRootAFM = "com/adobe/pdf/pcfi/afm/";
+ 
+     private static void addAdobeFontMetric(
+             Map<String, FontMetric> metrics, String name )

@@ -12,7 +12,7 @@ HOMEPAGE="http://pdfbox.apache.org/"
 SRC_URI="http://www.sai.msu.su/apache/pdfbox/${PV}/${P}-src.zip"
 
 LICENSE="BSD"
-SLOT="0"
+SLOT="1.7"
 KEYWORDS="amd64 ppc x86"
 IUSE=""
 
