@@ -1,4 +1,4 @@
->=dev-libs/glib-2.6.0 >=dev-util/cmake-2.4 dev-libs/expat dev-lang/python sys-libs/zlib >=dev-util/cmake-2.8.4 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) dev-vcs/subversion net-misc/rsync
+>=dev-libs/glib-2.6.0 >=dev-util/cmake-2.4 dev-libs/expat dev-lang/python sys-libs/zlib >=dev-util/cmake-2.8.8 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) dev-vcs/subversion net-misc/rsync
 >=dev-libs/glib-2.6.0 >=dev-util/cmake-2.4 dev-libs/expat dev-lang/python sys-libs/zlib
 0
 
