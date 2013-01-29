@@ -76,21 +76,21 @@ src_install() {
 	use source && java-pkg_dosrc src/main/java/org
 	#TODO: make launchers and postinstall messages?
 
-        my_launcher pdfconvertcolorspace ConvertColorspace
-        my_launcher pdfdecrypt Decrypt
-        my_launcher pdfencrypt Encrypt
-        my_launcher pdfexportfdf ExportFDF
-        my_launcher pdfexportxfdf ExportXFDF
-        my_launcher pdfextractimages ExtractImages
-        my_launcher pdfextracttext ExtractText
-        my_launcher pdfimportfdf ImportFDF
-        my_launcher pdfimportxfdf ImportXFDF
-        my_launcher pdfoverlay Overlay
-        my_launcher pdfdebugger PDFDebugger
-        my_launcher pdfmerger PDFMerger
-        my_launcher pdfreader PDFReader
-        my_launcher pdfsplit PDFSplit
-        my_launcher pdftoimage PDFToImage
-        my_launcher printpdf PrintPDF
-        my_launcher texttopdf TextToPDF
+#        my_launcher pdfconvertcolorspace ConvertColorspace
+#        my_launcher pdfdecrypt Decrypt
+#        my_launcher pdfencrypt Encrypt
+#        my_launcher pdfexportfdf ExportFDF
+#        my_launcher pdfexportxfdf ExportXFDF
+#        my_launcher pdfextractimages ExtractImages
+#        my_launcher pdfextracttext ExtractText
+#        my_launcher pdfimportfdf ImportFDF
+#        my_launcher pdfimportxfdf ImportXFDF
+#        my_launcher pdfoverlay Overlay
+#        my_launcher pdfdebugger PDFDebugger
+#        my_launcher pdfmerger PDFMerger
+#        my_launcher pdfreader PDFReader
+#        my_launcher pdfsplit PDFSplit
+#        my_launcher pdftoimage PDFToImage
+#        my_launcher printpdf PrintPDF
+#        my_launcher texttopdf TextToPDF
 }
