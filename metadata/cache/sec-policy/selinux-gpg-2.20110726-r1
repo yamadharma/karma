@@ -14,7 +14,7 @@ eutils multilib selinux-policy-2 toolchain-funcs user
 
 4
 
-compile install postinst prepare unpack
+compile install postinst postrm prepare unpack
 
 
 
