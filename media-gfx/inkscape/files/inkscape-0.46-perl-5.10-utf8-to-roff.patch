@@ -1,8 +1,0 @@
---- utf8-to-roff	2008-03-11 07:20:51.000000000 +0300
-+++ utf8-to-roff.new	2008-09-14 09:01:02.000000000 +0400
-@@ -1,4 +1,4 @@
--#! /usr/bin/perl -w -CI
-+#! /usr/bin/perl -w
- # Converts a man page from utf8 (not understood by groff 1.18) to groff escapes.
- # I couldn't find any existing tool to convert from utf8 to groff, though I
- # seem to recall seeing some code to do so somewhere.

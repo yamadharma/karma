@@ -1,0 +1,22 @@
+
+>=virtual/jdk-1.6.0-r1
+0
+https://geogebra.googlecode.com/files/GeoGebra-Unixlike-Installer-4.2.18.0.tar.gz
+mirror
+http://www.geogebra.org/cms/en
+GPL-3 CCPL-Attribution-ShareAlike-3.0
+
+~amd64 ~x86
+eutils multilib toolchain-funcs user
+
+
+
+
+4
+
+install prepare unpack
+
+
+
+
+

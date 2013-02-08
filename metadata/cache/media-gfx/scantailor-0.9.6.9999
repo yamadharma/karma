@@ -1,4 +1,4 @@
-dev-libs/boost media-libs/jpeg media-libs/libpng media-libs/tiff sys-libs/zlib x11-libs/libXrender >=x11-libs/qt-gui-4.4 >=dev-util/cmake-2.8.8 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) >=dev-vcs/git-1.6
+dev-libs/boost media-libs/jpeg media-libs/libpng media-libs/tiff sys-libs/zlib x11-libs/libXrender >=x11-libs/qt-gui-4.4 sys-devel/make >=dev-util/cmake-2.8.8 userland_GNU? ( >=sys-apps/findutils-4.4.0 ) >=dev-vcs/git-1.6
 dev-libs/boost media-libs/jpeg media-libs/libpng media-libs/tiff sys-libs/zlib x11-libs/libXrender >=x11-libs/qt-gui-4.4
 0
 
