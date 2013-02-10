@@ -1,4 +1,4 @@
-net-misc/csync >=dev-libs/iniparser-2.10 sys-devel/make >=dev-util/cmake-2.8.8 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+net-misc/csync >=dev-libs/iniparser-2.10 sys-devel/make >=dev-util/cmake-2.8.9 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 net-misc/csync >=dev-libs/iniparser-2.10
 0
 http://www.csync.org/files/pam_csync-0.42.0.tar.gz

@@ -1,4 +1,4 @@
-dev-games/ggz-client-libs dev-lang/lua media-libs/sdl-image[jpeg,png] media-libs/sdl-mixer[vorbis] media-libs/sdl-gfx media-libs/sdl-net media-libs/glew media-libs/sdl-ttf dev-libs/boost sys-devel/make >=dev-util/cmake-2.8.8 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+dev-games/ggz-client-libs dev-lang/lua media-libs/sdl-image[jpeg,png] media-libs/sdl-mixer[vorbis] media-libs/sdl-gfx media-libs/sdl-net media-libs/glew media-libs/sdl-ttf dev-libs/boost sys-devel/make >=dev-util/cmake-2.8.9 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 dev-games/ggz-client-libs dev-lang/lua media-libs/sdl-image[jpeg,png] media-libs/sdl-mixer[vorbis] media-libs/sdl-gfx media-libs/sdl-net media-libs/glew media-libs/sdl-ttf
 0
 http://launchpad.net/widelands/build16/build16/+download/widelands-build16-src.tar.bz2

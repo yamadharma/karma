@@ -14,8 +14,10 @@ SRC_URI="mirror://sourceforge/project/${MY_PN}/${MY_PN}/${PV}/${MY_PN}.tar.gz ->
 
 LICENSE="|| ( Artistic-2 GPL-1 GPL-2 GPL-3 )"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
+
+RESTRICT=mirror
 
 DEPEND="${RDEPEND}
 	test? ( dev-perl/File-Which )

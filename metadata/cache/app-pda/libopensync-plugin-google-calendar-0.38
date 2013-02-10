@@ -1,4 +1,4 @@
->=app-pda/libopensync-0.38 dev-python/httplib2 dev-libs/libgcal sys-devel/make >=dev-util/cmake-2.8.8 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=app-pda/libopensync-0.38 dev-python/httplib2 dev-libs/libgcal sys-devel/make >=dev-util/cmake-2.8.9 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 >=app-pda/libopensync-0.38 dev-python/httplib2 dev-libs/libgcal dev-python/pyxml
 0
 http://www.opensync.org/download/releases/0.38/libopensync-plugin-google-calendar-0.38.tar.bz2

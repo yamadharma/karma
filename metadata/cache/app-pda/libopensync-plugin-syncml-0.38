@@ -1,4 +1,4 @@
->=app-pda/libopensync-0.38 >=app-pda/libsyncml-0.4.7 sys-devel/make >=dev-util/cmake-2.8.8 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+>=app-pda/libopensync-0.38 >=app-pda/libsyncml-0.4.7 sys-devel/make >=dev-util/cmake-2.8.9 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 >=app-pda/libopensync-0.38 >=app-pda/libsyncml-0.4.7
 0
 http://www.opensync.org/download/releases/0.38/libopensync-plugin-syncml-0.38.tar.bz2
