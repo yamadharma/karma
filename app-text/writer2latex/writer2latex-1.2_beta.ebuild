@@ -4,9 +4,11 @@
 
 EAPI="4"
 
-inherit eutils latex-package java-pkg-2 java-ant-2 multilib openoffice-ext
+OO_EXTENSIONS=(writer2latex.oxt writer2xhtml.oxt xhtml-config-sample.oxt writer4latex.oxt)
 
-IS_SOURCE=
+inherit eutils latex-package java-pkg-2 java-ant-2 multilib office-ext
+
+IS_SOURCE=""
 
 MY_PV=${PV//./}
 MY_PV=${MY_PV/_/}
@@ -23,7 +25,7 @@ HOMEPAGE="http://writer2latex.sourceforge.net"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
 
 SLOT="0"
-LICENSE="GPL-2"
+LICENSE="GPL-3"
 KEYWORDS="x86 amd64"
 IUSE="doc examples"
 
@@ -31,7 +33,7 @@ DEPEND=">=virtual/jdk-1.6
 	virtual/latex-base"
 RDEPEND=">=virtual/jre-1.6"
 
-S=${WORKDIR}/${PN}11
+S=${WORKDIR}/${PN}12
 if [[ -n ${IS_SOURCE} ]]
 then
     S_DISTRO=${S}/source/distro
@@ -41,7 +43,7 @@ else
     S_TARGETLIB=${S}
 fi
 
-OOO_EXTENSIONS="writer2latex.oxt writer2xhtml.oxt xhtml-config-sample.oxt" 
+
 
 # EANT_EXTRA_ARGS="-DOFFICE_HOME=/usr/lib/openoffice"
 EANT_EXTRA_ARGS="-DOFFICE_HOME=${S}/openoffice"
@@ -54,6 +56,10 @@ src_prepare(){
 	find "${OOO_ROOT_DIR}" -name "*.jar" -exec ln -snf {} . \;
 	
 	sed -i -e "s:W2LPATH=.*:W2LPATH=/usr/$(get_libdir)/${PN}:" ${S_DISTRO}/w2l || die "Sed failed"
+}
+
+src_compile() {
+	echo 'nothing to compile'
 }
 
 src_install() {
@@ -79,15 +85,14 @@ src_install() {
 	if [[ -n ${IS_SOURCE} ]]
 	then
 		dodoc ${S}/source/oxt/xhtml-config-sample/config/*
-	else
-		dodoc ${S}/samples/config/*
 	fi
 
-	insinto "${OOO_EXT_DIR}"
-	for i in ${OOO_EXTENSIONS}
-	do
-		doins ${S_TARGETLIB}/${i}
-	done
+	#insinto "${OOO_EXT_DIR}"
+	#for i in ${OOO_EXTENSIONS}
+	#do
+	#	doins ${S_TARGETLIB}/${i}
+	#done
+        office-ext_src_install
 	
 	if use doc
         then
@@ -104,6 +109,7 @@ src_install() {
 	if use examples
 	then
 		cd ${S_DISTRO}
-		cp -R samples "${D}"/usr/share/doc/${PF} || die "Failed to copy samples"
+		cp -R samples config "${D}"/usr/share/doc/${PF} || die "Failed to copy samples"
+	    
 	fi
 }
