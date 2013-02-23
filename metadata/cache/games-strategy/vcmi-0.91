@@ -1,0 +1,22 @@
+media-libs/libsdl media-libs/sdl-mixer media-libs/sdl-image media-libs/sdl-ttf sys-libs/zlib media-video/ffmpeg dev-libs/boost sys-devel/make >=dev-util/cmake-2.8.9 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+media-libs/libsdl media-libs/sdl-mixer media-libs/sdl-image media-libs/sdl-ttf sys-libs/zlib media-video/ffmpeg dev-libs/boost
+0
+http://download.vcmi.eu/vcmi-0.91.tar.gz http://download.vcmi.eu/core.zip http://download.vcmi.eu/WoG/wog.zip
+mirror
+http://vcmi.sf.net
+GPL-2
+VCMI Project - Heroes 3: WoG recreated
+amd64 x86
+base cmake-utils eutils flag-o-matic multilib toolchain-funcs user
+
+
+
+
+5
+
+compile configure install prepare test unpack
+
+
+
+
+
