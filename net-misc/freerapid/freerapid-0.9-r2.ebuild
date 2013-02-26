@@ -6,7 +6,7 @@ EAPI="4"
 
 inherit eutils
 
-MY_PV_ADD=u1
+MY_PV_ADD=u2
 
 DESCRIPTION="FreeRapid is a simple Java downloader that supports downloading from Rapidshare and other file-sharing services."
 HOMEPAGE="http://wordrider.net/freerapid"
@@ -14,7 +14,7 @@ HOMEPAGE="http://wordrider.net/freerapid"
 SRC_URI="FreeRapid-${PV}${MY_PV_ADD}.zip"
 
 LICENSE="GPL"
-# KEYWORDS="x86 amd64"
+KEYWORDS="x86 amd64"
 RESTRICT="nomirror"
 
 IUSE=""
@@ -68,12 +68,15 @@ src_compile_() {
 
 src_install() {
 	dodir "${INSTALLDIR}"
-	mv "${S}/lib" "${S}/lookandfeel" "${S}/plugins" "${S}"/*.jar "${S}"/*.png "${S}/${PN}" "${D}/${INSTALLDIR}/" || die "Cannot install core-files"
+#	mv "${S}/lib" "${S}/lookandfeel" "${S}/plugins" "${S}"/*.jar "${S}"/*.png "${S}/${PN}" "${D}/${INSTALLDIR}/" || die "Cannot install core-files"
+#	mv "${S}/lib" "${S}/lookandfeel" "${S}"/*.jar "${S}"/*.png "${S}/${PN}" "${D}/${INSTALLDIR}/" || die "Cannot install core-files"
+	cp -R ${S}/* "${D}/${INSTALLDIR}/"
 	dodoc "${S}"/*.txt
 	# env
 	dodir /etc/env.d
 	echo -e "PATH=${INSTALLDIR}\nROOTPATH=${INSTALLDIR}" > "${D}/etc/env.d/10${PN}"
 
+	dodir ${INSTALLDIR}/plugins
 	fowners -R root:och ${INSTALLDIR}/plugins
 	fperms 775 ${INSTALLDIR}/plugins
 #	fperms 664 ${INSTALLDIR}/plugins/*
