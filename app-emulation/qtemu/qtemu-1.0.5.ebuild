@@ -16,7 +16,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND=">=dev-util/cmake-2.4.3
-		>=x11-libs/qt-4.2.2"
+		>=dev-qt/qt-4.2.2"
 RDEPEND="${DEPEND}"
 
 src_compile() {

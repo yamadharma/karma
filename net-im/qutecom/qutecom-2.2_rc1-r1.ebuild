@@ -30,7 +30,7 @@ DEPEND=">=dev-libs/boost-1.34
 	>=net-libs/libosip-3
 	net-misc/curl
 	|| ( x11-libs/libX11 virtual/x11 )
-	|| ( ( x11-libs/qt-gui:4 x11-libs/qt-svg:4 ) =x11-libs/qt-4.3* )
+	|| ( ( dev-qt/qtgui:4 dev-qt/qtsvg:4 ) =dev-qt/qt-meta-4.3* )
 	xv? ( x11-libs/libXv )"
 
 S=${WORKDIR}/${MY_P}

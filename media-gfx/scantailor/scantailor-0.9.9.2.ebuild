@@ -19,8 +19,8 @@ RDEPEND=">=media-libs/libpng-1.2.43
 	sys-libs/zlib
 	virtual/jpeg
 	x11-libs/libXrender
-	x11-libs/qt-gui:4
-	opengl? ( x11-libs/qt-opengl:4 )"
+	dev-qt/qtgui:4
+	opengl? ( dev-qt/qtopengl:4 )"
 DEPEND="${RDEPEND}
 	dev-libs/boost"
 

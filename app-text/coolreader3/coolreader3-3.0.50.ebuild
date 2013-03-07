@@ -38,8 +38,8 @@ DEPEND="sys-libs/zlib
 	media-libs/freetype
 	wxwidgets? ( app-admin/eselect-wxwidgets
 		>=x11-libs/wxGTK-2.8 )
-	qt4? ( x11-libs/qt-core:4
-		x11-libs/qt-gui:4 )
+	qt4? ( dev-qt/qtcore:4
+		dev-qt/qtgui:4 )
 	hyphen? ( app-arch/unzip )"
 RDEPEND="${DEPEND}
 	media-fonts/corefonts"

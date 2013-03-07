@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="x11-libs/qt-gui:4"
+RDEPEND="dev-qt/qtgui:4"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_P}_src"

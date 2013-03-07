@@ -23,11 +23,11 @@ QT_VER="4.7.0"
 DEPEND=">=dev-util/cmake-2.8.0"
 
 RDEPEND="
-		>=x11-libs/qt-core-${QT_VER}
-		>=x11-libs/qt-gui-${QT_VER}
-		>=x11-libs/qt-xmlpatterns-${QT_VER}
-		>=x11-libs/qt-svg-${QT_VER}
-		>=x11-libs/qt-webkit-${QT_VER}
+		>=dev-qt/qtcore-${QT_VER}
+		>=dev-qt/qtgui-${QT_VER}
+		>=dev-qt/qtxmlpatterns-${QT_VER}
+		>=dev-qt/qtsvg-${QT_VER}
+		>=dev-qt/qtwebkit-${QT_VER}
 		"
 
 

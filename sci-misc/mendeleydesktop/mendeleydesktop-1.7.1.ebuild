@@ -25,11 +25,11 @@ IUSE=""
 RESTRICT="fetch"
 
 DEPEND=""
-RDEPEND=">=x11-libs/qt-core-4.6:4
-	>=x11-libs/qt-gui-4.6:4
-	>=x11-libs/qt-svg-4.6:4
-	>=x11-libs/qt-webkit-4.6:4
-	>=x11-libs/qt-xmlpatterns-4.6:4"
+RDEPEND=">=dev-qt/qtcore-4.6:4
+	>=dev-qt/qtgui-4.6:4
+	>=dev-qt/qtsvg-4.6:4
+	>=dev-qt/qtwebkit-4.6:4
+	>=dev-qt/qtxmlpatterns-4.6:4"
 
 QA_PRESTRIPPED="
 	/opt/mendeleydesktop/$(get_libdir)/mendeleydesktop/libexec/.*
