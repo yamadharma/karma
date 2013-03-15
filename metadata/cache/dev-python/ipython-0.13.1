@@ -1,0 +1,22 @@
+dev-python/decorator dev-python/pexpect virtual/pyparsing dev-python/simplegeneric virtual/python-argparse emacs? ( app-emacs/python-mode virtual/emacs ) matplotlib? ( dev-python/matplotlib ) mongodb? ( dev-python/pymongo ) octave? ( dev-python/oct2py ) smp? ( dev-python/pyzmq ) wxwidgets? ( dev-python/wxpython ) test? ( dev-python/nose ) || ( =dev-lang/python-3.3* =dev-lang/python-3.2* =dev-lang/python-3.1* =dev-lang/python-2.7* =dev-lang/python-2.6* ) || ( =dev-lang/python-3.3*[readline,sqlite] =dev-lang/python-3.2*[readline,sqlite] =dev-lang/python-3.1*[readline,sqlite] =dev-lang/python-2.7*[readline,sqlite] =dev-lang/python-2.6*[readline,sqlite] ) test? ( !prefix? ( x11-base/xorg-server[xvfb] ) x11-apps/xhost )
+dev-python/decorator dev-python/pexpect virtual/pyparsing dev-python/simplegeneric virtual/python-argparse emacs? ( app-emacs/python-mode virtual/emacs ) matplotlib? ( dev-python/matplotlib ) mongodb? ( dev-python/pymongo ) octave? ( dev-python/oct2py ) smp? ( dev-python/pyzmq ) wxwidgets? ( dev-python/wxpython ) notebook? ( >=www-servers/tornado-2.1 dev-python/pygments dev-python/pyzmq ) qt4? ( || ( dev-python/PyQt4 dev-python/pyside ) dev-python/pygments dev-python/pyzmq ) || ( =dev-lang/python-3.3* =dev-lang/python-3.2* =dev-lang/python-3.1* =dev-lang/python-2.7* =dev-lang/python-2.6* ) || ( =dev-lang/python-3.3*[readline,sqlite] =dev-lang/python-3.2*[readline,sqlite] =dev-lang/python-3.1*[readline,sqlite] =dev-lang/python-2.7*[readline,sqlite] =dev-lang/python-2.6*[readline,sqlite] )
+0
+http://archive.ipython.org/release/0.13.1/ipython-0.13.1.tar.gz
+
+http://ipython.org/
+BSD
+Advanced interactive shell for Python
+~amd64 ~x86 ~amd64-linux ~x86-linux
+distutils elisp-common eutils multilib python toolchain-funcs user virtualx
+doc emacs examples matplotlib mongodb notebook octave qt4 +smp test wxwidgets test
+
+
+
+4
+
+compile install postinst postrm prepare setup test
+
+
+
+
+
