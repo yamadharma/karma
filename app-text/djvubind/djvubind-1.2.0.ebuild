@@ -21,6 +21,8 @@ RDEPEND="app-text/djvu
          cuneiform? ( app-text/cuneiform )
          minidjvu? ( app-text/minidjvu )"
 
+RESTRICT=mirror
+
 pkg_setup() {
     python_set_active_version 3
 }
