@@ -15,7 +15,7 @@ SRC_URI="mirror://sourceforge/${PN}/JabRef-${MY_PV}.jar"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+# KEYWORDS="amd64 x86"
 IUSE="mysql"
 
 #CDEPEND="dev-java/spin:0
