@@ -6,7 +6,7 @@ EAPI="4"
 
 inherit cmake-utils
 
-PV_MOD=-3
+PV_MOD=-7
 
 if [ "${PV}" == 9999 ]
 then
@@ -23,8 +23,9 @@ HYP_ARCH="AlReader2.Hyphen.zip"
 DESCRIPTION="CoolReader - reader of eBook files (fb2,epub,htm,rtf,txt)"
 HOMEPAGE="http://www.coolreader.org/
 	http://crengine.sourceforge.net/"
-SRC_URI="${SRC_URI}
-		 hyphen? ( http://alreader.kms.ru/AlReader/${HYP_ARCH} )"
+SRC_URI="${SRC_URI}"
+#		 hyphen? ( http://alreader.kms.ru/AlReader/${HYP_ARCH} )"
+
 RESTRICT="mirror"
 
 LICENSE="GPL-2"
@@ -51,15 +52,15 @@ RDEPEND="${DEPEND}
 #    fi
 #}
 
-src_prepare() {
+#src_prepare() {
     # fix for amd64
 #    if use amd64; then
 #	sed -e 's/unsigned int/unsigned long/g' -i "${WORKDIR}/${P}/crengine/src/lvdocview.cpp" \
 #	|| die "patching lvdocview.cpp for amd64 failed"
 #    fi
 
-    epatch "${FILESDIR}/coolreader3-libpng-1.5.patch" || die "failed while patching source for usage libpng-1.5"
-}
+#    epatch "${FILESDIR}/coolreader3-libpng-1.5.patch" || die "failed while patching source for usage libpng-1.5"
+#}
 
 src_configure() {
 	CMAKE_USE_DIR="${S}"
