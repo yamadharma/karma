@@ -1,4 +1,4 @@
-=media-libs/libdvdread-0.9* || ( >=sys-devel/automake-1.11.1 >=sys-devel/automake-1.12 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+=media-libs/libdvdread-0.9* || ( >=sys-devel/automake-1.12 >=sys-devel/automake-1.13 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 =media-libs/libdvdread-0.9*
 0
 mirror://sourceforge/lsdvd/lsdvd-0.16.tar.gz

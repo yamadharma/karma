@@ -1,4 +1,4 @@
-fortran? ( virtual/fortran ) mpi? ( || ( sys-cluster/openmpi[romio] sys-cluster/mpich2[romio] ) ) szip? ( >=sci-libs/szip-2.1 ) zlib? ( sys-libs/zlib ) sys-devel/libtool:2 sys-process/time || ( >=sys-devel/automake-1.11.1:1.11 >=sys-devel/automake-1.12:1.12 ) >=sys-devel/autoconf-2.68 sys-devel/libtool virtual/fortran
+fortran? ( virtual/fortran ) mpi? ( || ( sys-cluster/openmpi[romio] sys-cluster/mpich2[romio] ) ) szip? ( >=sci-libs/szip-2.1 ) zlib? ( sys-libs/zlib ) sys-devel/libtool:2 sys-process/time || ( >=sys-devel/automake-1.12:1.12 >=sys-devel/automake-1.13:1.13 ) >=sys-devel/autoconf-2.68 sys-devel/libtool virtual/fortran
 fortran? ( virtual/fortran ) mpi? ( || ( sys-cluster/openmpi[romio] sys-cluster/mpich2[romio] ) ) szip? ( >=sci-libs/szip-2.1 ) zlib? ( sys-libs/zlib ) virtual/fortran
 0
 http://www.hdfgroup.org/ftp/HDF5/prev-releases/hdf5-1.8.4/src/hdf5-1.8.4.tar.gz
