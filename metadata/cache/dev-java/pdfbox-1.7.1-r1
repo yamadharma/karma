@@ -6,7 +6,7 @@ mirror://apache/pdfbox/1.7.1/pdfbox-1.7.1-src.zip http://repo2.maven.org/maven2/
 http://pdfbox.apache.org/
 BSD
 Java library and utilities for working with PDF documents
-~amd64
+
 eutils java-ant-2 java-pkg-2 java-utils-2 multilib toolchain-funcs user versionator
 elibc_FreeBSD doc source test elibc_FreeBSD
 

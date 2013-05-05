@@ -17,7 +17,7 @@ SRC_URI="mirror://apache/${PN}/${PV}/${P}-src.zip
 #/com/adobe/pdf/pcfi/2010.08.09/pcfi-2010.08.09.jar
 LICENSE="BSD"
 SLOT="1.7"
-KEYWORDS="~amd64"
+#KEYWORDS="~amd64"
 IUSE=""
 
 CDEPEND=">=dev-java/bcprov-1.45:0

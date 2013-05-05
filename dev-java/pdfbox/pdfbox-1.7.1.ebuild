@@ -13,7 +13,7 @@ SRC_URI="http://www.sai.msu.su/apache/pdfbox/${PV}/${P}-src.zip"
 
 LICENSE="BSD"
 SLOT="1.7"
-KEYWORDS="amd64 ppc x86"
+#KEYWORDS="amd64 ppc x86"
 IUSE=""
 
 CDEPEND="dev-java/fontbox
