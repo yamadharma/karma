@@ -37,6 +37,8 @@ src_prepare() {
 	EPATCH_SUFFIX="patch" \
 	epatch "${WORKDIR}"/gentoo/patches
 
+	EPATCH_SUFFIX="patch" EPATCH_FORCE="yes" epatch ${FILESDIR}
+
 	# packaging is f-ed up, so we can't run automake (i.e. eautoreconf)
 	sed -i 's/^\(\s*\)a/\1ea/' regen.sh
 	: # this line makes repoman ok with not calling eautoconf etc. directly
