@@ -38,9 +38,9 @@ src_install() {
 
 	emake DESTDIR="${D}" install || die "emake install failed"
 	dodoc AUTHORS NEWS README REMARKS
-	doicon "${D}"/etc/xmedcon.png
-	rm "${D}"/etc/xmedcon.ico
-	rm "${D}"/etc/xmedcon.png
-	rm "${D}"/etc/xmedconrc.win32
+#	doicon "${D}"/etc/xmedcon.png
+#	rm "${D}"/etc/xmedcon.ico
+#	rm "${D}"/etc/xmedcon.png
+#	rm "${D}"/etc/xmedconrc.win32
 }
 
