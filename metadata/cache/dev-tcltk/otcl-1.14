@@ -7,14 +7,14 @@ http://otcl-tclcl.sourceforge.net/otcl/
 MIT
 MIT Object extension to Tcl
 amd64 ~ppc ~sparc x86
-base cmake-utils eutils flag-o-matic multilib toolchain-funcs user
+cmake-utils eutils flag-o-matic multilib toolchain-funcs user
 
 
 
 
 3
 
-compile configure install prepare test unpack
+compile configure install prepare test
 
 
 

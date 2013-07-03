@@ -16,6 +16,7 @@ LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="x86 amd64"
 IUSE="png gtk +dicom"
+RESTRICT=mirror
 
 RDEPEND="
 png? ( >=media-libs/libpng-1.2.1 )

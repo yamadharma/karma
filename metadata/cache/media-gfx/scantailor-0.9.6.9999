@@ -7,7 +7,7 @@ http://scantailor.sourceforge.net/
 GPL-3
 Scan Tailor is an interactive post-processing tool for scanned pages
 amd64 x86
-base cmake-utils eutils flag-o-matic git multilib toolchain-funcs user
+cmake-utils eutils flag-o-matic git multilib toolchain-funcs user
 
 
 
