@@ -44,7 +44,7 @@ DEPEND="media-libs/libsdl
 	media-libs/sdl-image
 	media-libs/sdl-ttf
 	sys-libs/zlib
-	media-video/ffmpeg
+	virtual/ffmpeg
 	dev-libs/boost"
 
 RESTRICT=mirror
