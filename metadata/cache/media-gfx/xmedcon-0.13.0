@@ -1,8 +1,8 @@
 
 png? ( >=media-libs/libpng-1.2.1 ) gtk? ( >=x11-libs/gtk+-2.1 )
 0
-mirror://sourceforge/xmedcon/xmedcon-0.11.0.tar.bz2
-
+mirror://sourceforge/xmedcon/xmedcon-0.13.0.tar.bz2
+mirror
 http://xmedcon.sourceforge.net
 GPL-2 LGPL-2.1
 Medical Image Conversion Utility with a GTK interface
