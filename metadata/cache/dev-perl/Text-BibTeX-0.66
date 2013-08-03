@@ -1,5 +1,5 @@
->=virtual/perl-Module-Build-0.36.03 >=dev-perl/Config-AutoConf-0.16 >=virtual/perl-ExtUtils-CBuilder-0.27 >=dev-perl/ExtUtils-LibBuilder-0.02 dev-lang/perl[-build]
-!dev-libs/btparse >=dev-perl/Capture-Tiny-0.06 dev-lang/perl[-build]
+>=virtual/perl-Module-Build-0.36.03 >=dev-perl/Config-AutoConf-0.16 >=virtual/perl-ExtUtils-CBuilder-0.27 >=dev-perl/ExtUtils-LibBuilder-0.02 || ( >=dev-lang/perl-5.16 <dev-lang/perl-5.16[-build] )
+!dev-libs/btparse >=dev-perl/Capture-Tiny-0.06 || ( >=dev-lang/perl-5.16 <dev-lang/perl-5.16[-build] )
 0
 mirror://cpan/authors/id/A/AM/AMBS/Text/Text-BibTeX-0.66.tar.gz
 mirror

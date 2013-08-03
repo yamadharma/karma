@@ -1,5 +1,5 @@
-test? ( >=dev-perl/Test-Pod-1.14 >=dev-perl/Test-Pod-Coverage-1.08 ) dev-lang/perl[-build]
-dev-lang/perl[-build]
+test? ( >=dev-perl/Test-Pod-1.14 >=dev-perl/Test-Pod-Coverage-1.08 ) || ( >=dev-lang/perl-5.16 <dev-lang/perl-5.16[-build] )
+|| ( >=dev-lang/perl-5.16 <dev-lang/perl-5.16[-build] )
 0
 mirror://cpan/authors/id/A/AM/AMBS/Config/Config-AutoConf-0.22.tar.gz
 mirror

@@ -1,5 +1,5 @@
-virtual/perl-Module-Build test? ( >=dev-perl/Test-Pod-1.22 >=dev-perl/Test-Pod-Coverage-1.08 ) dev-lang/perl[-build]
-dev-lang/perl[-build]
+virtual/perl-Module-Build test? ( >=dev-perl/Test-Pod-1.22 >=dev-perl/Test-Pod-Coverage-1.08 ) || ( >=dev-lang/perl-5.16 <dev-lang/perl-5.16[-build] )
+|| ( >=dev-lang/perl-5.16 <dev-lang/perl-5.16[-build] )
 0
 mirror://cpan/authors/id/A/AM/AMBS/ExtUtils/ExtUtils-LibBuilder-0.04.tar.gz
 mirror

@@ -1,5 +1,5 @@
-dev-lang/perl[-build]
-dev-lang/perl[-build]
+|| ( >=dev-lang/perl-5.16 <dev-lang/perl-5.16[-build] )
+|| ( >=dev-lang/perl-5.16 <dev-lang/perl-5.16[-build] )
 0
 mirror://cpan/authors/id/A/AL/ALINKE/Lingua-Translit-0.18.tar.gz
 
