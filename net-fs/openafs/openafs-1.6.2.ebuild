@@ -1,10 +1,10 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs/openafs-1.6.2.ebuild,v 1.4 2013/04/13 14:20:09 ago Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs/openafs-1.6.2.ebuild,v 1.5 2013/08/27 08:15:30 tomwij Exp $
 
 EAPI="4"
 
-inherit flag-o-matic eutils autotools multilib toolchain-funcs versionator pam
+inherit flag-o-matic eutils multilib toolchain-funcs versionator pam
 
 MY_PV=$(delete_version_separator '_')
 MY_P="${PN}-${MY_PV}"
@@ -14,13 +14,12 @@ HOMEPAGE="http://www.openafs.org/"
 # We always d/l the doc tarball as man pages are not USE=doc material
 SRC_URI="http://openafs.org/dl/openafs/${MY_PV}/${MY_P}-src.tar.bz2
 	http://openafs.org/dl/openafs/${MY_PV}/${MY_P}-doc.tar.bz2
-	mirror://gentoo/${PN}-1.6.2-patches-${PVER}.tar.bz2"
+	mirror://gentoo/${P}-patches-${PVER}.tar.bz2"
 
 LICENSE="IBM BSD openafs-krb5-a APSL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~sparc ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="amd64 sparc x86 ~amd64-linux ~x86-linux"
 IUSE="doc kerberos pam"
-RESTRICT=mirror
 
 RDEPEND="~net-fs/openafs-kernel-${PV}
 	sys-libs/ncurses
