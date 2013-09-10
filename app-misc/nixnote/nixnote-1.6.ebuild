@@ -21,7 +21,7 @@ RDEPEND=">=virtual/jdk-1.5"
 #     media-libs/libpng:1.2"
 RESTRICT=mirror
 
-S="${PN}"
+S=${WORKDIR}/"${PN}"
 
 src_install() {
 	cp -rf "${S}/usr" "${D}/"
