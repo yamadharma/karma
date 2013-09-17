@@ -6,7 +6,7 @@ EAPI="4"
 
 inherit eutils
 
-MY_PV_ADD=u1
+MY_PV_ADD=u3
 
 DESCRIPTION="FreeRapid is a simple Java downloader that supports downloading from Rapidshare and other file-sharing services."
 HOMEPAGE="http://wordrider.net/freerapid"
