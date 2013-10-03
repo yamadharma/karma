@@ -39,6 +39,7 @@ src_install() {
 	mkdir -p "${D}/usr/bin"
 	cp btsync "${D}/usr/bin/btsync"
 	pax-mark m "${D}/usr/bin/btsync"
-	
-	systemd_dounit "${FILESDIR}"/${PN}.service
+
+	systemd_dounit "${FILESDIR}"/${PN}.service	
+	systemd_dounit "${FILESDIR}"/${PN}@.service
 }
