@@ -1,0 +1,13 @@
+[Unit]
+Description=BitTorrent Sync - Automatically sync files via secure, distributed technology
+
+[Service]
+Type=dbus
+BusName=org.btsync.daemon
+PIDFile=/run/btsync/btsync.pid
+User=nobody
+Group=nobody
+ExecStart=/usr/bin/btsync --config /etc/btsync.conf
+
+[Install]
+WantedBy=multi-user.target
