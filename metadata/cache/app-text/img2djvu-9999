@@ -1,4 +1,4 @@
->=dev-vcs/git-1.6
+dev-vcs/git
 app-text/djvu app-text/minidjvu media-gfx/imagemagick app-text/ocrodjvu
 0
 
@@ -7,14 +7,14 @@ http://github.com/ashipunov/img2djvu
 GPL-2
 Single-pass DjVu encoder based on DjVu Libre, minidjvu and ImageMagick
 alpha amd64 arm hppa ia64 ppc ppc64 s390 sh sparc x86 ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-solaris
-eutils git multilib toolchain-funcs user
+eutils git-2 git-r3 multilib toolchain-funcs user
 
 
 
 
-2
+4
 
-install prepare unpack
+install unpack
 
 
 
