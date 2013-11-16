@@ -14,7 +14,7 @@ a52 aac alsa debug ffmpeg ipv6 jack jpeg jpeg2k mad opengl oss png pulseaudio sd
 
 
 
-compile install setup unpack
+compile install unpack
 
 
 
