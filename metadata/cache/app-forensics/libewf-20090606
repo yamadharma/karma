@@ -1,4 +1,4 @@
-sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl || ( >=sys-devel/automake-1.12 >=sys-devel/automake-1.13 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl || ( >=sys-devel/automake-1.13 >=sys-devel/automake-1.14 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl
 0
 mirror://sourceforge/libewf/libewf-beta-20090606.tar.gz

@@ -1,4 +1,4 @@
-gnome-base/gnome-vfs gnome-base/libgtop gnome-extra/kiba-dock glitz? ( >=media-libs/glitz-0.4 ) svg? ( gnome-base/librsvg ) || ( >=sys-devel/automake-1.12:1.12 >=sys-devel/automake-1.13:1.13 ) >=sys-devel/autoconf-2.68 sys-devel/libtool >=sys-apps/sed-4 || ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
+gnome-base/gnome-vfs gnome-base/libgtop gnome-extra/kiba-dock glitz? ( >=media-libs/glitz-0.4 ) svg? ( gnome-base/librsvg ) || ( >=sys-devel/automake-1.13:1.13 >=sys-devel/automake-1.14:1.14 ) >=sys-devel/autoconf-2.68 sys-devel/libtool >=sys-apps/sed-4 || ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
 gnome-base/gnome-vfs gnome-base/libgtop gnome-extra/kiba-dock glitz? ( >=media-libs/glitz-0.4 ) svg? ( gnome-base/librsvg )
 0
 

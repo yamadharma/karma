@@ -1,4 +1,4 @@
-|| ( x11-libs/libXmu virtual/x11 ) >=dev-lang/tcl-8.5 >=dev-lang/tk-8.5 >=dev-tcltk/otcl-1.14 >=dev-tcltk/tclcl-1.20 debug? ( dev-tcltk/tcl-debug ) || ( >=sys-devel/automake-1.12:1.12 >=sys-devel/automake-1.13:1.13 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+|| ( x11-libs/libXmu virtual/x11 ) >=dev-lang/tcl-8.5 >=dev-lang/tk-8.5 >=dev-tcltk/otcl-1.14 >=dev-tcltk/tclcl-1.20 debug? ( dev-tcltk/tcl-debug ) || ( >=sys-devel/automake-1.13:1.13 >=sys-devel/automake-1.14:1.14 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 >=net-analyzer/ns-2.27 || ( x11-libs/libXmu virtual/x11 ) >=dev-lang/tcl-8.5 >=dev-lang/tk-8.5 >=dev-tcltk/otcl-1.14 >=dev-tcltk/tclcl-1.20 debug? ( dev-tcltk/tcl-debug )
 0
 mirror://sourceforge/nsnam/nam-src-1.15.tar.gz
