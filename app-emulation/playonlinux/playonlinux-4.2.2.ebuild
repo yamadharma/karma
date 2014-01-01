@@ -90,7 +90,7 @@ src_install() {
 		newicon -s $size etc/${PN}$size.png ${PN}.png
 	done
 
-	dodoc CHANGELOG
+#	dodoc CHANGELOG
 
 	games_make_wrapper ${PN} "./${PN}" "${GAMES_DATADIR}/${PN}"
 	make_desktop_entry ${PN} ${MY_PN} ${PN} Game
