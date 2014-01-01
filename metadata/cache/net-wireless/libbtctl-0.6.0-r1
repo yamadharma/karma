@@ -1,4 +1,4 @@
->=dev-libs/glib-2 >=net-wireless/bluez-utils-2.7 >=net-wireless/bluez-libs-2.7 >=dev-libs/openobex-1 >=dev-lang/python-2.3 >=dev-python/pygtk-2.0 !sparc? ( mono? ( >=dev-lang/mono-0.96 =dev-dotnet/gtk-sharp-1.0* ) ) dev-util/intltool dev-util/pkgconfig doc? ( dev-util/gtk-doc ) >=sys-apps/sed-4 || ( >=sys-devel/automake-1.13 >=sys-devel/automake-1.14 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+>=dev-libs/glib-2 >=net-wireless/bluez-utils-2.7 >=net-wireless/bluez-libs-2.7 >=dev-libs/openobex-1 >=dev-lang/python-2.3 >=dev-python/pygtk-2.0 !sparc? ( mono? ( >=dev-lang/mono-0.96 =dev-dotnet/gtk-sharp-1.0* ) ) dev-util/intltool dev-util/pkgconfig doc? ( dev-util/gtk-doc ) >=sys-apps/sed-4 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13 >=sys-devel/automake-1.14 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
 >=dev-libs/glib-2 >=net-wireless/bluez-utils-2.7 >=net-wireless/bluez-libs-2.7 >=dev-libs/openobex-1 >=dev-lang/python-2.3 >=dev-python/pygtk-2.0 !sparc? ( mono? ( >=dev-lang/mono-0.96 =dev-dotnet/gtk-sharp-1.0* ) )
 0
 mirror://gnome/sources/libbtctl/0.6/libbtctl-0.6.0.tar.bz2
