@@ -35,6 +35,8 @@ RDEPEND="app-emulation/wine
 
 S=${WORKDIR}/${PN}
 
+RESTRICT=mirror
+
 # TODO:
 # Having a real install script and let playonlinux use standard filesystem
 # 	architecture to prevent having everything installed into GAMES_DATADIR
