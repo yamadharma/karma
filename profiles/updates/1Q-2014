@@ -1,0 +1,4 @@
+move dev-openoffice/languagetool app-officeext/languagetool
+move dev-openoffice/ooo2gd app-officeext/ooo2gd
+move dev-openoffice/ooofbtools app-officeext/ooofbtools
+
