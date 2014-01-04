@@ -1,0 +1,22 @@
+office_implementation_libreoffice? ( || ( app-office/libreoffice[java] app-office/libreoffice-bin[java] ) ) office_implementation_openoffice? ( || ( app-office/openoffice[java] app-office/openoffice-bin[java] ) ) app-arch/unzip
+office_implementation_libreoffice? ( || ( app-office/libreoffice[java] app-office/libreoffice-bin[java] ) ) office_implementation_openoffice? ( || ( app-office/openoffice[java] app-office/openoffice-bin[java] ) )
+0
+http://www.languagetool.org/download/LanguageTool-2.4.oxt
+mirror
+http://www.languagetool.org/
+LGPL-2
+Style and Grammar Checker for libreoffice
+~amd64 ~x86
+eutils multilib office-ext-r1 toolchain-funcs user
+office_implementation_libreoffice office_implementation_openoffice
+|| ( office_implementation_libreoffice office_implementation_openoffice )
+
+
+5
+
+install postinst prerm unpack
+
+
+
+
+
