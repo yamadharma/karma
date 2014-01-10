@@ -1,4 +1,4 @@
-www-client/firefox dev-util/pkgconfig || ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync app-arch/unzip
+www-client/firefox dev-util/pkgconfig || ( dev-vcs/subversion[http] dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync app-arch/unzip
 www-client/firefox dev-util/pkgconfig
 0
 
@@ -7,7 +7,7 @@ http://code.google.com/p/google-gears/
 BSD
 Google Gears
 ~amd64 ~x86
-eutils mozextension multilib subversion toolchain-funcs user
+eutils mozextension multilib subversion toolchain-funcs
 debug
 
 

@@ -7,7 +7,7 @@ http://cbbk.free.fr/bonrom/
 GPL-2
 Manage wireless interfaces, particularly Ralink devices
 x86 amd64
-eutils gnome2-utils linux-info multilib toolchain-funcs user versionator
+eutils gnome2-utils linux-info multilib toolchain-funcs versionator
 builtin-launcher debug gnome kde
 
 

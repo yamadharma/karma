@@ -7,7 +7,7 @@ http://www.mozilla.org/projects/security/pki/jss/
 MPL-1.1
 Network Security Services for Java (JSS)
 x86 amd64
-eutils java-pkg-2 java-utils-2 multilib toolchain-funcs user versionator
+eutils java-pkg-2 java-utils-2 multilib toolchain-funcs versionator
 doc examples source elibc_FreeBSD
 
 

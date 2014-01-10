@@ -7,7 +7,7 @@ http://largo.windowmaker.org/Login.app
 GPL-2
 XDM like graphical login program
 x86
-eutils multilib patch toolchain-funcs user
+eutils multilib patch toolchain-funcs
 
 
 

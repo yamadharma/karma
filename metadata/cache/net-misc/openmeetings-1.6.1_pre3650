@@ -7,7 +7,7 @@ http://code.google.com/p/openmeetings/
 GPL-2
 Open-Source Web-Conferencing
 x86 amd64
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 mysql postgres openoffice
 
 

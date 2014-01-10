@@ -7,7 +7,7 @@ http://www.cp.eng.chula.ac.th/~somchai/cut2col/
 as-is
 utility for converting 2-column to 1-column pdf documents
 ~x86 ~amd64
-eutils java-pkg-2 java-utils-2 multilib toolchain-funcs user versionator
+eutils java-pkg-2 java-utils-2 multilib toolchain-funcs versionator
 elibc_FreeBSD
 
 

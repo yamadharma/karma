@@ -7,7 +7,7 @@ http://sourceforge.net/projects/rep-rebuild/
 LGPL-2
 A tool to rebuild SVN/CVS packages taking care of dependencies ordering
 ~amd64 ~x86
-cvs eutils multilib toolchain-funcs user
+cvs eutils multilib toolchain-funcs
 
 
 

@@ -7,7 +7,7 @@ http://www.gnu.org/software/grub/
 GPL-2
 GNU GRUB boot loader
 x86 -ppc -sparc -alpha -mips
-eutils mount-boot multilib toolchain-funcs user
+eutils mount-boot multilib toolchain-funcs
 
 
 

@@ -7,7 +7,7 @@ http://code.google.com/p/tesseract-ocr/
 Apache-2.0
 An OCR Engine that was developed at HP and now at Google
 alpha amd64 ~mips ppc ppc64 sparc x86
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 tiff examples doc zh_trad zh_simp in sv ro sl sr tl tr hu fi it nl no ja vi es uk fr sk ko el ru pt bg lv lt pl de de_frak da da_frak cs ca +en
 
 

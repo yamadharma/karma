@@ -7,7 +7,7 @@ http://pstreams.sourceforge.net
 GPL-2
 POSIX Process Control in C++
 x86 ~ppc ~sparc ~alpha ~hppa amd64 ~ppc64 ~ia64
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 doc
 
 

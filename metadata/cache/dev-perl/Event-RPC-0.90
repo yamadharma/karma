@@ -7,7 +7,7 @@ http://www.exit1.org/Event-RPC/
 GPL-2
 Event based transparent Client/Server RPC framework
 amd64 ia64 ~ppc ~ppc64 sparc x86
-base eutils multilib multiprocessing perl-module toolchain-funcs user
+base eutils multilib multiprocessing perl-module toolchain-funcs
 
 
 

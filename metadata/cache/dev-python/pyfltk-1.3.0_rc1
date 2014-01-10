@@ -7,7 +7,7 @@ http://pyfltk.sourceforge.net/
 LGPL-2
 Python interface to Fltk library
 amd64 ppc x86
-distutils eutils multilib python toolchain-funcs user
+distutils eutils multilib python toolchain-funcs
 doc
 
 

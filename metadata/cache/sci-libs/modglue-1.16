@@ -7,7 +7,7 @@ http://cadabra.phi-sci.com
 GPL-2
 C++ library for handling of multiple co-processes
 ~x86
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 doc
 
 

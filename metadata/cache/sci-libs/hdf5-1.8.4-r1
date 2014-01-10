@@ -7,7 +7,7 @@ http://www.hdfgroup.org/HDF5/
 NCSA-HDF
 General purpose library and file format for storing scientific data
 alpha amd64 ia64 ppc ppc64 sparc x86
-autotools eutils fortran-2 libtool multilib multiprocessing toolchain-funcs user
+autotools eutils fortran-2 libtool multilib multiprocessing toolchain-funcs
 cxx examples fortran mpi szip threads zlib
 
 

@@ -7,7 +7,7 @@ http://tapioca-voip.sf.net
 LGPL-2
 Tapioca UI
 x86 amd64
-eutils mono multilib subversion toolchain-funcs user
+eutils mono multilib subversion toolchain-funcs
 
 
 

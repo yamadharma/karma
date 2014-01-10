@@ -7,7 +7,7 @@ http://www.avast.com/eng/avast-for-linux-workstation.html
 ALWIL-EULA
 avast! Linux Home Edition
 ~amd64 ~x86
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 
 
 

@@ -7,7 +7,7 @@ http://www.gnu.org/directory/intlfonts.html
 GPL-2
 International X11 fixed fonts
 ~x86 ~ppc ~amd64
-eutils extrafiles fonts multilib patch toolchain-funcs user
+eutils extrafiles fonts multilib patch toolchain-funcs
 X daemontools X gnustep
 
 

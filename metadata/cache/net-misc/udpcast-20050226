@@ -7,7 +7,7 @@ http://udpcast.linux.lu/
 GPL-2 BSD
 Multicast file transfer tool
 x86 amd64
-eutils flag-o-matic multilib toolchain-funcs user
+eutils flag-o-matic multilib toolchain-funcs
 
 
 

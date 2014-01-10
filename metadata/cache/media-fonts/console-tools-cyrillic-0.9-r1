@@ -7,7 +7,7 @@ http://www.45.free.net/~vitus
 GPL-2
 Base class for applying patches.
 x86 ppc sparc sparc64
-eutils extrafiles fonts kbd multilib patch toolchain-funcs user
+eutils extrafiles fonts kbd multilib patch toolchain-funcs
 daemontools X gnustep
 
 

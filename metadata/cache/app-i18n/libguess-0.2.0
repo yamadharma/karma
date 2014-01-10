@@ -7,7 +7,7 @@ http://www.honeyplanet.jp/libguess-0.2.0-d7.tar.gz
 GPL-2
 LibGuess is Encoding Detection Library for Japanese, Chinese, Korean and Thai Languages
 x86 amd64
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 
 
 

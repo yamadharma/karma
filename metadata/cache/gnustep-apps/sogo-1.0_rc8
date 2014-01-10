@@ -7,7 +7,7 @@ http://sogo.opengroupware.org/
 GPL-2
 groupware server built around OpenGroupware.org and the SOPE application server
 x86 amd64
-depend.apache eutils flag-o-matic gnustep-base multilib toolchain-funcs user
+depend.apache eutils flag-o-matic gnustep-base multilib toolchain-funcs
 debug doc
 
 

@@ -7,7 +7,7 @@ http://emeitner.f2o.org/qemu_launcher
 GPL-2
 Qemu Launcher is a Gtk front-end for the Qemu x86 PC emulator.
 amd64 x86
-eutils multilib subversion toolchain-funcs user
+eutils multilib subversion toolchain-funcs
 
 
 

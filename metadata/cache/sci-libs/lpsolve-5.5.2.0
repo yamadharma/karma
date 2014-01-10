@@ -7,7 +7,7 @@ http://lpsolve.sourceforge.net/
 LGPL-2.1
 Library for solving (mixed integer) linear programming problems
 ~amd64 ~x86
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 static-libs examples
 
 

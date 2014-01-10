@@ -7,7 +7,7 @@ http://ogmrip.sourceforge.net/
 LGPL-2.1
 Graphical frontend and libraries for ripping DVDs and encoding to AVI/OGM/MKV/MP4
 
-eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib subversion toolchain-funcs user versionator
+eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib subversion toolchain-funcs versionator
 aac debug doc dts gtk hal libnotify matroska mp3 mp4 ogm png spell srt theora vorbis x264 xvid debug
 
 

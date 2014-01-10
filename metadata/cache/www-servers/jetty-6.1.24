@@ -7,7 +7,7 @@ http://jetty.codehaus.org/
 Apache-2.0
 Jetty Web Server; Java Servlet container
 ~amd64 ~x86
-eutils java-pkg-2 java-utils-2 multilib toolchain-funcs user versionator
+eutils java-pkg-2 java-utils-2 multilib toolchain-funcs versionator
 ant-tasks client ldap ssl stats elibc_FreeBSD
 
 

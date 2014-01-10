@@ -7,7 +7,7 @@ http://hackage.haskell.org/package/unix
 BSD
 POSIX functionality
 ~amd64 ~x86
-eutils ghc-package haskell-cabal multilib toolchain-funcs user versionator
+eutils ghc-package haskell-cabal multilib toolchain-funcs versionator
 doc hscolour profile
 
 

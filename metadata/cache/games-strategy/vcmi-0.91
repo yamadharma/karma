@@ -7,7 +7,7 @@ http://vcmi.sf.net
 GPL-2
 VCMI Project - Heroes 3: WoG recreated
 amd64 x86
-cmake-utils eutils flag-o-matic multilib toolchain-funcs user
+cmake-utils eutils flag-o-matic multilib toolchain-funcs
 
 
 

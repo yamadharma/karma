@@ -7,7 +7,7 @@ http://hp.vector.co.jp/authors/VA012337/soft/fd/
 
 FDClone: Console Filer
 x86 amd64
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 unicode
 
 

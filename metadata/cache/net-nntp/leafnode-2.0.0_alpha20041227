@@ -7,7 +7,7 @@ http://www-dt.e-technik.uni-dortmund.de/~ma/leafnode/beta/
 LGPL-2.1
 A USENET software package designed for small sites
 ~x86 ~ppc ~sparc
-eutils flag-o-matic multilib toolchain-funcs user
+eutils flag-o-matic multilib toolchain-funcs
 ipv6 pam
 
 

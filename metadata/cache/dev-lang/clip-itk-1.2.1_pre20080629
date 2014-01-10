@@ -7,7 +7,7 @@ http://sourceforge.net/projects/clip-itk
 GPL-2
 Clipper/Xbase compatible compiler
 
-cvs eutils multilib toolchain-funcs user
+cvs eutils multilib toolchain-funcs
 doc linguas_ru mysql gd postgres oracle interbase odbc gtk2 ssl glade fcgi
 
 

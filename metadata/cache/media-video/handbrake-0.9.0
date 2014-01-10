@@ -7,7 +7,7 @@ http://handbrake.m0k.org
 GPL-2
 Handbrake is multithreaded DVD to MPEG4 ripper/converter.
 amd64 x86
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 
 
 

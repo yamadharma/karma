@@ -7,7 +7,7 @@ http://drupal.org/project/drush
 GPL-2
 Drupal-centric shell. Simplifies Drupal installation/management
 
-cvs eutils multilib toolchain-funcs user
+cvs eutils multilib toolchain-funcs
 examples
 
 

@@ -7,7 +7,7 @@ http://www.fpdf.org/
 freedist
 FPDF is a PHP class which allows to generate PDF files with pure PHP
 x86 amd64
-depend.php eutils multilib php-lib-r1 phpconfutils toolchain-funcs user
+depend.php eutils multilib php-lib-r1 phpconfutils toolchain-funcs
 doc
 
 

@@ -7,7 +7,7 @@ http://search.cpan.org/dist/Text-BibTeX/
 || ( Artistic GPL-1 GPL-2 GPL-3 )
 Text::BibTeX is a Perl library for reading, parsing, and processing BibTeX files
 ~amd64
-base eutils multilib multiprocessing perl-module toolchain-funcs user
+base eutils multilib multiprocessing perl-module toolchain-funcs
 
 
 

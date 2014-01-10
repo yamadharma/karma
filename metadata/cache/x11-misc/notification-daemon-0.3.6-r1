@@ -7,7 +7,7 @@ http://www.galago-project.org/
 GPL-2
 Notifications daemon
 ~alpha amd64 hppa ~ia64 ~ppc ~ppc64 ~sparc x86
-eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib toolchain-funcs user versionator
+eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib toolchain-funcs versionator
 debug
 
 

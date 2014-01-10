@@ -7,7 +7,7 @@ ftp://ftp.citkit.ru/pub/fonts_kit
 GPL-2
 Sazanami Japanese TrueType fonts
 x86 alpha ppc ppc64 ~ppc-macos amd64 sparc
-eutils font multilib toolchain-funcs user
+eutils font multilib toolchain-funcs
 gnustep X
 
 

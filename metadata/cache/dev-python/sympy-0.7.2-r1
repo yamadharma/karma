@@ -7,7 +7,7 @@ http://sympy.org/
 BSD
 Computer algebra system (CAS) in Python
 ~amd64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-macos
-distutils-r1 eutils multibuild multilib multiprocessing python-r1 python-utils-r1 toolchain-funcs user
+distutils-r1 eutils multibuild multilib multiprocessing python-r1 python-utils-r1 toolchain-funcs
 doc examples gtk imaging ipython latex mathml opengl pdf png pyglet system-mpmath test texmacs python_targets_python2_6 python_targets_python2_7 python_targets_python3_2
 || ( python_targets_python2_6 python_targets_python2_7 python_targets_python3_2 )
 

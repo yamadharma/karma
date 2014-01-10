@@ -7,7 +7,7 @@ http://www.iki.fi/tuomov/ion/
 LGPL-2.1
 A tiling tabbed window manager designed with keyboard users in mind
 amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc x86
-eutils flag-o-matic multilib toolchain-funcs user
+eutils flag-o-matic multilib toolchain-funcs
 unicode iontruetype doc
 
 

@@ -7,7 +7,7 @@ http://jabref.sourceforge.net/
 GPL-2
 Java GUI for managing BibTeX and other bibliographies
 ~amd64 ~x86 ~amd64-linux ~x86-linux
-eutils java-ant-2 java-pkg-2 java-utils-2 multilib toolchain-funcs user versionator
+eutils java-ant-2 java-pkg-2 java-utils-2 multilib toolchain-funcs versionator
 doc elibc_FreeBSD elibc_FreeBSD
 
 

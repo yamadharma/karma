@@ -7,7 +7,7 @@ http://muth.org/Robert/Apetag/
 GPL-3
 Command-line ape 2.0 tagger
 amd64 x86
-base eutils multilib toolchain-funcs user
+base eutils multilib toolchain-funcs
 
 
 

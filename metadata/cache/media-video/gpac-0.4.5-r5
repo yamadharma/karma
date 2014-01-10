@@ -7,7 +7,7 @@ http://gpac.sourceforge.net/
 GPL-2
 GPAC is an implementation of the MPEG-4 Systems standard developed from scratch in ANSI C.
 ~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd
-eutils flag-o-matic multilib toolchain-funcs user wxwidgets
+eutils flag-o-matic multilib toolchain-funcs wxwidgets
 a52 aac alsa debug ffmpeg ipv6 jack jpeg jpeg2k mad opengl oss png pulseaudio sdl ssl theora truetype vorbis wxwidgets xml xvid
 
 

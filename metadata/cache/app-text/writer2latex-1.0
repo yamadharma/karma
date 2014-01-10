@@ -7,7 +7,7 @@ http://writer2latex.sourceforge.net
 GPL-2
 Writer2Latex (w2l) - converter from OpenDocument .odt format
 x86 amd64
-base eutils java-ant-2 java-pkg-2 java-utils-2 latex-package multilib openoffice-ext toolchain-funcs user versionator
+base eutils java-ant-2 java-pkg-2 java-utils-2 latex-package multilib openoffice-ext toolchain-funcs versionator
 doc examples elibc_FreeBSD elibc_FreeBSD
 
 

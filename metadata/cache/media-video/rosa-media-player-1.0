@@ -7,7 +7,7 @@ http://www.rosalab.ru/
 GPL-2
 ROSA Media Player
 ~amd64 ~x86
-base eutils multilib qmake-utils qt4-r2 toolchain-funcs user
+base eutils multilib qmake-utils qt4-r2 toolchain-funcs
 linguas_ar linguas_bg linguas_ca linguas_cs linguas_de linguas_el linguas_en_GB linguas_es_LA linguas_es linguas_et linguas_eu linguas_fi linguas_fr linguas_gl linguas_hu linguas_it linguas_ja linguas_ka linguas_ko linguas_ku linguas_lt linguas_mk linguas_nl linguas_pl linguas_pt_PT linguas_pt linguas_pt_BR linguas_ro linguas_ru linguas_sk linguas_sl linguas_sr linguas_sv linguas_tr linguas_uk linguas_vi linguas_zh_CN linguas_zh_TW
 
 

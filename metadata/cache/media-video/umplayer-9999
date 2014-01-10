@@ -1,4 +1,4 @@
-|| ( dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
+|| ( dev-vcs/subversion[http] dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
 
 0
 
@@ -7,7 +7,7 @@ http://www.umplayer.com/
 GPL-3
 UMPlayer is the multimedia player that fills all your needs
 
-base eutils multilib qmake-utils qt4-r2 subversion toolchain-funcs user
+base eutils multilib qmake-utils qt4-r2 subversion toolchain-funcs
 
 
 

@@ -7,7 +7,7 @@ http://pmount.alioth.debian.org/
 GPL-2
 Policy based mounter that gives the ability to mount removable devices as a user
 amd64 ~arm hppa ~ia64 ppc ppc64 ~sh ~sparc x86
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 crypt hal
 
 

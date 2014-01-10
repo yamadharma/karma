@@ -7,7 +7,7 @@ http://www.cpan.org/modules/by-module/Archive/Archive-Tar-0.23.tgz
 Artistic
 Perl module for creation and manipulation of tar files
 x86 ppc sparc sparc64
-base eutils multilib multiprocessing perl-module toolchain-funcs user
+base eutils multilib multiprocessing perl-module toolchain-funcs
 
 
 

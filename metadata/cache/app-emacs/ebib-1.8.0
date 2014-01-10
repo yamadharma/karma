@@ -7,7 +7,7 @@ http://ebib.sourceforge.net/
 GPL-2
 Visible bookmarks in buffer
 amd64 x86
-elisp elisp-common eutils multilib toolchain-funcs user
+elisp elisp-common eutils multilib toolchain-funcs
 
 
 

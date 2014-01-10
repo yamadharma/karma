@@ -7,7 +7,7 @@ http://canopus.iacp.dvo.ru/~panov/cm-unicode/
 X11
 Computer Modern Unicode fonts
 amd64 ~ppc x86
-base eutils font latex-package multilib toolchain-funcs user
+base eutils font latex-package multilib toolchain-funcs
 latex gnustep X
 
 

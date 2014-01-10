@@ -7,7 +7,7 @@ https://launchpad.net/bzr-push-and-update
 GPL-2
 Run 'ssh remote bzr update path' after pushing to sftp://remote/path
 x86 amd64
-bzr eutils multilib python toolchain-funcs user
+bzr eutils multilib python toolchain-funcs
 
 
 

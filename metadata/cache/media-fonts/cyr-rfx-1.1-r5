@@ -7,7 +7,7 @@ http://www.inp.nsk.su/~bolkhov/files/fonts/cyr-rfx/00index.en.html
 AS IS
 CYRillic Raster Fonts for X
 x86 amd64 ~sparc ~sparc64 ~ppc
-eutils font multilib toolchain-funcs user
+eutils font multilib toolchain-funcs
 gnustep X
 
 

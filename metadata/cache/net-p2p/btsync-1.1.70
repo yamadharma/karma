@@ -7,7 +7,7 @@ http://labs.bittorrent.com/experiments/sync.html
 BitTorrent
 Sync stuff via BitTorrent
 ~amd64 ~x86 ~arm ~ppc
-eutils multilib pax-utils systemd toolchain-funcs user
+eutils multilib pax-utils systemd toolchain-funcs
 
 
 

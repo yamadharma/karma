@@ -7,7 +7,7 @@ http://jdee.sourceforge.net
 GPL-2
 The Emacs Lisp Library
 amd64 ppc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~sparc-solaris
-elisp elisp-common eutils multilib toolchain-funcs user
+elisp elisp-common eutils multilib toolchain-funcs
 
 
 

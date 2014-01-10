@@ -7,7 +7,7 @@ http://www.isi.edu/nsnam/ns/
 BSD as-is
 Network Simulator
 ~ppc ~sparc x86 amd64
-eutils flag-o-matic multilib toolchain-funcs user
+eutils flag-o-matic multilib toolchain-funcs
 doc debug click
 
 

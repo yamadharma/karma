@@ -7,7 +7,7 @@ http://www.nongnu.org/gcmd/
 GPL-2
 A full featured, dual-pane file manager for Gnome2
 
-autotools eutils fdo-mime flag-o-matic gnome.org gnome2 gnome2-utils libtool multilib multiprocessing subversion toolchain-funcs user versionator
+autotools eutils fdo-mime flag-o-matic gnome.org gnome2 gnome2-utils libtool multilib multiprocessing subversion toolchain-funcs versionator
 doc chm exif gsf taglib python debug
 
 

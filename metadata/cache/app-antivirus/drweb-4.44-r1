@@ -7,7 +7,7 @@ http://www.drweb.com
 DRWEB
 DrWeb virus scaner for Linux
 x86 amd64
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 X daemon logrotate
 
 

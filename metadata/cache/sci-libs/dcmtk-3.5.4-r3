@@ -7,7 +7,7 @@ http://dicom.offis.de/dcmtk.php.en
 BSD
 Libraries and applications implementing large parts the DICOM standard
 x86 amd64
-eutils multilib toolchain-funcs user
+eutils multilib toolchain-funcs
 png ssl tcpd tiff xml zlib doc
 
 

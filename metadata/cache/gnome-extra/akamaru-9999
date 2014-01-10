@@ -7,7 +7,7 @@ http://kiba-dock.org
 GPL-2
 Simple, but fun, physics engine prototype.
 x86 amd64
-autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib multiprocessing subversion toolchain-funcs user versionator
+autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib multiprocessing subversion toolchain-funcs versionator
 debug
 
 
