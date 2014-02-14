@@ -7,7 +7,7 @@ http://hackage.haskell.org/package/process
 BSD
 Process libraries
 ~amd64 ~x86
-eutils ghc-package haskell-cabal multilib toolchain-funcs versionator
+eutils ghc-package haskell-cabal multilib multiprocessing toolchain-funcs versionator
 doc hscolour profile
 
 
