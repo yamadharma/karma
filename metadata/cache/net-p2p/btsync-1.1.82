@@ -1,0 +1,22 @@
+virtual/pkgconfig
+
+0
+amd64? ( http://syncapp.bittorrent.com/1.1.82/btsync_x64-1.1.82.tar.gz ) x86? ( http://syncapp.bittorrent.com/1.1.82/btsync_i386-1.1.82.tar.gz ) arm? ( http://syncapp.bittorrent.com/1.1.82/btsync_arm-1.1.82.tar.gz ) ppc? ( http://syncapp.bittorrent.com/1.1.82/btsync_powerpc-1.1.82.tar.gz )
+mirror strip
+http://labs.bittorrent.com/experiments/sync.html
+BitTorrent
+Automatically sync files via secure, distributed technology.
+amd64 ~x86
+eutils multilib systemd toolchain-funcs user
+
+
+
+
+4
+
+install postinst setup
+
+
+
+
+
