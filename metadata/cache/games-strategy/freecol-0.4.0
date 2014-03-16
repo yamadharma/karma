@@ -1,5 +1,5 @@
 >=virtual/jdk-1.4 >=dev-java/ant-core-1.4.1
->=virtual/jre-1.4
+>=virtual/jre-1.4 games-misc/games-envd
 0
 mirror://sourceforge/freecol/freecol-0.4.0-src.tar.gz
 

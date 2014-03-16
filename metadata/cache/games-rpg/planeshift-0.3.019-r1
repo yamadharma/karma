@@ -1,5 +1,5 @@
 
-net-misc/curl >=media-libs/cal3d-0.11 >=dev-games/crystalspace-ps-1.1-r26888 >=dev-games/cel-ps-1.1-r2766 server? ( virtual/mysql )
+net-misc/curl >=media-libs/cal3d-0.11 >=dev-games/crystalspace-ps-1.1-r26888 >=dev-games/cel-ps-1.1-r2766 server? ( virtual/mysql ) games-misc/games-envd
 0
 http://dev.gentooexperimental.org/~loux/distfiles/planeshift-0.3.019-r1.tar.bz2
 

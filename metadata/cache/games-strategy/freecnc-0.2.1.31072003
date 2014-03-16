@@ -1,5 +1,5 @@
 media-libs/libsdl media-libs/sdl-net zlib? ( sys-libs/zlib ) app-arch/unzip
-media-libs/libsdl media-libs/sdl-net zlib? ( sys-libs/zlib )
+media-libs/libsdl media-libs/sdl-net zlib? ( sys-libs/zlib ) games-misc/games-envd
 0
 mirror://gentoo/freecnc++-0.2.1.31072003-src.tar.bz2 nocd? ( ftp://ftp.westwood.com/pub/cc1/previews/demo/cc1demo1.zip ) nocd? ( ftp://ftp.westwood.com/pub/cc1/previews/demo/cc1demo2.zip )
 

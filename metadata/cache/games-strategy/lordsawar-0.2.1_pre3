@@ -1,5 +1,5 @@
 dev-libs/boost dev-cpp/gtkmm:2.4 dev-cpp/libglademm dev-libs/expat dev-libs/libsigc++:2 dev-libs/libtar media-libs/sdl-image net-libs/gnet nls? ( sys-devel/gettext ) sound? ( media-libs/sdl-mixer[vorbis] ) dev-util/pkgconfig
-dev-libs/boost dev-cpp/gtkmm:2.4 dev-cpp/libglademm dev-libs/expat dev-libs/libsigc++:2 dev-libs/libtar media-libs/sdl-image net-libs/gnet nls? ( sys-devel/gettext ) sound? ( media-libs/sdl-mixer[vorbis] )
+dev-libs/boost dev-cpp/gtkmm:2.4 dev-cpp/libglademm dev-libs/expat dev-libs/libsigc++:2 dev-libs/libtar media-libs/sdl-image net-libs/gnet nls? ( sys-devel/gettext ) sound? ( media-libs/sdl-mixer[vorbis] ) games-misc/games-envd
 0
 http://download.savannah.gnu.org/releases-noredirect/lordsawar/lordsawar-0.2.1-pre3.tar.gz
 
