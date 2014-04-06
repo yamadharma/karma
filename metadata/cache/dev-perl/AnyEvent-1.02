@@ -7,7 +7,7 @@ http://search.cpan.org/~mlehmann/AnyEvent-1.02/
 GPL-2
 provide framework for multiple event loops
 amd64 ~ppc ~ppc64 sparc x86
-base eutils multilib multiprocessing perl-module toolchain-funcs
+eutils multilib multiprocessing perl-module toolchain-funcs unpacker
 
 
 

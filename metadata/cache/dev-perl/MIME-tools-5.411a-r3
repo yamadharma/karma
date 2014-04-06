@@ -7,7 +7,7 @@ http://www.cpan.org/modules/by-module/MIME/ERYQ/MIME-tools-5.411a.readme
 Artistic
 A Perl module for parsing and creating MIME entities
 x86 ppc sparc alpha
-base eutils multilib multiprocessing perl-module toolchain-funcs
+eutils multilib multiprocessing perl-module toolchain-funcs unpacker
 
 
 

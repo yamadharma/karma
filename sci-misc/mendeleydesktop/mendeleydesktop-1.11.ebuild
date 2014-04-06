@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sci-misc/mendeleydesktop/mendeleydesktop-1.8.3.ebuild,v 1.1 2013/04/03 11:02:18 miknix Exp $
+# $Header: /var/cvsroot/gentoo-x86/sci-misc/mendeleydesktop/mendeleydesktop-1.10.1.ebuild,v 1.1 2013/10/09 18:36:43 miknix Exp $
 
 EAPI="4"
 
@@ -82,7 +82,7 @@ src_install() {
 	doins share/icons/hicolor/48x48/apps/${PN}.png
 
 	# install documentation, but no license file
-	dodoc share/doc/${PN}/FAQ.pdf
+	#dodoc share/doc/${PN}/FAQ.pdf
 	dodoc share/doc/${PN}/Readme.txt
 
 	# install binary
@@ -100,6 +100,7 @@ src_install() {
 	insinto /opt/${PN}/share
 	doins -r share/mendeleydesktop
 
-	# make symbolic to known location
-	dosym /opt/${PN}/bin/${PN} /opt/bin/${PN}
+	# install launch script
+	exeinto /opt/bin
+	doexe "${FILESDIR}"/${PN}
 }
