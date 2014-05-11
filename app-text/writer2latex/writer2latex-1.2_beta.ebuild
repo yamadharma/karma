@@ -2,11 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
-
-OO_EXTENSIONS=(writer2latex.oxt writer2xhtml.oxt xhtml-config-sample.oxt writer4latex.oxt)
-
-inherit eutils latex-package java-pkg-2 java-ant-2 multilib office-ext
+EAPI="5"
 
 IS_SOURCE=""
 
@@ -20,6 +16,11 @@ else
 MY_P=${PN}${MY_PV}
 fi
 
+OFFICE_EXTENSIONS=(writer2latex.oxt writer2xhtml.oxt xhtml-config-sample.oxt writer4latex.oxt)
+
+inherit eutils latex-package java-pkg-2 java-ant-2 multilib office-ext-r1
+
+
 DESCRIPTION="Writer2Latex (w2l) - converter from OpenDocument .odt format"
 HOMEPAGE="http://writer2latex.sourceforge.net"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
@@ -28,6 +29,8 @@ SLOT="0"
 LICENSE="GPL-3"
 KEYWORDS="x86 amd64"
 IUSE="doc examples"
+
+RESTRICT=mirror
 
 DEPEND=">=virtual/jdk-1.6
 	virtual/latex-base"
@@ -43,10 +46,10 @@ else
     S_TARGETLIB=${S}
 fi
 
-
+OFFICE_EXTENSIONS_LOCATION="${S}"
 
 # EANT_EXTRA_ARGS="-DOFFICE_HOME=/usr/lib/openoffice"
-EANT_EXTRA_ARGS="-DOFFICE_HOME=${S}/openoffice"
+# EANT_EXTRA_ARGS="-DOFFICE_HOME=${S}/openoffice"
 EANT_BUILD_TARGET="all"
 
 src_prepare(){
@@ -92,7 +95,7 @@ src_install() {
 	#do
 	#	doins ${S_TARGETLIB}/${i}
 	#done
-        office-ext_src_install
+	office-ext-r1_src_install
 	
 	if use doc
         then
