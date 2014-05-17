@@ -2,7 +2,7 @@
 >=virtual/jre-1.6 virtual/latex-base >=dev-java/java-config-2.1.9-r1 office_implementation_libreoffice? ( || ( app-office/libreoffice app-office/libreoffice-bin ) ) office_implementation_openoffice? ( || ( app-office/openoffice app-office/openoffice-bin ) )
 0
 mirror://sourceforge/writer2latex/writer2latex12beta.zip
-
+mirror
 http://writer2latex.sourceforge.net
 GPL-3
 Writer2Latex (w2l) - converter from OpenDocument .odt format
