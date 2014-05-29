@@ -1,7 +1,7 @@
 >=virtual/jdk-1.6
 >=virtual/jre-1.6 || ( >=sys-apps/coreutils-8.15 app-misc/realpath )
 0
-FreeRapid-0.9u3.zip
+FreeRapid-0.9u4.zip
 nomirror
 http://wordrider.net/freerapid
 GPL
