@@ -19,6 +19,8 @@ SLOT="0"
 KEYWORDS="amd64 ~x86"
 IUSE=""
 
+RESTRICT=mirror
+
 DEPEND=""
 RDEPEND="${DEPEND}"
 
@@ -37,7 +39,7 @@ src_install() {
 	doins "${FILESDIR}/config"
 	doinitd "${FILESDIR}/init.d/${PN}"
 	# cp ${FILESDIR}/btsync.service ${D}/btsync@.service
-	systemd_dounit "${D}/btsync@.service"
+	systemd_dounit "${FILESDIR}/btsync@.service"
 	mkdir ${D}/opt/${PN}/pid/
 	fowners -R root:btsync /opt/${PN}
 	fperms -R 775 /opt/${PN}
