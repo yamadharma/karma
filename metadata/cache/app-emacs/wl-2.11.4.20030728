@@ -1,5 +1,5 @@
-virtual/emacs >=app-emacs/apel-10.6 >=virtual/flim-1.14 >=virtual/semi-1.14 >=virtual/emacs-21
-virtual/emacs >=app-emacs/apel-10.6 >=virtual/flim-1.14 >=virtual/semi-1.14 >=virtual/emacs-21
+virtual/emacs >=app-emacs/apel-10.6 >=virtual/flim-1.14 >=virtual/semi-1.14 >=virtual/emacs-23
+virtual/emacs >=app-emacs/apel-10.6 >=virtual/flim-1.14 >=virtual/semi-1.14 >=virtual/emacs-23
 0
 mirror://gentoo/wl-2.11.4.20030728.tar.gz http://dev.gentoo.org/~usata/distfiles/wl-2.11.4.20030728.tar.gz
 

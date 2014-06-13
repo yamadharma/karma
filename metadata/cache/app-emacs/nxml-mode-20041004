@@ -1,5 +1,5 @@
->=virtual/emacs-21
->=virtual/emacs-21
+>=virtual/emacs-23
+>=virtual/emacs-23
 0
 http://thaiopensource.com/download/nxml-mode-20041004.tar.gz mirror://gentoo/nxml-mode-20040910-xmlschema.patch.gz
 

@@ -1,5 +1,5 @@
-virtual/latex-base >=virtual/emacs-21 virtual/latex-base >=sys-apps/texinfo-4.2-r5
-virtual/latex-base >=virtual/emacs-21 virtual/latex-base
+virtual/latex-base >=virtual/emacs-23 virtual/latex-base >=sys-apps/texinfo-4.2-r5
+virtual/latex-base >=virtual/emacs-23 virtual/latex-base
 0
 mirror://gnu/reftex/reftex-4.34.tar.gz
 

@@ -1,5 +1,5 @@
->=virtual/emacs-21
->=virtual/emacs-21
+>=virtual/emacs-23
+>=virtual/emacs-23
 0
 mirror://sourceforge/ebib/ebib-1.8.0.tar.gz
 
