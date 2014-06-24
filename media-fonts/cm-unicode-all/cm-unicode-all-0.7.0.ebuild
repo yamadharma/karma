@@ -13,6 +13,7 @@ LICENSE="X11"
 SLOT="0"
 KEYWORDS="amd64 ~ppc x86"
 IUSE="latex"
+RESTRICT=mirror
 
 FONT_S="${S}"
 FONT_SUFFIX="afm pfb otf"
