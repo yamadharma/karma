@@ -1,8 +1,8 @@
 virtual/latex-base >=sys-apps/texinfo-4.2-r5 X? ( x11-apps/mkfontdir media-fonts/encodings ) gnustep? ( >=gnustep-base/mknfonts-0.5-r1 ) media-libs/fontconfig
 virtual/latex-base
 0
-mirror://sourceforge/cm-unicode/cm-unicode-0.7.0-pfb.tar.xz mirror://sourceforge/cm-unicode/cm-unicode-0.7.0-otf.tar.xz
-
+mirror://sourceforge/cm-unicode/cm-unicode-all-0.7.0-pfb.tar.xz mirror://sourceforge/cm-unicode/cm-unicode-all-0.7.0-otf.tar.xz
+mirror
 http://canopus.iacp.dvo.ru/~panov/cm-unicode/
 X11
 Computer Modern Unicode fonts

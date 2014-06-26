@@ -19,8 +19,6 @@ IUSE="+icu +links reader syslog"
 RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}[X]
 	dev-libs/libxml2
-	dev-db/sqlite:3[fts3(+),icu?]
-	dev-db/wxsqlite3:${WX_GTK_VER}
 	app-arch/bzip2
 	icu? ( dev-libs/icu:= )
 	reader? (
@@ -30,6 +28,10 @@ RDEPEND="
 		sys-libs/zlib
 	)
 "
+#	dev-db/sqlite:3[fts3(+),icu?]
+#	dev-db/wxsqlite3:${WX_GTK_VER}
+
+
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 "
@@ -39,12 +41,13 @@ src_prepare() {
 	rm -rf \
 		3rdparty/bzip2 \
 		3rdparty/faxpp \
-		3rdparty/sqlite3 \
-		3rdparty/wxsqlite3 \
 	|| die
 
-	sed -i -e 's/-lwxsqlite3-2.8/-lwxcode_gtk2u_wxsqlite3-2.8/' \
-		configure.in configure || die
+#		3rdparty/sqlite3 \
+#		3rdparty/wxsqlite3 \
+
+#	sed -i -e 's/-lwxsqlite3-2.8/-lwxcode_gtk2u_wxsqlite3-2.8/' \
+#		configure.in configure || die
 }
 
 src_configure() {
@@ -54,7 +57,9 @@ src_configure() {
 		$(use_with reader) \
 		$(use_with syslog) \
 		--without-bzip2 \
-		--without-sqlite \
-		--without-wxsqlite \
 		--without-strip
+
+#		--without-sqlite \
+#		--without-wxsqlite \
+
 }
