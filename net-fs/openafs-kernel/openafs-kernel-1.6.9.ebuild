@@ -1,14 +1,16 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/openafs-kernel-1.6.2.ebuild,v 1.4 2013/04/13 14:20:17 ago Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs-kernel/openafs-kernel-1.6.5-r2.ebuild,v 1.2 2013/10/15 19:11:13 hasufell Exp $
 
-EAPI="4"
+EAPI="5"
 
-inherit eutils autotools multilib linux-mod versionator toolchain-funcs
+inherit autotools eutils multilib linux-mod versionator toolchain-funcs
+
+MY_PATCH_VER=1.6.5
 
 MY_PV=$(delete_version_separator '_')
 MY_PN=${PN/-kernel}
-MY_P2="${MY_PN}-${PV}"
+MY_P2="${MY_PN}-${MY_PATCH_VER}"
 MY_P="${MY_PN}-${MY_PV}"
 PVER="1"
 DESCRIPTION="The OpenAFS distributed file system kernel module"
@@ -19,7 +21,7 @@ SRC_URI="http://openafs.org/dl/openafs/${MY_PV}/${MY_P}-src.tar.bz2
 
 LICENSE="IBM BSD openafs-krb5-a APSL-2"
 SLOT="0"
-KEYWORDS="amd64 sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
 IUSE=""
 
 S=${WORKDIR}/${MY_P}
@@ -39,17 +41,19 @@ pkg_setup() {
 }
 
 src_prepare() {
-	EPATCH_EXCLUDE="012_all_kbuild.patch" \
+	EPATCH_EXCLUDE="012_all_kbuild.patch 020_all_fbsd.patch" \
 	EPATCH_SUFFIX="patch" \
 	epatch "${WORKDIR}"/gentoo/patches
-	epatch "${FILESDIR}"/openafs-1.6.2-kernel-3.8-{1..5}.patch
-        epatch "${FILESDIR}"/openafs-1.6.2-kernel-3.9.patch
+	epatch_user
 
-	# packaging is f-ed up, so we can't run automake (i.e. eautoreconf)
-	sed -i 's/^\(\s*\)a/\1ea/' regen.sh
-	: # this line makes repoman ok with not calling eautoconf etc. directly
-	skipman=1
-	. regen.sh
+	# packaging is f-ed up, so we can't run eautoreconf
+	# run autotools commands based on what is listed in regen.sh
+	eaclocal -I src/cf
+	eautoconf
+	eautoconf -o configure-libafs configure-libafs.ac
+	eautoheader
+	einfo "Deleting autom4te.cache directory"
+	rm -rf autom4te.cache
 }
 
 src_configure() {
@@ -60,7 +64,7 @@ src_configure() {
 }
 
 src_compile() {
-	ARCH="$(tc-arch-kernel)" emake -j1 only_libafs || die
+	ARCH="$(tc-arch-kernel)" AR="$(tc-getAR)" emake V=1 -j1 only_libafs || die
 }
 
 src_install() {
@@ -80,11 +84,11 @@ src_install() {
 pkg_postinst() {
 	# Update linker.hints file
 	use kernel_FreeBSD && /usr/sbin/kldxref "${EPREFIX}/boot/modules"
-	use linux_kernel && linux-mod_pkg_postinst
+	use kernel_linux && linux-mod_pkg_postinst
 }
 
 pkg_postrm() {
 	# Update linker.hints file
 	use kernel_FreeBSD && /usr/sbin/kldxref "${EPREFIX}/boot/modules"
-	use linux_kernel && linux-mod_pkg_postrm
+	use kernel_linux && linux-mod_pkg_postrm
 }

@@ -1,10 +1,12 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs/openafs-1.6.2.ebuild,v 1.5 2013/08/27 08:15:30 tomwij Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/openafs/openafs-1.6.5-r1.ebuild,v 1.4 2013/10/07 20:27:16 hasufell Exp $
 
 EAPI="4"
 
-inherit flag-o-matic eutils multilib toolchain-funcs versionator pam
+inherit flag-o-matic eutils autotools multilib toolchain-funcs versionator pam systemd
+
+MY_PATCH_VER=1.6.5
 
 MY_PV=$(delete_version_separator '_')
 MY_P="${PN}-${MY_PV}"
@@ -14,14 +16,15 @@ HOMEPAGE="http://www.openafs.org/"
 # We always d/l the doc tarball as man pages are not USE=doc material
 SRC_URI="http://openafs.org/dl/openafs/${MY_PV}/${MY_P}-src.tar.bz2
 	http://openafs.org/dl/openafs/${MY_PV}/${MY_P}-doc.tar.bz2
-	mirror://gentoo/${P}-patches-${PVER}.tar.bz2"
+	mirror://gentoo/${PN}-${MY_PATCH_VER}-patches-${PVER}.tar.bz2"
 
 LICENSE="IBM BSD openafs-krb5-a APSL-2"
 SLOT="0"
-KEYWORDS="amd64 sparc x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
+
 IUSE="doc kerberos pam"
 
-RDEPEND="~net-fs/openafs-kernel-${PV}
+RDEPEND="|| ( ~net-fs/openafs-kernel-${PV} !net-fs/openafs-kernel )
 	sys-libs/ncurses
 	pam? ( sys-libs/pam )
 	kerberos? ( virtual/krb5 )"
@@ -29,14 +32,19 @@ RDEPEND="~net-fs/openafs-kernel-${PV}
 S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
+	EPATCH_EXCLUDE="020_all_fbsd.patch" \
 	EPATCH_SUFFIX="patch" \
 	epatch "${WORKDIR}"/gentoo/patches
+	epatch_user
 
-	# packaging is f-ed up, so we can't run automake (i.e. eautoreconf)
-	sed -i 's/^\(\s*\)a/\1ea/' regen.sh
-	: # this line makes repoman ok with not calling eautoconf etc. directly
-	skipman=1
-	. regen.sh
+	# packaging is f-ed up, so we can't run eautoreconf
+	# run autotools commands based on what is listed in regen.sh
+	eaclocal -I src/cf
+	eautoconf
+	eautoconf -o configure-libafs configure-libafs.ac
+	eautoheader
+	einfo "Deleting autom4te.cache directory"
+	rm -rf autom4te.cache
 }
 
 src_configure() {
@@ -109,6 +117,9 @@ src_install() {
 	newconfd "${CONFDIR}"/openafs-client openafs-client || die
 	newinitd "${SCRIPTDIR}"/openafs-server openafs-server || die
 	newconfd "${CONFDIR}"/openafs-server openafs-server || die
+	systemd_dotmpfilesd "${FILESDIR}"/tmpfiles.d/openafs-client.conf
+	systemd_dounit "${FILESDIR}"/openafs-client.service
+	systemd_dounit "${FILESDIR}"/openafs-server.service
 
 	# used directories: client
 	keepdir /etc/openafs
