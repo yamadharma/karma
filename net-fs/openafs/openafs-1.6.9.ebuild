@@ -114,7 +114,8 @@ src_install() {
 
 	# Gentoo related scripts
 	newinitd "${SCRIPTDIR}"/openafs-client openafs-client || die
-	newconfd "${CONFDIR}"/openafs-client openafs-client || die
+#	newconfd "${CONFDIR}"/openafs-client openafs-client || die
+	newconfd "${FILESDIR}"/openafs-client.conf openafs-client || die
 	newinitd "${SCRIPTDIR}"/openafs-server openafs-server || die
 	newconfd "${CONFDIR}"/openafs-server openafs-server || die
 	systemd_dotmpfilesd "${FILESDIR}"/tmpfiles.d/openafs-client.conf
