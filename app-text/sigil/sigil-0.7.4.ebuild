@@ -17,9 +17,8 @@ SRC_URI="https://${PN}.googlecode.com/files/${MY_P}.zip
 
 LICENSE="CC-BY-SA-3.0 GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="manual"
-RESTRICT=mirror
 
 RDEPEND="
 	>=app-text/hunspell-1.3.2
@@ -30,9 +29,9 @@ RDEPEND="
 	dev-qt/qtnetwork:5
 	dev-qt/qtprintsupport:5
 	dev-qt/qtsvg:5
-	dev-qt/qttools:5
 	dev-qt/qtwebkit:5[widgets]
 	dev-qt/qtxmlpatterns:5
+	dev-qt/linguist-tools:5
 	>=sys-libs/zlib-1.2.7[minizip]"
 DEPEND="
 	>=dev-util/cmake-2.8.9
