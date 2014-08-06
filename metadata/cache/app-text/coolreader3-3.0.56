@@ -1,4 +1,4 @@
-sys-libs/zlib media-libs/libpng virtual/jpeg media-libs/freetype wxwidgets? ( app-admin/eselect-wxwidgets >=x11-libs/wxGTK-2.8 ) qt4? ( dev-qt/qtcore:4 dev-qt/qtgui:4 ) hyphen? ( app-arch/unzip ) sys-devel/make >=dev-util/cmake-2.8.9 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
+sys-libs/zlib media-libs/libpng virtual/jpeg media-libs/freetype wxwidgets? ( app-admin/eselect-wxwidgets >=x11-libs/wxGTK-2.8 ) qt4? ( dev-qt/qtcore:4 dev-qt/qtgui:4 ) hyphen? ( app-arch/unzip ) sys-devel/make >=dev-util/cmake-2.8.12 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 sys-libs/zlib media-libs/libpng virtual/jpeg media-libs/freetype wxwidgets? ( app-admin/eselect-wxwidgets >=x11-libs/wxGTK-2.8 ) qt4? ( dev-qt/qtcore:4 dev-qt/qtgui:4 ) hyphen? ( app-arch/unzip ) media-fonts/corefonts
 0
 mirror://sourceforge/crengine/CoolReader3/cr3-3.0.56/cr3_3.0.56.orig.tar.gz
