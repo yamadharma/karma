@@ -1,4 +1,4 @@
->=sys-apps/util-linux-2.20 dmalloc? ( dev-libs/dmalloc[threads] ) hesiod? ( net-dns/hesiod ) ldap? ( >=net-nds/openldap-2.0 sasl? ( dev-libs/cyrus-sasl dev-libs/libxml2 virtual/krb5 ) ) libtirpc? ( net-libs/libtirpc ) sys-devel/flex virtual/yacc !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13:1.13 >=sys-devel/automake-1.14:1.14 ) >=sys-devel/autoconf-2.68 sys-devel/libtool virtual/pkgconfig
+>=sys-apps/util-linux-2.20 dmalloc? ( dev-libs/dmalloc[threads] ) hesiod? ( net-dns/hesiod ) ldap? ( >=net-nds/openldap-2.0 sasl? ( dev-libs/cyrus-sasl dev-libs/libxml2 virtual/krb5 ) ) libtirpc? ( net-libs/libtirpc ) sys-devel/flex virtual/yacc !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13:1.13 >=sys-devel/automake-1.14:1.14 ) >=sys-devel/autoconf-2.69 sys-devel/libtool virtual/pkgconfig
 >=sys-apps/util-linux-2.20 dmalloc? ( dev-libs/dmalloc[threads] ) hesiod? ( net-dns/hesiod ) ldap? ( >=net-nds/openldap-2.0 sasl? ( dev-libs/cyrus-sasl dev-libs/libxml2 virtual/krb5 ) ) libtirpc? ( net-libs/libtirpc )
 0
 mirror://kernel/linux/daemons/autofs/v5/autofs-5.0.7.tar.bz2 http://dev.gentoo.org/~jlec/distfiles/autofs-5.0.7-patches-3.tar.lzma

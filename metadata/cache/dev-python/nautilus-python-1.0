@@ -1,4 +1,4 @@
->=dev-python/pygtk-2.8 >=dev-python/pygobject-2.16 >=gnome-base/nautilus-2.22 >=dev-python/gconf-python-2.12 doc? ( >=dev-util/gtk-doc-1.9 ) >=sys-apps/sed-4 =dev-lang/python-2* !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13:1.13 >=sys-devel/automake-1.14:1.14 ) >=sys-devel/autoconf-2.68 sys-devel/libtool
+>=dev-python/pygtk-2.8 >=dev-python/pygobject-2.16 >=gnome-base/nautilus-2.22 >=dev-python/gconf-python-2.12 doc? ( >=dev-util/gtk-doc-1.9 ) >=sys-apps/sed-4 =dev-lang/python-2* !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13:1.13 >=sys-devel/automake-1.14:1.14 ) >=sys-devel/autoconf-2.69 sys-devel/libtool
 >=dev-python/pygtk-2.8 >=dev-python/pygobject-2.16 >=gnome-base/nautilus-2.22 =dev-lang/python-2*
 0
 mirror://gnome/sources/nautilus-python/1.0/nautilus-python-1.0.tar.bz2

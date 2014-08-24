@@ -1,4 +1,4 @@
-!<sys-devel/gettext-0.18.1.1-r3 =sys-devel/automake-1.5* >=sys-devel/autoconf-2.68 sys-devel/libtool dev-vcs/cvs
+!<sys-devel/gettext-0.18.1.1-r3 =sys-devel/automake-1.5* >=sys-devel/autoconf-2.69 sys-devel/libtool dev-vcs/cvs
 
 0
 http://tidy.sourceforge.net/docs/tidy_docs_051020.tgz xml? ( http://www.eecs.umich.edu/~ppadala/projects/tidy/html2db.tar.gz )
