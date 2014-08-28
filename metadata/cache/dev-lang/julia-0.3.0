@@ -1,0 +1,22 @@
+dev-lang/R:0= dev-libs/double-conversion:0= dev-libs/gmp:0= dev-libs/libpcre:3= dev-libs/mpfr:0= dev-libs/openspecfun sci-libs/arpack:0= sci-libs/camd:0= sci-libs/cholmod:0= sci-libs/fftw:3.0= sci-libs/openlibm:0= sci-libs/spqr:0= sci-libs/umfpack:0= sci-mathematics/glpk:0= =sys-devel/llvm-3.4* >=sys-libs/libunwind-1.1:7= sys-libs/readline:0= sys-libs/zlib:0= virtual/blas virtual/lapack emacs? ( app-emacs/ess ) dev-util/patchelf virtual/pkgconfig
+dev-lang/R:0= dev-libs/double-conversion:0= dev-libs/gmp:0= dev-libs/libpcre:3= dev-libs/mpfr:0= dev-libs/openspecfun sci-libs/arpack:0= sci-libs/camd:0= sci-libs/cholmod:0= sci-libs/fftw:3.0= sci-libs/openlibm:0= sci-libs/spqr:0= sci-libs/umfpack:0= sci-mathematics/glpk:0= =sys-devel/llvm-3.4* >=sys-libs/libunwind-1.1:7= sys-libs/readline:0= sys-libs/zlib:0= virtual/blas virtual/lapack emacs? ( app-emacs/ess )
+0
+https://github.com/JuliaLang/julia/archive/v0.3.0.tar.gz -> julia-0.3.0.tar.gz http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/dSFMT-src-2.2.tar.gz http://dev.gentoo.org/~patrick/libuv-julia-0.3.0.tar.bz2 http://dev.gentoo.org/~patrick/rmath-0_p20140821.tar.bz2 http://www.public-software-group.org/pub/projects/utf8proc/v1.1.6/utf8proc-v1.1.6.tar.gz http://github.com/xianyi/OpenBLAS/tarball/v0.2.10 -> openblas-v0.2.10.tar.gz
+test
+http://julialang.org/
+MIT
+High-performance programming language for technical computing
+~amd64 ~x86 ~amd64-linux ~x86-linux
+elisp-common eutils multilib pax-utils toolchain-funcs
+emacs
+
+
+
+5
+
+compile configure install postinst postrm prepare setup test
+
+
+
+
+
