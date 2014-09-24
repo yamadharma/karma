@@ -38,7 +38,7 @@ DEPEND=">=virtual/jdk-1.7
 	virtual/latex-base"
 RDEPEND=">=virtual/jre-1.7"
 
-S=${WORKDIR}/${PN}12
+S=${WORKDIR}/${PN}13
 if [[ -n ${IS_SOURCE} ]]
 then
     S_DISTRO=${S}/source/distro
@@ -77,8 +77,8 @@ src_install() {
 	dobin w2l
 
 	insinto /usr/$(get_libdir)/${PN}
-	cd ${S_DISTRO}/xslt
-	doins *.xsl
+	cd ${S_DISTRO}/config
+	doins *.xml
 	
 	cd ${S_DISTRO}/latex
 	latex-package_src_install

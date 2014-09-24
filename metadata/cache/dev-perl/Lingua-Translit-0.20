@@ -1,0 +1,22 @@
+dev-lang/perl:=[-build(-)]
+dev-lang/perl:=[-build(-)]
+0
+mirror://cpan/authors/id/A/AL/ALINKE/Lingua-Translit-0.20.tar.gz
+
+http://search.cpan.org/dist/Lingua-Translit/
+|| ( Artistic GPL-1 GPL-2 GPL-3 )
+Natural language text transliteration
+~amd64 ~x86
+eutils multilib multiprocessing perl-module toolchain-funcs unpacker
+
+
+
+
+5
+
+compile configure install prepare test unpack
+
+
+
+
+
