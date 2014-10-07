@@ -1,1 +1,3 @@
 move app-text/writer2latex app-officeext/writer2latex
+move media-fonts/pscyr dev-tex/pscyr
+
