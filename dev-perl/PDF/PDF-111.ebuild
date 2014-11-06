@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=5
 inherit perl-module
 
 DESCRIPTION="The PDF library is a proposed library for access the information contained inside a PDF file"

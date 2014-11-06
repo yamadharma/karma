@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License, v2 or later
 # $Header: /home/cvsroot/gentoo-x86/dev-perl/Compress-Zlib/Compress-Zlib-1.16-r1.ebuild,v 1.6 2002/08/14 04:32:30 murphy Exp $
 
+EAPI=5
 inherit perl-module
 
 S=${WORKDIR}/${P}

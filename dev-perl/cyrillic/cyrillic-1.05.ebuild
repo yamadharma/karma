@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /home/cvsroot/gentoo-x86/dev-perl/Config-Tiny/Config-Tiny-1.ebuild,v 1.2 2003/06/21 21:36:36 drobbins Exp $
 
+EAPI=5
 inherit perl-module
 
 S=${WORKDIR}/${P}

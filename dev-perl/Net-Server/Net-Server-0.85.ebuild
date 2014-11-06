@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /home/cvsroot/gentoo-x86/dev-perl/Net-Daemon/Net-Daemon-0.37.ebuild,v 1.1 2003/06/16 13:57:23 mcummings Exp $
 
+EAPI=5
 inherit perl-module
 
 S=${WORKDIR}/${P}

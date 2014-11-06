@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-perl/libnet/libnet-1.19.ebuild,v 1.5 2005/04/01 04:46:43 agriffis Exp $
 
+EAPI=5
 inherit perl-module
 
 DESCRIPTION="A URI Perl Module"
