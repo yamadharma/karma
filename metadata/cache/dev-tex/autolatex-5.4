@@ -1,5 +1,5 @@
-virtual/latex-base >=sys-apps/texinfo-4.2-r5
-dev-perl/Config-Simple virtual/latex-base
+dev-lang/perl:=[-build(-)] virtual/latex-base >=sys-apps/texinfo-4.2-r5
+dev-perl/Config-Simple dev-lang/perl:=[-build(-)] virtual/latex-base
 0
 http://download.tuxfamily.org/arakhne/pool/autolatex/autolatex_5.4-0arakhne0.tar.gz
 
@@ -12,9 +12,9 @@ base eutils latex-package multilib multiprocessing perl-module toolchain-funcs u
 
 
 
+5
 
-
-compile install postinst postrm preinst prerm setup test unpack
+compile configure install postinst postrm prepare test unpack
 
 
 
