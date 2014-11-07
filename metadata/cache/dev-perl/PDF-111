@@ -1,5 +1,5 @@
-dev-lang/perl
-dev-lang/perl
+dev-lang/perl dev-lang/perl:=[-build(-)]
+dev-lang/perl:=[-build(-)]
 0
 mirror://cpan/authors/id/A/AN/ANTRO/PDF-111.tgz
 
@@ -12,9 +12,9 @@ eutils multilib multiprocessing perl-module toolchain-funcs unpacker
 
 
 
+5
 
-
-compile install postinst postrm preinst prerm setup test unpack
+compile configure install prepare test unpack
 
 
 

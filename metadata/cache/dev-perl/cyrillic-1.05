@@ -1,5 +1,5 @@
-
-dev-perl/Unicode-Map8 dev-perl/Unicode-String
+dev-lang/perl:=[-build(-)]
+dev-perl/Unicode-Map8 dev-perl/Unicode-String dev-lang/perl:=[-build(-)]
 0
 http://www.cpan.org/modules/by-module/Convert/cyrillic-1.05.tar.gz
 
@@ -12,9 +12,9 @@ eutils multilib multiprocessing perl-module toolchain-funcs unpacker
 
 
 
+5
 
-
-compile install postinst postrm preinst prerm setup test unpack
+compile configure install prepare test unpack
 
 
 

@@ -1,5 +1,5 @@
-dev-lang/perl
-dev-lang/perl dev-perl/List-MoreUtils dev-perl/Sys-SigAction dev-perl/Devel-Symdump dev-perl/Acme-Damn
+dev-lang/perl dev-lang/perl:=[-build(-)]
+dev-lang/perl dev-perl/List-MoreUtils dev-perl/Sys-SigAction dev-perl/Devel-Symdump dev-perl/Acme-Damn dev-lang/perl:=[-build(-)]
 0
 mirror://cpan/authors/id/R/RY/RYBSKEJ/forks-0.33.tar.gz
 
@@ -12,9 +12,9 @@ test
 
 
 
+5
 
-
-compile install postinst postrm preinst prerm setup test unpack
+compile configure install prepare test unpack
 
 
 

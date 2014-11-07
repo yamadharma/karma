@@ -1,5 +1,5 @@
-dev-perl/Compress-Zlib
-dev-perl/Compress-Zlib
+dev-perl/Compress-Zlib dev-lang/perl:=[-build(-)]
+dev-lang/perl:=[-build(-)]
 0
 http://www.cpan.org/modules/by-module/Archive/Archive-Tar-0.23.tgz
 
@@ -12,9 +12,9 @@ eutils multilib multiprocessing perl-module toolchain-funcs unpacker
 
 
 
+5
 
-
-compile install postinst postrm preinst prerm setup test unpack
+compile configure install prepare test unpack
 
 
 

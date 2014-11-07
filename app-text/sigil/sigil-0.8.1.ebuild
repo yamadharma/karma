@@ -12,13 +12,15 @@ MY_MANUAL="Sigil_User_Guide_0_7_2.epub"
 
 DESCRIPTION="Sigil is a multi-platform WYSIWYG ebook editor for ePub format."
 HOMEPAGE="http://code.google.com/p/sigil/"
-SRC_URI="https://${PN}.googlecode.com/files/${MY_P}.zip
-		 manual? ( https://sigil.googlecode.com/files/${MY_MANUAL} )"
+SRC_URI="https://github.com/user-none/Sigil/releases/download/${PV}/${MY_P}.zip"
+#SRC_URI="https://${PN}.googlecode.com/files/${MY_P}.zip
+#		 manual? ( https://sigil.googlecode.com/files/${MY_MANUAL} )"
 
 LICENSE="CC-BY-SA-3.0 GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="manual"
+IUSE=""
+# IUSE="manual"
 
 RDEPEND="
 	>=app-text/hunspell-1.3.2
@@ -29,7 +31,8 @@ RDEPEND="
 	dev-qt/qtnetwork:5
 	dev-qt/qtprintsupport:5
 	dev-qt/qtsvg:5
-	dev-qt/qtwebkit:5[widgets]
+	dev-qt/qtwebkit:5
+	dev-qt/qtwidgets:5
 	dev-qt/qtxmlpatterns:5
 	dev-qt/linguist-tools:5
 	>=sys-libs/zlib-1.2.7[minizip]"
