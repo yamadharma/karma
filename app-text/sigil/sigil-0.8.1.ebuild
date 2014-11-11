@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 CMAKE_BUILD_TYPE="Release"
 
 inherit eutils cmake-utils
@@ -19,8 +19,8 @@ SRC_URI="https://github.com/user-none/Sigil/releases/download/${PV}/${MY_P}.zip"
 LICENSE="CC-BY-SA-3.0 GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
-# IUSE="manual"
+IUSE="manual"
+
 
 RDEPEND="
 	>=app-text/hunspell-1.3.2
@@ -40,16 +40,16 @@ DEPEND="
 	>=dev-util/cmake-2.8.9
 	${DEPEND}"
 
-S="${WORKDIR}"
+S=${WORKDIR}/Sigil-${PV}
 
-DOCS=( ChangeLog README )
+DOCS=( ${S}/docs/CodeStyle.md  ${S}/docs/Install.md  ${S}/docs/ReleaseChecklist.md  ${S}/docs/Translating.md )
 if use manual
-	then DOCS+=( "${DISTDIR}/${MY_MANUAL}" )
+	then DOCS+=( "${S}/docs/${MY_MANUAL}" )
 fi
 
-src_prepare() {
-	# use standard naming
-	mv -f README.txt README
-	mv -f ChangeLog.txt ChangeLog
-	edos2unix ChangeLog README
-}
+#src_prepare() {
+#	# use standard naming
+#	mv -f README.txt README
+#	mv -f ChangeLog.txt ChangeLog
+#	edos2unix ChangeLog README
+#}
