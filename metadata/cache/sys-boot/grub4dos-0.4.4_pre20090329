@@ -7,7 +7,7 @@ https://gna.org/projects/grub4dos
 GPL-2
 GRUB4DOS is an universal boot loader based on GNU GRUB
 amd64 x86 ~x86-fbsd
-autotools eutils flag-o-matic libtool mount-boot multilib multiprocessing toolchain-funcs
+autotools eutils flag-o-matic libtool mount-boot multilib toolchain-funcs
 custom-cflags ncurses netboot static
 
 

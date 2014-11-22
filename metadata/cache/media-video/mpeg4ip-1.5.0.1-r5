@@ -7,7 +7,7 @@ http://www.mpeg4ip.net/
 MPL-1.1 LGPL-2 GPL-2 LGPL-2.1 BSD UCL MPEG4
 MPEG 4 implementation library
 ~amd64 ~ppc ~x86
-autotools eutils libtool multilib multiprocessing toolchain-funcs
+autotools eutils libtool multilib toolchain-funcs
 ipv6 mmx v4l2 xvid nas alsa esd arts ffmpeg a52 mpeg2 lame aac id3 player mp4live x264
 
 

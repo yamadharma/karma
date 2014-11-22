@@ -7,7 +7,7 @@ http://nfs.sourceforge.net/
 GPL-2
 NFS client and server daemons
 ~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86
-autotools eutils flag-o-matic libtool multilib multiprocessing toolchain-funcs
+autotools eutils flag-o-matic libtool multilib toolchain-funcs
 nonfsv4 tcpd kerberos
 
 

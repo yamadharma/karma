@@ -7,7 +7,7 @@ http://www.gnome.org/projects/dia/
 GPL-2
 Diagram/flowchart creation program
 
-autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib multiprocessing python subversion toolchain-funcs versionator
+autotools eutils fdo-mime gnome.org gnome2 gnome2-utils libtool multilib python subversion toolchain-funcs versionator
 cairo doc gnome gnome-print png python zlib debug
 
 

@@ -7,7 +7,7 @@ http://www.isi.edu/nsnam/nam
 BSD
 Network Simulator GUI for NS
 amd64 ~ppc ~sparc x86
-autotools eutils libtool multilib multiprocessing toolchain-funcs
+autotools eutils libtool multilib toolchain-funcs
 debug
 
 

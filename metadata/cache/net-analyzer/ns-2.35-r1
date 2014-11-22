@@ -7,7 +7,7 @@ http://www.isi.edu/nsnam/ns/
 BSD as-is
 Network Simulator
 ~ppc ~sparc x86 amd64
-autotools eutils flag-o-matic libtool multilib multiprocessing toolchain-funcs
+autotools eutils flag-o-matic libtool multilib toolchain-funcs
 doc debug
 
 

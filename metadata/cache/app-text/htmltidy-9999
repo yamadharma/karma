@@ -7,7 +7,7 @@ http://tidy.sourceforge.net/
 GPL-2
 Tidy the layout and correct errors in HTML and XML documents
 alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sh sparc x86 ~x86-fbsd
-autotools cvs eutils libtool multilib multiprocessing toolchain-funcs
+autotools cvs eutils libtool multilib toolchain-funcs
 debug doc
 
 

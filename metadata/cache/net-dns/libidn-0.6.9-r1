@@ -7,7 +7,7 @@ http://www.gnu.org/software/libidn/
 LGPL-2.1
 Internationalized Domain Names (IDN) implementation
 alpha amd64 ~arm ~hppa ia64 ~mips ppc ppc64 ~s390 ~sh sparc x86 ~x86-fbsd
-autotools elisp-common eutils java-pkg-opt-2 java-utils-2 libtool mono multilib multiprocessing toolchain-funcs versionator
+autotools elisp-common eutils java-pkg-opt-2 java-utils-2 libtool mono multilib toolchain-funcs versionator
 java doc emacs mono nls elibc_FreeBSD java
 
 
