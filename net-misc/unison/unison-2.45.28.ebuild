@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-misc/unison/unison-2.32.52.ebuild,v 1.4 2010/08/05 06:16:50 aballier Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-misc/unison/unison-2.45.4.ebuild,v 1.2 2013/04/01 10:32:20 heroxbd Exp $
 
-EAPI="4"
+EAPI="5"
 
 inherit eutils versionator
 
@@ -12,7 +12,7 @@ DESCRIPTION="Two-way cross-platform file synchronizer"
 HOMEPAGE="http://www.cis.upenn.edu/~bcpierce/unison/"
 LICENSE="GPL-2"
 SLOT="$(get_version_component_range 1-2 ${PV})"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~sparc-solaris"
+KEYWORDS="~amd64 ~arm ~ppc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~sparc-solaris"
 
 # ocaml version so we are sure it has ocamlopt use flag
 DEPEND=">=dev-lang/ocaml-3.10.2[ocamlopt?]
@@ -25,7 +25,6 @@ RDEPEND="gtk? ( >=dev-ml/lablgtk-2.2
 	app-admin/eselect-unison"
 
 #PDEPEND="gtk? ( media-fonts/font-schumacher-misc )"
-RESTRICT="mirror"
 
 SRC_URI="http://www.cis.upenn.edu/~bcpierce/unison/download/releases/${P}/${P}.tar.gz
 	doc? ( http://www.cis.upenn.edu/~bcpierce/unison/download/releases/${P}/${P}-manual.pdf
@@ -54,26 +53,24 @@ src_compile() {
 
 	use ocamlopt || myconf="$myconf NATIVE=false"
 
-	# hack???
-#	make mkProjectInfo
 	# Discard cflags as it will try to pass them to ocamlc...
-	emake $myconf CFLAGS="" buildexecutable || die "error making unsion"
+	emake $myconf CFLAGS="" buildexecutable
 }
 
 src_test() {
-	emake selftest ||  die "selftest failed"
+	emake selftest
 }
 
 src_install () {
 	# install manually, since it's just too much
 	# work to force the Makefile to do the right thing.
-	newbin unison unison-${SLOT} || die
+	newbin unison unison-${SLOT}
 	dodoc BUGS.txt CONTRIB INSTALL NEWS \
-		  README ROADMAP.txt TODO.txt || die
+		  README ROADMAP.txt TODO.txt
 
 	if use doc; then
-		dohtml "${DISTDIR}/${P}-manual.html" || die
-		dodoc "${DISTDIR}/${P}-manual.pdf" || die
+		dohtml "${DISTDIR}/${P}-manual.html"
+		dodoc "${DISTDIR}/${P}-manual.pdf"
 	fi
 	use ocamlopt || export STRIP_MASK="*/bin/*"
 }
