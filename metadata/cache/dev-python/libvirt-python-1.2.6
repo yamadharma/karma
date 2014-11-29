@@ -1,5 +1,5 @@
->=app-emulation/libvirt-0.9.6:=[-python(-)] virtual/pkgconfig test? ( dev-python/lxml ) python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_2? ( >=dev-lang/python-3.2.5-r2:3.2 ) python_targets_python3_3? ( >=dev-lang/python-3.3.2-r2:3.3 ) dev-lang/python-exec:=[python_targets_python2_7(-)?,python_targets_python3_2(-)?,python_targets_python3_3(-)?,-python_single_target_python2_7(-),-python_single_target_python3_2(-),-python_single_target_python3_3(-)]
->=app-emulation/libvirt-0.9.6:=[-python(-)] python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_2? ( >=dev-lang/python-3.2.5-r2:3.2 ) python_targets_python3_3? ( >=dev-lang/python-3.3.2-r2:3.3 ) dev-lang/python-exec:=[python_targets_python2_7(-)?,python_targets_python3_2(-)?,python_targets_python3_3(-)?,-python_single_target_python2_7(-),-python_single_target_python3_2(-),-python_single_target_python3_3(-)]
+>=app-emulation/libvirt-0.9.6:=[-python(-)] virtual/pkgconfig test? ( dev-python/lxml ) python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_3? ( >=dev-lang/python-3.3.2-r2:3.3 ) dev-lang/python-exec:=[python_targets_python2_7(-)?,python_targets_python3_3(-)?,-python_single_target_python2_7(-),-python_single_target_python3_3(-)]
+>=app-emulation/libvirt-0.9.6:=[-python(-)] python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_3? ( >=dev-lang/python-3.3.2-r2:3.3 ) dev-lang/python-exec:=[python_targets_python2_7(-)?,python_targets_python3_3(-)?,-python_single_target_python2_7(-),-python_single_target_python3_3(-)]
 0
 http://libvirt.org/sources/python/libvirt-python-1.2.6.tar.gz
 
@@ -8,8 +8,8 @@ LGPL-2
 libvirt Python bindings
 ~amd64 ~x86
 distutils-r1 eutils multibuild multilib multiprocessing python-r1 python-utils-r1 toolchain-funcs
-test python_targets_python2_7 python_targets_python3_2 python_targets_python3_3
-|| ( python_targets_python2_7 python_targets_python3_2 python_targets_python3_3 )
+test python_targets_python2_7 python_targets_python3_3
+|| ( python_targets_python2_7 python_targets_python3_3 )
 
 
 5
