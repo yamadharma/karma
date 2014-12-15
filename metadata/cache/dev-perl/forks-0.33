@@ -4,7 +4,7 @@ dev-lang/perl dev-perl/List-MoreUtils dev-perl/Sys-SigAction dev-perl/Devel-Symd
 mirror://cpan/authors/id/R/RY/RYBSKEJ/forks-0.33.tar.gz
 
 http://search.cpan.org/dist/forks/
-|| ( Artistic GPL-1 GPL-2 GPL-3 )
+|| ( Artistic GPL-1+ )
 drop-in replacement for Perl threads using fork()
 ~amd64 ~x86
 eutils multilib multiprocessing perl-module toolchain-funcs unpacker
