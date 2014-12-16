@@ -1,4 +1,4 @@
-# Copyright 1999-2002 Gentoo Technologies, Inc.
+# Copyright 1999-2014 Gentoo Technologies, Inc.
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -17,8 +17,7 @@ RESTRICT=nomirror
 
 IUSE="${IUSE}"
 
-DEPEND="virtual/emacs
-	( app-emacs/tiny-tools )"
+DEPEND="virtual/emacs"
 
 S="${WORKDIR}/${P}"
 
