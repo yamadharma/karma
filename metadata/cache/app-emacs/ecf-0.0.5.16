@@ -1,7 +1,7 @@
-virtual/emacs ( app-emacs/tiny-tools )
+virtual/emacs
 
 0
-mirror://sourceforge/ecf/ecf-0.0.5.14.tar.bz2
+mirror://sourceforge/ecf/ecf-0.0.5.16.tar.bz2
 nomirror
 http://ecf.sourceforge.net
 GPL-2
