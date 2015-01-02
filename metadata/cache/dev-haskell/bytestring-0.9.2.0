@@ -14,7 +14,7 @@ doc hscolour profile
 
 3
 
-compile configure install postinst prerm setup test
+compile configure install postinst postrm setup test
 
 
 
