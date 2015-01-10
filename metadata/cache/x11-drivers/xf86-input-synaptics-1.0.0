@@ -1,4 +1,4 @@
-x11-libs/libXext hal? ( sys-apps/hal ) !x11-drivers/synaptics x11-base/xorg-server x11-proto/inputproto >=sys-apps/sed-4 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13 >=sys-devel/automake-1.14 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 >=sys-devel/libtool-1.5 >=sys-devel/m4-1.4 virtual/pkgconfig >=x11-misc/util-macros-1.3.0
+x11-libs/libXext hal? ( sys-apps/hal ) !x11-drivers/synaptics x11-base/xorg-server x11-proto/inputproto >=sys-apps/sed-4 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13 >=sys-devel/automake-1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 >=sys-devel/libtool-1.5 >=sys-devel/m4-1.4 virtual/pkgconfig >=x11-misc/util-macros-1.3.0
 x11-libs/libXext hal? ( sys-apps/hal ) !<=x11-base/xorg-x11-6.9
 0
 http://xorg.freedesktop.org/releases/individual/driver/xf86-input-synaptics-1.0.0.tar.bz2

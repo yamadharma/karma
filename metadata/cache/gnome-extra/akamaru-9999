@@ -1,4 +1,4 @@
->=dev-libs/glib-2.8 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13 >=sys-devel/automake-1.14 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 >=sys-apps/sed-4 dev-vcs/subversion net-misc/rsync
+>=dev-libs/glib-2.8 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13 >=sys-devel/automake-1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 >=sys-apps/sed-4 dev-vcs/subversion net-misc/rsync
 >=dev-libs/glib-2.8
 0
 
