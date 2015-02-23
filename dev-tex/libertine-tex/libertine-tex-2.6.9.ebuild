@@ -17,7 +17,7 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 RDEPEND="${RDEPEND}
-	>=media-fonts/libertine-ttf-${PV}"
+	>=media-fonts/libertine-${PV}"
 
 S="${WORKDIR}"
 
