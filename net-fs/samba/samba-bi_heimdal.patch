@@ -1,0 +1,36 @@
+--- 1/samba-4.1.17.ebuild	2015-03-03 12:31:14.000000000 +0300
++++ samba-4.2.0.ebuild	2015-03-09 11:12:05.000000000 +0300
+@@ -20,13 +20,14 @@ LICENSE="GPL-3"
+ 
+ SLOT="0"
+ 
+-IUSE="acl addns ads aio avahi client cluster cups dmapi fam gnutls iprint
++IUSE="acl addns ads aio avahi +bi_heimdal client cluster cups dmapi fam gnutls iprint
+ ldap quota selinux syslog systemd test winbind"
+ 
+ # sys-apps/attr is an automagic dependency (see bug #489748)
+ # sys-libs/pam is an automagic dependency (see bug #489770)
+ CDEPEND="${PYTHON_DEPS}
+-	>=app-crypt/heimdal-1.5[-ssl]
++	!bi_heimdal? ( >=app-crypt/heimdal-1.5[-ssl] )
++	bi_heimdal? ( !>=app-crypt/heimdal-1.5[-ssl] )
+ 	dev-libs/iniparser
+ 	dev-libs/popt
+ 	sys-libs/readline:=
+@@ -97,6 +98,8 @@ src_configure() {
+ 	local myconf=''
+ 	use "cluster" && myconf+=" --with-ctdb-dir=/usr"
+ 	use "test" && myconf+=" --enable-selftest"
++	use "bi_heimdal" && myconf+=" --bundled-libraries=heimdal,roken"
++	use "!bi_heimdal" && myconf+=" --bundled-libraries=NONE"
+ 	myconf="${myconf} \
+ 		--enable-fhs \
+ 		--sysconfdir=/etc \
+@@ -108,7 +111,6 @@ src_configure() {
+ 		--disable-rpath-install \
+ 		--nopyc \
+ 		--nopyo \
+-		--bundled-libraries=NONE \
+ 		--builtin-libraries=NONE \
+ 		$(use_with addns dnsupdate) \
+ 		$(use_with acl acl-support) \
