@@ -1,0 +1,22 @@
+test? ( ruby_targets_ruby19? ( www-apps/octopress-hooks[ruby_targets_ruby19] ) ruby_targets_ruby20? ( www-apps/octopress-hooks[ruby_targets_ruby20] ) ruby_targets_ruby21? ( www-apps/octopress-hooks[ruby_targets_ruby21] ) ) ruby_targets_ruby19? ( test? ( www-apps/octopress[ruby_targets_ruby19] www-apps/octopress-multilingual[ruby_targets_ruby19] dev-ruby/bundler[ruby_targets_ruby19] dev-ruby/clash[ruby_targets_ruby19] dev-ruby/rake[ruby_targets_ruby19] www-apps/octopress-debugger[ruby_targets_ruby19] ) ) ruby_targets_ruby20? ( test? ( www-apps/octopress[ruby_targets_ruby20] www-apps/octopress-multilingual[ruby_targets_ruby20] dev-ruby/bundler[ruby_targets_ruby20] dev-ruby/clash[ruby_targets_ruby20] dev-ruby/rake[ruby_targets_ruby20] www-apps/octopress-debugger[ruby_targets_ruby20] ) ) ruby_targets_ruby21? ( test? ( www-apps/octopress[ruby_targets_ruby21] www-apps/octopress-multilingual[ruby_targets_ruby21] dev-ruby/bundler[ruby_targets_ruby21] dev-ruby/clash[ruby_targets_ruby21] dev-ruby/rake[ruby_targets_ruby21] www-apps/octopress-debugger[ruby_targets_ruby21] ) ) ruby_targets_ruby19? ( dev-lang/ruby:1.9 ) ruby_targets_ruby20? ( dev-lang/ruby:2.0 ) ruby_targets_ruby21? ( dev-lang/ruby:2.1 ) ruby_targets_ruby19? ( doc? ( dev-ruby/rake[ruby_targets_ruby19] ) ) ruby_targets_ruby20? ( doc? ( dev-ruby/rake[ruby_targets_ruby20] ) ) ruby_targets_ruby21? ( doc? ( dev-ruby/rake[ruby_targets_ruby21] ) ) ruby_targets_ruby19? ( test? ( dev-ruby/rake[ruby_targets_ruby19] ) ) ruby_targets_ruby20? ( test? ( dev-ruby/rake[ruby_targets_ruby20] ) ) ruby_targets_ruby21? ( test? ( dev-ruby/rake[ruby_targets_ruby21] ) ) ruby_targets_ruby19? ( virtual/rubygems[ruby_targets_ruby19] ) ruby_targets_ruby20? ( virtual/rubygems[ruby_targets_ruby20] ) ruby_targets_ruby21? ( virtual/rubygems[ruby_targets_ruby21] ) test? ( ruby_targets_ruby19? ( virtual/rubygems[ruby_targets_ruby19] ) ruby_targets_ruby20? ( virtual/rubygems[ruby_targets_ruby20] ) ruby_targets_ruby21? ( virtual/rubygems[ruby_targets_ruby21] ) )
+ruby_targets_ruby19? ( www-apps/octopress-hooks[ruby_targets_ruby19] ) ruby_targets_ruby20? ( www-apps/octopress-hooks[ruby_targets_ruby20] ) ruby_targets_ruby21? ( www-apps/octopress-hooks[ruby_targets_ruby21] ) ruby_targets_ruby19? ( dev-lang/ruby:1.9 ) ruby_targets_ruby20? ( dev-lang/ruby:2.0 ) ruby_targets_ruby21? ( dev-lang/ruby:2.1 ) ruby_targets_ruby19? ( virtual/rubygems[ruby_targets_ruby19] ) ruby_targets_ruby20? ( virtual/rubygems[ruby_targets_ruby20] ) ruby_targets_ruby21? ( virtual/rubygems[ruby_targets_ruby21] )
+0
+mirror://rubygems/octopress-paginate-1.1.2.gem
+
+https://github.com/octopress/paginate
+MIT
+A nice and simple paginator for Jekyll sites.
+~amd64 ~x86
+eutils java-utils-2 multilib ruby-fakegem ruby-ng toolchain-funcs versionator
+test elibc_FreeBSD ruby_targets_ruby19 ruby_targets_ruby20 ruby_targets_ruby21 doc test test
+|| ( ruby_targets_ruby19 ruby_targets_ruby20 ruby_targets_ruby21 )
+
+
+5
+
+compile configure install prepare setup test unpack
+
+
+
+
+
