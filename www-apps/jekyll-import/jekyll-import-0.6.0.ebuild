@@ -19,7 +19,8 @@ IUSE=""
 
 ruby_add_rdepend ">=www-apps/jekyll-2
 	dev-ruby/nokogiri
-        "
+	dev-ruby/fastercsv"
+
 ruby_add_bdepend ">=www-apps/jekyll-2 
 	dev-ruby/rake
 	dev-ruby/rdoc
