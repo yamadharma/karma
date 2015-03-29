@@ -22,8 +22,8 @@ IUSE=""
 
 DEPEND="x11-libs/libX11
 	x11-libs/libXt
-	dev-lang/tcl:8.5
-	dev-lang/tk:8.5
+	=dev-lang/tcl-8.5*
+	=dev-lang/tk-8.5*
 	>=dev-tcltk/otcl-1.11"
 
 

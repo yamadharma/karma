@@ -17,8 +17,8 @@ SLOT="0"
 KEYWORDS="amd64 ~ppc ~sparc x86"
 IUSE=""
 
-DEPEND="dev-lang/tcl:8.5
-                dev-lang/tk:8.5"
+DEPEND="=dev-lang/tcl-8.5*
+                =dev-lang/tk-8.5*"
 
 # the package is not safe :-(
 MAKEOPTS="${MAKEOPTS} -j1"

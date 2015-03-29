@@ -18,8 +18,8 @@ SLOT="0"
 KEYWORDS="amd64 ~ppc ~sparc x86"
 IUSE="debug"
 DEPEND="|| ( x11-libs/libXmu virtual/x11 )
-	dev-lang/tcl:8.5
-	dev-lang/tk:8.5
+	=dev-lang/tcl-8.5*
+	=dev-lang/tk-8.5*
 	>=dev-tcltk/otcl-1.14
 	>=dev-tcltk/tclcl-1.20
 	debug? ( dev-tcltk/tcl-debug )"

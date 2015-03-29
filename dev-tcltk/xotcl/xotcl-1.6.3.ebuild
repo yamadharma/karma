@@ -16,8 +16,8 @@ SLOT="0"
 KEYWORDS="amd64 ~ppc ~sparc x86"
 IUSE=""
 
-DEPEND=">=dev-lang/tcl-8.4.5
-        >=dev-lang/tk-8.4.5"
+DEPEND="=dev-lang/tcl-8.5*
+        =dev-lang/tk-8.5*"
 
 
 src_configure() {

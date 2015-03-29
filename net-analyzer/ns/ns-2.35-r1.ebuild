@@ -15,8 +15,8 @@ SLOT="0"
 KEYWORDS="~ppc ~sparc x86 amd64"
 IUSE="doc debug"
 
-RDEPEND="dev-lang/tcl:8.5
-		dev-lang/tk:8.5
+RDEPEND="=dev-lang/tcl-8.5*
+		=dev-lang/tk-8.5*
 		>=dev-tcltk/otcl-1.11
 		>=dev-tcltk/tclcl-1.17
 		net-libs/libpcap
