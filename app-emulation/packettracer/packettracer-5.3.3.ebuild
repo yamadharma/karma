@@ -29,7 +29,6 @@ IUSE="doc"
 DEPEND="app-arch/gzip"
 
 RDEPEND="doc? ( www-plugins/adobe-flash  )
-	amd64? ( app-emulation/emul-linux-x86-compat )
 	!<app-emulation/packettracer-52"
 
 #RDEPEND="doc? ( www-plugins/adobe-flash  )
