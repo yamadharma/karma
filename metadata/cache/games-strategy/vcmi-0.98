@@ -1,7 +1,7 @@
 >=dev-libs/boost-1.48 media-libs/libsdl2 media-libs/sdl2-image media-libs/sdl2-mixer media-libs/sdl2-ttf >=sys-devel/gcc-4.6 sys-libs/zlib virtual/ffmpeg editor? ( dev-qt/qtwidgets:5 ) launcher? ( dev-qt/qtnetwork:5 dev-qt/qtwidgets:5 ) sys-devel/make >=dev-util/cmake-2.8.12 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
 >=dev-libs/boost-1.48 media-libs/libsdl2 media-libs/sdl2-image media-libs/sdl2-mixer media-libs/sdl2-ttf >=sys-devel/gcc-4.6 sys-libs/zlib virtual/ffmpeg editor? ( dev-qt/qtwidgets:5 ) launcher? ( dev-qt/qtnetwork:5 dev-qt/qtwidgets:5 ) games-misc/games-envd
 0
-https://github.com/vcmi/vcmi/archive/0.97.tar.gz -> vcmi-0.97.tar.gz
+https://github.com/vcmi/vcmi/archive/0.98.tar.gz -> vcmi-0.98.tar.gz
 
 http://vcmi.eu
 GPL-2
