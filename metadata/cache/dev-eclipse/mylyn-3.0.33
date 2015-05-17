@@ -1,5 +1,5 @@
-dev-java/commons-codec dev-java/commons-httpclient:3 dev-java/commons-lang:2.1 dev-java/commons-logging dev-java/xmlrpc:3 >=virtual/jdk-1.5 >=dev-java/java-config-2.1.9-r1 >=sys-apps/portage-2.1.2.7 app-arch/lzma-utils >=dev-java/javatoolkit-0.3.0 =dev-eclipse/extensions-base-3.4
-dev-java/commons-codec dev-java/commons-httpclient:3 dev-java/commons-lang:2.1 dev-java/commons-logging dev-java/xmlrpc:3 >=virtual/jre-1.5 >=dev-java/java-config-2.1.9-r1 >=sys-apps/portage-2.1.2.7 =dev-eclipse/extensions-base-3.4
+dev-java/commons-codec dev-java/commons-httpclient:3 dev-java/commons-lang:2.1 dev-java/commons-logging dev-java/xmlrpc:3 >=virtual/jdk-1.5 >=dev-java/java-config-2.2.0 >=sys-apps/portage-2.1.2.7 app-arch/lzma-utils >=dev-java/javatoolkit-0.3.0 =dev-eclipse/extensions-base-3.4
+dev-java/commons-codec dev-java/commons-httpclient:3 dev-java/commons-lang:2.1 dev-java/commons-logging dev-java/xmlrpc:3 >=virtual/jre-1.5 >=dev-java/java-config-2.2.0 >=sys-apps/portage-2.1.2.7 =dev-eclipse/extensions-base-3.4
 3.4
 http://dev.gentooexperimental.org/~chewi/distfiles/mylyn-3.0.33.tar.lzma
 
