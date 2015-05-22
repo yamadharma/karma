@@ -1,4 +1,4 @@
-=dev-lang/tcl-8.5* =dev-lang/tk-8.5* >=dev-tcltk/otcl-1.11 >=dev-tcltk/tclcl-1.17 net-libs/libpcap debug? ( =dev-lang/perl-5* >=sci-visualization/xgraph-12.1 >=dev-libs/dmalloc-4.8.2 >=dev-tcltk/tcl-debug-2.0 ) doc? ( virtual/latex-base virtual/ghostscript dev-tex/latex2html ) !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13:1.13 >=sys-devel/automake-1.15:1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+=dev-lang/tcl-8.5* =dev-lang/tk-8.5* >=dev-tcltk/otcl-1.11 >=dev-tcltk/tclcl-1.17 net-libs/libpcap debug? ( =dev-lang/perl-5* >=sci-visualization/xgraph-12.1 >=dev-libs/dmalloc-4.8.2 >=dev-tcltk/tcl-debug-2.0 ) doc? ( virtual/latex-base virtual/ghostscript dev-tex/latex2html ) !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.14.1:1.14 >=sys-devel/automake-1.15:1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 =dev-lang/tcl-8.5* =dev-lang/tk-8.5* >=dev-tcltk/otcl-1.11 >=dev-tcltk/tclcl-1.17 net-libs/libpcap debug? ( =dev-lang/perl-5* >=sci-visualization/xgraph-12.1 >=dev-libs/dmalloc-4.8.2 >=dev-tcltk/tcl-debug-2.0 )
 0
 mirror://sourceforge/nsnam/ns-src-2.35.tar.gz

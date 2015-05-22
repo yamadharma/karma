@@ -1,4 +1,4 @@
-java? ( >=virtual/jdk-1.4 dev-java/gjdoc mono? ( >=dev-lang/mono-0.95 ) ) java? ( >=dev-java/java-config-2.2.0 ) !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.13 >=sys-devel/automake-1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+java? ( >=virtual/jdk-1.4 dev-java/gjdoc mono? ( >=dev-lang/mono-0.95 ) ) java? ( >=dev-java/java-config-2.2.0 ) !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.14.1 >=sys-devel/automake-1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 java? ( >=virtual/jre-1.4 ) mono? ( >=dev-lang/mono-0.95 ) java? ( >=dev-java/java-config-2.2.0 )
 0
 ftp://alpha.gnu.org/pub/gnu/libidn/libidn-0.6.9.tar.gz
