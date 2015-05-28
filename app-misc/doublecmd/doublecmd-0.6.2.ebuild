@@ -55,8 +55,8 @@ src_install(){
 
 	install/linux/install.sh --portable-prefix=build
 
-	doicon -s 48 "${S}/build/doublecmd/doublecmd.png"
-	rm "${S}/build/doublecmd/doublecmd.png"
+#	doicon -s 48 "${S}/build/doublecmd/doublecmd.png"
+#	rm "${S}/build/doublecmd/doublecmd.png"
 
 	rsync -a "${S}/build/" "${D}/usr/share/" || die "Unable to copy files"
 
