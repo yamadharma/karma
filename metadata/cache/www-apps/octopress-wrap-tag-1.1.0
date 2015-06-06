@@ -7,7 +7,7 @@ https://github.com/octopress/wrap-tag
 MIT
 A Liquid block tag which makes it easy to wrap an include, render or yield tag with html
 ~amd64 ~x86
-eutils java-utils-2 multilib ruby-fakegem ruby-ng toolchain-funcs versionator
+eutils java-utils-2 multilib ruby-fakegem ruby-ng ruby-utils toolchain-funcs versionator
 test elibc_FreeBSD ruby_targets_ruby19 ruby_targets_ruby20 ruby_targets_ruby21 doc test test
 || ( ruby_targets_ruby19 ruby_targets_ruby20 ruby_targets_ruby21 )
 
