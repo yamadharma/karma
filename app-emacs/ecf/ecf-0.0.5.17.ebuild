@@ -33,6 +33,9 @@ src_install()
         dodir ${SITELISPEMACS}
 	dosym ${SITELISPROOT}/rc.d/site-start.el ${SITELISPEMACS}/site-start.el
 	dosym ${SITELISPROOT}/rc.d/default.el ${SITELISPEMACS}/default.el
+
+	dodir /etc/emacs
+	dosym ${SITELISPROOT}/rc.d/site-start.el /etc/emacs/site-start.el
     
 	cd ${S}
 	dodoc doc/*
