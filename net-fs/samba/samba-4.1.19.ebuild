@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-fs/samba/samba-4.2.0.ebuild,v 1.1 2015/03/08 13:21:55 polynomial-c Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-fs/samba/samba-4.1.19.ebuild,v 1.1 2015/06/26 07:37:20 polynomial-c Exp $
 
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
@@ -11,12 +11,8 @@ inherit python-single-r1 waf-utils multilib linux-info systemd
 MY_PV="${PV/_rc/rc}"
 MY_P="${PN}-${MY_PV}"
 
-SRC_PATH="stable"
-[[ ${PV} = *_rc* ]] && SRC_PATH="rc"
-
-SRC_URI="mirror://samba/${SRC_PATH}/${MY_P}.tar.gz"
-KEYWORDS="~amd64 ~hppa ~x86"
-[[ ${PV} = *_rc* ]] && KEYWORDS=""
+SRC_URI="mirror://samba/stable/${MY_P}.tar.gz"
+KEYWORDS="~amd64 ~arm64 ~hppa ~x86"
 
 DESCRIPTION="Samba Suite Version 4"
 HOMEPAGE="http://www.samba.org/"
@@ -37,16 +33,13 @@ CDEPEND="${PYTHON_DEPS}
 	sys-libs/readline:=
 	virtual/libiconv
 	dev-python/subunit[${PYTHON_USEDEP}]
-	>=net-libs/socket_wrapper-1.1.2
 	sys-apps/attr
 	sys-libs/libcap
-	>=sys-libs/ldb-1.1.20
-	>=sys-libs/nss_wrapper-1.0.2
 	>=sys-libs/ntdb-1.0[python,${PYTHON_USEDEP}]
-	>=sys-libs/talloc-2.1.1[python,${PYTHON_USEDEP}]
-	>=sys-libs/tdb-1.3.4[python,${PYTHON_USEDEP}]
-	>=sys-libs/tevent-0.9.24
-	>=sys-libs/uid_wrapper-1.0.1
+	>=sys-libs/ldb-1.1.17
+	>=sys-libs/tdb-1.2.12[python,${PYTHON_USEDEP}]
+	>=sys-libs/talloc-2.1.2[python,${PYTHON_USEDEP}]
+	>=sys-libs/tevent-0.9.18
 	sys-libs/zlib
 	virtual/pam
 	acl? ( virtual/acl )
@@ -75,6 +68,13 @@ RESTRICT="mirror"
 S="${WORKDIR}/${MY_P}"
 
 CONFDIR="${FILESDIR}/$(get_version_component_range 1-2)"
+
+PATCHES=(
+	"${FILESDIR}/${PN}-4.1.14-named.conf.dlz.patch"
+	"${FILESDIR}/${PN}-4.0.19-automagic_aio_fix.patch"
+	# support libsystemd (instead of libsystemd-daemon), bug #526362
+	"${FILESDIR}/${PN}-4.1.14-libsystemd.patch"
+)
 
 WAF_BINARY="${S}/buildtools/bin/waf"
 
@@ -133,7 +133,7 @@ src_configure() {
 		"
 	use "ads" && myconf+=" --with-shared-modules=idmap_ad"
 
-	CPPFLAGS="-I/usr/include/et ${CPPFLAGS}" \
+	CPPFLAGS="-I${SYSROOT}/usr/include/et ${CPPFLAGS}" \
 		waf-utils_src_configure ${myconf}
 }
 
