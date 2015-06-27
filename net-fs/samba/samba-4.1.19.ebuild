@@ -6,7 +6,7 @@ EAPI=5
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE='threads(+)'
 
-inherit python-single-r1 waf-utils multilib linux-info systemd
+inherit python-single-r1 waf-utils multilib linux-info systemd base
 
 MY_PV="${PV/_rc/rc}"
 MY_P="${PN}-${MY_PV}"
