@@ -7,14 +7,14 @@ http://www.samba.org/
 GPL-3
 Samba Suite Version 4
 ~amd64 ~arm64 ~hppa ~x86
-eutils linux-info multilib multiprocessing python-single-r1 python-utils-r1 systemd toolchain-funcs versionator waf-utils
+base eutils linux-info multilib multiprocessing python-single-r1 python-utils-r1 systemd toolchain-funcs versionator waf-utils
 acl addns ads aio avahi +bi_heimdal client cluster cups dmapi fam gnutls iprint ldap quota selinux syslog systemd test winbind python_targets_python2_7
 ads? ( acl ldap ) python_targets_python2_7
 
 
 5
 
-compile configure install postinst setup test
+compile configure install postinst prepare setup test unpack
 
 
 
