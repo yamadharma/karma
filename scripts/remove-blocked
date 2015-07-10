@@ -1,0 +1,4 @@
+#!/bin/bash
+
+grep "blocks B" | sed "s:\[.*\] \(.*\) (.*:\1:g" | xargs emerge -Cv
+
