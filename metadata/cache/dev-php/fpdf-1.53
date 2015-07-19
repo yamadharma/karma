@@ -1,5 +1,5 @@
-dev-lang/php dev-lang/php
-dev-lang/php dev-lang/php
+dev-lang/php
+dev-lang/php
 0
 mirror://gentoo/fpdf153.tgz
 fetch
