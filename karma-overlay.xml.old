@@ -3,19 +3,19 @@
   <repo quality="experimental" status="unofficial">
     <name>karma</name>
     <description>Karma overlay</description>
-    <homepage>https://bitbucket.org/yamadharma/soft-gentoo-portage-local</homepage>
+    <homepage>http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay</homepage>
     <owner>
       <email>yamadharma@gmail.com</email>
     </owner>
-    <source type="git">https://yamadharma@bitbucket.org/yamadharma/soft-gentoo-portage-local.git</source>
+    <source type="bzr">http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/karma</source>
   </repo>
   <repo quality="experimental" status="unofficial">
     <name>karma-profiles</name>
     <description>Karma overlay's profiles</description>
-    <homepage>https://bitbucket.org/yamadharma/soft-gentoo-portage-profiles</homepage>
+    <homepage>http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay</homepage>
     <owner>
       <email>yamadharma@gmail.com</email>
     </owner>
-    <source type="git">https://yamadharma@bitbucket.org/yamadharma/soft-gentoo-portage-profiles.git</source>
+    <source type="bzr">http://bazaar.launchpad.net/~yamadharma/karma-gentoo-overlay/profiles</source>
   </repo>
 </repositories>
