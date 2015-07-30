@@ -14,7 +14,7 @@ custom-cflags debug device-mapper efiemu nls static sdl truetype extras grub_pla
 
 4
 
-compile config configure install postinst postrm preinst prepare prerm unpack
+compile config configure install postinst postrm preinst prepare prerm pretend unpack
 
 
 
