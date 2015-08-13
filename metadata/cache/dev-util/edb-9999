@@ -1,0 +1,22 @@
+>=dev-qt/qtcore-4.5.0 >=dev-qt/qtgui-4.5.0 >=dev-libs/boost-1.35.0 || ( dev-vcs/subversion[http] dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
+>=dev-qt/qtcore-4.5.0 >=dev-qt/qtgui-4.5.0 >=dev-libs/boost-1.35.0
+0
+
+strip
+http://www.codef00.com/projects.php#debugger
+GPL-2
+EDB "Evan's Debugger" (OllyDbg workalike for Linux)
+
+eutils multilib subversion toolchain-funcs
+
+
+
+
+5
+
+configure install postinst preinst prepare unpack
+
+
+
+
+
