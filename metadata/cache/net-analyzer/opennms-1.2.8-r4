@@ -12,7 +12,7 @@ doc
 
 
 
-
+0
 
 compile config install postinst postrm preinst prerm setup unpack
 

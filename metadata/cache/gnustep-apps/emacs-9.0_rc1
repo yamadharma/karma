@@ -12,7 +12,7 @@ gif jpeg nls png spell tiff debug doc
 
 
 virtual/emacs virtual/editor
-
+0
 
 compile install postinst setup unpack
 

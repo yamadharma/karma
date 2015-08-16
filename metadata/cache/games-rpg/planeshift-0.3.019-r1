@@ -12,7 +12,7 @@ server static debug maxoptimization debug nochatbubbles
 
 
 
-
+0
 
 compile install postinst preinst setup unpack
 

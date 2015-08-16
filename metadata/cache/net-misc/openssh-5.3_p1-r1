@@ -12,7 +12,7 @@ hpn kerberos ldap libedit pam pkcs11 selinux skey smartcard static tcpd X X509
 
 
 virtual/ssh
-
+0
 
 compile install postinst setup test unpack
 

@@ -12,7 +12,7 @@ tmpfs perpackage localepurge autopatch resumemerge distclean
 
 
 
-
+0
 
 config install postinst postrm unpack
 

@@ -12,7 +12,7 @@ alsa debug dssi examples gconf gtk xml elibc_FreeBSD
 
 
 
-
+0
 
 compile install postinst preinst setup
 

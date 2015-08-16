@@ -12,7 +12,7 @@ readline selinux tcpd
 
 
 virtual/tftp
-
+0
 
 compile install postinst
 

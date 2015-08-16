@@ -12,7 +12,7 @@ kernel_linux
 
 
 
-
+0
 
 compile install postinst postrm preinst setup unpack
 

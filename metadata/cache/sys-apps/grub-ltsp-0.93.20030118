@@ -12,7 +12,7 @@ eutils mount-boot multilib toolchain-funcs
 
 
 virtual/bootloader
-
+0
 
 compile install postinst postrm preinst prerm unpack
 

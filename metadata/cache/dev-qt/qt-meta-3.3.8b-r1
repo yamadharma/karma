@@ -12,7 +12,7 @@ cups debug doc examples firebird ipv6 mysql nas nis odbc opengl postgres sqlite 
 
 odbc? ( ~dev-db/qt-unixODBC-3.3.8b )
 
-
+0
 
 compile install postinst setup unpack
 

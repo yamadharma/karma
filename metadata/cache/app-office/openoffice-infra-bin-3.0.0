@@ -12,7 +12,7 @@ gnome java kde
 
 
 virtual/ooo
-
+0
 
 install postinst unpack
 

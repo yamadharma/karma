@@ -12,7 +12,7 @@ doc examples fontconfig elibc_FreeBSD
 
 
 
-
+0
 
 compile install postinst postrm preinst prerm setup unpack
 
