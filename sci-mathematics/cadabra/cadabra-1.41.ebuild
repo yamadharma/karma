@@ -74,6 +74,9 @@ src_install() {
 	fi
 
 	rm -rf "${D}/usr/share/TeXmacs" || die
+
+	# hack for texmf
+	mv ${D}/usr/share/texmf ${D}/usr/share/texmf-site
 }
 
 pkg_postinst() {
