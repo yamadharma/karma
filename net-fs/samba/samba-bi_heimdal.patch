@@ -1,5 +1,5 @@
---- 1/samba-4.1.17.ebuild	2015-03-03 12:31:14.000000000 +0300
-+++ samba-4.2.0.ebuild	2015-03-09 11:12:05.000000000 +0300
+--- 1/samba-4.1.20-r1.ebuild	2015-09-01 17:31:02.000000000 +0300
++++ samba-4.1.20-r1.ebuild	2015-09-05 13:49:00.000000000 +0300
 @@ -20,13 +20,14 @@ LICENSE="GPL-3"
  
  SLOT="0"
@@ -11,22 +11,22 @@
  # sys-apps/attr is an automagic dependency (see bug #489748)
  # sys-libs/pam is an automagic dependency (see bug #489770)
  CDEPEND="${PYTHON_DEPS}
--	>=app-crypt/heimdal-1.5[-ssl]
-+	!bi_heimdal? ( >=app-crypt/heimdal-1.5[-ssl] )
-+	bi_heimdal? ( !>=app-crypt/heimdal-1.5[-ssl] )
- 	dev-libs/iniparser
+-	>=app-crypt/heimdal-1.5[-ssl,-threads]
++        !bi_heimdal? ( >=app-crypt/heimdal-1.5[-ssl,-threads] )
++        bi_heimdal? ( !app-crypt/heimdal )
+ 	dev-libs/iniparser:0
  	dev-libs/popt
  	sys-libs/readline:=
-@@ -97,6 +98,8 @@ src_configure() {
+@@ -98,6 +99,8 @@ src_configure() {
  	local myconf=''
  	use "cluster" && myconf+=" --with-ctdb-dir=/usr"
  	use "test" && myconf+=" --enable-selftest"
-+	use "bi_heimdal" && myconf+=" --bundled-libraries=heimdal,roken"
-+	use "!bi_heimdal" && myconf+=" --bundled-libraries=NONE"
++        use "bi_heimdal" && myconf+=" --bundled-libraries=heimdal,roken"
++        use "!bi_heimdal" && myconf+=" --bundled-libraries=NONE"
  	myconf="${myconf} \
  		--enable-fhs \
  		--sysconfdir=/etc \
-@@ -108,7 +111,6 @@ src_configure() {
+@@ -109,7 +112,6 @@ src_configure() {
  		--disable-rpath-install \
  		--nopyc \
  		--nopyo \
