@@ -7,7 +7,7 @@ http://paradiseo.gforge.inria.fr/
 CeCill
 ParadisEO is a white-box object-oriented framework dedicated to the flexible design of metaheuristics
 ~amd64 ~x86
-cmake-utils eutils flag-o-matic multilib toolchain-funcs
+cmake-utils eutils flag-o-matic multilib toolchain-funcs versionator
 
 
 

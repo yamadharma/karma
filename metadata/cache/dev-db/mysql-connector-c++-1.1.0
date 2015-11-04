@@ -7,7 +7,7 @@ http://forge.mysql.com/wiki/Connector_C++
 GPL-2
 MySQL database connector for C++ (mimics JDBC 4.0 API)
 ~amd64 ~ppc ~ppc64 ~sparc ~x86
-cmake-utils eutils flag-o-matic multilib toolchain-funcs
+cmake-utils eutils flag-o-matic multilib toolchain-funcs versionator
 debug examples gcov static
 
 

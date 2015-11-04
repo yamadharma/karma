@@ -7,7 +7,7 @@ http://otcl-tclcl.sourceforge.net/tclcl/
 as-is
 Tcl/C++ interface library
 ~amd64 ~ppc ~sparc ~x86
-cmake-utils eutils flag-o-matic multilib toolchain-funcs
+cmake-utils eutils flag-o-matic multilib toolchain-funcs versionator
 
 
 

@@ -7,7 +7,7 @@ http://www.coolreader.org/ http://crengine.sourceforge.net/
 GPL-2
 CoolReader - reader of eBook files (fb2,epub,htm,rtf,txt)
 ~amd64 ~x86
-cmake-utils eutils flag-o-matic multilib toolchain-funcs
+cmake-utils eutils flag-o-matic multilib toolchain-funcs versionator
 +qt4 wxwidgets +hyphen
 
 
