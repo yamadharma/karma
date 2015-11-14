@@ -1,0 +1,11 @@
+--- calligra-2.9.7/krita/ui/widgets/kis_advanced_color_space_selector.cc.orig	2015-08-29 16:39:29.000000000 +0200
++++ calligra-2.9.7/krita/ui/widgets/kis_advanced_color_space_selector.cc	2015-09-05 18:13:59.114576414 +0200
+@@ -523,7 +523,7 @@
+ {
+ #ifdef GHNS
+     KNS3::UploadDialog dialog("kritaiccprofiles.knsrc", this);
+-    const KoColorProfile *  profile = KoColorSpaceRegistry::instance()->profileByName(d->colorSpaceSelector->lstProfile->currentText());
++    const KoColorProfile *  profile = KoColorSpaceRegistry::instance()->profileByName(d->colorSpaceSelector->lstProfile->currentItem()->text());
+     if(!profile)  return;
+     dialog.setUploadFile(KUrl::fromLocalFile(profile->fileName()));
+     dialog.setUploadName(profile->name());
