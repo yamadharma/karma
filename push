@@ -2,3 +2,14 @@
 
 git pull
 git add -A .; git commit -am "$(date)"; git push
+
+# Сжатие git
+if [[ $1 == "compress" ]]
+then
+    if [[ -d .git ]]
+    then
+	git fsck
+        git gc --prune=now
+        git gc --aggressive --prune=now
+    fi
+fi
