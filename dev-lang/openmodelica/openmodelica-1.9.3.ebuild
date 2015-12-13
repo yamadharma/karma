@@ -17,7 +17,7 @@ else
 #	S=${WORKDIR}/Diamond-${PV}
 fi
 
-inherit eutils autotools git-r3
+inherit eutils autotools git-r3 flag-o-matic
 
 DESCRIPTION="A Modelica modeling, compilation and simulation environment."
 HOMEPAGE="https://openmodelica.org/"
@@ -64,6 +64,7 @@ src_prepare() {
 }
 
 src_configure() {
+	strip-flags
 
 	# Only omniORB for me
 	local myconf=(
@@ -77,7 +78,7 @@ src_configure() {
 	myconf+=( --with-lapack="`pkg-config --libs lapack`" )
 
 	#econf "${myconf[@]}"
-	./configure "${myconf[@]}"
+	LDFLAGS="" ./configure "${myconf[@]}"
 
 	# Correct the documentation installation directory: the package does not
 	# give a 'make doc' alternative, so we simply install it into a folder that
