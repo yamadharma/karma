@@ -72,9 +72,9 @@ src_configure() {
 		)
 
 	# for me only reference lapack work
-	# myconf+=( --with-lapack="`pkg-config --libs lapack`" )
+	myconf+=( --with-lapack="`pkg-config --libs lapack`" )
 
-	econf "${myconf[@]}" --with-lapack="`pkg-config --libs lapack`"
+	econf "${myconf[@]}"
 
 	# Correct the documentation installation directory: the package does not
 	# give a 'make doc' alternative, so we simply install it into a folder that
@@ -95,6 +95,10 @@ src_configure() {
 #		ewarn "You deactivated CORBA support for OpenModelica. This means also"
 #		ewarn "that the Qt-based GUI will not be built."
 #	fi
+}
+
+src_compile() {
+	make
 }
 
 src_install_() {
