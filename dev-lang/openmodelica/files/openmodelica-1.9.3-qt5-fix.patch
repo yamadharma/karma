@@ -1,0 +1,11 @@
+diff -Naurp openmodelica-1.9.3/OMEdit/qjson/CMakeLists.txt openmodelica-1.9.3.fixed/OMEdit/qjson/CMakeLists.txt
+--- openmodelica-1.9.3/OMEdit/qjson/CMakeLists.txt	2015-12-16 08:55:37.566334917 +0300
++++ openmodelica-1.9.3.fixed/OMEdit/qjson/CMakeLists.txt	2015-12-16 08:58:24.986729495 +0300
+@@ -41,6 +41,7 @@ SET(FRAMEWORK_INSTALL_DIR "${CMAKE_INSTA
+ SET(QT_USE_IMPORTED_TARGETS TRUE)
+ 
+ option(QT4_BUILD "Force building with Qt4 even if Qt5 is found")
++set(QT4_BUILD ON)
+ IF (NOT QT4_BUILD)
+   FIND_PACKAGE( Qt5Core QUIET )
+ ENDIF()

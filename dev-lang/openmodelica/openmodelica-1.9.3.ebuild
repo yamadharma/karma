@@ -21,7 +21,7 @@ HOMEPAGE="https://openmodelica.org/"
 
 LICENSE="OMPL"
 SLOT="0"
-IUSE="+corba doc threads +metis"
+IUSE="+editor doc threads"
 
 DEPEND="sys-apps/sed
 	sys-apps/coreutils
@@ -31,8 +31,8 @@ RDEPEND="=dev-java/antlr-2*
 	sys-libs/readline
 	dev-libs/libf2c
 	threads? ( dev-libs/boost )
-	metis? ( sci-libs/metis )
-	corba? ( || ( net-misc/omniORB net-misc/mico )
+	sci-libs/metis
+	editor? ( || ( net-misc/omniORB net-misc/mico )
 		dev-qt/qtcore:4
 		dev-qt/qtgui:4 
 		>=virtual/jre-1.5 )"
@@ -50,6 +50,7 @@ RDEPEND="=dev-java/antlr-2*
 #}
 
 src_prepare() {
+	epatch ${FILESDIR}/openmodelica-1.9.3-qt5-fix.patch
 #	cd "${S}"
 	eautoreconf
 	#autoconf
@@ -66,7 +67,7 @@ src_configure() {
 	# Only omniORB for me
 	local myconf=(
 		--disable-modelica3d
-		$(use_with corba omniORB)
+		$(use_with editor omniORB)
 		)
 
 #		$(use_with metis METIS)
@@ -74,7 +75,7 @@ src_configure() {
 	# for me only reference lapack work
 	myconf+=( --with-lapack="`pkg-config --libs lapack`" )
 
-	LDFLAGS="" econf "${myconf[@]}"
+	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" econf "${myconf[@]}"
 	# LDFLAGS="" ./configure "${myconf[@]}"
 
 	# Correct the documentation installation directory: the package does not
@@ -156,7 +157,7 @@ src_install() {
 	mv ${D}/usr/share/doc/omc/* ${D}/usr/share/doc/${P}
 }
 
-pkg_postinst() {
+pkg_postinst_() {
 	if use corba ; then
 		ewarn "Remember to run 'source /etc/profile' as a user before starting the"
 		ewarn "graphical interface OMShell, otherwise it will not be able to"
