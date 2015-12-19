@@ -1,0 +1,4 @@
+#!/bin/bash
+
+emerge -v $(find /usr/lib*/python3* -name '*cpython-3[3-5].so')
+
