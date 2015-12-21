@@ -1,3 +1,5 @@
 #!/bin/bash
 
-revdep-rebuild --library 'libstdc\+\+\.so\.6' -- --exclude gcc
+# revdep-rebuild.sh --library 'libstdc\+\+\.so\.6' -- --exclude gcc
+revdep-rebuild --library "libstdc++.so.6" -- -v --keep-going --exclude gcc
+
