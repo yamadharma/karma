@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd /var/db
+
+find dev-qt -type d -mtime +3 | xargs qlist -ISC | xargs emerge -v --keep-going
+
+
+
