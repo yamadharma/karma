@@ -2,7 +2,10 @@
 
 cd /var/db
 
-find dev-qt -type d -mtime +3 | xargs qlist -ISC | xargs emerge -v --keep-going
+for i in sys-* dev-* *
+do
+    find "${i}" -type d -mtime +7 | xargs qlist -ISC | xargs emerge -v --keep-going
+done
 
 
 
