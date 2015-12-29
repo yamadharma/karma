@@ -93,7 +93,7 @@ RDEPEND="
 	jpeg2k? ( media-libs/openjpeg:0 )
 	kdcraw? ( $(add_kdeapps_dep libkdcraw) )
 	kde? ( $(add_kdebase_dep kactivities) )
-	kdepim? ( $(add_kdebase_dep kdepimlibs) )
+	kdepim? ( $(add_kdeapps_dep kdepimlibs) )
 	lcms? (
 		media-libs/lcms:2
 		x11-libs/libX11
@@ -142,8 +142,7 @@ PDEPEND=">=app-office/calligra-l10n-${LANGVERSION}"
 RESTRICT=test
 
 PATCHES=( "${FILESDIR}/${PN}-2.9.6-ghns-linking.patch" 
-	"${FILESDIR}/calligra-2.9.7-kis_advanced_color_space_selector.patch" 
-)
+	    "${FILESDIR}/calligra-2.9.7-kis_advanced_color_space_selector.patch" )
 
 pkg_pretend() {
 	check-reqs_pkg_pretend
