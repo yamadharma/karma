@@ -1,10 +1,16 @@
 #!/bin/bash
 
-cd /var/db
+MYTIME="+7"
+
+cd /var/db/pkg
 
 for i in sys-* dev-* *
 do
-    find "${i}" -type d -mtime +7 | xargs qlist -ISC | xargs emerge -v --keep-going
+    echo "$i"
+    id [[ `find sys-apps -type d -mtime $MYTIME | wc -l` > 0 ]]
+    then
+	find "$i" -type d -mtime $MYTIME | xargs qlist -ISC | xargs emerge -v --keep-going
+    fi
 done
 
 
