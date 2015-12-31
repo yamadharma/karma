@@ -1,0 +1,36 @@
+diff -ur cdrdao-1.2.3.orig/dao/CdrDriver.cc cdrdao-1.2.3/dao/CdrDriver.cc
+--- cdrdao-1.2.3.orig/dao/CdrDriver.cc	2015-12-26 09:08:00.314389373 -0600
++++ cdrdao-1.2.3/dao/CdrDriver.cc	2015-12-26 09:09:34.575425244 -0600
+@@ -495,7 +495,7 @@
+   0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0
+ };
+ 
+-char CdrDriver::REMOTE_MSG_SYNC_[4] = { 0xff, 0x00, 0xff, 0x00 };
++unsigned char CdrDriver::REMOTE_MSG_SYNC_[4] = { 0xff, 0x00, 0xff, 0x00 };
+ 
+ 
+ /* Maps a string to the corresponding driver option value 
+diff -ur cdrdao-1.2.3.orig/dao/CdrDriver.h cdrdao-1.2.3/dao/CdrDriver.h
+--- cdrdao-1.2.3.orig/dao/CdrDriver.h	2015-12-26 09:08:00.315389342 -0600
++++ cdrdao-1.2.3/dao/CdrDriver.h	2015-12-26 09:09:34.574425275 -0600
+@@ -440,7 +440,7 @@
+   bool fullBurn_;
+ 
+   static unsigned char syncPattern[12];
+-  static char REMOTE_MSG_SYNC_[4];
++  unsigned static char REMOTE_MSG_SYNC_[4];
+ 
+   static int speed2Mult(int);
+   static int mult2Speed(int);
+diff -ur cdrdao-1.2.3.orig/xdao/CdDevice.cc cdrdao-1.2.3/xdao/CdDevice.cc
+--- cdrdao-1.2.3.orig/xdao/CdDevice.cc	2015-12-26 09:08:00.319389216 -0600
++++ cdrdao-1.2.3/xdao/CdDevice.cc	2015-12-26 09:09:34.577425181 -0600
+@@ -255,7 +255,7 @@
+ 
+ bool CdDevice::updateProgress(Glib::IOCondition cond, int fd)
+ {
+-  static char msgSync[4] = { 0xff, 0x00, 0xff, 0x00 };
++  unsigned static char msgSync[4] = { 0xff, 0x00, 0xff, 0x00 };
+   fd_set fds;
+   int state = 0;
+   char buf[10];
