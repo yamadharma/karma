@@ -7,7 +7,7 @@ cd /var/db/pkg
 for i in x11-libs dev-cpp sys-* dev-* *
 do
     echo "$i"
-    id [[ `find sys-apps -type d -mtime $MYTIME | wc -l` > 0 ]]
+    if [[ `find $i -type d -mtime $MYTIME | wc -l` != 0 ]]
     then
 	find "$i" -type d -mtime $MYTIME | xargs qlist -ISC | xargs emerge -v --keep-going
     fi
