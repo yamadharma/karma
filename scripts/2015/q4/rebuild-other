@@ -4,7 +4,7 @@ MYTIME="+7"
 
 cd /var/db/pkg
 
-for i in x11-libs dev-cpp sys-* dev-* *
+for i in x11-libs x11-proto dev-cpp dev-qt media-libs sys-* dev-* *
 do
     echo "$i"
     if [[ `find $i -type d -mtime $MYTIME | wc -l` != 0 ]]
