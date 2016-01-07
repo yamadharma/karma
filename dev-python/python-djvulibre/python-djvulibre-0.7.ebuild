@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/dnspython/dnspython-1.8.0.ebuild,v 1.8 2010/08/16 16:50:27 grobian Exp $
 
-EAPI="2"
-PYTHON_DEPEND="2"
-SUPPORT_PYTHON_ABIS="1"
+EAPI="5"
+PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
 
-inherit distutils
+inherit distutils-r1
 
 DESCRIPTION="python-djvulibre is a set of Python bindings for the DjVuLibre library, an open source implementation of DjVu"
 HOMEPAGE="http://jwilk.net/software/python-djvulibre"
@@ -19,8 +18,6 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="app-text/djvu"
-RESTRICT_PYTHON_ABIS="3.*"
 
-PYTHON_MODNAME="djvu"
 DOCS="doc/changelog"
 
