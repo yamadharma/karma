@@ -54,6 +54,7 @@ pkg_setup() {
 
 src_prepare() {
 	epatch ${FILESDIR}/libgpod-0.8.3-swig-comment-fix.patch
+	epatch ${FILESDIR}/github.com-jburton-libgpod-minimized.patch
 }
 
 src_configure() {

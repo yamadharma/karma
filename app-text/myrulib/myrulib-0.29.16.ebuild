@@ -56,7 +56,8 @@ src_configure() {
 		$(use_with reader) \
 		$(use_with syslog) \
 		--without-bzip2 \
-		--without-sqlite \
-		--without-wxsqlite \
 		--without-strip
+
+#		--without-sqlite \
+#		--without-wxsqlite \
 }
