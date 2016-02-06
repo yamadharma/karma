@@ -13,7 +13,7 @@ SRC_URI="http://perso.ensta-paristech.fr/~kielbasi/${PN}/src/${MY_P}-${PV: -8:4}
 
 LICENSE="tba"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc examples"
 
 S=${WORKDIR}/${MY_P}
@@ -22,10 +22,12 @@ src_install() {
 	latex-package_src_install
 	if use doc; then
 		cd "${S}/doc"  || die
-		latex-package_src_install
+		insinto /usr/share/doc/${PF}/doc
+		doins *
 	fi
 	if use examples; then
 		cd "${S}/examples"  || die
-		latex-package_src_install
+		insinto /usr/share/doc/${PF}/examples
+		doins *
 	fi
 }
