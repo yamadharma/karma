@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer>
+<email>xmw@gentoo.org</email>
+<name>Michael Weber</name>
+</maintainer>
+<longdescription lang="en">
+TikZ-UML is a TikZ extension to manage common UML diagrams : class diagrams, use case diagrams, state-machine diagrams and sequence diagrams. The first goal is to propose an alternative to pst-uml package written by Maurice Diamantini, as TikZ is an alternative itself to PSTricks.
+</longdescription>
+</pkgmetadata>
