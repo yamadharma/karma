@@ -66,16 +66,24 @@ src_configure() {
 
 	# Only omniORB for me
 	local myconf=(
+		--with-openmodelicahome="${S}"/build
+		--with-omc="${S}"/build/bin/omc
 		--disable-modelica3d
 		$(use_with editor omniORB)
 		)
 
+#		--with-ombuilddir="${S}"/build
+#		--with-openmodelicahome="${S}"/build
+#		--disable-modelica3d
+#		--with-omlibrary=all
 #		$(use_with metis METIS)
 
 	# for me only reference lapack work
 	myconf+=( --with-lapack="`pkg-config --libs lapack`" )
 
-	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" econf "${myconf[@]}"
+	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
+	    OPENMODELICAHOME="${S}"/build \
+	    econf "${myconf[@]}"
 	# LDFLAGS="" ./configure "${myconf[@]}"
 
 	# Correct the documentation installation directory: the package does not
