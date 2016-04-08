@@ -14,9 +14,4 @@ debug doc
 
 2
 
-compile configure install postinst preinst prepare setup unpack
-
-
-
-
-
+comp>=gnustep-base/gnustep-make-2.0 virtual/gnustep-back || ( dev-vcs

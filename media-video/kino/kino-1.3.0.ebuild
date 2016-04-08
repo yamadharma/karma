@@ -13,6 +13,21 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="alsa dvdr gpac lame gstreamer quicktime sox vorbis"
 
+# This ebuild would benef# Copyright 1999-2008 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/media-video/kino/kino-1.3.0.ebuild,v 1.2 2008/03/15 14:17:42 cla Exp $
+
+inherit eutils flag-o-matic
+
+DESCRIPTION="Kino is a non-linear DV editor for GNU/Linux"
+HOMEPAGE="http://www.kinodv.org/"
+SRC_URI="mirror://sourceforge/kino/${P}.tar.gz"
+
+LICENSE="GPL-2"
+SLOT="0"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="alsa dvdr gpac lame gstreamer quicktime sox vorbis"
+
 # This ebuild would benefit a lot of USE dependencies but that has to wait for
 # EAPI 2. The usual fix is to issue built_with_use checks but in that particu-
 # lar case it would make the ebuild rather complicated to write and maintain
@@ -90,23 +105,3 @@ src/page_bttv.cc' po/POTFILES.in || die "sed failed"
 }
 
 src_compile() {
-	append-cppflags -I/usr/include/libavcodec
-	append-cppflags -I/usr/include/libswscale
-	append-cppflags -I/usr/include/libavformat
-
-	econf \
-		--disable-dependency-tracking \
-		--disable-debug \
-		--disable-local-ffmpeg \
-		$(use_enable quicktime) \
-		$(use_with sparc dv1394) \
-		|| die "Configuration failed"
-	emake || die "Compilation failed"
-}
-
-src_install() {
-	emake DESTDIR="${D}" install || die "Installation failed"
-	dodoc AUTHORS BUGS ChangeLog NEWS README* TODO
-	# Fix bug #177378
-	fowners root:root -R /usr/share/kino/help
-}

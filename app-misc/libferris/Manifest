@@ -2,6 +2,10 @@ AUX libferris-1.1.98-amd64.patch 3013 RMD160 3bdff50f03dbeb7054e33ddfe5e313a61bd
 MD5 1b729bbfc2cb039cdcb33e13a3d755a7 files/libferris-1.1.98-amd64.patch 3013
 RMD160 3bdff50f03dbeb7054e33ddfe5e313a61bdb1b88 files/libferris-1.1.98-amd64.patch 3013
 SHA256 a01e632d9ff2d70b581cdc4dfa0bd1c71c4b3cc4eea8d12186b3bd7fdbb02281 files/libferris-1.1.98-amd64.patch 3013
+AUX libferris-1.1.98-broken-hidden-visibility.patch 1817 RMD160 d8a5318392511abda0ae0f5e5dbc2a3aeb0da7cb SHA1 515d9d0f2d2725fc1c3d39e9dc3201a022388095 SHA256 9AUX libferris-1.1.98-amd64.patch 3013 RMD160 3bdff50f03dbeb7054e33ddfe5e313a61bdb1b88 SHA1 efe7ba4c3a5d531447cbf756b2a2ceb2abd208b9 SHA256 a01e632d9ff2d70b581cdc4dfa0bd1c71c4b3cc4eea8d12186b3bd7fdbb02281
+MD5 1b729bbfc2cb039cdcb33e13a3d755a7 files/libferris-1.1.98-amd64.patch 3013
+RMD160 3bdff50f03dbeb7054e33ddfe5e313a61bdb1b88 files/libferris-1.1.98-amd64.patch 3013
+SHA256 a01e632d9ff2d70b581cdc4dfa0bd1c71c4b3cc4eea8d12186b3bd7fdbb02281 files/libferris-1.1.98-amd64.patch 3013
 AUX libferris-1.1.98-broken-hidden-visibility.patch 1817 RMD160 d8a5318392511abda0ae0f5e5dbc2a3aeb0da7cb SHA1 515d9d0f2d2725fc1c3d39e9dc3201a022388095 SHA256 9330f3d730daa109ecee6a6d8b84b1009488811c507492fd496c4743b6c48f2a
 MD5 ff00273c4b015aead955b04f608ed589 files/libferris-1.1.98-broken-hidden-visibility.patch 1817
 RMD160 d8a5318392511abda0ae0f5e5dbc2a3aeb0da7cb files/libferris-1.1.98-broken-hidden-visibility.patch 1817
@@ -19,10 +23,4 @@ MD5 d4514ea98b4e63234d9febe62d0ec8a0 files/libferris-1.1.98-missed-clucene.patch
 RMD160 de55255958d87d389ef018c581eeb8af24da55f0 files/libferris-1.1.98-missed-clucene.patch 22541
 SHA256 83b09a6a8568aaf94f7790dca9f3adaec581ab4263b2c06c9ccd205faa9f2ee5 files/libferris-1.1.98-missed-clucene.patch 22541
 DIST libferris-1.2.4.tar.bz2 2763272 RMD160 348d10047ba16075674ccefa5bea496d518b93c1 SHA1 c35a4b893181da04fcc85f081c58908c1af9eb76 SHA256 67aaee772f240cc49775288c0efd74f711ffe4df442a9617282fffbf86958a57
-EBUILD libferris-1.2.4.ebuild 5263 RMD160 a5a112eb090c769faba377eabb79305d88babb12 SHA1 199bd72a1ffc845d496042de0c2d8ec89494c3b9 SHA256 687a4f127e3ffcb285a838d2269e1bca0ec54ce8c592110816ed2dc729d4fe05
-MD5 02c02ae6c8b856bc8d194826c00a3172 libferris-1.2.4.ebuild 5263
-RMD160 a5a112eb090c769faba377eabb79305d88babb12 libferris-1.2.4.ebuild 5263
-SHA256 687a4f127e3ffcb285a838d2269e1bca0ec54ce8c592110816ed2dc729d4fe05 libferris-1.2.4.ebuild 5263
-MD5 50fadbb45f1b522d042aba4e3c88b868 files/digest-libferris-1.2.4 253
-RMD160 b42073454945b02bbbbc0867005884fc2aa45d9f files/digest-libferris-1.2.4 253
-SHA256 1ff23dc880fc831ee521940873c5d42dff84190555493aa7b76dfae15e18b370 files/digest-libferris-1.2.4 253
+EBUILD libferris-1.2.4.ebuild 5263 RMD160 a5a112eb090c769f

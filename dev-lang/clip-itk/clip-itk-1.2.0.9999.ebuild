@@ -23,6 +23,31 @@ S=${WORKDIR}/${ECVS_MODULE}
 #S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Clipper/Xbase compatible compiler"
+HOMEPAG# Copyright 1999-2006 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+inherit eutils cvs
+
+ECVS_CVS_COMMAND="cvs -q"
+ECVS_CVS_COMPRESS="-z3"
+ECVS_SERVER="clip-itk.cvs.sourceforge.net:/cvsroot/clip-itk"
+ECVS_USER="anonymous"
+ECVS_AUTH="pserver"
+ECVS_MODULE="clip-all"
+#ECVS_CO_OPTS="-D ${PV/*_pre} -P"
+#ECVS_UP_OPTS="-D ${PV/*_pre} -dP"
+#ECVS_CO_OPTS="-d clip-prg -P"
+#ECVS_UP_OPTS="-d clip-prg -P"
+
+
+S=${WORKDIR}/${ECVS_MODULE}
+
+#AUX_PR="-0"
+#MY_P=clip-prg-${PV}${AUX_PR}
+#S=${WORKDIR}/${MY_P}
+
+DESCRIPTION="Clipper/Xbase compatible compiler"
 HOMEPAGE="http://sourceforge.net/projects/clip-itk"
 #SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tgz
 #	doc? ( mirror://sourceforge/${PN}/clip-doc-en-html-${PV}.tgz 
@@ -129,25 +154,4 @@ src_install() {
 	rm -rf ${D}/${PKG_CLIPROOT}/doc
 	
 	dodir /usr/share/doc/${PF}/example/example
-	cp -R ${S}/example/* ${D}/usr/share/doc/${PF}/example/example
-
-	rm -rf `find ${D} -path '*CVS*'`
-
-	rm -f ${D}/usr/bin/*
-	cd ${D}/usr/bin/
-	ln -snf ../$(get_libdir)/clip/bin/clip* .
-	ln -snf ../$(get_libdir)/clip/bin/codb* .
-	
-	cd ${D}/usr/$(get_libdir)
-	ln -snf ./clip/lib/libclip* .
-	ln -snf ./clip/lib/libcodb* .
-
-	echo "-v0" > ${D}$${PKG_CLIPROOT}/cliprc/clipflags
-	echo "-O" >> ${D}$${PKG_CLIPROOT}/cliprc/clipflags
-	echo "-r" >> ${D}$${PKG_CLIPROOT}/cliprc/clipflags
-	echo "-l" >> ${D}$${PKG_CLIPROOT}/cliprc/clipflags
-
-	dodir /etc/env.d
-	echo "CLIPROOT=${PKG_CLIPROOT}" > ${D}/etc/env.d/50clip
-	echo "CLIP_LANG=POSIX" >> ${D}/etc/env.d/50clip
-}
+	cp -R ${S}/example/* ${D}/usr/share/doc/${PF}/examp
