@@ -1,1 +1,0 @@
-/usr/portage/local/layman/kde-sunset/eclass/qt3.eclass
