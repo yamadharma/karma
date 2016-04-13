@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_sinyagin_general_re-2.4.2.tar.bz2 543685 RMD160 fd8ff8fb25a9f3675357b165366cb2a0c2de998a SHA1 6349851fdb8e535ee34e263541661b8e9ae972f9 SHA256 0b329c9f923fe94a78f81f8f12fa2ae1b47b12741fd99083aac854ff40bb5be1
-EBUILD stardict-mova-sinyagin-general-ru-en-2.4.2.ebuild 559 RMD160 9be1def52ef2007141c81ef34664d9b75a978019 SHA1 70dc1be6d246ed11b0e7f62e1bac6ad4e10234ca SHA256 f850ff17f33f34f5a6ccea0fe9d0e1bf17b24e63c4e6c63bd21fecd98c912396
-MD5 7fba77f989d4aa7eca0fd64d78b52f7b stardict-mova-sinyagin-general-ru-en-2.4.2.ebuild 559
-RMD160 9be1def52ef2007141c81ef34664d9b75a978019 stardict-mova-sinyagin-general-ru-en-2.4.2.ebuild 559
-SHA256 f850ff17f33f34f5a6ccea0fe9d0e1bf17b24e63c4e6c63bd21fecd98c912396 stardict-mova-sinyagin-general-ru-en-2.4.2.ebuild 559
-MD5 7c81dfec3eb33d87afadee7980967bde files/digest-stardict-mova-sinyagin-general-ru-en-2.4.2 364
-RMD160 b140fdcb0bccc13e3cc607aee89d488ea9fa7633 files/digest-stardict-mova-sinyagin-general-ru-en-2.4.2 364
-SHA256 f131248201ea2c32856ec188a3d3a21c902d6905fe7b4e20109ac4730dcea601 files/digest-stardict-mova-sinyagin-general-ru-en-2.4.2 364

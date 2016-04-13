@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_engcom-2.4.2.tar.bz2 130413 RMD160 040c56bd35432f74503806de425a5cfbd74c2056 SHA1 6f63127262017ca1176b3add0aad61983657efd1 SHA256 ad8796c4f99e10da626d671a925681c0b36860cad850aa8b6622f1a0289aa5cd
-EBUILD stardict-mova-engcom-2.4.2.ebuild 546 RMD160 686a2cbc82b93e9d236a77bc2c8a9451676691f9 SHA1 4cf662be98d02a4641ab518054f168694bc3e8f4 SHA256 36197e7ec9e1332c78f47aba51a886c57973f3a6dd5b354e62ec4f5f2de305d6
-MD5 d052295dcdf8146c2a5a59516615c174 stardict-mova-engcom-2.4.2.ebuild 546
-RMD160 686a2cbc82b93e9d236a77bc2c8a9451676691f9 stardict-mova-engcom-2.4.2.ebuild 546
-SHA256 36197e7ec9e1332c78f47aba51a886c57973f3a6dd5b354e62ec4f5f2de305d6 stardict-mova-engcom-2.4.2.ebuild 546
-MD5 94e370797aaa0523593099a58aca10ef files/digest-stardict-mova-engcom-2.4.2 325
-RMD160 71db27cccd073c0ab00a8264697e474f868194f1 files/digest-stardict-mova-engcom-2.4.2 325
-SHA256 0f0926dc5d4519d8016e20e145a9a734be3c83631e34e8ee04b708e029e56745 files/digest-stardict-mova-engcom-2.4.2 325

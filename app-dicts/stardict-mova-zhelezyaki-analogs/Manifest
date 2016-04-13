@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_zhelezyaki_analogs-2.4.2.tar.bz2 69881 RMD160 df052833b39c9cc8acf5ef437627bbb41e9a9763 SHA1 0be11a3c68150e4f9511661c08bcfc914dea9753 SHA256 f59e50cb92301f026d0c402ccf056cf9de14912881c2e05f04bf06557374e6ba
-EBUILD stardict-mova-zhelezyaki-analogs-2.4.2.ebuild 558 RMD160 9566a18c1617cda9618e490bbf3324f6080b8a40 SHA1 6cd998eb6f3312918a802cd4c641d3c46ef9c404 SHA256 ff27ef847bbfcf148156d0934ef0691ef031f5a0ed127cd5f859e1dad5c63d24
-MD5 b3cf3e4b21f56439f6d54bde25f6a7f7 stardict-mova-zhelezyaki-analogs-2.4.2.ebuild 558
-RMD160 9566a18c1617cda9618e490bbf3324f6080b8a40 stardict-mova-zhelezyaki-analogs-2.4.2.ebuild 558
-SHA256 ff27ef847bbfcf148156d0934ef0691ef031f5a0ed127cd5f859e1dad5c63d24 stardict-mova-zhelezyaki-analogs-2.4.2.ebuild 558
-MD5 13ee9dff7a1291faa0a08e32a61b6e55 files/digest-stardict-mova-zhelezyaki-analogs-2.4.2 358
-RMD160 609a97d43d3da7b1158ca93939d5861c1b395fdd files/digest-stardict-mova-zhelezyaki-analogs-2.4.2 358
-SHA256 6f4cc43c62d98923361d685df9bd615574588d4da88c49ec5b29c6db8b1269b2 files/digest-stardict-mova-zhelezyaki-analogs-2.4.2 358

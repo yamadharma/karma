@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_ethnographic-2.4.2.tar.bz2 53559 RMD160 736e8473ef75872af8c512ded4a55cc93e81e538 SHA1 d7b65b3eb6414700cac974e1870c09b7aa30c280 SHA256 367782abb6ce61fcee30da36f4e9f939ff73e3c04eab130f4a14295228df8d34
-EBUILD stardict-mova-ethnographic-2.4.2.ebuild 552 RMD160 ff8056e8e905923531a7a6620aa0e2f30753ba51 SHA1 cf18c973155741e0245f05a47187a8b111c7d621 SHA256 a4d7f297dc812f32c1e1c17f0dbc220b60968fea5af7293cb07c88ff3b366be4
-MD5 0353e903810467b25a64dca22f50a810 stardict-mova-ethnographic-2.4.2.ebuild 552
-RMD160 ff8056e8e905923531a7a6620aa0e2f30753ba51 stardict-mova-ethnographic-2.4.2.ebuild 552
-SHA256 a4d7f297dc812f32c1e1c17f0dbc220b60968fea5af7293cb07c88ff3b366be4 stardict-mova-ethnographic-2.4.2.ebuild 552
-MD5 f4e8eccd04900e241ae442bd5f0caae5 files/digest-stardict-mova-ethnographic-2.4.2 340
-RMD160 08113c45c5daa2f0b41613ae0fcb3d1fb63d787c files/digest-stardict-mova-ethnographic-2.4.2 340
-SHA256 c9fb5933788089e0e612c8fb6909288884ddce6280b7d15b87f54a43f65c460c files/digest-stardict-mova-ethnographic-2.4.2 340

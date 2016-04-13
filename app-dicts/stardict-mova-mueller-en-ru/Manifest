@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_mueller7-2.4.2.tar.bz2 3369752 RMD160 7e6008c0d8ebf308c5fe6646ee7d2dc3432d399e SHA1 354555e0c01e044af8d328a0467ae5b4b6e62cd9 SHA256 8434e5ccfabf07463e830f35aceedfd77e30c76040c7225e5fd5c92f62a9d06c
-EBUILD stardict-mova-mueller-en-ru-2.4.2.ebuild 577 RMD160 3286fee009c845e8212d2cb16a8485a1832750f4 SHA1 4499cce5c88df813c20cc7d71e41b6789e12dfbb SHA256 ffc44a16058610d28b2bf4f3fe22b521aef00b4696958260ece4e0fad46fff16
-MD5 ace08d8db7bb7efec71ac20a51dbf0b1 stardict-mova-mueller-en-ru-2.4.2.ebuild 577
-RMD160 3286fee009c845e8212d2cb16a8485a1832750f4 stardict-mova-mueller-en-ru-2.4.2.ebuild 577
-SHA256 ffc44a16058610d28b2bf4f3fe22b521aef00b4696958260ece4e0fad46fff16 stardict-mova-mueller-en-ru-2.4.2.ebuild 577
-MD5 c56a2cb21ba6ae9469ae0d50d1959493 files/digest-stardict-mova-mueller-en-ru-2.4.2 334
-RMD160 1f84a8af1b9f5d9768dde846011f18ccb1696263 files/digest-stardict-mova-mueller-en-ru-2.4.2 334
-SHA256 e6efc30113356b2b10835c8814293763591e31709c96961738ba44e23146934e files/digest-stardict-mova-mueller-en-ru-2.4.2 334

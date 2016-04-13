@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_sinyagin_abbrev-2.4.2.tar.bz2 6232 RMD160 eaad07b2b463e01c98e738e09394076c67d3cc3f SHA1 64fe8f1008aa31ed9f12a62c9bf2fcfb75c7b965 SHA256 b92a3ecaa23206da92b515c954191f0194d0183f177bebb942457888aaeb9324
-EBUILD stardict-mova-sinyagin-abbrev-2.4.2.ebuild 555 RMD160 3cb07fcbaa4ab8ac0684641aa46dc4671bd3cfd5 SHA1 d5e3f53f3077963f252d635048da4a61ef8fcdac SHA256 121dcf2220517226e64b4db3a0309bd3d9d09335c5a301fe8e0a7955ce222914
-MD5 571e851c3f31dfb44ee0922ef546c758 stardict-mova-sinyagin-abbrev-2.4.2.ebuild 555
-RMD160 3cb07fcbaa4ab8ac0684641aa46dc4671bd3cfd5 stardict-mova-sinyagin-abbrev-2.4.2.ebuild 555
-SHA256 121dcf2220517226e64b4db3a0309bd3d9d09335c5a301fe8e0a7955ce222914 stardict-mova-sinyagin-abbrev-2.4.2.ebuild 555
-MD5 e86a30e968e8400d3e2a28ea331482ed files/digest-stardict-mova-sinyagin-abbrev-2.4.2 346
-RMD160 53a9aa09671f7887d40f21e3abd96bb229456365 files/digest-stardict-mova-sinyagin-abbrev-2.4.2 346
-SHA256 a0a6437e0cd69e11614c37947c889f4ab67e58e1012951ddad2cf3ac83502021 files/digest-stardict-mova-sinyagin-abbrev-2.4.2 346

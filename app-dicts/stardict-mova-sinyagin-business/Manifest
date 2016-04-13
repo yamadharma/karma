@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_sinyagin_business-2.4.2.tar.bz2 552714 RMD160 6bb1c008999dc4042d28d0e5abd29b8621daded5 SHA1 a3681736fb19a277f1c10b57dcd424d181cdac8b SHA256 9e2f2b8fa0e97eb798e9f0cd0d9f332e03d1330563b77e1e3df20fbb01358c8c
-EBUILD stardict-mova-sinyagin-business-2.4.2.ebuild 557 RMD160 da5b0493f963e860f26407e3d9614a81e17068ca SHA1 433195b885a2e46f980188062431e281e8f11efc SHA256 26474b6308f6bc7f8cb4229edff812b101637e332404796701987f5302232f86
-MD5 8fc744a5e1a5cf1d1a16fd3706cf39a3 stardict-mova-sinyagin-business-2.4.2.ebuild 557
-RMD160 da5b0493f963e860f26407e3d9614a81e17068ca stardict-mova-sinyagin-business-2.4.2.ebuild 557
-SHA256 26474b6308f6bc7f8cb4229edff812b101637e332404796701987f5302232f86 stardict-mova-sinyagin-business-2.4.2.ebuild 557
-MD5 d4d0e3dac7fc9fef683dbb0e15b9b976 files/digest-stardict-mova-sinyagin-business-2.4.2 358
-RMD160 a2d39111481828cae91366965e4ad20bfa1f89ce files/digest-stardict-mova-sinyagin-business-2.4.2 358
-SHA256 b57408c3e259ebd4ee82a8dc049e7c28f15b4930052f62bcb51e06aa13a97679 files/digest-stardict-mova-sinyagin-business-2.4.2 358

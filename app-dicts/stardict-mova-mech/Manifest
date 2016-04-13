@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_mech-2.4.2.tar.bz2 86456 RMD160 02ddc7c6ed7304d3f0c409878918c572e851fb45 SHA1 4024440312983b54e8b6d996e32f5f89373e34ed SHA256 8f22d010a1bd904b0845747c7fd25d80bd24916a38f8de64a7c6e5696406357e
-EBUILD stardict-mova-mech-2.4.2.ebuild 544 RMD160 faefa49c28f7fae705da7732b17266729ffcb9e5 SHA1 5d20d62cad031414175deea8bb550a2a5c09147a SHA256 f78444f2f7c2057a1da22faf45f67d29e8b3b30f8ccf5530e64cef18a5f2b57c
-MD5 6d6d13631e0ecdcc24696d0e56478dfd stardict-mova-mech-2.4.2.ebuild 544
-RMD160 faefa49c28f7fae705da7732b17266729ffcb9e5 stardict-mova-mech-2.4.2.ebuild 544
-SHA256 f78444f2f7c2057a1da22faf45f67d29e8b3b30f8ccf5530e64cef18a5f2b57c stardict-mova-mech-2.4.2.ebuild 544
-MD5 6cafc1b3195651dd57de39c729025f4c files/digest-stardict-mova-mech-2.4.2 316
-RMD160 944bdbbf3a2b5e391376d4bffa23ef2ce5c31f67 files/digest-stardict-mova-mech-2.4.2 316
-SHA256 1a69efd06a5a0b9c6b99bc4d9771650531745bfebe32591edb7fa429da663548 files/digest-stardict-mova-mech-2.4.2 316

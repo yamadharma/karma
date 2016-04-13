@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_brok_and_efr-2.4.2.tar.bz2 13991821 RMD160 63e1d06fe1253c6a6c452c14426b02cba17e7a31 SHA1 27b177e9e2c19f0f0a879a3b0219564b0cf58fab SHA256 38d89f268f9b0b23cee268a95cb530a84fbbbc5551640938497d7530dae95885
-EBUILD stardict-mova-brok-and-efr-2.4.2.ebuild 552 RMD160 559c4f44b00f6afee869fcc398e67684f4e5d45e SHA1 bb9ba688da9549f302bc43c5e9f3f471e6674257 SHA256 1749945e8e767e5563d112bf8d565ee874ee09baccc7d7e13d53fcd794b3ccc4
-MD5 62838fe1ec72e23c116b87ab4eb1c045 stardict-mova-brok-and-efr-2.4.2.ebuild 552
-RMD160 559c4f44b00f6afee869fcc398e67684f4e5d45e stardict-mova-brok-and-efr-2.4.2.ebuild 552
-SHA256 1749945e8e767e5563d112bf8d565ee874ee09baccc7d7e13d53fcd794b3ccc4 stardict-mova-brok-and-efr-2.4.2.ebuild 552
-MD5 b208e76054d6932f7ce64e6c5640137a files/digest-stardict-mova-brok-and-efr-2.4.2 349
-RMD160 bcb120053a60ca4e4772c8182deb1b3d4f15096c files/digest-stardict-mova-brok-and-efr-2.4.2 349
-SHA256 dd14b2f759bcee791e0dda1329955db2a3de3dc780835fded4be6603c17212dd files/digest-stardict-mova-brok-and-efr-2.4.2 349

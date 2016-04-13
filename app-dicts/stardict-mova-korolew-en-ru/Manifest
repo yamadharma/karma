@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_korolew_enru-2.4.2.tar.bz2 1936685 RMD160 5781af31d831952c8666476d22f150a4b26feddf SHA1 7939320fe939ce0316be522eae14707409f8f1cd SHA256 c2f3e8dacfbd85a53a8f7a8b6c585a453b589a332e18c413ec572075dddbf374
-EBUILD stardict-mova-korolew-en-ru-2.4.2.ebuild 600 RMD160 a622b789858ee8b2d8e1adf175b83bee2bc482a3 SHA1 d3f34b3aa359c88a3e4edcb7cbf41d3ba8dd6557 SHA256 090ffa376eb8ccc4635090f8af2c5259dbab8e41fc6e8da4aa379058e2d18f68
-MD5 7ad4b1aed5c5051cd5344a8e4a6a7c7b stardict-mova-korolew-en-ru-2.4.2.ebuild 600
-RMD160 a622b789858ee8b2d8e1adf175b83bee2bc482a3 stardict-mova-korolew-en-ru-2.4.2.ebuild 600
-SHA256 090ffa376eb8ccc4635090f8af2c5259dbab8e41fc6e8da4aa379058e2d18f68 stardict-mova-korolew-en-ru-2.4.2.ebuild 600
-MD5 0e7feef30530c277058a4c4b3e0b3e3e files/digest-stardict-mova-korolew-en-ru-2.4.2 346
-RMD160 b9655e1be8c6276443e9100cf821da3841487b22 files/digest-stardict-mova-korolew-en-ru-2.4.2 346
-SHA256 de02e9ab57af07f460348d32749e54de4d7812b3d1f65efbecd80b3b40bc4b28 files/digest-stardict-mova-korolew-en-ru-2.4.2 346

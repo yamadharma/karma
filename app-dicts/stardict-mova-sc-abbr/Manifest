@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_sc-abbr-2.4.2.tar.bz2 28707 RMD160 2c7bb3199dd4e1044e7a78b938643bf21f4ea04b SHA1 f35d36654cc097e4249e8e4c4964224f4453f981 SHA256 171da2c2d8b96e8b3ebb4b40980cd8a30d7da2e9f613467d199c3451888ecc28
-EBUILD stardict-mova-sc-abbr-2.4.2.ebuild 547 RMD160 0445341f387fb389361ae4aa4cf58df84ec6f6a8 SHA1 1c773902218f9025f422f9d20fa41518b8e00258 SHA256 abc211b3bff5c20cd0b2da19c59ef91852c8695cc060168a946debf638c03d5d
-MD5 620187d498a168a3b60f189b0419aca2 stardict-mova-sc-abbr-2.4.2.ebuild 547
-RMD160 0445341f387fb389361ae4aa4cf58df84ec6f6a8 stardict-mova-sc-abbr-2.4.2.ebuild 547
-SHA256 abc211b3bff5c20cd0b2da19c59ef91852c8695cc060168a946debf638c03d5d stardict-mova-sc-abbr-2.4.2.ebuild 547
-MD5 53febad4989d211b37977f1cb9d410d5 files/digest-stardict-mova-sc-abbr-2.4.2 325
-RMD160 cf91079b80b9bdff63bc1150f573cda23a11e7df files/digest-stardict-mova-sc-abbr-2.4.2 325
-SHA256 f63928a03c0d6db948af70dda0be8b47c86ec858f5a3dfb759d646751b20794f files/digest-stardict-mova-sc-abbr-2.4.2 325

@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_sokrat_enru-2.4.2.tar.bz2 1114064 RMD160 30f0aa049abbe4993bc34ac55229dbade446091b SHA1 756db9b77fe6e48477e865343ad5996ccbf6a214 SHA256 be48935be3e871cea1904a8afa1ffb559f765a8be7d10c4c18aa09f378ce85b4
-EBUILD stardict-mova-sokrat-en-ru-2.4.2.ebuild 589 RMD160 c1c71a7e095b8790a35d902228fb5dc37f98e036 SHA1 39e2c0db967487d8ab87ce9f8406c485301408ad SHA256 84fd81ac5dbb620699a8b8fdc8daafbc7fd77621c5dbb3403388ff587002266c
-MD5 0f5555ff27a097cc77ab5578b71ecdff stardict-mova-sokrat-en-ru-2.4.2.ebuild 589
-RMD160 c1c71a7e095b8790a35d902228fb5dc37f98e036 stardict-mova-sokrat-en-ru-2.4.2.ebuild 589
-SHA256 84fd81ac5dbb620699a8b8fdc8daafbc7fd77621c5dbb3403388ff587002266c stardict-mova-sokrat-en-ru-2.4.2.ebuild 589
-MD5 7528b9237b33dcc6852532af0df8bdb3 files/digest-stardict-mova-sokrat-en-ru-2.4.2 343
-RMD160 d1c986c6d834af3e45221fd5c1c292c6ff0fee2f files/digest-stardict-mova-sokrat-en-ru-2.4.2 343
-SHA256 33176c9b514be2f1122d2baac76821cce7d2ce25ea467f14b90b26718e2098ba files/digest-stardict-mova-sokrat-en-ru-2.4.2 343

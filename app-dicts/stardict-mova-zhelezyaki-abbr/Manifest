@@ -1,8 +1,0 @@
-DIST stardict-dictd_www.mova.org_zhelezyaki_abbr-2.4.2.tar.bz2 3940 RMD160 1ded0552cc8e2575da1e3797c4e6b3a28b699c63 SHA1 77b0712214bfac975c09a9a55bcb8c912efe75b6 SHA256 e3be6630d2b11142fb3ccc008fc6edd3133d20da07d188477577b1614fa2d3d1
-EBUILD stardict-mova-zhelezyaki-abbr-2.4.2.ebuild 555 RMD160 314f956ab815b767ded7c096454b93f025c9cc14 SHA1 df3a59c304cea9554d258bafdb5e93b55b545848 SHA256 ec0810c53e2451497386dacbbcb4f86f778f93623baa6d691a19092fd1e81381
-MD5 350d3a5858fdebba35c89df85e8da84d stardict-mova-zhelezyaki-abbr-2.4.2.ebuild 555
-RMD160 314f956ab815b767ded7c096454b93f025c9cc14 stardict-mova-zhelezyaki-abbr-2.4.2.ebuild 555
-SHA256 ec0810c53e2451497386dacbbcb4f86f778f93623baa6d691a19092fd1e81381 stardict-mova-zhelezyaki-abbr-2.4.2.ebuild 555
-MD5 4abd76a889a1a89fb08af0a9cc75145c files/digest-stardict-mova-zhelezyaki-abbr-2.4.2 346
-RMD160 a61dcfb0856c69b740efc0668c113af9ae8c5e0b files/digest-stardict-mova-zhelezyaki-abbr-2.4.2 346
-SHA256 7a0ad0c3f4384a2bada6de27e3b972c7d2fd67bb34029143e18608333cd449d9 files/digest-stardict-mova-zhelezyaki-abbr-2.4.2 346
