@@ -12,7 +12,7 @@ inherit kde4-base
 
 DESCRIPTION="IDE for the R-project"
 HOMEPAGE="http://rkward.sourceforge.net/"
-SRC_URI="mirror://sourceforge/rkward/${P}.tar.gz"
+SRC_URI="http://download.kde.org/stable/rkward/${PV}/src/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="4"
