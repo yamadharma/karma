@@ -7,6 +7,7 @@ EAPI=5
 KDE_DOC_DIRS="doc"
 KDE_HANDBOOK="optional"
 KDE_LINGUAS="ca cs da de el es fr it lt pl tr zh_CN"
+KDE_LINGUAS_DIR="i18n/po"
 
 inherit kde4-base
 
