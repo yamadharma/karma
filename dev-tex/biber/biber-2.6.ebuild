@@ -54,7 +54,8 @@ RDEPEND=">=dev-lang/perl-5.16
 	>=virtual/perl-Unicode-Collate-1.140.0
 	dev-perl/Sort-Key
 	dev-perl/Mozilla-CA
-	dev-perl/DateTime-Calendar-Julian"
+	dev-perl/DateTime-Calendar-Julian
+	dev-perl/DateTime-Format-Builder"
 DEPEND="${RDEPEND}
 	dev-perl/Config-AutoConf
 	dev-perl/Module-Build
