@@ -3,13 +3,14 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-python/dnspython/dnspython-1.8.0.ebuild,v 1.8 2010/08/16 16:50:27 grobian Exp $
 
 EAPI="5"
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
 inherit distutils-r1
 
 DESCRIPTION="python-djvulibre is a set of Python bindings for the DjVuLibre library, an open source implementation of DjVu"
 HOMEPAGE="http://jwilk.net/software/python-djvulibre"
-SRC_URI="http://pypi.python.org/packages/source/p/${PN}/${P}.tar.gz"
+SRC_URI="https://github.com/jwilk/python-djvulibre/archive/${PV}.tar.gz -> ${P}.tar.gz"
+# SRC_URI="http://pypi.python.org/packages/source/p/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
