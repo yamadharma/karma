@@ -1,0 +1,179 @@
+Description: Some bzr-specific helpers were removed from python-fastimport,
+ breaking bzr-fastimport by producing import errors.  This reinstates those
+ helpers into bzr-fastimport.
+Author: Jelmer Vernooij <jelmer@samba.org>
+Bug: https://bugs.launchpad.net/bugs/1295833
+
+=== modified file 'branch_updater.py'
+--- a/branch_updater.py
++++ b/branch_updater.py
+@@ -22,6 +22,7 @@
+ 
+ from bzrlib.plugins.fastimport.helpers import (
+     best_format_for_objects_in_a_repository,
++    single_plural,
+     )
+ 
+ 
+@@ -149,7 +150,6 @@
+ 
+         :return: whether the branch was changed or not
+         """
+-        from fastimport.helpers import single_plural
+         last_rev_id = self.cache_mgr.lookup_committish(last_mark)
+         self.repo.lock_read()
+         try:
+--- a/cache_manager.py
++++ b/cache_manager.py
+@@ -28,7 +28,7 @@
+ from bzrlib.plugins.fastimport.reftracker import (
+     RefTracker,
+     )
+-from fastimport.helpers import (
++from bzrlib.plugins.fastimport.helpers import (
+     single_plural,
+     )
+ 
+@@ -275,3 +275,14 @@
+         return content
+ 
+ 
++def invert_dictset(d):
++    """Invert a dictionary with keys matching a set of values, turned into lists."""
++    # Based on recipe from ASPN
++    result = {}
++    for k, c in d.iteritems():
++        for v in c:
++            keys = result.setdefault(v, [])
++            keys.append(k)
++    return result
++
++
+--- a/cmds.py
++++ b/cmds.py
+@@ -19,7 +19,10 @@
+ from bzrlib.commands import Command
+ from bzrlib.option import Option, ListOption, RegistryOption
+ 
+-from bzrlib.plugins.fastimport import load_fastimport
++from bzrlib.plugins.fastimport import (
++    helpers,
++    load_fastimport,
++    )
+ 
+ 
+ def _run(source, processor_factory, verbose=False, user_map=None, **kwargs):
+@@ -47,7 +50,6 @@
+ def _get_source_stream(source):
+     if source == '-' or source is None:
+         import sys
+-        from fastimport import helpers
+         stream = helpers.binary_stream(sys.stdin)
+     elif source.endswith('.gz'):
+         import gzip
+--- a/exporter.py
++++ b/exporter.py
+@@ -64,7 +64,7 @@
+     )
+ 
+ from fastimport import commands
+-from fastimport.helpers import (
++from bzrlib.plugins.fastimport.helpers import (
+     binary_stream,
+     single_plural,
+     )
+--- a/helpers.py
++++ b/helpers.py
+@@ -146,3 +146,53 @@
+         return 'tree-reference', False
+     else:
+         raise AssertionError("invalid mode %o" % mode)
++
++
++def binary_stream(stream):
++    """Ensure a stream is binary on Windows.
++
++    :return: the stream
++    """
++    try:
++        import os
++        if os.name == 'nt':
++            fileno = getattr(stream, 'fileno', None)
++            if fileno:
++                no = fileno()
++                if no >= 0:     # -1 means we're working as subprocess
++                    import msvcrt
++                    msvcrt.setmode(no, os.O_BINARY)
++    except ImportError:
++        pass
++    return stream
++
++
++def single_plural(n, single, plural):
++    """Return a single or plural form of a noun based on number."""
++    if n == 1:
++        return single
++    else:
++        return plural
++
++
++def invert_dictset(d):
++    """Invert a dictionary with keys matching a set of values, turned into lists."""
++    # Based on recipe from ASPN
++    result = {}
++    for k, c in d.iteritems():
++        for v in c:
++            keys = result.setdefault(v, [])
++            keys.append(k)
++    return result
++
++
++def invert_dict(d):
++    """Invert a dictionary with keys matching each value turned into a list."""
++    # Based on recipe from ASPN
++    result = {}
++    for k, v in d.iteritems():
++        keys = result.setdefault(v, [])
++        keys.append(k)
++    return result
++
++
+--- a/processors/generic_processor.py
++++ b/processors/generic_processor.py
+@@ -40,6 +40,7 @@
+ from bzrlib.plugins.fastimport import (
+     branch_updater,
+     cache_manager,
++    helpers,
+     idmapfile,
+     marks_file,
+     revision_store,
+@@ -47,7 +48,6 @@
+ from fastimport import (
+     commands,
+     errors as plugin_errors,
+-    helpers,
+     processor,
+     )
+ 
+--- a/processors/info_processor.py
++++ b/processors/info_processor.py
+@@ -18,14 +18,14 @@
+ from bzrlib.plugins.fastimport import (
+     reftracker,
+     )
++from bzrlib.plugins.fastimport.helpers import (
++    invert_dict,
++    invert_dictset,
++    )
+ from fastimport import (
+     commands,
+     processor,
+     )
+-from fastimport.helpers import (
+-    invert_dict,
+-    invert_dictset,
+-    )
+ import stat
+ 
+ 
