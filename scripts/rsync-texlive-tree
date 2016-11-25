@@ -1,4 +1,6 @@
 #!/bin/bash
 
-# rsync -rltpD -v -HS --delete rsync://mirror.datacenter.by/CTAN/systems/texlive/tlnet/ /com/lib/portage/distfiles/texlive
-rsync -rltpD -v -HS --delete rsync://ftp.fernuni-hagen.de/ctan/systems/texlive/tlnet/ /com/lib/portage/distfiles/texlive
+mkdir -p /com/lib/portage/extras/texlive
+
+# rsync -rltpD -v -HS --delete rsync://mirror.datacenter.by/CTAN/systems/texlive/tlnet/ /com/lib/portage/extras/texlive
+rsync -rltpD -v -HS --delete rsync://ftp.fernuni-hagen.de/ctan/systems/texlive/tlnet/ /com/lib/portage/extras/texlive
