@@ -31,6 +31,7 @@ DEPEND="nls? ( sys-devel/gettext )
 		gtk? ( x11-libs/gtk+ )
 		fftw? ( >=sci-libs/fftw-3 )"
 src_prepare() {
+	epatch ${FILESDIR}/gcc5.patch
 	./autogen.sh
 }
 

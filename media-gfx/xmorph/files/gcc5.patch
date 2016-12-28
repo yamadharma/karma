@@ -1,0 +1,19 @@
+diff -Naurp xmorph-20140707+nmu2.orig/gtkmorph/loadsave_mesh.c xmorph-20140707+nmu2/gtkmorph/loadsave_mesh.c
+--- xmorph-20140707+nmu2.orig/gtkmorph/loadsave_mesh.c	2016-12-28 12:00:40.000000000 +0300
++++ xmorph-20140707+nmu2/gtkmorph/loadsave_mesh.c	2016-12-28 12:02:05.000000000 +0300
+@@ -67,6 +67,15 @@
+  load mesh from file
+ */
+ 
++inline  void 
++showerr(const char *file, const char *msg)
++{
++  char *s = 
++	g_strdup_printf( msg, file, strerror(errno));
++			
++  show_error(s  );
++  g_free(s);
++}
+ 
+ 
+ static gboolean cmp_mesh_name(int lp,const char *file)
