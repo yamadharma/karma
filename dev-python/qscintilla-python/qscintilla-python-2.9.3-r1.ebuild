@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/qscintilla-python/qscintilla-python-2.9.ebuild,v 1.1 2015/04/30 13:50:25 pesa Exp $
 
-EAPI=6
+EAPI=5
 PYTHON_COMPAT=( python2_7 python3_{4,5} )
 
 inherit python-r1 qmake-utils
@@ -16,7 +16,7 @@ SRC_URI="mirror://sourceforge/pyqt/${MY_P}.tar.gz"
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="debug qt5"
+IUSE="debug +qt5"
 
 DEPEND="
 	${PYTHON_DEPS}
@@ -40,37 +40,36 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 S=${WORKDIR}/${MY_P}/Python
 
 src_prepare() {
-	default
-	if use qt5; then
+#	if use qt5; then
 		pushd "${WORKDIR}/${MY_P}" >/dev/null
-		epatch "${FILESDIR}/qt5_python_libname.patch"
+#		epatch "${FILESDIR}/qt5_python_libname.patch"
 		epatch "${FILESDIR}/qt5_includes.patch"
-		epatch "${FILESDIR}/qsci_link.patch"
+#		epatch "${FILESDIR}/qsci_link.patch"
 		popd >/dev/null
-	fi
+#	fi
 	python_copy_sources
 }
 
 src_configure() {
-	configuration_qt4() {
-		local myconf=(
-			"${PYTHON}" ../configure.py
-			--qmake="$(qt4_get_bindir)"/qmake
-			--destdir="$(python_get_sitedir)"/PyQt4
-			--sip-incdir="$(python_get_includedir)"
-			--pyqt=PyQt4
-			$(use debug && echo --debug)
-		)
-		mkdir buildqt4
-		cp -r sip buildqt4
-		pushd buildqt4 >/dev/null
-		echo "${myconf[@]}"
-		"${myconf[@]}" || die
-
-		# Run eqmake4 to respect toolchain, build flags, and prevent stripping
-		eqmake4
-		popd >/dev/null
-	}
+#	configuration_qt4() {
+#		local myconf=(
+#			"${PYTHON}" ../configure.py
+#			--qmake="$(qt4_get_bindir)"/qmake
+#			--destdir="$(python_get_sitedir)"/PyQt4
+#			--sip-incdir="$(python_get_includedir)"
+#			--pyqt=PyQt4
+#			$(use debug && echo --debug)
+#		)
+#		mkdir buildqt4
+#		cp -r sip buildqt4
+#		pushd buildqt4 >/dev/null
+#		echo "${myconf[@]}"
+#		"${myconf[@]}" || die
+#
+#		# Run eqmake4 to respect toolchain, build flags, and prevent stripping
+#		eqmake4
+#		popd >/dev/null
+#	}
 	configuration_qt5() {
 		local myconf=(
 			"${PYTHON}" ../configure.py
@@ -90,47 +89,47 @@ src_configure() {
 		popd >/dev/null
 	}
 
-	python_foreach_impl run_in_build_dir configuration_qt4
+	#python_foreach_impl run_in_build_dir configuration_qt4
 	
-	if use qt5; then
+	#if use qt5; then
 		python_foreach_impl run_in_build_dir configuration_qt5
-	fi
+	#fi
 }
 
 src_compile() {
-	compile_qt4() {
-		pushd buildqt4 >/dev/null
-		emake || die "emake failed (qt4)"
-		popd >/dev/null
-	}
+#	compile_qt4() {
+#		pushd buildqt4 >/dev/null
+#		emake || die "emake failed (qt4)"
+#		popd >/dev/null
+#	}
 	compile_qt5() {
 		pushd buildqt5 >/dev/null
 		emake || die "emake failed (qt5)"
 		popd >/dev/null
 	}
-	python_foreach_impl run_in_build_dir compile_qt4
+	#python_foreach_impl run_in_build_dir compile_qt4
 
-	if use qt5; then
+	#if use qt5; then
 		python_foreach_impl run_in_build_dir compile_qt5
-	fi
+	#fi
 }
 
 src_install() {
-	installation_qt4() {
-		pushd buildqt4 >/dev/null
-		emake INSTALL_ROOT="${D}" install
-		python_optimize
-		popd >/dev/null
-	}
+#	installation_qt4() {
+#		pushd buildqt4 >/dev/null
+#		emake INSTALL_ROOT="${D}" install
+#		python_optimize
+#		popd >/dev/null
+#	}
 	installation_qt5() {
 		pushd buildqt5 >/dev/null
 		emake INSTALL_ROOT="${D}" install
 		python_optimize
 		popd >/dev/null
 	}
-	python_foreach_impl run_in_build_dir installation_qt4
+	#python_foreach_impl run_in_build_dir installation_qt4
 
-	if use qt5; then
+	#if use qt5; then
 		python_foreach_impl run_in_build_dir installation_qt5
-	fi
+	#fi
 }
