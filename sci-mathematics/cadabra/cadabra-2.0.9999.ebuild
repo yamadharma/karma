@@ -102,13 +102,11 @@ src_install() {
 #	mv ${D}/usr/share/texmf ${D}/usr/share/texmf-site
 }
 
-#pkg_postinst() {
-#	etexmf-update
-#	elog "This version of the cadabra ebuild is still under development."
-#	elog "Help us improve the ebuild in:"
-#	elog "http://bugs.gentoo.org/show_bug.cgi?id= 194393"
-#}
+pkg_postinst() {
+	etexmf-update
+}
 
-#pkg_postrm() {
-#	etexmf-update
-#}
+pkg_postrm() {
+	etexmf-update
+}
+
