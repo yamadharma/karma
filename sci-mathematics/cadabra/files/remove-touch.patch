@@ -1,0 +1,13 @@
+diff -Naur cadabra-2.0.9999.orig/frontend/gtkmm/CMakeLists.txt cadabra-2.0.9999/frontend/gtkmm/CMakeLists.txt
+--- cadabra-2.0.9999.orig/frontend/gtkmm/CMakeLists.txt	2016-12-29 12:53:11.000000000 +0300
++++ cadabra-2.0.9999/frontend/gtkmm/CMakeLists.txt	2016-12-29 12:54:28.000000000 +0300
+@@ -125,6 +125,6 @@
+ install(FILES    ${PROJECT_SOURCE_DIR}/../../images/256x256/cadabra2-gtk.png   DESTINATION ${ICON_PREFIX}/share/icons/hicolor/256x256/apps)
+ install(FILES    ${PROJECT_SOURCE_DIR}/../../images/cadabra2-gtk.svg           DESTINATION ${ICON_PREFIX}/share/icons/hicolor/scalable/apps)
+ install(FILES    ${PROJECT_SOURCE_DIR}/../../config/cadabra2-gtk.desktop       DESTINATION ${ICON_PREFIX}/share/applications)
+-install(CODE     "execute_process(COMMAND touch ${ICON_PREFIX}/share/icons/hicolor/icon-theme.cache)")
+-install(CODE     "execute_process(COMMAND gtk-update-icon-cache-3.0 ${ICON_PREFIX}/share/icons/hicolor)")
+-install(CODE     "execute_process(COMMAND chmod go+r ${ICON_PREFIX}/share/icons/hicolor/icon-theme.cache)")
++#install(CODE     "execute_process(COMMAND touch ${ICON_PREFIX}/share/icons/hicolor/icon-theme.cache)")
++#install(CODE     "execute_process(COMMAND gtk-update-icon-cache-3.0 ${ICON_PREFIX}/share/icons/hicolor)")
++#install(CODE     "execute_process(COMMAND chmod go+r ${ICON_PREFIX}/share/icons/hicolor/icon-theme.cache)")

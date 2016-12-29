@@ -1,0 +1,34 @@
+diff -Naur cadabra-2.0.9999.orig/frontend/gtkmm/CMakeLists.txt cadabra-2.0.9999/frontend/gtkmm/CMakeLists.txt
+--- cadabra-2.0.9999.orig/frontend/gtkmm/CMakeLists.txt	2016-12-29 12:45:24.000000000 +0300
++++ cadabra-2.0.9999/frontend/gtkmm/CMakeLists.txt	2016-12-29 12:46:10.000000000 +0300
+@@ -76,18 +76,18 @@
+ 
+ 
+ # Remove old versions of files which we no longer need, to avoid confusion.
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/bin/cadabra-gtk)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/bin/cadabra-qt5)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/applications/cadabra2.desktop)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/applications/cadabra2-gtk.desktop)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps/cadabra2.png)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps/cadabra2.png)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps/cadabra2.png)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/cadabra2.svg)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps/cadabra2-gtk.png)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps/cadabra2-gtk.png)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps/cadabra2-gtk.png)")
+-install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/cadabra2-gtk.svg)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/bin/cadabra-gtk)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/bin/cadabra-qt5)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/applications/cadabra2.desktop)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/applications/cadabra2-gtk.desktop)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps/cadabra2.png)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps/cadabra2.png)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps/cadabra2.png)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/cadabra2.svg)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps/cadabra2-gtk.png)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps/cadabra2-gtk.png)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps/cadabra2-gtk.png)")
++#install(CODE     "execute_process(COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/cadabra2-gtk.svg)")
+ 
+ # Install programs.
+ #find_program(XDG-DESKTOP-MENU_EXECUTABLE xdg-desktop-menu REQUIRED)

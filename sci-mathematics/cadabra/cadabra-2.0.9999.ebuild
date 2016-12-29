@@ -4,6 +4,8 @@
 
 EAPI="5"
 
+inherit cmake-utils texlive-common
+
 DESCRIPTION="Field-theory motivated computer algebra system"
 HOMEPAGE="http://cadabra.science/"
 
@@ -18,18 +20,18 @@ else
         KEYWORDS="~amd64 ~x86"
 fi
 
-inherit cmake-utils eutils texlive-common
-
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc examples X"
+IUSE="doc examples"
 
-CDEPEND="X? (
-		x11-libs/gtk+:2
-		dev-cpp/gtkmm:2.4
-		dev-cpp/pangomm:1.4
-		app-text/dvipng )"
+CDEPEND="x11-libs/gtk+:3
+	dev-cpp/gtkmm:3.0
+	dev-libs/boost
+	dev-libs/jsoncpp
+	dev-libs/mathjax
+	dev-python/sympy
+	"
 DEPEND="${CDEPEND}
 	doc? (
 		app-doc/doxygen
@@ -39,6 +41,12 @@ DEPEND="${CDEPEND}
 RDEPEND="${CDEPEND}
 	virtual/latex-base
 	dev-texlive/texlive-latexrecommended"
+
+PATCHES=(
+	"${FILESDIR}/remove-rm.patch"
+	"${FILESDIR}/remove-touch.patch"
+)
+
 
 src_configure() {
         local mycmakeargs=(
@@ -68,27 +76,30 @@ src_configure() {
 #	fi
 #}
 
-src_install_() {
+src_install() {
+	enable_cmake-utils_src_install
 	# cadabra strip binaries unless you are on OS X.
 	# So faking it to avoid outright stripping.
-	emake DESTDIR="${D}" DEVDESTDIR="${D}" MACTEST=1 install
+#	emake DESTDIR="${D}" DEVDESTDIR="${D}" MACTEST=1 install
+#	einstall
 
-	dodoc AUTHORS ChangeLog INSTALL
+#	dodoc AUTHORS ChangeLog INSTALL
 
-	if use doc;	then
-		cd "${S}/doc/doxygen"
-		dohtml html/*
-		dodoc latex/*.pdf
-	fi
+#	if use doc;	
+#	then
+#		cd "${S}/doc/doxygen"
+#		dohtml html/*
+#		dodoc latex/*.pdf
+#	fi
 
 	if use examples; then
 		dodoc -r "${S}/examples/"
 	fi
 
-	rm -rf "${D}/usr/share/TeXmacs" || die
+#	rm -rf "${D}/usr/share/TeXmacs" || die
 
 	# hack for texmf
-	mv ${D}/usr/share/texmf ${D}/usr/share/texmf-site
+#	mv ${D}/usr/share/texmf ${D}/usr/share/texmf-site
 }
 
 #pkg_postinst() {
