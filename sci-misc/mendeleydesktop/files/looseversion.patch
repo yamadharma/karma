@@ -1,0 +1,21 @@
+diff -Naurp mendeleydesktop-1.17.6.orig/bin/mendeleydesktop mendeleydesktop-1.17.6/bin/mendeleydesktop
+--- mendeleydesktop-1.17.6.orig/bin/mendeleydesktop	2016-12-31 21:34:36.191664108 +0300
++++ mendeleydesktop-1.17.6/bin/mendeleydesktop	2016-12-31 21:35:09.099992662 +0300
+@@ -102,11 +102,12 @@ def should_use_bundled_libstdc():
+     cpp_runtime_lib = find_library("libstdc++.so.6")
+     cpp_runtime_version = library_version_from_path(cpp_runtime_lib)
+ 
+-    if distutils.version.LooseVersion(cpp_runtime_version) < distutils.version.LooseVersion(MINIMUM_CPP_VERSION):
+-        print("Using bundled C++ runtime libraries")
+-        return True
+-    else:
+-        return False
++#    if distutils.version.LooseVersion(cpp_runtime_version) < distutils.version.LooseVersion(MINIMUM_CPP_VERSION):
++#        print("Using bundled C++ runtime libraries")
++#        return True
++#    else:
++#        return False
++    return False
+ 
+ def set_environment():
+     """ Prepares the environment variables to run Mendeley Desktop. Specially
