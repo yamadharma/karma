@@ -3,6 +3,7 @@
 # $Id$
 
 EAPI=6
+
 EGO_PN="github.com/github/${PN}"
 
 if [[ ${PV} == *9999 ]]; then
@@ -19,11 +20,12 @@ HOMEPAGE="https://git-lfs.github.com/"
 
 LICENSE="MIT BSD BSD-2 BSD-4 Apache-2.0"
 SLOT="0"
-IUSE=""
+IUSE="+doc"
 
 DEPEND="
-	app-text/ronn
 	dev-lang/go
+
+	doc? ( app-text/ronn )
 "
 RDEPEND="
 	dev-vcs/git
@@ -31,14 +33,23 @@ RDEPEND="
 
 S="${WORKDIR}/${P}/src/${EGO_PN}"
 
+src_prepare() {
+	default
+	# dirty hack
+	cd ${WORKDIR}/${P}/src/github.com
+	ln -s github git-lfs
+}
+
 src_compile() {
 	export GOPATH="${WORKDIR}/${P}"
 
 	script/bootstrap
-	script/man
+
+	use doc && script/man
 }
 
 src_install() {
 	dobin bin/git-lfs
-	doman man/*.1
+
+	use doc && doman man/*.1
 }
