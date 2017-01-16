@@ -57,17 +57,6 @@ src_configure() {
         cmake-utils_src_configure
 }
 
-#src_compile() {
-#	default
-# 
-#	if use doc; then
-#		cd "${S}/doc"
-#		emake
-#		cd doxygen/latex
-#		emake pdf
-#	fi
-#}
-
 src_install() {
 	enable_cmake-utils_src_install
 	# cadabra strip binaries unless you are on OS X.
