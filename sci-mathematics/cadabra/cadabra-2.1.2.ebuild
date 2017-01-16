@@ -15,7 +15,7 @@ if [[ ${PV} = 2.0.9999* ]]; then
         KEYWORDS="~amd64 ~x86"
 else
 	inherit git-r3
-        EGIT_REPO_URI=""
+        EGIT_REPO_URI="https://github.com/kpeeters/cadabra2.git"
         EGIT_COMMIT="${PV}"
         KEYWORDS="~amd64 ~x86"
 fi
@@ -32,6 +32,7 @@ CDEPEND="x11-libs/gtk+:3
 	dev-libs/mathjax
 	dev-python/sympy
 	"
+
 DEPEND="${CDEPEND}
 	doc? (
 		app-doc/doxygen
@@ -47,23 +48,14 @@ PATCHES=(
 	"${FILESDIR}/remove-touch.patch"
 )
 
-
 src_configure() {
+	export GIT_DIR=${S}/.git/
+
         local mycmakeargs=(
                 -DUSE_PYTHON_3=OFF
         )
         cmake-utils_src_configure
 }
-
-#src_prepare(){
-#	# fixing the flag mess
-#	epatch "${FILESDIR}/${P}-FLAGS.patch"
-#}
-
-#src_configure(){
-#	econf $(use_enable X gui) \
-#		--disable-runtime-dependency-check
-#}
 
 #src_compile() {
 #	default
