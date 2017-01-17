@@ -9,7 +9,7 @@ inherit cmake-utils texlive-common
 DESCRIPTION="Field-theory motivated computer algebra system"
 HOMEPAGE="http://cadabra.science/"
 
-if [[ ${PV} = 2.0.9999* ]]; then
+if [[ ${PV} = *.9999* ]]; then
         inherit git-r3
         EGIT_REPO_URI="https://github.com/kpeeters/cadabra2.git"
         KEYWORDS="~amd64 ~x86"
@@ -48,12 +48,22 @@ PATCHES=(
 	"${FILESDIR}/remove-touch.patch"
 )
 
-src_configure() {
-	export GIT_DIR=${S}/.git/
+CMAKE_IN_SOURCE_BUILD=y
 
-        local mycmakeargs=(
-                -DUSE_PYTHON_3=OFF
-        )
+src_prepare() {
+	enable_cmake-utils_src_prepare
+	cd ${S}
+#	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py34:COMPONENTS python-3.4:g" "{}" \;
+	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py34:COMPONENTS python:g" "{}" \;
+	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python3:COMPONENTS python:g" "{}" \;
+}
+
+src_configure() {
+#	export GIT_DIR=${S}/.git/
+
+#        local mycmakeargs=(
+#                -DUSE_PYTHON_3=ON
+#        )
         cmake-utils_src_configure
 }
 
