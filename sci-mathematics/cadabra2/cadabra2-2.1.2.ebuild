@@ -59,12 +59,20 @@ src_prepare() {
 }
 
 src_configure() {
+#	PYTHON_CURRENT=`eselect python show`
+#	echo $PYTHON_CURRENT !!!!!
+#	if [[ $PYTHON_CURRENT == "python2.7" ]]
+#	then
+#	    eselect python set python3.4
+#	fi
 #	export GIT_DIR=${S}/.git/
 
 #        local mycmakeargs=(
 #                -DUSE_PYTHON_3=ON
 #        )
         cmake-utils_src_configure
+
+	eselect python set $PYTHON_CURRENT
 }
 
 src_install() {
