@@ -32,9 +32,9 @@ src_install() {
 
 }
 
-pkg_postrm() {
-
-        rm -rf "/opt/${MY_PN}"
-        rm "/usr/bin/${MY_PN}"
-
-}
+#pkg_postrm() {
+#
+#        rm -rf "/opt/${MY_PN}"
+#        rm "/usr/bin/${MY_PN}"
+#
+#}
