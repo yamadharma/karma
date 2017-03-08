@@ -39,15 +39,15 @@ RDEPEND="=dev-java/antlr-2*
 
 #S="${WORKDIR}/${PN}"
 
-#pkg_setup() {
-#	export RMLHOME="${ROOT}usr"
-#	export ANTLRHOME="${ROOT}usr"
-#	export CLASSPATH="${ROOT}usr/share/antlr/lib/antlr.jar"
-#
+pkg_setup() {
+	export RMLHOME="${ROOT}usr"
+	export ANTLRHOME="${ROOT}usr"
+	export CLASSPATH="${ROOT}usr/share/antlr/lib/antlr.jar"
+
 	# This package is very sensitive to parallelisation of the build process. Do not
 	# do it and you will be safe.
-#	MAKEOPTS="${MAKEOPTS} -j1"
-#}
+	MAKEOPTS="${MAKEOPTS} -j1"
+}
 
 src_prepare() {
 	eautoreconf
