@@ -103,6 +103,11 @@ src_configure() {
 #	fi
 }
 
+src_compile() {
+	emake omc
+	emake
+}
+
 src_install() {
 	# sed -i -r "s#^((lib|data)dir\s*=)\s*/usr(.*)#\1 \${prefix}\3#" Makefile
 	# make prefix="${D}/usr" install
