@@ -24,6 +24,8 @@ RDEPEND="
 	doc? ( www-plugins/adobe-flash  )
 "
 
+S=${WORKDIR}/PacketTracer70
+
 pkg_nofetch () {
 	ewarn "To fetch sources you need cisco account which is available in case"
 	ewarn "you are cisco web-learning student, instructor or you sale cisco hardware, etc..  "
@@ -46,7 +48,7 @@ pkg_nofetch () {
 
 src_install () {
 
-	local PKT_HOME="/opt/${P}"
+	local PKT_HOME="/opt/${PN}/${PV}"
 
 	dodir "${PKT_HOME}"
 
