@@ -48,7 +48,7 @@ pkg_nofetch () {
 
 src_install () {
 
-	local PKT_HOME="/opt/${PN}/${PV}"
+	local PKT_HOME="/opt/${P}"
 
 	dodir "${PKT_HOME}"
 
