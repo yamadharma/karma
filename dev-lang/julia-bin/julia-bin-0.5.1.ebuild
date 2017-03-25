@@ -15,13 +15,14 @@ SRC_URI="
 	amd64? ( https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-${PV}-linux-x86_64.tar.gz )
 "
 #S=$WORKDIR/${P}
+GITHASH=6445c82d00
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="mkl"
 
-S=${WORKDIR}/julia-3c9d75391c
+S=${WORKDIR}/julia-${GITHASH}
 
 RDEPEND="
 	dev-lang/R:0=
