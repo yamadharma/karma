@@ -8,7 +8,7 @@ DESCRIPTION="Scilab scientific software"
 HOMEPAGE="http://www.scilab.org"
 SLOT="0"
 IUSE=""
-KEYWORDS="~amd64"
+#KEYWORDS="~amd64"
 
 MY_PN=${PN/-bin/}
 MY_PV=${PV/_beta/-beta-}
