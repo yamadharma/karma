@@ -2,15 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/dnspython/dnspython-1.8.0.ebuild,v 1.8 2010/08/16 16:50:27 grobian Exp $
 
-EAPI="2"
-PYTHON_DEPEND="2"
-SUPPORT_PYTHON_ABIS="1"
+EAPI=5
 
-inherit distutils
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_IN_SOURCE_BUILD=1 # setup.py applies 2to3 to tests
+PYTHON_REQ_USE=""
+
+inherit distutils-r1
 
 DESCRIPTION="djvusmooth is a graphical editor for DjVu documents"
 HOMEPAGE="http://jwilk.net/software/ocrodjvu"
-SRC_URI="http://pypi.python.org/packages/source/o/${PN}/${P}.tar.gz"
+SRC_URI="https://github.com/jwilk/ocrodjvu/releases/download/${PV}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -20,7 +22,8 @@ IUSE="cuneiform gocr ocrad ocropus tesseract"
 RESTRICT=mirror
 
 DEPEND=""
-RDEPEND="dev-python/python-djvulibre
+RDEPEND="${PYTHON_DEPS}
+	dev-python/python-djvulibre
 	dev-python/lxml
  	dev-python/pyicu
 	cuneiform? ( app-text/cuneiform )
@@ -33,13 +36,13 @@ RDEPEND="dev-python/python-djvulibre
 
 RESTRICT="nomirror"
 
-RESTRICT_PYTHON_ABIS="3.*"
+#RESTRICT_PYTHON_ABIS="3.*"
 
 #PYTHON_MODNAME="dns"
 DOCS="doc/changelog doc/*.xml doc/dependencies.txt"
 
 src_install() {
-	distutils_src_install
+	distutils-r1_src_install
 
 	doman doc/*.1
 }
