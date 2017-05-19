@@ -2,10 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-dicts/aspell-ru/aspell-ru-0.99.1-r1.ebuild,v 1.9 2012/05/17 20:07:41 aballier Exp $
 
-ASPELL_LANG="Russian + English"
-ASPOSTFIX="6"
+EAPI=6
 
-inherit aspell-dict
+ASPELL_LANG="Russian + English"
+ASPELL_VERSION=6
+
+inherit aspell-dict-r1
 
 LICENSE="GPL-3"
 
@@ -17,6 +19,15 @@ IUSE=""
 
 SRC_URI=""
 #S=${WORKDIR}/${FILENAME}
+S=${WORKDIR}
+
+DEPEND="app-dicts/aspell-ru
+	app-dicts/aspell-en
+	"
+
+src_configure() {
+	echo "Nothing to configure"
+}
 
 src_compile() {
 	ru_list=$(aspell dump dicts | grep -e "^ru.*")
@@ -34,6 +45,7 @@ src_compile() {
 }
 
 src_install() {
-	dodir /usr/lib64/aspell-0.60
+	default
+	dodir /usr/$(get_libdir)/aspell-0.60
 	cp *.rws *.multi *.dat ${D}/usr/lib64/aspell-0.60
 }
