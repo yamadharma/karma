@@ -31,7 +31,7 @@ RDEPEND="=dev-java/antlr-2*
 	sys-libs/readline
 	dev-libs/libf2c
 	threads? ( dev-libs/boost )
-	|| ( sci-libs/metis sci-libs/parmetis ))
+	|| ( sci-libs/metis sci-libs/parmetis )
 	editor? ( || ( net-misc/omniORB net-misc/mico )
 		dev-qt/qtcore:4
 		dev-qt/qtgui:4 
