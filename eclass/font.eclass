@@ -188,7 +188,7 @@ font_src_install() {
 	fi
 
 	font_fontpath_dir_config
-	font_make_nfont
+	# font_make_nfont
         
 	font_fontconfig
 
@@ -290,7 +290,7 @@ font_make_nfont() {
 		cd "${D}/${GNUSTEP_SYSTEM_LIBRARY}/Fonts"
 		for suffix in ${NFONT_SUFFIX}; do
 			#set_FONTDIR ${suffix}
-			sh /usr/bin/mknfonts \
+			/usr/bin/mknfonts \
 			    ${D}/${FONTDIR}/* # \
 #			    || die "nfonts support files creation failed"
 		done
