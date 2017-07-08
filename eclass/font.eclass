@@ -258,6 +258,7 @@ GNUSTEP_PREFIX="/usr/GNUstep"
 
 FONTPATH_DIR="/etc/X11/fontpath.d"
 
+FONTDIR_ROOT="/usr/share/fonts"
 
 font_fontpath_dir_config() {
 	if ( use X )
