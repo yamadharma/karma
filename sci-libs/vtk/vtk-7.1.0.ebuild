@@ -97,7 +97,7 @@ RDEPEND="
 		${WEBAPP_DEPEND}
 		dev-python/six[${PYTHON_USEDEP}]
 		dev-python/autobahn[${PYTHON_USEDEP}]
-		dev-python/twisted-core[${PYTHON_USEDEP}]
+		dev-python/twisted[${PYTHON_USEDEP}]
 		dev-python/zope-interface[${PYTHON_USEDEP}]
 	)
 	xdmf2? ( sci-libs/xdmf2 )
