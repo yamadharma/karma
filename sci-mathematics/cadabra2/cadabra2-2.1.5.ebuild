@@ -55,7 +55,6 @@ CMAKE_IN_SOURCE_BUILD=y
 src_prepare() {
 	cmake-utils_src_prepare
 	cd ${S}
-#	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py34:COMPONENTS python-3.4:g" "{}" \;
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py34:COMPONENTS python:g" "{}" \;
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python3:COMPONENTS python:g" "{}" \;
 	# multilib
@@ -64,31 +63,17 @@ src_prepare() {
 
 src_configure() {
 	python_setup 'python3*'
-#	PYTHON_CURRENT=`eselect python show`
-#	echo $PYTHON_CURRENT !!!!!
-#	if [[ $PYTHON_CURRENT == "python2.7" ]]
-#	then
-#	    eselect python set python3.4
-#	fi
-#	export GIT_DIR=${S}/.git/
 
 #        local mycmakeargs=(
 #                -DUSE_PYTHON_3=ON
 #        )
 
-#        local mycmakeargs=(
-#                -DPYTHON_EXECUTABLE=/usr/bin/python3
-#		-PYTHON_LIBRARIES=/usr/lib64
-#		-DPYTHON_INCLUDE_DIRS=/usr/include
-#        )
-
         cmake-utils_src_configure
-
-#	eselect python set $PYTHON_CURRENT
 }
 
 src_install() {
 	cmake-utils_src_install
+
 	# cadabra strip binaries unless you are on OS X.
 	# So faking it to avoid outright stripping.
 #	emake DESTDIR="${D}" DEVDESTDIR="${D}" MACTEST=1 install
