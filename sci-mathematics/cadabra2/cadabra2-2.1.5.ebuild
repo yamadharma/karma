@@ -1,10 +1,12 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="5"
 
-inherit cmake-utils texlive-common
+PYTHON_COMPAT=( python{3_4,3_5} )
+
+inherit cmake-utils texlive-common python-r1
 
 DESCRIPTION="Field-theory motivated computer algebra system"
 HOMEPAGE="http://cadabra.science/"
@@ -51,14 +53,17 @@ PATCHES=(
 CMAKE_IN_SOURCE_BUILD=y
 
 src_prepare() {
-	enable_cmake-utils_src_prepare
+	cmake-utils_src_prepare
 	cd ${S}
 #	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py34:COMPONENTS python-3.4:g" "{}" \;
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py34:COMPONENTS python:g" "{}" \;
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python3:COMPONENTS python:g" "{}" \;
+	# multilib
+	find . -name "CMakeLists.txt" -exec sed -i -e "s:DESTINATION lib:DESTINATION $(get_libdir):g" "{}" \;
 }
 
 src_configure() {
+	python_setup 'python3*'
 #	PYTHON_CURRENT=`eselect python show`
 #	echo $PYTHON_CURRENT !!!!!
 #	if [[ $PYTHON_CURRENT == "python2.7" ]]
@@ -70,13 +75,19 @@ src_configure() {
 #        local mycmakeargs=(
 #                -DUSE_PYTHON_3=ON
 #        )
+
+#        local mycmakeargs=(
+#                -DPYTHON_EXECUTABLE=/usr/bin/python3
+#		-PYTHON_LIBRARIES=/usr/lib64
+#		-DPYTHON_INCLUDE_DIRS=/usr/include
+#        )
+
         cmake-utils_src_configure
 
-	eselect python set $PYTHON_CURRENT
+#	eselect python set $PYTHON_CURRENT
 }
 
 src_install() {
-	enable_cmake-utils_src_install
 	cmake-utils_src_install
 	# cadabra strip binaries unless you are on OS X.
 	# So faking it to avoid outright stripping.
