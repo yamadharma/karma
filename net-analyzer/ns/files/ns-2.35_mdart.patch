@@ -1,0 +1,256 @@
+--- ns-allinone-2.35/ns-2.35/mdart/mdart_adp.cc	2010-05-10 02:28:41.000000000 +0400
++++ nsnam/ns-2/mdart/mdart_adp.cc	2014-12-17 06:46:24.000000000 +0300
+@@ -49,6 +49,22 @@
+ #include <mdart/mdart.h>
+ #include <mdart/mdart_function.h>
+ 
++// Helper function
++static nsaddr_t mdart_hash(nsaddr_t id) {
++        bitset<ADDR_SIZE> tempAddress_ (id);
++        bitset<ADDR_SIZE> address_;
++        for(unsigned int i=0; i<ADDR_SIZE; i++) {
++                if (tempAddress_.test(i)) {
++                        address_.set(ADDR_SIZE - 1 - i);
++                }
++        }
++        address_.flip(ADDR_SIZE - 1);
++        nsaddr_t temp = (nsaddr_t) address_.to_ulong();
++#ifdef DEBUG
++        fprintf(stdout, "\thash = %s\n", bitString(temp));
++#endif
++        return temp;
++}
+ 
+ 
+ //------------------------------------------------------------------------------
+@@ -105,7 +121,7 @@ void ADP::sendDarq(nsaddr_t reqId, int r
+ #ifdef DEBUG_ADP
+ 	fprintf(stdout, "%.9f\tADP::sendDarq(%d)\t\t\tin node %d\twith address %s\n", CURRENT_TIME, reqId, mdart_->id_, bitString(mdart_->address_));
+ #endif
+-	nsaddr_t dstAdd_ = hash(reqId);
++	nsaddr_t dstAdd_ = mdart_hash(reqId);
+ #ifdef DEBUG_ADP
+ 	fprintf(stdout, "\tsending darq for node %s\n", bitString(dstAdd_));
+ #endif
+@@ -393,7 +409,7 @@ void ADP::sendDaup() {
+ 	fprintf(stdout, "%.9f\tMDART::sendDaup()\t\t\t\tin node %d\twith address %s\n", CURRENT_TIME, mdart_->id_, bitString(mdart_->address_));
+ //	printDHT();
+ #endif
+-	nsaddr_t dstAdd_ = hash(mdart_->id_);
++	nsaddr_t dstAdd_ = mdart_hash(mdart_->id_);
+ #ifdef DEBUG_ADP
+ 	fprintf(stdout, "\tsending daup for node  %s\n", bitString(dstAdd_));
+ 	mdart_->routingTable_->print();
+diff -Naurp ns-allinone-2.35/ns-2.35/mdart/mdart.cc nsnam/ns-2/mdart/mdart.cc
+--- ns-allinone-2.35/ns-2.35/mdart/mdart.cc	2010-05-10 02:28:41.000000000 +0400
++++ nsnam/ns-2/mdart/mdart.cc	2014-12-17 06:46:24.000000000 +0300
+@@ -100,7 +100,7 @@ inline static void macFailedCallback(Pac
+ // MDART timer 
+ //------------------------------------------------------------------------------
+ void MDARTTimer::handle(Event*) {
+-//#ifdef DEBUG
++//#ifdef DEBUG_MDART_GENERAL
+ //	fprintf(stdout, "%.9f\tMDARTTimer::handle\t\t\tin node %d\twith address %s\n", CURRENT_TIME, mdart_->id_, bitString(mdart_->address_));
+ //#endif
+ 	double interval_ = NDP_MIN_HELLO_INTERVAL + ((NDP_MAX_HELLO_INTERVAL - NDP_MIN_HELLO_INTERVAL) * Random::uniform());
+@@ -144,7 +144,7 @@ MDART::MDART(nsaddr_t id) : Agent(PT_MDA
+ //	MDART::lookupTable_ [id_] = address_;
+ 	// dht
+ //	lookupTableAddEntry(id_, address_);
+-// #ifdef DEBUG
++// #ifdef DEBUG_MDART_GENERAL
+ // 	fprintf(stdout, "%.9f\tMDART::MDART()\t\t\t\tin node %d\twith address %s\n", CURRENT_TIME, id_, bitAddress_.to_string().c_str());
+ // #endif
+ 	mdartTimer_ = new MDARTTimer(this);
+@@ -160,7 +160,7 @@ MDART::MDART(nsaddr_t id) : Agent(PT_MDA
+ 
+ 
+ MDART::~MDART() {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 	fprintf(stdout, "%.9f\tMDART::~MDART()\t\t\t\tin node %d\twith address %s\n", CURRENT_TIME, id_, bitString(address_));
+ #endif
+ 	delete mdartTimer_;
+@@ -170,7 +170,7 @@ MDART::~MDART() {
+ 
+ 
+ int MDART::command(int argc, const char* const* argv) {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 			fprintf(stdout, "%.9f\tMDART::command()\t\t\tin node %d\twith address %s\n", CURRENT_TIME, id_, bitString(address_));
+ #endif
+ 	if (argc == 2) {
+@@ -184,7 +184,7 @@ int MDART::command(int argc, const char*
+ 				logtarget_->pt_->dump();
+ 			}
+ 			else {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 				fprintf(stdout, "%f_ %d_ If you want to print the routing table size you must create a trace file in your tcl script", CURRENT_TIME, address_);
+ #endif
+ 			}
+@@ -196,7 +196,7 @@ int MDART::command(int argc, const char*
+ 				logtarget_->pt_->dump();
+ 			}
+ 			else {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 				fprintf(stdout, "%f_ %d_ If you want to print the neighbor degree you must create a trace file in your tcl script", CURRENT_TIME, address_);
+ #endif
+ 			}
+@@ -208,7 +208,7 @@ int MDART::command(int argc, const char*
+ 				logtarget_->pt_->dump();
+ 			}
+ 			else {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 				fprintf(stdout, "%f_ %d_ If you want to print the real neighbor degree you must create a trace file in your tcl script", CURRENT_TIME, address_);
+ #endif
+ 			}
+@@ -277,7 +277,7 @@ int MDART::command(int argc, const char*
+ 				}
+ 			}
+ 			else {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 				fprintf(stdout, "%f_ %d_ If you want to print the lookup table you must create a trace file in your tcl script", CURRENT_TIME, address_);
+ #endif
+ 			}
+@@ -294,7 +294,7 @@ int MDART::command(int argc, const char*
+ 				}
+ 			}
+ 			else {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 				fprintf(stdout, "%f_ %d_ If you want to print the lookup table you must create a trace file in your tcl script", CURRENT_TIME, address_);
+ #endif
+ 			}
+@@ -351,7 +351,7 @@ int MDART::command(int argc, const char*
+ // Packet routines
+ //------------------------------------------------------------------------------
+ void MDART::recv(Packet* recvPkt_, Handler* h) {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 	fprintf(stdout, "%.9f\tMDART::recv()\t\t\t\tin node %d\twith address %s\n", CURRENT_TIME, id_, bitString(address_));
+ #endif
+ 	struct hdr_cmn* ch = HDR_CMN(recvPkt_);
+@@ -562,7 +562,7 @@ void MDART::forward(Packet* sendPkt_) {
+ 
+ 
+ void MDART::recvMDART(Packet* recvPkt_) {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 	fprintf(stdout, "%.9f\t%s\t\t\tin node %d\twith address %s\n",  CURRENT_TIME, __FUNCTION__, id_, bitString(address_));
+ #endif
+ 	struct hdr_mdart* recvPktRh_ = HDR_MDART(recvPkt_);
+@@ -598,7 +598,7 @@ void MDART::recvMDART(Packet* recvPkt_)
+ 			idp_->recvReplyInfo(recvPkt_);
+ 			break;*/
+ 		default:
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 			fprintf(stderr, "!!!\tinvalid MDART type (%x)\n", recvPktRh_->type_);
+ #endif
+ 			exit(1);
+@@ -622,7 +622,7 @@ void MDART::lookupTableRmEntry(nsaddr_t
+ }
+ 
+ void MDART::lookupTableAddEntry(nsaddr_t uid, nsaddr_t address) {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 	fprintf(stdout, "%.9f\tMDART::lookupTableAddEntry(%d, %s)\tin node %d\twith address %s\n", CURRENT_TIME, uid, bitString(address), id_, bitString(address_));
+ #endif
+ 	MDART::lookupTable_[uid] = address;
+diff -Naurp ns-allinone-2.35/ns-2.35/mdart/mdart_function.h nsnam/ns-2/mdart/mdart_function.h
+--- ns-allinone-2.35/ns-2.35/mdart/mdart_function.h	2010-05-10 02:28:41.000000000 +0400
++++ nsnam/ns-2/mdart/mdart_function.h	2014-12-18 01:16:08.000000000 +0300
+@@ -69,12 +69,14 @@
+ 
+ #include <mdart/mdart_packet.h>
+ 
++// use of stl is pervasive in mdart code
++using namespace std;
+ 
+ 
+ //------------------------------------------------------------------------------
+ // Defining debug facilities
+ //------------------------------------------------------------------------------
+-//#define DEBUG
++//#define DEBUG_MDART_GENERAL
+ //#define DEBUG_PACKET_FORWARDING
+ //#define DEBUG_ADDRESS_ALLOCATION
+ //#define DEBUG_NDP
+diff -Naurp ns-allinone-2.35/ns-2.35/mdart/mdart_ndp.cc nsnam/ns-2/mdart/mdart_ndp.cc
+--- ns-allinone-2.35/ns-2.35/mdart/mdart_ndp.cc	2010-05-10 02:28:41.000000000 +0400
++++ nsnam/ns-2/mdart/mdart_ndp.cc	2014-12-17 06:46:24.000000000 +0300
+@@ -205,13 +205,13 @@ void NDP::startNeighborTimer() {
+  * NDP neighbor list functions
+  ******************************************************************************/
+ Neighbor* NDP::neighborLookup(nsaddr_t id) {
+-// #ifdef DEBUG
++// #ifdef DEBUG_MDART_GENERAL
+ // 	fprintf(stdout, "%.9f\tNDP::neighborLookup(%d)\t\t\tin node %d\twith address %s\n", CURRENT_TIME, id, mdart_->id_, bitString(mdart_->address_));
+ // #endif
+ 	neighborSet::iterator neighbor_;
+ 	for (neighbor_ = neighborSet_->begin(); neighbor_ != neighborSet_->end(); ++neighbor_) {
+ 		if((*neighbor_)->id() == id) {
+-// #ifdef DEBUG
++// #ifdef DEBUG_MDART_GENERAL
+ // 			fprintf(stdout, "\tId found\n");
+ // #endif
+ 			return (*neighbor_);
+@@ -284,14 +284,14 @@ void NDP::neighborPurge(void) {
+ 
+ /*	neighborSet::iterator neighbor_;
+ 	for (neighbor_ = neighborSet_->begin(); neighbor_ != neighborSet_->end(); ++neighbor_) {
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+ 			fprintf(stdout, "\tNeighbor id = %d\texpire = %.9f\n", (*neighbor_)->id_, (*neighbor_)->expire());
+ #endif
+ 		if((*neighbor_)->expire() <= now) {
+ //			mdart_->routingTable_->purge((*neighbor_)->id_);
+ 			neighborSet_->erase(neighbor_);
+ 			delete (*neighbor_);
+-#ifdef DEBUG
++#ifdef DEBUG_MDART_GENERAL
+  			fprintf(stdout, "\tNeighbor purged\n");
+ #endif
+ 		}
+diff -Naurp ns-allinone-2.35/ns-2.35/mdart/mdart_table.cc nsnam/ns-2/mdart/mdart_table.cc
+--- ns-allinone-2.35/ns-2.35/mdart/mdart_table.cc	2011-10-03 02:32:34.000000000 +0400
++++ nsnam/ns-2/mdart/mdart_table.cc	2014-12-17 06:46:24.000000000 +0300
+@@ -324,7 +324,7 @@ nsaddr_t RoutingTable::networkId(u_int32
+ }
+ 
+ u_int32_t RoutingTable::hopNumber(u_int32_t levelSibling) {
+-//#ifdef DEBUG
++//#ifdef DEBUG_MDART_GENERAL
+ //	fprintf(stdout, "%.9f\tRoutingTable::cost(%d)\t\t\tin node %d\twith address %s.\n", CURRENT_TIME, levelSibling, mdart_->id(), bitString(mdart_->address()));
+ //#endif
+ 	u_int32_t hopNumber_ = INFINITO;
+@@ -333,7 +333,7 @@ u_int32_t RoutingTable::hopNumber(u_int3
+ 		if ((*itEntry_)->hopNumber() < hopNumber_)
+ 			hopNumber_ = (*itEntry_)->hopNumber();
+ 	}
+-//#ifdef DEBUG
++//#ifdef DEBUG_MDART_GENERAL
+ //	fprintf(stdout, "\tCost is %d.\n", cost_);
+ //#endif
+ 	return hopNumber_;
+@@ -346,14 +346,14 @@ double RoutingTable::etxMetric(u_int32_t
+ 		if ((*itEntry_)->etxMetric() < etxMetric_)
+ 			etxMetric_ = (*itEntry_)->etxMetric();
+ 	}
+-//#ifdef DEBUG
++//#ifdef DEBUG_MDART_GENERAL
+ //	fprintf(stdout, "\tCost is %d.\n", cost_);
+ //#endif
+ 	return etxMetric_;
+ }
+ 
+ bitset<ADDR_SIZE> RoutingTable::routeLog(u_int32_t levelSibling) {
+-//#ifdef DEBUG
++//#ifdef DEBUG_MDART_GENERAL
+ //	fprintf(stdout, "%.9f\tRoutingTable::routeLog(%d)\t\t\tin node %d\twith address %s.\n", CURRENT_TIME, levelSibling, mdart_->id(), bitString(mdart_->address()));
+ //#endif
+ 	bitset<ADDR_SIZE> routeLog_;

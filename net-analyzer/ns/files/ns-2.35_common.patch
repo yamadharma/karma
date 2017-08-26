@@ -1,0 +1,597 @@
+diff -Naurp ns-allinone-2.35/ns-2.35/common/agent.cc nsnam/ns-2/common/agent.cc
+--- ns-allinone-2.35/ns-2.35/common/agent.cc	2010-03-08 08:54:49.000000000 +0300
++++ nsnam/ns-2/common/agent.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/agent.h nsnam/ns-2/common/agent.h
+--- ns-allinone-2.35/ns-2.35/common/agent.h	2011-08-26 23:26:39.000000000 +0400
++++ nsnam/ns-2/common/agent.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/bi-connector.cc nsnam/ns-2/common/bi-connector.cc
+--- ns-allinone-2.35/ns-2.35/common/bi-connector.cc	1999-10-15 02:19:22.000000000 +0400
++++ nsnam/ns-2/common/bi-connector.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/bi-connector.h nsnam/ns-2/common/bi-connector.h
+--- ns-allinone-2.35/ns-2.35/common/bi-connector.h	1998-12-08 22:09:02.000000000 +0300
++++ nsnam/ns-2/common/bi-connector.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/connector.cc nsnam/ns-2/common/connector.cc
+--- ns-allinone-2.35/ns-2.35/common/connector.cc	1998-12-09 02:43:05.000000000 +0300
++++ nsnam/ns-2/common/connector.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/connector.h nsnam/ns-2/common/connector.h
+--- ns-allinone-2.35/ns-2.35/common/connector.h	2005-09-26 12:41:55.000000000 +0400
++++ nsnam/ns-2/common/connector.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/Decapsulator.h nsnam/ns-2/common/Decapsulator.h
+--- ns-allinone-2.35/ns-2.35/common/Decapsulator.h	2010-03-08 08:54:49.000000000 +0300
++++ nsnam/ns-2/common/Decapsulator.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/encap.cc nsnam/ns-2/common/encap.cc
+--- ns-allinone-2.35/ns-2.35/common/encap.cc	2000-09-01 07:04:05.000000000 +0400
++++ nsnam/ns-2/common/encap.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/encap.h nsnam/ns-2/common/encap.h
+--- ns-allinone-2.35/ns-2.35/common/encap.h	2000-09-01 07:04:05.000000000 +0400
++++ nsnam/ns-2/common/encap.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/flags.h nsnam/ns-2/common/flags.h
+--- ns-allinone-2.35/ns-2.35/common/flags.h	2004-10-28 05:20:10.000000000 +0400
++++ nsnam/ns-2/common/flags.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/ip.cc nsnam/ns-2/common/ip.cc
+--- ns-allinone-2.35/ns-2.35/common/ip.cc	1998-08-13 03:41:05.000000000 +0400
++++ nsnam/ns-2/common/ip.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/ip.h nsnam/ns-2/common/ip.h
+--- ns-allinone-2.35/ns-2.35/common/ip.h	2006-02-22 16:32:23.000000000 +0300
++++ nsnam/ns-2/common/ip.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/ivs.cc nsnam/ns-2/common/ivs.cc
+--- ns-allinone-2.35/ns-2.35/common/ivs.cc	2000-09-01 07:04:05.000000000 +0400
++++ nsnam/ns-2/common/ivs.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/location.h nsnam/ns-2/common/location.h
+--- ns-allinone-2.35/ns-2.35/common/location.h	2000-09-01 00:11:49.000000000 +0400
++++ nsnam/ns-2/common/location.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/message.cc nsnam/ns-2/common/message.cc
+--- ns-allinone-2.35/ns-2.35/common/message.cc	1998-08-13 03:41:08.000000000 +0400
++++ nsnam/ns-2/common/message.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/message.h nsnam/ns-2/common/message.h
+--- ns-allinone-2.35/ns-2.35/common/message.h	2000-09-01 07:04:06.000000000 +0400
++++ nsnam/ns-2/common/message.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/misc.cc nsnam/ns-2/common/misc.cc
+--- ns-allinone-2.35/ns-2.35/common/misc.cc	2010-03-08 08:54:49.000000000 +0300
++++ nsnam/ns-2/common/misc.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/mobilenode.cc nsnam/ns-2/common/mobilenode.cc
+--- ns-allinone-2.35/ns-2.35/common/mobilenode.cc	2006-02-22 16:21:52.000000000 +0300
++++ nsnam/ns-2/common/mobilenode.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/mobilenode.h nsnam/ns-2/common/mobilenode.h
+--- ns-allinone-2.35/ns-2.35/common/mobilenode.h	2006-02-21 18:20:18.000000000 +0300
++++ nsnam/ns-2/common/mobilenode.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/node.cc nsnam/ns-2/common/node.cc
+--- ns-allinone-2.35/ns-2.35/common/node.cc	2002-05-30 21:44:03.000000000 +0400
++++ nsnam/ns-2/common/node.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/node.h nsnam/ns-2/common/node.h
+--- ns-allinone-2.35/ns-2.35/common/node.h	2002-05-30 21:44:03.000000000 +0400
++++ nsnam/ns-2/common/node.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/object.cc nsnam/ns-2/common/object.cc
+--- ns-allinone-2.35/ns-2.35/common/object.cc	2000-09-01 07:04:06.000000000 +0400
++++ nsnam/ns-2/common/object.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/object.h nsnam/ns-2/common/object.h
+--- ns-allinone-2.35/ns-2.35/common/object.h	2000-09-07 23:56:06.000000000 +0400
++++ nsnam/ns-2/common/object.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/packet.cc nsnam/ns-2/common/packet.cc
+--- ns-allinone-2.35/ns-2.35/common/packet.cc	2008-02-18 06:39:02.000000000 +0300
++++ nsnam/ns-2/common/packet.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/packet.h nsnam/ns-2/common/packet.h
+--- ns-allinone-2.35/ns-2.35/common/packet.h	2010-05-10 02:28:41.000000000 +0400
++++ nsnam/ns-2/common/packet.h	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/scheduler.cc nsnam/ns-2/common/scheduler.cc
+--- ns-allinone-2.35/ns-2.35/common/scheduler.cc	2009-01-01 06:42:13.000000000 +0300
++++ nsnam/ns-2/common/scheduler.cc	2015-01-16 01:12:21.000000000 +0300
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+@@ -1024,7 +1020,7 @@ class RealTimeScheduler : public Calenda
+ public:
+ 	RealTimeScheduler();
+ 	virtual void run();
+-	double start() const { return start_; }
++	virtual double start() const { return start_; }
+ 	virtual void reset();
+ protected:
+ 	void sync() { clock_ = tod(); }
+diff -Naurp ns-allinone-2.35/ns-2.35/common/scheduler.h nsnam/ns-2/common/scheduler.h
+--- ns-allinone-2.35/ns-2.35/common/scheduler.h	2007-12-04 22:59:31.000000000 +0300
++++ nsnam/ns-2/common/scheduler.h	2015-01-16 01:12:21.000000000 +0300
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+@@ -92,7 +88,7 @@ public:
+ 		return (clock_);
+ 	}
+ 	virtual void sync() {};
+-	virtual double start() {		// start time
++	virtual double start() const {		// start time
+ 		return SCHED_START;
+ 	}
+ 	virtual void reset();
+diff -Naurp ns-allinone-2.35/ns-2.35/common/scheduler-map.cc nsnam/ns-2/common/scheduler-map.cc
+--- ns-allinone-2.35/ns-2.35/common/scheduler-map.cc	2004-02-26 03:55:18.000000000 +0300
++++ nsnam/ns-2/common/scheduler-map.cc	2014-12-18 01:16:08.000000000 +0300
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- *	This product includes software developed by the Computer Systems
+- *	Engineering Group at Lawrence Berkeley Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  *
+@@ -63,7 +59,7 @@ private:
+ 				(e1->time_ == e2->time_	&& e1->uid_ < e2->uid_); // for FIFO
+ 		}
+ 	};
+-	typedef set<Event *, event_less_adapter> EventQueue_t;
++	typedef std::set<Event *, event_less_adapter> EventQueue_t;
+ 	EventQueue_t EventQueue_;	// The actual event list
+ };
+ 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/session-rtp.cc nsnam/ns-2/common/session-rtp.cc
+--- ns-allinone-2.35/ns-2.35/common/session-rtp.cc	2000-09-01 07:04:07.000000000 +0400
++++ nsnam/ns-2/common/session-rtp.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+  *
+diff -Naurp ns-allinone-2.35/ns-2.35/common/tclAppInit.cc nsnam/ns-2/common/tclAppInit.cc
+--- ns-allinone-2.35/ns-2.35/common/tclAppInit.cc	2008-02-18 06:39:02.000000000 +0300
++++ nsnam/ns-2/common/tclAppInit.cc	2014-12-17 06:45:01.000000000 +0300
+@@ -22,15 +22,23 @@ extern EmbeddedTcl et_ns_ptypes;
+ 
+ /* MSVC requires this global var declaration to be outside of 'extern "C"' */
+ #ifdef MEMDEBUG_SIMULATIONS
++#if defined(_MSC_VER) 
+ #include "mem-trace.h"
+ MemTrace *globalMemTrace;
+ #endif
++#endif
+ 
+ #define NS_BEGIN_EXTERN_C	extern "C" {
+ #define NS_END_EXTERN_C		}
+ 
+ NS_BEGIN_EXTERN_C
+ 
++/* declaration compatible with clang++ and g++ */
++#if !defined(_MSC_VER) 
++#include "mem-trace.h"
++MemTrace *globalMemTrace;
++#endif
++
+ #ifdef HAVE_FENV_H
+ #include <fenv.h>
+ #endif /* HAVE_FENV_H */
+diff -Naurp ns-allinone-2.35/ns-2.35/common/tkAppInit.cc nsnam/ns-2/common/tkAppInit.cc
+--- ns-allinone-2.35/ns-2.35/common/tkAppInit.cc	2007-08-15 09:49:13.000000000 +0400
++++ nsnam/ns-2/common/tkAppInit.cc	2015-02-05 04:22:28.000000000 +0300
+@@ -30,15 +30,23 @@ extern EmbeddedTcl et_tk;
+ 
+ /* MSVC requires this global var declaration to be outside of 'extern "C"' */
+ #ifdef MEMDEBUG_SIMULATIONS
++#if defined(_MSC_VER)
+ #include "mem-trace.h"
+ MemTrace *globalMemTrace;
+ #endif
++#endif
+ 
+ #define NS_BEGIN_EXTERN_C	extern "C" {
+ #define NS_END_EXTERN_C		}
+ 
+ NS_BEGIN_EXTERN_C
+ 
++/* declaration compatible with clang++ and g++ */
++#if !defined(_MSC_VER)
++#include "mem-trace.h"
++MemTrace *globalMemTrace;
++#endif
++
+ #ifdef HAVE_FENV_H
+ #include <fenv.h>
+ #endif /* HAVE_FENV_H */
+@@ -62,14 +70,14 @@ extern int		Tktest_Init _ANSI_ARGS_((Tcl
+ void loadbitmaps(Tcl_Interp* tcl)
+ {
+ 	Tk_DefineBitmap(tcl, Tk_GetUid("play"),
+-			play_bits, play_width, play_height);
++			(char *) play_bits, play_width, play_height);
+ 	Tk_DefineBitmap(tcl, Tk_GetUid("stop"),
+-			stop_bits, stop_width, stop_height);
++			(char *) stop_bits, stop_width, stop_height);
+ 
+ 	Tk_DefineBitmap(tcl, Tk_GetUid("rewind"),
+-			rewind_bits, rewind_width, rewind_height);
++			(char *) rewind_bits, rewind_width, rewind_height);
+ 	Tk_DefineBitmap(tcl, Tk_GetUid("ff"),
+-			ff_bits, ff_width, ff_height);
++			(char *) ff_bits, ff_width, ff_height);
+ }
+ 
+ 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/ttl.cc nsnam/ns-2/common/ttl.cc
+--- ns-allinone-2.35/ns-2.35/common/ttl.cc	1998-08-13 03:41:24.000000000 +0400
++++ nsnam/ns-2/common/ttl.cc	2012-05-07 06:30:36.000000000 +0400
+@@ -11,11 +11,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the MASH Research
+- * 	Group at the University of California Berkeley.
+- * 4. Neither the name of the University nor of the Research Group may be
++ * 3. Neither the name of the University nor of the Research Group may be
+  *    used to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 
+diff -Naurp ns-allinone-2.35/ns-2.35/common/win32.c nsnam/ns-2/common/win32.c
+--- ns-allinone-2.35/ns-2.35/common/win32.c	2006-02-21 18:20:18.000000000 +0300
++++ nsnam/ns-2/common/win32.c	2012-05-07 06:30:36.000000000 +0400
+@@ -10,11 +10,7 @@
+  * 2. Redistributions in binary form must reproduce the above copyright
+  *    notice, this list of conditions and the following disclaimer in the
+  *    documentation and/or other materials provided with the distribution.
+- * 3. All advertising materials mentioning features or use of this software
+- *    must display the following acknowledgement:
+- * 	This product includes software developed by the Network Research
+- * 	Group at Lawrence Berkeley National Laboratory.
+- * 4. Neither the name of the University nor of the Laboratory may be used
++ * 3. Neither the name of the University nor of the Laboratory may be used
+  *    to endorse or promote products derived from this software without
+  *    specific prior written permission.
+  * 

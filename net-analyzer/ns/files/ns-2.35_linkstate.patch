@@ -1,0 +1,53 @@
+diff -Naurp ns-allinone-2.35/ns-2.35/linkstate/ls.h nsnam/ns-2/linkstate/ls.h
+--- ns-allinone-2.35/ns-2.35/linkstate/ls.h	2010-03-08 08:54:51.000000000 +0300
++++ nsnam/ns-2/linkstate/ls.h	2014-12-18 01:16:08.000000000 +0300
+@@ -105,9 +105,9 @@ enum ls_message_type_t {
+ };
+ 
+ template <class _Tp>
+-class LsList : public list<_Tp> {
++class LsList : public std::list<_Tp> {
+ public:
+-	typedef list<_Tp> baseList;
++	typedef std::list<_Tp> baseList;
+ 	LsList() : baseList() {}
+ 	LsList(const _Tp& x) : baseList(1, x) {}
+ 	void eraseAll() { 
+@@ -119,22 +119,22 @@ public:
+ };
+ 
+ template<class Key, class T>
+-class LsMap : public map<Key, T, less<Key> > {
++class LsMap : public std::map<Key, T, std::less<Key> > {
+ public:
+-	typedef less<Key> less_key;
+-	typedef map<Key, T, less_key> baseMap;
++	typedef std::less<Key> less_key;
++	typedef std::map<Key, T, less_key> baseMap;
+ 	LsMap() : baseMap() {}
+ 
+ 	// this next typedef of iterator seems extraneous but is required by gcc-2.96
+-	typedef typename map<Key, T, less<Key> >::iterator iterator;
+-	typedef pair<iterator, bool> pair_iterator_bool;
++	typedef typename std::map<Key, T, std::less<Key> >::iterator iterator;
++	typedef std::pair<iterator, bool> pair_iterator_bool;
+ 	iterator insert(const Key & key, const T & item) {
+ 		typename baseMap::value_type v(key, item);
+ 		pair_iterator_bool ib = baseMap::insert(v);
+ 		return ib.second ? ib.first : baseMap::end();
+ 	}
+ 
+-	void eraseAll() { erase(baseMap::begin(), baseMap::end()); }
++	void eraseAll() { this->erase(baseMap::begin(), baseMap::end()); }
+ 	T* findPtr(Key key) {
+ 		iterator it = baseMap::find(key);
+ 		return (it == baseMap::end()) ? (T *)NULL : &((*it).second);
+@@ -455,7 +455,7 @@ private:
+    LsMessageHistory 
+ */
+ typedef LsList<u_int32_t> LsMessageIdList;
+-typedef less<int> less_node_id;
++typedef std::less<int> less_node_id;
+ class LsMessageHistory : public LsMap<int, u_int32_t> {
+ public:
+ 	// isNewMessage, note: it saves this one in the history as well

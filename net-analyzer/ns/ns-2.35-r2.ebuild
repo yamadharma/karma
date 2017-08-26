@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-analyzer/ns/ns-2.31.ebuild,v 1.4 2008/09/03 07:36:41 opfer Exp $
 
-EAPI=4
+EAPI=5
 
 inherit eutils toolchain-funcs flag-o-matic autotools
 
@@ -15,28 +15,49 @@ SLOT="0"
 #KEYWORDS="~ppc ~sparc x86 amd64"
 IUSE="doc debug"
 
-RDEPEND="=dev-lang/tcl-8.5*
-		=dev-lang/tk-8.5*
-		>=dev-tcltk/otcl-1.11
-		>=dev-tcltk/tclcl-1.17
-		net-libs/libpcap
-		debug? (	=dev-lang/perl-5*
-					>=sci-visualization/xgraph-12.1
-					>=dev-libs/dmalloc-4.8.2
-					>=dev-tcltk/tcl-debug-2.0 )"
+S=${WORKDIR}/${PN}-allinone-${PV}
+
+RDEPEND="!dev-tcltk/otcl
+	!dev-tcltk/tclcl
+	net-libs/libpcap
+	debug? (	=dev-lang/perl-5*
+			>=sci-visualization/xgraph-12.1
+			>=dev-libs/dmalloc-4.8.2
+			>=dev-tcltk/tcl-debug-2.0 )"
 DEPEND="${RDEPEND}
 		doc? (	virtual/latex-base
 				virtual/ghostscript
 				dev-tex/latex2html )"
 
 src_prepare() {
-	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/indep-utils/model-gen/Makefile"
-
+	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/${PN}-${PV}/indep-utils/model-gen/Makefile" || die
+    	
+	epatch ${FILESDIR}/ns-2.35_mdart.patch
+	epatch ${FILESDIR}/ns-2.35_linkstate.patch
+	epatch ${FILESDIR}/ns-2.35_bitmap.patch
+	epatch ${FILESDIR}/ns-2.35_common.patch
+	
 	epatch ${FILESDIR}/tcltk-conf.patch
+	cd ${S}/${PN}-${PV}
 	eautoreconf
 }
 
+
 src_compile() {
+	local myconf
+	local mytclver=""
+	local i
+
+	tc-export CC CXX
+
+	# correctness is more important than speed
+	replace-flags -Os -O2
+	replace-flags -O3 -O2
+
+	./install
+}
+
+src_compile_() {
 	local myconf
 	local mytclver=""
 	local i
