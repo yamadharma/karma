@@ -1,0 +1,104 @@
+diff -Nuar qtiplot-0.9.8.9.orig/qtiplot/src/matrix/MatrixValuesDialog.cpp qtiplot-0.9.8.9/qtiplot/src/matrix/MatrixValuesDialog.cpp
+--- qtiplot-0.9.8.9.orig/qtiplot/src/matrix/MatrixValuesDialog.cpp	2010-09-27 10:12:45.000000000 +0300
++++ qtiplot-0.9.8.9/qtiplot/src/matrix/MatrixValuesDialog.cpp	2017-09-29 09:23:03.930666582 +0300
+@@ -70,7 +70,7 @@
+ 	endCol->setRange(1, INT_MAX);
+ 	gl1->addWidget(endCol, 1, 3);
+ 
+-	functions = new QComboBox(false);
++	functions = new QComboBox();
+ 	functions->addItems(scriptEnv->mathFunctions());
+ 	btnAddFunction = new QPushButton(tr( "Add &Function" ));
+ 	btnAddCell = new QPushButton(tr( "Add Ce&ll" ));
+diff -Nuar qtiplot-0.9.8.9.orig/qtiplot/src/plot2D/dialogs/LayerDialog.cpp qtiplot-0.9.8.9/qtiplot/src/plot2D/dialogs/LayerDialog.cpp
+--- qtiplot-0.9.8.9.orig/qtiplot/src/plot2D/dialogs/LayerDialog.cpp	2010-09-27 10:12:46.000000000 +0300
++++ qtiplot-0.9.8.9/qtiplot/src/plot2D/dialogs/LayerDialog.cpp	2017-09-29 09:21:22.722704124 +0300
+@@ -69,14 +69,14 @@
+ 	QGridLayout *gl2 = new QGridLayout(gb2);
+ 	gl2->addWidget(new QLabel(tr("Horizontal")), 0, 0);
+ 
+-	alignHorBox = new QComboBox( false );
++	alignHorBox = new QComboBox();
+ 	alignHorBox->insertItem( tr( "Center" ) );
+ 	alignHorBox->insertItem( tr( "Left" ) );
+ 	alignHorBox->insertItem( tr( "Right" ) );
+ 	gl2->addWidget(alignHorBox, 0, 1);
+ 
+ 	gl2->addWidget(new QLabel( tr( "Vertical" )), 1, 0 );
+-	alignVertBox = new QComboBox( false );
++	alignVertBox = new QComboBox();
+ 	alignVertBox->insertItem( tr( "Center" ) );
+ 	alignVertBox->insertItem( tr( "Top" ) );
+ 	alignVertBox->insertItem( tr( "Bottom" ) );
+diff -Nuar qtiplot-0.9.8.9.orig/qtiplot/src/plot2D/dialogs/PlotDialog.cpp qtiplot-0.9.8.9/qtiplot/src/plot2D/dialogs/PlotDialog.cpp
+--- qtiplot-0.9.8.9.orig/qtiplot/src/plot2D/dialogs/PlotDialog.cpp	2011-09-13 14:50:34.000000000 +0300
++++ qtiplot-0.9.8.9/qtiplot/src/plot2D/dialogs/PlotDialog.cpp	2017-09-29 09:21:30.606298066 +0300
+@@ -954,7 +954,7 @@
+ 	l4->setBuddy(boxFirstColor);
+ 	gl2->addWidget(l4, 0, 0);
+ 
+-	boxPiePattern = new PatternBox(false);
++	boxPiePattern = new PatternBox();
+ 	gl2->addWidget(boxPiePattern, 1, 1);
+ 	gl2->setRowStretch(2, 1);
+ 
+@@ -1337,7 +1337,7 @@
+ 	hb->addWidget(boxCurveOpacity);
+ 	gl2->addLayout(hb, 1, 1);
+ 
+-	boxPattern = new PatternBox(false);
++	boxPattern = new PatternBox();
+ 	gl2->addWidget(boxPattern, 2, 1);
+ 	
+ 	QLabel *l6 = new QLabel("&" + tr("Pattern"));
+@@ -2126,17 +2126,17 @@
+     QGridLayout *gl3 = new QGridLayout(GroupBoxVectEnd);
+     labelXEnd = new QLabel(tr( "X End" ));
+     gl3->addWidget(labelXEnd, 0, 0);
+-	xEndBox = new QComboBox(false);
++	xEndBox = new QComboBox();
+     gl3->addWidget(xEndBox, 0, 1);
+ 
+ 	labelYEnd = new QLabel(tr( "Y End" ));
+     gl3->addWidget(labelYEnd, 1, 0);
+-	yEndBox = new  QComboBox( false);
++	yEndBox = new  QComboBox();
+     gl3->addWidget(yEndBox, 1, 1);
+ 
+ 	labelPosition = new QLabel(tr( "Position" ));
+     gl3->addWidget(labelPosition, 2, 0);
+-	vectPosBox = new  QComboBox( false);
++	vectPosBox = new  QComboBox();
+ 	vectPosBox->addItem(tr("Tail"));
+ 	vectPosBox->addItem(tr("Middle"));
+ 	vectPosBox->addItem(tr("Head"));
+diff -Nuar qtiplot-0.9.8.9.orig/qtiplot/src/table/SetColValuesDialog.cpp qtiplot-0.9.8.9/qtiplot/src/table/SetColValuesDialog.cpp
+--- qtiplot-0.9.8.9.orig/qtiplot/src/table/SetColValuesDialog.cpp	2010-09-27 10:12:49.000000000 +0300
++++ qtiplot-0.9.8.9/qtiplot/src/table/SetColValuesDialog.cpp	2017-09-29 09:23:56.721831816 +0300
+@@ -72,12 +72,12 @@
+ 	hbox1->addWidget(end);
+ 
+ 	QGridLayout *gl1 = new QGridLayout();
+-	functions = new QComboBox(false);
++	functions = new QComboBox();
+ 	functions->addItems(muParserScripting::functionsList(true));
+ 	gl1->addWidget(functions, 0, 0);
+ 	btnAddFunction = new QPushButton(tr( "Add function" ));
+ 	gl1->addWidget(btnAddFunction, 0, 1);
+-	boxColumn = new QComboBox(false);
++	boxColumn = new QComboBox();
+ 	gl1->addWidget(boxColumn, 1, 0);
+ 	btnAddCol = new QPushButton(tr( "Add column" ));
+ 	gl1->addWidget(btnAddCol, 1, 1);
+diff -Nuar qtiplot-0.9.8.9.orig/qtiplot/src/table/TableDialog.cpp qtiplot-0.9.8.9/qtiplot/src/table/TableDialog.cpp
+--- qtiplot-0.9.8.9.orig/qtiplot/src/table/TableDialog.cpp	2011-08-31 21:11:20.000000000 +0300
++++ qtiplot-0.9.8.9/qtiplot/src/table/TableDialog.cpp	2017-09-29 09:25:51.680808639 +0300
+@@ -127,7 +127,7 @@
+     labelFormat = new QLabel(tr( "Format:" ));
+  	gl1->addWidget(labelFormat, 2, 0);
+ 
+-    formatBox = new QComboBox(false);
++    formatBox = new QComboBox();
+     gl1->addWidget(formatBox, 2, 1);
+ 
+ 	labelNumeric = new QLabel(tr( "Precision:" ));

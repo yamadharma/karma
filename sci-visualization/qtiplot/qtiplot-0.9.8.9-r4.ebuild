@@ -79,8 +79,11 @@ PATCHES=(
 	"${FILESDIR}"/${P}-PyQt4-4.11.3.patch
 	"${FILESDIR}"/${P}-gsl-2.patch
 	"${FILESDIR}"/${P}-sip-4.19.patch
-	"${FILESDIR}"/${P}-ftbfs-gcc-6.patch
+	"${FILESDIR}"/${P}-QtItemFlags.patch
+	"${FILESDIR}"/${P}-bool-pointer.patch
 )
+
+	#"${FILESDIR}"/${P}-ftbfs-gcc-6.patch
 
 RESTRICT="!bindist? ( bindist )"
 
