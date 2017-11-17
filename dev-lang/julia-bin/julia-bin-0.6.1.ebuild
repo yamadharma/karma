@@ -11,8 +11,8 @@ inherit elisp-common eutils multilib pax-utils toolchain-funcs
 DESCRIPTION="High-performance programming language for technical computing"
 HOMEPAGE="http://julialang.org/"
 SRC_URI="
-	x86? ( https://julialang.s3.amazonaws.com/bin/linux/x86/0.5/julia-${PV}-linux-i686.tar.gz )
-	amd64? ( https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-${PV}-linux-x86_64.tar.gz )
+	x86? ( https://julialang-s3.julialang.org/bin/linux/x86/0.6/julia-${PV}-linux-i686.tar.gz )
+	amd64? ( https://julialang-s3.julialang.org/bin/linux/x64/0.6/julia-${PV}-linux-x86_64.tar.gz )
 "
 #S=$WORKDIR/${P}
 GITHASH=6445c82d00
@@ -39,7 +39,7 @@ RDEPEND="
 	sci-libs/spqr:0=
 	sci-libs/umfpack:0=
 	sci-mathematics/glpk:0=
-	>=sys-devel/llvm-3.5:0=
+	sys-devel/llvm
 	>=sys-libs/libunwind-1.1:7=
 	sys-libs/readline:0=
 	sys-libs/zlib:0=
