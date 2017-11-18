@@ -16,15 +16,12 @@ if [[ ${PV} = *.9999* ]]; then
         EGIT_REPO_URI="https://github.com/kpeeters/cadabra2.git"
         KEYWORDS="~amd64 ~x86"
 else
-	inherit git-r3
-        EGIT_REPO_URI="https://github.com/kpeeters/cadabra2.git"
-        EGIT_COMMIT="${PV}"
+	SRC_URI="https://github.com/kpeeters/cadabra2/archive/${PV}.tar.gz -> ${P}.tar.gz"
         KEYWORDS="~amd64 ~x86"
 fi
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
 IUSE="doc examples"
 
 CDEPEND="x11-libs/gtk+:3
@@ -63,10 +60,6 @@ src_prepare() {
 
 src_configure() {
 	python_setup 'python3*'
-
-#        local mycmakeargs=(
-#                -DUSE_PYTHON_3=ON
-#        )
 
         cmake-utils_src_configure
 }
