@@ -1,10 +1,9 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 
 inherit eutils fdo-mime multilib python-single-r1
 
@@ -22,27 +21,32 @@ LICENSE="Mendeley-terms"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
-
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RESTRICT="fetch"
 
 DEPEND=""
-RDEPEND="${PYTHON_DEPS}
-	dev-qt/qtcore:4
-	dev-qt/qtgui:4
-	dev-qt/qtsvg:4
-	dev-qt/qtwebkit:4
-	dev-qt/qtxmlpatterns:4
+RDEPEND="
+	dev-qt/qtcore:5
+	dev-qt/qtdeclarative:5
+	dev-qt/qtgui:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtpositioning:5
+	dev-qt/qtprintsupport:5
+	dev-qt/qtsvg:5
+	dev-qt/qtwebengine:5[widgets]
+	dev-qt/qtwebkit:5
+	dev-qt/qtxml:5
+	sys-libs/zlib
+	virtual/opengl
 	x11-libs/libX11
-	"
+	${PYTHON_DEPS}"
 
 QA_PREBUILT="/opt/mendeleydesktop/.*"
 
-
-PATCHES=(
-        "${FILESDIR}/looseversion.patch"
-)
+PATCHES=( "${FILESDIR}"/${PN}-1.17.8-libdir.patch
+	"${FILESDIR}"/${PN}-1.17.8-qt5plugins.patch
+	"${FILESDIR}"/${PN}-1.17.8-unix-distro-build.patch )
 
 pkg_nofetch() {
 	elog "Please download ${A} from:"
@@ -62,23 +66,22 @@ src_unpack() {
 	fi
 }
 
-src_prepare_() {
+src_prepare() {
+	default
+
 	# remove bundled Qt libraries
 	rm -r lib/mendeleydesktop/plugins \
 		|| die "failed to remove plugin directory"
-	rm -r lib/qt || die "failed to remove qt libraries"
+	rm -r lib/qt || die
 
-	# force use of system Qt libraries
-	sed -i "s:sys\.argv\.count(\"--force-system-qt\") > 0:True:" \
-		bin/mendeleydesktop || die "failed to patch startup script"
+	# fix qt library path
+	sed -e "s:/usr/lib/qt5/plugins:${EROOT}usr/$(get_libdir)/qt5/plugins:g" \
+		-i bin/mendeleydesktop || die
 
 	# fix library paths
-	sed -i \
-		-e "s:lib/mendeleydesktop:$(get_libdir)/mendeleydesktop:g" \
-		-e "s:MENDELEY_BASE_PATH + \"/lib/\":MENDELEY_BASE_PATH + \"/$(get_libdir)/\":g" \
-		bin/mendeleydesktop || die "failed to patch library path"
-
-	default
+	sed -e "s:lib/mendeleydesktop:$(get_libdir)/mendeleydesktop:g" \
+		-e "s:MENDELEY_BASE'] + \"/lib/\":MENDELEY_BASE'] + \"/$(get_libdir)/\":g" \
+		-i bin/mendeleydesktop || die
 }
 
 src_install() {
@@ -102,22 +105,18 @@ src_install() {
 	dobin bin/*
 
 	# install libraries
-	#dolib.so lib/lib*.so*
+	dolib.so lib/lib*.so*
 
 	# install programs
-	#exeinto /opt/mendeleydesktop/$(get_libdir)/mendeleydesktop/libexec
-	#doexe lib/mendeleydesktop/libexec/*
+	exeinto /opt/mendeleydesktop/$(get_libdir)/mendeleydesktop/libexec
+	doexe lib/mendeleydesktop/libexec/*
 
 	# install shared files
-	#insinto /opt/${PN}/share
-	#doins -r share/mendeleydesktop
+	insinto /opt/${PN}/share
+	doins -r share/mendeleydesktop
 
-	dodir /opt/${PN}
-	cp -R ${S}/* ${D}/opt/${PN}
-
-	# install launch script
-	into /opt
-	make_wrapper ${PN} "/opt/${PN}/bin/${PN} --unix-distro-build"
+	# symlink launch script
+	dosym /opt/mendeleydesktop/bin/mendeleydesktop /opt/bin/mendeleydesktop
 }
 
 pkg_postinst() {
