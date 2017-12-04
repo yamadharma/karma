@@ -4,7 +4,7 @@
 
 EAPI="5"
 
-PYTHON_COMPAT=( python{3_4,3_5} )
+PYTHON_COMPAT=( python{3_4,3_5,3_6} )
 
 inherit cmake-utils texlive-common python-r1
 
@@ -53,6 +53,8 @@ src_prepare() {
 	cmake-utils_src_prepare
 	cd ${S}
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py34:COMPONENTS python:g" "{}" \;
+	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py35:COMPONENTS python:g" "{}" \;
+	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python-py36:COMPONENTS python:g" "{}" \;
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:COMPONENTS python3:COMPONENTS python:g" "{}" \;
 	# multilib
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:DESTINATION lib:DESTINATION $(get_libdir):g" "{}" \;
