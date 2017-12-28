@@ -29,7 +29,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
 
 SLOT="0"
 LICENSE="GPL-3"
-#KEYWORDS="x86 amd64"
+KEYWORDS="x86 amd64"
 IUSE="doc examples"
 
 RESTRICT=mirror
@@ -38,7 +38,7 @@ DEPEND=">=virtual/jdk-1.7
 	virtual/latex-base"
 RDEPEND=">=virtual/jre-1.7"
 
-S=${WORKDIR}/${PN}15
+S=${WORKDIR}/${PN}14
 if [[ -n ${IS_SOURCE} ]]
 then
     S_DISTRO=${S}/source/distro
