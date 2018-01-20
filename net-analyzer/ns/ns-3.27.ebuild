@@ -10,7 +10,7 @@ NSC_PV=0.5.2
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.nsnam.org"
-SRC_URI="http://www.nsnam.org/releases/ns-allinone-${PV}.tar.bz2
+SRC_URI="https://www.nsnam.org/release/ns-allinone-${PV}.tar.bz2
 	http://research.wand.net.nz/software/nsc/nsc-${NSC_PV}.tar.bz2"
 
 LICENSE="GPL-2"
