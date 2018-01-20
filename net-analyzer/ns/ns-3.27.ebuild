@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI=5
 
 inherit eutils
 
-NSC_PV=0.5.2
+NSC_PV=0.5.3
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.nsnam.org"
@@ -19,13 +19,14 @@ KEYWORDS="~x86 ~amd64"
 IUSE="doc examples"
 
 RDEPEND="dev-lang/python
-	dev-python/pygccxml"
+	dev-python/pygccxml
+	dev-python/pygraphviz"
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
 
-src_prepare() {
-	sed -i -e "s|^NSC_RELEASE_URL =.*|NSC_RELEASE_URL = \"file://${DISTDIR}\"|" src/internet-stack/wscript
-}
+#src_prepare() {
+#	sed -i -e "s|^NSC_RELEASE_URL =.*|NSC_RELEASE_URL = \"file://${DISTDIR}\"|" src/internet-stack/wscript
+#}
 
 src_configure() {
 	local myconf
