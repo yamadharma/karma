@@ -15,7 +15,7 @@ SRC_URI="
 	amd64? ( https://julialang-s3.julialang.org/bin/linux/x64/0.6/julia-${PV}-linux-x86_64.tar.gz )
 "
 #S=$WORKDIR/${P}
-GITHASH=0d7248e2ff
+GITHASH=d386e40c17
 
 LICENSE="MIT"
 SLOT="0"
