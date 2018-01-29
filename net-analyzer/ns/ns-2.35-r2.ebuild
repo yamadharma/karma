@@ -12,12 +12,13 @@ SRC_URI="mirror://sourceforge/nsnam/${PN}-allinone-${PV}.tar.gz"
 
 LICENSE="BSD as-is"
 SLOT="0"
-#KEYWORDS="~ppc ~sparc x86 amd64"
+KEYWORDS="~ppc ~sparc x86 amd64"
 IUSE="doc debug"
 
 S=${WORKDIR}/${PN}-allinone-${PV}
 
 RDEPEND="!dev-tcltk/otcl
+	!dev-tcltk/tclcl
 	!dev-tcltk/tclcl
 	net-libs/libpcap
 	debug? (	=dev-lang/perl-5*
@@ -25,12 +26,16 @@ RDEPEND="!dev-tcltk/otcl
 			>=dev-libs/dmalloc-4.8.2
 			>=dev-tcltk/tcl-debug-2.0 )"
 DEPEND="${RDEPEND}
-		doc? (	virtual/latex-base
+    	doc? (	virtual/latex-base
 				virtual/ghostscript
 				dev-tex/latex2html )"
+PDEPEND="sci-visualization/xgraph"
 
 src_prepare() {
 	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/${PN}-${PV}/indep-utils/model-gen/Makefile" || die
+
+        # dirty hack
+	sed -i -e 's/@V_CCOPT@/@V_CCOPT@ -funsigned-char/g' "${S}/nam-1.15/Makefile.in" || die
     	
 	epatch ${FILESDIR}/ns-2.35_mdart.patch
 	epatch ${FILESDIR}/ns-2.35_linkstate.patch
@@ -54,7 +59,19 @@ src_compile() {
 	replace-flags -Os -O2
 	replace-flags -O3 -O2
 
+	append-cxxflags -funsigned-char
+
 	./install
+
+	cd "${S}/${PN}-${PV}/indep-utils/dosdbell"
+	emake DFLAGS="${CFLAGS}" || die
+	cd "${S}/${PN}-${PV}/indep-utils/dosreduce"
+	${CC} ${CFLAGS} dosreduce.c -o dosreduce
+#	cd "${S}/${PN}-${PV}/indep-utils/propagation"
+#	${CXX} ${CXXFLAGS} threshold.cc -o threshold
+	cd "${S}/${PN}-${PV}/indep-utils/model-gen"
+	emake CFLAGS="${CFLAGS}" || die
+
 }
 
 src_compile_() {
@@ -88,13 +105,13 @@ src_compile_() {
 		--enable-release || die "./configure failed"
 	emake CCOPT="${CFLAGS}" || die
 
-	cd "${S}/indep-utils/dosdbell"
+	cd "${S}/${PN}-${PV}/indep-utils/dosdbell"
 	emake DFLAGS="${CFLAGS}" || die
-	cd "${S}/indep-utils/dosreduce"
+	cd "${S}/${PN}-${PV}/indep-utils/dosreduce"
 	${CC} ${CFLAGS} dosreduce.c -o dosreduce
-#	cd "${S}/indep-utils/propagation"
+#	cd "${S}/${PN}-${PV}/indep-utils/propagation"
 #	${CXX} ${CXXFLAGS} threshold.cc -o threshold
-	cd "${S}/indep-utils/model-gen"
+	cd "${S}/${PN}-${PV}/indep-utils/model-gen"
 	emake CFLAGS="${CFLAGS}" || die
 
 	if useq doc; then
@@ -105,30 +122,32 @@ src_compile_() {
 }
 
 src_install() {
+	cd ${S}/${PN}-${PV}
 	dodir /usr/bin /usr/share/man/man1 /usr/share/doc/${PF} /usr/share/ns
-	make DESTDIR="${D}" MANDEST=/usr/share/man install \
-		|| die "make install failed"
+	#make DESTDIR="${D}" MANDEST=/usr/share/man install \
+	#	|| die "make install failed"
+
 	dobin nse
 
 	dodoc BASE-VERSION COPYRIGHTS FILES HOWTO-CONTRIBUTE README VERSION
 	dohtml CHANGES.html TODO.html
 
-	cd "${S}"
+	cd "${S}"/${PN}-${PV}
 	insinto /usr/share/ns
 	doins -r tcl
 
-	cd "${S}/indep-utils/dosdbell"
+	cd "${S}/${PN}-${PV}/indep-utils/dosdbell"
 	dobin dosdbell dosdbellasim
 	newdoc README README.dosdbell
-	cd "${S}/indep-utils/dosreduce"
+	cd "${S}/${PN}-${PV}/indep-utils/dosreduce"
 	dobin dosreduce
 	newdoc README README.dosreduce
-	cd "${S}/indep-utils/cmu-scen-gen"
+	cd "${S}/${PN}-${PV}/indep-utils/cmu-scen-gen"
 	dobin cbrgen.tcl
 	newdoc README README.cbrgen
-#	cd "${S}/indep-utils/propagation"
+#	cd "${S}/${PN}-${PV}/indep-utils/propagation"
 #	dobin threshold
-	cd "${S}/indep-utils/model-gen"
+	cd "${S}/${PN}-${PV}/indep-utils/model-gen"
 	dobin http_connect http_active
 
 	if use doc; then
@@ -136,9 +155,16 @@ src_install() {
 		docinto doc
 		dodoc everything.dvi everything.ps.gz everything.html everything.pdf
 		docinto model-gen
-		cd "${S}/indep-utils/model-gen"
+		cd "${S}/${PN}-${PV}/indep-utils/model-gen"
 		dodoc *
 	fi
+
+	cd ${S}
+	rm ${S}/bin/xgraph
+	rm ${S}/bin/tclsh8.5
+	rm ${S}/bin/wish8.5
+	dobin ${S}/bin/*
+		
 }
 
 src_test() {
