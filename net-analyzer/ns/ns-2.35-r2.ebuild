@@ -19,6 +19,7 @@ S=${WORKDIR}/${PN}-allinone-${PV}
 
 RDEPEND="!dev-tcltk/otcl
 	!dev-tcltk/tclcl
+	!net-analyzer/nam
 	net-libs/libpcap
 	debug? (	=dev-lang/perl-5*
 			>=sci-visualization/xgraph-12.1
