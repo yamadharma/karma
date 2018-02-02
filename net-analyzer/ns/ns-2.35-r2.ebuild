@@ -31,6 +31,8 @@ DEPEND="${RDEPEND}
 				dev-tex/latex2html )"
 PDEPEND="sci-visualization/xgraph"
 
+OPTDEST=/opt/ns2
+
 src_prepare() {
 	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/${PN}-${PV}/indep-utils/model-gen/Makefile" || die
 
@@ -127,6 +129,8 @@ src_install() {
 	#make DESTDIR="${D}" MANDEST=/usr/share/man install \
 	#	|| die "make install failed"
 
+	dodir ${OPTDEST}/bin ${OPTDEST}/lib
+	into ${OPTDEST}
 	dobin nse
 
 	dodoc BASE-VERSION COPYRIGHTS FILES HOWTO-CONTRIBUTE README VERSION
@@ -162,12 +166,14 @@ src_install() {
 	cd ${S}
 
 	rm ${S}/bin/xgraph
-	rm ${S}/bin/tclsh8.5
-	rm ${S}/bin/wish8.5
-	rm ${S}/bin/cweave
-	rm ${S}/bin/ctangle
+#	rm ${S}/bin/tclsh8.5
+#	rm ${S}/bin/wish8.5
+#	rm ${S}/bin/cweave
+#	rm ${S}/bin/ctangle
 
+	into ${OPTDEST}
 	dobin ${S}/bin/*
+	cp -R ${S}/lib ${D}/${OPTDEST}
 		
 }
 
