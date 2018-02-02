@@ -160,9 +160,13 @@ src_install() {
 	fi
 
 	cd ${S}
+
 	rm ${S}/bin/xgraph
 	rm ${S}/bin/tclsh8.5
 	rm ${S}/bin/wish8.5
+	rm ${S}/bin/cweave
+	rm ${S}/bin/ctangle
+
 	dobin ${S}/bin/*
 		
 }
