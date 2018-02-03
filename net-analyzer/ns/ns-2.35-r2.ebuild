@@ -182,7 +182,7 @@ src_install() {
 	    echo -e "TCL_LIBRARY=${OPTDEST}/lib/tcl8.5" >> ${D}/usr/bin/$i
 	    echo -e "export TCL_LIBRARY" >> ${D}/usr/bin/$i
 	    echo -e "export PATH=${OPTDEST}/bin:\$PATH" >> ${D}/usr/bin/$i
-	    echo -e "${OPTDEST}/bin/ns \"\$@\"\n" >> ${D}/usr/bin/$i
+	    echo -e "${OPTDEST}/bin/${i} \"\$@\"\n" >> ${D}/usr/bin/$i
 	    chmod +x ${D}/usr/bin/$i
 	done
 
