@@ -178,11 +178,11 @@ src_install() {
 	# Generate links
 	for i in ns nam
 	do
-	    echo -e "#!/bin/bash\n" > ${D}/usr/bin/$i
-	    echo -e "TCL_LIBRARY=${OPTDEST}/lib/tcl8.5\n" >> ${D}/usr/bin/$i
-	    echo -e "export TCL_LIBRARY\n" >> ${D}/usr/bin/$i
-	    echo -e "export PATH=${OPTDEST}/bin:\$PATH\n" >> ${D}/usr/bin/$i
-	    echo -e "${OPTDEST}/bin/ns \"$@\"\n\n" >> ${D}/usr/bin/$i
+	    echo -e "#!/bin/bash" > ${D}/usr/bin/$i
+	    echo -e "TCL_LIBRARY=${OPTDEST}/lib/tcl8.5" >> ${D}/usr/bin/$i
+	    echo -e "export TCL_LIBRARY" >> ${D}/usr/bin/$i
+	    echo -e "export PATH=${OPTDEST}/bin:\$PATH" >> ${D}/usr/bin/$i
+	    echo -e "${OPTDEST}/bin/ns \"\$@\"\n" >> ${D}/usr/bin/$i
 	    chmod +x ${D}/usr/bin/$i
 	done
 
