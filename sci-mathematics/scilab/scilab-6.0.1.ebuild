@@ -8,7 +8,7 @@ DESCRIPTION="Scilab scientific software"
 HOMEPAGE="http://www.scilab.org"
 SLOT="0"
 IUSE=""
-#KEYWORDS="~amd64"
+KEYWORDS="~amd64"
 
 MY_PN=${PN/-bin/}
 MY_PV=${PV/_beta/-beta-}
@@ -30,7 +30,14 @@ src_install() {
         fowners root /opt/scilab
         fperms 755 /opt/scilab
 
+	use bash-completion && newbashcomp "${FILESDIR}"/"${PN}".bash_completion "${PN}"
+
+#	echo "SEARCH_DIRS_MASK=${EPREFIX}/usr/$(get_libdir)/scilab" \
+#		> 50-"${PN}"
+#	insinto /etc/revdep-rebuild && doins "50-${PN}"
+
 }
+
 
 #pkg_postrm() {
 #
