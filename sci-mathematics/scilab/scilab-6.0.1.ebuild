@@ -17,7 +17,9 @@ MY_P=${MY_PN}-${MY_PV}
 SRC_URI="http://www.scilab.org/download/${MY_PV}/${MY_PN}-${MY_PV}.bin.linux-x86_64.tar.gz"
 
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	dev-lang/tcl:8.5
+	dev-lang/tk:8.5"
 
 S=${WORKDIR}/${MY_P}
 
