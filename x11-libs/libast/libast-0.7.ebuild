@@ -16,7 +16,7 @@ RDEPEND="!sci-astronomy/ast
 	x11-libs/libICE
 	x11-libs/libSM
 	x11-libs/libX11
-	media-libs/freetype:2
+	media-libs/freetype
 	imlib? ( media-libs/imlib2 )
 	pcre? ( dev-libs/libpcre )"
 DEPEND="${RDEPEND}"
