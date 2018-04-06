@@ -31,6 +31,8 @@ src_install() {
         local dest="${D}/opt/scilab"
         mkdir -p "${dest}"
         cp -R "${WORKDIR}/scilab"*/. "${dest}" || die
+	dodir /usr/share
+	cp -R "${S}/share/"* ${D}/usr/share  || die	
 #        dosym /opt/scilab/bin/scilab /usr/bin/scilab || die
 	cd ${dest}/bin
 	for i in *
@@ -38,7 +40,7 @@ src_install() {
             dosym /opt/scilab/bin/"$i" /usr/bin/"$i"
 	done
 	cd ${S}
-        fowners root /opt/scilab
+	fowners root /opt/scilab
         fperms 755 /opt/scilab
 
 	use bash-completion && newbashcomp "${FILESDIR}"/"${PN}".bash_completion "${PN}"
