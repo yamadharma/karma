@@ -2,7 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=5
+
+inherit eutils bash-completion-r1 fdo-mime
+
 
 DESCRIPTION="Scilab scientific software"
 HOMEPAGE="http://www.scilab.org"
@@ -16,6 +19,8 @@ MY_P=${MY_PN}-${MY_PV}
 
 SRC_URI="http://www.scilab.org/download/${MY_PV}/${MY_PN}-${MY_PV}.bin.linux-x86_64.tar.gz"
 
+IUSE="bash-completion"
+
 DEPEND=""
 RDEPEND="${DEPEND}"
 
@@ -26,7 +31,13 @@ src_install() {
         local dest="${D}/opt/scilab"
         mkdir -p "${dest}"
         cp -R "${WORKDIR}/scilab"*/. "${dest}" || die
-        dosym /opt/scilab/bin/scilab /usr/bin/scilab || die
+#        dosym /opt/scilab/bin/scilab /usr/bin/scilab || die
+	cd ${dest}/bin
+	for i in *
+	do
+            dosym /opt/scilab/bin/"$i" /usr/bin/"$i"
+	done
+	cd ${S}
         fowners root /opt/scilab
         fperms 755 /opt/scilab
 
@@ -38,10 +49,12 @@ src_install() {
 
 }
 
+pkg_postinst() {
+	fdo-mime_mime_database_update
+}
 
-#pkg_postrm() {
-#
-#        rm -rf "/opt/${MY_PN}"
-#        rm "/usr/bin/${MY_PN}"
-#
-#}
+
+pkg_postrm() {
+	fdo-mime_mime_database_update
+}
+
