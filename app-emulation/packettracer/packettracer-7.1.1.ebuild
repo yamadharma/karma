@@ -8,14 +8,14 @@ inherit eutils fdo-mime multilib
 
 DESCRIPTION="Cisco's Packet Tracer"
 HOMEPAGE="https://www.netacad.com"
-SRC_URI="amd64? ( PacketTracer70_64bit_linux.tar.gz )
-	x86? ( PacketTracer70_32bit_linux.tar.gz )"
+SRC_URI="Packet_Tracer_${PV}_for_Linux_64_bit.tar.gz"
 
-RESTRICT="fetch mirror strip"
+
+RESTRICT="fetch mirror strip userpriv"
 LICENSE="Cisco_EULA"
 
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE="doc online-exam"
 
 DEPEND="app-arch/gzip"
@@ -24,7 +24,7 @@ RDEPEND="
 	doc? ( www-plugins/adobe-flash  )
 "
 
-S=${WORKDIR}/PacketTracer70
+S=${WORKDIR}
 
 pkg_nofetch () {
 	ewarn "To fetch sources you need cisco account which is available in case"
@@ -33,7 +33,7 @@ pkg_nofetch () {
 	einfo ""
 	einfo "After that point your browser at http://www.netacad.net/"
 	einfo "Login, go to PacketTracer image and download:"
-	einfo "Cisco Packet Tracer 7.0 for Linux - Ubuntu installation - Student version"
+	einfo "Cisco Packet Tracer ${PV} for Linux - Ubuntu installation"
 	einfo "file and save it to ${DISTDIR}"
 }
 
@@ -56,8 +56,9 @@ src_install () {
 
 	doicon "${S}/art/"{app,pka,pkt,pkz}.{ico,png}
 
-	make_wrapper packettracer "./bin/PacketTracer7" "${PKT_HOME}" "${PKT_HOME}/lib"
-	make_desktop_entry "packettracer"  "PacketTracer 7.0 (Student)" "app" "Education;Emulator;System"
+	# make_wrapper packettracer "./bin/PacketTracer7" "${PKT_HOME}" "${PKT_HOME}/lib"
+	dosym "${D}${PKT_HOME}/bin/PacketTracer7" /usr/bin/packettracer
+	make_desktop_entry "packettracer"  "PacketTracer 7.1 (Student)" "app" "Education;Emulator;System"
 
 	insinto /usr/share/mime/applications
 	doins bin/*.xml
