@@ -17,7 +17,7 @@ LICENSE="MPL-2.0"
 SLOT="0"
 KEYWORDS="amd64 x86 arm"
 
-DOCS=( CHANGELOG.md CONTRIBUTING.md README.md )
+DOCS=( CHANGELOG.md README.md )
 
 src_install() {
 	golang-single_src_install
