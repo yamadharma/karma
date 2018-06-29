@@ -68,7 +68,7 @@ src_configure() {
 
 src_install() {
 	emake INSTALL_ROOT="${D}" install || die 'emake install failed'
-	dodoc README.md CHANGES || die
+	dodoc README.md || die
 	doicon scidavis/icons/hicolor-48/scidavis.png || die
 	cd ${PN}/translations
 	insinto /usr/share/${PN}/translations
