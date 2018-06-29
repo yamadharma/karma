@@ -35,8 +35,8 @@ RDEPEND="=dev-java/antlr-2*
 	threads? ( dev-libs/boost )
 	|| ( sci-libs/metis sci-libs/parmetis )
 	editor? ( || ( net-misc/omniORB net-misc/mico )
-		dev-qt/qtcore:4
-		dev-qt/qtgui:4 
+		dev-qt/qtcore:5
+		dev-qt/qtgui:5
 		>=virtual/jre-1.5 )"
 
 #S="${WORKDIR}/${PN}"
