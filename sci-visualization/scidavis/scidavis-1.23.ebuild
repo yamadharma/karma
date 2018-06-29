@@ -26,11 +26,11 @@ CDEPEND="sys-libs/zlib
 	>=x11-libs/qwt-5.1[svg]
 	>=x11-libs/qwtplot3d-0.2.7
 	dev-qt/assistant:4
-	dev-qt/qt3support:4
 	>=dev-cpp/muParser-1.30
 	>=sci-libs/gsl-1.8"
 # remove because unsupported for now
 #	sci-libs/liborigin:2"
+#	dev-qt/qt3support:4
 
 DEPEND="${CDEPEND}
 	dev-util/pkgconfig
