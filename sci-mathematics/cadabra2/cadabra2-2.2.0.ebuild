@@ -6,7 +6,7 @@ EAPI="5"
 
 PYTHON_COMPAT=( python{3_4,3_5,3_6} )
 
-inherit cmake-utils texlive-common python-r1
+inherit cmake-utils texlive-common python-single-r1
 
 DESCRIPTION="Field-theory motivated computer algebra system"
 HOMEPAGE="http://cadabra.science/"
@@ -42,11 +42,6 @@ RDEPEND="${CDEPEND}
 	virtual/latex-base
 	dev-texlive/texlive-latexrecommended"
 
-#PATCHES=(
-#	"${FILESDIR}/remove-rm.patch"
-#	"${FILESDIR}/remove-touch.patch"
-#)
-
 CMAKE_IN_SOURCE_BUILD=y
 
 src_prepare() {
@@ -67,7 +62,7 @@ src_prepare() {
 }
 
 src_configure() {
-	python_setup 'python3*'
+	python_setup
 
         cmake-utils_src_configure
 }
@@ -97,6 +92,14 @@ src_install() {
 
 	# hack for texmf
 #	mv ${D}/usr/share/texmf ${D}/usr/share/texmf-site
+	
+	# fix python path
+	# sed -i -e '1 s:^.*$:\#\!/usr/bin/python3:' ${D}/usr/bin/cadabra2
+
+#	CUR_PYTHON_DIR=`echo $PATH | cut -d: -f1`
+#	sed -i -e "s:${CUR_PYTHON_DIR}/python:/usr/bin/python3:g" ${D}/usr/bin/cadabra2
+	sed -i -e "s:${T}/python.*/bin/python:/usr/bin/python3:g" ${D}/usr/bin/cadabra2
+
 }
 
 pkg_postinst() {
