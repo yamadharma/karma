@@ -4,6 +4,7 @@
 
 EAPI="5"
 
+CMAKE_MIN_VERSION=3.1.0
 PYTHON_COMPAT=( python{3_4,3_5,3_6} )
 
 inherit cmake-utils texlive-common python-single-r1
@@ -55,14 +56,19 @@ src_prepare() {
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:DESTINATION lib:DESTINATION $(get_libdir):g" "{}" \;
 	# Install prefix
 	sed -i -e 's:ICON_PREFIX "/usr":ICON_PREFIX "${CMAKE_INSTALL_PREFIX}":g' \
-    	    -e "s:^install(CODE:#install(CODE:g" \
+    	    -e "s:^[[:space:]]*install(CODE:#install(CODE:g" \
 	    ${S}/frontend/gtkmm/CMakeLists.txt
 	sed -i -e "s:^[[:space:]]*install(CODE:#install(CODE:g" \
+	    -e "s:^[[:space:]]*remove_file(:#remove_file(:g" \
 	    ${S}/core/CMakeLists.txt
 }
 
 src_configure() {
 	python_setup
+
+	local mycmakeargs=(
+	    -DPACKAGING_MODE=ON
+	)
 
         cmake-utils_src_configure
 }
