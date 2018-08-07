@@ -4,6 +4,7 @@
 
 EAPI="5"
 
+: ${CMAKE_MAKEFILE_GENERATOR:=ninja}
 CMAKE_MIN_VERSION=3.1.0
 PYTHON_COMPAT=( python{3_4,3_5,3_6} )
 
@@ -15,7 +16,7 @@ HOMEPAGE="http://cadabra.science/"
 if [[ ${PV} = *.9999* ]]; then
         inherit git-r3
         EGIT_REPO_URI="https://github.com/kpeeters/cadabra2.git"
-        KEYWORDS="~amd64 ~x86"
+        # KEYWORDS="~amd64 ~x86"
 else
 	SRC_URI="https://github.com/kpeeters/cadabra2/archive/${PV}.tar.gz -> ${P}.tar.gz"
         KEYWORDS="~amd64 ~x86"
@@ -61,8 +62,6 @@ src_prepare() {
 	sed -i -e "s:^[[:space:]]*install(CODE:#install(CODE:g" \
 	    -e "s:^[[:space:]]*remove_file(:#remove_file(:g" \
 	    ${S}/core/CMakeLists.txt
-
-	epatch "${FILESDIR}"/pybind.patch
 }
 
 src_configure() {
