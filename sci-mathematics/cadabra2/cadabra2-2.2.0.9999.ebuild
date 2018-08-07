@@ -61,6 +61,8 @@ src_prepare() {
 	sed -i -e "s:^[[:space:]]*install(CODE:#install(CODE:g" \
 	    -e "s:^[[:space:]]*remove_file(:#remove_file(:g" \
 	    ${S}/core/CMakeLists.txt
+
+	epatch "${FILESDIR}"/pybind.patch
 }
 
 src_configure() {
