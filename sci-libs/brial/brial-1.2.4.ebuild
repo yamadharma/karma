@@ -33,7 +33,6 @@ src_configure(){
 	econf \
 		$(use_enable static-libs static)
 
-
 #		--with-boost="${EPREFIX}"/usr \
 }
 
