@@ -46,6 +46,17 @@ RDEPEND="${CDEPEND}
 
 CMAKE_IN_SOURCE_BUILD=y
 
+pkg_setup() {
+
+	if [[ -n `kpsewhich --var-value TEXMFSITE` ]]
+	then
+	    TEXMF="${EPREFIX}"`kpsewhich --var-value TEXMFSITE`
+	else
+	    TEXMF="${EPREFIX}"`kpsewhich --var-value TEXMFLOCAL`
+	fi
+
+}
+
 src_prepare() {
 	cmake-utils_src_prepare
 	cd ${S}
@@ -95,6 +106,11 @@ src_install() {
 		dodoc -r "${S}/examples/"
 	fi
 
+	insinto ${TEXMF}/tex/latex/cadabra2
+	doins frontend/latex/tableaux.sty
+	dodoc frontend/latex/young.html
+	
+
 #	rm -rf "${D}/usr/share/TeXmacs" || die
 
 	# hack for texmf
@@ -111,10 +127,12 @@ src_install() {
 
 pkg_postinst() {
 	etexmf-update
+	mktexlsr
 	/usr/bin/gtk-update-icon-cache /usr/share/icons/hicolor
 }
 
 pkg_postrm() {
 	etexmf-update
+	mktexlsr
 }
 
