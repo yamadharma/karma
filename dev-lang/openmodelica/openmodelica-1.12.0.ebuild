@@ -73,7 +73,7 @@ src_configure() {
 #		$(use_with metis METIS)
 
 	# for me only reference lapack work
-	myconf+=( --with-lapack="`pkg-config --libs lapack`" )
+	myconf+=( --with-lapack="`pkg-config --libs lapack` `pkg-config --libs blas`" )
 
 	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
 	    OPENMODELICAHOME="${S}"/build \
