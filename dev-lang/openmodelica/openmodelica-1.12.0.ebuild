@@ -62,10 +62,10 @@ src_configure() {
 	local myconf=(
 		--with-openmodelicahome="${S}"/build
 		--with-omc="${S}"/build/bin/omc
-		--disable-modelica3d
 		$(use_with editor omniORB)
 		)
 
+#		--disable-modelica3d
 #		--with-ombuilddir="${S}"/build
 #		--with-openmodelicahome="${S}"/build
 #		--disable-modelica3d
