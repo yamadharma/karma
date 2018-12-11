@@ -27,7 +27,7 @@ JAVA_ANT_REWRITE_CLASSPATH="true"
 
 src_prepare() {
 	default
-	sed -i -e "s:jlatexmath.*\.jar:$(java-pkg_getjars jlatexmath-1):g" \
+	sed -i -e "s:jlatexmath.*\?.jar:$(java-pkg_getjars jlatexmath-1):g" \
 		-e "s://:/:g" \
 			build.xml || die
 
