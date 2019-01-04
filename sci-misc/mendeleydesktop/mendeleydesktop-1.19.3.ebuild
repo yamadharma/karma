@@ -14,9 +14,10 @@ DESCRIPTION="Research management tool for desktop and web"
 HOMEPAGE="https://www.mendeley.com/"
 SRC_URI="
 	amd64? ( ${MY_P_AMD64}.tar.bz2 )
-	x86? ( ${MY_P_X86}.tar.bz2 )
-	amd64-linux? ( ${MY_P_AMD64}.tar.bz2 )
-	x86-linux? ( ${MY_P_X86}.tar.bz2 )"
+	amd64-linux? ( ${MY_P_AMD64}.tar.bz2 )"
+
+#	x86? ( ${MY_P_X86}.tar.bz2 )
+#	x86-linux? ( ${MY_P_X86}.tar.bz2 )
 
 LICENSE="Mendeley-terms"
 SLOT="0"
@@ -47,7 +48,7 @@ QA_PREBUILT="/opt/mendeleydesktop/.*"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-1.17.8-libdir.patch
-#	"${FILESDIR}"/${PN}-1.17.8-qt5plugins.patch
+	"${FILESDIR}"/${PN}-1.17.8-qt5plugins.patch
 	"${FILESDIR}"/${PN}-1.17.8-unix-distro-build.patch
 )
 
@@ -73,18 +74,18 @@ src_prepare() {
 	default
 
 	# remove bundled Qt libraries
-#	rm -r lib/mendeleydesktop/plugins \
-#		|| die "failed to remove plugin directory"
-#	rm -r lib/qt || die
+	rm -r lib/mendeleydesktop/plugins \
+		|| die "failed to remove plugin directory"
+	rm -r lib/qt || die
 
 	# fix qt library path
-#	sed -e "s:/usr/lib/qt5/plugins:${EROOT}usr/$(get_libdir)/qt5/plugins:g" \
-#		-i bin/mendeleydesktop || die
+	sed -e "s:/usr/lib/qt5/plugins:${EROOT}usr/$(get_libdir)/qt5/plugins:g" \
+		-i bin/mendeleydesktop || die
 
 	# fix library paths
-#	sed -e "s:lib/mendeleydesktop:$(get_libdir)/mendeleydesktop:g" \
-#		-e "s:MENDELEY_BASE'] + \"/lib/\":MENDELEY_BASE'] + \"/$(get_libdir)/\":g" \
-#		-i bin/mendeleydesktop || die
+	sed -e "s:lib/mendeleydesktop:$(get_libdir)/mendeleydesktop:g" \
+		-e "s:MENDELEY_BASE'] + \"/lib/\":MENDELEY_BASE'] + \"/$(get_libdir)/\":g" \
+		-i bin/mendeleydesktop || die
 }
 
 src_install() {
@@ -108,11 +109,15 @@ src_install() {
 	dobin bin/*
 
 	# install libraries
-#	dolib.so lib/lib*.so*
+	dolib.so lib/lib*.so*
+
+	# remove qtconf and qt-5.10 workaround
+	rm lib/mendeleydesktop/libexec/qt.conf
+	rm "lib/mendeleydesktop/libexec/QtWebEngineProcess --type=zygote --lang=en-US"
 
 	# install programs
-#	exeinto /opt/mendeleydesktop/$(get_libdir)/mendeleydesktop/libexec
-#	doexe lib/mendeleydesktop/libexec/*
+	exeinto /opt/mendeleydesktop/$(get_libdir)/mendeleydesktop/libexec
+	doexe lib/mendeleydesktop/libexec/*
 
 	# install shared files
 	insinto /opt/${PN}/share
@@ -120,9 +125,6 @@ src_install() {
 
 	# symlink launch script
 	dosym ../mendeleydesktop/bin/mendeleydesktop /opt/bin/mendeleydesktop
-
-	cp -R ${S}/* ${D}/opt/mendeleydesktop/
-
 }
 
 pkg_postinst() {
