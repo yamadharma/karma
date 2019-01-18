@@ -15,7 +15,7 @@ RESTRICT="fetch mirror strip userpriv"
 LICENSE="Cisco_EULA"
 
 SLOT="0"
-KEYWORDS="~amd64"
+# KEYWORDS="~amd64"
 IUSE="doc online-exam"
 
 DEPEND="app-arch/gzip"
