@@ -1,0 +1,34 @@
+# ChangeLog for dev-lang/xharbour
+# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*xharbour-1.2.1 (15 Mar 2013)
+
+  15 Mar 2013; Patrick Lauer <patrick@gentoo.org> -xharbour-1.0.0_beta1.ebuild,
+  +xharbour-1.2.1.ebuild:
+  [dev-lang/xharbour] Bump, remove useless useflag, fix compilation
+
+  19 Jul 2011; Thomas Sachau (Tommy[D]) <tommy@gentoo.org>
+  xharbour-1.0.0_beta1.ebuild:
+  Switch from deprecated useq to use
+
+  09 Mar 2009; Christian Ruppert (idl0r) <spooky85@gmail.com> -big.diff:
+  removed useless big.diff :)
+
+  08 Mar 2009; Phil Krylov (philkrylov) <phil.krylov@gmail.com>
+  xharbour-1.0.0_beta1.ebuild, +big.diff, +files/xharbour-override-cc.patch:
+  Fixed tc-getCC usage and a typo in ChangeLog.
+
+  08 Mar 2009; Thomas Sachau (Tommy[D]) <tommy@gentoo.org>
+  xharbour-1.0.0_beta1.ebuild:
+  Add missing eclass, drop useless DEP, use tc-getCC for compiler, use doins,
+  whitespace
+
+  08 Mar 2009; Phil Krylov (philkrylov) <phil.krylov@gmail.com>
+  +xharbour-1.0.0_beta1.ebuild, +files/xharbour-as-needed.patch,
+  +files/xharbour-fPIC.patch, +files/xharbour-mkinstdir.patch,
+  +files/xharbour-parallel-make.patch,
+  +files/xharbour-skip-static-utils.patch, +metadata.xml:
+  New ebuild for bug 123975. Thanks to Clemens Dudek <cdudek@netway.at> and
+  Bel Zébute <mailto:stephane@gorfou.ca>.
+
