@@ -19,6 +19,11 @@ RDEPEND="
 DEPEND="${RDEPEND}
 "
 
+PDEPEND="
+	dev-haskell/pandoc-crossref-bin
+"
+
+
 S=${WORKDIR}/pandoc-${PV}
 
 src_install() {
