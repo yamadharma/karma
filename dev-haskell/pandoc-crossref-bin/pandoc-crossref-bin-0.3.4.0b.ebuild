@@ -15,6 +15,8 @@ SLOT="0/${PANDOC_PV}"
 KEYWORDS="amd64 ~x86"
 IUSE=""
 
+RESTRICT="strip"
+
 RDEPEND="
 	!dev-haskell/pandoc-crossref
 "

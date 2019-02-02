@@ -12,6 +12,8 @@ SLOT="0/${PV}"
 KEYWORDS="amd64"
 IUSE=""
 
+RESTRICT="strip"
+
 RDEPEND="
 	!app-text/pandoc
 	!dev-haskell/pandoc-citeproc
