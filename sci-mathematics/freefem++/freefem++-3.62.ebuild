@@ -10,7 +10,8 @@ MY_PV=$(replace_version_separator 2 '-')
 
 DESCRIPTION="Solve PDEs using FEM on 2d and 3d domains"
 HOMEPAGE="http://www.freefem.org/ff++/"
-SRC_URI="http://www.freefem.org/ff++/ftp/${PN}-${MY_PV}.tar.gz"
+# SRC_URI="http://www.freefem.org/ff++/ftp/${PN}-${MY_PV}.tar.gz"
+SRC_URI="https://github.com/FreeFem/FreeFem-sources/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -45,16 +46,16 @@ DEPEND="${RDEPEND}
 		media-gfx/imagemagick
 		)"
 
-S="${WORKDIR}/${PN}-${MY_PV}"
+S="${WORKDIR}/FreeFem-sources-${PV}"
 
-src_prepare_() {
+src_prepare() {
 	# acoptim.m4 forced -O2 removal
-	epatch "${FILESDIR}"/${PN}-acoptim.patch
+	#epatch "${FILESDIR}"/${PN}-acoptim.patch
 	# do not try to do a forced "manual" installation of
 	# examples and documentation
-	epatch "${FILESDIR}"/${PN}-no-doc-autobuild.patch
+	#epatch "${FILESDIR}"/${PN}-no-doc-autobuild.patch
 	# Honor FHS
-	epatch "${FILESDIR}"/${PN}-path.patch
+	#epatch "${FILESDIR}"/${PN}-path.patch
 
 	eautoreconf
 }
