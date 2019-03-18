@@ -52,6 +52,7 @@ RDEPEND="=dev-java/antlr-2*
 #}
 
 src_prepare() {
+	default
 	eautoreconf
 }
 
@@ -104,6 +105,7 @@ src_configure() {
 }
 
 src_install() {
+	default
 	# sed -i -r "s#^((lib|data)dir\s*=)\s*/usr(.*)#\1 \${prefix}\3#" Makefile
 	# make prefix="${D}/usr" install
 	einstall
