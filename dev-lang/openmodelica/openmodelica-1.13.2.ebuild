@@ -104,6 +104,10 @@ src_configure() {
 #	fi
 }
 
+src_compile() {
+	emake -j1
+}
+
 src_install() {
 	default
 	# sed -i -r "s#^((lib|data)dir\s*=)\s*/usr(.*)#\1 \${prefix}\3#" Makefile
