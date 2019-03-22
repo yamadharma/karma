@@ -39,6 +39,8 @@ RDEPEND="=dev-java/antlr-2*
 		dev-qt/qtgui:5
 		>=virtual/jre-1.5 )"
 
+RESTRICT=network-sandbox
+
 #S="${WORKDIR}/${PN}"
 
 #pkg_setup() {
@@ -54,6 +56,9 @@ RDEPEND="=dev-java/antlr-2*
 src_prepare() {
 	default
 	eautoreconf
+
+	cd libraries
+	make
 }
 
 src_configure() {
