@@ -1,9 +1,9 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
+EAPI=7
+PYTHON_COMPAT=( python{2_7,3_5,3_6,3_7} )
 
 inherit desktop gnome2-utils python-single-r1 xdg-utils
 
@@ -19,7 +19,7 @@ SRC_URI="
 
 LICENSE="Mendeley-terms"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 ~x86"
 IUSE=""
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
@@ -122,14 +122,4 @@ src_install() {
 
 	cp -R ${S}/* ${D}/opt/mendeleydesktop/
 
-}
-
-pkg_postinst() {
-	xdg_pkg_postinst
-	gnome2_icon_cache_update
-}
-
-pkg_postrm() {
-	xdg_pkg_postrm
-	gnome2_icon_cache_update
 }
