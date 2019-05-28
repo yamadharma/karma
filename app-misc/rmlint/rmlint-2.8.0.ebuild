@@ -5,10 +5,11 @@ EAPI=6
 
 PYTHON_COMPAT=( python3_{5,6,7} )
 
-inherit eutils git-r3 gnome2-utils python-r1 scons-utils
+inherit eutils gnome2-utils python-r1 scons-utils
 
 DESCRIPTION="rmlint finds space waste and other broken things on your filesystem and offers to remove it"
 HOMEPAGE="https://github.com/sahib/rmlint"
+
 if [[ ${PV} = 9999* ]]; then
 inherit git-r3
 EGIT_REPO_URI="https://github.com/sahib/${PN}.git"
@@ -21,7 +22,6 @@ fi
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
 IUSE="X doc"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
