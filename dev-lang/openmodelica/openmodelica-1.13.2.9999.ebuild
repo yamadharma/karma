@@ -9,13 +9,13 @@ inherit eutils autotools flag-o-matic
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/OpenModelica/OpenModelica.git"
-	KEYWORDS="amd64 x86"
+	KEYWORDS=""
 else
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/OpenModelica/OpenModelica.git"
 	EGIT_COMMIT="v${PV}"
 #	SRC_URI="https://github.com/OpenModelica/OpenModelica/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="amd64 ~x86"
 fi
 
 DESCRIPTION="A Modelica modeling, compilation and simulation environment."

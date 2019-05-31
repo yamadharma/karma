@@ -15,7 +15,7 @@ else
 	EGIT_REPO_URI="https://github.com/OpenModelica/OpenModelica.git"
 	EGIT_COMMIT="v${PV}"
 #	SRC_URI="https://github.com/OpenModelica/OpenModelica/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="amd64 ~x86"
 fi
 
 DESCRIPTION="A Modelica modeling, compilation and simulation environment."
