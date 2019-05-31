@@ -23,7 +23,7 @@ HOMEPAGE="https://openmodelica.org/"
 
 LICENSE="OMPL"
 SLOT="0"
-IUSE="+editor doc threads"
+IUSE="+editor doc threads clang"
 
 DEPEND="sys-apps/sed
 	sys-apps/coreutils
@@ -64,12 +64,16 @@ src_prepare() {
 src_configure() {
 	strip-flags
 
+	append-ldflags -Wno-dev
+
 	# Only omniORB for me
 	local myconf=(
 		--with-openmodelicahome="${S}"/build
 		--with-omc="${S}"/build/bin/omc
 		$(use_with editor omniORB)
 		)
+
+	use clang && myconf+=( CC=clang CXX=clang++ GNUCXX=g++ )
 
 #		--disable-modelica3d
 #		--with-ombuilddir="${S}"/build
@@ -109,9 +113,9 @@ src_configure() {
 #	fi
 }
 
-src_compile() {
-	emake -j1
-}
+#src_compile() {
+#	emake -j1
+#}
 
 src_install() {
 	default
