@@ -39,7 +39,7 @@ RDEPEND="=dev-java/antlr-2*
 		dev-qt/qtgui:5
 		>=virtual/jre-1.5 )"
 
-RESTRICT=network-sandbox
+RESTRICT="network-sandbox nostrip"
 
 #S="${WORKDIR}/${PN}"
 
