@@ -55,6 +55,9 @@ RESTRICT=network-sandbox
 
 src_prepare() {
 	default
+
+	epatch "${FILESDIR}/paradiseo-cmake.patch"
+
 	eautoreconf
 
 	cd libraries
