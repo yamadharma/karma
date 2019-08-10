@@ -8,13 +8,19 @@ PYTHON_COMPAT=( python2_7 )
 inherit distutils-r1
 
 DESCRIPTION="A screencast tool to display your keys inspired by Screenflick"
-HOMEPAGE="https://github.com/wavexx/screenkey"
-SRC_URI="https://github.com/wavexx/screenkey/archive/${P}.tar.gz"
-
+HOMEPAGE="https://gitlab.com/wavexx/screenkey"
+if [[ ${PV} = *.9999* ]]
+then
+    inherit git-r3
+    EGIT_REPO_URI="https://gitlab.com/wavexx/screenkey.git"
+    KEYWORDS="amd64 ~x86"
+else
+    SRC_URI="https://github.com/wavexx/screenkey/archive/${P}.tar.gz"
+    KEYWORDS="~amd64 ~x86"
+fi
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
@@ -28,4 +34,4 @@ RDEPEND="${DEPEND}
 "
 BDEPEND=""
 
-S="${WORKDIR}/${PN}-${P}"
+# S="${WORKDIR}/${PN}-${P}"
