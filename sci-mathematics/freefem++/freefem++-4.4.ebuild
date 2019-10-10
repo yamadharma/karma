@@ -24,6 +24,7 @@ RDEPEND="
 	virtual/lapack
 	sci-libs/umfpack
 	sci-libs/arpack
+	sci-libs/superlu
 	mpi? ( $(mpi_pkg_deplist) )
 	opengl? (
 		media-libs/freeglut
@@ -68,6 +69,9 @@ src_configure() {
 	else
 		myconf="--without-mpi"
 	fi
+
+	# Dirty hack (temporary disable superlu)
+	myconf="${myconf} --disable-superlu"
 
 	econf \
 		--disable-download \
