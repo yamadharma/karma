@@ -25,10 +25,15 @@ LICENSE="OMPL"
 SLOT="0"
 IUSE="+editor doc threads clang"
 
+
+# Don't compile with lapack-3.8
 DEPEND="sys-apps/sed
 	sys-apps/coreutils
 	sys-apps/findutils
-	app-arch/tar"
+	app-arch/tar
+	|| ( sci-libs/openblas ( sci-libs/lapack-reference sci-libs/blas-reference ) )
+"
+
 RDEPEND="=dev-java/antlr-2*
 	sys-libs/readline
 	dev-libs/libf2c
@@ -86,7 +91,8 @@ src_configure() {
 #		$(use_with metis METIS)
 
 	# for me only reference lapack work
-	myconf+=( --with-lapack="`pkg-config --libs lapack` `pkg-config --libs blas`" )
+	# myconf+=( --with-lapack="`pkg-config --libs lapack` `pkg-config --libs blas`" )
+	myconf+=( --with-lapack=auto )
 
 	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
 	    OPENMODELICAHOME="${S}"/build \
