@@ -1,7 +1,7 @@
-diff -Naurd gamess.orig/comp gamess/comp
---- gamess.orig/comp	2018-10-01 06:45:26.000000000 +0300
-+++ gamess/comp	2018-10-23 17:24:42.094888310 +0300
-@@ -1585,7 +1585,7 @@
+diff -Naurp gamess.orig/comp gamess/comp
+--- gamess.orig/comp	2019-10-12 19:25:33.000000000 +0300
++++ gamess/comp	2019-10-12 19:31:09.000000000 +0300
+@@ -1603,7 +1603,7 @@ if ($TARGET == linux32) then
  #
     case gfortran:
  #
@@ -10,7 +10,7 @@ diff -Naurd gamess.orig/comp gamess/comp
        if ($MODULE == zheev)  set OPT='-O0'  # defensive compiling
  
        set EXTRAOPT=" "
-@@ -1698,7 +1698,7 @@
+@@ -1734,7 +1734,7 @@ if ($TARGET == linux32) then
  #    optimizations in 32 bit mode, as a function of the ifort version.
  #
     case ifort:
@@ -19,7 +19,7 @@ diff -Naurd gamess.orig/comp gamess/comp
     if ($MODULE == delocl) set OPT='-O0'  # from Cheol
     if ($MODULE == prpamm) set OPT='-O0'  # for exam13
     if ($MODULE == zheev)  set OPT='-O0'
-@@ -1944,7 +1944,7 @@
+@@ -2015,7 +2015,7 @@ if ($TARGET == linux64) then
  #
  #         first, initialize OPT and EXTRAOPT
  #
@@ -28,7 +28,7 @@ diff -Naurd gamess.orig/comp gamess/comp
        if ($MODULE == zheev)  set OPT='-O0'  # defensive compiling
  
        set EXTRAOPT=" "
-@@ -2109,7 +2109,7 @@
+@@ -2307,7 +2307,7 @@ if ($TARGET == linux64) then
  #     -WB means warn but don't fail on out-of-bounds array references
  #     -ftz flushes underflow results to zero
  #
@@ -37,7 +37,7 @@ diff -Naurd gamess.orig/comp gamess/comp
        if (".$GMS_DEBUG_FLAGS" != .) set OPT="$GMS_DEBUG_FLAGS"
  #       alas, I'm so tired of hearing about so many versions failing to
  #       diagonalize, that this time critical code is run w/o optimization.
-@@ -2331,6 +2331,10 @@
+@@ -2682,6 +2682,10 @@ if ($TARGET == mac32) then
           case 5.1:
           case 5.2:
           case 5.3:
@@ -48,10 +48,10 @@ diff -Naurd gamess.orig/comp gamess/comp
              if ($MODULE == cosmo)  set OPT='-O0'
              if ($MODULE == dcscf)  set OPT='-O0'
              if ($MODULE == tddgrd) set OPT='-O0'
-diff -Naurd gamess.orig/ddi/compddi gamess/ddi/compddi
---- gamess.orig/ddi/compddi	2018-08-07 10:23:20.000000000 +0300
-+++ gamess/ddi/compddi	2018-10-23 17:14:31.801671875 +0300
-@@ -696,7 +696,7 @@
+diff -Naurp gamess.orig/ddi/compddi gamess/ddi/compddi
+--- gamess.orig/ddi/compddi	2019-10-12 19:25:32.000000000 +0300
++++ gamess/ddi/compddi	2019-10-12 19:32:54.000000000 +0300
+@@ -706,7 +706,7 @@ endif
  
       set FORTRAN=$GMS_FORTRAN   # might be g77, gfortran, ifort, pgf77, f2c
  
@@ -60,18 +60,18 @@ diff -Naurd gamess.orig/ddi/compddi gamess/ddi/compddi
       set CFLAGS = "-DLINUX -O3 -fstrict-aliasing -I./"
       set CLIBS  = "-lpthread"
  
-@@ -751,7 +751,7 @@
+@@ -761,7 +761,7 @@ endif
       if (`uname -p` == ia64) set ARCH=''
       if (`uname -p` == aarch64) set ARCH='-mcpu=native'
- 
+      
 -     set CC = 'gcc'
 +     set gentoo-CC = 'gcc'
       set CFLAGS = "-DLINUX $ARCH -O3 -fstrict-aliasing -I./"
       set CLIBS  = "-lpthread"
  
-diff -Naurd gamess.orig/ddi/kickoff/ddikick.c gamess/ddi/kickoff/ddikick.c
---- gamess.orig/ddi/kickoff/ddikick.c	2018-02-08 00:15:23.000000000 +0300
-+++ gamess/ddi/kickoff/ddikick.c	2018-10-23 17:14:31.801671875 +0300
+diff -Naurp gamess.orig/ddi/kickoff/ddikick.c gamess/ddi/kickoff/ddikick.c
+--- gamess.orig/ddi/kickoff/ddikick.c	2019-10-12 19:25:32.000000000 +0300
++++ gamess/ddi/kickoff/ddikick.c	2019-10-12 19:31:09.000000000 +0300
 @@ -105,7 +105,7 @@
            remoteshell = argv[++i];
         } else {
@@ -81,9 +81,9 @@ diff -Naurd gamess.orig/ddi/kickoff/ddikick.c gamess/ddi/kickoff/ddikick.c
            }
         }
  
-diff -Naurd gamess.orig/gms-files.csh gamess/gms-files.csh
---- gamess.orig/gms-files.csh	2018-10-01 06:45:26.000000000 +0300
-+++ gamess/gms-files.csh	2018-10-23 17:14:31.802671840 +0300
+diff -Naurp gamess.orig/gms-files.csh gamess/gms-files.csh
+--- gamess.orig/gms-files.csh	2019-10-12 19:25:32.000000000 +0300
++++ gamess/gms-files.csh	2019-10-12 19:31:09.000000000 +0300
 @@ -28,7 +28,7 @@
  #     to see all the file definitions (one is just below).
  #
@@ -93,10 +93,10 @@ diff -Naurd gamess.orig/gms-files.csh gamess/gms-files.csh
  setenv  EXTBAS /dev/null
  setenv  NUCBAS /dev/null
  setenv  EXTCAB /dev/null
-diff -Naurd gamess.orig/lked gamess/lked
---- gamess.orig/lked	2018-10-01 06:45:26.000000000 +0300
-+++ gamess/lked	2018-10-23 17:28:20.981434120 +0300
-@@ -368,12 +368,12 @@
+diff -Naurp gamess.orig/lked gamess/lked
+--- gamess.orig/lked	2019-10-12 19:25:33.000000000 +0300
++++ gamess/lked	2019-10-12 19:31:09.000000000 +0300
+@@ -378,12 +378,12 @@ if ($TARGET == linux32) then
     switch ($GMS_FORTRAN)
       case gfortran:
          set LDR='gfortran'
@@ -111,7 +111,7 @@ diff -Naurd gamess.orig/lked gamess/lked
          set FORTLIBS='-Vaxlib'
          breaksw
       case pgfortran:
-@@ -432,12 +432,7 @@
+@@ -442,12 +442,7 @@ if ($TARGET == linux32) then
        #     Otherwise, attempt a link against shared object libs.
        #     See the 64 bit Atlas below for a way to fix the linker's
        #     not being able to locate -lf77blas, if that happens.
@@ -124,9 +124,9 @@ diff -Naurd gamess.orig/lked gamess/lked
 +      set MATHLIBS=`${PKG_CONFIG} --libs blas`
        set BLAS=' '
        breaksw
- 
-@@ -506,13 +501,13 @@
-    switch ($GMS_FORTRAN)
+    case atlas-so:
+@@ -529,13 +524,13 @@ if ($TARGET == linux64) then
+          breaksw
        case gfortran:
           set LDR='gfortran'
 -         set LDOPTS=' '
@@ -141,24 +141,10 @@ diff -Naurd gamess.orig/lked gamess/lked
  #            this auxiliary library seems to have disappeared in ifort 10
           set FORTLIBS=' '
           if ($GMS_IFORT_VERNO < 10) set FORTLIBS='-Vaxlib'
-@@ -672,12 +667,7 @@
-       #          ln -s liblapack_atlas.so.3.0 liblapack.so
-       #          ln -s liblapack.so.3.0       liblapack.so
-       #     It is strange the RPM's don't do these soft links for us.
--      if (-e $GMS_MATHLIB_PATH/libf77blas.a) then
--         set MATHLIBS="$GMS_MATHLIB_PATH/libf77blas.a"
--         set MATHLIBS="$MATHLIBS $GMS_MATHLIB_PATH/libatlas.a"
--      else
--         set MATHLIBS="-L$GMS_MATHLIB_PATH -lf77blas -latlas"
--      endif
-+      set MATHLIBS=`${PKG_CONFIG} --libs blas`
-       if ($CCHEM == true) then
-         set MATHLIBS="-L$GMS_MATHLIB_PATH -Wl,--start-group -lf77blas -latlas -lcblas -llapack -Wl,--end-group"
-       endif
-diff -Naurd gamess.orig/runall gamess/runall
---- gamess.orig/runall	2018-02-08 00:15:24.000000000 +0300
-+++ gamess/runall	2018-10-23 17:14:31.802671840 +0300
-@@ -46,7 +46,7 @@
+diff -Naurp gamess.orig/runall gamess/runall
+--- gamess.orig/runall	2019-10-12 19:25:33.000000000 +0300
++++ gamess/runall	2019-10-12 19:31:09.000000000 +0300
+@@ -46,7 +46,7 @@ while ($i <= $Ntest)
       xgms -v $VERNO -q $QUEUE -l exam$NUM.log exam$NUM
       sleep 2
    else
@@ -167,9 +153,9 @@ diff -Naurd gamess.orig/runall gamess/runall
    endif
    @ i++
  end
-diff -Naurd gamess.orig/rungms gamess/rungms
---- gamess.orig/rungms	2018-10-01 06:45:26.000000000 +0300
-+++ gamess/rungms	2018-10-23 17:29:37.732820347 +0300
+diff -Naurp gamess.orig/rungms gamess/rungms
+--- gamess.orig/rungms	2019-10-12 19:25:33.000000000 +0300
++++ gamess/rungms	2019-10-12 19:31:09.000000000 +0300
 @@ -61,9 +61,9 @@
  #       See also a very old LoadLeveler "ll-gms" for some IBM systems.
  #
