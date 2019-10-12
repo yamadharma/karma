@@ -19,12 +19,12 @@ LICENSE="gamess"
 # new version comes out the stable version will be useless since
 # users can not get at the tarball any more.
 KEYWORDS="amd64 ~x86"
-IUSE="mpi msucc neo openmp pax_kernel qmmm-tinker vb2000"
+IUSE="mpi msucc neo +openmp pax_kernel qmmm-tinker vb2000"
 
 CDEPEND="
 	app-shells/tcsh
 	mpi? ( virtual/mpi )
-	virtual/blas"
+	sci-libs/openblas"
 DEPEND="${CDEPEND}
 	virtual/pkgconfig"
 RDEPEND="${CDEPEND}
@@ -245,8 +245,8 @@ src_prepare() {
 	setenv GMS_TARGET $active_arch
 	setenv GMS_FORTRAN $FCOMP
 	setenv GMS_GFORTRAN_VERNO $(gcc-major-version).$(gcc-minor-version)
-	setenv GMS_MATHLIB atlas
-	setenv GMS_MATHLIB_PATH  /usr/$(get_libdir)/atlas
+	setenv GMS_MATHLIB openblas
+	setenv GMS_MATHLIB_PATH  /usr/$(get_libdir)
 	setenv GMS_DDI_COMM sockets
 	setenv GMS_LIBCCHEM false
 	setenv GMS_PHI false

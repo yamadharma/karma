@@ -1,6 +1,6 @@
 diff -Naurp gamess.orig/comp gamess/comp
---- gamess.orig/comp	2019-10-12 19:25:33.000000000 +0300
-+++ gamess/comp	2019-10-12 19:31:09.000000000 +0300
+--- gamess.orig/comp	2019-10-12 20:10:13.000000000 +0300
++++ gamess/comp	2019-10-12 20:12:31.000000000 +0300
 @@ -1603,7 +1603,7 @@ if ($TARGET == linux32) then
  #
     case gfortran:
@@ -28,7 +28,17 @@ diff -Naurp gamess.orig/comp gamess/comp
        if ($MODULE == zheev)  set OPT='-O0'  # defensive compiling
  
        set EXTRAOPT=" "
-@@ -2307,7 +2307,7 @@ if ($TARGET == linux64) then
+@@ -2153,6 +2153,9 @@ if ($TARGET == linux64) then
+          case 7.3:
+          case 8.1:
+          case 8.2:
++         case 8.3:
++         case 8.4:
++         case 8.5:
+              if ($GMS_MATHLIB == libflame) then
+                  #keeping these in to fix exam30
+                  if ($MODULE == efgrda) set OPT='-O0'
+@@ -2307,7 +2310,7 @@ if ($TARGET == linux64) then
  #     -WB means warn but don't fail on out-of-bounds array references
  #     -ftz flushes underflow results to zero
  #
@@ -37,7 +47,7 @@ diff -Naurp gamess.orig/comp gamess/comp
        if (".$GMS_DEBUG_FLAGS" != .) set OPT="$GMS_DEBUG_FLAGS"
  #       alas, I'm so tired of hearing about so many versions failing to
  #       diagonalize, that this time critical code is run w/o optimization.
-@@ -2682,6 +2682,10 @@ if ($TARGET == mac32) then
+@@ -2682,6 +2685,10 @@ if ($TARGET == mac32) then
           case 5.1:
           case 5.2:
           case 5.3:
@@ -49,8 +59,8 @@ diff -Naurp gamess.orig/comp gamess/comp
              if ($MODULE == dcscf)  set OPT='-O0'
              if ($MODULE == tddgrd) set OPT='-O0'
 diff -Naurp gamess.orig/ddi/compddi gamess/ddi/compddi
---- gamess.orig/ddi/compddi	2019-10-12 19:25:32.000000000 +0300
-+++ gamess/ddi/compddi	2019-10-12 19:32:54.000000000 +0300
+--- gamess.orig/ddi/compddi	2019-10-12 20:10:12.000000000 +0300
++++ gamess/ddi/compddi	2019-10-12 20:12:02.000000000 +0300
 @@ -706,7 +706,7 @@ endif
  
       set FORTRAN=$GMS_FORTRAN   # might be g77, gfortran, ifort, pgf77, f2c
@@ -70,8 +80,8 @@ diff -Naurp gamess.orig/ddi/compddi gamess/ddi/compddi
       set CLIBS  = "-lpthread"
  
 diff -Naurp gamess.orig/ddi/kickoff/ddikick.c gamess/ddi/kickoff/ddikick.c
---- gamess.orig/ddi/kickoff/ddikick.c	2019-10-12 19:25:32.000000000 +0300
-+++ gamess/ddi/kickoff/ddikick.c	2019-10-12 19:31:09.000000000 +0300
+--- gamess.orig/ddi/kickoff/ddikick.c	2019-10-12 20:10:12.000000000 +0300
++++ gamess/ddi/kickoff/ddikick.c	2019-10-12 20:12:02.000000000 +0300
 @@ -105,7 +105,7 @@
            remoteshell = argv[++i];
         } else {
@@ -82,8 +92,8 @@ diff -Naurp gamess.orig/ddi/kickoff/ddikick.c gamess/ddi/kickoff/ddikick.c
         }
  
 diff -Naurp gamess.orig/gms-files.csh gamess/gms-files.csh
---- gamess.orig/gms-files.csh	2019-10-12 19:25:32.000000000 +0300
-+++ gamess/gms-files.csh	2019-10-12 19:31:09.000000000 +0300
+--- gamess.orig/gms-files.csh	2019-10-12 20:10:12.000000000 +0300
++++ gamess/gms-files.csh	2019-10-12 20:12:02.000000000 +0300
 @@ -28,7 +28,7 @@
  #     to see all the file definitions (one is just below).
  #
@@ -94,8 +104,8 @@ diff -Naurp gamess.orig/gms-files.csh gamess/gms-files.csh
  setenv  NUCBAS /dev/null
  setenv  EXTCAB /dev/null
 diff -Naurp gamess.orig/lked gamess/lked
---- gamess.orig/lked	2019-10-12 19:25:33.000000000 +0300
-+++ gamess/lked	2019-10-12 19:31:09.000000000 +0300
+--- gamess.orig/lked	2019-10-12 20:10:13.000000000 +0300
++++ gamess/lked	2019-10-12 20:12:02.000000000 +0300
 @@ -378,12 +378,12 @@ if ($TARGET == linux32) then
     switch ($GMS_FORTRAN)
       case gfortran:
@@ -121,7 +131,7 @@ diff -Naurp gamess.orig/lked gamess/lked
 -      else
 -         set MATHLIBS="-L$GMS_MATHLIB_PATH -lf77blas -latlas"
 -      endif
-+      set MATHLIBS=`${PKG_CONFIG} --libs blas`
++      set MATHLIBS=`${PKG_CONFIG} --libs openblas`
        set BLAS=' '
        breaksw
     case atlas-so:
@@ -142,8 +152,8 @@ diff -Naurp gamess.orig/lked gamess/lked
           set FORTLIBS=' '
           if ($GMS_IFORT_VERNO < 10) set FORTLIBS='-Vaxlib'
 diff -Naurp gamess.orig/runall gamess/runall
---- gamess.orig/runall	2019-10-12 19:25:33.000000000 +0300
-+++ gamess/runall	2019-10-12 19:31:09.000000000 +0300
+--- gamess.orig/runall	2019-10-12 20:10:15.000000000 +0300
++++ gamess/runall	2019-10-12 20:12:02.000000000 +0300
 @@ -46,7 +46,7 @@ while ($i <= $Ntest)
       xgms -v $VERNO -q $QUEUE -l exam$NUM.log exam$NUM
       sleep 2
@@ -154,8 +164,8 @@ diff -Naurp gamess.orig/runall gamess/runall
    @ i++
  end
 diff -Naurp gamess.orig/rungms gamess/rungms
---- gamess.orig/rungms	2019-10-12 19:25:33.000000000 +0300
-+++ gamess/rungms	2019-10-12 19:31:09.000000000 +0300
+--- gamess.orig/rungms	2019-10-12 20:10:15.000000000 +0300
++++ gamess/rungms	2019-10-12 20:12:02.000000000 +0300
 @@ -61,9 +61,9 @@
  #       See also a very old LoadLeveler "ll-gms" for some IBM systems.
  #
