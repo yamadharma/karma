@@ -13,7 +13,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0/10"
-KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="amd64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="accessibility cpu_flags_x86_avx +curl emacs gnome gtk mpi nls odbc openmp python
 	readline cpu_flags_x86_sse2 R static-libs"
 

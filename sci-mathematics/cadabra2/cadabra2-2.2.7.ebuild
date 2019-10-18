@@ -55,9 +55,10 @@ src_prepare() {
 	find . -name "CMakeLists.txt" -exec sed -i -e "s:DESTINATION lib:DESTINATION $(get_libdir):g" "{}" \;
 	# Install prefix
 	sed -i -e 's:ICON_PREFIX "/usr":ICON_PREFIX "${CMAKE_INSTALL_PREFIX}":g' \
-    	    -e "s:^install(CODE:#install(CODE:g" \
+    	    -e "s:^[[:space:]]*install(CODE:#install(CODE:g" \
 	    ${S}/frontend/gtkmm/CMakeLists.txt
 	sed -i -e "s:^[[:space:]]*install(CODE:#install(CODE:g" \
+	    -e "s:^[[:space:]]*remove_file(:#remove_file(:g" \
 	    ${S}/core/CMakeLists.txt
 }
 
