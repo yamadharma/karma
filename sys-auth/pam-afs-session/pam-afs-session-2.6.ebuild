@@ -12,11 +12,13 @@ SRC_URI="http://archives.eyrie.org/software/afs/${P}.tar.gz"
 
 LICENSE="as-is"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 ~x86"
 IUSE=""
 RESTRICT=mirror
 
-DEPEND="virtual/krb5 virtual/pam"
+DEPEND="virtual/krb5 
+	sys-libs/pam
+	"
 RDEPEND="${DEPEND}"
 
 #src_compile() {
