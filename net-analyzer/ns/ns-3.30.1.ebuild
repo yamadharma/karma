@@ -2,9 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=7
 
-inherit eutils
+PYTHON_COMPAT=( python{3_5,3_6,3_7} )
+
+inherit eutils python-single-r1
 
 NSC_PV=0.5.3
 
@@ -16,38 +18,83 @@ SRC_URI="https://www.nsnam.org/release/ns-allinone-${PV}.tar.bz2
 LICENSE="GPL-2"
 SLOT="3"
 KEYWORDS="~x86 ~amd64"
-IUSE="doc examples"
+IUSE="doc examples tests mpi"
 
 RDEPEND="dev-lang/python
-	dev-python/pygccxml
-	dev-python/pygraphviz"
+	dev-libs/boost
+	x11-libs/gtk+:3
+	dev-python/pygraphviz
+	sci-libs/gsl
+"
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
+
+S=${WORKDIR}/ns-allinone-${PV}
 
 #src_prepare() {
 #	sed -i -e "s|^NSC_RELEASE_URL =.*|NSC_RELEASE_URL = \"file://${DISTDIR}\"|" src/internet-stack/wscript
 #}
 
 src_configure() {
+	# NetAnim
+	NETANIM_DIR=$(echo netanim-*)
+	cd ${NETANIM_DIR}
+	qmake NetAnim.pro
+	cd ..
+
+	# ns
 	local myconf
-	myconf="${myconf} --enable-nsc"
+	use mpi && myconf="${myconf} --enable-mpi"
+
+	NS_DIR=$(echo ns-*)
+	cd ${NS_DIR}
 	
 	./waf configure \
 	    --prefix=/usr \
+	    $(use_enable examples) \
+	    $(use_enable tests) \
 	    ${myconf} || die
+	cd ..	 
+
 }
 
 src_compile() {
-	./waf build
-	if ( use examples )
-	then
-	    ./waf check
-	    ./waf --doxygen
-	fi	    
+	# NetAnim
+	NETANIM_DIR=$(echo netanim-*)
+	cd ${NETANIM_DIR}
+	emake
+	cd ..
+
+	# ns
+	NS_DIR=$(echo ns-*)
+	cd ${NS_DIR}
+	
+	./waf build || die
+	cd ..	 
+
+#	./waf build
+#	if ( use examples )
+#	then
+#	    ./waf check
+#	    ./waf --doxygen
+#	fi	    
 }
 
+
 src_install() {
-	DESTDIR=${D} ./waf install
+	# NetAnim
+	NETANIM_DIR=$(echo netanim-*)
+	cd ${NETANIM_DIR}
+	
+	dobin NetAnim	
+
+	cd ..
+
+	# ns
+	NS_DIR=$(echo ns-*)
+	cd ${NS_DIR}
+
+	./waf install --prefix=/usr --destdir=${D}
 	
 	dodoc AUTHORS CHANGES.html LICENSE README RELEASE_NOTES VERSION
 	cp waf ${D}/usr/share/doc/${PF}
@@ -55,6 +102,8 @@ src_install() {
 	then
 	    cp -R examples ${D}/usr/share/doc/${PF}
 	    cp -R samples ${D}/usr/share/doc/${PF}
-	fi	    
+	fi
+
+	cd ..
 }
 
