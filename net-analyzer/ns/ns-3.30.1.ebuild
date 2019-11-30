@@ -96,7 +96,7 @@ src_install() {
 
 	./waf install --prefix=/usr --destdir=${D}
 	
-	dodoc AUTHORS CHANGES.html LICENSE README RELEASE_NOTES VERSION
+	dodoc AUTHORS CHANGES.html LICENSE README.md RELEASE_NOTES VERSION
 	cp waf ${D}/usr/share/doc/${PF}
 	if ( use examples )
 	then
@@ -105,5 +105,7 @@ src_install() {
 	fi
 
 	cd ..
+
+	mv ${D}/usr/lib/* ${D}/usr/lib64
 }
 

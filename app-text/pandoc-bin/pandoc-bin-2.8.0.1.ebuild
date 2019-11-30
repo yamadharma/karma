@@ -5,7 +5,7 @@ EAPI=6
 
 DESCRIPTION="Conversion between markup formats"
 HOMEPAGE="http://pandoc.org"
-SRC_URI="https://github.com/jgm/pandoc/releases/download/${PV}/pandoc-${PV}-linux.tar.gz"
+SRC_URI="https://github.com/jgm/pandoc/releases/download/${PV}/pandoc-${PV}-linux-amd64.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0/${PV}"

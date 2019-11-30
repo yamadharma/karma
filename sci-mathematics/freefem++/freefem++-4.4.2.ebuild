@@ -16,7 +16,7 @@ SRC_URI="https://github.com/FreeFem/FreeFem-sources/archive/v${PV}.tar.gz -> ${P
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="amd64"
-IUSE="doc examples mpi opengl X"
+IUSE="doc examples mpi opengl X static"
 
 RDEPEND="
 	sci-libs/fftw:3.0
@@ -37,6 +37,8 @@ RDEPEND="
 		x11-libs/libXpm
 		x11-libs/libXxf86vm
 		)"
+
+#	sci-libs/mumps
 
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
@@ -67,8 +69,10 @@ src_configure() {
 	if use mpi; then
 		myconf="${myconf} --with-mpi=$(mpi_pkg_cxx)"
 	else
-		myconf="--without-mpi"
+		myconf="${myconf} --without-mpi"
 	fi
+
+	use static && myconf="${myconf} --enable-static"
 
 	# Dirty hack (temporary disable superlu)
 	myconf="${myconf} --disable-superlu"
