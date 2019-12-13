@@ -10,7 +10,7 @@ MY_P="${P/bibtool/BibTool}"
 S="${WORKDIR}/BibTool"
 
 DESCRIPTION="BibTool is a powerful command-line tool to manipulate BibTeX databases."
-HOMEPAGE="http://www.gerd-neugebauer.de/software/TeX/BibTool.en.html"
+HOMEPAGE="http://www.gerd-neugebauer.de/software/TeX/BibTool/en/"
 SRC_URI="http://mirror.ctan.org/biblio/bibtex/utils/bibtool/${MY_P}.tar.gz"
 
 LICENSE="GPL-1"
