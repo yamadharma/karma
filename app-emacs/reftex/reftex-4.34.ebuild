@@ -1,6 +1,9 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
+EAPI=7
+NEED_EMACS=24
+
 inherit elisp eutils latex-package
 
 DESCRIPTION="Extended support for writing, formatting and using (La)TeX, Texinfo and BibTeX files"
