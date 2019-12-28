@@ -1,9 +1,10 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="4"
+EAPI=7
+NEED_EMACS=24
 
-inherit elisp
+inherit elisp readme.gentoo-r1
 
 DESCRIPTION="Visible bookmarks in buffer"
 HOMEPAGE="http://ebib.sourceforge.net/"
