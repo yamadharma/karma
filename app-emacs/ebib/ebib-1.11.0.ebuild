@@ -16,5 +16,5 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 LISP_TEXINFO="info/ebib-manual.info"
-DOCS="ChangeLog INSTALL README doc/ebib-manual.pdf"
+DOCS="INSTALL README doc/ebib-manual.pdf"
 
