@@ -35,7 +35,7 @@ KEYWORDS="amd64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="dedicated libressl server"
 
 RDEPEND="
-	|| ( ( >=app-text/pandoc-${PANDOC_VER}	dev-haskell/pandoc-citeproc ) 
+	|| ( ( >=app-text/pandoc-${PANDOC_VER} dev-haskell/pandoc-citeproc ) 
 	    >=app-text/pandoc-bin-${PANDOC_VER} )
 	dev-java/aopalliance:1
 	dev-java/gin:2.1
