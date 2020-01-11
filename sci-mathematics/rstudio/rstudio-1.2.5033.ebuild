@@ -43,7 +43,6 @@ RDEPEND="
 	dev-java/gwt:2.8
 	dev-java/javax-inject
 	=dev-java/validation-api-1.0*:1.0[source]
-	dev-haskell/pandoc-citeproc
 	dev-lang/R
 	dev-libs/boost:=
 	>=dev-libs/mathjax-2.7.4
