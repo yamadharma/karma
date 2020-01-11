@@ -1,29 +1,24 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit eutils user cmake-utils gnome2-utils pam xdg-utils java-pkg-2 pax-utils qmake-utils
+inherit eutils cmake-utils pam xdg-utils java-pkg-2 java-ant-2 pax-utils prefix qmake-utils vcs-clean
 
 # TODO
-# * package gin and gwt
 # * use dict from tree, linguas
 # * do src_test (use junit from tree?)
 
 # update from scripts in dependencies/common
-# egrep '(GWT_SDK_VER=|GIN_VER=|SELENIUM_VER=|CHROMEDRIVER_VER=)' dependencies/common/install-gwt
+# egrep '(GWT_SDK_VER=|GIN_VER=)' dependencies/common/install-gwt
 GWT_VER=2.8.1
 GIN_VER=2.1.2
-SELENIUM_VER=2.37.0
-CHROMEDRIVER_VER=2.7
 # grep 'PANDOC_VERSION=' dependencies/common/install-pandoc
 # It should be PANDOC_VER=2.3.1 however >=app-text/pandoc-2.3.1 is not yet in portage
 PANDOC_VER=1.19.2.1
-# ls dependencies/common/*.tar.gz
-PACKRAT_VER=0.98.1000
-RMARKDOWN_VER=0.98.1000
-SHINYAPPS_VER=0.98.1000
-RSCONNECT_VER=0.4.1.4_fcac892a69817febd7b655b189bf57193260cda0
+# grep -5 QT_CANDIDATES src/cpp/desktop/CMakeLists.txt
+QT_VER=5.10
+QT_SLOT=5
 
 DESCRIPTION="IDE for the R language"
 HOMEPAGE="
@@ -31,16 +26,7 @@ HOMEPAGE="
 	https://github.com/rstudio/rstudio/"
 SRC_URI="
 	https://github.com/rstudio/rstudio/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	https://s3.amazonaws.com/rstudio-buildtools/gin-${GIN_VER}.zip
-	https://s3.amazonaws.com/rstudio-buildtools/gwt-${GWT_VER}.zip
-	https://s3.amazonaws.com/rstudio-buildtools/selenium-java-${SELENIUM_VER}.zip
-	https://s3.amazonaws.com/rstudio-buildtools/selenium-server-standalone-${SELENIUM_VER}.jar
-	https://s3.amazonaws.com/rstudio-buildtools/chromedriver-linux
 	https://s3.amazonaws.com/rstudio-dictionaries/core-dictionaries.zip
-	https://dev.gentoo.org/~gienah/distfiles/packrat-${PACKRAT_VER}.tar.gz
-	https://dev.gentoo.org/~gienah/distfiles/rmarkdown-${RMARKDOWN_VER}.tar.gz
-	https://dev.gentoo.org/~gienah/distfiles/shinyapps-${SHINYAPPS_VER}.tar.gz
-	https://dev.gentoo.org/~gienah/distfiles/rsconnect_${RSCONNECT_VER}.tar.gz
 "
 
 LICENSE="AGPL-3"
@@ -48,16 +34,20 @@ SLOT="0"
 KEYWORDS="amd64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="dedicated libressl server"
 
-QT_VER=5.4
-QT_SLOT=5
 RDEPEND="
 	|| ( ( >=app-text/pandoc-${PANDOC_VER}	dev-haskell/pandoc-citeproc ) 
 	    >=app-text/pandoc-bin-${PANDOC_VER} )
-	>=dev-lang/R-2.11.1
-	>=dev-libs/boost-1.63:=
+	dev-java/aopalliance:1
+	dev-java/gin:2.1
+	dev-java/gwt:2.8
+	dev-java/javax-inject
+	=dev-java/validation-api-1.0*:1.0[source]
+	dev-haskell/pandoc-citeproc
+	dev-lang/R
+	dev-libs/boost:=
 	>=dev-libs/mathjax-2.7.4
 	sys-apps/util-linux
-	>=sys-devel/clang-3.5.0:*
+	sys-devel/clang:*
 	sys-libs/zlib
 	>=virtual/jre-1.8:=
 	x11-libs/pango
@@ -75,13 +65,22 @@ RDEPEND="
 		>=dev-qt/qtsql-${QT_VER}:${QT_SLOT}
 		>=dev-qt/qtsvg-${QT_VER}:${QT_SLOT}
 		>=dev-qt/qtwebchannel-${QT_VER}:${QT_SLOT}
-		>=dev-qt/qtwebengine-${QT_VER}:${QT_SLOT}
+		>=dev-qt/qtwebengine-${QT_VER}:${QT_SLOT}[widgets]
 		>=dev-qt/qtwidgets-${QT_VER}:${QT_SLOT}
 		>=dev-qt/qtxml-${QT_VER}:${QT_SLOT}
 		>=dev-qt/qtxmlpatterns-${QT_VER}:${QT_SLOT}
-		server? ( virtual/pam )
+		server? ( sys-libs/pam )
 	)
-	dedicated? ( virtual/pam )
+	dedicated? ( sys-libs/pam )
+	dedicated? (
+		sys-libs/pam
+		acct-user/rstudio-server
+		acct-group/rstudio-server
+	)
+	server? (
+		acct-user/rstudio-server
+		acct-group/rstudio-server
+	)
 	!libressl? ( dev-libs/openssl:0= )
 	libressl? ( dev-libs/libressl:0= )"
 DEPEND="${RDEPEND}
@@ -92,49 +91,23 @@ DEPEND="${RDEPEND}
 #	test? ( dev-java/junit:4 )
 
 PATCHES=(
-		"${FILESDIR}/${PN}-1.2.1335-prefs.patch"
-		"${FILESDIR}/${PN}-1.2.1335-paths.patch"
-		"${FILESDIR}/${PN}-1.2.1335-pandoc.patch"
-		"${FILESDIR}/${PN}-1.2.1335-linker_flags.patch"
-		"${FILESDIR}/${PN}-1.2.1335-qtsingleapplication.patch"
-		"${FILESDIR}/${PN}-1.0.44-systemd.patch"
-		"${FILESDIR}/${PN}-1.2.1335-core.patch"
-		"${FILESDIR}/${PN}-1.2.1335-fix-ptr-int-compare.patch"
-		"${FILESDIR}/${PN}-1.2.1335-boost-1.70.0_p1.patch"
-		"${FILESDIR}/${PN}-1.2.1335-boost-1.70.0_p2.patch"
+	"${FILESDIR}"/${PN}-1.2.5033-prefs.patch
+	"${FILESDIR}"/${PN}-1.2.5033-paths.patch
+	"${FILESDIR}"/${PN}-1.2.5033-pandoc.patch
+	"${FILESDIR}"/${PN}-1.2.1335-linker_flags.patch
+	"${FILESDIR}"/${PN}-1.2.1335-qtsingleapplication.patch
+	"${FILESDIR}"/${PN}-1.0.44-systemd.patch
+	"${FILESDIR}"/${PN}-1.2.1335-core.patch
+	"${FILESDIR}"/${PN}-1.2.1335-boost-1.70.0_p1.patch
+	"${FILESDIR}"/${PN}-1.2.1335-boost-1.70.0_p2.patch
 )
 
 src_unpack() {
-	unpack ${P}.tar.gz gwt-${GWT_VER}.zip
+	unpack ${P}.tar.gz
 	cd "${S}" || die
-	mkdir -p src/gwt/lib/{gin,gwt} \
-		dependencies/common/dictionaries \
-		src/gwt/lib/selenium/${SELENIUM_VER} \
-		src/gwt/lib/selenium/chromedriver/${CHROMEDRIVER_VER} || die
-	mv ../gwt-${GWT_VER} src/gwt/lib/gwt/${GWT_VER} || die
-	unzip -qd src/gwt/lib/gin/${GIN_VER} \
-		"${DISTDIR}"/gin-${GIN_VER}.zip || die
+	mkdir -p dependencies/common/dictionaries
 	unzip -qd dependencies/common/dictionaries \
 		"${DISTDIR}"/core-dictionaries.zip || die
-	unzip -qd src/gwt/lib/selenium/${SELENIUM_VER} \
-		"${DISTDIR}"/selenium-java-${SELENIUM_VER}.zip || die
-	cp "${DISTDIR}"/selenium-server-standalone-${SELENIUM_VER}.jar \
-		src/gwt/lib/selenium/${SELENIUM_VER}/ || die
-	cp "${DISTDIR}"/chromedriver-linux \
-		src/gwt/lib/selenium/chromedriver/${CHROMEDRIVER_VER}/ || die
-	cd dependencies/common || die
-	unpack packrat-${PACKRAT_VER}.tar.gz
-	unpack rmarkdown-${RMARKDOWN_VER}.tar.gz
-	unpack shinyapps-${SHINYAPPS_VER}.tar.gz
-	unpack rsconnect_${RSCONNECT_VER}.tar.gz
-	cp "${DISTDIR}"/rmarkdown-${RMARKDOWN_VER}.tar.gz \
-		. || die
-	cp "${DISTDIR}"/packrat-${PACKRAT_VER}.tar.gz \
-		. || die
-	cp "${DISTDIR}"/shinyapps-${SHINYAPPS_VER}.tar.gz \
-		. || die
-	cp "${DISTDIR}"/rsconnect_${RSCONNECT_VER}.tar.gz \
-		. || die
 }
 
 src_prepare() {
@@ -160,6 +133,11 @@ src_prepare() {
 	sed -i \
 		-e "s:/usr:${EPREFIX}/usr:g" \
 		CMakeGlobals.txt src/cpp/desktop/CMakeLists.txt || die
+
+	# install themes in /etc/rstudio/extra/sthemes instead of /usr/extra/themes
+	sed -i \
+		-e "s@\(DESTINATION \"\)\(extras/themes\"\)@\1${EROOT}/etc/rstudio/\2@" \
+		src/cpp/server/CMakeLists.txt || die
 
 	# On Gentoo the rstudio-server configuration file is /etc/conf.d/rstudio-server.conf
 	sed -e "s@/etc/rstudio/rserver.conf@${EROOT}/etc/conf.d/rstudio-server.conf@" \
@@ -190,6 +168,8 @@ src_prepare() {
 		-i "${S}"/CMakeLists.txt \
 		"${S}"/CMakeGlobals.txt \
 		|| die
+
+	eprefixify src/gwt/build.xml
 }
 
 src_configure() {
@@ -199,16 +179,25 @@ src_configure() {
 
 	local mycmakeargs=(
 		-DDISTRO_SHARE=share/${PN}
-		-DRSTUDIO_INSTALL_FREEDESKTOP="$(usex !dedicated "ON" "OFF")"
 		-DRSTUDIO_TARGET=$(usex dedicated "Server" "$(usex server "Development" "Desktop")")
-		-DQT_QMAKE_EXECUTABLE=$(qt5_get_bindir)/qmake
 		-DRSTUDIO_VERIFY_R_VERSION=FALSE
 		)
 
+	if use !dedicated; then
+		mycmakeargs+=(
+			-DRSTUDIO_INSTALL_FREEDESKTOP="$(usex !dedicated "ON" "OFF")"
+			-DQT_QMAKE_EXECUTABLE=$(qt5_get_bindir)/qmake
+		)
+	fi
 	cmake-utils_src_configure
 }
 
 src_compile() {
+	local JAVA_ANT_REWRITE_CLASSPATH="yes"
+	local EANT_BUILD_XML="src/gwt/build.xml"
+	local EANT_BUILD_TARGET="clean"
+	java-pkg-2_src_compile
+
 	# Avoid the rest of the oracle-jdk-bin-1.8.0.60 sandbox violations F: mkdir S: deny
 	# P: /root/.oracle_jre_usage.
 	export ANT_OPTS="-Duser.home=${T}"
@@ -218,12 +207,12 @@ src_compile() {
 src_install() {
 	export ANT_OPTS="-Duser.home=${T}"
 	cmake-utils_src_install
-	pax-mark m "${ED}/usr/bin/rstudio"
+	use dedicated || pax-mark m "${ED}/usr/bin/rstudio"
 	doconfd "${FILESDIR}"/rstudio-server.conf
 	dodir /etc/rstudio
 	insinto /etc/rstudio
 	doins "${FILESDIR}"/rsession.conf
-	dosym "${ED}/etc/conf.d/rstudio-server.conf" "/etc/rstudio/rserver.conf"
+	dosym ../conf.d/rstudio-server.conf /etc/rstudio/rserver.conf
 	if use dedicated || use server; then
 		dopamd src/cpp/server/extras/pam/rstudio
 		newinitd "${FILESDIR}"/rstudio-server.initd rstudio-server
@@ -231,23 +220,17 @@ src_install() {
 }
 
 pkg_preinst() {
-	use dedicated || gnome2_icon_savelist
 	java-pkg-2_pkg_preinst
 }
 
 pkg_postinst() {
 	use dedicated || { xdg_desktop_database_update
 		xdg_mimeinfo_database_update
-		gnome2_icon_cache_update ;}
-
-	if use dedicated || use server; then
-		enewgroup rstudio-server
-		enewuser rstudio-server -1 -1 -1 rstudio-server
-	fi
+		xdg_icon_cache_update ;}
 }
 
 pkg_postrm() {
 	use dedicated || { xdg_desktop_database_update
 		xdg_mimeinfo_database_update
-		gnome2_icon_cache_update ;}
+		xdg_icon_cache_update ;}
 }
