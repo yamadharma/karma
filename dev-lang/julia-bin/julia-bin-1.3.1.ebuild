@@ -4,16 +4,17 @@
 EAPI=7
 MY_PN=${PN/-bin/}
 MY_P=${MY_PN}-${PV}
+MY_PV=$(ver_cut 1-2)
 
 DESCRIPTION="High-performance programming language for technical computing"
 HOMEPAGE="https://julialang.org/"
 SRC_URI="
-	amd64? ( https://julialang-s3.julialang.org/bin/linux/x64/1.3/${MY_P}-linux-x86_64.tar.gz )
-	"
+	amd64? ( https://julialang-s3.julialang.org/bin/linux/x64/${MY_PV}/${MY_P}-linux-x86_64.tar.gz )
+"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="-* amd64 ~x86"
+KEYWORDS="-* amd64 ~arm ~arm64 ~x86"
 IUSE="elibc_glibc elibc_FreeBSD"
 
 RDEPEND="!dev-lang/julia"
