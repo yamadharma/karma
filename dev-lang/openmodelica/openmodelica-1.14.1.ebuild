@@ -6,6 +6,9 @@ EAPI=5
 
 inherit eutils autotools flag-o-matic
 
+OMOptimPV=1.11.0-dev.beta4
+OMSensPV=WorkPackage-2-Final
+
 if [[ ${PV} = 9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/OpenModelica/OpenModelica.git"
@@ -14,9 +17,12 @@ else
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/OpenModelica/OpenModelica.git"
 	EGIT_COMMIT="v${PV}"
-#	SRC_URI="https://github.com/OpenModelica/OpenModelica/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+#	SRC_URI="https://github.com/OpenModelica/OpenModelica/archive/v${PV}.tar.gz -> ${P}.tar.gz
+#		https://github.com/OpenModelica/OMOptim/archive/v${OMOptimPV}.tar.gz -> OMOptim-${OMOptimPV}.tar.gz
+#		https://github.com/OpenModelica/OMSens/archive/v${OMSensPV}.tar.gz -> OMSens-${OMSensPV}.tar.gz
+#		"
 #	S=${WORKDIR}/OpenModelica-${PV}
-#	KEYWORDS="amd64 ~x86"
+	KEYWORDS="amd64 ~x86"
 fi
 
 DESCRIPTION="A Modelica modeling, compilation and simulation environment."
