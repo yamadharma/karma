@@ -4,7 +4,7 @@
 
 EAPI="7"
 
-PYTHON_COMPAT=( python{3_5,3_6,3_7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit cmake-utils texlive-common python-single-r1
 
@@ -43,6 +43,7 @@ RDEPEND="${CDEPEND}
 	dev-texlive/texlive-latexrecommended"
 
 CMAKE_IN_SOURCE_BUILD=y
+CMAKE_MAKEFILE_GENERATOR=emake
 
 src_prepare() {
 	cmake-utils_src_prepare
