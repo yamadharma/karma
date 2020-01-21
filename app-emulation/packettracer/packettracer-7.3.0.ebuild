@@ -26,7 +26,10 @@ RDEPEND="${DEPEND}
 	dev-libs/icu
 	dev-libs/openssl:0=
 	media-libs/libpng:1.2
+	media-libs/jpeg:8 
 "
+# media-libs/jpeg:8 for the libjpeg.so.8 SONAME for ABI compat
+
 S="${WORKDIR}"
 QA_PREBUILT="opt/packettracer/*"
 
