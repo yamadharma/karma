@@ -13,7 +13,7 @@ SRC_URI="
 
 LICENSE="Cisco_EULA"
 SLOT="0"
-KEYWORDS="amd64"
+# KEYWORDS="amd64"
 IUSE=""
 RESTRICT="fetch mirror strip userpriv"
 
