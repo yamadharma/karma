@@ -1,4 +1,4 @@
-sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.1 >=sys-devel/automake-1.15.1 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl
 0
 mirror://sourceforge/libewf/libewf-beta-20090606.tar.gz
@@ -7,7 +7,7 @@ http://libewf.sourceforge.net
 BSD
 Implementation of the EWF (SMART and EnCase) image format
 ~x86 ~amd64
-autotools eutils libtool multilib toolchain-funcs
+autotools desktop epatch estack eutils libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean
 debug rawio unicode
 
 

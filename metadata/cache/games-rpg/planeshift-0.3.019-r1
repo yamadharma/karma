@@ -7,7 +7,7 @@ http://www.planeshift.it/
 || ( GPL-2 Planeshift )
 Virtual fantasy world MMORPG
 x86 amd64
-base eutils games multilib toolchain-funcs user
+base desktop epatch estack eutils games ltprune multilib preserve-libs toolchain-funcs user vcs-clean
 server static debug maxoptimization debug nochatbubbles
 
 

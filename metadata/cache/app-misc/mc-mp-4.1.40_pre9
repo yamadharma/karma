@@ -7,11 +7,11 @@ http://mc.linuxinside.com/cgi-bin/dir.cgi
 GPL-2
 GNU Midnight Commander cli-based file manager. 4.1.x branch
 amd64 x86
-eutils flag-o-matic multilib pam toolchain-funcs
+desktop epatch estack eutils flag-o-matic ltprune multilib pam preserve-libs toolchain-funcs vcs-clean
 7zip gpm nls ncurses pam slang
 
 
-virtual/editor
+
 0
 
 compile install postinst unpack

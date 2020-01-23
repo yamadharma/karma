@@ -11,7 +11,7 @@ port of the OpenBSD TFTP server
 readline selinux tcpd
 
 
-virtual/tftp
+
 0
 
 compile install postinst

@@ -1,0 +1,22 @@
+X? ( x11-apps/mkfontdir media-fonts/encodings )
+
+0
+http://lizard.phys.msu.su/home/compu_sci/OldFonts-dist-39.tar.bz2
+nostrip
+http://lizard.phys.msu.su/home/compu_sci
+as-is
+The package includes several Russian book font families
+alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sh sparc x86
+desktop epatch estack eutils font ltprune multilib preserve-libs toolchain-funcs vcs-clean
+gnustep X
+
+
+
+2
+
+install postinst postrm setup
+
+
+
+
+

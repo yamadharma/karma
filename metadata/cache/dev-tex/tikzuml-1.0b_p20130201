@@ -1,0 +1,22 @@
+virtual/latex-base >=sys-apps/texinfo-4.2-r5
+virtual/latex-base
+0
+http://perso.ensta-paristech.fr/~kielbasi/tikzuml/src/tikzuml-v1.0b-2013-02-01.tbz
+
+http://perso.ensta-paristech.fr/~kielbasi/tikzuml/
+tba
+TikZ extension to manage common UML diagrams
+~amd64 ~x86
+base desktop epatch estack eutils latex-package ltprune multilib preserve-libs toolchain-funcs vcs-clean
+doc examples
+
+
+
+5
+
+compile configure install postinst postrm prepare unpack
+
+
+
+
+

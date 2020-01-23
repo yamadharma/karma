@@ -7,7 +7,7 @@ ftp://invisible-island.net/xterm/
 GPL-2
 XTerm wrapper with koi8-r locale
 x86 ~ppc ~sparc ~alpha ~mips ~arm ~hppa amd64 ~ia64 ~ppc64
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 
 
 

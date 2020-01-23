@@ -1,0 +1,22 @@
+
+
+0
+http://shounen.ru/soft/avinfo/avinfo-1.0.a15unix.tar.gz http://shounen.ru/soft/avinfo/avinfo-1.0.a15unix-patch1.tar.gz
+
+http://shounen.ru/soft/avinfo/english.shtml
+GPL-2
+Utility for displaying AVI information
+~amd64 ~ppc ~x86
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+
+
+
+
+4
+
+compile install prepare
+
+
+
+
+

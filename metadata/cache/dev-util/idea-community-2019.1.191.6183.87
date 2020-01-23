@@ -1,0 +1,22 @@
+!dev-util/idea-community:14 !dev-util/idea-community:15
+!dev-util/idea-community:14 !dev-util/idea-community:15 >=virtual/jdk-1.7:*
+0
+https://download.jetbrains.com/idea/ideaIC-2019.1-no-jbr.tar.gz -> ideaIC-191.6183.87.tar.gz jbr8? ( x86? ( https://bintray.com/jetbrains/intellij-jdk/download_file?file_path=jbrx-8u202-linux-i586-b1483.37.tar.gz -> jbrx-8u202-linux-i586-b1483.37.tar.gz ) amd64? ( https://bintray.com/jetbrains/intellij-jdk/download_file?file_path=jbrx-8u202-linux-x64-b1483.37.tar.gz -> jbrx-8u202-linux-x64-b1483.37.tar.gz ) ) jbr11? ( amd64? ( https://bintray.com/jetbrains/intellij-jdk/download_file?file_path=jbr-11_0_2-linux-x64-b164.tar.gz -> jbr-11_0_2-linux-x64-b164.tar.gz ) )
+
+https://www.jetbrains.com/idea
+Apache-2.0 jbr8? ( GPL-2 ) jbr11? ( GPL-2 )
+A complete toolset for web, mobile and enterprise development
+~amd64 ~x86
+desktop eutils
++jbr8 -jbr11
+jbr8? ( !jbr11 )
+
+
+7
+
+install prepare unpack
+
+
+
+
+

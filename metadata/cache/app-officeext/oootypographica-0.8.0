@@ -1,0 +1,22 @@
+virtual/ooo
+virtual/ooo
+0
+http://extensions.services.openoffice.org/files/1299/0/OOoTypographica-0.8.0.oxt
+
+http://extensions.services.openoffice.org/project/OOoTypographica
+LGPL-3
+Russian Typographica
+~alpha amd64 ~hppa ~ia64 ppc ~ppc64 sparc x86 ~x86-fbsd
+desktop epatch estack eutils ltprune multilib openoffice-ext preserve-libs toolchain-funcs vcs-clean
+
+
+
+
+2
+
+install postinst prerm setup unpack
+
+
+
+
+

@@ -7,7 +7,7 @@ http://portage-bashrc.sourceforge.net/
 GPL-2
 A pluggable Portage add-on. Included: tmpfs, autopatch, localepurge, perpackage, resumemerge, distclean
 ~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~s390 ~sparc ~x86
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 tmpfs perpackage localepurge autopatch resumemerge distclean
 
 

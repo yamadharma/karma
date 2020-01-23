@@ -7,7 +7,7 @@ http://gshowtv.sourceforge.net/xmltv-druid.html
 GPL-2
 Very simple Gnome druid for selecting, configuring and scheduling s tv_grab task for XMLTV.
 ~amd64 ~x86
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 
 
 

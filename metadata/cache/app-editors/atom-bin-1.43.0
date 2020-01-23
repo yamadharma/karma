@@ -1,0 +1,22 @@
+|| ( >=dev-lang/python-2.7.5-r2:2.7 ) media-fonts/inconsolata system-node? ( >=net-libs/nodejs-6.0[npm] ) !!dev-util/atom-shell !dev-util/apm !app-editors/atom
+|| ( >=dev-lang/python-2.7.5-r2:2.7 ) media-fonts/inconsolata system-node? ( >=net-libs/nodejs-6.0[npm] ) !!dev-util/atom-shell !dev-util/apm !app-editors/atom x11-libs/gtk+:2 x11-libs/libnotify gnome-base/libgnome-keyring dev-libs/nss dev-libs/nspr gnome-base/gconf media-libs/alsa-lib net-print/cups sys-libs/libcap x11-libs/libXtst x11-libs/pango dev-vcs/git dev-libs/openssl:0=
+0
+amd64? ( https://github.com/atom/atom/releases/download/v1.43.0/atom-amd64.tar.gz -> atom-1.43.0-amd64.tar.gz )
+mirror strip bindist
+https://atom.io
+MIT
+A hackable text editor for the 21st Century - Binary package
+amd64
+desktop epatch estack eutils flag-o-matic gnome2-utils ltprune multilib pax-utils preserve-libs python-any-r1 python-utils-r1 toolchain-funcs unpacker vcs-clean xdg-utils
+system-node pax_kernel
+
+
+
+6
+
+install postinst postrm preinst prepare setup unpack
+
+
+
+
+

@@ -1,4 +1,4 @@
-media-libs/libsdl player? ( >=x11-libs/gtk+-2 ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20080326 ) mpeg2? ( media-libs/libmpeg2 ) id3? ( media-libs/libid3tag ) a52? ( media-libs/a52dec ) ) xvid? ( >=media-libs/xvid-0.9.8 ) mp4live? ( >=x11-libs/gtk+-2 lame? ( >=media-sound/lame-3.92 ) aac? ( >=media-libs/faac-1.24-r1 ) ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20080326 ) x264? ( media-libs/x264 ) ) nas? ( media-libs/nas x11-libs/libXt ) alsa? ( media-libs/alsa-lib ) arts? ( kde-base/arts ) esd? ( media-sound/esound ) =media-libs/libmp4v2-1.5.0.1* !<media-libs/faad2-2.0-r9 >=x11-libs/gtk+-2 media-libs/alsa-lib >=dev-libs/glib-2 dev-util/pkgconfig player? ( mmx? ( >=dev-lang/nasm-0.98.19 ) ) !<sys-devel/gettext-0.18.1.1-r3 =sys-devel/automake-1.9* >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+media-libs/libsdl player? ( >=x11-libs/gtk+-2 ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20080326 ) mpeg2? ( media-libs/libmpeg2 ) id3? ( media-libs/libid3tag ) a52? ( media-libs/a52dec ) ) xvid? ( >=media-libs/xvid-0.9.8 ) mp4live? ( >=x11-libs/gtk+-2 lame? ( >=media-sound/lame-3.92 ) aac? ( >=media-libs/faac-1.24-r1 ) ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20080326 ) x264? ( media-libs/x264 ) ) nas? ( media-libs/nas x11-libs/libXt ) alsa? ( media-libs/alsa-lib ) arts? ( kde-base/arts ) esd? ( media-sound/esound ) =media-libs/libmp4v2-1.5.0.1* !<media-libs/faad2-2.0-r9 >=x11-libs/gtk+-2 media-libs/alsa-lib >=dev-libs/glib-2 dev-util/pkgconfig player? ( mmx? ( >=dev-lang/nasm-0.98.19 ) ) >=app-portage/elt-patches-20170815 =sys-devel/automake-1.9* >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 media-libs/libsdl player? ( >=x11-libs/gtk+-2 ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20080326 ) mpeg2? ( media-libs/libmpeg2 ) id3? ( media-libs/libid3tag ) a52? ( media-libs/a52dec ) ) xvid? ( >=media-libs/xvid-0.9.8 ) mp4live? ( >=x11-libs/gtk+-2 lame? ( >=media-sound/lame-3.92 ) aac? ( >=media-libs/faac-1.24-r1 ) ffmpeg? ( >=media-video/ffmpeg-0.4.9_p20080326 ) x264? ( media-libs/x264 ) ) nas? ( media-libs/nas x11-libs/libXt ) alsa? ( media-libs/alsa-lib ) arts? ( kde-base/arts ) esd? ( media-sound/esound ) =media-libs/libmp4v2-1.5.0.1* !<media-libs/faad2-2.0-r9
 0
 mirror://sourceforge/mpeg4ip/mpeg4ip-1.5.0.1.tar.gz
@@ -7,7 +7,7 @@ http://www.mpeg4ip.net/
 MPL-1.1 LGPL-2 GPL-2 LGPL-2.1 BSD UCL MPEG4
 MPEG 4 implementation library
 ~amd64 ~ppc ~x86
-autotools eutils libtool multilib toolchain-funcs
+autotools desktop epatch estack eutils libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean
 ipv6 mmx v4l2 xvid nas alsa esd arts ffmpeg a52 mpeg2 lame aac id3 player mp4live x264
 
 

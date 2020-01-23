@@ -7,7 +7,7 @@ http://marc.merlins.org/linux/exim/sa.html
 GPL-2
 Exim SpamAssassin at SMTP time
 x86 amd64
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 
 
 

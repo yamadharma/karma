@@ -1,0 +1,22 @@
+x11-libs/gtk+:3 dev-cpp/gtkmm:3.0 dev-libs/boost dev-libs/jsoncpp dev-libs/mathjax dev-python/sympy doc? ( app-doc/doxygen dev-texlive/texlive-latexextra || ( app-text/texlive-core dev-tex/pdftex ) )
+x11-libs/gtk+:3 dev-cpp/gtkmm:3.0 dev-libs/boost dev-libs/jsoncpp dev-libs/mathjax dev-python/sympy virtual/latex-base dev-texlive/texlive-latexrecommended
+0
+
+
+http://cadabra.science/
+GPL-2
+Field-theory motivated computer algebra system
+~amd64 ~x86
+cmake-utils eutils flag-o-matic git-r3 multilib multiprocessing ninja-utils python-single-r1 python-utils-r1 texlive-common toolchain-funcs xdg-utils
+doc examples +python_targets_python3_6 +python_single_target_python3_6
+
+
+dev-util/ninja >=dev-util/cmake-3.1.0 >=dev-vcs/git-1.8.2.1[curl]
+7
+live
+compile configure install postinst postrm prepare setup test unpack
+
+
+
+
+

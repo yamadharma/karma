@@ -7,7 +7,7 @@ http://www.planeshift.it/
 PlaneShift
 Virtual fantasy world MMORPG
 amd64 x86
-base eutils games multilib toolchain-funcs user
+base desktop epatch estack eutils games ltprune multilib preserve-libs toolchain-funcs user vcs-clean
 
 
 

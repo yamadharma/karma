@@ -1,0 +1,22 @@
+X? ( x11-libs/gtksourceview:3.0 doc? ( dev-python/sphinx[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] ) dev-python/pygobject:3[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] gnome-base/librsvg:2 x11-libs/gtk+:3 ) dev-util/scons[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] sys-devel/gettext virtual/pkgconfig dev-util/scons[python_targets_python2_7]
+X? ( x11-libs/gtksourceview:3.0 doc? ( dev-python/sphinx[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] ) dev-python/pygobject:3[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] gnome-base/librsvg:2 x11-libs/gtk+:3 )
+0
+https://github.com/sahib/rmlint/archive/v2.8.0.tar.gz -> rmlint-2.8.0.tar.gz
+
+https://github.com/sahib/rmlint
+GPL-3
+rmlint finds space waste and other broken things on your filesystem and offers to remove it
+amd64 ~x86
+desktop epatch estack eutils gnome2-utils ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 scons-utils toolchain-funcs vcs-clean xdg-utils
+X doc python_targets_python3_6 python_targets_python3_7
+|| ( python_targets_python3_6 python_targets_python3_7 )
+
+
+6
+
+compile install postinst postrm
+
+
+
+
+

@@ -1,0 +1,22 @@
+X? ( x11-libs/gtksourceview:3.0 doc? ( dev-python/sphinx[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] ) dev-python/pygobject:3[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] gnome-base/librsvg:2 x11-libs/gtk+:3 ) dev-util/scons[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] sys-devel/gettext virtual/pkgconfig >=dev-vcs/git-1.8.2.1[curl] dev-util/scons[python_targets_python2_7]
+X? ( x11-libs/gtksourceview:3.0 doc? ( dev-python/sphinx[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] ) dev-python/pygobject:3[python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_python3_6(-),-python_single_target_python3_7(-)] gnome-base/librsvg:2 x11-libs/gtk+:3 )
+0
+
+
+https://github.com/sahib/rmlint
+GPL-3
+rmlint finds space waste and other broken things on your filesystem and offers to remove it
+
+desktop epatch estack eutils git-r3 gnome2-utils ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 scons-utils toolchain-funcs vcs-clean xdg-utils
+X doc python_targets_python3_6 python_targets_python3_7
+|| ( python_targets_python3_6 python_targets_python3_7 )
+
+
+6
+live
+compile install postinst postrm unpack
+
+
+
+
+

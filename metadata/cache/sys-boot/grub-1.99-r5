@@ -1,4 +1,4 @@
-dev-libs/libisoburn dev-libs/lzo sys-boot/os-prober >=sys-libs/ncurses-5.2-r5 debug? ( sdl? ( media-libs/libsdl ) ) device-mapper? ( >=sys-fs/lvm2-2.02.45 ) truetype? ( media-libs/freetype >=media-fonts/unifont-5 ) >=dev-lang/python-2.5.2 sys-devel/flex virtual/yacc app-arch/xz-utils >=dev-vcs/bzr-2.0.1
+dev-libs/libisoburn dev-libs/lzo sys-boot/os-prober >=sys-libs/ncurses-5.2-r5 debug? ( sdl? ( media-libs/libsdl ) ) device-mapper? ( >=sys-fs/lvm2-2.02.45 ) truetype? ( media-libs/freetype >=media-fonts/unifont-5 ) >=dev-lang/python-2.5.2 sys-devel/flex virtual/yacc app-arch/xz-utils >=dev-vcs/bzr-2.6.0
 dev-libs/libisoburn dev-libs/lzo sys-boot/os-prober >=sys-libs/ncurses-5.2-r5 debug? ( sdl? ( media-libs/libsdl ) ) device-mapper? ( >=sys-fs/lvm2-2.02.45 ) truetype? ( media-libs/freetype >=media-fonts/unifont-5 )
 2
 mirror://gnu/grub/grub-1.99.tar.xz mirror://gentoo/grub-1.99.tar.xz
@@ -7,13 +7,13 @@ http://www.gnu.org/software/grub/
 GPL-3
 GNU GRUB boot loader
 ~amd64 ~mips ~x86
-bzr eutils flag-o-matic mount-boot multilib pax-utils toolchain-funcs
+bzr desktop epatch estack eutils flag-o-matic ltprune mount-boot multilib pax-utils preserve-libs toolchain-funcs vcs-clean
 custom-cflags debug device-mapper efiemu nls static sdl truetype extras grub_platforms_coreboot grub_platforms_efi-32 grub_platforms_efi-64 grub_platforms_emu grub_platforms_ieee1275 grub_platforms_multiboot grub_platforms_pc grub_platforms_qemu grub_platforms_qemu-mips grub_platforms_yeeloong
 
 
 
 4
-
+live
 compile config configure install postinst postrm preinst prepare prerm pretend unpack
 
 

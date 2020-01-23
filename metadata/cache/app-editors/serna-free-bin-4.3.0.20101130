@@ -7,7 +7,7 @@ http://www.syntext.com
 
 Serna free is a WYSIWYG XML editor
 x86
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 
 
 

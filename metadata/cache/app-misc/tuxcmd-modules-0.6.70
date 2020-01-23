@@ -7,7 +7,7 @@ http://tuxcmd.sourceforge.net/
 GPL-2 unrar? ( unRAR )
 Tux Commander - Fast and Small filemanager - VFS modules
 ~x86 ~amd64
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 +gnome +zip unrar +libarchive
 
 

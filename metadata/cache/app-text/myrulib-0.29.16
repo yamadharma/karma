@@ -7,7 +7,7 @@ http://www.lintest.ru/wiki/MyRuLib
 GPL-3
 E-book collection manager
 ~amd64 ~x86
-eutils flag-o-matic multilib toolchain-funcs wxwidgets
+desktop epatch estack eutils flag-o-matic ltprune multilib preserve-libs toolchain-funcs vcs-clean wxwidgets
 +icu +links reader syslog
 
 

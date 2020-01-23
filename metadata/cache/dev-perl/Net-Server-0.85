@@ -7,7 +7,7 @@ http://seamons.com/net_server.html
 Artistic
 Abstract base class for portable servers
 x86 ~ppc ~sparc ~alpha ~hppa ~arm
-eutils multilib multiprocessing perl-module toolchain-funcs unpacker
+desktop epatch estack eutils ltprune multilib multiprocessing perl-functions perl-module preserve-libs toolchain-funcs unpacker vcs-clean
 
 
 

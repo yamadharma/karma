@@ -7,7 +7,7 @@ http://mgrx.fgrim.com/
 GPL-2
 MGRX is a 2D graphics library derived from the GRX library.
 x86 ~ppc ~sparc ~alpha ~hppa amd64 ~ppc64 ~ia64
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 X
 
 

@@ -1,0 +1,22 @@
+!dev-haskell/pandoc-crossref
+!dev-haskell/pandoc-crossref
+0/2.9.1.1
+https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.6.1b/linux-pandoc_2_9_1_1.tar.gz -> pandoc-crossref-bin-0.3.6.1b-2.9.1.1.tar.gz
+strip
+https://github.com/lierdakil/pandoc-crossref#readme
+GPL-2
+Pandoc filter for cross-references
+amd64 ~x86
+
+
+
+
+
+7
+
+install
+
+
+
+
+

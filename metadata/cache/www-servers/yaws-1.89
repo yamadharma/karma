@@ -7,11 +7,11 @@ http://yaws.hyber.org/
 BSD
 Yaws is a high performance HTTP 1.1 web server.
 ~x86 ~ppc ~sparc ~amd64
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 
 
 
-virtual/httpd-basic virtual/httpd-cgi
+
 2
 
 install postinst

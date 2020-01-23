@@ -1,13 +1,13 @@
-virtual/libc =sys-devel/gcc-3.3.4* dev-lang/gdc sys-devel/gnuconfig
+virtual/libc =sys-devel/gcc-3.3.4* dev-lang/gdc >=app-portage/elt-patches-20170815 sys-devel/gnuconfig
 virtual/libc =sys-devel/gcc-3.3.4* dev-lang/gdc
-3.3
+
 http://home.earthlink.net/~dvdfrdmn/d/gdc-0.9.tar.bz2 ftp://gcc.gnu.org/pub/gcc/releases/gcc-3.3.4/gcc-3.3.4.tar.bz2
 
 http://home.earthlink.net/~dvdfrdmn/d
 GPL-2
 D main library
 x86 ~sparc ~amd64
-eutils flag-o-matic gnuconfig libtool multilib toolchain-funcs
+desktop epatch estack eutils flag-o-matic gnuconfig libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean
 nls
 
 

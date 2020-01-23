@@ -1,4 +1,4 @@
-kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources )
+kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources virtual/libelf )
 kernel_linux? ( virtual/modutils )
 0
 mirror://sourceforge/submount/submount-2.4-0.9.tar.gz mirror://sourceforge/submount/submount-0.9.tar.gz
@@ -7,8 +7,8 @@ http://submount.sourceforge.net/
 GPL-2
 Submount is a new attempt to solve the removable media problem for Linux.
 alpha amd64 ppc ~sparc x86
-eutils linux-info linux-mod multilib toolchain-funcs versionator
-kernel_linux
+desktop eapi7-ver epatch estack eutils linux-info linux-mod ltprune multilib preserve-libs toolchain-funcs vcs-clean
+kernel_linux kernel_linux
 
 
 

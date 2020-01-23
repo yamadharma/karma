@@ -1,4 +1,4 @@
->=dev-lang/mono-2.10.5 app-arch/unzip >=sys-apps/sed-4
+>=dev-lang/mono-2.10.5 app-arch/unzip
 >=dev-lang/mono-2.10.5 dev-dotnet/libgdiplus[cairo]
 0
 mirror://sourceforge/keepass/KeePass-2.30-Source.zip
@@ -7,7 +7,7 @@ http://keepass.info/
 GPL-2
 A free, open source, light-weight and easy-to-use password manager
 ~amd64 ~x86
-eutils fdo-mime gnome2-utils mono-env multilib toolchain-funcs
+desktop epatch estack eutils fdo-mime gnome2-utils ltprune mono-env multilib preserve-libs toolchain-funcs vcs-clean xdg-utils
 aot
 
 

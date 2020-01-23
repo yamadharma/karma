@@ -7,7 +7,7 @@ http://search.cpan.org/~antro/
 Artistic
 The PDF library is a proposed library for access the information contained inside a PDF file
 amd64 ~ppc ~ppc64 x86
-eutils multilib multiprocessing perl-module toolchain-funcs unpacker
+desktop epatch estack eutils ltprune multilib multiprocessing perl-functions perl-module preserve-libs toolchain-funcs unpacker vcs-clean
 
 
 

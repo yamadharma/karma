@@ -7,7 +7,7 @@ http://www.google.com/chat/video
 UNKNOWN
 Video chat browser plug-in for Google Talk
 -* ~amd64 ~x86
-eutils mozextension multilib nsplugins toolchain-funcs versionator
+desktop epatch estack eutils ltprune mozextension multilib nsplugins preserve-libs toolchain-funcs vcs-clean versionator
 +system-libCg
 
 

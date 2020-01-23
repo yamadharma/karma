@@ -1,0 +1,22 @@
+python_targets_python3_6? ( dev-lang/python:3.6 ) >=dev-lang/python-exec-2:=[python_targets_python3_6(-)?,-python_single_target_python3_6(-)] dev-python/setuptools[python_targets_python3_6(-)?,-python_single_target_python3_6(-)]
+app-text/djvu app-text/tesseract dev-lang/python media-gfx/imagemagick cuneiform? ( app-text/cuneiform ) minidjvu? ( app-text/minidjvu ) python_targets_python3_6? ( dev-lang/python:3.6 ) >=dev-lang/python-exec-2:=[python_targets_python3_6(-)?,-python_single_target_python3_6(-)]
+0
+https://github.com/strider1551/djvubind/archive/v1.2.1.tar.gz -> djvubind-1.2.1.tar.gz
+mirror
+https://github.com/strider1551/djvubind
+GPL-3
+Creates djvu files with positional ocr, metadata, and bookmarks.
+~amd64 ~x86
+desktop distutils-r1 epatch estack eutils ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+cuneiform minidjvu python_targets_python3_6
+|| ( python_targets_python3_6 )
+
+
+5
+
+compile configure install prepare test
+
+
+
+
+

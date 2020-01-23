@@ -1,15 +1,15 @@
-test? ( ruby_targets_ruby19? ( www-apps/octopress-tag-helpers[ruby_targets_ruby19] www-apps/jekyll[ruby_targets_ruby19] ) ruby_targets_ruby20? ( www-apps/octopress-tag-helpers[ruby_targets_ruby20] www-apps/jekyll[ruby_targets_ruby20] ) ruby_targets_ruby21? ( www-apps/octopress-tag-helpers[ruby_targets_ruby21] www-apps/jekyll[ruby_targets_ruby21] ) ) ruby_targets_ruby19? ( test? ( dev-ruby/bundler[ruby_targets_ruby19] dev-ruby/clash[ruby_targets_ruby19] dev-ruby/rake[ruby_targets_ruby19] www-apps/octopress-debugger[ruby_targets_ruby19] ) ) ruby_targets_ruby20? ( test? ( dev-ruby/bundler[ruby_targets_ruby20] dev-ruby/clash[ruby_targets_ruby20] dev-ruby/rake[ruby_targets_ruby20] www-apps/octopress-debugger[ruby_targets_ruby20] ) ) ruby_targets_ruby21? ( test? ( dev-ruby/bundler[ruby_targets_ruby21] dev-ruby/clash[ruby_targets_ruby21] dev-ruby/rake[ruby_targets_ruby21] www-apps/octopress-debugger[ruby_targets_ruby21] ) ) ruby_targets_ruby19? ( dev-lang/ruby:1.9 ) ruby_targets_ruby20? ( dev-lang/ruby:2.0 ) ruby_targets_ruby21? ( dev-lang/ruby:2.1 ) ruby_targets_ruby19? ( doc? ( dev-ruby/rake[ruby_targets_ruby19] ) ) ruby_targets_ruby20? ( doc? ( dev-ruby/rake[ruby_targets_ruby20] ) ) ruby_targets_ruby21? ( doc? ( dev-ruby/rake[ruby_targets_ruby21] ) ) ruby_targets_ruby19? ( test? ( dev-ruby/rake[ruby_targets_ruby19] ) ) ruby_targets_ruby20? ( test? ( dev-ruby/rake[ruby_targets_ruby20] ) ) ruby_targets_ruby21? ( test? ( dev-ruby/rake[ruby_targets_ruby21] ) ) ruby_targets_ruby19? ( virtual/rubygems[ruby_targets_ruby19] ) ruby_targets_ruby20? ( virtual/rubygems[ruby_targets_ruby20] ) ruby_targets_ruby21? ( virtual/rubygems[ruby_targets_ruby21] ) test? ( ruby_targets_ruby19? ( virtual/rubygems[ruby_targets_ruby19] ) ruby_targets_ruby20? ( virtual/rubygems[ruby_targets_ruby20] ) ruby_targets_ruby21? ( virtual/rubygems[ruby_targets_ruby21] ) )
-ruby_targets_ruby19? ( www-apps/octopress-tag-helpers[ruby_targets_ruby19] www-apps/jekyll[ruby_targets_ruby19] ) ruby_targets_ruby20? ( www-apps/octopress-tag-helpers[ruby_targets_ruby20] www-apps/jekyll[ruby_targets_ruby20] ) ruby_targets_ruby21? ( www-apps/octopress-tag-helpers[ruby_targets_ruby21] www-apps/jekyll[ruby_targets_ruby21] ) ruby_targets_ruby19? ( dev-lang/ruby:1.9 ) ruby_targets_ruby20? ( dev-lang/ruby:2.0 ) ruby_targets_ruby21? ( dev-lang/ruby:2.1 ) ruby_targets_ruby19? ( virtual/rubygems[ruby_targets_ruby19] ) ruby_targets_ruby20? ( virtual/rubygems[ruby_targets_ruby20] ) ruby_targets_ruby21? ( virtual/rubygems[ruby_targets_ruby21] )
-0
-mirror://rubygems/octopress-assign-tag-1.0.2.gem
+test? ( ) test? ( )
 
+0
+https://rubygems.org/gems/octopress-assign-tag-1.0.2.gem
+!test? ( test ) !test? ( test ) !test? ( test )
 https://github.com/octopress/assign-tag
 MIT
 A powerful replacement for the Liquid assign tag
 ~amd64 ~x86
-eutils java-utils-2 multilib ruby-fakegem ruby-ng ruby-utils toolchain-funcs versionator
-test elibc_FreeBSD ruby_targets_ruby19 ruby_targets_ruby20 ruby_targets_ruby21 doc test test
-|| ( ruby_targets_ruby19 ruby_targets_ruby20 ruby_targets_ruby21 )
+desktop epatch estack eutils ltprune multilib preserve-libs ruby-fakegem ruby-ng ruby-utils toolchain-funcs vcs-clean
+test doc test test
+|| ( )
 
 
 5

@@ -1,4 +1,4 @@
-!<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+>=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.1 >=sys-devel/automake-1.15.1 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 
 0
 http://dside.dyndns.org/files/rusxmms/librcd-0.1.13.tar.bz2
@@ -7,7 +7,7 @@ http://dside.dyndns.org/files/rusxmms/librcd-0.1.13.tar.bz2
 GPL-2
 LibRCD is Russian Encoding Detection Library
 x86 amd64
-autotools eutils libtool multilib toolchain-funcs
+autotools desktop epatch estack eutils libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean
 
 
 

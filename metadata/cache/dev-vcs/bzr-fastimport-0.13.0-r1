@@ -1,0 +1,22 @@
+python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] dev-python/setuptools[python_targets_python2_7(-)?,-python_single_target_python2_7(-)]
+>=dev-vcs/bzr-1.18 >=dev-python/python-fastimport-0.9.6 python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)]
+0
+https://launchpad.net/bzr-fastimport/trunk/0.13.0/+download/bzr-fastimport-0.13.0.tar.gz
+
+https://launchpad.net/bzr-fastimport http://wiki.bazaar.canonical.com/BzrFastImport
+GPL-2
+Plugin providing fast loading of revision control data into Bazaar
+amd64 x86
+desktop distutils-r1 epatch estack eutils ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+python_targets_python2_7
+|| ( python_targets_python2_7 )
+
+
+5
+
+compile configure install postinst prepare test
+
+
+
+
+

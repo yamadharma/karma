@@ -7,7 +7,7 @@ http://acidlab.sourceforge.net
 GPL-2
 SNORT ACID - Analysis Console for Intrusion Databases
 ~x86
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 apache2 php5 mysql postgres
 
 

@@ -7,7 +7,7 @@ http://www.monkeysaudio.com/
 monkeysaudio
 Unix port of Monkey's Audio codec
 amd64 x86
-eutils multilib toolchain-funcs versionator
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean versionator
 
 
 

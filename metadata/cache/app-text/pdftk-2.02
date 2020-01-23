@@ -1,0 +1,22 @@
+sys-devel/gcc[gcj] sys-devel/gcc-config
+sys-devel/gcc[gcj]
+0
+http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk-2.02-src.zip
+
+http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
+GPL-2
+A tool for manipulating PDF documents
+amd64 ~arm ppc x86 ~amd64-linux
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+
+
+
+
+5
+
+compile install prepare
+
+
+
+
+

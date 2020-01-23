@@ -7,7 +7,7 @@ http://www.cpan.org/modules/by-module/Convert/Convert-Translit-1.03.readme
 Artistic
 transliterating strings between any 8-bit character sets defined in RFC 1345 (about 128 character sets).
 x86 amd64 ~alpha ~arm ~hppa ~mips ~ppc ~sparc
-eutils multilib multiprocessing perl-module toolchain-funcs unpacker
+desktop epatch estack eutils ltprune multilib multiprocessing perl-functions perl-module preserve-libs toolchain-funcs unpacker vcs-clean
 
 
 

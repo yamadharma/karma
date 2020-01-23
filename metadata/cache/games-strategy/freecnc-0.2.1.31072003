@@ -7,7 +7,7 @@ http://freecnc-sf.holarse.net/
 GPL-2
 SDL-rewrite of the classical real time strategy hit Command & Conquer
 ~ppc x86 amd64
-base eutils flag-o-matic games multilib toolchain-funcs user
+base desktop epatch estack eutils flag-o-matic games ltprune multilib preserve-libs toolchain-funcs user vcs-clean
 zlib nocd
 
 

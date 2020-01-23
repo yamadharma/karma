@@ -7,7 +7,7 @@ http://www.dspace.org/
 GPL-2
 DSpace open source software enables open sharing of content that spans organizations, continents and time
 ~x86 ~amd64 ~alpha ~amd64-fbsd ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~sparc-fbsd ~x86-fbsd
-eutils multilib toolchain-funcs versionator
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean versionator
 resin tomcat doc javadoc
 
 

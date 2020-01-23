@@ -7,7 +7,7 @@ http://harbour-project.org/
 GPL-2-with-exceptions
 An extended implementation of the Clipper dialect of the xBase language family
 amd64 x86
-base eutils multilib toolchain-funcs
+base desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 allegro doc gpm odbc pcre slang threads X
 
 

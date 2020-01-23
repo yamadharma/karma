@@ -1,0 +1,22 @@
+x11-libs/gtk+:3 x11-libs/gtksourceview:3.0/3 net-libs/webkit-gtk:4/37 app-text/gtkspell:3/0 >=dev-util/meson-0.51.2 >=dev-util/ninja-1.8.2 >=dev-vcs/git-1.8.2.1[curl]
+x11-libs/gtk+:3 x11-libs/gtksourceview:3.0/3 net-libs/webkit-gtk:4/37 app-text/gtkspell:3/0 pandoc? ||( app-text/pandoc app-text/pandoc-bin )
+0
+
+
+https://fabiocolacio.github.io/Marker
+GPL-3 ISC
+Markdown editor made with GTK+-3.0
+~x86 amd64
+desktop epatch estack eutils git-r3 gnome2-utils ltprune meson multilib multiprocessing ninja-utils preserve-libs python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+pandoc
+
+
+
+6
+live
+compile configure install postinst postrm preinst prepare test unpack
+
+
+
+
+

@@ -1,0 +1,22 @@
+virtual/pkgconfig
+!net-misc/hamachi
+0
+x86? ( https://www.vpn.net/installers/logmein-hamachi-2.1.0.198-x86.tgz ) amd64? ( https://www.vpn.net/installers/logmein-hamachi-2.1.0.198-x64.tgz )
+mirror
+https://www.vpn.net/
+LogMeIn
+LogMeIn Hamachi VPN tunneling engine
+-* ~amd64 ~x86
+eapi7-ver linux-info multilib systemd toolchain-funcs
+kernel_linux
+
+
+
+6
+
+install postinst setup unpack
+
+
+
+
+

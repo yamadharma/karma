@@ -7,7 +7,7 @@ http://www.caudium.net/
 GPL-2 | LGPL-2.1 | MPL-1.1
 Caudium Web Server
 ~x86 ~amd64
-eutils gnuconfig multilib toolchain-funcs
+desktop epatch estack eutils gnuconfig ltprune multilib preserve-libs toolchain-funcs vcs-clean
 perl
 
 

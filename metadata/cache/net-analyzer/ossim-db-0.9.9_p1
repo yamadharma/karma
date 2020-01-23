@@ -7,7 +7,7 @@ http://www.ossim.net/
 BSD
 Open Source Security Information Management
 x86 amd64
-eutils multilib toolchain-funcs
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
 doc mysql postgres eventdb-only ossimdb-only
 
 
