@@ -16,13 +16,16 @@ SRC_URI="
 RESTRICT="mirror"
 LICENSE="PSF-2.2"
 SLOT="0"
-KEYWORDS="amd64 ~x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
+KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux ~x64-macos ~x86-macos"
 IUSE="web"
 
 DEPEND="
 	dev-libs/msgpack[cxx]
 	dev-libs/mmtf-cpp
-	dev-python/numpy-python2[${PYTHON_USEDEP}]
+	|| (
+		dev-python/numpy-python2[${PYTHON_USEDEP}]
+		dev-python/numpy[${PYTHON_USEDEP}]
+	)
 	dev-python/pmw:py2[${PYTHON_USEDEP}]
 	dev-python/pyopengl[${PYTHON_USEDEP}]
 	dev-python/PyQt5[opengl,${PYTHON_USEDEP}]
