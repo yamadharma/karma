@@ -1,8 +1,9 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-inherit go-module bash-completion-r1
+EAPI=7
+# inherit go-module bash-completion-r1
+inherit eutils bash-completion-r1
 
 # The fork with prefetched vendor packages using `go mod vendor`
 EGO_PN="github.com/g4s8/hugo"
@@ -24,7 +25,7 @@ S=${WORKDIR}
 src_install() {
 	dobin hugo
 	if use bash-completion ; then
-		dobashcomp ${FILES}/hugo || die
+		dobashcomp ${FILESDIR}/hugo || die
 	fi
 	dodoc README*
 }
