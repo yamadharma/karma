@@ -1,5 +1,0 @@
-#OPTIONS="--with-threads --log-dir=/var/log/caudium --config-dir=/etc/caudium/configuration"
-flags="--with-threads --log-dir=/var/log/caudium"
-pidfile=/var/run/caudium/caudium.pid
-
-
