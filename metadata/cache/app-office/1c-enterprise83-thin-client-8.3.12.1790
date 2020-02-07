@@ -7,7 +7,7 @@ http://v8.1c.ru/
 1CEnterprise_en
 Native linux thin client of 1C ERP system
 amd64
-desktop epatch estack eutils ltprune multilib pax-utils preserve-libs toolchain-funcs user vcs-clean versionator
+desktop epatch estack eutils ltprune multilib pax-utils preserve-libs toolchain-funcs user user-info vcs-clean versionator
 +nls
 
 

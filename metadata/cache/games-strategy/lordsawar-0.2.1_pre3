@@ -7,7 +7,7 @@ http://www.lordsawar.com/ http://www.nongnu.org/lordsawar/
 GPL-2
 Another Free Warlords II clone
 ~amd64 ~x86
-base desktop epatch estack eutils games ltprune multilib preserve-libs toolchain-funcs user vcs-clean
+base desktop epatch estack eutils games ltprune multilib preserve-libs toolchain-funcs user user-info vcs-clean
 dedicated editor netplay nls pbm sound
 
 

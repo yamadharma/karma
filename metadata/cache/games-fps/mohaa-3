@@ -7,7 +7,7 @@ http://icculus.org/betas/mohaa/
 as-is
 Medal of Honor for Linux
 x86 amd64
-base desktop epatch estack eutils games ltprune multilib preserve-libs toolchain-funcs user vcs-clean
+base desktop epatch estack eutils games ltprune multilib preserve-libs toolchain-funcs user user-info vcs-clean
 
 
 
