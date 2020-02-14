@@ -1,6 +1,6 @@
-EAPI="2"
+EAPI=7
 
-inherit font 
+inherit font
 
 DL_HOST=download.microsoft.com
 DL_PATH=download/f/5/a/f5a3df76-d856-4a61-a6bd-722f52a5be26
