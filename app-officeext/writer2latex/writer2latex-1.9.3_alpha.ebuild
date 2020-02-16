@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="5"
+EAPI=7
 
 IS_SOURCE=""
 
@@ -18,10 +18,11 @@ fi
 
 OFFICE_REQ_USE="java"
 
-OFFICE_EXTENSIONS=(writer2latex.oxt writer2xhtml.oxt xhtml-config-sample.oxt writer4latex.oxt)
+# OFFICE_EXTENSIONS=(writer2latex.oxt writer2xhtml.oxt xhtml-config-sample.oxt writer4latex.oxt)
+OFFICE_EXTENSIONS=(writer2latex.oxt)
 
-inherit eutils latex-package java-pkg-2 java-ant-2 multilib office-ext-r1
-
+# inherit eutils latex-package java-pkg-2 java-ant-2 multilib office-ext-r1
+inherit eutils java-pkg-2 java-ant-2 multilib office-ext-r1
 
 DESCRIPTION="Writer2Latex (w2l) - converter from OpenDocument .odt format"
 HOMEPAGE="http://writer2latex.sourceforge.net"
@@ -34,11 +35,11 @@ IUSE="doc examples"
 
 RESTRICT=mirror
 
-DEPEND=">=virtual/jdk-1.7
+DEPEND=">=virtual/jdk-1.8
 	virtual/latex-base"
-RDEPEND=">=virtual/jre-1.7"
+RDEPEND=">=virtual/jre-1.8"
 
-S=${WORKDIR}/${PN}14
+S=${WORKDIR}/${PN}19
 if [[ -n ${IS_SOURCE} ]]
 then
     S_DISTRO=${S}/source/distro
@@ -55,11 +56,12 @@ OFFICE_EXTENSIONS_LOCATION="${S}"
 EANT_BUILD_TARGET="all"
 
 src_prepare(){
+	default
 	# Hack for OOo-3
-	mkdir -p openoffice/program/classes
-	cd openoffice/program/classes
-	find "${OOO_ROOT_DIR}" -name "*.jar" -exec ln -snf {} . \;
-	
+#	mkdir -p openoffice/program/classes
+#	cd openoffice/program/classes
+#	find "${OOO_ROOT_DIR}" -name "*.jar" -exec ln -snf {} . \;
+#	
 	sed -i -e "s:W2LPATH=.*:W2LPATH=/usr/$(get_libdir)/${PN}:" ${S_DISTRO}/w2l || die "Sed failed"
 }
 
@@ -80,8 +82,8 @@ src_install() {
 	cd ${S_DISTRO}/config
 	doins *.xml
 	
-	cd ${S_DISTRO}/latex
-	latex-package_src_install
+	#cd ${S_DISTRO}/latex
+	#latex-package_src_install
 
 
 	cd ${S_DISTRO}
