@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-tex/extsizes/extsizes-1.0.ebuild,v 1.7 2007/12/11 10:36:23 aballier Exp $
 
+EAPI=7
+
 inherit latex-package versionator
 
 MY_PN="LinLibertineTex"
