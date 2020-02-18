@@ -7,14 +7,14 @@ http://perso.ensta-paristech.fr/~kielbasi/tikzuml/
 tba
 TikZ extension to manage common UML diagrams
 ~amd64 ~x86
-base desktop epatch estack eutils latex-package ltprune multilib preserve-libs toolchain-funcs vcs-clean
+latex-package
 doc examples
 
 
 
-5
+7
 
-compile configure install postinst postrm prepare unpack
+compile install postinst postrm
 
 
 

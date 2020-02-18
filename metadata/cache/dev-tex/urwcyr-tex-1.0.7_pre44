@@ -1,5 +1,5 @@
 virtual/tex-base dev-lang/perl virtual/latex-base >=sys-apps/texinfo-4.2-r5
-virtual/tex-base dev-lang/perl virtual/latex-base
+virtual/latex-base
 0
 ftp://ftp.gnome.ru/fonts/urw/release/urw-fonts-1.0.7pre44.tar.bz2 https://launchpad.net/urwcyr-tex/trunk/0.1.0.1/+download/urwcyr-tex-0.1.0.1.tar.bz2
 
@@ -7,14 +7,14 @@ ftp://ftp.gnome.ru/fonts/urw/release/urw-fonts-1.0.7pre44.tar.bz2 https://launch
 GPL-3
 URW fonts cyrillized by Valek Filippov
 x86 amd64
-base desktop epatch estack eutils latex-package ltprune multilib preserve-libs toolchain-funcs vcs-clean
+latex-package
 
 
 
 
-0
+7
 
-compile install postinst postrm unpack
+compile install postinst postrm
 
 
 
