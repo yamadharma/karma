@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/dnspython/dnspython-1.8.0.ebuild,v 1.8 2010/08/16 16:50:27 grobian Exp $
 
-EAPI="4"
+EAPI="7"
 
-inherit git-2
+inherit git-r3
 EGIT_REPO_URI="http://github.com/ashipunov/${PN}.git"
 
 DESCRIPTION="Shell utility to manipulate pages of DjVu file"
