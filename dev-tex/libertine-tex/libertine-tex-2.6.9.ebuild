@@ -4,10 +4,10 @@
 
 EAPI=7
 
-inherit latex-package versionator
+inherit latex-package
 
 MY_PN="LinLibertineTex"
-MY_P="${MY_PN}-$(get_version_component_range 1-2)beta"
+MY_P="${MY_PN}-$(ver_cut 1-2 ${PV})beta"
 
 DESCRIPTION="TeX bindings for OpenType fonts from the Linux Libertine Open Fonts Project"
 HOMEPAGE="http://linuxlibertine.sourceforge.net/"
