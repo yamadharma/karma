@@ -1,0 +1,22 @@
+
+sys-apps/util-linux
+0
+https://github.com/tj/git-extras/archive/5.1.0.tar.gz -> git-extras-5.1.0.tar.gz
+
+https://github.com/tj/git-extras
+MIT
+Little git extras
+amd64 ~x86
+bash-completion-r1 multilib toolchain-funcs
+
+
+
+virtual/awk
+7
+
+compile install
+
+
+
+
+
