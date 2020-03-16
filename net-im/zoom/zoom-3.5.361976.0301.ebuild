@@ -14,7 +14,7 @@ SRC_URI="${BASE_SERVER_URI}/client/${PV}/${MY_PN}_x86_64.pkg.tar.xz -> ${MY_PN}-
 
 LICENSE="ZOOM"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
 RESTRICT="mirror"
 
