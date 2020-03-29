@@ -1,5 +1,5 @@
-|| ( >=dev-lang/python-2.7.5-r2:2.7 ) media-fonts/inconsolata system-node? ( >=net-libs/nodejs-6.0[npm] ) !!dev-util/atom-shell !dev-util/apm !app-editors/atom
-|| ( >=dev-lang/python-2.7.5-r2:2.7 ) media-fonts/inconsolata system-node? ( >=net-libs/nodejs-6.0[npm] ) !!dev-util/atom-shell !dev-util/apm !app-editors/atom x11-libs/gtk+:2 x11-libs/libnotify gnome-base/libgnome-keyring dev-libs/nss dev-libs/nspr gnome-base/gconf media-libs/alsa-lib net-print/cups sys-libs/libcap x11-libs/libXtst x11-libs/pango dev-vcs/git dev-libs/openssl:0=
+|| ( >=dev-lang/python-2.7.17-r1:2.7 ) media-fonts/inconsolata system-node? ( >=net-libs/nodejs-6.0[npm] ) !!dev-util/atom-shell !dev-util/apm !app-editors/atom
+|| ( >=dev-lang/python-2.7.17-r1:2.7 ) media-fonts/inconsolata system-node? ( >=net-libs/nodejs-6.0[npm] ) !!dev-util/atom-shell !dev-util/apm !app-editors/atom x11-libs/gtk+:2 x11-libs/libnotify gnome-base/libgnome-keyring dev-libs/nss dev-libs/nspr gnome-base/gconf media-libs/alsa-lib net-print/cups sys-libs/libcap x11-libs/libXtst x11-libs/pango dev-vcs/git dev-libs/openssl:0=
 0
 amd64? ( https://github.com/atom/atom/releases/download/v1.44.0/atom-amd64.tar.gz -> atom-1.44.0-amd64.tar.gz )
 mirror strip bindist

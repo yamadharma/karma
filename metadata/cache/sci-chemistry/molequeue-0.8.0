@@ -1,5 +1,5 @@
-python_single_target_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] ) dev-qt/qtcore:5 dev-qt/qtnetwork:5 dev-qt/qtwidgets:5 zeromq? ( net-libs/cppzmq:0= ) doc? ( app-doc/doxygen ) sys-devel/make >=dev-util/cmake-3.9.6 test? ( !prefix? ( x11-base/xorg-server[xvfb] ) x11-apps/xhost )
-python_single_target_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] ) dev-qt/qtcore:5 dev-qt/qtnetwork:5 dev-qt/qtwidgets:5 zeromq? ( net-libs/cppzmq:0= )
+python_single_target_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] ) dev-qt/qtcore:5 dev-qt/qtnetwork:5 dev-qt/qtwidgets:5 zeromq? ( net-libs/cppzmq:0= ) doc? ( app-doc/doxygen ) sys-devel/make >=dev-util/cmake-3.9.6 test? ( !prefix? ( x11-base/xorg-server[xvfb] ) x11-apps/xhost )
+python_single_target_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] ) dev-qt/qtcore:5 dev-qt/qtnetwork:5 dev-qt/qtwidgets:5 zeromq? ( net-libs/cppzmq:0= )
 0
 https://github.com/OpenChemistry/molequeue/archive/0.8.0.tar.gz -> molequeue-0.8.0.tar.gz
 !test? ( test )

@@ -11,7 +11,7 @@ git-r3 multibuild multilib python-r1 python-utils-r1 toolchain-funcs
 clang python_targets_python2_7
 
 
-clang? ( sys-devel/clang ) python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] >=dev-vcs/git-1.8.2.1[curl]
+clang? ( sys-devel/clang ) python_targets_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] >=dev-vcs/git-1.8.2.1[curl]
 7
 live
 install postinst prepare unpack
