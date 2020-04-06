@@ -1,0 +1,22 @@
+|| ( dev-python/cython[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] dev-python/pyrex[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] ) test? ( curl? ( dev-python/pycurl[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] ) sftp? ( dev-python/paramiko[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] ) >=dev-python/pyftpdlib-0.7.0[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] dev-python/subunit >=dev-python/testtools-0.9.5[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] ) python_targets_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7[threads,ssl,xml] ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] >=dev-python/setuptools-42.0.2[python_targets_python2_7(-)?,-python_single_target_python2_7(-)]
+curl? ( dev-python/pycurl[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] ) sftp? ( dev-python/paramiko[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] ) python_targets_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7[threads,ssl,xml] ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)]
+0
+https://dev.gentoo.org/~grozin/bzr-2.7.1_pre.tar.gz
+test
+http://bazaar-vcs.org/
+GPL-2
+Bazaar is a next generation distributed version control system
+~alpha amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~m68k-mint ~sparc-solaris
+bash-completion-r1 desktop distutils-r1 epatch estack eutils flag-o-matic l10n ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+curl doc +sftp test python_targets_python2_7
+|| ( python_targets_python2_7 )
+
+
+6
+
+compile configure install prepare test
+
+
+
+
+
