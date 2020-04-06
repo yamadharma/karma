@@ -107,7 +107,6 @@ RDEPEND="
 			dev-qt/qtgui:5
 			dev-qt/qtopengl:5
 			dev-qt/qtsql:5
-			dev-qt/qtwebkit:5
 			dev-qt/qtx11extras:5
 			python? ( dev-python/PyQt5[\${PYTHON_MULTI_USEDEP}] )
 		)
@@ -153,6 +152,7 @@ src_configure() {
 		-Wno-dev
 		-DVTK_DIR="${S}"
 		-DVTK_INSTALL_LIBRARY_DIR=$(get_libdir)
+		-DVTK_INSTALL_PACKAGE_DIR="$(get_libdir)/cmake/${PN}-${SPV}"
 		-DVTK_INSTALL_DOC_DIR="${EPREFIX}/usr/share/doc/${PF}"
 		-DVTK_DATA_ROOT="${EPREFIX}/usr/share/${PN}/data"
 		-DVTK_CUSTOM_LIBRARY_SUFFIX=""
@@ -255,7 +255,7 @@ src_configure() {
 			-DVTK_USE_QVTK_QTOPENGL=ON
 			-DQT_WRAP_CPP=ON
 			-DQT_WRAP_UI=ON
-			-DVTK_INSTALL_QT_DIR="$(qt5_get_libdir)/qt5/plugins/designer"
+			-DVTK_INSTALL_QT_DIR="$(basename $(qt5_get_libdir))/qt5/plugins/designer"
 			-DDESIRED_QT_VERSION=5
 			-DVTK_QT_VERSION=5
 			-DQT_MOC_EXECUTABLE="$(qt5_get_bindir)/moc"
@@ -263,6 +263,7 @@ src_configure() {
 			-DQT_INCLUDE_DIR="${EPREFIX}/usr/include/qt5"
 			-DQT_QMAKE_EXECUTABLE="$(qt5_get_bindir)/qmake"
 			-DVTK_Group_Qt:BOOL=ON
+			-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebKitWidgets=ON
 		)
 	fi
 
