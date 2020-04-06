@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python{3_6,3_7} )
 
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/${PN}/${PN}/releases/download/${P}/${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos"
-IUSE="examples gtk imaging ipython latex mathml opengl pdf png pyglet symengine test texmacs theano doc"
+IUSE="examples gtk imaging ipython latex mathml opengl pdf png pyglet symengine test texmacs theano"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	ipython? ( || ( $(python_gen_useflags -3) ) )"
@@ -35,7 +35,7 @@ RDEPEND="dev-python/mpmath[${PYTHON_USEDEP}]
 	)
 	mathml? (
 		dev-libs/libxml2:2[${PYTHON_USEDEP}]
-		gtk? ( x11-libs/gtkmathview[gtk] )
+		gtk? ( x11-libs/gtkmathview )
 	)
 	opengl? ( dev-python/pyopengl[${PYTHON_USEDEP}] )
 	pyglet? ( dev-python/pyglet[${PYTHON_USEDEP}] )
@@ -50,15 +50,6 @@ DEPEND="${RDEPEND}
 PATCHES=(
 	"${FILESDIR}"/${PN}-1.4_undeffun_sage.patch
 	)
-
-python_compile_all() {
-	if use doc; then
-		export XDG_CONFIG_HOME="${T}/config-dir"
-		mkdir "${XDG_CONFIG_HOME}" || die
-		chmod 0700 "${XDG_CONFIG_HOME}" || die
-		emake -j1 -C doc html info man cheatsheet
-	fi
-}
 
 python_test() {
 	virtx "${PYTHON}" setup.py test
