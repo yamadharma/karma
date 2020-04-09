@@ -1,0 +1,22 @@
+
+
+0
+http://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz
+
+http://www.scilab.org
+
+Scilab scientific software
+~amd64
+bash-completion-r1 desktop epatch estack eutils fdo-mime ltprune multilib preserve-libs toolchain-funcs vcs-clean
+bash-completion
+
+
+
+5
+
+install postinst postrm
+
+
+
+
+
