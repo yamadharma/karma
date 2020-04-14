@@ -1,0 +1,22 @@
+app-arch/unzip
+
+0
+https://www.fosshub.com/JabRef.html?dwl=JabRef-5.0-portable_linux.tar.gz -> JabRef-5.0-portable_linux.tar.gz
+fetch preserve-libs strip
+http://www.jabref.org/
+MIT
+Java GUI for managing BibTeX and other bibliographies
+amd64 ~x86
+desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+
+
+
+
+6
+
+install nofetch
+
+
+
+
+

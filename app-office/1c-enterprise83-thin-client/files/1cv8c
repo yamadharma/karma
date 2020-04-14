@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export LD_LIBRARY_PATH=/opt/1C/v8.3/x86_64:$LD_LIBRARY_PATH
+exec /opt/1C/v8.3/x86_64/1cv8c "$@"
+
