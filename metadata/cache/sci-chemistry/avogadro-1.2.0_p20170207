@@ -1,5 +1,5 @@
-glsl? ( >=media-libs/glew-1.5.0 ) >=dev-libs/boost-1.35.0-r5[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] >=dev-qt/qtgui-4.8.5:4 >=dev-qt/qtopengl-4.8.5:4 >=sci-chemistry/openbabel-2.3.0 dev-python/numpy[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] dev-python/sip[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] x11-libs/gl2ps virtual/pkgconfig dev-cpp/eigen sys-devel/make >=dev-util/cmake-3.9.6
-glsl? ( >=media-libs/glew-1.5.0 ) >=dev-libs/boost-1.35.0-r5[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] >=dev-qt/qtgui-4.8.5:4 >=dev-qt/qtopengl-4.8.5:4 >=sci-chemistry/openbabel-2.3.0 dev-python/numpy[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] dev-python/sip[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] x11-libs/gl2ps
+glsl? ( >=media-libs/glew-1.5.0 ) >=dev-libs/boost-1.35.0-r5[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] >=dev-qt/qtgui-4.8.5:4 >=dev-qt/qtopengl-4.8.5:4 >=sci-chemistry/openbabel-2.3.0 dev-python/numpy[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] dev-python/sip[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] x11-libs/gl2ps virtual/pkgconfig dev-cpp/eigen sys-devel/make >=dev-util/cmake-3.9.6
+glsl? ( >=media-libs/glew-1.5.0 ) >=dev-libs/boost-1.35.0-r5[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] >=dev-qt/qtgui-4.8.5:4 >=dev-qt/qtopengl-4.8.5:4 >=sci-chemistry/openbabel-2.3.0 dev-python/numpy[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] dev-python/sip[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] x11-libs/gl2ps
 0
 https://github.com/cryos/avogadro/archive/258105b4d8957e0245a341cdf1dc12c72234c833.tar.gz -> avogadro-1.2.0_p20170207.tar.gz
 test

@@ -1,5 +1,5 @@
-dev-python/clientcookie[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] dev-python/mechanize[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] python_single_target_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] ) python_single_target_python2_7? ( >=dev-python/setuptools-42.0.2[python_targets_python2_7(-)] )
-dev-python/clientcookie[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] dev-python/mechanize[%PYTHON_USEDEP-HAS-BEEN-REMOVED%] python_single_target_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] )
+dev-python/clientcookie[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] dev-python/mechanize[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] python_single_target_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] ) python_single_target_python2_7? ( >=dev-python/setuptools-42.0.2[python_targets_python2_7(-)] )
+dev-python/clientcookie[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] dev-python/mechanize[%PYTHON_USEDEP-NEEDS-TO-BE-USED-IN-PYTHON_GEN_COND_DEP%] python_single_target_python2_7? ( >=dev-lang/python-2.7.17-r1:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] )
 0
 mirror://sourceforge/libgmail/libgmail-0.1.11.tar.gz
 
