@@ -31,7 +31,7 @@ SRC_URI="
 
 LICENSE="AGPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="dedicated libressl server"
 
 RDEPEND="
@@ -100,6 +100,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-1.2.1335-core.patch
 	"${FILESDIR}"/${PN}-1.2.1335-boost-1.70.0_p1.patch
 	"${FILESDIR}"/${PN}-1.2.1335-boost-1.70.0_p2.patch
+	"${FILESDIR}"/${PN}-1.2.5042-boost-1.73.0.patch
 )
 
 src_unpack() {
@@ -164,7 +165,7 @@ src_prepare() {
 		|| die
 
 	# The git commit for tag: git rev-list -n 1 v${PV}
-	sed -e 's@git ARGS rev-parse HEAD@echo ARGS 6871a99b32add885fe6fa3d50fe15f62346142e7@'\
+	sed -e 's@git ARGS rev-parse HEAD@echo ARGS e4a1c219cbf6c10d9aec41461d80171ab3009bef@'\
 		-i "${S}"/CMakeLists.txt \
 		"${S}"/CMakeGlobals.txt \
 		|| die
