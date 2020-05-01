@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: Exp $
 
-EAPI=3
+EAPI=6
 #CMAKE_IN_SOURCE_BUILD=1
 #inherit eutils virtualx cmake-utils multilib
 inherit cmake-utils multilib flag-o-matic
@@ -24,6 +24,7 @@ DEPEND="=dev-lang/tcl-8.5*
 MAKEOPTS="${MAKEOPTS} -j1"
 
 src_prepare() {
+	default
 #	epatch "${FILESDIR}"/${PN}-1.14-configure-cleanup.patch
 #        eautoreconf
 	cp ${FILESDIR}/CMakeLists.txt .

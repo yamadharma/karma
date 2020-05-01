@@ -27,6 +27,9 @@ RDEPEND="
 	>=dev-python/python-zipstream-1.1.4[${PYTHON_USEDEP}]
 	>=dev-python/raven-5.23.0[${PYTHON_USEDEP}]
 	>=net-misc/ubridge-0.9.14
+	dev-python/async_generator
+	>=dev-python/distro-1.3.0
+	dev-python/py-cpuinfo
 "
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 
