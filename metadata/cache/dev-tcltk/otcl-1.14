@@ -1,5 +1,5 @@
-=dev-lang/tcl-8.5* =dev-lang/tk-8.5* sys-devel/make >=dev-util/cmake-2.8.12 userland_GNU? ( >=sys-apps/findutils-4.4.0 )
-=dev-lang/tcl-8.5* =dev-lang/tk-8.5*
+=dev-lang/tcl-8.5* =dev-lang/tk-8.5* sys-devel/make >=dev-util/cmake-3.9.6
+
 0
 mirror://sourceforge/otcl-tclcl/otcl-src-1.14.tar.gz
 
@@ -7,12 +7,12 @@ http://otcl-tclcl.sourceforge.net/otcl/
 MIT
 MIT Object extension to Tcl
 amd64 ~ppc ~sparc x86
-cmake-utils eutils flag-o-matic multilib toolchain-funcs versionator
+cmake-utils desktop epatch estack eutils flag-o-matic ltprune multilib multiprocessing ninja-utils preserve-libs toolchain-funcs vcs-clean xdg-utils
 
 
 
 
-3
+6
 
 compile configure install prepare test
 
