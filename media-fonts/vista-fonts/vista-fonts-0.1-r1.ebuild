@@ -9,6 +9,8 @@ ARCHIVE=PowerPointViewer.exe
 DESCRIPTION="Original Vista Fonts"
 HOMEPAGE=""
 SRC_URI="http://$DL_HOST/$DL_PATH/$ARCHIVE"
+# SRC_URI="https://web.archive.org/web/20171225132744/http://download.microsoft.com/download/E/6/7/E675FFFC-2A6D-4AB0-B3EB-27C9F8C8F696/PowerPointViewer.exe"
+# SRC_URI="http://fs2.softfamous.com/downloads/tname-2507a84a3561/software/PowerPointViewer.exe"
 
 FONT_SUPPLIER="microsoft"
 S=${WORKDIR}
