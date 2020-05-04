@@ -4,20 +4,21 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit distutils-r1
 
 DESCRIPTION="Graphical editor for DjVu documents"
 HOMEPAGE="http://jwilk.net/software/djvusmooth"
-SRC_URI="mirror://pypi/d/${PN}/${P}.tar.gz"
+# SRC_URI="mirror://pypi/d/${PN}/${P}.tar.gz"
+SRC_URI="https://github.com/jwilk/djvusmooth/releases/download/${PV}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 ~x86"
 
 # TODO: check with wxpython:2.9
 RDEPEND="dev-python/python-djvulibre[${PYTHON_USEDEP}]
-	dev-python/wxpython:2.8[${PYTHON_USEDEP}]
+	|| ( dev-python/wxpython:2.8[${PYTHON_USEDEP}] dev-python/wxpython:3.0[${PYTHON_USEDEP}] )
 	x11-themes/hicolor-icon-theme"
 DEPEND=""
