@@ -11,7 +11,8 @@ DESCRIPTION="Python to GNU Octave bridge"
 HOMEPAGE="
 	https://github.com/blink1073/oct2py
 	https://blink1073.github.io/oct2py/"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz
+	https://github.com/blink1073/oct2py/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
