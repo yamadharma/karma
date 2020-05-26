@@ -1,0 +1,22 @@
+pulseaudio? ( media-sound/pulseaudio ) dev-db/sqlite dev-db/unixODBC dev-libs/glib dev-libs/nss dev-libs/libxslt dev-qt/qtmultimedia media-libs/fontconfig media-libs/mesa x11-libs/libxcb x11-libs/libXcomposite x11-libs/libXi x11-libs/libXrender dev-qt/qtwebengine dev-qt/qtsvg app-admin/chrpath dev-util/desktop-file-utils x11-misc/shared-mime-info
+pulseaudio? ( media-sound/pulseaudio ) dev-db/sqlite dev-db/unixODBC dev-libs/glib dev-libs/nss dev-libs/libxslt dev-qt/qtmultimedia media-libs/fontconfig media-libs/mesa x11-libs/libxcb x11-libs/libXcomposite x11-libs/libXi x11-libs/libXrender dev-qt/qtwebengine dev-qt/qtsvg
+0
+https://zoom.us/client/5.0.408598.0517/zoom_x86_64.pkg.tar.xz -> zoom-5.0.408598.0517_x86_64.pkg.tar.xz
+mirror
+https://zoom.us
+ZOOM
+Video conferencing and web conferencing service
+amd64
+unpacker xdg xdg-utils
+pulseaudio
+
+
+
+7
+
+install postinst postrm preinst prepare unpack
+
+
+
+
+
