@@ -15,8 +15,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
-	>=dev-python/aiohttp-2.3.3[${PYTHON_USEDEP}]
-	>=dev-python/aiohttp-cors-0.6.0[${PYTHON_USEDEP}]
+	>=dev-python/aiohttp-3.6.2[${PYTHON_USEDEP}]
+	>=dev-python/aiohttp-cors-0.7.0[${PYTHON_USEDEP}]
 	sys-apps/busybox
 	dev-python/async_timeout[${PYTHON_USEDEP}]
 	>=app-emulation/dynamips-0.2.18
@@ -25,7 +25,6 @@ RDEPEND="
 	dev-python/prompt_toolkit[${PYTHON_USEDEP}]
 	>=dev-python/psutil-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/python-zipstream-1.1.4[${PYTHON_USEDEP}]
-	>=dev-python/raven-5.23.0[${PYTHON_USEDEP}]
 	>=net-misc/ubridge-0.9.14
 	dev-python/async_generator
 	>=dev-python/distro-1.3.0
