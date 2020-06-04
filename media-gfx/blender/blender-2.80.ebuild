@@ -35,8 +35,10 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}
 RDEPEND="${PYTHON_DEPS}
 	>=dev-libs/boost-1.62:=[nls?,threads(+)]
 	dev-libs/lzo:2
-	>=dev-python/numpy-1.10.1[${PYTHON_USEDEP}]
-	dev-python/requests[${PYTHON_USEDEP}]
+	$(python_gen_cond_dep '
+		>=dev-python/numpy-1.10.1[${PYTHON_MULTI_USEDEP}]
+		dev-python/requests[${PYTHON_MULTI_USEDEP}]
+	')
 	media-libs/freetype
 	media-libs/glew:*
 	media-libs/libpng:0=
