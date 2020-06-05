@@ -1,0 +1,22 @@
+python_single_target_python3_7? ( dev-lang/python:3.7 >=dev-lang/python-exec-2:=[python_targets_python3_7] ) >=dev-libs/boost-1.62:=[nls?,threads(+)] dev-libs/lzo:2 python_single_target_python3_7? ( >=dev-python/numpy-1.10.1[python_targets_python3_7(-)] dev-python/requests[python_targets_python3_7(-)] ) media-libs/freetype media-libs/glew:* media-libs/libpng:0= media-libs/libsamplerate sys-libs/zlib virtual/glu virtual/jpeg:0= virtual/libintl virtual/opengl alembic? ( >=media-gfx/alembic-1.7.11[boost(+),hdf(+)] ) collada? ( >=media-libs/opencollada-1.6.18:= ) colorio? ( media-libs/opencolorio ) cuda? ( dev-util/nvidia-cuda-toolkit:= ) ffmpeg? ( media-video/ffmpeg:=[x264,mp3,encode,theora,jpeg2k?] ) libav? ( >=media-video/libav-11.3:=[x264,mp3,encode,theora,jpeg2k?] ) fftw? ( sci-libs/fftw:3.0= ) !headless? ( x11-libs/libX11 x11-libs/libXi x11-libs/libXxf86vm ) jack? ( virtual/jack ) jemalloc? ( dev-libs/jemalloc:= ) jpeg2k? ( media-libs/openjpeg:0 ) llvm? ( sys-devel/llvm:= ) ndof? ( app-misc/spacenavd dev-libs/libspnav ) nls? ( virtual/libiconv ) openal? ( media-libs/openal ) opencl? ( virtual/opencl ) openimageio? ( >=media-libs/openimageio-1.7.0 ) openexr? ( >=media-libs/ilmbase-2.2.0:= >=media-libs/openexr-2.2.0:= ) opensubdiv? ( >=media-libs/opensubdiv-3.3.0:=[cuda=,opencl=] ) openvdb? ( media-gfx/openvdb[python_single_target_python3_7(-)?,-abi3-compat(-),abi4-compat(+)] dev-cpp/tbb >=dev-libs/c-blosc-1.5.2 ) osl? ( media-libs/osl:= ) sdl? ( media-libs/libsdl2[sound,joystick] ) sndfile? ( media-libs/libsndfile ) tiff? ( media-libs/tiff:0 ) valgrind? ( dev-util/valgrind ) >=dev-cpp/eigen-3.2.8:3 virtual/pkgconfig doc? ( app-doc/doxygen[-nodot(-),dot(+),latex] dev-python/sphinx[latex] ) nls? ( sys-devel/gettext ) sys-devel/make >=dev-util/cmake-3.9.6
+python_single_target_python3_7? ( dev-lang/python:3.7 >=dev-lang/python-exec-2:=[python_targets_python3_7] ) >=dev-libs/boost-1.62:=[nls?,threads(+)] dev-libs/lzo:2 python_single_target_python3_7? ( >=dev-python/numpy-1.10.1[python_targets_python3_7(-)] dev-python/requests[python_targets_python3_7(-)] ) media-libs/freetype media-libs/glew:* media-libs/libpng:0= media-libs/libsamplerate sys-libs/zlib virtual/glu virtual/jpeg:0= virtual/libintl virtual/opengl alembic? ( >=media-gfx/alembic-1.7.11[boost(+),hdf(+)] ) collada? ( >=media-libs/opencollada-1.6.18:= ) colorio? ( media-libs/opencolorio ) cuda? ( dev-util/nvidia-cuda-toolkit:= ) ffmpeg? ( media-video/ffmpeg:=[x264,mp3,encode,theora,jpeg2k?] ) libav? ( >=media-video/libav-11.3:=[x264,mp3,encode,theora,jpeg2k?] ) fftw? ( sci-libs/fftw:3.0= ) !headless? ( x11-libs/libX11 x11-libs/libXi x11-libs/libXxf86vm ) jack? ( virtual/jack ) jemalloc? ( dev-libs/jemalloc:= ) jpeg2k? ( media-libs/openjpeg:0 ) llvm? ( sys-devel/llvm:= ) ndof? ( app-misc/spacenavd dev-libs/libspnav ) nls? ( virtual/libiconv ) openal? ( media-libs/openal ) opencl? ( virtual/opencl ) openimageio? ( >=media-libs/openimageio-1.7.0 ) openexr? ( >=media-libs/ilmbase-2.2.0:= >=media-libs/openexr-2.2.0:= ) opensubdiv? ( >=media-libs/opensubdiv-3.3.0:=[cuda=,opencl=] ) openvdb? ( media-gfx/openvdb[python_single_target_python3_7(-)?,-abi3-compat(-),abi4-compat(+)] dev-cpp/tbb >=dev-libs/c-blosc-1.5.2 ) osl? ( media-libs/osl:= ) sdl? ( media-libs/libsdl2[sound,joystick] ) sndfile? ( media-libs/libsndfile ) tiff? ( media-libs/tiff:0 ) valgrind? ( dev-util/valgrind )
+0
+http://download.blender.org/source/blender-2.80.tar.gz
+
+http://www.blender.org
+|| ( GPL-2 BL )
+3D Creation/Animation/Publishing System
+amd64 ~x86
+check-reqs cmake-utils desktop eapi7-ver epatch estack eutils flag-o-matic gnome2-utils ltprune multilib multiprocessing ninja-utils pax-utils preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
++bullet +dds +elbeem +openexr alembic collada colorio cuda cycles debug doc ffmpeg fftw headless jack jemalloc jpeg2k libav llvm man ndof nls openal opencl openimageio openmp opensubdiv openvdb osl sdl sndfile test tiff valgrind +python_single_target_python3_7
+^^ ( python_single_target_python3_7 ) alembic? ( openexr ) cuda? ( cycles ) cycles? ( openexr tiff openimageio ) opencl? ( cycles ) osl? ( cycles llvm )
+
+
+6
+
+compile configure install postinst postrm preinst prepare pretend setup test
+
+
+
+
+
