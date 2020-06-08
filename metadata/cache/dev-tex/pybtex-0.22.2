@@ -1,0 +1,22 @@
+dev-python/setuptools
+dev-python/pyparsing dev-python/pyyaml dev-python/six dev-python/latexcodec python_targets_python3_7? ( dev-lang/python:3.7 ) python_targets_python3_8? ( dev-lang/python:3.8 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,python_targets_python3_8(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-)]
+0
+https://files.pythonhosted.org/packages/source/p/pybtex/pybtex-0.22.2.tar.gz
+test
+https://pybtex.org/
+GPL-3
+BibTeX-compatible bibliography processor in Python
+x86 amd64
+distutils-r1 multibuild multilib multiprocessing python-r1 python-utils-r1 toolchain-funcs
+doc examples python_targets_python3_7 python_targets_python3_8
+|| ( python_targets_python3_7 python_targets_python3_8 )
+
+python_targets_python3_7? ( dev-lang/python:3.7 ) python_targets_python3_8? ( dev-lang/python:3.8 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,python_targets_python3_8(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-)] >=dev-python/setuptools-42.0.2[python_targets_python3_7(-)?,python_targets_python3_8(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-)]
+7
+
+compile configure install prepare test
+
+
+
+
+
