@@ -1,0 +1,22 @@
+
+app-shells/bash net-misc/rsync[xattr] sys-apps/systemd
+0
+https://github.com/graysky2/profile-sync-daemon/archive/v6.40.tar.gz -> profile-sync-daemon-6.40.tar.gz
+
+https://wiki.archlinux.org/index.php/Profile-sync-daemon
+MIT
+Symlinks and syncs browser profile dirs to RAM
+amd64 ~x86
+
+
+
+
+
+7
+
+install postinst
+
+
+
+
+
