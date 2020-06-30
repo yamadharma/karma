@@ -7,7 +7,7 @@ https://www.netacad.com/about-networking-academy/packet-tracer
 Cisco_EULA
 Cisco's packet tracer
 
-desktop pax-utils unpacker xdg-utils
+desktop multilib pax-utils toolchain-funcs unpacker xdg-utils
 
 
 
