@@ -15,7 +15,7 @@ SRC_URI="https://www.playonlinux.com/script_files/${MY_PN}/${PV}/${MY_PN}_${PV}.
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+# KEYWORDS="amd64 ~x86"
 IUSE="winbind"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
@@ -27,7 +27,8 @@ RDEPEND="${PYTHON_DEPS}
 	app-crypt/gnupg
 	app-misc/jq
 	$(python_gen_cond_dep '
-		dev-python/wxpython:3.0[${PYTHON_MULTI_USEDEP}]
+		dev-python/wxpython:4.0[${PYTHON_MULTI_USEDEP}]
+		dev-python/natsort[${PYTHON_MULTI_USEDEP}]
 	')
 	media-gfx/icoutils
 	|| ( net-analyzer/netcat net-analyzer/openbsd-netcat )
