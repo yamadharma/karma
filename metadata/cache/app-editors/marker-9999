@@ -1,4 +1,4 @@
-x11-libs/gtk+:3 x11-libs/gtksourceview:3.0/3 net-libs/webkit-gtk:4/37 app-text/gtkspell:3/0 >=dev-util/meson-0.51.2 >=dev-util/ninja-1.8.2 >=dev-vcs/git-1.8.2.1[curl]
+x11-libs/gtk+:3 x11-libs/gtksourceview:3.0/3 net-libs/webkit-gtk:4/37 app-text/gtkspell:3/0 >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 >=dev-vcs/git-1.8.2.1[curl]
 x11-libs/gtk+:3 x11-libs/gtksourceview:3.0/3 net-libs/webkit-gtk:4/37 app-text/gtkspell:3/0 pandoc? ( app-text/pandoc )
 0
 
