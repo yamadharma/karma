@@ -2,12 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-# inherit go-module bash-completion-r1
+
 inherit eutils bash-completion-r1
 
-# The fork with prefetched vendor packages using `go mod vendor`
-EGO_PN="github.com/g4s8/hugo"
-GIT_COMMIT="6608f1557054a7d0230dff260c1b66bc19e65ec8"
 KEYWORDS="~amd64"
 
 DESCRIPTION="The world's fastest framework for building websites"

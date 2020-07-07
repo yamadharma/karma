@@ -9,7 +9,7 @@ SRC_URI="https://github.com/jgm/pandoc/releases/download/${PV}/pandoc-${PV}-linu
 
 LICENSE="GPL-2"
 SLOT="0/${PV}"
-KEYWORDS="amd64"
+# KEYWORDS="amd64"
 IUSE=""
 
 RESTRICT="strip"
