@@ -1,12 +1,12 @@
 !app-text/pandoc !dev-haskell/pandoc-citeproc
 !app-text/pandoc !dev-haskell/pandoc-citeproc
-0/2.9.1.1
-https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1-linux-amd64.tar.gz
+0/2.10
+https://github.com/jgm/pandoc/releases/download/2.10/pandoc-2.10-linux-amd64.tar.gz
 strip
 http://pandoc.org
 GPL-2
 Conversion between markup formats
-amd64
+
 
 
 
