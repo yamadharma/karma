@@ -21,7 +21,7 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/python-distutils-extra[${PYTHON_USEDEP}]
 "
 RDEPEND="${DEPEND}
-	dev-python/pygtk[${PYTHON_USEDEP}]
+	dev-python/pygobject[${PYTHON_USEDEP}]
 	dev-python/pycairo[${PYTHON_USEDEP}]
 	x11-misc/slop
 	media-fonts/fontawesome
