@@ -17,3 +17,10 @@ SLOT="0"
 KEYWORDS="amd64"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 
+python_prepare_all() {
+	sed -e "/ADD_CFLAGS/s:=:=${CFLAGS/-O?/}:" \
+		-e "/ADD_LDFLAGS/s:=:=${LDFLAGS}:" \
+		-i ${PN}/make/config.mk || die
+
+	distutils-r1_python_prepare_all
+}
