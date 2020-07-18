@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit eutils cmake-utils pam xdg-utils java-pkg-2 java-ant-2 pax-utils prefix qmake-utils vcs-clean
+inherit eutils cmake pam xdg-utils java-pkg-2 java-ant-2 pax-utils prefix qmake-utils vcs-clean
 
 # TODO
 # * use dict from tree, linguas
@@ -95,7 +95,8 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-1.0.44-systemd.patch
 	"${FILESDIR}"/${PN}-1.3.959-core.patch
 	"${FILESDIR}"/${PN}-1.2.5042-boost-1.73.0.patch
-	"${FILESDIR}"/${PN}-1.3.959-R-4.0.0.patch
+	"${FILESDIR}"/${PN}-1.3.1056-R-4.0.0.patch
+	"${FILESDIR}"/${PN}-1.3.1056-boost-1.74.0.patch
 )
 
 src_unpack() {
@@ -107,7 +108,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	cmake-utils_src_prepare
+	cmake_src_prepare
 	java-pkg-2_src_prepare
 	egit_clean
 
@@ -160,7 +161,7 @@ src_prepare() {
 		|| die
 
 	# The git commit for tag: git rev-list -n 1 v${PV}
-	sed -e 's@git ARGS rev-parse HEAD@echo ARGS 3a09be39fd51a8fafa8ae330007937d31924b395@'\
+	sed -e 's@git ARGS rev-parse HEAD@echo ARGS 5a4dee980c998d9a270a83b582b367126f3914cf@'\
 		-i "${S}"/CMakeLists.txt \
 		"${S}"/CMakeGlobals.txt \
 		|| die
@@ -186,7 +187,7 @@ src_configure() {
 			-DQT_QMAKE_EXECUTABLE=$(qt5_get_bindir)/qmake
 		)
 	fi
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile() {
@@ -198,12 +199,12 @@ src_compile() {
 	# Avoid the rest of the oracle-jdk-bin-1.8.0.60 sandbox violations F: mkdir S: deny
 	# P: /root/.oracle_jre_usage.
 	export ANT_OPTS="-Duser.home=${T}"
-	cmake-utils_src_compile
+	cmake_src_compile
 }
 
 src_install() {
 	export ANT_OPTS="-Duser.home=${T}"
-	cmake-utils_src_install
+	cmake_src_install
 	use dedicated || pax-mark m "${ED}/usr/bin/rstudio"
 	doconfd "${FILESDIR}"/rstudio-server.conf
 	insinto /etc/rstudio
