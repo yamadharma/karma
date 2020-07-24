@@ -32,8 +32,11 @@ src_unpack() {
 
 src_prepare() {
 	eapply_user
+#	sed -i \
+#		-e "/^OPENPROJ_HOME0=/s:=.*:=/opt/${MY_PN}:" \
+#		${MY_PN}.sh || die
 	sed -i \
-		-e "/^OPENPROJ_HOME0=/s:=.*:=/opt/${MY_PN}:" \
+		-e "/^PROJECTLIBRE_HOME0=/s:=.*:=/opt/${MY_PN}:" \
 		${MY_PN}.sh || die
 }
 
