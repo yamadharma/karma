@@ -1,0 +1,22 @@
+
+|| ( virtual/jre virtual/jdk )
+0
+https://www.ganttproject.biz/dl/2.8.11/lin -> ganttproject-bin-2.8.11.deb
+
+https://www.ganttproject.biz
+GPLv3
+A tool for creating a project schedule by means of Gantt chart and resource load chart
+amd64 ~x86
+desktop multilib toolchain-funcs unpacker xdg-utils
+
+
+
+
+7
+
+install postinst postrm unpack
+
+
+
+
+
