@@ -7,16 +7,23 @@ PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit distutils-r1
 
-DESCRIPTION="A Python implementation of the JSON5 data format"
-HOMEPAGE="https://github.com/dpranke/pyjson5"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+DESCRIPTION="A Jupyter Notebook server extension that implements common Slurm commands"
+HOMEPAGE="https://github.com/NERSC/jupyterlab-slurm"
+SRC_URI="mirror://pypi/j/jupyterlab_slurm/jupyterlab_slurm-${PV}.tar.gz"
 
-LICENSE="Apache-2.0"
+LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="\
+	sys-cluster/slurm \
+	dev-python/notebook[${PYTHON_USEDEP}] \
 "
+
+src_unpack() {
+	default
+        mv * ${P}
+}
 
 src_prepare() {
 	distutils-r1_src_prepare
@@ -28,6 +35,7 @@ python_compile() {
 
 python_install() {
 	distutils-r1_python_install --skip-build
+	rm ${D}/usr/share/jupyter/lab/extensions/jupyter-slurm-*.tgz
 }
 
 python_install_all() {
