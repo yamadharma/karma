@@ -63,3 +63,7 @@ python_install() {
 python_install_all() {
 	distutils-r1_python_install_all
 }
+
+pkg_postinst() {
+	jupyter lab build
+}
