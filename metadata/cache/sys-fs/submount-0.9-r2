@@ -1,5 +1,5 @@
-kernel_linux? ( virtual/modutils ) sys-apps/sed kernel_linux? ( virtual/linux-sources virtual/libelf )
-kernel_linux? ( virtual/modutils )
+kernel_linux? ( sys-apps/kmod[tools] ) sys-apps/sed kernel_linux? ( virtual/linux-sources virtual/libelf )
+kernel_linux? ( sys-apps/kmod[tools] )
 0
 mirror://sourceforge/submount/submount-2.4-0.9.tar.gz mirror://sourceforge/submount/submount-0.9.tar.gz
 
