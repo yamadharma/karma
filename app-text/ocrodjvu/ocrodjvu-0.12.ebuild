@@ -12,7 +12,7 @@ inherit distutils-r1
 
 DESCRIPTION="djvusmooth is a graphical editor for DjVu documents"
 HOMEPAGE="http://jwilk.net/software/ocrodjvu"
-SRC_URI="https://github.com/jwilk/ocrodjvu/releases/download/${PV}/${P}.tar.gz"
+SRC_URI="https://github.com/jwilk/ocrodjvu/releases/download/${PV}/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -25,7 +25,7 @@ DEPEND=""
 RDEPEND="${PYTHON_DEPS}
 	dev-python/python-djvulibre
 	dev-python/lxml
- 	dev-python/pyicu
+ 	dev-python/PyICU
 	cuneiform? ( app-text/cuneiform )
 	gocr? ( app-text/gocr )
 	ocropus? ( app-text/ocropus )
