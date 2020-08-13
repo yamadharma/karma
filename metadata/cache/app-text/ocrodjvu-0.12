@@ -1,7 +1,7 @@
 python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] >=dev-python/setuptools-42.0.2[python_targets_python2_7(-)?,-python_single_target_python2_7(-)]
-python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] dev-python/python-djvulibre dev-python/lxml dev-python/pyicu cuneiform? ( app-text/cuneiform ) gocr? ( app-text/gocr ) ocropus? ( app-text/ocropus ) tesseract? ( app-text/tesseract ) ocrad? ( app-text/ocrad ) python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)]
+python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)] dev-python/python-djvulibre dev-python/lxml dev-python/PyICU cuneiform? ( app-text/cuneiform ) gocr? ( app-text/gocr ) ocropus? ( app-text/ocropus ) tesseract? ( app-text/tesseract ) ocrad? ( app-text/ocrad ) python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,-python_single_target_python2_7(-)]
 0
-https://github.com/jwilk/ocrodjvu/releases/download/0.10.2/ocrodjvu-0.10.2.tar.gz
+https://github.com/jwilk/ocrodjvu/releases/download/0.12/ocrodjvu-0.12.tar.xz
 nomirror
 http://jwilk.net/software/ocrodjvu
 GPL-2

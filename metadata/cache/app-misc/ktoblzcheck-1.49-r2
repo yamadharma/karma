@@ -1,0 +1,22 @@
+app-text/recode sys-apps/grep sys-apps/sed virtual/awk || ( net-misc/wget www-client/lynx ) sys-devel/libtool
+app-text/recode sys-apps/grep sys-apps/sed virtual/awk || ( net-misc/wget www-client/lynx )
+0
+mirror://sourceforge/ktoblzcheck/ktoblzcheck-1.49.tar.gz
+
+http://ktoblzcheck.sourceforge.net/
+LGPL-2.1
+Library to check account numbers and bank codes of German banks
+amd64 ~ppc ~ppc64 ~sparc ~x86
+
+
+
+
+
+7
+
+configure install
+
+
+
+
+
