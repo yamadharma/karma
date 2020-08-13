@@ -2,9 +2,10 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
-		<email>hanno@gentoo.org</email>
+		<email>maksbotan@gentoo.org</email>
+		<name>Maxim Koltsov</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="sourceforge">ktoblzcheck</remote-id>
+		<remote-id type="github">nijel/enca</remote-id>
 	</upstream>
 </pkgmetadata>
