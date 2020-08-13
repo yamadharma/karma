@@ -15,8 +15,8 @@ KEYWORDS="~alpha amd64 arm ~arm64 hppa ~ia64 ~mips ppc ppc64 sparc x86 ~amd64-li
 IUSE="doc +iconv recode static-libs"
 
 RDEPEND="
-	iconv? ( virtual/libiconv[${MULTILIB_USEDEP}] )
-	recode? ( app-text/recode[${MULTILIB_USEDEP}] )
+	iconv? ( virtual/libiconv )
+	recode? ( app-text/recode )
 "
 DEPEND="${RDEPEND}
 	sys-devel/gettext
