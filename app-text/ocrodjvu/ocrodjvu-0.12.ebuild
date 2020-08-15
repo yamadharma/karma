@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/dnspython/dnspython-1.8.0.ebuild,v 1.8 2010/08/16 16:50:27 grobian Exp $
 
-EAPI=5
+EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
 DISTUTILS_IN_SOURCE_BUILD=1 # setup.py applies 2to3 to tests
@@ -12,7 +12,8 @@ inherit distutils-r1
 
 DESCRIPTION="djvusmooth is a graphical editor for DjVu documents"
 HOMEPAGE="http://jwilk.net/software/ocrodjvu"
-SRC_URI="https://github.com/jwilk/ocrodjvu/releases/download/${PV}/${P}.tar.xz"
+SRC_URI="https://github.com/jwilk/ocrodjvu/archive/${PV}.tar.gz -> ${P}.tar.gz"
+# SRC_URI="https://github.com/jwilk/ocrodjvu/releases/download/${PV}/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -41,9 +42,14 @@ RESTRICT="nomirror"
 #PYTHON_MODNAME="dns"
 DOCS="doc/changelog doc/*.xml doc/dependencies.txt"
 
-src_install() {
-	distutils-r1_src_install
+src_compile() {
+	emake PYTHON=python2
+}
 
-	doman doc/*.1
+src_install() {
+#	distutils-r1_src_install
+	make install PREFIX=/usr DESTDIR=${D} PYTHON=python2
+
+	dodoc -r doc/* examples
 }
 
