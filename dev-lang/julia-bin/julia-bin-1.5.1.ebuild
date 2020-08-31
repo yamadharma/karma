@@ -43,4 +43,7 @@ src_install() {
 		PATH="${EROOT}/usr/$(get_libdir)/${MY_P}/bin"
 	EOF
 	doenvd 99julia-bin
+	
+	dodir /usr/bin
+	dosym ${EROOT}/usr/$(get_libdir)/${MY_P}/bin/julia /usr/bin/julia
 }
