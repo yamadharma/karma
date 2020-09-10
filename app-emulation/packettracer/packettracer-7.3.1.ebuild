@@ -8,12 +8,12 @@ inherit desktop pax-utils xdg-utils unpacker
 DESCRIPTION="Cisco's packet tracer"
 HOMEPAGE="https://www.netacad.com/about-networking-academy/packet-tracer"
 SRC_URI="
-	amd64? ( "PacketTracer_730_amd64.deb" )
+	amd64? ( "PacketTracer_731_amd64.deb" )
 "
 
 LICENSE="Cisco_EULA"
 SLOT="0"
-# KEYWORDS="amd64"
+KEYWORDS="amd64"
 IUSE=""
 RESTRICT="fetch mirror strip userpriv"
 
