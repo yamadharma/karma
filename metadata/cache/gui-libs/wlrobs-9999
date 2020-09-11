@@ -1,0 +1,22 @@
+dev-libs/wayland media-video/obs-studio[wayland] dev-vcs/mercurial
+dev-libs/wayland media-video/obs-studio[wayland]
+0
+
+
+https://hg.sr.ht/~scoopta/wlrobs
+GPL-3
+Wayland (wlroots-based) screen capture plugin for obs-studio
+amd64 x86
+eutils mercurial meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-funcs
+
+
+
+>=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2
+7
+live
+compile configure install test unpack
+
+
+
+
+

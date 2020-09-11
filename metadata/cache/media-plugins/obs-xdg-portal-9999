@@ -1,0 +1,22 @@
+x11-wm/mutter[screencast] media-video/obs-studio
+x11-wm/mutter[screencast] media-video/obs-studio
+0
+
+
+https://gitlab.gnome.org/feaneron/obs-xdg-portal
+GPL-3
+OBS Studio plugin using the Desktop portal for Wayland & X11 screencasting.
+amd64
+git-r3 meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-funcs
+
+
+
+dev-util/meson dev-util/ninja >=dev-vcs/git-1.8.2.1[curl] >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2
+7
+live
+compile configure install test unpack
+
+
+
+
+
