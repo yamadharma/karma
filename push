@@ -1,15 +1,22 @@
 #!/bin/bash
 
 git pull
-git add -A .; git commit -am "$(date)"; git push
 
-# Сжатие git
+# Push
+git add -A .
+git commit -am "$(date)"
+git push
+
+# Mirror
+git push --mirror git@github.com:yamadharma/gentoo-portage-profiles.git
+
+# git compress
 if [[ $1 == "compress" ]]
 then
     if [[ -d .git ]]
     then
 	git fsck
-        git gc --prune=now
-        git gc --aggressive --prune=now
+	git gc --prune=now
+	git gc --aggressive --prune=now
     fi
 fi
