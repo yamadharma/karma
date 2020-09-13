@@ -7,7 +7,7 @@ http://xmedcon.sourceforge.net
 GPL-2 LGPL-2.1
 Medical Image Conversion Utility with a GTK interface
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 png gtk +dicom
 
 

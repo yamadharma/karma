@@ -7,7 +7,7 @@ http://www.pixelbeat.org/fslint/
 GPL-2
 A utility to find various forms of lint on a filesystem
 amd64 x86
-desktop epatch estack eutils ltprune multibuild multilib preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multibuild multilib preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean wrapper
 nls python_targets_python2_7
 || ( python_targets_python2_7 )
 

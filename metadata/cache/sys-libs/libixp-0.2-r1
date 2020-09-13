@@ -7,7 +7,7 @@ http://libs.suckless.org/
 MIT
 Standalone client/server 9P library
 amd64 ~ppc64 x86
-desktop epatch estack eutils flag-o-matic ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils flag-o-matic l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

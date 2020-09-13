@@ -7,7 +7,7 @@ http://opennms.org
 GPL-2
 OpenNMS is a higly robust and flexible NMS tool
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 doc
 
 

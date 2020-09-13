@@ -7,7 +7,7 @@ http://www.blender.org
 || ( GPL-2 BL )
 3D Creation/Animation/Publishing System
 amd64 ~x86
-check-reqs cmake-utils desktop eapi7-ver epatch estack eutils flag-o-matic gnome2-utils ltprune multilib multiprocessing ninja-utils pax-utils preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+check-reqs cmake-utils desktop eapi7-ver edos2unix epatch estack eutils flag-o-matic gnome2-utils l10n ltprune multilib multiprocessing ninja-utils pax-utils preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean wrapper xdg-utils
 +bullet +dds +elbeem +openexr alembic collada colorio cuda cycles debug doc ffmpeg fftw headless jack jemalloc jpeg2k libav llvm man ndof nls openal opencl openimageio openmp opensubdiv openvdb osl sdl sndfile test tiff valgrind +python_single_target_python3_7
 ^^ ( python_single_target_python3_7 ) alembic? ( openexr ) cuda? ( cycles ) cycles? ( openexr tiff openimageio ) opencl? ( cycles ) osl? ( cycles llvm )
 

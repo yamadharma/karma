@@ -7,7 +7,7 @@ http://libgmail.sourceforge.net/
 GPL-2
 Python bindings to access Google's gmail service
 ~amd64 ~ppc ~x86 ~amd64-linux ~x86-linux ~x86-macos
-desktop distutils-r1 epatch estack eutils ltprune multilib multiprocessing preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+desktop distutils-r1 edos2unix epatch estack eutils l10n ltprune multilib multiprocessing preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean wrapper xdg-utils
 +python_single_target_python2_7
 ^^ ( python_single_target_python2_7 )
 

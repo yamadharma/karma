@@ -7,7 +7,7 @@ http://soft.proindependent.com/qtiplot.html http://www.staff.science.uu.nl/~zeve
 GPL-2 GPL-3
 Qt based clone of the Origin plotting package
 ~amd64 ~x86 ~amd64-linux ~x86-linux
-desktop epatch estack eutils ltprune multilib preserve-libs python-single-r1 python-utils-r1 qmake-utils toolchain-funcs vcs-clean xdg xdg-utils
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs python-single-r1 python-utils-r1 qmake-utils toolchain-funcs vcs-clean wrapper xdg xdg-utils
 bindist doc mono latex python linguas_zh_CN linguas_cs linguas_de linguas_es linguas_fr linguas_ja linguas_ro linguas_ru linguas_sv +python_single_target_python2_7
 python? ( ^^ ( python_single_target_python2_7 ) )
 

@@ -7,7 +7,7 @@ http://www.scilab.org
 
 Scilab scientific software
 ~amd64
-bash-completion-r1 desktop epatch estack eutils fdo-mime ltprune multilib preserve-libs toolchain-funcs vcs-clean
+bash-completion-r1 desktop edos2unix epatch estack eutils fdo-mime l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 bash-completion
 
 

@@ -7,7 +7,7 @@ https://www.jetbrains.com/idea
 Apache-2.0 jbr8? ( GPL-2 ) jbr11? ( GPL-2 )
 A complete toolset for web, mobile and enterprise development
 ~amd64 ~x86
-desktop eutils
+desktop edos2unix eutils l10n wrapper
 +jbr8 -jbr11
 jbr8? ( !jbr11 )
 

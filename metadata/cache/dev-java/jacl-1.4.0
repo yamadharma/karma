@@ -7,7 +7,7 @@ http://tcljava.sourceforge.net
 BSD
 Jacl is an implementation of Tcl written in Java.
 amd64 ~ia64 ppc ppc64 x86 ~x86-fbsd
-base desktop epatch estack eutils java-pkg-2 java-utils-2 ltprune multilib preserve-libs toolchain-funcs vcs-clean
+base desktop edos2unix epatch estack eutils java-pkg-2 java-utils-2 l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 doc elibc_FreeBSD
 
 

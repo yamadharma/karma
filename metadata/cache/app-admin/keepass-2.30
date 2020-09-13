@@ -7,7 +7,7 @@ http://keepass.info/
 GPL-2
 A free, open source, light-weight and easy-to-use password manager
 ~amd64 ~x86
-desktop epatch estack eutils fdo-mime gnome2-utils ltprune mono-env multilib preserve-libs toolchain-funcs vcs-clean xdg-utils
+desktop edos2unix epatch estack eutils fdo-mime gnome2-utils l10n ltprune mono-env multilib preserve-libs toolchain-funcs vcs-clean wrapper xdg-utils
 aot
 
 

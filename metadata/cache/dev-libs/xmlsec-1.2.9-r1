@@ -7,7 +7,7 @@ http://www.aleksey.com/xmlsec
 MIT
 command line tool for signing, verifying, encrypting and decrypting XML
 x86 amd64 ~sparc ~ppc
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 ssl mozilla gnutls
 
 

@@ -7,7 +7,7 @@ https://launchpad.net/bzr-fastimport http://wiki.bazaar.canonical.com/BzrFastImp
 GPL-2
 Plugin providing fast loading of revision control data into Bazaar
 amd64 x86
-desktop distutils-r1 epatch estack eutils ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+desktop distutils-r1 edos2unix epatch estack eutils l10n ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean wrapper xdg-utils
 python_targets_python2_7
 || ( python_targets_python2_7 )
 

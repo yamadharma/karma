@@ -7,7 +7,7 @@ http://www.cgsecurity.org/wiki/TestDisk
 GPL-2
 Checks and undeletes partitions + PhotoRec, signature based recovery tool
 ~amd64 ~ppc ~x86
-desktop epatch estack eutils flag-o-matic ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils flag-o-matic l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 static reiserfs ntfs jpeg
 
 

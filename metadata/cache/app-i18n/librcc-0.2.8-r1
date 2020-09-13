@@ -7,7 +7,7 @@ http://dside.dyndns.org/files/rusxmms/librcc-0.2.8.tar.bz2
 GPL-2
 LibRCC is Russian Encoding Conversion Library
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

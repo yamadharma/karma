@@ -7,7 +7,7 @@ http://code.google.com/p/cue2tracks/
 GPL-2
 Bash script for split audio CD image files with cue sheet to tracks and write tags.
 ~x86 ~amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 flake mac tta shorten wavpack mp3 m4a vorbis
 
 

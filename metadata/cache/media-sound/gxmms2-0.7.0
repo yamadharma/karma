@@ -7,7 +7,7 @@ http://wejp.k.vu/projects/xmms2/
 GPL-2
 A GTK+ 2.6 based XMMS2 client
 amd64 ~ppc ~sparc x86 ~hppa ~mips ~ppc64 ~alpha ~ia64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

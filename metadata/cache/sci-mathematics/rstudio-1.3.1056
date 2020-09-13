@@ -7,7 +7,7 @@ http://www.rstudio.org https://github.com/rstudio/rstudio/
 AGPL-3
 IDE for the R language
 ~amd64 ~x86 ~amd64-linux ~x86-linux
-cmake estack eutils flag-o-matic java-ant-2 java-pkg-2 java-utils-2 multilib multiprocessing ninja-utils pam pax-utils prefix qmake-utils toolchain-funcs vcs-clean xdg-utils
+cmake edos2unix estack eutils flag-o-matic java-ant-2 java-pkg-2 java-utils-2 l10n multilib multiprocessing ninja-utils pam pax-utils prefix qmake-utils toolchain-funcs vcs-clean wrapper xdg-utils
 dedicated libressl server elibc_FreeBSD elibc_FreeBSD
 
 

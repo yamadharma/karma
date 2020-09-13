@@ -7,7 +7,7 @@ http://ccache.samba.org/
 GPL-2
 This package contains polgen, a collection of scripts and tools developed by the MITRE corporation to automate the SELinux policy generation process.
 x86 amd64 ~ppc ~sparc ~alpha ~hppa
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 doc selinux
 
 

@@ -7,7 +7,7 @@ http://wordrider.net/freerapid
 GPL
 FreeRapid is a simple Java downloader that supports downloading from Rapidshare and other file-sharing services.
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

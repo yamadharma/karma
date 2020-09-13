@@ -7,7 +7,7 @@ http://www.gnu.org/software/classpath
 GPL-2-with-linking-exception
 Free core class libraries for use with virtual machines and compilers for the Java programming language
 amd64 ~ppc x86
-desktop epatch estack eutils java-pkg-2 java-utils-2 ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils java-pkg-2 java-utils-2 l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 alsa debug dssi examples gconf gtk xml elibc_FreeBSD
 
 

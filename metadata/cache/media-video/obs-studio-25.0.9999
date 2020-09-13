@@ -7,7 +7,7 @@ https://obsproject.com
 GPL-2
 Software for Recording and Streaming Live Video Content (wayland branch)
 amd64 x86
-cmake-utils eutils flag-o-matic git-r3 multilib multiprocessing ninja-utils python-single-r1 python-utils-r1 toolchain-funcs xdg-utils
+cmake-utils edos2unix eutils flag-o-matic git-r3 l10n multilib multiprocessing ninja-utils python-single-r1 python-utils-r1 toolchain-funcs wrapper xdg-utils
 +alsa fdk imagemagick jack luajit nvenc pulseaudio python speex +ssl truetype v4l vlc wayland X python_single_target_python3_6 python_single_target_python3_7
 python? ( ^^ ( python_single_target_python3_6 python_single_target_python3_7 ) )
 

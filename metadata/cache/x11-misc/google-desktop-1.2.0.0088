@@ -7,7 +7,7 @@ http://desktop.google.com/linux/
 as-is
 Google Desktop
 -* x86 amd64
-desktop epatch estack eutils ltprune mozextension multilib preserve-libs rpm toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune mozextension multilib preserve-libs rpm toolchain-funcs vcs-clean wrapper
 firefox thunderbird
 
 

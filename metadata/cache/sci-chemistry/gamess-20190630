@@ -7,7 +7,7 @@ http://www.msg.chem.iastate.edu/GAMESS/GAMESS.html
 gamess
 A powerful quantum chemistry package
 amd64 ~x86
-check-reqs desktop epatch estack eutils flag-o-matic fortran-2 ltprune multilib pax-utils preserve-libs toolchain-funcs vcs-clean
+check-reqs desktop edos2unix epatch estack eutils flag-o-matic fortran-2 l10n ltprune multilib pax-utils preserve-libs toolchain-funcs vcs-clean wrapper
 mpi msucc neo +openmp pax_kernel qmmm-tinker vb2000
 ( openmp? ( !neo !vb2000 ) )
 

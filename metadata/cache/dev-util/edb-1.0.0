@@ -7,7 +7,7 @@ https://github.com/eteran/edb-debugger
 GPL-2
 EDB "Evan's Debugger" (OllyDbg workalike for Linux)
 amd64 x86
-cmake-utils eutils flag-o-matic multilib multiprocessing ninja-utils toolchain-funcs xdg-utils
+cmake-utils edos2unix eutils flag-o-matic l10n multilib multiprocessing ninja-utils toolchain-funcs wrapper xdg-utils
 
 
 

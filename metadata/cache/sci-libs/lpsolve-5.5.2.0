@@ -7,7 +7,7 @@ http://lpsolve.sourceforge.net/
 LGPL-2.1
 Library for solving (mixed integer) linear programming problems
 ~amd64 ~x86
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 static-libs examples
 
 

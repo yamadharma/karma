@@ -7,7 +7,7 @@ http://openbabel.sourceforge.net/
 GPL-2
 Python bindings for OpenBabel (including Pybel)
 amd64 ~arm x86 ~amd64-linux ~x86-linux
-cmake-utils desktop epatch estack eutils flag-o-matic ltprune multibuild multilib multiprocessing ninja-utils preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+cmake-utils desktop edos2unix epatch estack eutils flag-o-matic l10n ltprune multibuild multilib multiprocessing ninja-utils preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean wrapper xdg-utils
 python_targets_python2_7 python_targets_python3_6
 || ( python_targets_python2_7 python_targets_python3_6 )
 

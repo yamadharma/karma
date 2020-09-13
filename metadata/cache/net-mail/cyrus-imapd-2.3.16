@@ -7,7 +7,7 @@ http://asg.web.cmu.edu/cyrus/imapd/
 as-is
 The Cyrus IMAP Server.
 ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86
-autotools db-use desktop eapi7-ver epatch estack eutils fixheadtails flag-o-matic libtool ltprune multilib pam preserve-libs ssl-cert toolchain-funcs vcs-clean
+autotools db-use desktop eapi7-ver edos2unix epatch estack eutils fixheadtails flag-o-matic l10n libtool ltprune multilib pam preserve-libs ssl-cert toolchain-funcs vcs-clean wrapper
 idled kerberos nntp pam replication +sieve snmp ssl tcpd ssl
 
 

@@ -7,7 +7,7 @@ http://tiny-tools.sourceforge.net
 GPL
 Emacs Tiny Tools is a collection of libraries and packages
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

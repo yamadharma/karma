@@ -7,7 +7,7 @@ http://sogo.opengroupware.org/
 GPL-2
 groupware server built around OpenGroupware.org and the SOPE application server
 x86 amd64
-depend.apache desktop epatch estack eutils flag-o-matic gnustep-base ltprune multilib preserve-libs toolchain-funcs vcs-clean
+depend.apache desktop edos2unix epatch estack eutils flag-o-matic gnustep-base l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 debug doc
 
 

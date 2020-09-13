@@ -7,7 +7,7 @@ http://avogadro.openmolecules.net/
 GPL-2
 Advanced molecular editor that uses Qt4 and OpenGL
 ~amd64 ~arm ~x86
-cmake-utils desktop epatch estack eutils flag-o-matic ltprune multilib multiprocessing ninja-utils preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+cmake-utils desktop edos2unix epatch estack eutils flag-o-matic l10n ltprune multilib multiprocessing ninja-utils preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean wrapper xdg-utils
 +glsl cpu_flags_x86_sse2 test +python_single_target_python2_7
 
 

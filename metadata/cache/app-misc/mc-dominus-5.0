@@ -7,7 +7,7 @@ http://www.sf.net/projects/mc-dominus
 
 Fork of popularity file manager GNU Midnight Commander
 x86 amd64 ~ppc ~sparc ~alpha ~mips ~hppa ~arm
-desktop epatch estack eutils flag-o-matic ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils flag-o-matic l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 7zip X gpm ncurses nls pam samba slang unicode
 
 

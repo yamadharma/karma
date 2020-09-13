@@ -7,7 +7,7 @@ http://www.gnustep.org
 LGPL-2.1
 libart_lgpl back-end component for the GNUstep GUI Library
 ~alpha ~amd64 ~ppc ~sparc ~x86 ~amd64-linux ~x86-linux ~x86-solaris
-desktop epatch estack eutils flag-o-matic gnustep-base ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils flag-o-matic gnustep-base l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 opengl xim debug doc
 
 

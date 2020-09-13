@@ -7,7 +7,7 @@ https://fabiocolacio.github.io/Marker
 GPL-3 ISC
 Markdown editor made with GTK+-3.0
 ~x86 amd64
-desktop eapi7-ver epatch estack eutils git-r3 gnome2-utils ltprune meson multilib multiprocessing ninja-utils preserve-libs python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+desktop eapi7-ver edos2unix epatch estack eutils git-r3 gnome2-utils l10n ltprune meson multilib multiprocessing ninja-utils preserve-libs python-utils-r1 toolchain-funcs vcs-clean wrapper xdg-utils
 pandoc
 
 

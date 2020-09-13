@@ -7,7 +7,7 @@ http://richard.jones.name/google-hacks/gmail-filesystem/gmail-filesystem.html
 GPL-2
 GmailFS provides a mountable Linux filesystem which uses your Gmail account as its storage medium.
 x86 ~ppc ~sparc ~mips ~alpha ~arm ~hppa amd64 ~ia64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

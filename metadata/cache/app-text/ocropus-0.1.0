@@ -7,7 +7,7 @@ http://ocropus.googlecode.com
 Apache-2.0
 OCRopus is a state-of-the-art document analysis and OCR system.
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

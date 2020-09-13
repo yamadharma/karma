@@ -7,7 +7,7 @@ http://us1.samba.org/samba/Linux_CIFS_client.html
 GPL-2
 Advanced Common Internet File System for Linux with Etersoft extension
 -* x86 amd64
-desktop eapi7-ver epatch estack eutils linux-info linux-mod ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop eapi7-ver edos2unix epatch estack eutils l10n linux-info linux-mod ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 kernel_linux kernel_linux kernel_linux kernel_linux
 
 

@@ -7,7 +7,7 @@ http://www.isi.edu/nsnam/ns/
 BSD as-is
 Network Simulator
 ~ppc ~sparc x86 amd64
-autotools desktop epatch estack eutils flag-o-matic libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean
+autotools desktop edos2unix epatch estack eutils flag-o-matic l10n libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 doc debug
 
 

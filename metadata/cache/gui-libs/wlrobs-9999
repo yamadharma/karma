@@ -7,7 +7,7 @@ https://hg.sr.ht/~scoopta/wlrobs
 GPL-3
 Wayland (wlroots-based) screen capture plugin for obs-studio
 amd64 x86
-eutils mercurial meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-funcs
+edos2unix eutils l10n mercurial meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-funcs wrapper
 
 
 

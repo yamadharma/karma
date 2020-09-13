@@ -7,7 +7,7 @@ http://www.gizmoproject.com/
 gizmoproject-eula
 A P2P-VoiceIP client
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 avahi
 
 

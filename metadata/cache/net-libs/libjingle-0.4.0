@@ -7,7 +7,7 @@ http://libjingle.sourceforge.net/
 BSD
 Google's jabber voice extension library modified by Tapioca
 
-autotools desktop epatch estack eutils libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean
+autotools desktop edos2unix epatch estack eutils l10n libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 speex ilbc ortp
 
 

@@ -7,7 +7,7 @@ http://swtch.com/plan9port
 LucentPL-1.02
 Port of the bulk of the Plan9 software build environment to Unix
 x86 sparc alpha ia64 s390 ppc amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 X
 
 

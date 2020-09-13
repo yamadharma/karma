@@ -7,7 +7,7 @@ http://www.draves.org/goban/
 GPL-2
 Replays historical games of go (aka wei-chi and baduk) on the screen
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

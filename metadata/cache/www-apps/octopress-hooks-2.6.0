@@ -7,7 +7,7 @@ https://github.com/octopress/hooks
 MIT
 Allows access to Jekyll's site, posts and pages at different points in the life cycle of a build. Formerly known as 'jekyll-page-hooks'.
 ~amd64 ~x86
-desktop epatch estack eutils ltprune multilib preserve-libs ruby-fakegem ruby-ng ruby-utils toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs ruby-fakegem ruby-ng ruby-utils toolchain-funcs vcs-clean wrapper
 test doc test test
 || ( )
 

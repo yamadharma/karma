@@ -7,7 +7,7 @@ https://cernlib.web.cern.ch/cernlib/
 GPL-2 LGPL-2 BSD
 CERN program library for High Energy Physics
 amd64 ~hppa ~sparc ~x86 ~amd64-linux ~x86-linux
-desktop epatch estack eutils fortran-2 ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils fortran-2 l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

@@ -7,7 +7,7 @@ http://freemind.sourceforge.net
 GPL-2
 Mind-mapping software written in Java
 
-desktop eapi7-ver epatch estack eutils java-ant-2 java-pkg-2 java-utils-2 ltprune multilib preserve-libs toolchain-funcs vcs-clean versionator
+desktop eapi7-ver edos2unix epatch estack eutils java-ant-2 java-pkg-2 java-utils-2 l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean versionator wrapper
 doc elibc_FreeBSD elibc_FreeBSD
 
 

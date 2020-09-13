@@ -7,7 +7,7 @@ https://www.vtk.org/
 BSD LGPL-2
 The Visualization Toolkit
 ~amd64 ~x86 ~amd64-linux ~x86-linux
-cmake-utils desktop eapi7-ver epatch estack eutils flag-o-matic java-pkg-opt-2 java-utils-2 ltprune multilib multiprocessing ninja-utils preserve-libs python-single-r1 python-utils-r1 qmake-utils toolchain-funcs vcs-clean versionator virtualx webapp xdg-utils
+cmake-utils desktop eapi7-ver edos2unix epatch estack eutils flag-o-matic java-pkg-opt-2 java-utils-2 l10n ltprune multilib multiprocessing ninja-utils preserve-libs python-single-r1 python-utils-r1 qmake-utils toolchain-funcs vcs-clean versionator virtualx webapp wrapper xdg-utils
 all-modules aqua boost doc examples imaging ffmpeg gdal java json mpi odbc offscreen postgres python qt5 rendering tbb theora tk tcl video_cards_nvidia views web R +X xdmf2 elibc_FreeBSD java python_single_target_python3_6 python_single_target_python3_7 test
 all-modules? ( python xdmf2 boost ) java? ( qt5 ) python? ( ^^ ( python_single_target_python3_6 python_single_target_python3_7 ) ) tcl? ( rendering ) examples? ( python ) tk? ( tcl ) web? ( python ) ^^ ( X aqua offscreen )
 

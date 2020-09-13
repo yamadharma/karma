@@ -11,13 +11,15 @@ ARCH_FILES[amd64]="JabRef-${PV}-portable_linux.tar.gz"
 
 DESCRIPTION="Java GUI for managing BibTeX and other bibliographies"
 HOMEPAGE="http://www.jabref.org/"
-SRC_URI="https://www.fosshub.com/JabRef.html?dwl=JabRef-${PV}-portable_linux.tar.gz -> JabRef-${PV}-portable_linux.tar.gz"
+# SRC_URI="https://www.fosshub.com/JabRef.html?dwl=JabRef-${PV}-portable_linux.tar.gz -> JabRef-${PV}-portable_linux.tar.gz"
+SRC_URI="https://github.com/JabRef/jabref/releases/download/v${PV}/JabRef-${PV}-portable_linux.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="amd64 ~x86"
 
-RESTRICT="fetch preserve-libs strip"
+# RESTRICT="fetch preserve-libs strip"
+RESTRICT="preserve-libs strip"
 
 DEPEND="app-arch/unzip"
 

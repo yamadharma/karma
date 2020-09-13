@@ -7,7 +7,7 @@ http://xmorph.sourceforge.net/
 GPL-2
 Library that implements digital image warping, known as morphing, along with GUIs.
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 gtk nls fftw
 
 

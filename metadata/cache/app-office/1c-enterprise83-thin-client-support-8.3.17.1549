@@ -7,7 +7,7 @@ http://v8.1c.ru/
 misc
 Support libs for Native linux thin client of 1C ERP system
 amd64
-eutils pax-utils user user-info
+edos2unix eutils l10n pax-utils user user-info wrapper
 +nls
 
 

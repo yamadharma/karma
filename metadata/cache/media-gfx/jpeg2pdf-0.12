@@ -7,7 +7,7 @@ http://koan.studentenweb.org/software/jpeg2pdf.html
 X11/own
 Merge JPEG files into PDF
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

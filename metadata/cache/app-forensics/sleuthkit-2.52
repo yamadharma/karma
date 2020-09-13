@@ -7,7 +7,7 @@ http://www.sleuthkit.org/sleuthkit/
 GPL-2 IBM
 A collection of file system and media management forensic analysis tools
 amd64 ~arm ~hppa ~ppc ~s390 ~sparc x86
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

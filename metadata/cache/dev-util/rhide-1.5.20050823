@@ -7,7 +7,7 @@ http://www.rhide.com/
 GPL-2
 Console IDE for various languages
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 X aalib
 
 

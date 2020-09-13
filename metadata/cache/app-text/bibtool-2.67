@@ -7,7 +7,7 @@ http://www.gerd-neugebauer.de/software/TeX/BibTool/en/
 GPL-1
 BibTool is a powerful command-line tool to manipulate BibTeX databases.
 x86 amd64
-desktop epatch estack eutils flag-o-matic ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils flag-o-matic l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 doc
 
 

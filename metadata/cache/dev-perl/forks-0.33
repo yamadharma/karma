@@ -7,7 +7,7 @@ https://metacpan.org/release/forks
 || ( Artistic GPL-1+ )
 drop-in replacement for Perl threads using fork()
 ~amd64 ~x86
-desktop epatch estack eutils ltprune multilib multiprocessing perl-functions perl-module preserve-libs toolchain-funcs unpacker vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib multiprocessing perl-functions perl-module preserve-libs toolchain-funcs unpacker vcs-clean wrapper
 test
 
 

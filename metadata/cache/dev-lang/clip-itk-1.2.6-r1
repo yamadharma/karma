@@ -7,7 +7,7 @@ http://sourceforge.net/projects/clip-itk
 GPL-2
 Header file allowing to call Fortran routines from C and C++
 
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 doc linguas_en linguas_ru
 
 

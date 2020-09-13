@@ -7,7 +7,7 @@ http://www.gftp.org
 GPL-2
 Gnome based FTP Client
 ~alpha amd64 ~ppc ~ppc64 ~sparc x86
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 gtk ssl rcc
 
 

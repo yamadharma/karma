@@ -7,7 +7,7 @@ http://www.cyrusimap.org/
 as-is
 The Cyrus IMAP Server.
 ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86
-autotools db-use desktop eapi7-ver epatch estack eutils flag-o-matic libtool ltprune multilib pam preserve-libs ssl-cert toolchain-funcs vcs-clean
+autotools db-use desktop eapi7-ver edos2unix epatch estack eutils flag-o-matic l10n libtool ltprune multilib pam preserve-libs ssl-cert toolchain-funcs vcs-clean wrapper
 afs berkdb kerberos mysql nntp pam postgres replication sieve snmp sqlite ssl tcpd ssl
 afs? ( kerberos )
 

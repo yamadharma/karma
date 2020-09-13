@@ -7,7 +7,7 @@ http://www.gnunet.org
 GPL
 Allows you to mount directories shared over GNUnet as Linux file-systems
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

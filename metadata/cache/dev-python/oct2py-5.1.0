@@ -7,7 +7,7 @@ https://github.com/blink1073/oct2py https://blink1073.github.io/oct2py/
 MIT
 Python to GNU Octave bridge
 amd64 ~x86 ~amd64-linux ~x86-linux
-desktop distutils-r1 epatch estack eutils ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean xdg-utils
+desktop distutils-r1 edos2unix epatch estack eutils l10n ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean wrapper xdg-utils
 doc examples test python_targets_python3_6 python_targets_python3_7 python_targets_python3_8
 || ( python_targets_python3_6 python_targets_python3_7 python_targets_python3_8 )
 

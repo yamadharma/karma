@@ -7,7 +7,7 @@ http://vcmi.eu
 GPL-2
 VCMI is work-in-progress attempt to recreate engine for Heroes III, giving it new and extended possibilities.
 ~amd64 ~x86
-base cmake-utils desktop epatch estack eutils flag-o-matic games ltprune multilib multiprocessing ninja-utils preserve-libs toolchain-funcs user user-info vcs-clean xdg-utils
+base cmake-utils desktop edos2unix epatch estack eutils flag-o-matic games l10n ltprune multilib multiprocessing ninja-utils preserve-libs toolchain-funcs user user-info vcs-clean wrapper xdg-utils
 editor erm +launcher
 
 

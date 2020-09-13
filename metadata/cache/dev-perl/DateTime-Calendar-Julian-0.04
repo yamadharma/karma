@@ -7,7 +7,7 @@ https://metacpan.org/release/DateTime-Calendar-Julian
 || ( Artistic GPL-1+ )
 Convert between DateTime and RFC2822/822 formats
 alpha amd64 arm ia64 ppc ppc64 sparc x86 ~x86-fbsd ~x86-solaris
-desktop epatch estack eutils ltprune multilib multiprocessing perl-functions perl-module preserve-libs toolchain-funcs unpacker vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib multiprocessing perl-functions perl-module preserve-libs toolchain-funcs unpacker vcs-clean wrapper
 test
 
 

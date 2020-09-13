@@ -7,7 +7,7 @@ http://kxml.sourceforge.net/
 as-is
 Some java libary
 amd64 x86
-desktop epatch estack eutils java-ant-2 java-pkg-2 java-utils-2 ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils java-ant-2 java-pkg-2 java-utils-2 l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 elibc_FreeBSD doc examples source elibc_FreeBSD
 
 

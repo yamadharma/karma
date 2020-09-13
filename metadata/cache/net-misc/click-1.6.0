@@ -7,7 +7,7 @@ http://read.cs.ucla.edu/click/
 MIT
 The Click Modular Router
 x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 nsclick wifi ipv6
 
 

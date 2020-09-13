@@ -7,7 +7,7 @@ http://www.bastoul.net/cloog/
 LGPL-2.1
 A loop generator for scanning polyhedra
 amd64
-autotools desktop epatch estack eutils libtool ltprune multibuild multilib multilib-build multilib-minimal preserve-libs toolchain-funcs vcs-clean
+autotools desktop edos2unix epatch estack eutils l10n libtool ltprune multibuild multilib multilib-build multilib-minimal preserve-libs toolchain-funcs vcs-clean wrapper
 static-libs abi_x86_32 abi_x86_64 abi_x86_x32 abi_mips_n32 abi_mips_n64 abi_mips_o32 abi_riscv_lp64d abi_riscv_lp64 abi_riscv_ilp32d abi_riscv_ilp32 abi_s390_32 abi_s390_64
 
 

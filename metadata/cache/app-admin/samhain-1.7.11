@@ -7,7 +7,7 @@ http://la-samhna.de/samhain/
 GPL-2
 Open Source File Integrity Checker and IDS (local use monitoring agent)
 x86 ~ppc ~sparc ~alpha
-desktop epatch estack eutils extrafiles ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils extrafiles l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 doc static daemontools
 
 

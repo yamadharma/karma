@@ -7,7 +7,7 @@ http://www.openchemistry.org/OpenChemistry/project/molequeue.html
 BSD
 Abstract, manage and coordinate execution of tasks
 ~amd64 ~x86 ~amd64-linux ~x86-linux
-cmake-utils desktop epatch estack eutils flag-o-matic ltprune multilib multiprocessing ninja-utils preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean versionator virtualx xdg-utils
+cmake-utils desktop edos2unix epatch estack eutils flag-o-matic l10n ltprune multilib multiprocessing ninja-utils preserve-libs python-single-r1 python-utils-r1 toolchain-funcs vcs-clean versionator virtualx wrapper xdg-utils
 +client doc server test +zeromq +python_single_target_python2_7 test
 ^^ ( python_single_target_python2_7 ) server? ( client ) test? ( server )
 

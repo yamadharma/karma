@@ -7,7 +7,7 @@ http://thekonst.net/en/motor
 GPL-2
 text mode based programming environment for Linux
 ppc x86 amd64
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 nls
 
 

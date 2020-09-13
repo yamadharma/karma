@@ -7,7 +7,7 @@ http://synce.sourceforge.net/synce/unshield.php
 MIT
 InstallShield CAB file extractor.
 amd64 ~hppa ~ppc x86
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

@@ -7,7 +7,7 @@ http://muth.org/Robert/Apetag/
 GPL-3
 Command-line ape 2.0 tagger
 amd64 x86
-base desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+base desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

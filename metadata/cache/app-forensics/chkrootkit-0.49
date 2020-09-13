@@ -7,7 +7,7 @@ http://www.chkrootkit.org/
 BSD-2
 a tool to locally check for signs of a rootkit
 alpha amd64 arm hppa ia64 ~mips ppc ppc64 s390 sh sparc x86
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 

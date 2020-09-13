@@ -7,7 +7,7 @@ http://unbound.net
 BSD
 Validating, recursive, and caching DNS resolver
 amd64 x86
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 debug libevent static threads
 
 

@@ -7,7 +7,7 @@ http://fort.xdas.com/~kor/oss2jack/
 GPL-2
 Stackable unification file system, which can appear to merge the contents of several directories
 x86 amd64
-desktop eapi7-ver epatch estack eutils linux-info linux-mod ltprune multilib preserve-libs toolchain-funcs vcs-clean versionator
+desktop eapi7-ver edos2unix epatch estack eutils l10n linux-info linux-mod ltprune multilib preserve-libs toolchain-funcs vcs-clean versionator wrapper
 doc kernel_linux kernel_linux
 
 

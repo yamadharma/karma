@@ -7,7 +7,7 @@ http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
 GPL-2
 A tool for manipulating PDF documents
 amd64 ~arm ppc x86 ~amd64-linux
-desktop epatch estack eutils ltprune multilib preserve-libs toolchain-funcs vcs-clean
+desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 
 
 
