@@ -1,0 +1,22 @@
+dev-libs/wayland
+dev-libs/wayland
+0
+
+
+https://github.com/emersion/wlr-randr
+ISC
+xrandr clone for wlroots compositors
+
+git-r3 meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-funcs
+
+
+
+dev-libs/wayland-protocols virtual/pkgconfig >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 >=dev-vcs/git-1.8.2.1[curl]
+7
+live
+compile configure install test unpack
+
+
+
+
+
