@@ -1,0 +1,22 @@
+
+sys-libs/zlib virtual/opengl x11-libs/libX11
+0
+https://static.mendeley.com/bin/desktop/mendeley-reference-manager-2.34.0-x86_64.AppImage
+mirror strip bindist
+https://www.mendeley.com/
+Mendeley-terms
+Research management tool for desktop and web
+amd64
+desktop xdg-utils
+
+
+
+
+7
+
+install unpack
+
+
+
+
+

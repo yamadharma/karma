@@ -1,8 +1,7 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI=5
+EAPI=6
 
 MY_PN=${PN/-bin/}
 inherit unpacker eutils
@@ -10,14 +9,16 @@ inherit unpacker eutils
 DESCRIPTION="Tool for building and distributing virtual machines"
 HOMEPAGE="http://vagrantup.com/"
 
-SRC_URI_AMD64="https://dl.bintray.com/mitchellh/${MY_PN}/${MY_PN}_${PV}_x86_64.deb"
+SRC_URI_AMD64="https://releases.hashicorp.com/${MY_PN}/${PV}/${MY_PN}_${PV}_x86_64.deb"
+SRC_URI_X86="https://releases.hashicorp.com/${MY_PN}/${PV}/${MY_PN}_${PV}_i686.deb"
 SRC_URI="
-    amd64? ( ${SRC_URI_AMD64} )
+	amd64? ( ${SRC_URI_AMD64} )
+	x86? ( ${SRC_URI_X86} )
 "
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 S="${WORKDIR}/opt/${MY_PN}"
@@ -36,6 +37,11 @@ src_unpack() {
 }
 
 src_install() {
+	pushd embedded/gems/${PV}/gems/${MY_PN}-${PV}/contrib > /dev/null || die
+	insinto /usr/share/vim/vimfiles/plugin
+	doins vim/*
+	popd > /dev/null || die
+
 	local dir="/opt/${MY_PN}"
 	dodir ${dir}
 	cp -ar ./* "${ED}${dir}" || die "copy files failed"
