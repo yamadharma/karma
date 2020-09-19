@@ -8,7 +8,7 @@ GPL-2
 Detect and convert encoding of text files
 ~alpha amd64 arm ~arm64 hppa ~ia64 ~mips ppc ppc64 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x86-solaris
 autotools desktop edos2unix epatch estack eutils flag-o-matic l10n libtool ltprune multibuild multilib multilib-build multilib-minimal preserve-libs toolchain-funcs vcs-clean wrapper
-doc +iconv recode static-libs abi_x86_32 abi_x86_64 abi_x86_x32 abi_mips_n32 abi_mips_n64 abi_mips_o32 abi_riscv_lp64d abi_riscv_lp64 abi_riscv_ilp32d abi_riscv_ilp32 abi_s390_32 abi_s390_64
+doc +iconv recode static-libs abi_x86_32 abi_x86_64 abi_x86_x32 abi_mips_n32 abi_mips_n64 abi_mips_o32 abi_s390_32 abi_s390_64
 
 
 

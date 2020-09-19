@@ -23,7 +23,7 @@ RESTRICT="!test? ( test )"
 RDEPEND="
 	>=dev-python/numpy-1.11[${PYTHON_USEDEP}]
 	dev-python/octave_kernel[${PYTHON_USEDEP}]
-	>=sci-libs/scipy-0.17[${PYTHON_USEDEP}]
+	>=dev-python/scipy-0.17[${PYTHON_USEDEP}]
 "
 DEPEND="${RDEPEND}
 	doc? (
