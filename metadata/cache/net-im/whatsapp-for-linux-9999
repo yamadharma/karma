@@ -1,0 +1,22 @@
+dev-cpp/gtkmm:3.0 net-libs/webkit-gtk:4=
+dev-cpp/gtkmm:3.0 net-libs/webkit-gtk:4=
+0
+
+
+https://github.com/eneshecan/whatsapp-for-linux
+GPL-3
+Unofficial Whatsapp Linux client desktop application
+
+cmake edos2unix eutils flag-o-matic git-r3 gnome2-utils l10n multilib multiprocessing ninja-utils toolchain-funcs wrapper xdg-utils
+
+
+
+dev-util/ninja dev-util/cmake >=dev-vcs/git-1.8.2.1[curl]
+7
+live
+compile configure install postinst postrm preinst prepare test unpack
+
+
+
+
+
