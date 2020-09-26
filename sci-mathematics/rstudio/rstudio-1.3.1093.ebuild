@@ -11,8 +11,7 @@ inherit eutils cmake pam xdg-utils java-pkg-2 java-ant-2 pax-utils prefix qmake-
 
 GIN_VER=2.1.2
 # grep 'PANDOC_VERSION=' dependencies/common/install-pandoc
-# It should be PANDOC_VER=2.7.3 however >=app-text/pandoc-2.7.3 is not yet in portage
-PANDOC_VER=1.19.2.1
+PANDOC_VER=2.9.2.1
 # grep -5 QT_CANDIDATES src/cpp/desktop/CMakeLists.txt
 QT_VER=5.12.6
 QT_SLOT=5
@@ -161,7 +160,7 @@ src_prepare() {
 		|| die
 
 	# The git commit for tag: git rev-list -n 1 v${PV}
-	sed -e 's@git ARGS rev-parse HEAD@echo ARGS 5a4dee980c998d9a270a83b582b367126f3914cf@'\
+	sed -e 's@git ARGS rev-parse HEAD@echo ARGS aee44535570639672cf61c0545113e7a62c90b5b@'\
 		-i "${S}"/CMakeLists.txt \
 		"${S}"/CMakeGlobals.txt \
 		|| die
