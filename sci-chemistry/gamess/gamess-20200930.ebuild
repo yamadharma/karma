@@ -18,7 +18,7 @@ LICENSE="gamess"
 # provides the latest version. In other words: As soon as a
 # new version comes out the stable version will be useless since
 # users can not get at the tarball any more.
-KEYWORDS="amd64 ~x86"
+#KEYWORDS="amd64 ~x86"
 IUSE="mpi msucc neo +openmp pax_kernel qmmm-tinker vb2000"
 
 CDEPEND="
@@ -253,6 +253,8 @@ src_prepare() {
 	setenv GMS_SHMTYPE sysv
 	setenv GMS_OPENMP $(usex openmp true false)
 	setenv GMS_MSUCC $(usex msucc true false)
+	setenv GMS_FPE_FLAGS "-ffpe-trap=invalid,zero,overflow"
+	setenv GMS_LIBXC false
 	EOF
 
 }
@@ -298,7 +300,7 @@ src_install() {
 	fi
 
 	# the docs
-	dodoc *.DOC qmnuc/*.DOC
+	dodoc qmnuc/*.DOC
 
 	# install ericftm
 	insinto /usr/share/${PN}
