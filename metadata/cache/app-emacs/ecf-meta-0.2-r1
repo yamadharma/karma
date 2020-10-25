@@ -10,7 +10,7 @@ x86 amd64
 edos2unix eutils l10n wrapper
 
 
-app-emacs/ecf app-emacs/auctex app-emacs/ebib app-dicts/aspell-enru media-fonts/fira-code
+app-emacs/ecf app-emacs/auctex app-emacs/ebib app-dicts/aspell-enru media-fonts/fira-code sys-apps/ripgrep
 
 7
 
