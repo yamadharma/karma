@@ -1,0 +1,22 @@
+
+dev-qt/designer:5 dev-qt/qtgui:5 svg? ( dev-qt/qtsvg:5 )
+5
+https://github.com/gbm19/qwt5-qt5/archive/0052f96fdd6d5f021f20a1cfc4d2fcfc605941da.tar.gz -> qwt-5.2.3_p20200902.tar.gz
+
+https://qwt.sourceforge.io/ https://github.com/gbm19/qwt5-qt5
+qwt
+2D plotting library for Qt5
+amd64 ~arm ~ppc ~ppc64 ~x86
+estack multilib qmake-utils toolchain-funcs
+doc examples svg
+
+
+doc? ( app-doc/doxygen )
+7
+
+compile configure install prepare
+
+
+
+
+
