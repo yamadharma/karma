@@ -20,6 +20,7 @@ PDEPEND="app-emacs/ecf
 	app-dicts/aspell-enru
 	media-fonts/fira-code
 	sys-apps/ripgrep
+	media-gfx/ditaa
 "
 
 # Local Variables:
