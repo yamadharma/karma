@@ -4,7 +4,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_{6,7,8} )
 DISTUTILS_IN_SOURCE_BUILD=1 # setup.py applies 2to3 to tests
 PYTHON_REQ_USE=""
 

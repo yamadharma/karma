@@ -20,7 +20,8 @@ DEPEND=""
 RDEPEND="app-text/djvu
 	app-text/minidjvu
 	media-gfx/imagemagick
-	app-text/ocrodjvu"
+	"
+#	app-text/ocrodjvu
 
 src_install() {
 	dobin img2djvu
