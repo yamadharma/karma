@@ -17,8 +17,11 @@ DESCRIPTION="A tool to help you collect, organize, cite, and share your research
 HOMEPAGE="https://www.zotero.org/"
 SRC_URI="
 	amd64? ( "https://download.zotero.org/client/release/${PV}/${MY_P}_linux-x86_64.tar.bz2" )
-	x86? ( "https://download.zotero.org/client/release/${PV}/${MY_P}_linux-i686.tar.bz2" )
 "
+#SRC_URI="
+#	amd64? ( "https://download.zotero.org/client/release/${PV}/${MY_P}_linux-x86_64.tar.bz2" )
+#	x86? ( "https://download.zotero.org/client/release/${PV}/${MY_P}_linux-i686.tar.bz2" )
+#"
 
 LICENSE="GPL-3"
 SLOT="0"
