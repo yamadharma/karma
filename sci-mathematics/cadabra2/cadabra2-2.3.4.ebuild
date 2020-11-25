@@ -6,7 +6,7 @@
 
 EAPI="7"
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{6..9} )
 
 inherit cmake-utils texlive-common python-single-r1
 
@@ -104,6 +104,7 @@ src_install() {
 #	sed -i -e "s:${CUR_PYTHON_DIR}/python:/usr/bin/python3:g" ${D}/usr/bin/cadabra2
 	sed -i -e "s:${T}/python.*/bin/python:/usr/bin/python3:g" ${D}/usr/bin/cadabra2
 
+	sed -i -e 's:".*/bin/python":"python":g' ${D}/usr/share/jupyter/kernels/cadabra2/kernel.json
 }
 
 pkg_postinst() {
