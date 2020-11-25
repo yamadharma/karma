@@ -1,7 +1,7 @@
 dev-libs/kpathsea virtual/libc doc? ( app-text/texlive )
 dev-libs/kpathsea virtual/libc doc? ( app-text/texlive )
 0
-http://mirror.ctan.org/biblio/bibtex/utils/bibtool/BibTool-2.67.tar.gz
+http://mirror.ctan.org/biblio/bibtex/utils/bibtool/BibTool-2.68.tar.gz
 
 http://www.gerd-neugebauer.de/software/TeX/BibTool/en/
 GPL-1

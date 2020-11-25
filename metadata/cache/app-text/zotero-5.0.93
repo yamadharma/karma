@@ -1,7 +1,7 @@
 
 
 0
-amd64? ( https://download.zotero.org/client/release/5.0.82/Zotero-5.0.82_linux-x86_64.tar.bz2 ) x86? ( https://download.zotero.org/client/release/5.0.82/Zotero-5.0.82_linux-i686.tar.bz2 )
+amd64? ( https://download.zotero.org/client/release/5.0.93/Zotero-5.0.93_linux-x86_64.tar.bz2 )
 mirror strip
 https://www.zotero.org/
 GPL-3
