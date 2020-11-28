@@ -16,7 +16,6 @@ IUSE="${IUSE}"
 
 PDEPEND="app-emacs/ecf
 	app-emacs/auctex
-	app-emacs/ebib
 	app-dicts/aspell-enru
 	media-fonts/fira-code
 	sys-apps/ripgrep
