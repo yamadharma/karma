@@ -1,4 +1,4 @@
->=dev-lang/ghc-6.10.1 dev-haskell/unix dev-haskell/filepath >=dev-haskell/cabal-1.6 doc? ( || ( dev-haskell/haddock >=dev-lang/ghc-7.10.2 ) ) hscolour? ( dev-haskell/hscolour )
+>=dev-lang/ghc-6.10.1 dev-haskell/unix dev-haskell/filepath >=dev-haskell/cabal-1.6 hscolour? ( dev-haskell/hscolour )
 >=dev-lang/ghc-6.10.1 dev-haskell/unix dev-haskell/filepath
 0
 http://hackage.haskell.org/packages/archive/process/1.1.0.0/process-1.1.0.0.tar.gz
