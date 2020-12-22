@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=7
 
-inherit eutils bash-completion-r1 fdo-mime
+inherit eutils bash-completion-r1 xdg
 
 
 DESCRIPTION="Scilab scientific software"
@@ -52,11 +52,11 @@ src_install() {
 }
 
 pkg_postinst() {
-	fdo-mime_mime_database_update
+	xdg_pkg_postinst
 }
 
 
 pkg_postrm() {
-	fdo-mime_mime_database_update
+	xdg_pkg_postrm
 }
 
