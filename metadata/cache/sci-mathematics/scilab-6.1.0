@@ -1,4 +1,4 @@
-
+dev-util/desktop-file-utils x11-misc/shared-mime-info
 
 0
 http://www.scilab.org/download/6.1.0/scilab-6.1.0.bin.linux-x86_64.tar.gz
@@ -7,14 +7,14 @@ http://www.scilab.org
 
 Scilab scientific software
 ~amd64
-bash-completion-r1 desktop edos2unix epatch estack eutils fdo-mime l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
+bash-completion-r1 edos2unix eutils l10n multilib toolchain-funcs wrapper xdg xdg-utils
 bash-completion
 
 
 
-5
+7
 
-install postinst postrm
+install postinst postrm preinst prepare
 
 
 
