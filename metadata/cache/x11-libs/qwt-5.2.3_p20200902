@@ -7,7 +7,7 @@ https://qwt.sourceforge.io/ https://github.com/gbm19/qwt5-qt5
 qwt
 2D plotting library for Qt5
 amd64 ~arm ~ppc ~ppc64 ~x86
-estack multilib qmake-utils toolchain-funcs
+multilib qmake-utils toolchain-funcs
 doc examples svg
 
 

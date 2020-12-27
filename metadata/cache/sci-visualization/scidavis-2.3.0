@@ -7,7 +7,7 @@ http://scidavis.sourceforge.net/
 GPL-2
 Application for Scientific Data Analysis and Visualization
 amd64 ~x86
-estack multilib python-single-r1 python-utils-r1 qmake-utils toolchain-funcs xdg xdg-utils
+multilib python-single-r1 python-utils-r1 qmake-utils toolchain-funcs xdg xdg-utils
 assistant doc origin python test python_single_target_python3_7 python_single_target_python3_8 python_single_target_python3_9
 python? ( ^^ ( python_single_target_python3_7 python_single_target_python3_8 python_single_target_python3_9 ) )
 
