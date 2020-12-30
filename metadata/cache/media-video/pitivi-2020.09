@@ -11,7 +11,7 @@ gnome.org meson multilib multiprocessing ninja-utils python-single-r1 python-uti
 v4l test python_single_target_python3_6 python_single_target_python3_7 python_single_target_python3_8 python_single_target_python3_9 test
 ^^ ( python_single_target_python3_6 python_single_target_python3_7 python_single_target_python3_8 python_single_target_python3_9 )
 
-app-text/yelp-tools dev-python/setuptools >=dev-util/intltool-0.35.5 dev-util/itstool sys-devel/gettext virtual/pkgconfig test? ( python_single_target_python3_6? ( dev-python/nose2[python_targets_python3_6(-)] ) python_single_target_python3_7? ( dev-python/nose2[python_targets_python3_7(-)] ) python_single_target_python3_8? ( dev-python/nose2[python_targets_python3_8(-)] ) python_single_target_python3_9? ( dev-python/nose2[python_targets_python3_9(-)] ) ) app-arch/xz-utils >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 test? ( x11-base/xorg-server[xvfb] x11-apps/xhost )
+app-text/yelp-tools dev-python/setuptools >=dev-util/intltool-0.35.5 dev-util/itstool sys-devel/gettext virtual/pkgconfig test? ( python_single_target_python3_6? ( dev-python/nose2[python_targets_python3_6(-)] ) python_single_target_python3_7? ( dev-python/nose2[python_targets_python3_7(-)] ) python_single_target_python3_8? ( dev-python/nose2[python_targets_python3_8(-)] ) python_single_target_python3_9? ( dev-python/nose2[python_targets_python3_9(-)] ) ) app-arch/xz-utils >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array test? ( x11-base/xorg-server[xvfb] x11-apps/xhost )
 7
 
 compile configure install postinst postrm preinst prepare setup test

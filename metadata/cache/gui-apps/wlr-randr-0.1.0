@@ -11,7 +11,7 @@ meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-funcs
 
 
 
-dev-libs/wayland-protocols virtual/pkgconfig >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2
+dev-libs/wayland-protocols virtual/pkgconfig >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array
 7
 
 compile configure install test
