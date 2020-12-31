@@ -19,6 +19,7 @@ PDEPEND="app-emacs/ecf
 	app-dicts/aspell-enru
 	media-fonts/fira-code
 	sys-apps/ripgrep
+	sys-apps/fd
 	media-gfx/ditaa
 "
 
