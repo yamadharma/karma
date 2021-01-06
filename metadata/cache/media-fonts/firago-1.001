@@ -1,0 +1,22 @@
+app-arch/unzip X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+
+0
+https://bboxtype.com/downloads/FiraGO/Download_Folder_FiraGO_1001.zip
+primaryuri
+https://bboxtype.com/typefaces/FiraGO
+OFL-1.1
+A continuation of FiraSans
+amd64 ~x86
+font
+X
+
+
+
+7
+
+install postinst postrm setup
+
+
+
+
+
