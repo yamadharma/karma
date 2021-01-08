@@ -1,5 +1,5 @@
-media-sound/jack-audio-connection-kit kernel_linux? ( sys-apps/kmod[tools] ) sys-apps/sed kernel_linux? ( virtual/linux-sources virtual/libelf )
-media-sound/jack-audio-connection-kit kernel_linux? ( sys-apps/kmod[tools] )
+media-sound/jack-audio-connection-kit kernel_linux? ( sys-apps/kmod[tools] dist-kernel? ( virtual/dist-kernel:= ) ) sys-apps/sed kernel_linux? ( virtual/linux-sources virtual/libelf )
+media-sound/jack-audio-connection-kit kernel_linux? ( sys-apps/kmod[tools] dist-kernel? ( virtual/dist-kernel:= ) )
 0
 http://fort.xdas.com/~kor/oss2jack/fusd-kor-1.10-11.tar.gz
 
@@ -8,7 +8,7 @@ GPL-2
 Stackable unification file system, which can appear to merge the contents of several directories
 x86 amd64
 desktop eapi7-ver edos2unix epatch estack eutils l10n linux-info linux-mod ltprune multilib preserve-libs toolchain-funcs vcs-clean versionator wrapper
-doc kernel_linux kernel_linux
+doc kernel_linux kernel_linux dist-kernel
 
 
 

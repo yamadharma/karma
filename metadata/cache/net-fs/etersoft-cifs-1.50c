@@ -1,5 +1,5 @@
-kernel_linux? ( virtual/linux-sources ) kernel_linux? ( sys-apps/kmod[tools] ) sys-apps/sed kernel_linux? ( virtual/linux-sources virtual/libelf )
-kernel_linux? ( virtual/linux-sources ) kernel_linux? ( sys-apps/kmod[tools] )
+kernel_linux? ( virtual/linux-sources ) kernel_linux? ( sys-apps/kmod[tools] dist-kernel? ( virtual/dist-kernel:= ) ) sys-apps/sed kernel_linux? ( virtual/linux-sources virtual/libelf )
+kernel_linux? ( virtual/linux-sources ) kernel_linux? ( sys-apps/kmod[tools] dist-kernel? ( virtual/dist-kernel:= ) )
 0
 http://pserver.samba.org/samba/ftp/cifs-cvs/cifs-1.50c.tar.gz
 
@@ -8,7 +8,7 @@ GPL-2
 Advanced Common Internet File System for Linux with Etersoft extension
 -* x86 amd64
 desktop eapi7-ver edos2unix epatch estack eutils l10n linux-info linux-mod ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
-kernel_linux kernel_linux kernel_linux kernel_linux
+kernel_linux kernel_linux kernel_linux dist-kernel kernel_linux
 
 
 
