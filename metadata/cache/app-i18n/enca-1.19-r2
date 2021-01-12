@@ -1,4 +1,4 @@
-iconv? ( virtual/libiconv ) recode? ( app-text/recode ) sys-devel/gettext doc? ( dev-util/gtk-doc ) >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.1:1.16 >=sys-devel/automake-1.15.1:1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+iconv? ( virtual/libiconv ) recode? ( app-text/recode ) sys-devel/gettext doc? ( dev-util/gtk-doc ) >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.2-r1:1.16 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 iconv? ( virtual/libiconv ) recode? ( app-text/recode )
 0
 https://dl.cihar.com/enca/enca-1.19.tar.xz

@@ -1,4 +1,4 @@
-sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.1 >=sys-devel/automake-1.15.1 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.2-r1 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 sys-libs/e2fsprogs-libs sys-libs/zlib dev-libs/openssl
 0
 mirror://sourceforge/libewf/libewf-beta-20090606.tar.gz

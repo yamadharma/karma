@@ -1,4 +1,4 @@
-dev-libs/openssl ortp? ( >=net-libs/ortp-0.7.1 ilbc? ( dev-libs/ilbc-rfc3951 ) speex? ( media-libs/speex ) ) dev-util/pkgconfig >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.1 >=sys-devel/automake-1.15.1 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+dev-libs/openssl ortp? ( >=net-libs/ortp-0.7.1 ilbc? ( dev-libs/ilbc-rfc3951 ) speex? ( media-libs/speex ) ) dev-util/pkgconfig >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.2-r1 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 dev-libs/openssl ortp? ( >=net-libs/ortp-0.7.1 ilbc? ( dev-libs/ilbc-rfc3951 ) speex? ( media-libs/speex ) )
 0
 mirror://sourceforge/libjingle/libjingle-0.4.0.tar.gz
