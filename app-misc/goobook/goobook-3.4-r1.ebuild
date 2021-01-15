@@ -12,7 +12,7 @@ SRC_URI="mirror://pypi/g/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-# KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
@@ -21,7 +21,6 @@ RDEPEND="${PYTHON_DEPS}
 	>=dev-python/simplejson-2.1.0[${PYTHON_USEDEP}]
 	>=dev-python/oauth2client-1.5.0[${PYTHON_USEDEP}]
 	<dev-python/oauth2client-5[${PYTHON_USEDEP}]
-	>dev-python/xdg-4.0.1[${PYTHON_USEDEP}]
 "
 
 DEPEND="${PYTHON_DEPS}"
