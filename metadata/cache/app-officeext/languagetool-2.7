@@ -1,5 +1,5 @@
-office_implementation_libreoffice? ( || ( app-office/libreoffice[java] app-office/libreoffice-bin[java] ) ) office_implementation_openoffice? ( app-office/openoffice-bin[java] ) app-arch/unzip
->=virtual/jdk-1.7 office_implementation_libreoffice? ( || ( app-office/libreoffice[java] app-office/libreoffice-bin[java] ) ) office_implementation_openoffice? ( app-office/openoffice-bin[java] )
+office_implementation_libreoffice? ( || ( app-office/libreoffice[java] app-office/libreoffice-bin[java] ) ) app-arch/unzip
+>=virtual/jdk-1.7 office_implementation_libreoffice? ( || ( app-office/libreoffice[java] app-office/libreoffice-bin[java] ) )
 0
 http://www.languagetool.org/download/LanguageTool-2.7.oxt
 
@@ -8,13 +8,13 @@ LGPL-2
 Style and Grammar Checker for libreoffice
 ~amd64 ~x86
 desktop edos2unix epatch estack eutils l10n ltprune multilib office-ext-r1 preserve-libs toolchain-funcs vcs-clean wrapper
-office_implementation_libreoffice office_implementation_openoffice
-|| ( office_implementation_libreoffice office_implementation_openoffice )
+office_implementation_libreoffice
+|| ( office_implementation_libreoffice )
 
 
 5
 
-install postinst prerm unpack
+install unpack
 
 
 
