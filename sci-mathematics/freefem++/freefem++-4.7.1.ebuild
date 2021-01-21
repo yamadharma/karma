@@ -1,22 +1,20 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=5
+EAPI=7
 
-inherit autotools eutils flag-o-matic mpi versionator toolchain-funcs
+inherit autotools flag-o-matic toolchain-funcs
 
-MY_PV=$(replace_version_separator 2 '-')
+MY_PV="$(ver_rs 2 -)"
 
 DESCRIPTION="Solve PDEs using FEM on 2d and 3d domains"
-HOMEPAGE="http://www.freefem.org/ff++/"
-# SRC_URI="http://www.freefem.org/ff++/ftp/${PN}-${MY_PV}.tar.gz"
-SRC_URI="https://github.com/FreeFem/FreeFem-sources/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://freefem.org/"
+SRC_URI="https://github.com/FreeFem/FreeFem-sources/archive/v4.7-1.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="amd64"
-IUSE="doc examples mpi opengl X static"
+KEYWORDS="~amd64"
+IUSE="examples mpi opengl X"
 
 RDEPEND="
 	sci-libs/fftw:3.0
@@ -24,8 +22,8 @@ RDEPEND="
 	virtual/lapack
 	sci-libs/umfpack
 	sci-libs/arpack
-	sci-libs/superlu
-	mpi? ( $(mpi_pkg_deplist) )
+	sci-libs/hdf5[cxx,mpi?]
+	mpi? ( virtual/mpi )
 	opengl? (
 		media-libs/freeglut
 		virtual/opengl
@@ -38,27 +36,13 @@ RDEPEND="
 		x11-libs/libXxf86vm
 		)"
 
-#	sci-libs/mumps
+DEPEND="${RDEPEND}"
+BDEPEND="virtual/pkgconfig"
 
-DEPEND="${RDEPEND}
-	virtual/pkgconfig
-	doc? (
-		dev-texlive/texlive-latexrecommended
-		dev-texlive/texlive-latexextra
-		virtual/latex-base
-		media-gfx/imagemagick
-		)"
-
-S="${WORKDIR}/FreeFem-sources-${PV}"
+S="${WORKDIR}/FreeFem-sources-${MY_PV}"
 
 src_prepare() {
-	# acoptim.m4 forced -O2 removal
-	#epatch "${FILESDIR}"/${PN}-acoptim.patch
-	# do not try to do a forced "manual" installation of
-	# examples and documentation
-	#epatch "${FILESDIR}"/${PN}-no-doc-autobuild.patch
-	# Honor FHS
-	#epatch "${FILESDIR}"/${PN}-path.patch
+	default
 
 	eautoreconf
 }
@@ -67,12 +51,10 @@ src_configure() {
 	local myconf
 
 	if use mpi; then
-		myconf="${myconf} --with-mpi=$(mpi_pkg_cxx)"
+		myconf="${myconf} --with-mpi=/usr/bin/mpi"
 	else
-		myconf="${myconf} --without-mpi"
+		myconf="--without-mpi"
 	fi
-
-	use static && myconf="${myconf} --enable-static"
 
 	# Dirty hack (temporary disable superlu)
 	myconf="${myconf} --disable-superlu"
@@ -84,16 +66,7 @@ src_configure() {
 		--with-blas="$($(tc-getPKG_CONFIG) --libs blas)" \
 		--with-lapack="$($(tc-getPKG_CONFIG) --libs lapack)" \
 		$(use_enable opengl) \
-		$(use_with X x) \
 		${myconf}
-}
-
-src_compile() {
-	default
-
-	if use doc; then
-		emake documentation
-	fi
 }
 
 src_test() {
@@ -111,11 +84,6 @@ src_test() {
 
 src_install() {
 	default
-
-	insinto /usr/share/doc/${PF}
-	if use doc; then
-		doins DOC/freefem++doc.pdf
-	fi
 
 	if use examples; then
 		einfo "Installing examples..."
