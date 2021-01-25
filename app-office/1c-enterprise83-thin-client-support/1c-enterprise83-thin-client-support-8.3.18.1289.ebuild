@@ -39,7 +39,7 @@ src_unpack() {
 }
 
 src_install() {
-	dodir /opt/1C/v${SLOT}/x86_64
-	mv "${WORKDIR}"/usr/lib/x86_64-linux-gnu/* "${D}"/opt/1C/v${SLOT}/x86_64
+	dodir /opt/1cv8/x86_64/${PV}
+	mv "${WORKDIR}"/usr/lib/x86_64-linux-gnu/* "${D}"/opt/1cv8/x86_64/${PV}
 }
 
