@@ -1,0 +1,22 @@
+
+dev-python/pycryptodome[python_targets_python3_7(-)?,python_targets_python3_8(-)?,python_targets_python3_9(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-),-python_single_target_python3_9(-)] python_targets_python3_7? ( dev-lang/python:3.7 ) python_targets_python3_8? ( dev-lang/python:3.8 ) python_targets_python3_9? ( dev-lang/python:3.9 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,python_targets_python3_8(-)?,python_targets_python3_9(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-),-python_single_target_python3_9(-)]
+0
+mirror://pypi/p/pdfminer/pdfminer-20191125.tar.gz
+!test? ( test )
+https://euske.github.io/pdfminer/ https://pypi.org/project/pdfminer/
+MIT
+Python tool for extracting information from PDF documents
+amd64 x86
+distutils-r1 multibuild multilib multiprocessing python-r1 python-utils-r1 toolchain-funcs
+doc examples test python_targets_python3_7 python_targets_python3_8 python_targets_python3_9
+|| ( python_targets_python3_7 python_targets_python3_8 python_targets_python3_9 )
+
+dev-python/setuptools[python_targets_python3_7(-)?,python_targets_python3_8(-)?,python_targets_python3_9(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-),-python_single_target_python3_9(-)] python_targets_python3_7? ( dev-lang/python:3.7 ) python_targets_python3_8? ( dev-lang/python:3.8 ) python_targets_python3_9? ( dev-lang/python:3.9 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,python_targets_python3_8(-)?,python_targets_python3_9(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-),-python_single_target_python3_9(-)] >=dev-python/setuptools-42.0.2[python_targets_python3_7(-)?,python_targets_python3_8(-)?,python_targets_python3_9(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-),-python_single_target_python3_9(-)]
+7
+
+compile configure install prepare test
+
+
+
+
+
