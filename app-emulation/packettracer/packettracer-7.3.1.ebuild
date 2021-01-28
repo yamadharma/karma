@@ -25,7 +25,6 @@ RDEPEND="${DEPEND}
 	dev-qt/qtgui:5
 	dev-libs/icu
 	dev-libs/openssl:0=
-	media-libs/libpng:1.2
 	virtual/jpeg-compat
 "
 # media-libs/jpeg:8 for the libjpeg.so.8 SONAME for ABI compat
