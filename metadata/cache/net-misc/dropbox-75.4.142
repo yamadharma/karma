@@ -1,5 +1,5 @@
 librsync-bundled? ( dev-util/patchelf ) experimental? ( !net-libs/dropbox-filesystem-fix ) >=dev-vcs/git-1.8.2.1[curl] virtual/pkgconfig
-python_single_target_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 >=dev-lang/python-exec-2:=[python_targets_python2_7] ) python_single_target_python3_7? ( dev-lang/python:3.7 >=dev-lang/python-exec-2:=[python_targets_python3_7] ) X? ( dev-libs/glib:2 dev-qt/qtcore:5 dev-qt/qtdbus:5 dev-qt/qtdeclarative:5 dev-qt/qtgui:5[-gles2,xcb] dev-qt/qtopengl:5[-gles2] dev-qt/qtnetwork:5 dev-qt/qtprintsupport:5[-gles2] dev-qt/qtwebkit:5 dev-qt/qtwidgets:5[-gles2] media-libs/fontconfig media-libs/freetype virtual/jpeg x11-libs/libSM x11-libs/libX11 x11-libs/libXinerama x11-libs/libXxf86vm x11-libs/pango[X] x11-misc/wmctrl x11-themes/hicolor-icon-theme ) !librsync-bundled? ( <net-libs/librsync-2 ) selinux? ( sec-policy/selinux-dropbox ) app-arch/bzip2 dev-libs/popt net-misc/wget >=sys-devel/gcc-4.2.0 sys-libs/zlib sys-libs/ncurses:5/5
+python_single_target_python3_7? ( dev-lang/python:3.7 >=dev-lang/python-exec-2:=[python_targets_python3_7] ) X? ( dev-libs/glib:2 dev-qt/qtcore:5 dev-qt/qtdbus:5 dev-qt/qtdeclarative:5 dev-qt/qtgui:5[-gles2,xcb] dev-qt/qtopengl:5[-gles2] dev-qt/qtnetwork:5 dev-qt/qtprintsupport:5[-gles2] dev-qt/qtwebkit:5 dev-qt/qtwidgets:5[-gles2] media-libs/fontconfig media-libs/freetype virtual/jpeg x11-libs/libSM x11-libs/libX11 x11-libs/libXinerama x11-libs/libXxf86vm x11-libs/pango[X] x11-misc/wmctrl x11-themes/hicolor-icon-theme ) !librsync-bundled? ( <net-libs/librsync-2 ) selinux? ( sec-policy/selinux-dropbox ) app-arch/bzip2 dev-libs/popt net-misc/wget >=sys-devel/gcc-4.2.0 sys-libs/zlib sys-libs/ncurses:5/5
 0
 x86? ( https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86-75.4.142.tar.gz ) amd64? ( https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-75.4.142.tar.gz )
 mirror strip
@@ -8,8 +8,8 @@ CC-BY-ND-3.0 FTL MIT LGPL-2 openssl dropbox
 Dropbox daemon (pretends to be GUI-less)
 amd64 x86 ~x86-linux
 desktop edos2unix epatch estack eutils git-r3 gnome2-utils l10n ltprune multilib pax-utils preserve-libs python-single-r1 python-utils-r1 systemd toolchain-funcs vcs-clean wrapper xdg-utils
-experimental +librsync-bundled selinux X python_single_target_python2_7 python_single_target_python3_7
-^^ ( python_single_target_python2_7 python_single_target_python3_7 )
+experimental +librsync-bundled selinux X +python_single_target_python3_7
+^^ ( python_single_target_python3_7 )
 
 
 6

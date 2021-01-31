@@ -1,5 +1,5 @@
-dev-python/cryptography[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] dev-python/argon2_cffi[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] dev-python/setuptools[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)]
-dev-python/cryptography[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] dev-python/argon2_cffi[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] dev-python/setuptools[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)]
+dev-python/cryptography[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] dev-python/argon2_cffi[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] dev-python/setuptools[python_targets_python3_7(-)?,-python_single_target_python3_7(-)]
+dev-python/cryptography[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] dev-python/argon2_cffi[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] dev-python/setuptools[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,-python_single_target_python3_7(-)]
 0
 
 
@@ -8,10 +8,10 @@ Apache-2.0 MIT
 An easy, fast lib to correctly password-protect your data
 amd64 ~x86
 distutils-r1 git-r3 multibuild multilib multiprocessing python-r1 python-utils-r1 toolchain-funcs
-python_targets_python2_7 python_targets_python3_7
-|| ( python_targets_python2_7 python_targets_python3_7 )
+python_targets_python3_7
+|| ( python_targets_python3_7 )
 
-python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] >=dev-python/setuptools-42.0.2[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] >=dev-vcs/git-1.8.2.1[curl]
+python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] >=dev-python/setuptools-42.0.2[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] >=dev-vcs/git-1.8.2.1[curl]
 7
 live
 compile configure install prepare test unpack

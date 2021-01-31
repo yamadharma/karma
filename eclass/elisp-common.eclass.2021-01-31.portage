@@ -213,14 +213,6 @@ BYTECOMPFLAGS="-L ."
 # Cached value of Emacs version detected in elisp-check-emacs-version().
 _ELISP_EMACS_VERSION=""
 
-
-# Sandbox issues
-for i in /usr/info /usr/local/info /usr/local/texlive/2020/texmf-dist/doc/info /usr/local/texlive/2019/texmf-dist/doc/info ${INFOPATH}
-do
-    addpredict ${i}
-done
-
-
 # @FUNCTION: elisp-emacs-version
 # @RETURN: exit status of Emacs
 # @DESCRIPTION:

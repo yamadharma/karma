@@ -1,5 +1,5 @@
-dev-python/setuptools[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)]
-dev-python/setuptools[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)]
+dev-python/setuptools[python_targets_python3_7(-)?,-python_single_target_python3_7(-)]
+dev-python/setuptools[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,-python_single_target_python3_7(-)]
 0
 https://github.com/rianhunter/fusepyng/archive/v1.0.7.tar.gz -> fusepyng-1.0.7.tar.gz
 
@@ -8,10 +8,10 @@ ISC
 Simple ctypes bindings for FUSE
 amd64 ~x86
 distutils-r1 multibuild multilib multiprocessing python-r1 python-utils-r1 toolchain-funcs
-python_targets_python2_7 python_targets_python3_7
-|| ( python_targets_python2_7 python_targets_python3_7 )
+python_targets_python3_7
+|| ( python_targets_python3_7 )
 
-python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] python_targets_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)] >=dev-python/setuptools-42.0.2[python_targets_python2_7(-)?,python_targets_python3_7(-)?,-python_single_target_python2_7(-),-python_single_target_python3_7(-)]
+python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] python_targets_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,-python_single_target_python3_7(-)] >=dev-python/setuptools-42.0.2[python_targets_python3_7(-)?,-python_single_target_python3_7(-)]
 7
 
 compile configure install prepare test
