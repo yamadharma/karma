@@ -38,6 +38,7 @@ DEPEND="sys-apps/sed
 	sys-apps/coreutils
 	sys-apps/findutils
 	app-arch/tar
+	dev-libs/libffi
 	|| ( sci-libs/openblas ( sci-libs/lapack-reference sci-libs/blas-reference ) )
 "
 
@@ -80,6 +81,7 @@ src_configure() {
 	strip-flags
 
 	append-ldflags -Wno-dev
+	append-cppflags -I/usr/lib64/libffi/include
 
 	# Only omniORB for me
 	local myconf=(
@@ -163,9 +165,10 @@ src_install() {
 	#done
 
 	# Build environment variables
-	#echo "OPENMODELICAHOME=${ROOT}usr" > "${T}/99OpenModelica"
-	#echo "OPENMODELICALIBRARY=${ROOT}usr/share/${PN}/ModelicaLibrary" >> "${T}/99OpenModelica"
-	#doenvd "${T}/99OpenModelica"
+	echo "OPENMODELICAHOME=${ROOT}usr" > "${T}/99OpenModelica"
+	echo "OPENMODELICALIBRARY=${ROOT}usr/lib64/omlibrary" >> "${T}/99OpenModelica"
+	echo "LDPATH=${ROOT}usr/lib64/x86_64-linux-gnu/omc" >> "${T}/99OpenModelica"
+	doenvd "${T}/99OpenModelica"
 	
 	# Do some spring cleaining: some files must be removed.
 	#cd "${D}/usr"
