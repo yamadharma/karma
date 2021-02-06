@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Disable 3D acceleration using MESA
+LIBGL_ALWAYS_SOFTWARE=1 MESA_GL_VERSION_OVERRIDE=3.0 /opt/scilab/bin/scilab "$@"

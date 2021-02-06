@@ -43,6 +43,10 @@ src_install() {
 	fowners root /opt/scilab
         fperms 755 /opt/scilab
 
+	# Hack, use script for call scilab
+	rm ${D}//usr/bin/scilab
+	dobin ${FILESDIR}/scilab
+
 	use bash-completion && newbashcomp "${FILESDIR}"/"${PN}".bash_completion "${PN}"
 
 #	echo "SEARCH_DIRS_MASK=${EPREFIX}/usr/$(get_libdir)/scilab" \
