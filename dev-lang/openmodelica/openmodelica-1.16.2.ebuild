@@ -42,7 +42,7 @@ DEPEND="sys-apps/sed
 	sys-apps/hwloc
 	sci-libs/hdf5
 	sci-mathematics/lpsolve
-	dev-games/openscenegraph-openmw
+	|| ( dev-games/openscenegraph-openmw dev-games/openscenegraph )
 	threads? ( dev-libs/boost )
 	|| ( sci-libs/openblas ( sci-libs/lapack-reference sci-libs/blas-reference ) )
 "
@@ -73,7 +73,8 @@ RESTRICT="network-sandbox nostrip"
 src_prepare() {
 	default
 
-#	epatch "${FILESDIR}/paradiseo-cmake.patch"
+	# FIXME! Dirty patch
+#	sed -i -e "s:assert(tmp);:/* assert(tmp); */:g" OMCompiler/Compiler/runtime/settingsimpl.c
 
 	eautoreconf
 
@@ -86,7 +87,9 @@ src_configure() {
 
 	append-ldflags -Wno-dev
 	append-cppflags -I/usr/lib64/libffi/include
-
+	append-cflags -ffloat-store
+	filter-flags -march=native
+	
 	# Only omniORB for me
 #	local myconf=(
 #		--with-openmodelicahome="${S}"/build
@@ -107,6 +110,7 @@ src_configure() {
 #		$(use_with metis METIS)
 	myconf+=( --with-omlibrary=all )
 	myconf+=( $(use_with threads cppruntime) )
+	# myconf+=( --without-cppruntime )
 
 	# for me only reference lapack work
 	# myconf+=( --with-lapack="`pkg-config --libs lapack` `pkg-config --libs blas`" )
@@ -115,11 +119,11 @@ src_configure() {
 #	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
 #	    OPENMODELICAHOME="${S}"/build \
 #	    econf "${myconf[@]}"
-	# LDFLAGS="" ./configure "${myconf[@]}"
+	LDFLAGS="" ./configure "${myconf[@]}"
 
-	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
-	    OPENMODELICAHOME=/usr \
-	    econf "${myconf[@]}"
+	#LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
+	#    OPENMODELICAHOME=/usr \
+	#    econf "${myconf[@]}"
 
 
 	# Correct the documentation installation directory: the package does not
@@ -152,8 +156,11 @@ src_configure() {
 src_install() {
 	default
 	# sed -i -r "s#^((lib|data)dir\s*=)\s*/usr(.*)#\1 \${prefix}\3#" Makefile
-	# make prefix="${D}/usr" install
-	einstall
+
+	make DESTDIR="${D}" prefix=/usr install
+
+	# einstall
+
 	#dobin "${S}/OMShell/OMShell"
 	# Yes, it looks stupid to put data files in /bin, but that's where
 	# OpenModelica expects them to be.
