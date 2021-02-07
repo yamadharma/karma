@@ -39,13 +39,17 @@ DEPEND="sys-apps/sed
 	sys-apps/findutils
 	app-arch/tar
 	dev-libs/libffi
+	sys-apps/hwloc
+	sci-libs/hdf5
+	sci-mathematics/lpsolve
+	dev-games/openscenegraph-openmw
+	threads? ( dev-libs/boost )
 	|| ( sci-libs/openblas ( sci-libs/lapack-reference sci-libs/blas-reference ) )
 "
 
 RDEPEND="=dev-java/antlr-2*
 	sys-libs/readline
 	dev-libs/libf2c
-	threads? ( dev-libs/boost )
 	|| ( sci-libs/metis sci-libs/parmetis )
 	editor? ( || ( net-misc/omniORB net-misc/mico )
 		dev-qt/qtcore:5
@@ -84,11 +88,14 @@ src_configure() {
 	append-cppflags -I/usr/lib64/libffi/include
 
 	# Only omniORB for me
-	local myconf=(
-		--with-openmodelicahome="${S}"/build
-		--with-omc="${S}"/build/bin/omc
-		$(use_with editor omniORB)
-		)
+#	local myconf=(
+#		--with-openmodelicahome="${S}"/build
+#		--with-omc="${S}"/build/bin/omc
+#		$(use_with editor omniORB)
+#		)
+
+	local myconf=( --without-omc )
+	myconf+=( $(use_with editor omniORB) )
 
 	use clang && myconf+=( CC=clang CXX=clang++ GNUCXX=g++ )
 
@@ -98,15 +105,22 @@ src_configure() {
 #		--disable-modelica3d
 #		--with-omlibrary=all
 #		$(use_with metis METIS)
+	myconf+=( --with-omlibrary=all )
+	myconf+=( $(use_with threads cppruntime) )
 
 	# for me only reference lapack work
 	# myconf+=( --with-lapack="`pkg-config --libs lapack` `pkg-config --libs blas`" )
 	myconf+=( --with-lapack=auto )
 
-	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
-	    OPENMODELICAHOME="${S}"/build \
-	    econf "${myconf[@]}"
+#	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
+#	    OPENMODELICAHOME="${S}"/build \
+#	    econf "${myconf[@]}"
 	# LDFLAGS="" ./configure "${myconf[@]}"
+
+	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
+	    OPENMODELICAHOME=/usr \
+	    econf "${myconf[@]}"
+
 
 	# Correct the documentation installation directory: the package does not
 	# give a 'make doc' alternative, so we simply install it into a folder that
