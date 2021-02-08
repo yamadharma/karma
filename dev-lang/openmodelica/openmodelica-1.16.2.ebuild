@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=7
 
-inherit eutils autotools flag-o-matic
+inherit eutils autotools flag-o-matic multilib
 
 OMOptimPV=1.11.0-dev.beta4
 OMSensPV=WorkPackage-2-Final
@@ -119,7 +119,7 @@ src_configure() {
 #	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
 #	    OPENMODELICAHOME="${S}"/build \
 #	    econf "${myconf[@]}"
-	LDFLAGS="" ./configure "${myconf[@]}"
+	LDFLAGS="" econf "${myconf[@]}"
 
 	#LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
 	#    OPENMODELICAHOME=/usr \
@@ -187,8 +187,8 @@ src_install() {
 
 	# Build environment variables
 	echo "OPENMODELICAHOME=${ROOT}usr" > "${T}/99OpenModelica"
-	echo "OPENMODELICALIBRARY=${ROOT}usr/lib64/omlibrary" >> "${T}/99OpenModelica"
-	echo "LDPATH=${ROOT}usr/lib64/x86_64-linux-gnu/omc" >> "${T}/99OpenModelica"
+	echo "OPENMODELICALIBRARY=${ROOT}usr/lib/omlibrary" >> "${T}/99OpenModelica"
+	echo "LDPATH=${ROOT}usr/lib/x86_64-linux-gnu/omc" >> "${T}/99OpenModelica"
 	doenvd "${T}/99OpenModelica"
 	
 	# Do some spring cleaining: some files must be removed.
@@ -212,6 +212,7 @@ src_install() {
 	rm ${D}/usr/bin/*.so
 
 	mv ${D}/usr/share/doc/omc/* ${D}/usr/share/doc/${P}
+	rm -r ${D}/var
 }
 
 pkg_postinst_() {
