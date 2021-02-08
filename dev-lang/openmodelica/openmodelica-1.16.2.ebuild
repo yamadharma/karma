@@ -119,7 +119,8 @@ src_configure() {
 #	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
 #	    OPENMODELICAHOME="${S}"/build \
 #	    econf "${myconf[@]}"
-	LDFLAGS="" econf "${myconf[@]}"
+	# LDFLAGS="" econf "${myconf[@]}"
+	./configure "${myconf[@]}"
 
 	#LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
 	#    OPENMODELICAHOME=/usr \
@@ -158,7 +159,6 @@ src_install() {
 	# sed -i -r "s#^((lib|data)dir\s*=)\s*/usr(.*)#\1 \${prefix}\3#" Makefile
 
 	make DESTDIR="${D}" prefix=/usr install
-
 	# einstall
 
 	#dobin "${S}/OMShell/OMShell"
@@ -186,10 +186,10 @@ src_install() {
 	#done
 
 	# Build environment variables
-	echo "OPENMODELICAHOME=${ROOT}usr" > "${T}/99OpenModelica"
-	echo "OPENMODELICALIBRARY=${ROOT}usr/lib/omlibrary" >> "${T}/99OpenModelica"
-	echo "LDPATH=${ROOT}usr/lib/x86_64-linux-gnu/omc" >> "${T}/99OpenModelica"
-	doenvd "${T}/99OpenModelica"
+	# echo "OPENMODELICAHOME=${ROOT}usr" > "${T}/99OpenModelica"
+	# echo "OPENMODELICALIBRARY=${ROOT}usr/$(get_libdir)/omlibrary" >> "${T}/99OpenModelica"
+	# echo "LDPATH=${ROOT}/usr/lib/x86_64-linux-gnu/omc" >> "${T}/99OpenModelica"
+	# doenvd "${T}/99OpenModelica"
 	
 	# Do some spring cleaining: some files must be removed.
 	#cd "${D}/usr"
@@ -212,6 +212,8 @@ src_install() {
 	rm ${D}/usr/bin/*.so
 
 	mv ${D}/usr/share/doc/omc/* ${D}/usr/share/doc/${P}
+	
+	# FIXME! Dirty hack
 	rm -r ${D}/var
 }
 
