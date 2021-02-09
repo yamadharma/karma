@@ -42,7 +42,7 @@ DEPEND="sys-apps/sed
 	sys-apps/hwloc
 	sci-libs/hdf5
 	sci-mathematics/lpsolve
-	|| ( dev-games/openscenegraph-openmw dev-games/openscenegraph )
+	|| ( dev-games/openscenegraph dev-games/openscenegraph-openmw )
 	threads? ( dev-libs/boost )
 	|| ( sci-libs/openblas ( sci-libs/lapack-reference sci-libs/blas-reference ) )
 "
