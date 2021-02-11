@@ -10,7 +10,7 @@ HOMEPAGE="https://www.dev47apps.com/droidcam/linux/
 	https://github.com/aramg/droidcam"
 SRC_URI="https://github.com/aramg/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 LICENSE="GPL-2"
 SLOT="0"
 
