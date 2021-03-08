@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_{7..9} )
 
-inherit python-any-r1 toolchain-funcs flag-o-matic
+inherit autotools python-any-r1 toolchain-funcs flag-o-matic
 
 DESCRIPTION="A tool to create DjVu files from PDF files"
 HOMEPAGE="http://jwilk.net/software/pdf2djvu"
@@ -40,8 +40,7 @@ DOCS=(
 	doc/{changelog,credits,djvudigital,README}
 )
 
-PATCHES=(
-)
+PATCHES=( ${FILESDIR}/poppler-splash.patch )
 
 pkg_setup() {
 	use test && python-any-r1_pkg_setup
@@ -51,6 +50,7 @@ src_prepare() {
 	# bug 626874, poppler headers require C++11
 	append-cxxflags -std=c++11
 	default
+	eautoreconf
 }
 
 src_configure() {
