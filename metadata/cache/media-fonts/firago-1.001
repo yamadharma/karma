@@ -1,4 +1,4 @@
-app-arch/unzip X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+app-arch/unzip
 
 0
 https://bboxtype.com/downloads/FiraGO/Download_Folder_FiraGO_1001.zip
@@ -11,7 +11,7 @@ font
 X
 
 
-
+X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
 7
 
 install postinst postrm setup

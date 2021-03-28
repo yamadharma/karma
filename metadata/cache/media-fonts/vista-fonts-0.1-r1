@@ -1,4 +1,4 @@
-app-arch/cabextract X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+app-arch/cabextract
 
 0
 http://download.microsoft.com/download/f/5/a/f5a3df76-d856-4a61-a6bd-722f52a5be26/PowerPointViewer.exe
@@ -11,7 +11,7 @@ font
 X
 
 
-
+X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
 7
 
 install postinst postrm prepare setup unpack

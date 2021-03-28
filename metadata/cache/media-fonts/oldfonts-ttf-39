@@ -1,4 +1,4 @@
-X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+
 
 0
 http://lizard.phys.msu.su/home/compu_sci/OldFonts-dist-39.tar.bz2 doc? ( http://lizard.phys.msu.su/home/compu_sci/sample-39.pdf )
@@ -11,7 +11,7 @@ font
 +doc X
 
 
-
+X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
 7
 
 install postinst postrm setup

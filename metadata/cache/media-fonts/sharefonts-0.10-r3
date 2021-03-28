@@ -1,4 +1,4 @@
-X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+
 
 0
 mirror://gimp/fonts/sharefonts-0.10.tar.gz
@@ -11,7 +11,7 @@ font
 X
 
 
-
+X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
 7
 
 install postinst postrm setup
