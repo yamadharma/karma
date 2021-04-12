@@ -1,1 +1,0 @@
-/usr/portage/local/layman/science/eclass/mpi.eclass
