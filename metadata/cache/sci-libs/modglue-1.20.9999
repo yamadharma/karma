@@ -1,4 +1,4 @@
-dev-libs/libsigc++:2 virtual/pkgconfig >=app-portage/elt-patches-20170815 >=dev-vcs/git-1.8.2.1[curl]
+dev-libs/libsigc++:2 virtual/pkgconfig sys-devel/gnuconfig >=app-portage/elt-patches-20170815 >=dev-vcs/git-1.8.2.1[curl]
 dev-libs/libsigc++:2
 0
 
@@ -7,7 +7,7 @@ http://cadabra.science/
 GPL-2
 C++ library for handling of multiple co-processes
 ~x86 ~amd64
-autotools autotools-utils desktop edos2unix epatch estack eutils flag-o-matic git-r3 l10n libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
+autotools autotools-utils desktop edos2unix epatch estack eutils flag-o-matic git-r3 gnuconfig l10n libtool ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
 doc
 
 

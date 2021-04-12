@@ -7,11 +7,11 @@ https://freefem.org/
 LGPL-2.1
 Solve PDEs using FEM on 2d and 3d domains
 ~amd64
-autotools edos2unix eutils flag-o-matic l10n libtool multilib toolchain-funcs wrapper
+autotools edos2unix eutils flag-o-matic gnuconfig l10n libtool multilib toolchain-funcs wrapper
 examples mpi opengl X
 
 
-virtual/pkgconfig >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.2-r1:1.16 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+virtual/pkgconfig sys-devel/gnuconfig >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.2-r1:1.16 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 sys-apps/gawk
 7
 
 configure install prepare test

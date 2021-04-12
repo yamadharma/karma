@@ -26,7 +26,7 @@ DEPEND=""
 RDEPEND="${PYTHON_DEPS}
 	dev-python/python-djvulibre
 	dev-python/lxml
- 	dev-python/PyICU
+	dev-python/pyicy
 	cuneiform? ( app-text/cuneiform )
 	gocr? ( app-text/gocr )
 	ocropus? ( app-text/ocropus )
