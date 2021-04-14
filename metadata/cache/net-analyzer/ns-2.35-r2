@@ -1,4 +1,4 @@
-!!dev-tcltk/otcl !!dev-tcltk/tclcl !!net-analyzer/nam net-libs/libpcap debug? ( =dev-lang/perl-5* >=sci-visualization/xgraph-12.1 >=dev-libs/dmalloc-4.8.2 >=dev-tcltk/tcl-debug-2.0 ) doc? ( virtual/latex-base virtual/ghostscript dev-tex/latex2html ) sys-devel/gnuconfig >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.2-r1:1.16 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 sys-apps/gawk
+!!dev-tcltk/otcl !!dev-tcltk/tclcl !!net-analyzer/nam net-libs/libpcap debug? ( =dev-lang/perl-5* >=sci-visualization/xgraph-12.1 >=dev-libs/dmalloc-4.8.2 >=dev-tcltk/tcl-debug-2.0 ) doc? ( virtual/latex-base virtual/ghostscript dev-tex/latex2html ) sys-devel/gnuconfig >=app-portage/elt-patches-20170815 || ( >=sys-devel/automake-1.16.2-r1:1.16 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
 !!dev-tcltk/otcl !!dev-tcltk/tclcl !!net-analyzer/nam net-libs/libpcap debug? ( =dev-lang/perl-5* >=sci-visualization/xgraph-12.1 >=dev-libs/dmalloc-4.8.2 >=dev-tcltk/tcl-debug-2.0 )
 0
 mirror://sourceforge/nsnam/ns-allinone-2.35.tar.gz
