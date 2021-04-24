@@ -1,1 +1,2 @@
 move dev-python/jupyterlab-server dev-python/jupyterlab_server
+move dev-python/PyICU dev-python/pyicu
