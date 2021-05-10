@@ -46,7 +46,7 @@ src_install(){
 	cp -r . "${ED%/}/"
 	rm -rf "${ED%/}/usr/lib"
 	dodir /usr/bin
-	dosym /opt/${MY_PN}/${PN} /usr/bin/${PN}
+	dosym /opt/${MY_PN}/${MY_PN} /usr/bin/${PN}
 	pax-mark m "${ED%/}"/opt/${MY_PN}/${PN}
 }
 
