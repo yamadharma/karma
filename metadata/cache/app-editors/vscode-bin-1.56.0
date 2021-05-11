@@ -1,7 +1,7 @@
 >=media-libs/libpng-1.2.46 >=x11-libs/gtk+-2.24.8-r1:2 x11-libs/cairo x11-libs/libXtst !app-editors/vscode
 >=media-libs/libpng-1.2.46 >=x11-libs/gtk+-2.24.8-r1:2 x11-libs/cairo x11-libs/libXtst !app-editors/vscode app-accessibility/at-spi2-atk >=net-print/cups-2.0.0 x11-libs/libnotify x11-libs/libXScrnSaver dev-libs/nss app-crypt/libsecret[crypt]
 0
-https://update.code.visualstudio.com/1.55.2/linux-x64/stable -> vscode-1.55.2-amd64.tar.gz
+https://update.code.visualstudio.com/1.56.0/linux-x64/stable -> vscode-1.56.0-amd64.tar.gz
 mirror strip bindist
 https://code.visualstudio.com
 MS-vscode
