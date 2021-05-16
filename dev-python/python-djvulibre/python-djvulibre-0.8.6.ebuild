@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/dnspython/dnspython-1.8.0.ebuild,v 1.8 2010/08/16 16:50:27 grobian Exp $
 
-EAPI="5"
-PYTHON_COMPAT=( python3_{6,7,8} )
+EAPI="7"
+PYTHON_COMPAT=( python3_{7..9} )
 
 inherit distutils-r1
 

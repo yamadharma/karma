@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{7..9} )
 DISTUTILS_IN_SOURCE_BUILD=1 # setup.py applies 2to3 to tests
 PYTHON_REQ_USE=""
 
