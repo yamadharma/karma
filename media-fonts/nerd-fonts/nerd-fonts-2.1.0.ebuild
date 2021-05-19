@@ -1,13 +1,13 @@
 # Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit font check-reqs
 
 DESCRIPTION="Collection of fonts that are patched to include a high number of glyphs (icons)."
-HOMEPAGE="https://nerdfonts.com"
-SRC_URI=""
+HOMEPAGE="https://nerdfonts.com
+https://github.com/ryanoasis/nerd-fonts/"
 
 LICENSE="MIT"
 SLOT="0"
@@ -15,11 +15,14 @@ KEYWORDS="amd64 ~x86"
 
 DIRNAME=(
 	3270
+	Agave
 	AnonymousPro
 	Arimo
 	AurulentSansMono
 	BigBlueTerminal
 	BitstreamVeraSansMono
+	CascadiaCode
+	CodeNewRoman
 	Cousine
 	DejaVuSansMono
 	DroidSansMono
@@ -27,14 +30,18 @@ DIRNAME=(
 	FiraCode
 	FiraMono
 	Go-Mono
+	Gohu
 	Hack
 	Hasklig
 	HeavyData
 	Hermit
+	iA-Writer
+	IBMPlexMono
 	Inconsolata
 	InconsolataGo
 	InconsolataLGC
 	Iosevka
+	JetBrainsMono
 	Lekton
 	LiberationMono
 	Meslo
@@ -47,7 +54,6 @@ DIRNAME=(
 	Overpass
 	ProFont
 	ProggyClean
-	Regular
 	RobotoMono
 	ShareTechMono
 	SourceCodePro
@@ -56,11 +62,20 @@ DIRNAME=(
 	Tinos
 	Ubuntu
 	UbuntuMono
+	VictorMono
 )
 
-IUSE_FLAGS=(${DIRNAME[*],,})
-IUSE="${IUSE_FLAGS[*]}"
-REQUIRED_USE="|| ( ${IUSE_FLAGS[*]} )"
+SRC_URI=""
+
+for i in ${DIRNAME[@]}
+do
+SRC_URI="${SRC_URI}
+	https://github.com/ryanoasis/${PN}/releases/download/v${PV}/${i}.zip -> nerd-fonts-${i}-${PV}.zip"
+done
+
+#IUSE_FLAGS=(${DIRNAME[*],,})
+#IUSE="${IUSE_FLAGS[*]}"
+#REQUIRED_USE="|| ( ${IUSE_FLAGS[*]} )"
 
 DEPEND="app-arch/unzip
 	net-misc/wget"
@@ -77,17 +92,6 @@ FONT_S=${S}
 
 pkg_pretend() {
 	check-reqs_pkg_setup
-}
-
-src_unpack() {
-	default
-	for i in $(seq 0 $((${#IUSE_FLAGS[@]} - 1)))
-	do
-		if use ${IUSE_FLAGS[${i}]}; then
-			wget https://github.com/ryanoasis/${PN}/releases/download/v${PV}/${DIRNAME[${i}]}.zip
-			unzip ${S}/${DIRNAME[${i}]}.zip -d ${S}
-		fi
-	done
 }
 
 src_install() {
