@@ -1,0 +1,22 @@
+>=dev-java/java-config-2.2.0-r3 >=app-eselect/eselect-java-0.4.0
+>=sys-libs/glibc-2.2.5:* sys-libs/zlib >=dev-java/java-config-2.2.0-r3 >=app-eselect/eselect-java-0.4.0
+11
+https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-linux-amd64-21.1.0.tar.gz native-image? ( https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/native-image-installable-svm-java11-linux-amd64-21.1.0.jar )
+preserve-libs splitdebug
+https://www.graalvm.org/
+GPL-2-with-classpath-exception
+GraalVM prebuild binaries
+~amd64
+java-vm-2 multilib pax-utils prefix toolchain-funcs xdg-utils
++gentoo-vm native-image
+
+
+
+6
+
+install postinst postrm prerm pretend setup unpack
+
+
+
+
+
