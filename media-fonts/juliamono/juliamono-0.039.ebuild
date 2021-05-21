@@ -7,7 +7,7 @@ inherit font
 
 DESCRIPTION="JuliaMono - a monospaced font for scientific and technical computing"
 HOMEPAGE="https://juliamono.netlify.app/"
-SRC_URI="https://github.com/cormullion/${PN}/releases/download/v${PV}/JuliaMono-ttf.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/cormullion/${PN}/releases/download/v${PV}/JuliaMono-ttf.tar.gz -> ${P}-ttf.tar.gz"
 S="${WORKDIR}"
 
 LICENSE="OFL"
