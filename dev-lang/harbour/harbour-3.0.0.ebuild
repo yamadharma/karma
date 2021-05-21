@@ -2,13 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="7"
 
 inherit base toolchain-funcs multilib
 
 MY_P=${P/_/-}
 DESCRIPTION="An extended implementation of the Clipper dialect of the xBase language family"
-HOMEPAGE="http://harbour-project.org/"
+HOMEPAGE="http://harbour-project.org/
+	https://harbour.github.io/
+	https://github.com/harbour/core/"
 SRC_URI="mirror://sourceforge/${PN}-project/${P}.tar.bz2"
 
 LICENSE="GPL-2-with-exceptions"

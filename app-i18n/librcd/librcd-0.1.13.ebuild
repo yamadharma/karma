@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: 
 
+EAPI="7"
 inherit eutils autotools
 
 DESCRIPTION="LibRCD is Russian Encoding Detection Library"
