@@ -11,7 +11,7 @@ SRC_URI="https://typora.io/linux/typora_${PV}_amd64.deb"
 
 LICENSE="EULA"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE=""
 
 DEPEND=""
