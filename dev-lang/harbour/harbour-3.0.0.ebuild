@@ -4,7 +4,7 @@
 
 EAPI="7"
 
-inherit base toolchain-funcs multilib
+inherit toolchain-funcs multilib
 
 MY_P=${P/_/-}
 DESCRIPTION="An extended implementation of the Clipper dialect of the xBase language family"
