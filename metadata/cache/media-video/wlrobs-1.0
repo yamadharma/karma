@@ -11,7 +11,7 @@ meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-funcs
 +dmabuf +scpy
 
 
->=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array
+>=dev-util/meson-0.56.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array
 7
 
 compile configure install test

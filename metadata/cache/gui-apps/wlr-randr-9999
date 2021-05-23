@@ -11,7 +11,7 @@ git-r3 meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-func
 
 
 
-dev-libs/wayland-protocols virtual/pkgconfig >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array >=dev-vcs/git-1.8.2.1[curl]
+dev-libs/wayland-protocols virtual/pkgconfig >=dev-util/meson-0.56.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array >=dev-vcs/git-1.8.2.1[curl]
 7
 live
 compile configure install test unpack

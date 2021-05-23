@@ -11,7 +11,7 @@ meson multilib multiprocessing ninja-utils python-utils-r1 toolchain-funcs xdg x
 
 
 
-x11-libs/gtk+:3[wayland] gui-libs/wlroots >=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array
+x11-libs/gtk+:3[wayland] gui-libs/wlroots >=dev-util/meson-0.56.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array
 7
 
 compile configure install postinst postrm preinst prepare test

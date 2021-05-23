@@ -11,7 +11,7 @@ edos2unix eutils l10n mercurial meson multilib multiprocessing ninja-utils pytho
 +dmabuf +scpy
 
 
->=dev-util/meson-0.54.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array
+>=dev-util/meson-0.56.0 >=dev-util/ninja-1.8.2 dev-util/meson-format-array
 7
 live
 compile configure install test unpack
