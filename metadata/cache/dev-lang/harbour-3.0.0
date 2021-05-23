@@ -3,18 +3,18 @@ sys-libs/ncurses allegro? ( media-libs/allegro ) gpm? ( sys-libs/gpm ) odbc? ( d
 0
 mirror://sourceforge/harbour-project/harbour-3.0.0.tar.bz2
 
-http://harbour-project.org/
+http://harbour-project.org/ https://harbour.github.io/ https://github.com/harbour/core/
 GPL-2-with-exceptions
 An extended implementation of the Clipper dialect of the xBase language family
 amd64 x86
-base desktop edos2unix epatch estack eutils l10n ltprune multilib preserve-libs toolchain-funcs vcs-clean wrapper
+multilib toolchain-funcs
 allegro doc gpm odbc pcre slang threads X
 
 
 
-3
+7
 
-compile configure install prepare test unpack
+compile install test
 
 
 
