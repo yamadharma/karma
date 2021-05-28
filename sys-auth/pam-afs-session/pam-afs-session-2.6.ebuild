@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/sys-auth/pam-afs-session/pam-afs-session-1.6.ebuild,v 1.1 2008/03/25 11:46:56 stefaan Exp $
 
-EAPI=4
+EAPI=7
 
 inherit pam
 
