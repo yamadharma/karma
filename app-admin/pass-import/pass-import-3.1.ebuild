@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{7..10} )
 
 # pass-import makes only one Python implementation, needs PYTHON_SINGLE_TARGET.
 inherit python-single-r1
