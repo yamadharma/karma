@@ -4,7 +4,7 @@
 EAPI=7
 
 PLOCALES="de es fr"
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7..10} )
 
 inherit eutils distutils-r1 gnome2-utils l10n python-r1 scons-utils
 

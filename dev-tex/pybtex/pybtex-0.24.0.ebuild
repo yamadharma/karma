@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7,8} )
+PYTHON_COMPAT=( python3_{7..10} )
 
 inherit distutils-r1
 
@@ -12,7 +12,7 @@ HOMEPAGE="https://pybtex.org/"
 #SRC_URI="https://pypi.python.org/packages/82/59/d46b4a84faacd7c419cfc9a442b7940d6d625d127b83d83666e2a8b203d8/pybtex-0.21.tar.gz"
 #SRC_URI="http://pypi.python.org/packages/source/${PN:0:1}/${PN}/${P}.tar.gz"
 #SRC_URI="https://bitbucket.org/pybtex-devs/${PN}/get/${PV}.tar.bz2 -> ${P}.tar.bz2"
-SRC_URI="https://files.pythonhosted.org/packages/source/p/pybtex/pybtex-0.22.2.tar.gz"
+SRC_URI="https://files.pythonhosted.org/packages/source/p/pybtex/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

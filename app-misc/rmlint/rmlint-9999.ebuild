@@ -1,9 +1,9 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python3_{5,6,7} )
+PYTHON_COMPAT=( python3_{7..10} )
 
 inherit eutils git-r3 gnome2-utils python-r1 scons-utils
 
@@ -16,7 +16,7 @@ EGIT_BRANCH="develop"
 KEYWORDS=""
 else
 SRC_URI="https://github.com/sahib/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-KEYWORDS="amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 fi
 
 LICENSE="GPL-3"
