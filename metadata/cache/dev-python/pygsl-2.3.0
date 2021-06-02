@@ -1,5 +1,5 @@
-sci-libs/gsl dev-python/numpy[python_targets_python3_7(-)?,python_targets_python3_8(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-)] python_targets_python3_7? ( dev-lang/python:3.7 ) python_targets_python3_8? ( dev-lang/python:3.8 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,python_targets_python3_8(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-)] >=dev-python/setuptools-42.0.2[python_targets_python3_7(-)?,python_targets_python3_8(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-)]
-sci-libs/gsl dev-python/numpy[python_targets_python3_7(-)?,python_targets_python3_8(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-)] python_targets_python3_7? ( dev-lang/python:3.7 ) python_targets_python3_8? ( dev-lang/python:3.8 ) >=dev-lang/python-exec-2:=[python_targets_python3_7(-)?,python_targets_python3_8(-)?,-python_single_target_python3_7(-),-python_single_target_python3_8(-)]
+sci-libs/gsl dev-python/numpy[python_targets_python3_8(-)?,-python_single_target_python3_8(-)] python_targets_python3_8? ( dev-lang/python:3.8 ) >=dev-lang/python-exec-2:=[python_targets_python3_8(-)?,-python_single_target_python3_8(-)] >=dev-python/setuptools-42.0.2[python_targets_python3_8(-)?,-python_single_target_python3_8(-)]
+sci-libs/gsl dev-python/numpy[python_targets_python3_8(-)?,-python_single_target_python3_8(-)] python_targets_python3_8? ( dev-lang/python:3.8 ) >=dev-lang/python-exec-2:=[python_targets_python3_8(-)?,-python_single_target_python3_8(-)]
 0
 mirror://sourceforge/project/pygsl/pygsl/pygsl-2.3.0/pygsl-2.3.0.tar.gz
 
@@ -8,8 +8,8 @@ GPL-2
 Python interface for the GNU scientific library (gsl)
 amd64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux
 desktop distutils-r1 edos2unix epatch estack eutils l10n ltprune multibuild multilib multiprocessing preserve-libs python-r1 python-utils-r1 toolchain-funcs vcs-clean wrapper xdg-utils
-examples python_targets_python3_7 python_targets_python3_8
-|| ( python_targets_python3_7 python_targets_python3_8 )
+examples python_targets_python3_8
+|| ( python_targets_python3_8 )
 
 
 6
