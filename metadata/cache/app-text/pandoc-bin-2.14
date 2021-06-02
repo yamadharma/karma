@@ -1,7 +1,7 @@
 !app-text/pandoc !dev-haskell/pandoc-citeproc
 !app-text/pandoc !dev-haskell/pandoc-citeproc
-0/2.13
-https://github.com/jgm/pandoc/releases/download/2.13/pandoc-2.13-linux-amd64.tar.gz
+0/2.14
+https://github.com/jgm/pandoc/releases/download/2.14/pandoc-2.14-linux-amd64.tar.gz
 strip
 http://pandoc.org
 GPL-2
