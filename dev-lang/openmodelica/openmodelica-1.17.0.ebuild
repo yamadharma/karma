@@ -89,7 +89,8 @@ src_configure() {
 	append-cppflags -I/usr/lib64/libffi/include
 	append-cflags -ffloat-store
 	filter-flags -march=native
-	append-fflags -fallow-argument-mismatch
+	export FFLAGS=""
+	export FCFLAGS=""
 	
 	# Only omniORB for me
 #	local myconf=(
