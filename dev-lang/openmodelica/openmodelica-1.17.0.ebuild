@@ -89,6 +89,7 @@ src_configure() {
 	append-cppflags -I/usr/lib64/libffi/include
 	append-cflags -ffloat-store
 	filter-flags -march=native
+	append-fflags -fallow-argument-mismatch
 	
 	# Only omniORB for me
 #	local myconf=(
@@ -150,16 +151,16 @@ src_configure() {
 #	fi
 }
 
-#src_compile() {
-#	emake -j1
-#}
+src_compile() {
+	emake -j1
+}
 
 src_install() {
 	default
 	# sed -i -r "s#^((lib|data)dir\s*=)\s*/usr(.*)#\1 \${prefix}\3#" Makefile
 
-	make DESTDIR="${D}" prefix=/usr install
-	# einstall
+	# make DESTDIR="${D}" prefix=/usr install
+	einstall
 
 	#dobin "${S}/OMShell/OMShell"
 	# Yes, it looks stupid to put data files in /bin, but that's where
