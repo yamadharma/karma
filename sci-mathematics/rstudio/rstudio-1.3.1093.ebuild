@@ -178,6 +178,7 @@ src_configure() {
 		-DRSTUDIO_TARGET=$(usex dedicated "Server" "$(usex server "Development" "Desktop")")
 		-DRSTUDIO_VERIFY_R_VERSION=FALSE
 		-DRSTUDIO_USE_SYSTEM_BOOST=TRUE
+		-DRSTUDIO_BOOST_SIGNALS_VERSION=2
 		)
 
 	if use !dedicated; then
