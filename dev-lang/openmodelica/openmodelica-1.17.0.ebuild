@@ -58,6 +58,11 @@ RDEPEND="=dev-java/antlr-2*
 
 RESTRICT="network-sandbox nostrip"
 
+PATCHES=(
+	"${FILESDIR}/FCFlags.patch"
+	"${FILESDIR}/antlr4.patch"
+)
+
 #S="${WORKDIR}/${PN}"
 
 #pkg_setup() {
@@ -86,11 +91,12 @@ src_configure() {
 	strip-flags
 
 	append-ldflags -Wno-dev
+	append-ldflags $(no-as-needed)
 	append-cppflags -I/usr/lib64/libffi/include
 	append-cflags -ffloat-store
 	filter-flags -march=native
-	export FFLAGS=""
-	export FCFLAGS=""
+#	export FFLAGS=""
+#	export FCFLAGS=""
 	
 	# Only omniORB for me
 #	local myconf=(
@@ -117,6 +123,9 @@ src_configure() {
 	# for me only reference lapack work
 	# myconf+=( --with-lapack="`pkg-config --libs lapack` `pkg-config --libs blas`" )
 	myconf+=( --with-lapack=auto )
+	
+#	myconf+=( --with-omlibrary=no --libdir=/usr/lib )
+	myconf+=( --with-omc=no --libdir=/usr/lib )
 
 #	LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
 #	    OPENMODELICAHOME="${S}"/build \
@@ -160,9 +169,12 @@ src_install() {
 	default
 	# sed -i -r "s#^((lib|data)dir\s*=)\s*/usr(.*)#\1 \${prefix}\3#" Makefile
 
-	# make DESTDIR="${D}" prefix=/usr install
-	einstall
+	emake DESTDIR="${D}" install
+	einstalldocs
 
+	dodir /usr
+	cp -R ${S}/build/* ${D}/usr
+	
 	#dobin "${S}/OMShell/OMShell"
 	# Yes, it looks stupid to put data files in /bin, but that's where
 	# OpenModelica expects them to be.
@@ -215,8 +227,11 @@ src_install() {
 
 	mv ${D}/usr/share/doc/omc/* ${D}/usr/share/doc/${P}
 	
+	doicon ${WORKDIR}/${P}/OMEdit/OMEditLIB/Resources/icons/omedit.ico
+	make_desktop_entry OMEdit OMEdit omedit
+	
 	# FIXME! Dirty hack
-	rm -r ${D}/var
+	rm -r ${D}/var/tmp
 }
 
 pkg_postinst_() {

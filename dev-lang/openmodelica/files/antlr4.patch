@@ -1,0 +1,19 @@
+diff --git a/OMParser/Makefile b/OMParser/Makefile
+index 1c3b86a214..e3c3e5b0dc 100644
+--- a/OMParser/Makefile
++++ b/OMParser/Makefile
+@@ -11,7 +11,6 @@ CMAKE_TARGET = "Unix Makefiles"
+ endif
+ 
+ override CXXFLAGS += -Iinstall/include/antlr4-runtime -std=c++11 -DANTLR4CPP_STATIC
+-override LDFLAGS +=-Linstall/lib -Bstatic -lantlr4-runtime -lstdc++ -Bdynamic -static-libgcc
+ 
+ CPP_FILES=modelicaBaseListener.cpp  modelicaBaseVisitor.cpp  modelicaLexer.cpp  modelicaListener.cpp  modelicaParser.cpp  modelicaVisitor.cpp
+ H_FILES=$(patsubst %.cpp,%.h,$(CPP_FILES))
+@@ -49,4 +48,4 @@ clean-local:
+ clean-runtime:
+ 	rm -rf 3rdParty/antlr4/runtime/Cpp/build/ 3rdParty/antlr4/runtime/Cpp/dist/ install
+ 
+-clean: clean-local clean-runtime
+\ No newline at end of file
++clean: clean-local clean-runtime
