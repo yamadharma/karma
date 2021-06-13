@@ -61,6 +61,7 @@ RESTRICT="network-sandbox nostrip"
 PATCHES=(
 	"${FILESDIR}/FCFlags.patch"
 	"${FILESDIR}/antlr4.patch"
+	"${FILESDIR}/openmodelica-1.17.0-emoth-release.patch"
 )
 
 #S="${WORKDIR}/${PN}"
@@ -163,6 +164,7 @@ src_configure() {
 
 src_compile() {
 	emake -j1
+#	emake -j1 omlibrary-all
 }
 
 src_install() {

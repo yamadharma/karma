@@ -1,0 +1,40 @@
+diff -Naurp openmodelica-1.17.0.orig/libraries/Makefile.libs openmodelica-1.17.0/libraries/Makefile.libs
+--- openmodelica-1.17.0.orig/libraries/Makefile.libs	2021-06-13 14:54:03.111972413 +0300
++++ openmodelica-1.17.0/libraries/Makefile.libs	2021-06-13 14:56:43.161230116 +0300
+@@ -152,13 +152,13 @@ DriveControl:
+ 	echo '3.1.0-20181117-174044~git~release' > "$(BUILD_DIR)/DriveControl 3.1.0.last_change"
+ EMOTH:
+ 	# Building git/EMOTH
+-	./checkout-git.sh 'git/EMOTH' 'https://github.com/AHaumer/EMOTH.git' 'release' 'fa890c8c2781f0c0b2f8efe955ed8a27875dd9ac'
+-	test ! -d 'build//EMOTH 1.4.0'
+-	cp -a 'git/EMOTH/EMOTH' "$(BUILD_DIR)/EMOTH 1.4.0"
+-	echo 'Modelica 3.2.2' >> "$(BUILD_DIR)/EMOTH 1.4.0.uses"
+-	echo 'VehicleInterfaces 1.2.4' >> "$(BUILD_DIR)/EMOTH 1.4.0.uses"
+-	echo 'bsd3' > "$(BUILD_DIR)/EMOTH 1.4.0.license"
+-	echo '1.4.0-20170626-211752~git~release' > "$(BUILD_DIR)/EMOTH 1.4.0.last_change"
++	./checkout-git.sh 'git/EMOTH' 'https://github.com/AHaumer/EMOTH.git' 'master' '5c74d21b131b91db113db39551593880c516bb51'
++	test ! -d 'build//EMOTH 1.7.0'
++	cp -a 'git/EMOTH/EMOTH' "$(BUILD_DIR)/EMOTH 1.7.0"
++	echo 'Modelica 3.2.2' >> "$(BUILD_DIR)/EMOTH 1.7.0.uses"
++	echo 'VehicleInterfaces 1.2.4' >> "$(BUILD_DIR)/EMOTH 1.7.0.uses"
++	echo 'bsd3' > "$(BUILD_DIR)/EMOTH 1.7.0.license"
++	echo '1.7.0' > "$(BUILD_DIR)/EMOTH 1.7.0.last_change"
+ ElectroMechanicalDrives:
+ 	# Building git/ElectroMechanicalDrives
+ 	./checkout-git.sh 'git/ElectroMechanicalDrives' 'https://github.com/christiankral/ElectroMechanicalDrives.git' 'v2.2.0' 'v2.2.0'
+diff -Naurp openmodelica-1.17.0.orig/libraries/repos.json openmodelica-1.17.0/libraries/repos.json
+--- openmodelica-1.17.0.orig/libraries/repos.json	2021-06-13 14:54:03.111972413 +0300
++++ openmodelica-1.17.0/libraries/repos.json	2021-06-13 14:55:19.414200001 +0300
+@@ -236,10 +236,10 @@
+     {
+       "dest": "EMOTH",
+       "options": {
+-        "gitbranch": "release",
++        "gitbranch": "master",
+         "license": "bsd3"
+       },
+-      "rev": "fa890c8c2781f0c0b2f8efe955ed8a27875dd9ac",
++      "rev": "5c74d21b131b91db113db39551593880c516bb51",
+       "url": "https://github.com/AHaumer/EMOTH.git"
+     },
+     {
