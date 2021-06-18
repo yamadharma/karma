@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{7..10} )
 
 inherit flag-o-matic python-any-r1 eutils unpacker pax-utils xdg-utils
 
