@@ -11,9 +11,9 @@ SRC_URI="https://github.com/be5invis/Iosevka/releases/download/v${PV}/super-ttc-
 
 LICENSE="OFL-1.1"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
+KEYWORDS="amd64 ~arm ~arm64 ~ppc64 ~x86"
 
-DEPEND="app-arch/unzip"
+BDEPEND="app-arch/unzip"
 
 S="${WORKDIR}"
 FONT_S="${S}"
