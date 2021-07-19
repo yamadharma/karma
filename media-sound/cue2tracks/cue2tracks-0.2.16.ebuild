@@ -2,15 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=7
+
 inherit eutils
 
 DESCRIPTION="Bash script for split audio CD image files with cue sheet to tracks and write tags."
 HOMEPAGE="http://code.google.com/p/cue2tracks/"
-SRC_URI="http://${PN}.googlecode.com/files/${P}.tar.gz"
+SRC_URI="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 amd64"
 IUSE="flake mac tta shorten wavpack mp3 m4a vorbis"
 RESTRICT=mirror
 
