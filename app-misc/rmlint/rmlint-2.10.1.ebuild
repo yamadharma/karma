@@ -6,7 +6,7 @@ EAPI=7
 PLOCALES="de es fr"
 PYTHON_COMPAT=( python3_{7..10} )
 
-inherit eutils distutils-r1 gnome2-utils l10n python-r1 scons-utils
+inherit eutils distutils-r1 gnome2-utils python-r1 scons-utils
 
 DESCRIPTION="Removes duplicates and other lint from your filesystem"
 HOMEPAGE="https://rmlint.rtfd.org https://github.com/sahib/rmlint"
@@ -46,12 +46,6 @@ src_prepare() {
 		$(usex cpu_flags_x86_sse --with-sse --without-sse) \
 		$(usex nls --with-gettext --without-gettext) \
 		$(usex X --with-gui --without-gui)"
-
-	l10n_prepare() {
-		rm po/"${1}".po || die "removing of ${1}.po failed"
-	}
-	l10n_find_plocales_changes po "" .po
-	l10n_for_each_disabled_locale_do l10n_prepare
 }
 
 src_configure() {
