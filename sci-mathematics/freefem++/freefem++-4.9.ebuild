@@ -9,11 +9,11 @@ MY_PV="$(ver_rs 2 -)"
 
 DESCRIPTION="Solve PDEs using FEM on 2d and 3d domains"
 HOMEPAGE="https://freefem.org/"
-SRC_URI="https://github.com/FreeFem/FreeFem-sources/archive/v4.7-1.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/FreeFem/FreeFem-sources/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="examples mpi opengl X"
 
 RDEPEND="
