@@ -35,7 +35,6 @@ RDEPEND="
 	dev-qt/qtprintsupport:5
 	dev-qt/qtsvg:5
 	dev-qt/qtwebengine:5[widgets]
-	dev-qt/qtwebkit:5
 	dev-qt/qtxml:5
 	sys-libs/zlib
 	virtual/opengl
