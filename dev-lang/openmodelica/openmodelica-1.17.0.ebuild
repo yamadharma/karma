@@ -163,7 +163,8 @@ src_configure() {
 }
 
 src_compile() {
-	emake -j1
+	make -j1
+#	emake -j1
 #	emake -j1 omlibrary-all
 }
 
