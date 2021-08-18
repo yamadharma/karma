@@ -17,6 +17,8 @@ else
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/OpenModelica/OpenModelica.git"
 	EGIT_COMMIT="v${PV}"
+	REFS="refs/tags/v${PV}"
+	TAG="${PV}"
 #	SRC_URI="https://github.com/OpenModelica/OpenModelica/archive/v${PV}.tar.gz -> ${P}.tar.gz
 #		https://github.com/OpenModelica/OMOptim/archive/v${OMOptimPV}.tar.gz -> OMOptim-${OMOptimPV}.tar.gz
 #		https://github.com/OpenModelica/OMSens/archive/v${OMSensPV}.tar.gz -> OMSens-${OMSensPV}.tar.gz
@@ -75,6 +77,11 @@ PATCHES=(
 	# do it and you will be safe.
 #	MAKEOPTS="${MAKEOPTS} -j1"
 #}
+
+src_unpack() {
+	git-r3_fetch ${EGIT_REPO_URI} ${REFS} ${TAG}
+	git-r3_checkout ${EGIT_REPO_URI} "${WORKDIR}/${P}" ${TAG}
+}
 
 src_prepare() {
 	default
@@ -163,8 +170,7 @@ src_configure() {
 }
 
 src_compile() {
-	make -j1
-#	emake -j1
+	emake -j1
 #	emake -j1 omlibrary-all
 }
 
