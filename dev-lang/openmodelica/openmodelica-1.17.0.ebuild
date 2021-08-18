@@ -64,6 +64,7 @@ PATCHES=(
 	"${FILESDIR}/FCFlags.patch"
 	"${FILESDIR}/antlr4.patch"
 	"${FILESDIR}/openmodelica-1.17.0-emoth-release.patch"
+	"${FILESDIR}/openmodelica-1.17.0-cmake-3.20.patch"
 )
 
 #S="${WORKDIR}/${PN}"
