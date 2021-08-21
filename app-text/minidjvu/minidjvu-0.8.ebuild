@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-text/djvu/djvu-3.5.22-r1.ebuild,v 1.8 2010/08/18 04:02:21 jer Exp $
 
-EAPI="2"
+EAPI="7"
 inherit eutils multilib
 
 
