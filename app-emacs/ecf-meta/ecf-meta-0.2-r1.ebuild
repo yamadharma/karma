@@ -21,8 +21,7 @@ PDEPEND="app-emacs/ecf
 	sys-apps/ripgrep
 	sys-apps/fd
 	media-gfx/ditaa
-	app-emacs/magit
-	app-emacs/magit-popup
+	dev-tex/LaTeXML
 "
 
 # Local Variables:
