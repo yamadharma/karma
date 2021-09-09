@@ -16,3 +16,6 @@ SLOT="0"
 KEYWORDS="amd64 ~hppa ~ia64 ~x86"
 IUSE=""
 
+RDEPEND="
+	dev-python/deprecation
+"

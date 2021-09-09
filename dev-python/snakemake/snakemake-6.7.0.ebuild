@@ -28,6 +28,7 @@ BDEPEND="test? (
 	dev-python/pygraphviz[${PYTHON_USEDEP}]
 	dev-python/oauth2client[${PYTHON_USEDEP}]
 	net-libs/google-cloud-cpp
+	dev-python/ratelimiter
 )"
 
 RDEPEND="
