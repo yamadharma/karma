@@ -1,0 +1,32 @@
+diff -urN ultradefrag-5.0.0AB.7.orig/src/Makefile ultradefrag-5.0.0AB.7/src/Makefile
+--- ultradefrag-5.0.0AB.7.orig/src/Makefile	2011-11-24 14:57:55.000000000 +0400
++++ ultradefrag-5.0.0AB.7/src/Makefile	2016-06-11 23:58:20.847846736 +0300
+@@ -24,8 +24,8 @@
+ COPT=-DPPGC=1 -O2
+ GCCOPT=-DPPGC=1 -O2
+ LIB1=/usr/lib64
+-LIB2=/usr/lib/gcc/x86_64-redhat-linux/4.6.0
+-NTFSLIB=/lib64/libntfs-3g.so.*.0.0
++LIB2=`dirname \`gcc -print-libgcc-file-name\``
++NTFSLIB=/usr/lib64/libntfs-3g.so.*.0.0
+ 
+ A=console.a udefrag.a zenwinx.a wincalls.a
+ 
+@@ -66,5 +66,5 @@
+ 		$(LIB1)/crt1.o $(LIB1)/crti.o $(LIB2)/crtbegin.o \
+ 		console/console.a dll/udefrag/udefrag.a dll/zenwinx/zenwinx.a \
+ 		wincalls/wincalls.a $(NTFSLIB) \
+-		-lgcc -L$(LIB2) -L$(LIB1) -lc -lm -lpthread -lncurses \
++		-lgcc -L$(LIB2) -L$(LIB1) -lc -lm -lpthread -lncurses -ltinfo \
+ 		$(LIB2)/crtend.o $(LIB1)/crtn.o > udefrag.map
+diff -urN ultradefrag-5.0.0AB.7.orig/src/wincalls/ntfs-3g.c ultradefrag-5.0.0AB.7/src/wincalls/ntfs-3g.c
+--- ultradefrag-5.0.0AB.7.orig/src/wincalls/ntfs-3g.c	2011-11-26 17:56:37.000000000 +0400
++++ ultradefrag-5.0.0AB.7/src/wincalls/ntfs-3g.c	2016-06-11 23:56:53.402345824 +0300
+@@ -31,6 +31,7 @@
+ #if LXSC | L8SC | STSC | SPGC | PPGC
+ #include "config.h"
+ #endif
++#include <linux/fs.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
