@@ -3,13 +3,14 @@
 
 EAPI=7
 
-PANDOC_PV=2.14.0.2
+PANDOC_PV=2.14.2
 
 DESCRIPTION="Pandoc filter for cross-references"
 HOMEPAGE="https://github.com/lierdakil/pandoc-crossref#readme"
 # SRC_URI="mirror://hackage/packages/archive/${PN}/${PV}/${P}.tar.gz"
 #SRC_URI="https://github.com/lierdakil/pandoc-crossref/releases/download/v${PV}/linux-pandoc_${PANDOC_PV//./_}.tar.gz -> ${P}-${PANDOC_PV}.tar.gz"
-SRC_URI="https://github.com/lierdakil/pandoc-crossref/releases/download/v${PV}/pandoc-crossref-Linux.tar.xz -> ${P}-${PANDOC_PV}.tar.xz"
+#SRC_URI="https://github.com/lierdakil/pandoc-crossref/releases/download/v${PV}/pandoc-crossref-Linux.tar.xz -> ${P}-${PANDOC_PV}.tar.xz"
+SRC_URI="https://github.com/lierdakil/pandoc-crossref/releases/download/v${PV}/pandoc-crossref-Linux.tar.xz -> ${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0/${PANDOC_PV}"
