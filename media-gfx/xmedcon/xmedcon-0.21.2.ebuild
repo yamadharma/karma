@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="7"
 
 inherit eutils
 
@@ -19,8 +19,8 @@ IUSE="png gtk +dicom"
 RESTRICT=mirror
 
 RDEPEND="
-png? ( >=media-libs/libpng-1.2.1 )
-gtk? ( >=x11-libs/gtk+-2.1 )
+	png? ( media-libs/libpng )
+	gtk? ( x11-libs/gtk+ )
 "
 
 src_compile() {
