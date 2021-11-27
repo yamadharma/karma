@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Joplin
+Comment=Joplin is a free, open source note taking and to-do application, which can handle a large number of notes organised into notebooks..
+Comment[ru]=Joplin - приложение для создания заметок и дел.
+Icon=joplin-bin
+Exec=/usr/sbin/joplin-bin
+TryExec=/usr/sbin/joplin-bin
+StartupNotify=true
+Type=Application
+Categories=Office;
