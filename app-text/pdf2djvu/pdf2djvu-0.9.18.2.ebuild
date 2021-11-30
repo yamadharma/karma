@@ -40,7 +40,7 @@ DOCS=(
 	doc/{changelog,credits,djvudigital,README}
 )
 
-PATCHES=( ${FILESDIR}/poppler-splash.patch )
+# PATCHES=( ${FILESDIR}/poppler-splash.patch )
 
 pkg_setup() {
 	use test && python-any-r1_pkg_setup
