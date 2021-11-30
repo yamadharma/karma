@@ -28,10 +28,11 @@ IUSE="doc examples"
 
 CDEPEND="x11-libs/gtk+:3
 	dev-cpp/gtkmm:3.0
-	dev-libs/boost
+	>dev-libs/boost-1.45.0
 	dev-libs/jsoncpp
 	dev-libs/mathjax
 	dev-python/sympy
+	>=dev-util/cmake-3.22
 	"
 
 DEPEND="${CDEPEND}
