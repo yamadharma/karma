@@ -15,7 +15,7 @@ KEYWORDS="x86 amd64"
 
 IUSE="${IUSE}"
 
-DEPEND="virtual/emacs"
+DEPEND="app-editor/emacs"
 
 src_install() {
 	default
