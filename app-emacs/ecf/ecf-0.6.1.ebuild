@@ -15,7 +15,7 @@ KEYWORDS="x86 amd64"
 
 IUSE="${IUSE}"
 
-DEPEND="app-editor/emacs"
+DEPEND="app-editors/emacs"
 
 src_install() {
 	default
