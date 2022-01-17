@@ -32,7 +32,7 @@ src_install() {
         mkdir -p "${dest}"
         cp -R "${WORKDIR}/scilab"*/. "${dest}" || die
 	dodir /usr/share
-	cp -R "${S}/share/"* ${D}/usr/share  || die	
+	cp -R "${S}/share/"* ${D}/usr/share  || die
 #        dosym /opt/scilab/bin/scilab /usr/bin/scilab || die
 	cd ${dest}/bin
 	for i in *
@@ -47,7 +47,8 @@ src_install() {
 	rm ${D}//usr/bin/scilab
 	dobin ${FILESDIR}/scilab
 
-	use bash-completion && newbashcomp "${FILESDIR}"/"${PN}".bash_completion "${PN}"
+	use bash-completion && newbashcomp "${FILESDIR}"/bash_completion "${PN}"
+	use bash-completion && newbashcomp "${FILESDIR}"/bash_completion "${PN//-bin}"
 
 #	echo "SEARCH_DIRS_MASK=${EPREFIX}/usr/$(get_libdir)/scilab" \
 #		> 50-"${PN}"
