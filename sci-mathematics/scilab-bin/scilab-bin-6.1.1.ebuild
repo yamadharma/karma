@@ -17,7 +17,7 @@ MY_PN=${PN/-bin/}
 MY_PV=${PV/_beta/-beta-}
 MY_P=${MY_PN}-${MY_PV}
 
-SRC_URI="http://www.scilab.org/download/${MY_PV}/${MY_PN}-${MY_PV}.bin.linux-x86_64.tar.gz"
+SRC_URI="https://www.scilab.org/download/${MY_PV}/${MY_P}.bin.linux-x86_64.tar.gz"
 
 IUSE="bash-completion"
 
