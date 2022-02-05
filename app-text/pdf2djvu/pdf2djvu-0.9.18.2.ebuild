@@ -47,8 +47,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# bug 626874, poppler headers require C++11
-	append-cxxflags -std=c++11
+	# use C++17 for Poppler
+	append-cxxflags -std=gnu++17
 	default
 	eautoreconf
 }
