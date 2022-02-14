@@ -8,7 +8,7 @@ inherit desktop pax-utils xdg-utils unpacker
 DESCRIPTION="Cisco's packet tracer"
 HOMEPAGE="https://www.netacad.com/about-networking-academy/packet-tracer"
 SRC_URI="
-	amd64? ( "PacketTracer_731_amd64.deb" )
+	amd64? ( "CiscoPacketTracer_${PV//.}_Ubuntu_64bit.deb" )
 "
 
 LICENSE="Cisco_EULA"
@@ -31,6 +31,7 @@ RDEPEND="${DEPEND}
 
 S="${WORKDIR}"
 QA_PREBUILT="opt/packettracer/*"
+MY_PN=${PN}
 
 pkg_nofetch() {
     ewarn "To fetch sources, you need a Cisco account which is"
@@ -54,39 +55,41 @@ src_unpack.qt-installer() {
 
 
 src_prepare() {
-    sed -i -e "s#/opt/pt#/opt/${PN}#" bin/Cisco-PacketTracer.desktop
-    sed -i -e "s#Application;Network#Network#" bin/Cisco-PacketTracer.desktop
+#    sed -i -e "s#/opt/pt#/opt/${PN}#" bin/Cisco-PacketTracer.desktop
+#    sed -i -e "s#Application;Network#Network#" bin/Cisco-PacketTracer.desktop
     default_src_prepare
 }
 
 src_install_() {
-    exeinto /opt/${PN}/bin
-    doexe bin/linguist bin/meta bin/PacketTracer7
-    rm bin/linguist bin/meta bin/PacketTracer7
-    exeinto /opt/${PN}/bin/Linux
+    exeinto /opt/${MY_PN}/bin
+    doexe bin/linguist bin/meta bin/PacketTracer
+    rm bin/linguist bin/meta bin/PacketTracer
+    exeinto /opt/${MY_PN}/bin/Linux
     doexe bin/Linux/*
     rm -r bin/Linux
     insinto /usr/share/mime/packages
     doins bin/Cisco-*.xml
     rm bin/Cisco-*.xml
-    domenu bin/Cisco-PacketTracer.desktop
-    rm bin/Cisco-PacketTracer.desktop
-    insinto /opt/${PN}
+#    domenu bin/Cisco-PacketTracer.desktop
+#    rm bin/Cisco-PacketTracer.desktop
+    insinto /opt/${MY_PN}
     doins -r art backgrounds bin extensions help languages saves Sounds templates
     for icon in pka pkt pkz; do
 	newicon -s 48x48 -c mimetypes art/${icon}.png application-x-${icon}.png
     done
     # dodoc eula${PV//./}.txt
     dobin "${FILESDIR}/${PN}"
-    exeinto /opt/${PN}
+    exeinto /opt/${MY_PN}
     doexe "${FILESDIR}/linguist"
     insinto /etc/profile.d
     doins "${FILESDIR}/${PN}.sh"
     #find "${ED%/}/opt/${PN}/bin" -iname "*.so*" -exec patchelf --set-rpath '$ORIGIN/' {} \;
-    for b in PacketTracer7 meta linguist; do
+    for b in PacketTracer meta linguist; do
 	#patchelf --set-rpath '$ORIGIN/' "${ED%/}/opt/${PN}/bin/${b}"
-	pax-mark -m "${ED%/}/opt/${PN}/bin/${b}"
+	pax-mark -m "${ED%/}/opt/${MY_PN}/bin/${b}"
     done
+    
+    # find "${WORKDIR}/usr/" -iname "*.desktop*" -exec sed -i -e "s|/opt/pt|/opt/${PN}|g" "{}" \;
     
     # fperms +x "${EPREFIX}/opt/${PN}/extensions/NetacadExamPlayer/NetacadExamPlayer"
     # fperms +x "${EPREFIX}/opt/${PN}/extensions/NetacadExamPlayer/QtWebEngineProcess"
@@ -104,20 +107,22 @@ src_install() {
     cp -R opt usr ${D}
     mv ${D}/opt/pt ${D}/opt/${PN}
 
-    for b in PacketTracer7 meta linguist
+    find "${D}/usr/" -iname "*.desktop*" -exec sed -i -e "s|/opt/pt|/opt/${PN}|g" "{}" \;
+
+    for b in PacketTracer meta linguist
     do
 	patchelf --set-rpath '$ORIGIN/' "${ED%/}/opt/${PN}/bin/${b}"
 	pax-mark -m "${ED%/}/opt/${PN}/bin/${b}"
     done
 
-    for b in libicudata.so.52 libicui18n.so.52 libicuuc.so.52
-    do
-	patchelf --set-rpath '$ORIGIN/' "${ED%/}/opt/${PN}/bin/${b}"
-    done
+#    for b in libicudata.so.52 libicui18n.so.52 libicuuc.so.52
+#    do
+#	patchelf --set-rpath '$ORIGIN/' "${ED%/}/opt/${PN}/bin/${b}"
+#    done
 
 
     ## 
-    dobin "${FILESDIR}/${PN}"
+    newbin "${FILESDIR}/${PN}-8" "${PN}"
     exeinto /opt/${PN}
     doexe "${FILESDIR}/linguist"
     insinto /etc/profile.d
