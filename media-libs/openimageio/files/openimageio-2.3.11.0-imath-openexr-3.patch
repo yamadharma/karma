@@ -1,0 +1,23 @@
+diff --git a/src/cmake/modules/FindOpenEXR.cmake b/src/cmake/modules/FindOpenEXR.cmake
+index 5e356dd..595445c 100644
+--- a/src/cmake/modules/FindOpenEXR.cmake
++++ b/src/cmake/modules/FindOpenEXR.cmake
+@@ -35,14 +35,14 @@
+ #
+ 
+ # First, try to fine just the right config files
+-find_package(Imath CONFIG)
+-if (NOT TARGET Imath::Imath)
++find_package(Imath-3 CONFIG)
++if (NOT TARGET Imath-3::Imath)
+     # Couldn't find Imath::Imath, maybe it's older and has IlmBase?
+     find_package(IlmBase CONFIG)
+ endif ()
+-find_package(OpenEXR CONFIG)
++find_package(OpenEXR-3 CONFIG)
+ 
+-if (TARGET OpenEXR::OpenEXR AND TARGET Imath::Imath)
++if (TARGET OpenEXR-3::OpenEXR AND TARGET Imath-3::Imath)
+     # OpenEXR 3.x if both of these targets are found
+     set (FOUND_OPENEXR_WITH_CONFIG 1)
+     if (NOT OpenEXR_FIND_QUIETLY)
