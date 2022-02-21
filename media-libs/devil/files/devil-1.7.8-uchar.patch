@@ -1,0 +1,20 @@
+diff -ru devil-1.7.8.orig/src-IL/src/il_jp2.c devil-1.7.8/src-IL/src/il_jp2.c
+--- devil-1.7.8.orig/src-IL/src/il_jp2.c	2009-03-07 23:10:09.000000000 -0800
++++ devil-1.7.8/src-IL/src/il_jp2.c	2016-11-20 11:11:15.798150421 -0800
+@@ -14,6 +14,7 @@
+ #include "il_internal.h"
+ #ifndef IL_NO_JP2
+ #include <jasper/jasper.h>
++#include <jasper/jas_types.h>
+ #include "il_jp2.h"
+ 
+ #if defined(_WIN32) && defined(IL_USE_PRAGMA_LIBS)
+@@ -459,7 +460,7 @@
+ 			/* The buffer must be large enough to accommodate maximum
+ 			  putback. */
+ 			assert(bufsize > JAS_STREAM_MAXPUTBACK);
+-			stream->bufbase_ = JAS_CAST(uchar *, buf);
++			stream->bufbase_ = JAS_CAST(jas_uchar *, buf);
+ 			stream->bufsize_ = bufsize - JAS_STREAM_MAXPUTBACK;
+ 		}
+ 	} else {
