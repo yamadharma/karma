@@ -1,16 +1,18 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 ANT_TASKS="ant-apache-bsf"
 
+MY_PN=${PN/-bin/}
+
 if [ ${PV} = "9999" ]; then
 	EGIT_REPO_URI="https://github.com/apache/netbeans.git"
 else
-	KEYWORDS="~amd64"
-	SRC_URI="mirror://apache/netbeans/netbeans/${PV}/netbeans-${PV}-source.zip"
-	S="${WORKDIR}"
+	KEYWORDS="amd64"
+	SRC_URI="mirror://apache/netbeans/netbeans/${PV}/netbeans-${PV}-bin.zip"
+	S="${WORKDIR}"/${MY_PN}
 fi
 
 inherit java-pkg-2 java-ant-2 desktop xdg $([[ ${PV} = "9999" ]] && echo git-r3)
@@ -24,32 +26,15 @@ IUSE=""
 DEPEND=">=virtual/jdk-11:*"
 RDEPEND=">=virtual/jdk-11"
 
-PATCHES=( "${FILESDIR}"/fix-private-debugger-access.patch )
-
 JAVA_PKG_BSFIX="off"
-INSTALL_DIR=/usr/share/${PN}-${SLOT}
-
-pkg_pretend() {
-	if has network-sandbox ${FEATURES}; then
-		eerror
-		eerror "Netbeans downloads a lot of dependencies during the build"
-		eerror "process, so you need to disable network-sandbox feature"
-		eerror "to make this ebuild proceed (FEATURES=-network-sandbox)."
-		eerror "You can also use package.env to disable this feature"
-		eerror "for the package, see:"
-		eerror
-		eerror "    https://wiki.gentoo.org/wiki//etc/portage/package.env"
-		eerror
-		die "network-sandbox is enabled, disable it to proceed";
-	fi
-}
+INSTALL_DIR=/usr/share/${MY_PN}-${SLOT}
 
 src_prepare() {
 	default
 }
 
 src_compile() {
-	eant -Dcluster.config=full -Dpermit.jdk9.builds=true -Dbinaries.cache="${S}"/.hgexternalcache || die "Failed to compile"
+	default
 }
 
 QA_PREBUILT="
@@ -69,8 +54,6 @@ QA_PREBUILT="
 "
 
 src_install() {
-	pushd nbbuild/netbeans >/dev/null || die
-
 	insinto ${INSTALL_DIR}
 	doins -r .
 
@@ -91,26 +74,24 @@ src_install() {
 	doexe extide/ant/bin/{ant{,Run,Run.pl},complete-ant-cmd.pl,runant.{pl,py}}
 
 	dodoc DEPENDENCIES NOTICE
-	dosym ${INSTALL_DIR}/bin/netbeans /usr/bin/${PN}-${SLOT}
+	dosym ${INSTALL_DIR}/bin/netbeans /usr/bin/${MY_PN}-${SLOT}
 	fperms 755 ${INSTALL_DIR}/bin/netbeans
 
-	insinto /etc/${PN}-${SLOT}
+	insinto /etc/${MY_PN}-${SLOT}
 	doins etc/*
 	rm -fr "${ED}"/${INSTALL_DIR}/etc
-	dosym ../../../../etc/${PN}-${SLOT} ${INSTALL_DIR}/etc
-	sed -i -e "s/#netbeans_jdkhome.*/netbeans_jdkhome=\$\(java-config -O\)/g" "${ED}"/etc/${PN}-${SLOT}/netbeans.conf || die "Failed to set set Netbeans JDK home"
+	dosym ../../../../etc/${MY_PN}-${SLOT} ${INSTALL_DIR}/etc
+	sed -i -e "s/#netbeans_jdkhome.*/netbeans_jdkhome=\$\(java-config -O\)/g" "${ED}"/etc/${MY_PN}-${SLOT}/netbeans.conf || die "Failed to set set Netbeans JDK home"
 
 	if [[ -e "${ED}"/${INSTALL_DIR}/bin/netbeans ]]; then
-		sed -i -e "s:\"\$progdir\"/../etc/:/etc/${PN}-${SLOT}/:" "${ED}"/${INSTALL_DIR}/bin/netbeans
-		sed -i -e "s:\"\${userdir}\"/etc/:/etc/${PN}-${SLOT}/:" "${ED}"/${INSTALL_DIR}/bin/netbeans
+		sed -i -e "s:\"\$progdir\"/../etc/:/etc/${MY_PN}-${SLOT}/:" "${ED}"/${INSTALL_DIR}/bin/netbeans
+		sed -i -e "s:\"\${userdir}\"/etc/:/etc/${MY_PN}-${SLOT}/:" "${ED}"/${INSTALL_DIR}/bin/netbeans
 	fi
 
 	dodir /usr/share/icons/hicolor/32x32/apps
-	dosym ${INSTALL_DIR}/nb/netbeans.png /usr/share/icons/hicolor/32x32/apps/${PN}-${SLOT}.png
+	dosym ${INSTALL_DIR}/nb/netbeans.png /usr/share/icons/hicolor/32x32/apps/${MY_PN}-${SLOT}.png
 
-	popd >/dev/null || die
-
-	make_desktop_entry ${PN}-${SLOT} "Netbeans ${PV}" ${PN}-${SLOT} Development
+	make_desktop_entry ${MY_PN}-${SLOT} "Netbeans ${PV}" ${MY_PN}-${SLOT} Development
 
 	mkdir -p  "${ED}"/${INSTALL_DIR}/nb/config || die
 	echo "NBGNT" > "${ED}"/${INSTALL_DIR}/nb/config/productid || die
