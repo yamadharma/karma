@@ -13,7 +13,7 @@ HOMEPAGE="http://jwilk.net/software/pdf2djvu"
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/jwilk/pdf2djvu.git"
-	KEYWORDS="amd64 x86"
+#	KEYWORDS="amd64 x86"
 else
 	SRC_URI="https://github.com/jwilk/${PN}/releases/download/${PV}/${P}.tar.xz"
 	KEYWORDS="amd64 x86"
@@ -47,10 +47,7 @@ DOCS=(
 	doc/{changelog,credits,djvudigital,README}
 )
 
-#PATCHES=( 	${FILESDIR}/pdf2djvu-0.9.18.2-poppler-22.04-1.patch
-#		${FILESDIR}/pdf2djvu-0.9.18.2-poppler-22.04-2.patch
-#		${FILESDIR}/pdf2djvu-0.9.18.2-poppler-22.04-3.patch
-#	)
+# PATCHES=( ${FILESDIR}/poppler-splash.patch )
 
 pkg_setup() {
 	use test && python-any-r1_pkg_setup
