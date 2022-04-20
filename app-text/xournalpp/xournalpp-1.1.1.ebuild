@@ -11,7 +11,7 @@ if [[ ${PV} == *9999 ]]; then
 	unset SRC_URI
 else
 	KEYWORDS="amd64 ~x86"
-	SRC_URI="https://github.com/xournalpp/xournalpp/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/xournalpp/xournalpp/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
 DESCRIPTION="An application for notetaking, sketching, and keeping a journal using a stylus"
