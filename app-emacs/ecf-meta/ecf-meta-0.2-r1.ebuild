@@ -15,7 +15,6 @@ KEYWORDS="x86 amd64"
 IUSE="${IUSE}"
 
 PDEPEND="app-emacs/ecf
-	app-emacs/auctex
 	app-dicts/aspell-enru
 	media-fonts/fira-code
 	sys-apps/ripgrep
