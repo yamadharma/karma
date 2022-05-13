@@ -31,7 +31,7 @@ RDEPEND="=app-office/1c-enterprise83-thin-client-support-${PV}"
 
 S="${WORKDIR}"
 
-src_unpack() {
+src_unpack_() {
 	for i in ${A}
 	do
 	    dpkg-deb -R "${DISTDIR}"/"${i}" ${WORKDIR}
@@ -42,7 +42,9 @@ src_unpack() {
 src_install() {
 	dodir /opt /usr/bin
 	cp -R "${WORKDIR}"/opt/* "${D}"/opt
+	cp -R "${WORKDIR}"/usr/* "${D}"/usr
 	# mv "${WORKDIR}"/usr/lib/x86_64-linux-gnu/* "${D}"/opt/1C/v8.3/x86_64
+	find "${D}"/opt -name "libstdc++.so.6" -delete
 
 #	cp -R "${WORKDIR}"/usr/* "${D}"/usr
 
