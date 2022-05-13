@@ -44,7 +44,7 @@ src_install() {
 	cp -R "${WORKDIR}"/opt/* "${D}"/opt
 	# mv "${WORKDIR}"/usr/lib/x86_64-linux-gnu/* "${D}"/opt/1C/v8.3/x86_64
 
-	cp -R "${WORKDIR}"/usr/* "${D}"/usr
+#	cp -R "${WORKDIR}"/usr/* "${D}"/usr
 
 	#local res
 	#for res in 16 22 24 32 36 48 64 72 96 128 192 256; do
@@ -53,7 +53,7 @@ src_install() {
 	#	done
 	#done
 
-	domenu "${WORKDIR}"/usr/share/applications/1cv8c-${MY_PV}.desktop
+#	domenu "${WORKDIR}"/usr/share/applications/1cv8c-${MY_PV}.desktop
 
 #	dosym /opt/1C/v8.3/x86_64/1cv8c /usr/bin/1cv8c
 	dobin ${FILESDIR}/1cv8c
