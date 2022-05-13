@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Foundation
+    # Copyright 1999-2019 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,7 +12,7 @@ HOMEPAGE="http://v8.1c.ru/"
 SRC_URI="
 	mirror://debian/pool/main/w/webkitgtk/libwebkitgtk-3.0-0_2.4.11-3_amd64.deb
 	mirror://debian/pool/main/w/webkitgtk/libjavascriptcoregtk-3.0-0_2.4.11-3_amd64.deb
-	mirror://debian/pool/main/libw/libwebp/libwebp6_0.6.1-2_amd64.deb
+	mirror://debian/pool/main/libw/libwebp/libwebp6_0.6.1-2.1_amd64.deb
 	mirror://debian/pool/main/i/icu/libicu57_57.1-6+deb9u4_amd64.deb
 "
 
