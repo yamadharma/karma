@@ -34,7 +34,6 @@ LICENSE="OMPL"
 SLOT="0"
 IUSE="+editor doc threads clang"
 
-
 # Don't compile with lapack-3.8
 DEPEND="sys-apps/sed
 	sys-apps/coreutils
