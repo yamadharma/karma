@@ -1,0 +1,24 @@
+diff --git a/src/cpp/diagnostics/CMakeLists.txt b/src/cpp/diagnostics/CMakeLists.txt
+index d93de04..9f77098 100644
+--- a/src/cpp/diagnostics/CMakeLists.txt
++++ b/src/cpp/diagnostics/CMakeLists.txt
+@@ -50,16 +50,16 @@ if(WIN32)
+ 
+ endif()
+ 
+-add_stripped_executable(diagnostics
++add_stripped_executable(rstudio-diagnostics
+   ${DIAGNOSTICS_SOURCE_FILES}
+ )
+ 
+ # set link dependencies
+-target_link_libraries(diagnostics
++target_link_libraries(rstudio-diagnostics
+    rstudio-core
+ )
+ 
+ if(NOT RSTUDIO_SESSION_WIN32)
+-   install(TARGETS diagnostics DESTINATION ${RSTUDIO_INSTALL_BIN})
++   install(TARGETS rstudio-diagnostics DESTINATION ${RSTUDIO_INSTALL_BIN})
+ endif()
+ 
