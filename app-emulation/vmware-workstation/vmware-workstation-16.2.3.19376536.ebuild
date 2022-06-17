@@ -3,7 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..10} )
+#PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{8..9} )
 
 inherit desktop pam python-any-r1 readme.gentoo-r1 systemd xdg
 
@@ -370,8 +371,7 @@ src_install() {
 	# Install initscript for vmware-workstation
 	newinitd "${FILESDIR}"/vmware-net.initd vmware-net
 	newinitd "${FILESDIR}"/vmware-usb.initd vmware-usb
-	use systemd && systemd_dounit "${WORKDIR}"/systemd-vmware-"${SYSTEMD_UNITS_TAG}"/vmware-{authentication,usb,vmblock,vmci,vmmon,vmnet,vmsock}.service \
-			vmware.target
+	use systemd && systemd_dounit "${WORKDIR}"/systemd-vmware-"${SYSTEMD_UNITS_TAG}"/vmware-{authentication,usb,vmblock,vmci,vmmon,vmnet,vmsock}.service "${WORKDIR}"/systemd-vmware-"${SYSTEMD_UNITS_TAG}"/vmware.target
 
 	# enable macOS guests support
 	if use macos-guests ; then
