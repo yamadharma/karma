@@ -14,6 +14,7 @@ HOMEPAGE="http://www.jabref.org/"
 # SRC_URI="https://www.fosshub.com/JabRef.html?dwl=JabRef-${PV}-portable_linux.tar.gz -> JabRef-${PV}-portable_linux.tar.gz"
 SRC_URI="https://github.com/JabRef/jabref/releases/download/v${PV}/JabRef-${PV}-portable_linux.tar.gz"
 
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="amd64 ~x86"
