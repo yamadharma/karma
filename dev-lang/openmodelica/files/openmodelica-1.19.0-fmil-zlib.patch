@@ -1,0 +1,14 @@
+diff -Naurp a/OMCompiler/3rdParty/FMIL/ThirdParty/Zlib/zlib-1.2.6/zlib.h b/OMCompiler/3rdParty/FMIL/ThirdParty/Zlib/zlib-1.2.6/zlib.h
+--- a/OMCompiler/3rdParty/FMIL/ThirdParty/Zlib/zlib-1.2.6/zlib.h	2022-06-23 16:24:22.909564827 +0300
++++ b/OMCompiler/3rdParty/FMIL/ThirdParty/Zlib/zlib-1.2.6/zlib.h	2022-06-23 16:24:55.870195808 +0300
+@@ -37,6 +37,10 @@
+ extern "C" {
+ #endif
+ 
++#ifndef OF
++#define OF(x) x
++#endif
++
+ #define ZLIB_VERSION "1.2.6"
+ #define ZLIB_VERNUM 0x1260
+ #define ZLIB_VER_MAJOR 1

@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit eutils autotools flag-o-matic multilib
+inherit eutils autotools flag-o-matic multilib qmake-utils
 
 OMOptimPV=1.11.0-dev.beta4
 OMSensPV=WorkPackage-2-Final
@@ -59,12 +59,13 @@ RDEPEND="=dev-java/antlr-2*
 
 RESTRICT="network-sandbox nostrip"
 
-#PATCHES=(
+PATCHES=(
+	"${FILESDIR}/openmodelica-1.19.0-fmil-zlib.patch"
 #	"${FILESDIR}/FCFlags.patch"
 #	"${FILESDIR}/antlr4.patch"
 #	"${FILESDIR}/openmodelica-1.17.0-emoth-release.patch"
 #	"${FILESDIR}/openmodelica-1.17.0-cmake-3.20.patch"
-#)
+)
 
 #S="${WORKDIR}/${PN}"
 
@@ -89,6 +90,7 @@ src_prepare() {
 	# FIXME! Dirty patch
 #	sed -i -e "s:assert(tmp);:/* assert(tmp); */:g" OMCompiler/Compiler/runtime/settingsimpl.c
 
+	export QMAKE=qmake5; \
 	eautoreconf
 
 	cd libraries
@@ -144,6 +146,7 @@ src_configure() {
 #	    OPENMODELICAHOME="${S}"/build \
 #	    econf "${myconf[@]}"
 	# LDFLAGS="" econf "${myconf[@]}"
+	export QMAKE=qmake5; \
 	./configure "${myconf[@]}"
 
 	#LDFLAGS="-L${S}/build/lib/x86_64-linux-gnu/omc" \
