@@ -49,8 +49,10 @@ RDEPEND="
 	>=dev-lang/R-3.0.1
 	>=dev-libs/boost-1.69:=
 	>=dev-libs/mathjax-2.7
-	app-text/pandoc
-	dev-libs/soci[postgres]
+	||  ( app-text/pandoc-bin
+		( app-text/pandoc dev-haskell/pandoc-citeproc )
+	    )
+	dev-db/soci[postgres]
 	net-libs/nodejs
 	sys-process/lsof
 	>=virtual/jdk-1.8:=
