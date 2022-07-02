@@ -5,7 +5,7 @@ EAPI=8
 
 inherit linux-mod udev
 
-MY_KV="5.18"
+MY_KV="5.${PR#r*}"
 MY_PV="${PV}"
 
 DESCRIPTION="VMware kernel modules"
