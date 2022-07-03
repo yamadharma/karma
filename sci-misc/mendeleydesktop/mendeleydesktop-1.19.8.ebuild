@@ -3,7 +3,7 @@
 
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{6..11} )
 
 inherit desktop gnome2-utils python-single-r1 xdg-utils
 
