@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{7..11} )
 inherit distutils-r1
 
 DESCRIPTION="Implementation of the XDG Base Directory Specification in Python"
