@@ -1,0 +1,12 @@
+diff -Naurp mu-1.8.5-orig/meson.build mu-1.8.5/meson.build
+--- mu-1.8.5-orig/meson.build	2022-07-07 13:58:08.350003794 +0300
++++ mu-1.8.5/meson.build	2022-07-07 13:59:00.537919562 +0300
+@@ -187,7 +187,7 @@ subdir('lib')
+ subdir('mu')
+ subdir('man')
+ 
+-if emacs.found()
++if get_option('emacs').enabled() and emacs.found()
+    subdir('mu4e')
+ endif
+ 
