@@ -4,7 +4,7 @@
 EAPI=7
 
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${PN}-${PV}.tar.gz"
-PYTHON_COMPAT=( python3_{6..11} )
+PYTHON_COMPAT=( python3_{8..11} )
 
 inherit distutils-r1
 
@@ -17,10 +17,10 @@ SLOT="0"
 KEYWORDS="amd64"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 
-python_prepare_all() {
-	sed -e "/ADD_CFLAGS/s:=:=${CFLAGS/-O?/}:" \
-		-e "/ADD_LDFLAGS/s:=:=${LDFLAGS}:" \
-		-i ${PN}/make/config.mk || die
-
-	distutils-r1_python_prepare_all
-}
+#python_prepare_all() {
+#	sed -e "/ADD_CFLAGS/s:=:=${CFLAGS/-O?/}:" \
+#		-e "/ADD_LDFLAGS/s:=:=${LDFLAGS}:" \
+#		-i ${PN}/make/config.mk || die
+#
+#	distutils-r1_python_prepare_all
+#}
