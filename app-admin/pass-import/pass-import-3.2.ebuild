@@ -1,12 +1,13 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( pypy3 python3_{8..11} )
 
 # pass-import makes only one Python implementation, needs PYTHON_SINGLE_TARGET.
-inherit python-single-r1
+inherit distutils-r1
 
 DESCRIPTION="generic importer extension for password manager ZX2C4's pass"
 HOMEPAGE="https://github.com/roddhjav/pass-import"
@@ -19,28 +20,28 @@ KEYWORDS="amd64 ~x86"
 
 COMMON_DEPEND="app-shells/bash
 	$(python_gen_cond_dep '
-		dev-python/cryptography[${PYTHON_MULTI_USEDEP}]
+		dev-python/cryptography[${PYTHON_USEDEP}]
 	')
 	$(python_gen_cond_dep '
-		dev-python/defusedxml[${PYTHON_MULTI_USEDEP}]
+		dev-python/defusedxml[${PYTHON_USEDEP}]
 	')
 	|| (
 		$(python_gen_cond_dep '
-			sys-apps/file[python,${PYTHON_MULTI_USEDEP}]
+			sys-apps/file[python,${PYTHON_USEDEP}]
 		')
 		$(python_gen_cond_dep '
-			dev-python/python-magic[${PYTHON_MULTI_USEDEP}]
+			dev-python/python-magic[${PYTHON_USEDEP}]
 		')
 	)
 	$(python_gen_cond_dep '
-		dev-python/pyyaml[${PYTHON_MULTI_USEDEP}]
+		dev-python/pyyaml[${PYTHON_USEDEP}]
 	')
 	$(python_gen_cond_dep '
-		dev-python/secretstorage[${PYTHON_MULTI_USEDEP}]
+		dev-python/secretstorage[${PYTHON_USEDEP}]
 	')"
 DEPEND="${COMMON_DEPEND}
 	$(python_gen_cond_dep '
-		dev-python/setuptools[${PYTHON_MULTI_USEDEP}]
+		dev-python/setuptools[${PYTHON_USEDEP}]
 	')
 	"
 RDEPEND="${COMMON_DEPEND}
