@@ -1,2 +1,4 @@
 move sci-mathematics/scilab sci-mathematics/scilab-bin
+move sci-mathematics/cadabra2 sci-mathematics/cadabra
+
 
