@@ -33,18 +33,22 @@ PDEPEND="sci-visualization/xgraph"
 
 OPTDEST=/opt/ns2
 
+PATCHES=(
+	${FILESDIR}/ns-2.35_mdart.patch
+	${FILESDIR}/ns-2.35_linkstate.patch
+	${FILESDIR}/ns-2.35_bitmap.patch
+	${FILESDIR}/ns-2.35_common.patch
+	${FILESDIR}/tcltk-conf.patch
+	)
+
 src_prepare() {
 	sed '/$(CC)/s!-g!$(CFLAGS)!g' "${S}/${PN}-${PV}/indep-utils/model-gen/Makefile" || die
 
         # dirty hack
 	sed -i -e 's/@V_CCOPT@/@V_CCOPT@ -funsigned-char/g' "${S}/nam-1.15/Makefile.in" || die
-    	
-	epatch ${FILESDIR}/ns-2.35_mdart.patch
-	epatch ${FILESDIR}/ns-2.35_linkstate.patch
-	epatch ${FILESDIR}/ns-2.35_bitmap.patch
-	epatch ${FILESDIR}/ns-2.35_common.patch
-	
-	epatch ${FILESDIR}/tcltk-conf.patch
+
+	default
+
 	cd ${S}/${PN}-${PV}
 	eautoreconf
 }
