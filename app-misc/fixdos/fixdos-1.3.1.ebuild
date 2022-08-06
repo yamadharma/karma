@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-misc/fixdos/fixdos-1.3.1-r1.ebuild,v 1.5 2013/05/26 15:57:44 ago Exp $
 
-EAPI=5
+EAPI=7
 
 MY_P="fixDos-${PV}"
 inherit eutils toolchain-funcs
