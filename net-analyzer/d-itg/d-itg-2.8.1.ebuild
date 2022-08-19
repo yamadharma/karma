@@ -10,7 +10,7 @@ MY_REV=1023
 
 DESCRIPTION="D-ITG, Distributed Internet Traffic Generator"
 HOMEPAGE="http://traffic.comics.unina.it/software/ITG/"
-SRC_URI="http://traffic.comics.unina.it/software/ITG/codice/${MY_PN}-${PV}-r${MY_REV}-src.zip
+SRC_URI="https://traffic.comics.unina.it/software/ITG/codice/${MY_PN}-${PV}-r${MY_REV}-src.zip
 	doc? ( http://traffic.comics.unina.it/software/ITG/manual/${MY_PN}-${PV}-manual.pdf )"
 
 LICENSE="GPL-3"
