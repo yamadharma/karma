@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-analyzer/iptraf-ng/iptraf-ng-1.1.4-r1.ebuild,v 1.9 2014/05/03 20:46:58 zlogene Exp $
 
-EAPI=5
+EAPI=7
 inherit eutils toolchain-funcs
 
 MY_PN=D-ITG
