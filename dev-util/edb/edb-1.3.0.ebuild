@@ -3,11 +3,12 @@
 # $Header: $
 
 EAPI=7
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="EDB \"Evan's Debugger\" (OllyDbg workalike for Linux)"
 HOMEPAGE="https://github.com/eteran/edb-debugger"
-SRC_URI="https://github.com/eteran/edb-debugger/releases/download/1.0.0/edb-debugger-1.0.0.tgz -> ${PN}-${PV}.tgz"
+SRC_URI="https://github.com/eteran/edb-debugger/releases/download/${PV}/edb-debugger-${PV}.tgz"
+
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -24,7 +25,7 @@ DEPEND="
 
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/edb-debugger-${PV}"
+S="${WORKDIR}/edb-debugger"
 
 #src_configure() {
 #	qmake -makefile DEFAULT_PLUGIN_PATH="/usr/$(get_libdir)/edb/" || die "qmake failed"
