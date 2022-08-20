@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils virtualx pax-utils
+inherit cmake multilib virtualx pax-utils
 
 DESCRIPTION="VDPAU driver with VA-API/OpenGL backend."
 HOMEPAGE="https://github.com/i-rinat/libvdpau-va-gl/"
