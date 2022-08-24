@@ -137,4 +137,7 @@ src_install() {
 
 	rm -rf ${D}/etc/ld.so.conf.d
 	mv ${D}/usr/lib ${D}/usr/lib64
+	
+	rm ${D}/usr/lib64/libbz2.a
+	rm ${D}/usr/lib64/libminizip.a
 }
