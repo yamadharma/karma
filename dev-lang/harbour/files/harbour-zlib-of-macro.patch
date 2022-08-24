@@ -1,0 +1,28 @@
+diff -Naurp harbour-3.0.0.9999.orig/contrib/hbmzip/3rd/minizip/ioapi.h harbour-3.0.0.9999/contrib/hbmzip/3rd/minizip/ioapi.h
+--- a/contrib/hbmzip/3rd/minizip/ioapi.h	2022-08-24 12:22:34.421913974 +0300
++++ b/contrib/hbmzip/3rd/minizip/ioapi.h	2022-08-24 12:22:50.107634891 +0300
+@@ -47,6 +47,10 @@
+ 
+ #include "hbsetup.h"
+ 
++#ifndef OF
++#define OF(x) x
++#endif
++
+ #if defined( HB_OS_VXWORKS ) && defined( _STD_USING_INT_TYPES )
+    /* NOTE: Hack to avoid collision between stdint.h and types/vxTypes.h. [vszakats] */
+    #ifndef __BIT_TYPES_DEFINED__
+diff -Naurp harbour-3.0.0.9999.orig/contrib/hbmzip/3rd/minizip/unzip.h harbour-3.0.0.9999/contrib/hbmzip/3rd/minizip/unzip.h
+--- a/contrib/hbmzip/3rd/minizip/unzip.h	2022-08-24 12:22:34.421913974 +0300
++++ b/contrib/hbmzip/3rd/minizip/unzip.h	2022-08-24 12:23:07.147504341 +0300
+@@ -47,6 +47,10 @@
+ extern "C" {
+ #endif
+ 
++#ifndef OF
++#define OF(x) x
++#endif
++
+ #ifndef _ZLIB_H
+ #include "zlib.h"
+ #endif

@@ -4,7 +4,7 @@
 
 EAPI="7"
 
-inherit toolchain-funcs multilib
+inherit toolchain-funcs flag-o-matic
 
 MY_P=${P/_/-}
 DESCRIPTION="An extended implementation of the Clipper dialect of the xBase language family"
@@ -20,8 +20,6 @@ else
 	SRC_URI="mirror://sourceforge/${PN}-project/${P}.tar.bz2"
 	KEYWORDS="amd64 ~x86"
 fi
-
-
 
 LICENSE="GPL-2-with-exceptions"
 SLOT="0"
@@ -43,20 +41,29 @@ RDEPEND="sys-libs/ncurses
 
 DEPEND="${RDEPEND}"
 
-#PATCHES=(
-#	"${FILESDIR}"/${PN}-as-needed.patch
+PATCHES=(
+	"${FILESDIR}"/${PN}-zlib-of-macro.patch
 #	"${FILESDIR}"/${PN}-fPIC.patch
 #	"${FILESDIR}"/${PN}-mkinstdir.patch
 #	"${FILESDIR}"/${PN}-override-cc.patch
 #	"${FILESDIR}"/${PN}-parallel-make.patch
 #	"${FILESDIR}"/${PN}-skip-static-utils.patch
-#)
+)
+
+src_prepare() {
+	default
+	
+	# Dirty hack
+	cd ${S}/contrib/hbmxml
+	ln -s 3rd/minixml/*.h .
+}
 
 src_compile() {
+	append-cflags -I/usr/include/postgresql
 	# Harbour uses environment vars to configure the build
 	export \
-		C_USR="${CFLAGS}" \
-		L_USR="${LDFLAGS}" \
+		HB_USER_CFLAGS="${CFLAGS}" \
+		HB_USER_LDFLAGS="${LDFLAGS}" \
 		HB_GTALLEG=$(useq allegro && echo yes) \
 		HB_GPM_MOUSE=$(useq gpm && echo yes) \
 		HB_WITHOUT_GTSLN=$(useq slang || echo yes) \
@@ -101,8 +108,8 @@ src_install() {
 	EOF
 
 	# build utils with shared libs
-	L_USR="${L_USR} -L${HB_LIB_INSTALL} -l${PN}"
-	export PRG_USR="\"-D_DEFAULT_INC_DIR='${_DEFAULT_INC_DIR}'\""
+	export HB_USER_LDFLAGS="${HB_USER_LDFLAGS} -L${HB_LIB_INSTALL} -l${PN}"
+	export HB_USER_PRGFLAGS="\"-D_DEFAULT_INC_DIR='${_DEFAULT_INC_DIR}'\""
 #	for utl in hbdict hbmake hbpp hbrun xbscript; do
 #		emake -C utils/${utl} install || die
 #	done
@@ -113,9 +120,9 @@ src_install() {
 	# remove unused files
 #	rm -f "${HB_BIN_INSTALL}"/{hbdict*.hit,gharbour,harbour-link}
 
-	doman ${S}/doc/man/*
+#	doman ${S}/doc/man/*
 
-	dodoc ChangeLog INSTALL TODO
+#	dodoc ChangeLog INSTALL TODO
 
 #	if ! has nodoc ${FEATURES} && use doc; then
 #		dodoc doc/*.txt || die
@@ -129,4 +136,5 @@ src_install() {
 #	fi
 
 	rm -rf ${D}/etc/ld.so.conf.d
+	mv ${D}/usr/lib ${D}/usr/lib64
 }
