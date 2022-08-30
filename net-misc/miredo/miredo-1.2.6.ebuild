@@ -2,11 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
+EAPI=7
+
 inherit eutils
 
 DESCRIPTION="Teredo IPv6 tunneling"
 HOMEPAGE="http://www.remlab.net/miredo/"
-SRC_URI="http://www.remlab.net/files/miredo/${P}.tar.bz2"
+SRC_URI="http://www.remlab.net/files/miredo/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
