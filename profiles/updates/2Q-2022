@@ -1,1 +1,2 @@
 move dev-tex/pybtex dev-python/pybtex
+move net-misc/miredo net-vpn/miredo
