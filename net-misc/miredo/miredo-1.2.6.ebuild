@@ -28,6 +28,9 @@ src_install() {
 	newconfd "${FILESDIR}"/miredo-server.conf miredo-server
 	emake DESTDIR="${D}" install || die "failed install"
 	dodoc README NEWS ChangeLog AUTHORS THANKS TODO
+
+	dodir /usr/lib
+	mv ${D}/usr/lib64/systemd ${D}/usr/lib
 }
 
 pkg_preinst() {
