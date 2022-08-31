@@ -1,9 +1,9 @@
 # Copyright 2018-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{7..10} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit bash-completion-r1 distutils-r1
 
@@ -21,12 +21,14 @@ DEPEND=""
 
 RDEPEND=">=app-admin/pass-1.7
 	dev-python/requests
-	dev-python/zxcvbn
 	"
+#	dev-python/zxcvbn
 
 src_install() {
+	default
 	distutils-r1_src_install
 
-	emake install DESTDIR="${D}" BASHCOMPDIR="$(get_bashcompdir)"
+#	emake install DESTDIR="${D}" BASHCOMPDIR="$(get_bashcompdir)"
+	
 }
 
