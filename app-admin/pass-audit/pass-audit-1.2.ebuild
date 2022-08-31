@@ -7,8 +7,7 @@ PYTHON_COMPAT=( python3_{7..10} )
 
 inherit bash-completion-r1 distutils-r1
 
-DESCRIPTION="About
-A pass extension for auditing your password repository"
+DESCRIPTION="A pass extension for auditing your password repository"
 HOMEPAGE="https://github.com/roddhjav/pass-audit"
 SRC_URI="https://github.com/roddhjav/pass-audit/releases/download/v${PV}/${P}.tar.gz"
 
