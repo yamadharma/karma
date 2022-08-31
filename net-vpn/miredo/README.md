@@ -11,3 +11,6 @@ The fork includes:
  - new features:
   - ability to set syslog severity level, because the original version of miredo totally spams journal with its messages
    - this is done via `SyslogSeverityLevel` config entry
+
+- Workin teredo servers
+    - teredo.iks-jena.de
