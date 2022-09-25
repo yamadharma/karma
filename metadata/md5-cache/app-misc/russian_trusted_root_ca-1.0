@@ -1,0 +1,10 @@
+DEFINED_PHASES=install postinst unpack
+DESCRIPTION=Russian Root CA
+EAPI=8
+HOMEPAGE=https://www.gosuslugi.ru/crt
+KEYWORDS=amd64
+LICENSE=all-rights-reserved
+RDEPEND=dev-libs/openssl
+SLOT=0
+SRC_URI=https://gu-st.ru/content/Other/doc/russian_trusted_root_ca.cer -> russian_trusted_root_ca-1.0.cer
+_md5_=afda4679c1a8c85eb13306ccc0f3e126
