@@ -1,2 +1,3 @@
 move dev-tex/pybtex dev-python/pybtex
 move net-misc/miredo net-vpn/miredo
+move dev-util/edb dev-util/edb-debugger
