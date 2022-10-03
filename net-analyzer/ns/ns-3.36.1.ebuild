@@ -18,7 +18,7 @@ SRC_URI="https://www.nsnam.org/release/ns-allinone-${PV}.tar.bz2
 LICENSE="GPL-2"
 SLOT="3"
 KEYWORDS="~x86 ~amd64"
-IUSE="doc examples tests mpi"
+IUSE="doc examples tests mpi static"
 
 RDEPEND="dev-lang/python
 	dev-libs/boost
@@ -27,6 +27,7 @@ RDEPEND="dev-lang/python
 	sci-libs/gsl
 "
 DEPEND="${RDEPEND}
+	static? ( dev-db/sqlite[static-libs] )
 	doc? ( app-doc/doxygen )"
 
 S=${WORKDIR}/ns-allinone-${PV}
