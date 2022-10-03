@@ -28,6 +28,7 @@ RDEPEND="dev-lang/python
 "
 DEPEND="${RDEPEND}
 	static? ( dev-db/sqlite[static-libs] )
+	dev-python/pygccxml
 	doc? ( app-doc/doxygen )"
 
 S=${WORKDIR}/ns-allinone-${PV}
