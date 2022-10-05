@@ -18,7 +18,7 @@ SRC_URI="https://www.nsnam.org/release/ns-allinone-${PV}.tar.bz2
 LICENSE="GPL-2"
 SLOT="3"
 KEYWORDS="~x86 ~amd64"
-IUSE="doc examples tests mpi static"
+IUSE="doc +examples +tests mpi static"
 
 RDEPEND="dev-lang/python
 	dev-libs/boost
@@ -28,7 +28,9 @@ RDEPEND="dev-lang/python
 "
 DEPEND="${RDEPEND}
 	static? ( dev-db/sqlite[static-libs] )
+	!static? ( dev-db/sqlite )
 	dev-python/pygccxml
+	dev-python/cxxfilt
 	doc? ( app-doc/doxygen )"
 
 S=${WORKDIR}/ns-allinone-${PV}
@@ -38,26 +40,35 @@ S=${WORKDIR}/ns-allinone-${PV}
 #}
 
 src_configure() {
-	# NetAnim
+	## NetAnim
 	NETANIM_DIR=$(echo netanim-*)
 	cd ${NETANIM_DIR}
-	qmake NetAnim.pro
+	qmake5 NetAnim.pro
 	cd ..
-
-	# ns
+	
+	## pybindgen
+	PYBINGEN_DIR=$(echo pybindgen-*)
+	cd ${PYBINGEN_DIR}
+    	./waf configure --prefix=/usr
+	cd ..
+	
+	## ns
 	local myconf
 	use mpi && myconf="${myconf} --enable-mpi"
 
+	myconf="${myconf} --enable-monolib --enable-python-bindings"
+	
+	myconf="${myconf} -- -DNS3_SCAN_PYTHON_BINDINGS=ON"
+
 	NS_DIR=$(echo ns-*)
 	cd ${NS_DIR}
-	
-	./waf configure \
+
+	./ns3 configure \
 	    --prefix=/usr \
 	    $(use_enable examples) \
 	    $(use_enable tests) \
 	    ${myconf} || die
-	cd ..	 
-
+	cd ..
 }
 
 src_compile() {
@@ -67,11 +78,17 @@ src_compile() {
 	emake
 	cd ..
 
+	## pybindgen
+	PYBINGEN_DIR=$(echo pybindgen-*)
+	cd ${PYBINGEN_DIR}
+    	./waf build
+	cd ..
+
 	# ns
 	NS_DIR=$(echo ns-*)
 	cd ${NS_DIR}
 	
-	./waf build || die
+	./ns3 build || die
 	cd ..	 
 
 #	./waf build
@@ -87,19 +104,23 @@ src_install() {
 	# NetAnim
 	NETANIM_DIR=$(echo netanim-*)
 	cd ${NETANIM_DIR}
-	
 	dobin NetAnim	
-
 	cd ..
 
-	# ns
+	## pybindgen
+	PYBINGEN_DIR=$(echo pybindgen-*)
+	cd ${PYBINGEN_DIR}
+    	./waf install --prefix=/usr --destdir=${D}
+	cd ..
+
+	## ns
 	NS_DIR=$(echo ns-*)
 	cd ${NS_DIR}
 
-	./waf install --prefix=/usr --destdir=${D}
+	export DESTDIR="${D}"; ./ns3 install
 	
-	dodoc AUTHORS CHANGES.html LICENSE README.md RELEASE_NOTES VERSION
-	cp waf ${D}/usr/share/doc/${PF}
+	dodoc README.md
+#	cp waf ${D}/usr/share/doc/${PF}
 	if ( use examples )
 	then
 	    cp -R examples ${D}/usr/share/doc/${PF}
