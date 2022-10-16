@@ -18,7 +18,7 @@ RDEPEND="
 	media-libs/glu
 	virtual/ffmpeg
 	virtual/opengl
-	x11-libs/libva[X]
+	media-libs/libva[X]
 	x11-libs/libvdpau
 	x11-libs/libX11
 	x11-libs/libXext
