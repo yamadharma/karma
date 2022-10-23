@@ -7,7 +7,7 @@ inherit font
 
 DESCRIPTION="xkcd script font"
 HOMEPAGE="https://github.com/ipython/xkcd-font"
-SRC_URI="https://github.com/ipython/xkcd-font/blob/master/xkcd-script/font/xkcd-script.ttf"
+SRC_URI="https://github.com/ipython/xkcd-font/blob/master/xkcd-script/font/xkcd-script.ttf?raw=true -> xkcd-script-${PV}.ttf"
 S="${WORKDIR}"
 
 LICENSE="CC-BY-SA-3.0"

@@ -7,8 +7,8 @@ inherit font
 
 DESCRIPTION="xkcd font"
 HOMEPAGE="https://github.com/ipython/xkcd-font"
-SRC_URI="https://github.com/ipython/xkcd-font/blob/master/xkcd/build/xkcd.otf
-	https://github.com/ipython/xkcd-font/blob/master/xkcd/build/xkcd-Regular.otf
+SRC_URI="https://github.com/ipython/xkcd-font/blob/master/xkcd/build/xkcd.otf?raw=true -> xkcd-${PV}.otf
+	https://github.com/ipython/xkcd-font/blob/master/xkcd/build/xkcd-Regular.otf?raw=true -> xkcd-Regular-${PV}.otf
 	"
 S="${WORKDIR}"
 
@@ -21,6 +21,6 @@ FONT_SUFFIX="otf"
 src_unpack() {
 	for i in xkcd xkcd-Regular
 	do
-		cp "${DISTDIR}/${i}".${FONT_SUFFIX} "${S}/" || die
+		cp "${DISTDIR}/${i}"-${PV}.${FONT_SUFFIX} "${S}/${i}".${FONT_SUFFIX} || die
 	done
 }
