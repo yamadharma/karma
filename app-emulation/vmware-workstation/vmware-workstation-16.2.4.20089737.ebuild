@@ -74,6 +74,7 @@ RDEPEND="app-arch/bzip2:=
 	cups? ( net-print/cups )
 	modules? ( >=app-emulation/vmware-modules-${MY_PV} )
 	ovftool? ( !dev-util/ovftool )
+	app-emulation/open-vm-tools
 	${CDEPEND}"
 DEPEND="${PYTHON_DEPS}"
 BDEPEND="${CDEPEND}
