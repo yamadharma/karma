@@ -30,6 +30,7 @@ RDEPEND="
 	>=dev-python/psutil-5.9.1[${PYTHON_USEDEP}]
 	>=dev-python/py-cpuinfo-8.0.0[${PYTHON_USEDEP}]
 	>=dev-python/sentry-sdk-1.9.5[${PYTHON_USEDEP}]
+	dev-python/importlib_resources[${PYTHON_USEDEP}]
 	net-misc/ubridge
 	sys-apps/busybox
 "
@@ -39,9 +40,9 @@ BDEPEND="
 	)
 "
 
-PATCHES=(
-	"${FILESDIR}/${PN}-2.2.33.1-openrc-posix-complaint.patch"
-	)
+#PATCHES=(
+#	"${FILESDIR}/${PN}-2.2.33.1-openrc-posix-complaint.patch"
+#	)
 
 distutils_enable_tests pytest
 
