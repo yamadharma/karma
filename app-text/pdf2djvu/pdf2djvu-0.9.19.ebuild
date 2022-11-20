@@ -47,10 +47,10 @@ DOCS=(
 	doc/{changelog,credits,djvudigital,README}
 )
 
-PATCHES=(
-	${FILESDIR}/pdf2djvu-0.9.18.2-poppler-fix.patch
-	${FILESDIR}/pdf2djvu-0.9.18.2-tests-python-3.patch
-	)
+#PATCHES=(
+#	${FILESDIR}/pdf2djvu-0.9.18.2-poppler-fix.patch
+#	${FILESDIR}/pdf2djvu-0.9.18.2-tests-python-3.patch
+#	)
 
 pkg_setup() {
 	use test && python-any-r1_pkg_setup
