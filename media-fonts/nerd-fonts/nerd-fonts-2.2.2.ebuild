@@ -64,9 +64,9 @@ FONTS=(
 
 SRC_URI=""
 
-for i in $FONTS
+for i in "${FONTS[@]}"
 do
-    SRC_URI+="${COMMON_URI}/${i}.zip -> ${P}_${i}.zip"
+    SRC_URI+="${i,,}? ( ${COMMON_URI}/${i}.zip -> ${P}_${i}.zip ) "
 done
 
 
@@ -133,7 +133,7 @@ LICENSE="MIT
 		Vic-Fieger-License
 		UbuntuFontLicense-1.0"
 SLOT="0"
-#KEYWORDS="amd64 ~x86"
+KEYWORDS="amd64 ~x86"
 
 DEPEND="app-arch/unzip"
 RDEPEND="media-libs/fontconfig"
