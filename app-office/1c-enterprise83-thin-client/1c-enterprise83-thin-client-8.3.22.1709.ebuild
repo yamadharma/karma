@@ -4,7 +4,7 @@
 
 EAPI="6"
 
-inherit eutils pax-utils  user versionator
+inherit eutils pax-utils versionator
 
 DESCRIPTION="Native linux thin client of 1C ERP system"
 HOMEPAGE="http://v8.1c.ru/"
