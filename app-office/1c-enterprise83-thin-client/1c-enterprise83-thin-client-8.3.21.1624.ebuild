@@ -18,7 +18,7 @@ SRC_URI="${P}.tar.gz"
 
 SLOT=$(get_version_component_range 1-2)
 LICENSE="1CEnterprise_en"
-#KEYWORDS="amd64"
+KEYWORDS="amd64"
 RESTRICT="fetch strip"
 
 IUSE="+nls"

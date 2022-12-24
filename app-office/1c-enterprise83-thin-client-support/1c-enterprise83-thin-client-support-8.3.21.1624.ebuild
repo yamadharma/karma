@@ -18,7 +18,7 @@ SRC_URI="
 
 SLOT=$(ver_cut 1-2)
 LICENSE="misc"
-#KEYWORDS="amd64"
+KEYWORDS="amd64"
 RESTRICT="strip"
 
 IUSE="+nls"
