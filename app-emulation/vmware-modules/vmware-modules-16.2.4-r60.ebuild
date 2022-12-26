@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit flag-o-matic linux-info linux-mod user udev
+inherit flag-o-matic linux-info linux-mod udev
 
 DESCRIPTION="VMware kernel modules"
 HOMEPAGE="https://github.com/mkubecek/vmware-host-modules"
@@ -22,7 +22,7 @@ MY_COMMIT="cafa1489600562d26c8393ede8e702154276e0be"
 SRC_URI=" https://github.com/mkubecek/vmware-host-modules/archive/${MY_COMMIT}.tar.gz -> ${P}-${MY_COMMIT}.tar.gz"
 
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="
 KEYWORDS="amd64"
 IUSE=""
 
