@@ -22,11 +22,11 @@ MY_COMMIT="cafa1489600562d26c8393ede8e702154276e0be"
 SRC_URI=" https://github.com/mkubecek/vmware-host-modules/archive/${MY_COMMIT}.tar.gz -> ${P}-${MY_COMMIT}.tar.gz"
 
 LICENSE="GPL-2"
-SLOT="
-KEYWORDS="amd64"
+SLOT="0"
+KEYWORDS="~amd64"
 IUSE=""
 
-RDEPEND=""
+RDEPEND="acct-group/vmware"
 DEPEND=""
 
 RESTRICT="mirror"
@@ -60,7 +60,7 @@ pkg_setup() {
 
 	BUILD_TARGETS="auto-build KERNEL_DIR=${KERNEL_DIR} KBUILD_OUTPUT=${KV_OUT_DIR}"
 
-	enewgroup "${VMWARE_GROUP}"
+#	enewgroup "${VMWARE_GROUP}"
 
 	filter-flags -mfpmath=sse -mavx -mpclmul -maes
 	append-cflags -mno-sse  # Found a problem similar to bug #492964
