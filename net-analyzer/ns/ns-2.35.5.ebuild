@@ -141,6 +141,8 @@ src_install() {
 	mv ${D}/usr/lib64/ns2/${S}/* ${D}/usr/
 
 	rm -rf ${D}/usr/lib64
+	rm -rf ${D}/usr/share/man
+	rm -rf ${D}/usr/include
 	rm ${D}/usr/lib/*.sh
 
 	if use doc; then
