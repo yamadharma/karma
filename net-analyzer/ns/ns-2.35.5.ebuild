@@ -144,6 +144,8 @@ src_install() {
 	rm -rf ${D}/usr/share/man
 	rm -rf ${D}/usr/include
 	rm ${D}/usr/lib/*.sh
+	rm ${D}/usr/bin/ctangle
+	rm ${D}/usr/bin/cweave
 
 	if use doc; then
 		cd "${S_NS}/doc"
