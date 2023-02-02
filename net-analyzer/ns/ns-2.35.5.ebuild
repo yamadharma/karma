@@ -146,7 +146,7 @@ src_install() {
 	rm ${D}/usr/lib/*.sh
 	rm ${D}/usr/bin/ctangle
 	rm ${D}/usr/bin/cweave
-	rm -rf ${D}/usr/tcl8/8.4
+	rm -rf ${D}/usr/lib/tcl8/8.4
 
 	if use doc; then
 		cd "${S_NS}/doc"
