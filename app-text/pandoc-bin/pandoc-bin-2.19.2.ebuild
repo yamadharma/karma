@@ -1,36 +1,48 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
-DESCRIPTION="Conversion between markup formats"
-HOMEPAGE="http://pandoc.org"
-SRC_URI="https://github.com/jgm/pandoc/releases/download/${PV}/pandoc-${PV}-linux-amd64.tar.gz"
+MY_PN=${PN//-bin/}
+MY_P=${MY_PN}-${PV}
+
+DESCRIPTION="Conversion between markup formats (binary package)"
+HOMEPAGE="https://pandoc.org/"
+
+BASE_URI="https://github.com/jgm/${MY_PN}/releases/download/${PV}/${MY_P}"
+SRC_URI="
+	amd64? ( ${BASE_URI}-linux-amd64.tar.gz )
+	arm64? ( ${BASE_URI}-linux-arm64.tar.gz )
+"
+S="${WORKDIR}"/${MY_P}
 
 LICENSE="GPL-2"
-SLOT="0/${PV}"
-KEYWORDS="amd64"
-IUSE=""
+SLOT="0"
+KEYWORDS="-* amd64 ~arm64"  # Upstream provides only AMD and ARM 64-bit binaries
+IUSE="+pandoc-symlink"
 
-RESTRICT="strip"
-
-RDEPEND="
-	!app-text/pandoc
-	!dev-haskell/pandoc-citeproc
-"
-DEPEND="${RDEPEND}
-"
+RDEPEND="pandoc-symlink? ( !${CATEGORY}/${MY_PN} )"
 
 PDEPEND="
 	dev-haskell/pandoc-crossref-bin
 "
 
+QA_FLAGS_IGNORED="usr/bin/${PN}"
+QA_PRESTRIPPED="${QA_FLAGS_IGNORED}"
 
-S=${WORKDIR}/pandoc-${PV}
+src_unpack() {
+	default
 
-src_install() {
-	dobin bin/*
-	doman share/man/man1/*
+	# Manpages are gzipped
+	unpack "${S}"/share/man/man1/${MY_PN}.1.gz
 }
 
+src_install() {
+	newbin bin/${MY_PN} ${PN}
+	newman "${WORKDIR}"/${MY_PN}.1 ${PN}.1
 
+	if use pandoc-symlink ; then
+		dosym ${PN} /usr/bin/${MY_PN}
+		dosym ${PN}.1 /usr/share/man/man1/${MY_PN}.1
+	fi
+}
