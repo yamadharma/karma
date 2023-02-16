@@ -12,8 +12,8 @@ NSC_PV=0.5.3
 
 DESCRIPTION="Network Simulator"
 HOMEPAGE="http://www.nsnam.org"
-SRC_URI="https://www.nsnam.org/release/ns-allinone-${PV}.tar.bz2
-	http://research.wand.net.nz/software/nsc/nsc-${NSC_PV}.tar.bz2"
+SRC_URI="https://www.nsnam.org/release/ns-allinone-${PV}.tar.bz2"
+#	http://research.wand.net.nz/software/nsc/nsc-${NSC_PV}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="3"
@@ -40,6 +40,9 @@ S=${WORKDIR}/ns-allinone-${PV}
 #}
 
 src_configure() {
+
+	#./build.py
+
 	## NetAnim
 	NETANIM_DIR=$(echo netanim-*)
 	cd ${NETANIM_DIR}
@@ -47,10 +50,10 @@ src_configure() {
 	cd ..
 	
 	## pybindgen
-	PYBINGEN_DIR=$(echo pybindgen-*)
-	cd ${PYBINGEN_DIR}
-    	./waf configure --prefix=/usr
-	cd ..
+	#PYBINGEN_DIR=$(echo pybindgen-*)
+	#cd ${PYBINGEN_DIR}
+	#./waf configure --prefix=/usr
+	#cd ..
 	
 	## ns
 	local myconf
@@ -79,10 +82,10 @@ src_compile() {
 	cd ..
 
 	## pybindgen
-	PYBINGEN_DIR=$(echo pybindgen-*)
-	cd ${PYBINGEN_DIR}
-    	./waf build
-	cd ..
+	#PYBINGEN_DIR=$(echo pybindgen-*)
+	#cd ${PYBINGEN_DIR}
+	#./waf build
+	#cd ..
 
 	# ns
 	NS_DIR=$(echo ns-*)
@@ -108,10 +111,10 @@ src_install() {
 	cd ..
 
 	## pybindgen
-	PYBINGEN_DIR=$(echo pybindgen-*)
-	cd ${PYBINGEN_DIR}
-    	./waf install --prefix=/usr --destdir=${D}
-	cd ..
+	#PYBINGEN_DIR=$(echo pybindgen-*)
+	#cd ${PYBINGEN_DIR}
+	#./waf install --prefix=/usr --destdir=${D}
+	#cd ..
 
 	## ns
 	NS_DIR=$(echo ns-*)
