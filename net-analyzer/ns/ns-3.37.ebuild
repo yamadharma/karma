@@ -31,6 +31,7 @@ DEPEND="${RDEPEND}
 	!static? ( dev-db/sqlite )
 	dev-python/pygccxml
 	dev-python/cxxfilt
+	|| ( sci-physics/root dev-python/cppyy )
 	doc? ( app-doc/doxygen )"
 
 S=${WORKDIR}/ns-allinone-${PV}
@@ -121,6 +122,7 @@ src_install() {
 	cd ${NS_DIR}
 
 	export DESTDIR="${D}"; ./ns3 install
+	dobin ns3
 	
 	dodoc README.md
 #	cp waf ${D}/usr/share/doc/${PF}
