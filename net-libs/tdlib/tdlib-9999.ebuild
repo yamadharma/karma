@@ -1,78 +1,46 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-inherit cmake
+inherit cmake git-r3
 
 DESCRIPTION="Cross-platform library for building Telegram clients"
-HOMEPAGE="https://core.telegram.org/tdlib https://github.com/tdlib/td"
-
-if [[ ${PV} == 9999 ]]
-then
-	inherit git-r3
-	EGIT_REPO_URI="https://github.com/${PN}/td.git"
-	EGIT_SUBMODULES=()
-	KEYWORDS=""
-else
-	SRC_URI="https://github.com/${PN}/td/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
-fi
+HOMEPAGE="https://github.com/tdlib/td"
+EGIT_REPO_URI="https://github.com/tdlib/td"
 
 LICENSE="Boost-1.0"
 SLOT="0"
-IUSE="doc java test"
+KEYWORDS="amd64"
+IUSE="+cli doc debug java lto low-ram test"
 
 BDEPEND="
+	>=dev-util/cmake-3.0.2
+	|| (
+		sys-devel/gcc
+		sys-devel/clang
+	)
 	dev-util/gperf
+	dev-lang/php[cli]
 	doc? ( app-doc/doxygen )
-	java? ( virtual/jdk )
+	java? ( virtual/jdk:= )
 "
 RDEPEND="
-	dev-db/sqlite
-	dev-libs/openssl
+	dev-libs/openssl:0=
 	sys-libs/zlib
 "
-DEPEND="${RDEPEND}"
+
+# According to documentation, LTO breaks build of java bindings. But actually it builds fine for me.
+REQUIRED_USE="?? ( lto java )"
+
+DOCS=( README.md )
+
+PATCHES=( "${FILESDIR}/${P}-fix-runpath.patch" )
+
+RESTRICT="!test? ( test )"
 
 src_prepare() {
-	sed 's/tdnet/tdcore tdnet/' -i benchmark/CMakeLists.txt
-	sed '/target_link_libraries(tdjson_private/s/tdutils/tdutils tdcore/' -i CMakeLists.txt
-	
-	sed -i -e '/^install/,/^)/d' \
-		td{actor,db,net,utils}/CMakeLists.txt || die
-
-	sed -i -e '/example/d' \
-		tdactor/CMakeLists.txt || die
-
-	local findPkgConfig="find_package(PkgConfig REQUIRED)"
-	local pkgCheckModules="pkg_check_modules(SQLITE3 REQUIRED sqlite3)"
-
-	sed -i \
-		-e "/add_library.*tddb/i ${findPkgConfig}" \
-		-e "/add_library.*tddb/i ${pkgCheckModules}" \
-		-e 's/target_include_directories.*PUBLIC/& ${SQLITE3_INCLUDE_DIRS}/' \
-		-e 's/\(target_link_libraries.*\)tdsqlite/\1${SQLITE3_LIBRARIES}/' \
-		-e '/binlog_dump/d' \
-		tddb/CMakeLists.txt || die
-
-	sed -i \
-		-e 's/\(include.*sqlite\).*sqlite/\1/' \
-		tddb/td/db/detail/RawSqliteDb.cpp \
-		tddb/td/db/SqliteStatement.cpp \
-		tddb/td/db/SqliteDb.cpp || die
-
-	sed -i \
-		-e '/add_subdirectory.*benchmark/d' \
-		-e '/add_subdirectory.*sqlite/d' \
-		-e 's/install.*TARGETS/& tg_cli/' \
-		-e '/install.*TARGETS/ s/tdcore[a-z]*//g' \
-		-e '/install.*TARGETS/ s/tdjson_[a-z]*//g' \
-		-e '/install.*TARGETS/ s/Td[A-Za-z]*Static//g' \
-		CMakeLists.txt || die
-
-	if use test
-	then
+	if use test; then
 		sed -i -e '/run_all_tests/! {/all_tests/d}' \
 			test/CMakeLists.txt || die
 	else
@@ -81,31 +49,54 @@ src_prepare() {
 			-e '/add_subdirectory.*test/d' \
 			CMakeLists.txt || die
 	fi
+	# user reported that for now, tests segfaults on glibc and musl
 
 	cmake_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DTD_ENABLE_DOTNET=OFF
-		-DTD_ENABLE_JNI=$(usex java)
-		-DTD_ENABLE_LTO=ON
-	)
+		-DCMAKE_BUILD_TYPE=$(usex debug Debug Release)
+		-DCMAKE_INSTALL_PREFIX=/usr
+		-DTD_ENABLE_JNI=$(usex java ON OFF)
+		-DTD_ENABLE_LTO=$(usex lto ON OFF)
 
+		# According to TDLib build instructions, DOTNET=ON is only needed
+		# for using tdlib from C# under Windows through C++/CLI
+		-DTD_ENABLE_DOTNET=OFF
+
+		# -DTD_EXPERIMENTAL_WATCH_OS=$(usex watch-os ON OFF) # Requires "Foundation" library. TBD.
+		# -DEMSCRIPTEN=$(usex javascript ON OFF) # Somehow makes GCC to stop seeing pthreads.h
+	)
 	cmake_src_configure
+
+	if use low-ram; then
+		cmake --build "${BUILD_DIR}" --target prepare_cross_compiling || die
+		php SplitSource.php || die
+	fi
 }
 
 src_compile() {
 	cmake_src_compile
 
-	if use doc
-	then
-		doxygen Doxyfile || die
+	if use doc; then
+		doxygen Doxyfile || die "Could not build docs with doxygen"
 	fi
 }
 
 src_install() {
+	use low-ram && php SplitSource.php --undo
+
 	cmake_src_install
+
+	# TODO: USE=java installs crap into /usr/bin:
+	# /usr/bin/td/generate/scheme/td_api.tlo
+	# /usr/bin/td/generate/scheme/td_api.tl
+	# /usr/bin/td/generate/TlDocumentationGenerator.php
+	# /usr/bin/td/generate/JavadocTlDocumentationGenerator.php
+	# Need to fix this
+
+	use cli && dobin "${BUILD_DIR}"/tg_cli
 
 	use doc && local HTML_DOCS=( docs/html/. )
 	einstalldocs
