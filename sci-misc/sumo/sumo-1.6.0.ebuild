@@ -14,9 +14,20 @@ SLOT="0"
 KEYWORDS="amd64 ~x86"
 IUSE=""
  
-DEPEND=""
+DEPEND="x11-libs/fox:1.6
+	dev-libs/xerces-c
+	sci-libs/proj
+	sci-libs/gdal
+	dev-lang/swig
+	virtual/jdk
+	dev-cpp/eigen:3
+	media-video/ffmpeg
+	x11-libs/gl2ps
+	dev-lang/python"
 RDEPEND="${DEPEND}"
 BDEPEND=""
+
+RESTRICT="network-sandbox nostrip"
 
 S=${WORKDIR}/${PN}-${PV//./_}
 
@@ -36,10 +47,12 @@ src_install () {
 	insinto /usr/share/applications
 	doins ${FILESDIR}/${PN}.desktop
 
+	newenvd - 99sumo <<- EOF || die
+	SUMO_HOME="${EPREFIX}/usr/share/sumo"
+	EOF
 }
 
 pkg_postinst() {
-	readme.gentoo_print_elog
 	xdg_desktop_database_update
 }
 

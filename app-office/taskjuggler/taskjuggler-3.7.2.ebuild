@@ -4,7 +4,7 @@
 
 EAPI="7"
 
-USE_RUBY="ruby26 ruby27"
+USE_RUBY="ruby26 ruby27 ruby30 ruby31"
 
 RUBY_FAKEGEM_RECIPE_TEST="none"
 RUBY_FAKEGEM_RECIPE_DOC="none"
@@ -16,9 +16,8 @@ inherit ruby-fakegem
 MY_PN="TaskJuggler"
 
 DESCRIPTION="Project Management beyond Gantt Chart Drawing"
-SRC_URI="https://github.com/${PN}/${MY_PN}/archive/refs/tags/release-${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/taskjuggler/TaskJuggler/archive/refs/tags/v${PV}.tar.gz  -> ${P}.tar.gz"
 HOMEPAGE="http://taskjuggler.org/"
-
 
 
 LICENSE="GPL-2"
@@ -28,8 +27,9 @@ SLOT="0"
 RDEPEND="dev-ruby/mail
 	dev-ruby/term-ansicolor"
 
-each_ruby_prepare() {
-	cd ${MY_PN}-release-${PV} || die
+#S=${WORKDIR}/all/${MY_PN}-${PV}
 
+each_ruby_prepare() {
+	cd ${MY_PN}-${PV}
 	mv * ../ || die
 }
