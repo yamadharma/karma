@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
 	dev-libs/glib:2
-	media-libs/libva[X,opengl]
+	media-libs/libva[X]
 	x11-libs/libvdpau
 	x11-libs/libX11
 	x11-libs/libXext
