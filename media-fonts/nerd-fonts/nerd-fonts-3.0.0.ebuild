@@ -19,6 +19,7 @@ FONTS=(
 	BitstreamVeraSansMono
 	CascadiaCode
 	CodeNewRoman
+	ComicShannsMono
 	Cousine
 	DaddyTimeMono
 	DejaVuSansMono
