@@ -1,9 +1,9 @@
 # Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PANDOC_PV=3.1.1
+PANDOC_PV=3.1.2
 
 DESCRIPTION="Pandoc filter for cross-references"
 HOMEPAGE="https://github.com/lierdakil/pandoc-crossref#readme"
