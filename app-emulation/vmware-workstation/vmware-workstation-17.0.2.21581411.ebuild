@@ -74,6 +74,7 @@ RDEPEND="
 	x11-libs/startup-notification
 	x11-libs/xcb-util
 	x11-themes/hicolor-icon-theme
+	app-emulation/open-vm-tools
 "
 DEPEND="
 	${PYTHON_DEPS}
