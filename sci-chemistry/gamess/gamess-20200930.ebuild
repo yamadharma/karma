@@ -28,7 +28,7 @@ CDEPEND="
 DEPEND="${CDEPEND}
 	virtual/pkgconfig"
 RDEPEND="${CDEPEND}
-	net-misc/openssh"
+	virtusl/openssh"
 
 REQUIRED_USE="(
 	openmp? ( !neo !vb2000 ) )"
