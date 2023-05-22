@@ -1,49 +1,101 @@
-# Copyright 2020-2021 Gentoo Authors
+# Copyright 2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit autotools git-r3
+inherit desktop optfeature xdg-utils
 
-DESCRIPTION="Nyxt browser: the Internet on your terms"
+DESCRIPTION="Nyxt - the hacker's power-browser"
 HOMEPAGE="https://nyxt.atlas.engineer/"
-EGIT_REPO_URI="https://github.com/atlas-engineer/nyxt.git"
 
-# TODO: Necessary to download dependencies. Otherwise, create dev-lisp packages.
-RESTRICT="network-sandbox"
+if [[ "${PV}" = *9999* ]]
+then
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/atlas-engineer/${PN}.git"
+else
+	KEYWORDS="amd64"
+	MY_PV="${PV/_pre/-pre-release-}"
+	SRC_URI="https://github.com/atlas-engineer/${PN}/releases/download/${MY_PV}/${P}-source-with-submodules.tar.xz -> ${PF}.gh.tar.xz"
+fi
 
-LICENSE="BSD"
+# Portage replaces the nyxt binary with scbl when stripping
+RESTRICT="mirror strip"
+
+LICENSE="BSD CC-BY-SA-3.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+IUSE="doc"
 
-DEPEND="
-	app-text/enchant:2
-	net-libs/glib-networking
+RDEPEND="
 	dev-libs/gobject-introspection
 	gnome-base/gsettings-desktop-schemas
-	net-libs/webkit-gtk[introspection,spell]
-	dev-db/sqlite
+	media-libs/gst-plugins-bad
+	media-libs/gst-plugins-base
+	media-libs/gst-plugins-good
+	media-libs/gst-plugins-ugly
+	media-plugins/gst-plugins-libav
+	net-libs/glib-networking
+	net-libs/webkit-gtk:4.1
 	sys-libs/libfixposix
-	x11-misc/xclip
 "
-BDEPEND="${DEPEND}"
-RDEPEND="
-	>=dev-lisp/sbcl-2.0.0
-	${DEPEND}"
 
-src_compile(){
+DEPEND="${RDEPEND}"
+BDEPEND="
+	>=dev-lisp/sbcl-2.0.0
+"
+
+src_unpack() {
+	default
+
+	# nyxt-3-source-with-submodules.tar.xz doesn't unpack in a subdirectory
+	# so we create it instead of working directly in ${WORKDIR}
+	if [[ "${PV}" != *9999* ]]
+	then
+		mkdir "${WORKDIR}/${P}" || die
+		mv "${WORKDIR}/assets" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/_build" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/build-scripts" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/documents" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/engineer.atlas.Nyxt.yaml" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/examples" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/INSTALL" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/libraries" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/licenses" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/makefile" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/nyxt.asd" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/README.org" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/source" "${WORKDIR}/${P}/" || die
+		mv "${WORKDIR}/tests" "${WORKDIR}/${P}/" || die
+	fi
+}
+
+src_compile() {
 	emake all
+	use doc && emake doc
 }
 
 src_install(){
-	emake \
-		DESTDIR="${D}" \
-		PREFIX="/usr" \
-		install
+	dobin "${S}/nyxt"
+
+	if [ "$(use doc)" ]
+	then
+		docinto "/usr/share/doc/${P}"
+		dodoc "${S}/manual.html"
+	fi
+
+	newicon -s 512 "${S}/assets/nyxt_512x512.png" nyxt.png
+	domenu "${S}/assets/nyxt.desktop"
 }
 
-pkg_postinst(){
-	elog "If pages do not render, "
-	elog "\"export WEBKIT_DISABLE_COMPOSITING_MODE=1\""
-	elog " and try again"
+pkg_postinst() {
+	xdg_mimeinfo_database_update
+	xdg_desktop_database_update
+	xdg_icon_cache_update
+	optfeature "for X11 clipboard support" "x11-misc/xclip"
+	optfeature "for spellchecking" "app-text/enchant"
+}
+
+pkg_postrm() {
+	xdg_mimeinfo_database_update
+	xdg_desktop_database_update
+	xdg_icon_cache_update
 }

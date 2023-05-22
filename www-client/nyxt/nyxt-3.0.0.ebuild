@@ -15,7 +15,7 @@ then
 else
 	KEYWORDS="amd64"
 	MY_PV="${PV/_pre/-pre-release-}"
-	SRC_URI="https://github.com/atlas-engineer/${PN}/releases/download/${MY_PV}/nyxt-3-source-with-submodules.tar.xz -> ${PF}.gh.tar.xz"
+	SRC_URI="https://github.com/atlas-engineer/${PN}/releases/download/${MY_PV}/${P}-source-with-submodules.tar.xz -> ${PF}.gh.tar.xz"
 fi
 
 # Portage replaces the nyxt binary with scbl when stripping
