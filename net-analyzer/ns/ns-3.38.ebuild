@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{7..10} )
+PYTHON_COMPAT=( python3_{7..11} )
 
-inherit eutils python-single-r1
+inherit python-single-r1
 
 NSC_PV=0.5.3
 
@@ -41,7 +41,7 @@ S=${WORKDIR}/ns-allinone-${PV}
 #}
 
 src_configure() {
-
+	python_get_sitedir
 	#./build.py
 
 	## NetAnim
@@ -61,8 +61,10 @@ src_configure() {
 	use mpi && myconf="${myconf} --enable-mpi"
 
 	myconf="${myconf} --enable-monolib --enable-python-bindings"
+	myconf="${myconf} --cxx-standard 17"
 	
-	myconf="${myconf} -- -DNS3_SCAN_PYTHON_BINDINGS=ON"
+	myconf="${myconf} -- -DNS3_BINDINGS_INSTALL_DIR=${PYTHON_SITEDIR}"
+
 
 	NS_DIR=$(echo ns-*)
 	cd ${NS_DIR}
