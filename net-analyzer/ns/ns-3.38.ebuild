@@ -60,10 +60,10 @@ src_configure() {
 	local myconf
 	use mpi && myconf="${myconf} --enable-mpi"
 
-	myconf="${myconf} --enable-monolib --enable-python-bindings"
-	myconf="${myconf} --cxx-standard 17"
-	
-	myconf="${myconf} -- -DNS3_BINDINGS_INSTALL_DIR=${PYTHON_SITEDIR}"
+	myconf="${myconf} --enable-monolib"
+        #myconf="${myconf} --cxx-standard 17"
+	#myconf="${myconf} --enable-python-bindings"
+	#myconf="${myconf} -- -DNS3_BINDINGS_INSTALL_DIR=${PYTHON_SITEDIR}"
 
 
 	NS_DIR=$(echo ns-*)
