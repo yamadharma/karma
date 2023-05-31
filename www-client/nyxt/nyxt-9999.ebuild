@@ -13,9 +13,18 @@ then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/atlas-engineer/${PN}.git"
 else
-	KEYWORDS="amd64"
-	MY_PV="${PV/_pre/-pre-release-}"
-	SRC_URI="https://github.com/atlas-engineer/${PN}/releases/download/${MY_PV}/${P}-source-with-submodules.tar.xz -> ${PF}.gh.tar.xz"
+	KEYWORDS="~amd64"
+	NYXTCOMMIT="27612fee394f80dee6480c045ec7da5cd1f82196"
+	S="${WORKDIR}/${PN}-${NYXTCOMMIT}"
+
+	# Specify commits for each submodules
+	# Some regex substitutions allows to automate this process...
+	# Commit hashes are obtained from -9999 version on ${NYXTCOMMIT}
+	# Full list can be found here: https://github.com/atlas-engineer/nyxt/tree/master/_build
+	# Removed the commits to reduce useless lines in -9999 version
+
+	SRC_URI="https://github.com/atlas-engineer/${PN}/archive/${NYXTCOMMIT}.tar.gz -> ${P}.gh.tar.gz"
+	# Removed the submodules SRC_URIs to reduce useless lines in -9999 version
 fi
 
 # Portage replaces the nyxt binary with scbl when stripping
@@ -41,30 +50,19 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="
 	>=dev-lisp/sbcl-2.0.0
+	!!net-libs/webkit-gtk:5
 "
+# If webkit-gtk:5 is installed, nyxt won't compile
+# https://github.com/atlas-engineer/nyxt/issues/2743
 
 src_unpack() {
 	default
 
-	# nyxt-3-source-with-submodules.tar.xz doesn't unpack in a subdirectory
-	# so we create it instead of working directly in ${WORKDIR}
+	# Unpack the submodules in the _build directory
 	if [[ "${PV}" != *9999* ]]
 	then
-		mkdir "${WORKDIR}/${P}" || die
-		mv "${WORKDIR}/assets" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/_build" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/build-scripts" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/documents" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/engineer.atlas.Nyxt.yaml" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/examples" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/INSTALL" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/libraries" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/licenses" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/makefile" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/nyxt.asd" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/README.org" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/source" "${WORKDIR}/${P}/" || die
-		mv "${WORKDIR}/tests" "${WORKDIR}/${P}/" || die
+		# Removed src_unpack to reduce useless lines in -9999
+		true
 	fi
 }
 
@@ -82,7 +80,7 @@ src_install(){
 		dodoc "${S}/manual.html"
 	fi
 
-	newicon -s 512 "${S}/assets/nyxt_512x512.png" nyxt.png
+	doicon "${S}/assets/icon_512x512.png.ico"
 	domenu "${S}/assets/nyxt.desktop"
 }
 
