@@ -9,7 +9,8 @@ inherit distutils-r1
 
 DESCRIPTION="Microsoft Authentication Library (MSAL) for Python library"
 HOMEPAGE="https://pypi.org/project/msal"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz
+https://github.com/AzureAD/microsoft-authentication-library-for-python/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 KEYWORDS="amd64 ~arm ~x86"
 LICENSE="MIT"
