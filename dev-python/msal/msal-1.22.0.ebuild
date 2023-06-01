@@ -21,3 +21,5 @@ RDEPEND=">=dev-python/requests-2.20.0[${PYTHON_USEDEP}]
 
 DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]"
+
+S=${WORKDIR}/microsoft-authentication-library-for-python-${PV}
