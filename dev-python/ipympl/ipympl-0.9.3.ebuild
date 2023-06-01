@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7..10} )
+PYTHON_COMPAT=( python3_{7..12} )
 
 inherit distutils-r1
 
@@ -15,8 +15,10 @@ LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="\
-	dev-python/ipywidgets[${PYTHON_USEDEP}] \
+RDEPEND="
+	>=dev-python/ipywidgets-7.5.0[${PYTHON_USEDEP}]
+	>=dev-python/ipykernel-4.7[${PYTHON_USEDEP}]
+	>=dev-python/matplotlib-2.0.0[${PYTHON_USEDEP}]
 "
 
 src_prepare() {

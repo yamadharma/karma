@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( pypy3 python3_{8..11} )
+PYTHON_COMPAT=( pypy3 python3_{8..12} )
 
 # pass-import makes only one Python implementation, needs PYTHON_SINGLE_TARGET.
 inherit distutils-r1
