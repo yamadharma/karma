@@ -9,7 +9,8 @@ inherit distutils-r1
 
 DESCRIPTION="Matplotlib Jupyter Integration"
 HOMEPAGE="https://github.com/matplotlib/ipympl"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz
+https://github.com/matplotlib/ipympl/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD-2"
 SLOT="0"
