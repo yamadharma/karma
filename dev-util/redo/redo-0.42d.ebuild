@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{8..12} )
 PYTHON_REQ_USE="sqlite"
 inherit multilib multiprocessing python-utils-r1 python-single-r1
 
