@@ -4,7 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python3_{9..11} )
-USE_RUBY="ruby27 ruby30"
+USE_RUBY="ruby27 ruby30 ruby31 ruby32"
 inherit check-reqs cmake flag-o-matic python-any-r1 qmake-utils ruby-single toolchain-funcs
 
 DESCRIPTION="WebKit rendering library for the Qt5 framework (deprecated)"
