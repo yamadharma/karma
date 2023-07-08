@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PANDOC_PV=3.1.2
+PANDOC_PV=3.1.4
 
 DESCRIPTION="Pandoc filter for cross-references"
 HOMEPAGE="https://github.com/lierdakil/pandoc-crossref#readme"
@@ -20,6 +20,7 @@ IUSE=""
 RESTRICT="strip"
 
 RDEPEND="
+	~app-text/pandoc-${PANDOC_PV}
 	!dev-haskell/pandoc-crossref
 "
 
