@@ -20,7 +20,7 @@ IUSE=""
 RESTRICT="strip"
 
 RDEPEND="
-	~app-text/pandoc-${PANDOC_PV}
+	~app-text/pandoc-bin-${PANDOC_PV}
 	!dev-haskell/pandoc-crossref
 "
 
