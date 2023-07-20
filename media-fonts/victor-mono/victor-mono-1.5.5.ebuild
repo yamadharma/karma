@@ -10,7 +10,8 @@ if [[ -z ${PV%%*9999} ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/rubjo/${PN}.git"
 else
-	SRC_URI="https://rubjo.github.io/victor-mono/VictorMonoAll.zip -> ${P}.zip"
+#	SRC_URI="https://rubjo.github.io/victor-mono/VictorMonoAll.zip -> ${P}.zip"
+	SRC_URI="https://github.com/rubjo/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tag.gz"
 	KEYWORDS="amd64 ~x86"
 	S="${WORKDIR}"
 fi
