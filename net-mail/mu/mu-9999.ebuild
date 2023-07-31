@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -7,11 +7,21 @@ inherit elisp-common meson
 
 DESCRIPTION="Set of tools to deal with Maildirs, in particular, searching and indexing"
 HOMEPAGE="https://www.djcbsoftware.nl/code/mu/ https://github.com/djcb/mu"
-SRC_URI="https://github.com/djcb/mu/releases/download/v${PV}/${P}.tar.xz"
+
+if [[ ${PV} == 9999 ]]; then
+	EGIT_REPO_URI="https://github.com/djcb/mu"
+	inherit git-r3 autotools
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86 ~x64-macos"
+else
+	SRC_URI="https://github.com/djcb/mu/releases/download/v${PV}/${P}.tar.xz"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~riscv ~x86"
+fi
+
+
+
 
 LICENSE="GPL-3+"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~x86 ~x64-macos"
 IUSE="emacs readline"
 
 DEPEND="
@@ -26,10 +36,6 @@ BDEPEND="
 	virtual/pkgconfig
 "
 
-#PATCHES=(
-#	"${FILESDIR}"/${P}-1.7.12-optional-mu4e.patch
-#)
-
 SITEFILE="70mu-gentoo-autoload.el"
 
 src_prepare() {
@@ -39,17 +45,19 @@ src_prepare() {
 	sed -i '/NEWS.org/,+1 d' meson.build || die
 	sed -i '/mu4e-about.org/d' mu4e/meson.build || die
 
+	# Don't compress the info file.
+	sed -i '/gzip/d' build-aux/meson-install-info.sh || die
+
 	# Instead, put it in /usr/share/doc/${PF}.
 	sed -i "/MU_DOC_DIR/s/mu/${PF}/" mu4e/meson.build || die
 }
 
 src_configure() {
 	local emesonargs=(
-		$(meson_feature emacs)
 		$(meson_feature readline)
-		# NOTE: Guile interface is deprecated to be removed shortly.
+		-Demacs="$(usex emacs "${EMACS}" emacs-not-enabled)"
+		# TODO: revisit this, it's not actually deprecated, just been reworked
 		-Dguile=disabled
-		-Demacs=emacs
 	)
 	meson_src_configure
 }
