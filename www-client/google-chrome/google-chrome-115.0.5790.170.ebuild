@@ -26,7 +26,7 @@ SRC_URI="https://dl.google.com/linux/chrome/deb/pool/main/g/${MY_PN}/${MY_P}_amd
 
 LICENSE="google-chrome"
 SLOT="0"
-IUSE="qt5 selinux"
+IUSE="qt5 qt6 selinux"
 RESTRICT="bindist mirror strip"
 
 RDEPEND="
@@ -67,6 +67,7 @@ RDEPEND="
 		dev-qt/qtgui:5[X]
 		dev-qt/qtwidgets:5
 	)
+	qt6? ( dev-qt/qtbase:6[gui,widgets] )
 	selinux? ( sec-policy/selinux-chromium )
 "
 
@@ -114,6 +115,9 @@ src_install() {
 	if ! use qt5; then
 		rm "${CHROME_HOME}/libqt5_shim.so" || die
 	fi
+	if ! use qt6; then
+		rm "${CHROME_HOME}/libqt6_shim.so" || die
+	fi
 
 	local suffix=
 	[[ ${PN} == google-chrome-beta ]] && suffix=_beta
@@ -125,11 +129,12 @@ src_install() {
 	done
 
 	pax-mark m "${CHROME_HOME}/chrome"
-	
+
 	### 
 	cp ${FILESDIR}/google-chrome ${D}/opt/google/chrome
 	chmod +x ${D}/opt/google/chrome/google-chrome
 	
 	dodir /etc
 	cp ${FILESDIR}/chrome-flags.conf ${D}/etc
+
 }
