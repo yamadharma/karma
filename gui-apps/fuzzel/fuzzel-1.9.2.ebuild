@@ -1,50 +1,53 @@
-# Copyright 2021 Aisha Tammy
-# Copyright 2021 Erik Rodriguez
-# Distributed under the terms of the ISC License
+# Copyright 2022 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit meson xdg
-
-DESCRIPTION="Application launcher similar to rofi's 'drun' mode"
-HOMEPAGE="https://codeberg.org/dnkl/yambar"
+inherit meson
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://codeberg.org/dnkl/fuzzel"
+	EGIT_REPO_URI="https://codeberg.org/dnkl/fuzzel.git"
 else
 	SRC_URI="https://codeberg.org/dnkl/fuzzel/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	S="${WORKDIR}"/${PN}
 	KEYWORDS="~amd64"
+	S="${WORKDIR}/${PN}"
 fi
 
+DESCRIPTION="Application launcher for wlroots based Wayland compositors."
+HOMEPAGE="https://codeberg.org/dnkl/fuzzel"
 LICENSE="MIT"
 SLOT="0"
 IUSE="cairo png svg"
 
-RDEPEND="
+DEPEND="
 	dev-libs/wayland
-	media-libs/fcft
+	<media-libs/fcft-4.0.0
+	>=media-libs/fcft-3.0.0
 	x11-libs/libxkbcommon
+	x11-libs/pixman
 	cairo? ( x11-libs/cairo )
 	png? ( media-libs/libpng )
 	svg? ( gnome-base/librsvg )
 "
-DEPEND="${RDEPEND}
-	dev-libs/tllist
-"
+RDEPEND="${DEPEND}"
 BDEPEND="
 	app-text/scdoc
+	>=dev-libs/tllist-1.0.1
 	dev-libs/wayland-protocols
-	virtual/pkgconfig
+	dev-util/wayland-scanner
 "
 
 src_configure() {
 	local emesonargs=(
-		-Dwerror=false
+		-Dpng-backend=$(usex png libpng none)
+		-Dsvg-backend=$(usex svg librsvg none)
 		$(meson_feature cairo enable-cairo)
-		$(meson_native_use_feature png png-backend)
-		$(meson_native_use_feature svg svg-backend)
 	)
 	meson_src_configure
+}
+
+src_install() {
+	meson_src_install
+	rm -rf "${ED}/usr/share/doc/fuzzel" || die
 }
