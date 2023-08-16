@@ -9,16 +9,15 @@ inherit unpacker eutils
 DESCRIPTION="Tool for building and distributing virtual machines"
 HOMEPAGE="http://vagrantup.com/"
 
-SRC_URI_AMD64="https://releases.hashicorp.com/${MY_PN}/${PV}/${MY_PN}_${PV}_x86_64.deb"
-SRC_URI_X86="https://releases.hashicorp.com/${MY_PN}/${PV}/${MY_PN}_${PV}_i686.deb"
+# SRC_URI_AMD64="https://releases.hashicorp.com/${MY_PN}/${PV}/${MY_PN}_${PV}_x86_64.deb"
+# SRC_URI_X86="https://releases.hashicorp.com/${MY_PN}/${PV}/${MY_PN}_${PV}_i686.deb"
 SRC_URI="
-	amd64? ( ${SRC_URI_AMD64} )
-	x86? ( ${SRC_URI_X86} )
+	amd64? ( https://hashicorp-releases.yandexcloud.net/vagrant/${PV}/vagrant_${PV}-1_amd64.deb )
 "
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 ~x86"
 IUSE=""
 
 S="${WORKDIR}/opt/${MY_PN}"
@@ -37,7 +36,8 @@ src_unpack() {
 }
 
 src_install() {
-	pushd embedded/gems/${PV}/gems/${MY_PN}-${PV}/contrib > /dev/null || die
+#	pushd embedded/gems/${PV}/gems/${MY_PN}-${PV}/contrib > /dev/null || die
+	pushd embedded/gems/gems/${MY_PN}-${PV}/contrib > /dev/null || die
 	insinto /usr/share/vim/vimfiles/plugin
 	doins vim/*
 	popd > /dev/null || die
