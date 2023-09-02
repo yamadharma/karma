@@ -1,9 +1,9 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit eutils perl-module latex-package
+inherit perl-module latex-package
 
 DESCRIPTION="A modern (La)TeX to XML/HTML conversion tool"
 HOMEPAGE="http://dlmf.nist.gov/LaTeXML/"
