@@ -1,7 +1,7 @@
 # Copyright 1999-2020 Go Overlay Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 GOLANG_PKG_IMPORTPATH="github.com/oniony"
 GOLANG_PKG_NAME="TMSU"
@@ -16,7 +16,7 @@ GOLANG_PKG_DEPENDENCIES=(
 	"github.com/golang/sys:5c8b2ff -> golang.org/x"
 )
 
-inherit golang-single
+inherit go-module
 
 DESCRIPTION="github.com/oniony/TMSU/releases"
 HOMEPAGE="https://tmsu.org"
