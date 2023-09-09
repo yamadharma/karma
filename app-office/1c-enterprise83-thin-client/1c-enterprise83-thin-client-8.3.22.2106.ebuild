@@ -18,7 +18,7 @@ SRC_URI="${MY_PN}-${PV}-thin-client_${MY_PV}_amd64.deb
 
 SLOT=$(get_version_component_range 1-2)
 LICENSE="1CEnterprise_en"
-# KEYWORDS="amd64"
+KEYWORDS="amd64"
 RESTRICT="fetch strip"
 
 IUSE="+nls"
