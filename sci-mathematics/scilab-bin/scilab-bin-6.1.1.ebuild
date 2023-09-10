@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=7
+EAPI=8
 
-inherit eutils bash-completion-r1 xdg
+inherit bash-completion-r1 xdg
 
 
 DESCRIPTION="Scilab scientific software"
