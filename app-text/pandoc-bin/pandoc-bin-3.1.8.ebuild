@@ -6,6 +6,8 @@ EAPI=8
 MY_PN=${PN//-bin/}
 MY_P=${MY_PN}-${PV}
 
+CROSSREF_PV=0.3.17.0
+
 DESCRIPTION="Conversion between markup formats (binary package)"
 HOMEPAGE="https://pandoc.org/
 	https://github.com/jgm/pandoc/"
@@ -25,7 +27,7 @@ IUSE="+pandoc-symlink"
 RDEPEND="pandoc-symlink? ( !${CATEGORY}/${MY_PN} )"
 
 PDEPEND="
-	dev-haskell/pandoc-crossref-bin
+	~dev-haskell/pandoc-crossref-bin-${CROSSREF_PV}
 "
 
 QA_FLAGS_IGNORED="usr/bin/${PN}"
