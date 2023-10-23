@@ -1,0 +1,120 @@
+--- a/google/cloud/iam_policy.h	2023-08-26 23:33:08.726455158 +0200
++++ b/google/cloud/iam_policy.h	2023-08-26 23:32:40.366454602 +0200
+@@ -17,6 +17,7 @@
+ 
+ #include "google/cloud/iam_bindings.h"
+ #include "google/cloud/version.h"
++#include <cstdint>
+ #include <string>
+ 
+ namespace google {
+
+--- a/google/cloud/internal/curl_handle.h	2023-08-26 23:49:06.586473933 +0200
++++ b/google/cloud/internal/curl_handle.h	2023-08-26 23:49:01.634473836 +0200
+@@ -21,6 +21,7 @@
+ #include "absl/functional/function_ref.h"
+ #include <curl/curl.h>
+ #include <string>
++#include <cstdint>
+ #include <type_traits>
+ 
+ namespace google {
+
+--- a/google/cloud/internal/rest_response.h	2023-08-26 23:57:44.946484094 +0200
++++ b/google/cloud/internal/rest_response.h	2023-08-26 23:57:56.938484329 +0200
+@@ -19,6 +19,7 @@
+ #include "google/cloud/options.h"
+ #include "google/cloud/status_or.h"
+ #include "google/cloud/version.h"
++#include <cstdint>
+ #include <map>
+ 
+ namespace google {
+
+--- a/google/cloud/pubsub/ack_handler.h	2023-08-27 00:04:51.402492453 +0200
++++ b/google/cloud/pubsub/ack_handler.h	2023-08-27 00:04:59.122492604 +0200
+@@ -17,6 +17,7 @@
+
+ #include "google/cloud/pubsub/version.h"
+ #include "google/cloud/status.h"
++#include <cstdint>
+ #include <memory>
+
+ namespace google {
+
+--- a/google/cloud/storage/iam_policy.h	2023-08-27 00:20:52.138511284 +0200
++++ b/google/cloud/storage/iam_policy.h	2023-08-27 00:20:34.994510948 +0200
+@@ -17,6 +17,7 @@
+
+ #include "google/cloud/storage/version.h"
+ #include "google/cloud/status_or.h"
++#include <cstdint>
+ #include <memory>
+ #include <string>
+ #include <vector>
+
+--- a/google/cloud/storage/internal/hash_function_impl.cc	2023-08-27 00:33:09.738525742 +0200
++++ b/google/cloud/storage/internal/hash_function_impl.cc	2023-08-27 00:31:12.234523439 +0200
+@@ -17,6 +17,7 @@
+ #include "google/cloud/internal/big_endian.h"
+ #include "absl/memory/memory.h"
+ #include <crc32c/crc32c.h>
++#include <cstdint>
+
+ namespace google {
+ namespace cloud {
+
+--- a/google/cloud/storage/internal/hash_function.cc	2023-08-27 00:33:02.230525595 +0200
++++ b/google/cloud/storage/internal/hash_function.cc	2023-08-27 00:32:43.530525228 +0200
+@@ -16,6 +16,7 @@
+ #include "google/cloud/storage/internal/hash_function_impl.h"
+ #include "google/cloud/storage/internal/object_requests.h"
+ #include "absl/memory/memory.h"
++#include <cstdint>
+
+ namespace google {
+ namespace cloud {
+
+--- a/google/cloud/storage/internal/hash_function_impl.h	2022-02-02 03:25:24.000000000 +0100
++++ b/google/cloud/storage/internal/hash_function_impl.h	2023-08-27 00:44:08.446538653 +0200
+@@ -17,6 +17,7 @@
+ 
+ #include "google/cloud/storage/internal/hash_function.h"
+ #include "google/cloud/storage/version.h"
++#include <cstdint>
+ #include <openssl/md5.h>
+ #include <map>
+ #include <memory>
+
+--- a/google/cloud/storage/internal/object_read_streambuf.h	2023-08-27 00:53:16.134549389 +0200
++++ b/google/cloud/storage/internal/object_read_streambuf.h	2023-08-27 00:52:30.982548504 +0200
+@@ -22,6 +22,7 @@
+ #include "google/cloud/storage/version.h"
+ #include "google/cloud/status.h"
+ #include "google/cloud/status_or.h"
++#include <cstdint>
+ #include <iostream>
+ #include <map>
+ #include <memory>
+
+--- a/google/cloud/storage/internal/object_read_streambuf.cc	2023-08-27 00:53:21.102549486 +0200
++++ b/google/cloud/storage/internal/object_read_streambuf.cc	2023-08-27 00:52:54.702548969 +0200
+@@ -16,6 +16,7 @@
+ #include "google/cloud/storage/hash_mismatch_error.h"
+ #include "google/cloud/storage/internal/hash_function.h"
+ #include "absl/memory/memory.h"
++#include <cstdint>
+ #include <cstring>
+
+ namespace google {
+
+--- a/google/cloud/storage/internal/object_read_source.h	2023-08-27 01:04:03.390562075 +0200
++++ b/google/cloud/storage/internal/object_read_source.h	2023-08-27 01:03:43.294561682 +0200
+@@ -20,6 +20,7 @@
+ #include "google/cloud/storage/version.h"
+ #include "google/cloud/status_or.h"
+ #include "absl/types/optional.h"
++#include <cstdint>
+
+ namespace google {
+ namespace cloud {
