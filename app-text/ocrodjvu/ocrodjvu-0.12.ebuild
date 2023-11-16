@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/dnspython/dnspython-1.8.0.ebuild,v 1.8 2010/08/16 16:50:27 grobian Exp $
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{7..11} )
+PYTHON_COMPAT=( python3_{7..12} )
 DISTUTILS_IN_SOURCE_BUILD=1 # setup.py applies 2to3 to tests
 PYTHON_REQ_USE=""
 
