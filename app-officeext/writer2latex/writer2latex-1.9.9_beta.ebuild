@@ -22,7 +22,7 @@ OFFICE_REQ_USE="java"
 OFFICE_EXTENSIONS=(writer2latex.oxt)
 
 # inherit eutils latex-package java-pkg-2 java-ant-2 multilib office-ext-r1
-inherit eutils java-pkg-2 java-ant-2 multilib office-ext-r1
+inherit java-pkg-2 java-ant-2 multilib office-ext-r1
 
 DESCRIPTION="Writer2Latex (w2l) - converter from OpenDocument .odt format"
 HOMEPAGE="http://writer2latex.sourceforge.net"
