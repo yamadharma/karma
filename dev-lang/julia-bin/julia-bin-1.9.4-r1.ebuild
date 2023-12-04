@@ -63,4 +63,7 @@ src_install() {
 
 #	dodir /usr/bin
 #	dosym ${EROOT}/usr/$(get_libdir)/${MY_P}/bin/julia /usr/bin/julia
+
+	## FIX remove old glibc
+	rm ${D}/usr/$(get_libdir)/${MY_P}/lib/julia/libstdc++*
 }
