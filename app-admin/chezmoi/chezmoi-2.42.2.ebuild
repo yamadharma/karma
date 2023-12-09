@@ -37,4 +37,8 @@ src_install() {
 	doins -r *
 
 	fperms +x /usr/bin/${MY_PN}
+
+	newbashcomp completions/${PN}-completion.bash ${PN}
+	dofishcomp completions/${PN}.fish
+	newzshcomp completions/${PN}.zsh _${PN}
 }
