@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit unpacker
+inherit unpacker shell-completion
 
 MY_PN="${PN%-bin}"
 
@@ -38,7 +38,7 @@ src_install() {
 
 	fperms +x /usr/bin/${MY_PN}
 
-	newbashcomp completions/${PN}-completion.bash ${PN}
-	dofishcomp completions/${PN}.fish
-	newzshcomp completions/${PN}.zsh _${PN}
+	# newbashcomp completions/${PN}-completion.bash ${PN}
+	# dofishcomp completions/${PN}.fish
+	# newzshcomp completions/${PN}.zsh _${PN}
 }
