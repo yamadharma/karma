@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit eutils autotools flag-o-matic multilib qmake-utils
+inherit autotools flag-o-matic multilib qmake-utils
 
 OMOptimPV=1.11.0-dev.beta4
 OMSensPV=WorkPackage-2-Final
