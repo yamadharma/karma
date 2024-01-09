@@ -5,7 +5,7 @@
 EAPI=7
 
 MY_P="fixDos-${PV}"
-inherit eutils toolchain-funcs
+inherit toolchain-funcs
 
 DESCRIPTION="Set of utilities such as crlf which converts files between UNIX and DOS newlines"
 HOMEPAGE="http://e.co.za/marius/"
