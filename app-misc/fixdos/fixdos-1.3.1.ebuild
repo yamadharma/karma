@@ -18,8 +18,8 @@ KEYWORDS="amd64 ppc ppc64 x86 ~amd64-linux ~x86-linux"
 S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-gentoo-makefile.diff
-	epatch_user
+	eapply -p0 "${FILESDIR}"/${P}-gentoo-makefile.diff
+	eapply_user
 	tc-export CC
 }
 
