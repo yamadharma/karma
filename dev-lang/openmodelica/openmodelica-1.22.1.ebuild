@@ -47,8 +47,9 @@ DEPEND="sys-apps/sed
 	|| ( dev-games/openscenegraph dev-games/openscenegraph-openmw )
 	threads? ( dev-libs/boost )
 	|| ( sci-libs/openblas ( sci-libs/lapack-reference sci-libs/blas-reference ) )
-	dev-qt/qtwebkit
+	dev-qt/qtwebengine:5
 "
+#	dev-qt/qtwebkit
 
 RDEPEND="=dev-java/antlr-2*
 	sys-libs/readline
@@ -136,6 +137,7 @@ src_configure() {
 	append-cppflags -I/usr/lib64/libffi/include
 	append-cflags -ffloat-store
 	filter-flags -march=native
+	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE:BOOL=ON
 	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
 
 	## https://github.com/OpenModelica/OpenModelica/issues/7619
