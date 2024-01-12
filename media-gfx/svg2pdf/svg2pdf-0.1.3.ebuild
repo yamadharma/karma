@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit eutils
+# inherit eutils
 
 DESCRIPTION="Convert an SVG file to a PDF file (using cairo)"
 HOMEPAGE="http://cairographics.org/"

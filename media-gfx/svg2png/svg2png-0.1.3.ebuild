@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit eutils
+# inherit eutils
 
 DESCRIPTION="Render an SVG image to a PNG image (using cairo)"
 HOMEPAGE="http://cairographics.org/"

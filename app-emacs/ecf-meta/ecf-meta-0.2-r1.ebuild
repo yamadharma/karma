@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit eutils
+# inherit eutils
 
 DESCRIPTION="Emacs Configuration Framework meta package"
 HOMEPAGE="https://github.com/yamadharma/ecf"
@@ -15,7 +15,6 @@ KEYWORDS="x86 amd64"
 IUSE="${IUSE}"
 
 PDEPEND="app-emacs/ecf
-	app-dicts/aspell-enru
 	media-fonts/fira-code
 	sys-apps/ripgrep
 	sys-apps/fd

@@ -4,7 +4,7 @@
 
 EAPI="7"
 
-inherit eutils
+# inherit eutils
 
 DESCRIPTION="pdf2svg is based on poppler and cairo and can convert pdf to svg files"
 HOMEPAGE="http://www.cityinthesky.co.uk/${PN}.html"
