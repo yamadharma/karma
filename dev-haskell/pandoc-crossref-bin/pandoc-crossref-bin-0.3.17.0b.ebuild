@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PANDOC_PV=3.1.8
+PANDOC_PV=3.1.11
 
 DESCRIPTION="Pandoc filter for cross-references"
 HOMEPAGE="https://github.com/lierdakil/pandoc-crossref#readme"

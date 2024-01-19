@@ -15,13 +15,12 @@ HOMEPAGE="https://pandoc.org/
 BASE_URI="https://github.com/jgm/${MY_PN}/releases/download/${PV}/${MY_P}"
 SRC_URI="
 	amd64? ( ${BASE_URI}-linux-amd64.tar.gz )
-	arm64? ( ${BASE_URI}-linux-arm64.tar.gz )
 "
 S="${WORKDIR}"/${MY_P}
 
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS="-* amd64 arm64"
+KEYWORDS="-* amd64"
 IUSE="+pandoc-symlink"
 
 
