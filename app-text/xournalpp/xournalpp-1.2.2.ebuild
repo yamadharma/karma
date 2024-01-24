@@ -1,10 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-# Upstream only support 5.3 (see CMakeLists.txt), also bug #854615
-LUA_COMPAT=( lua5-3 )
+LUA_COMPAT=( lua5-3 lua5-4 )
 inherit cmake lua-single xdg
 
 if [[ ${PV} == *9999 ]]; then
@@ -12,7 +11,7 @@ if [[ ${PV} == *9999 ]]; then
 	EGIT_REPO_URI="https://github.com/xournalpp/xournalpp.git"
 else
 	SRC_URI="https://github.com/xournalpp/xournalpp/archive/refs/tags/v${PV}.tar.gz -> ${P}.tgz"
-	KEYWORDS="~amd64 ~ppc64"
+	KEYWORDS="amd64 ~ppc64"
 fi
 
 DESCRIPTION="Handwriting notetaking software with PDF annotation support"
@@ -40,10 +39,19 @@ DEPEND="${COMMON_DEPEND}"
 BDEPEND="
 	virtual/pkgconfig
 	sys-apps/lsb-release
-	elibc_musl? ( sys-libs/libbacktrace )
 "
 
 PATCHES=(
 	"${FILESDIR}/${PN}-1.1.1-nostrip.patch"
-	"${FILESDIR}/${PN}-1.1.1-nocompress.patch"
+#	"${FILESDIR}/${PN}-1.1.1-nocompress.patch"
+#	"${FILESDIR}/${PN}-1.1.3-lua-5-4.patch"
+#	"${FILESDIR}/${PN}-1.1.3-gcc13.patch"
 )
+
+src_configure() {
+	local mycmakeargs=(
+		-DLUA_VERSION="$(lua_get_version)"
+	)
+
+	cmake_src_configure
+}
