@@ -15,7 +15,7 @@ KEYWORDS="amd64"
 IUSE="+cli doc debug java lto low-ram test"
 
 BDEPEND="
-	>=dev-util/cmake-3.0.2
+	>=dev-build/cmake-3.0.2
 	|| (
 		sys-devel/gcc
 		sys-devel/clang
