@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=8
+
 DESCRIPTION="A conversion script for mass converting your music collection from one format to another"
 HOMEPAGE="http://lossless2lossy.sourceforge.net/"
 SRC_URI="http://downloads.sourceforge.net/${PN}/${PN}-v${PV}.gz"
