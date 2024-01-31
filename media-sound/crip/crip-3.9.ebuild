@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=8
+
 KEYWORDS="x86 amd64"
 
 DESCRIPTION="A terminal-based ripper/encoder/tagger tool for creating Ogg Vorbis and FLAC files."
