@@ -5,7 +5,7 @@
 EAPI=7
 
 inherit autotools flag-o-matic multilib qmake-utils desktop
-#inherit cmake flag-o-matic multilib qmake-utils desktop
+# inherit cmake flag-o-matic multilib qmake-utils desktop
 
 OMOptimPV=1.11.0-dev.beta4
 OMSensPV=WorkPackage-2-Final
@@ -96,11 +96,24 @@ src_prepare() {
 	export QMAKE=qmake5; \
 	eautoreconf
 
-	cd libraries
-	make
+	## Dirty hack
+	find . -name "*.pro" -exec sed -i -e "s/webkit/webengine/g" '{}' \;
+
+#	cd libraries
+#	make
 }
 
 src_configure_() {
+	strip-flags
+
+	append-ldflags -Wno-dev
+	append-ldflags $(no-as-needed)
+	append-cppflags -I/usr/lib64/libffi/include
+	append-cflags -ffloat-store
+	filter-flags -march=native
+
+
+
 	local mycmakeargs=(
 		-DOM_OMEDIT_ENABLE_QTWEBENGINE=ON
 #		-DFMILIB_BUILD_STATIC_LIB=ON
@@ -132,13 +145,15 @@ src_configure_() {
 src_configure() {
 	strip-flags
 
-	append-ldflags -Wno-dev
+#	append-ldflags -Wno-dev
 	append-ldflags $(no-as-needed)
 	append-cppflags -I/usr/lib64/libffi/include
 	append-cflags -ffloat-store
 	filter-flags -march=native
-	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE:BOOL=ON
-	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
+#	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE:BOOL=ON
+#	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
+	append-cppflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
+#	append-cflags -Werror
 
 	## https://github.com/OpenModelica/OpenModelica/issues/7619
 	## https://github.com/graphstream/gs-netstream/issues/8
@@ -211,7 +226,7 @@ src_configure() {
 #	fi
 }
 
-src_compile_() {
+src_compile() {
 	emake -j1
 	emake -j1 omlibrary
 }
