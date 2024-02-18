@@ -98,6 +98,7 @@ src_prepare() {
 
 	## Dirty hack
 	find . -name "*.pro" -exec sed -i -e "s/webkit/webengine/g" '{}' \;
+	find . -name "*.pro" -exec sed -i -e '/.*QT.*webengine.*$/aDEFINES += OM_OMEDIT_ENABLE_QTWEBENGINE' '{}' \;
 
 #	cd libraries
 #	make
@@ -151,7 +152,7 @@ src_configure() {
 	append-cflags -ffloat-store
 	filter-flags -march=native
 #	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE:BOOL=ON
-#	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
+	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
 	append-cppflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
 #	append-cflags -Werror
 
