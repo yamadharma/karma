@@ -39,6 +39,8 @@ FONTS=(
 	InconsolataGo
 	InconsolataLGC
 	Iosevka
+	IosevkaTerm
+	IosevkaTermSlab
 	JetBrainsMono
 	Lekton
 	LiberationMono
@@ -61,6 +63,7 @@ FONTS=(
 	Ubuntu
 	UbuntuMono
 	VictorMono
+	NerdFontsSymbolsOnly
 )
 
 SRC_URI=""
@@ -99,7 +102,7 @@ SRC_URI__="
 	inconsolata?            ( "${COMMON_URI}/Inconsolata.zip" )
 	inconsolatago?          ( "${COMMON_URI}/InconsolataGo.zip" )
 	inconsolatalgc?         ( "${COMMON_URI}/InconsolataLGC.zip" )
-	iosevka?                ( "${COMMON_URI}/Iosevka.zip" )
+	iosevka?                ( "${COMMON_URI}/Iosevka.zip" "${COMMON_URI}/IosevkaTerm.zip" "${COMMON_URI}/IosevkaTermSlab.zip" )
 	jetbrainsmono?          ( "${COMMON_URI}/JetBrainsMono.zip" )
 	lekton?                 ( "${COMMON_URI}/Lekton.zip" )
 	liberationmono?         ( "${COMMON_URI}/LiberationMono.zip" )
@@ -122,6 +125,7 @@ SRC_URI__="
 	ubuntu?                 ( "${COMMON_URI}/Ubuntu.zip" )
 	ubuntumono?             ( "${COMMON_URI}/UbuntuMono.zip" )
 	victormono?             ( "${COMMON_URI}/VictorMono.zip" )
+	symbolsonly?		( "${COMMON_URI}/NerdFontsSymbolsOnly.zip" )
 "
 
 LICENSE="MIT
