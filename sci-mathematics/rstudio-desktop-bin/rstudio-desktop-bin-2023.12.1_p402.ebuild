@@ -35,10 +35,7 @@ RDEPEND="
 	dev-libs/mathjax
 	dev-libs/nspr
 	dev-libs/nss
-	|| (
-		dev-libs/openssl-compat:1.1.1
-		=dev-libs/openssl-1.1.1*
-	)
+	dev-libs/openssl
 	media-libs/alsa-lib
 	media-libs/fontconfig
 	media-libs/mesa[gbm(+)]
