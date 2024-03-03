@@ -8,7 +8,7 @@ inherit shell-completion
 
 DESCRIPTION="Fast static HTML and CSS website generator"
 HOMEPAGE="https://gohugo.io https://github.com/gohugoio/hugo"
-SRC_URI="https://github.com/gohugoio/hugo/releases/download/v0.123.3/hugo_extended_0.123.3_linux-amd64.tar.gz -> ${PN}-bin-${PV}.tar.gz"
+SRC_URI="https://github.com/gohugoio/hugo/releases/download/v${PV}/hugo_extended_${PV}_linux-amd64.tar.gz -> ${PN}-bin-${PV}.tar.gz"
 
 
 # NOTE: To create the vendor tarball, run:
