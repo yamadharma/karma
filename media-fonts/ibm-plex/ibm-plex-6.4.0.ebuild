@@ -8,6 +8,8 @@ inherit font
 DESCRIPTION="The package of IBM's typeface"
 HOMEPAGE="https://github.com/IBM/plex"
 SRC_URI="https://github.com/IBM/plex/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+# https://github.com/IBM/plex/issues/250
+SRC_URI+=" https://github.com/IBM/plex/files/14278223/IBMPlexMath-Beta240212.otf.zip"
 
 LICENSE="OFL-1.1"
 SLOT="0"
@@ -24,6 +26,9 @@ FONT_SUFFIX=""
 
 src_install() {
 
+mkdir -p ${S}/IBM-Plex-Math/fonts/complete/otf
+mv ${WORKDIR}/IBMPlexMath* ${S}/IBM-Plex-Math/fonts/complete/otf/IBMPlexMath.otf
+
 if use otf; then
 
 	FONT_SUFFIX+="otf"
@@ -39,6 +44,8 @@ if use otf; then
 		IBM-Plex-Serif/fonts/complete/otf
 		IBM-Plex-Sans-Thai/fonts/complete/otf
 		IBM-Plex-Sans-Thai-Looped/fonts/complete/otf )
+
+	FONT_S+=(IBM-Plex-Math/fonts/complete/otf)
 fi
 
 if use ttf; then
