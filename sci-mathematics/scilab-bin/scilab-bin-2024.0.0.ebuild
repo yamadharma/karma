@@ -42,9 +42,10 @@ KEYWORDS="-* ~amd64"
 # 	sci-libs/umfpack
 
 RDEPEND="
-	sys-libs/ncurses-compat
+
 	virtual/jre:1.8
 "
+#	sys-libs/ncurses-compat
 
 QA_PREBUILT=( "opt/${MY_PN}/*" )
 
