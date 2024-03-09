@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{8..12} )
 inherit readme.gentoo-r1 pam python-any-r1 systemd xdg-utils
 
 MY_PN="VMware-Workstation-Full"
@@ -11,7 +11,7 @@ MY_PV=$(ver_cut 1-3)
 PV_MODULES="${MY_PV}"
 PV_BUILD=$(ver_cut 4)
 MY_P="${MY_PN}-${MY_PV}-${PV_BUILD}"
-VMWARE_FUSION_VER="13.0.1/21139760" # https://softwareupdate.vmware.com/cds/vmw-desktop/fusion/
+VMWARE_FUSION_VER="13.5.1/23298085" # https://softwareupdate.vmware.com/cds/vmw-desktop/fusion/
 SYSTEMD_UNITS_TAG="gentoo-02"
 UNLOCKER_VERSION="3.0.5"
 
@@ -201,13 +201,13 @@ src_install() {
 	insinto /usr
 	doins -r */share
 
-	if use cups; then
-		exeinto $(cups-config --serverbin)/filter
-		doexe */extras/thnucups
-
-		insinto /etc/cups
-		doins -r */etc/cups/*
-	fi
+#	if use cups; then
+#		exeinto $(cups-config --serverbin)/filter
+#		doexe */extras/thnucups
+#
+#		insinto /etc/cups
+#		doins -r */etc/cups/*
+#	fi
 
 	# Hardcoded EULA path. We need to disable the default compression.
 	insinto /usr/share/doc/vmware-workstation
