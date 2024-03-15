@@ -26,7 +26,7 @@ BDEPEND="virtual/pkgconfig"
 
 CONFIG_CHECK="ACPI_EC_DEBUGFS HWMON X86_MSR"
 
-PATCHES=( "${FILESDIR}/${PN}-0.1.7-disable_systemd+bash_completion_install.patch" )
+# PATCHES=( "${FILESDIR}/${PN}-0.1.7-disable_systemd+bash_completion_install.patch" )
 
 src_compile() {
 	tc-export CC
@@ -42,7 +42,7 @@ src_compile() {
 }
 
 src_install() {
-	emake -j1 "${myemakeargs[@]}" DESTDIR="${ED}" install-c
+	emake -j1 "${myemakeargs[@]}" DESTDIR="${ED}" install
 
 	for completion in "ec_probe" "nbfc" "nbfc_service"; do
 		dobashcomp "${S}/completion/bash/${completion}"
@@ -51,5 +51,5 @@ src_install() {
 	einstalldocs
 
 	newinitd "${FILESDIR}/nbfc.initd" nbfc
-	systemd_dounit "nbfc_service.service"
+#	systemd_dounit "nbfc_service.service"
 }
