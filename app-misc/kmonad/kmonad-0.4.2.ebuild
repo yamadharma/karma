@@ -8,7 +8,7 @@ EAPI=8
 #hackport: flags: -dext,-kext
 
 CABAL_FEATURES="lib profile haddock hoogle hscolour test-suite"
-inherit haskell-cabal
+inherit haskell-cabal systemd
 
 DESCRIPTION="Advanced keyboard remapping utility"
 HOMEPAGE="https://github.com/kmonad/kmonad#readme"
@@ -43,4 +43,13 @@ src_configure() {
 	haskell-cabal_src_configure \
 		--flag=-dext \
 		--flag=-kext
+}
+
+src_install() {
+	haskell-cabal_src_install
+
+	dodoc -r ${S}/keymap
+	dodoc -r ${S}/doc
+
+	systemd_dounit startup/kmonad@.service
 }
