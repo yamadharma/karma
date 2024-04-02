@@ -31,8 +31,12 @@ RDEPEND="
 "
 BDEPEND="
 	dev-python/setuptools-scm[${PYTHON_USEDEP}]
-	dev-python/vdirsyncer[${PYTHON_USEDEP}]
-	dev-python/freezegun[${PYTHON_USEDEP}]
+	test? (
+		dev-python/freezegun[${PYTHON_USEDEP}]
+		dev-python/hypothesis[${PYTHON_USEDEP}]
+		dev-python/packaging[${PYTHON_USEDEP}]
+		dev-python/vdirsyncer[${PYTHON_USEDEP}]
+	)
 "
 
 DOCS=( AUTHORS.txt CHANGELOG.rst CONTRIBUTING.rst README.rst khal.conf.sample )
