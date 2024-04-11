@@ -11,7 +11,7 @@ EGIT_REPO_URI="https://github.com/tdlib/td"
 
 LICENSE="Boost-1.0"
 SLOT="0"
-KEYWORDS="~amd64"
+#KEYWORDS="~amd64"
 IUSE="+cli doc debug java lto low-ram test"
 
 BDEPEND="
