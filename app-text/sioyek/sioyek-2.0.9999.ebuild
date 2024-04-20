@@ -2,12 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-MUPDF_PV=1.23.10
+#MUPDF_PV=1.23.10
+MUPDF_PV=1.24.1
 ZLIB_PV=1.3.1
 
 inherit qmake-utils desktop xdg
 
-if [[ ${PV} != 9999 ]]; then
+if [[ ${PV##*.} != 9999 ]]; then
 	SRC_URI="
 		https://github.com/ahrm/sioyek/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 		https://github.com/ArtifexSoftware/mupdf/archive/refs/tags/${MUPDF_PV}.tar.gz -> mupdf-${MUPDF_PV}.tar.gz
@@ -15,8 +16,13 @@ if [[ ${PV} != 9999 ]]; then
 		"
 	KEYWORDS="~amd64"
 else
+#	SRC_URI="
+#		https://github.com/ArtifexSoftware/mupdf/archive/refs/tags/${MUPDF_PV}.tar.gz -> mupdf-${MUPDF_PV}.tar.gz
+#		https://github.com/madler/zlib/archive/refs/tags/v${ZLIB_PV}.tar.gz -> zlib-${ZLIB_PV}.tar.gz
+#		"
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/ahrm/sioyek.git"
+	KEYWORDS="~amd64"
 fi
 
 DESCRIPTION="Sioyek is a PDF viewer with a focus on textbooks and research papers"
@@ -34,23 +40,27 @@ BDEPEND="
 PATCHES=(
 	"${FILESDIR}/mupdf-1.23.patch"
 	"${FILESDIR}/epub-support.patch"
-	"${FILESDIR}/fuzzy-smart-case.patch"
 	"${FILESDIR}/sqlite3-fix-1.patch"
 	"${FILESDIR}/sqlite3-fix-2.patch"
 	"${FILESDIR}/sqlite3-fix-3.patch"
 	)
 
+#	"${FILESDIR}/fuzzy-smart-case.patch"
+
 src_prepare() {
 	default
 
-	if [[ ${PV} != 9999 ]]; then
+	if [[ ${PV##*.} != 9999 ]]; then
 		rm -r "${S}/mupdf" "${S}/zlib" || die
 		mv "${WORKDIR}/mupdf-${MUPDF_PV}" "${S}/mupdf" || die
 		mv "${WORKDIR}/zlib-${ZLIB_PV}" "${S}/zlib" || die
 	fi
 
 	## Fix for new mupdf
-	sed -i -e "s/-lmupdf-third//g" pdf_viewer_build_config.pro
+	sed -i -e 's/-lmupdf-third//g' pdf_viewer_build_config.pro
+
+	## Move /etc
+	sed -i -e 's:$$PREFIX/etc:/etc:g' pdf_viewer_build_config.pro
 }
 
 src_compile() {
@@ -64,7 +74,7 @@ src_compile() {
 }
 
 src_install() {
-	einstall
+	make install INSTALL_ROOT=${D}
 	#intall bin and shaders
 #	dobin sioyek
 #	insinto /usr/share/sioyek/shaders
