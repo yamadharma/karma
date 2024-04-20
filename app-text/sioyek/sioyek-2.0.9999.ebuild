@@ -50,6 +50,8 @@ PATCHES=(
 src_prepare() {
 	default
 
+	rm -r "${S}/mupdf" "${S}/zlib" || die
+
 	if [[ ${PV##*.} != 9999 ]]; then
 		rm -r "${S}/mupdf" "${S}/zlib" || die
 		mv "${WORKDIR}/mupdf-${MUPDF_PV}" "${S}/mupdf" || die
