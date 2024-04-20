@@ -67,9 +67,9 @@ src_prepare() {
 
 src_compile() {
 	#Make Mupdf specific for build
-	pushd mupdf || die
-	emake USE_SYSTEM_HARFBUZZ=yes
-	popd || die
+#	pushd mupdf || die
+#	emake USE_SYSTEM_HARFBUZZ=yes
+#	popd || die
 
 	eqmake6 pdf_viewer_build_config.pro
 	emake
