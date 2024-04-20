@@ -1,0 +1,29 @@
+From d3198a1e8bdf1f73dbcc867cad0f1fcadc32988c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?H=C3=A5kon=20Harnes?= <hakon@harnes.dev>
+Date: Sun, 16 Apr 2023 15:41:28 +0200
+Subject: [PATCH] fix: sqlite3 memory leak fix
+
+---
+ pdf_viewer/sqlite3.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/pdf_viewer/sqlite3.c b/pdf_viewer/sqlite3.c
+index 55dc686ee..636296dc9 100644
+--- a/pdf_viewer/sqlite3.c
++++ b/pdf_viewer/sqlite3.c
+@@ -23578,11 +23578,13 @@ static void *sqlite3MemRealloc(void *pPrior, int nByte){
+   assert( pPrior!=0 && nByte>0 );
+   assert( nByte==ROUND8(nByte) ); /* EV: R-46199-30249 */
+   p--;
+-  p = SQLITE_REALLOC(p, nByte+8 );
+-  if( p ){
++  void *new_p = SQLITE_REALLOC(p, nByte+8 );
++  if( new_p ){
++    p = (sqlite3_int64 *)new_p;
+     p[0] = nByte;
+     p++;
+   }else{
++    SQLITE_FREE(p);
+     testcase( sqlite3GlobalConfig.xLog!=0 );
+     sqlite3_log(SQLITE_NOMEM,
+       "failed memory resize %u to %u bytes",

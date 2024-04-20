@@ -1,0 +1,99 @@
+From 4541d73cc6cba798e1d37bf21520ac8538eb6ac3 Mon Sep 17 00:00:00 2001
+From: NightMachinery <feraidoonmehri@gmail.com>
+Date: Fri, 12 Jan 2024 18:32:31 +0330
+Subject: [PATCH] fuzzy matching uses smart case
+
+---
+ pdf_viewer/ui.cpp    |  6 +++---
+ pdf_viewer/utils.cpp | 32 ++++++++++++++++++++++++++------
+ pdf_viewer/utils.h   |  2 ++
+ 3 files changed, 31 insertions(+), 9 deletions(-)
+
+diff --git a/pdf_viewer/ui.cpp b/pdf_viewer/ui.cpp
+index b546545ad..0d7931fa9 100644
+--- a/pdf_viewer/ui.cpp
++++ b/pdf_viewer/ui.cpp
+@@ -128,7 +128,7 @@ bool MySortFilterProxyModel::filterAcceptsRow(int source_row,
+ 			if (filterString.size() == 0) return true;
+ 			std::wstring s1 = filterString.toStdWString();
+ 			std::wstring s2 = key.toStdWString();
+-			int score = static_cast<int>(rapidfuzz::fuzz::partial_ratio(s1, s2));
++			int score = calculate_partial_ratio(s1, s2);
+ 
+ 			return score > 50;
+ 		}
+@@ -160,8 +160,8 @@ bool MySortFilterProxyModel::lessThan(const QModelIndex& left,
+ 		QString leftData = sourceModel()->data(left).toString();
+ 		QString rightData = sourceModel()->data(right).toString();
+ 
+-		int left_score = static_cast<int>(rapidfuzz::fuzz::partial_ratio(filterString.toStdWString(), leftData.toStdWString()));
+-		int right_score = static_cast<int>(rapidfuzz::fuzz::partial_ratio(filterString.toStdWString(), rightData.toStdWString()));
++		int left_score = calculate_partial_ratio(filterString.toStdWString(), leftData.toStdWString());
++		int right_score = calculate_partial_ratio(filterString.toStdWString(), rightData.toStdWString());
+ 		return left_score > right_score;
+ 	}
+ 	else {
+diff --git a/pdf_viewer/utils.cpp b/pdf_viewer/utils.cpp
+index c53b3e404..146aeef47 100644
+--- a/pdf_viewer/utils.cpp
++++ b/pdf_viewer/utils.cpp
+@@ -25,6 +25,11 @@
+ #include <qnetworkreply.h>
+ #include <qscreen.h>
+ 
++#include "rapidfuzz_amalgamated.hpp"
++
++#include <algorithm>
++#include <locale>
++
+ #include <mupdf/pdf.h>
+ 
+ extern std::wstring LIBGEN_ADDRESS;
+@@ -42,12 +47,11 @@ extern bool NUMERIC_TAGS;
+ #endif
+ 
+ 
+-std::wstring to_lower(const std::wstring& inp) {
+-	std::wstring res;
+-	for (char c : inp) {
+-		res.push_back(::tolower(c));
+-	}
+-	return res;
++std::wstring to_lower(const std::wstring& input) {
++    std::wstring output = input;
++    std::transform(output.begin(), output.end(), output.begin(),
++                   [](wchar_t c) { return std::tolower(c, std::locale()); });
++    return output;
+ }
+ 
+ void get_flat_toc(const std::vector<TocNode*>& roots, std::vector<std::wstring>& output, std::vector<int>& pages) {
+@@ -2256,3 +2260,19 @@ void convert_color4(float* in_color, int* out_color) {
+ 	out_color[2] = (int)(in_color[2] * 255);
+ 	out_color[3] = (int)(in_color[3] * 255);
+ }
++
++// Your function with smart_case_p parameter
++int calculate_partial_ratio(const std::wstring& filterString, const std::wstring& key, bool smart_case_p) {
++    std::wstring s1 = filterString;
++    std::wstring s2 = key;
++
++    // Convert strings to lowercase if smart_case_p is true and filterString is all lowercase
++    if (smart_case_p && is_all_lower(s1)) {
++        s1 = to_lower(s1);
++        s2 = to_lower(s2);
++    }
++
++    // Calculate the partial ratio score
++    int score = static_cast<int>(rapidfuzz::fuzz::partial_ratio(s1, s2));
++    return score;
++}
+diff --git a/pdf_viewer/utils.h b/pdf_viewer/utils.h
+index 10873c6c4..a58dc363a 100644
+--- a/pdf_viewer/utils.h
++++ b/pdf_viewer/utils.h
+@@ -214,3 +214,5 @@ void convert_color4(float* in_color, int
+ std::string get_aplph_tag(int n, int max_n);
+ 
+ bool should_trigger_delete(QKeyEvent *key_event);
++
++int calculate_partial_ratio(const std::wstring& filterString, const std::wstring& key, bool smart_case_p = true);

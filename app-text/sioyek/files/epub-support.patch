@@ -1,0 +1,28 @@
+From c0894a53c4428f278b5e81ade9bf614c0486addb Mon Sep 17 00:00:00 2001
+From: Aman9das <39594914+Aman9das@users.noreply.github.com>
+Date: Mon, 15 Apr 2024 04:19:00 +0530
+Subject: [PATCH] Declare epub support
+
+---
+ resources/sioyek.desktop | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/resources/sioyek.desktop b/resources/sioyek.desktop
+index 4773c59e7..a2706fca3 100644
+--- a/resources/sioyek.desktop
++++ b/resources/sioyek.desktop
+@@ -1,7 +1,7 @@
+ [Desktop Entry]
+ Name=Sioyek
+ Comment=PDF viewer for reading research papers and technical books
+-Keywords=pdf;viewer;reader;research;
++Keywords=pdf;viewer;reader;research;epub;
+ TryExec=sioyek
+ Exec=sioyek %f
+ StartupNotify=true
+@@ -9,4 +9,4 @@ Terminal=false
+ Type=Application
+ Icon=sioyek-icon-linux
+ Categories=Development;Viewer;
+-MimeType=application/pdf;
++MimeType=application/pdf;application/epub+zip;
