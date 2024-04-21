@@ -22,6 +22,7 @@ else
 #		"
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/ahrm/sioyek.git"
+	EGIT_BRANCH=development
 	KEYWORDS="~amd64"
 fi
 
@@ -38,13 +39,13 @@ BDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/mupdf-1.23.patch"
 	"${FILESDIR}/epub-support.patch"
 	"${FILESDIR}/sqlite3-fix-1.patch"
 	"${FILESDIR}/sqlite3-fix-2.patch"
 	"${FILESDIR}/sqlite3-fix-3.patch"
 	)
 
+#	"${FILESDIR}/mupdf-1.23.patch"
 #	"${FILESDIR}/fuzzy-smart-case.patch"
 
 src_prepare() {
