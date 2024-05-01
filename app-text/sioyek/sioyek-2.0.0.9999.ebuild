@@ -83,7 +83,7 @@ src_install() {
 #	insinto /usr/share/sioyek/shaders
 #	doins pdf_viewer/shaders/*
 
-	domenu "${FILESDIR}/sioyek.desktop"
+#	domenu "${FILESDIR}/sioyek.desktop"
 #	doicon resources/sioyek-icon-linux.png
 #	insinto /usr/share/sioyek && doins tutorial.pdf pdf_viewer/keys.config pdf_viewer/prefs.config
 #	doman resources/sioyek.1
