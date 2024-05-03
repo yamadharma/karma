@@ -72,7 +72,6 @@ src_configure() {
 		-DENABLE_TRANSLATIONS=$(usex translations)
 		-DENABLE_PCH=$(usex !debug)
 		-DENABLE_NULLKILLER_AI=$(usex nullkiller-ai)
-
 		-DENABLE_MONOLITHIC_INSTALL=OFF
 		-DFORCE_BUNDLED_FL=OFF
 		-DFORCE_BUNDLED_MINIZIP=OFF
