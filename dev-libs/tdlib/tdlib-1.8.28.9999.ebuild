@@ -22,7 +22,7 @@ HOMEPAGE="https://github.com/tdlib/td"
 
 LICENSE="Boost-1.0"
 SLOT="0"
-IUSE="+cli doc debug java lto low-ram test"
+IUSE="+cli doc debug java lto +low-ram test"
 
 BDEPEND="
 	>=dev-build/cmake-3.0.2
@@ -41,7 +41,7 @@ RDEPEND="
 "
 
 # According to documentation, LTO breaks build of java bindings. But actually it builds fine for me.
-REQUIRED_USE="?? ( lto java )"
+#REQUIRED_USE="?? ( lto java )"
 
 DOCS=( README.md )
 
