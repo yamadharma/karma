@@ -7,7 +7,8 @@ inherit elisp-common toolchain-funcs xdg-utils
 
 DESCRIPTION="Regression, econometrics and time-series library"
 HOMEPAGE="http://gretl.sourceforge.net/"
-SRC_URI="mirror://sourceforge/project/${PN}/${PN}/${PV}/${P}.tar.xz"
+# SRC_URI="mirror://sourceforge/project/${PN}/${PN}/${PV}/${P}.tar.xz"
+SRC_URI="https://prdownloads.sourceforge.net/${PN}/${P}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0/40"
@@ -47,9 +48,9 @@ SITEFILE=50${PN}-gentoo.el
 
 REQUIRED_USE="emacs? ( gtk )"
 
-PATCHES=(
-	"${FILESDIR}"/${PN}-2001d-appdatadir.patch
-)
+#PATCHES=(
+#	"${FILESDIR}"/${PN}-2001d-appdatadir.patch
+#)
 
 DOCS=( README ChangeLog CompatLog )
 
