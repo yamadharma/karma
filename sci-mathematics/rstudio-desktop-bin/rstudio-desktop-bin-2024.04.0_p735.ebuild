@@ -58,8 +58,10 @@ RDEPEND="
 	x11-libs/libxkbcommon
 	x11-libs/libxshmfence
 	x11-libs/pango
-	=virtual/jdk-11*:*
+	virtual/jdk
 "
+
+#	=virtual/jdk-11*:*
 
 DESTDIR="/opt/${MY_PN}"
 
