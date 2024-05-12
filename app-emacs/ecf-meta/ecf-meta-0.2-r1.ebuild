@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=7
+EAPI=8
 
 # inherit eutils
 
@@ -20,6 +20,7 @@ PDEPEND="app-emacs/ecf
 	sys-apps/fd
 	media-gfx/ditaa
 	dev-tex/LaTeXML
+	app-editors/emacs-lsp-booster
 "
 
 # Local Variables:
