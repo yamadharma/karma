@@ -21,7 +21,10 @@ src_install() {
 	doins index.theme cursor.theme
 
 	insinto /usr/share/icons/plan9/cursors
+	doins -r src/cursors/.
 	doins -r cursors/.
+	rm ${D}/usr/share/icons/plan9/cursors/*.{in,png,py}
+	rm ${D}/usr/share/icons/plan9/cursors/Makefile
 
 	dosym /usr/share/icons/plan9/cursors /usr/share/cursors/xorg-x11/plan9
 }
