@@ -9,6 +9,7 @@ git push
 
 # Mirror
 git push --mirror git@github.com:yamadharma/gentoo-portage-local.git
+git push --mirror git@bitbucket.org:yamadharma/soft-gentoo-portage-local.git
 
 # git compress
 if [[ $1 == "compress" ]]
