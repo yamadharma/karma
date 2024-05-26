@@ -5,7 +5,7 @@ git pull
 # Push
 git add -A .
 git commit -am "$(date)"
-git push
+# git push
 
 # Mirror
 git push --mirror git@github.com:yamadharma/gentoo-portage-local.git
