@@ -8,8 +8,8 @@ git commit -am "$(date)"
 # git push
 
 # Mirror
-git push --mirror git@github.com:yamadharma/gentoo-portage-local.git
-git push --mirror git@bitbucket.org:yamadharma/karma.git
+git push --mirror git@github.com:yamadharma/karma.git
+git push --mirror git@bitbucket.org:yamadharma/gentoo-portage-local.git
 
 # git compress
 if [[ $1 == "compress" ]]
