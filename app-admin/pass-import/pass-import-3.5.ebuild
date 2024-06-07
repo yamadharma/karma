@@ -19,6 +19,7 @@ SLOT="0"
 KEYWORDS="amd64 ~x86"
 
 COMMON_DEPEND="app-shells/bash
+	dev-python/dominate
 	$(python_gen_cond_dep '
 		dev-python/cryptography[${PYTHON_USEDEP}]
 	')
@@ -59,6 +60,11 @@ src_prepare() {
 	eapply_user
 	python_fix_shebang .
 	sed -i -e 's:python3:'${EPYTHON}':g' scripts/import.bash scripts/pimport
+}
+
+src_compile() {
+	pandoc -t man -s -o share/man/man1/pass-import.1 share/man/man1/pass-import.md
+	pandoc -t man -s -o share/man/man1/pimport.1 share/man/man1/pimport.md 
 }
 
 src_install() {
