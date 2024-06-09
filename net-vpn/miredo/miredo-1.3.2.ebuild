@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit autotools eutils linux-info systemd
+inherit autotools linux-info systemd
 
 DESCRIPTION="Miredo is an open-source Teredo IPv6 tunneling software"
 HOMEPAGE="http://www.remlab.net/miredo/"
