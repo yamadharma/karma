@@ -1,10 +1,10 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
 MY_PN=${PN/-bin/}
-inherit unpacker eutils
+inherit unpacker bash-completion-r1
 
 DESCRIPTION="Tool for building and distributing virtual machines"
 HOMEPAGE="http://vagrantup.com/"
