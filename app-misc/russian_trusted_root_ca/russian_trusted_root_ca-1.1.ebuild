@@ -34,7 +34,7 @@ src_install () {
 		# openssl x509 -inform DER -in ${i} -out ${i/.cer/.crt}
 		mv ${i} ${i/.cer/.crt}
 	done
-	insinto /usr/share/ca-certificates/russiancrt
+	insinto /usr/local/share/ca-certificates/
 	doins *.crt
 }
 
