@@ -6,9 +6,9 @@ EAPI=8
 ECM_HANDBOOK="optional"
 ECM_TEST="forceoptional"
 PVCUT=$(ver_cut 1-3)
-KFMIN=6.0.0
+KFMIN=6.3.0
 QTMIN=6.6.2
-inherit ecm gear.kde.org flag-o-matic
+inherit ecm gear.kde.org
 
 DESCRIPTION="Certificate manager and GUI for OpenPGP and CMS cryptography"
 HOMEPAGE="https://apps.kde.org/kleopatra/"
@@ -39,6 +39,7 @@ DEPEND="
 	>=kde-frameworks/kio-${KFMIN}:6
 	>=kde-frameworks/kitemmodels-${KFMIN}:6
 	>=kde-frameworks/knotifications-${KFMIN}:6
+	>=kde-frameworks/kstatusnotifieritem-${KFMIN}:6
 	>=kde-frameworks/ktextwidgets-${KFMIN}:6
 	>=kde-frameworks/kwidgetsaddons-${KFMIN}:6
 	>=kde-frameworks/kwindowsystem-${KFMIN}:6
@@ -55,8 +56,10 @@ RDEPEND="${DEPEND}
 "
 
 src_configure() {
+
 	append-cxxflags -D_LIBCPP_ENABLE_CXX20_REMOVED_SHARED_PTR_UNIQUE
 	append-cxxflags -Wno-error=enum-constexpr-conversion
+
 	local mycmakeargs=(
 		$(cmake_use_find_package pim KPim6AkonadiMime)
 		$(cmake_use_find_package pim KPim6IdentityManagement)
