@@ -135,6 +135,9 @@ src_prepare() {
 src_configure() {
 	# libstdc++ bug, bug #887815
 	append-cxxflags -U_GLIBCXX_ASSERTIONS
+#	append-cxxflags -U_GLIBCXX_USE_CXX11_ABI=0
+
+	append-cxxflags -std=gnu++17
 
 	# Unfortunate dependency on mpi from hdf5 (bug #302621)
 	use hdf5 && has_version sci-libs/hdf5[mpi] && \
