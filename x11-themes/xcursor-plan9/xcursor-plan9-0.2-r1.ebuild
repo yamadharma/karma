@@ -1,0 +1,30 @@
+# Copyright 1999-2024 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+DESCRIPTION="Xorg cursor theme inspired and based on plan9 cursors"
+HOMEPAGE="https://xn--1xa.duncano.de/"
+#SRC_URI="https://π.duncano.de/files/${P}.tar.xz"
+SRC_URI="https://github.com/wintermute-cell/${PN}/archive/refs/tags/v0.2.tar.gz -> ${P}.tar.gz"
+
+LICENSE="unknown"
+SLOT="0"
+KEYWORDS="amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86"
+
+DEPEND="x11-apps/xcursorgen"
+RDEPEND="x11-libs/libXcursor"
+
+
+src_install() {
+	insinto /usr/share/icons/plan9
+	doins index.theme cursor.theme
+
+	insinto /usr/share/icons/plan9/cursors
+	doins -r src/cursors/
+	doins -r cursors/
+	rm ${D}/usr/share/icons/plan9/cursors/*.{in,png,py}
+	rm ${D}/usr/share/icons/plan9/cursors/Makefile
+
+	dosym /usr/share/icons/plan9/cursors /usr/share/cursors/xorg-x11/plan9
+}
