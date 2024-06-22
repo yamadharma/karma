@@ -12,7 +12,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 amd64"
 
-IUSE="${IUSE} lisp"
+IUSE="${IUSE} elisp"
 
 PDEPEND="app-emacs/ecf
 	media-fonts/fira-code
@@ -21,12 +21,13 @@ PDEPEND="app-emacs/ecf
 	media-gfx/ditaa
 	dev-tex/LaTeXML
 	app-editors/emacs-lsp-booster
-	lisp? (
+	elisp? (
 	      app-emacs/auctex
 	      app-emacs/auto-complete
 	      app-emacs/autoconf-mode
 	      app-emacs/ebuild-mode
 	      app-emacs/ebuild-run-mode
+	      app-emacs/async
 	)
 "
 
@@ -46,7 +47,6 @@ PDEPEND="app-emacs/ecf
 # app-emacs/apel
 # app-emacs/apheleia
 # app-emacs/assess
-# app-emacs/async
 # app-emacs/atomic-chrome
 # app-emacs/autothemer
 # app-emacs/avy
