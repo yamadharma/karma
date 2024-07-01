@@ -113,8 +113,9 @@ PATCHES=(
 	"${FILESDIR}"/${P}-libxml2-2.12.patch
 	"${FILESDIR}"/${P}-poppler-24.03.patch
 	"${FILESDIR}"/${P}-poppler-24.05.patch # bug 931917
-#	"${FILESDIR}"/${P}-cxx20.patch # bug 931917
-#	"${FILESDIR}"/${P}-cxx20-2.patch # bug 933216
+	"${FILESDIR}"/${P}-cxx20.patch # bug 931917
+	"${FILESDIR}"/${P}-cxx20-2.patch # bug 933216
+	"${FILESDIR}"/avoid-std-shared_ptr-t-unique.patch
 )
 
 pkg_pretend() {
