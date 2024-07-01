@@ -97,8 +97,7 @@ src_install() {
 	insinto /usr/share/xdg-desktop-portal
 	doins "${FILESDIR}/sway-portals.conf"
 
-	insinto /usr/bin
-	doins "${FILESDIR}/start-sway"
+	dobin "${FILESDIR}/start-sway"
 	sed -i -e 's/Exec=sway/Exec=start-sway/' ${D}/usr/share/wayland-sessions/sway.desktop
 }
 
