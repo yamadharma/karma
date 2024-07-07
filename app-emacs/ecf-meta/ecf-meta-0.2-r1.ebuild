@@ -12,7 +12,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 amd64"
 
-IUSE="${IUSE} elisp"
+IUSE="${IUSE} elisp latex lsp"
 
 PDEPEND="app-emacs/ecf
 	media-fonts/fira-code
@@ -20,7 +20,7 @@ PDEPEND="app-emacs/ecf
 	sys-apps/fd
 	media-gfx/ditaa
 	dev-tex/LaTeXML
-	app-editors/emacs-lsp-booster
+	lsp? ( app-editors/emacs-lsp-booster )
 	elisp? (
 	      app-emacs/auctex
 	      app-emacs/auto-complete
@@ -29,6 +29,7 @@ PDEPEND="app-emacs/ecf
 	      app-emacs/ebuild-run-mode
 	      app-emacs/async
 	)
+	latex? ( dev-tex/texlab )
 "
 
 # app-emacs/a
