@@ -9,7 +9,7 @@ DESCRIPTION="VMware kernel modules"
 HOMEPAGE="https://github.com/mkubecek/vmware-host-modules"
 
 # Highest kernel version known to work:
-MY_KERNEL_VERSION="6.8"
+MY_KERNEL_VERSION="6.9"
 
 # Upstream doesn't want to tag versions or anything that looks like properly
 # releasing the software, so we need to just pick a commit from
@@ -34,6 +34,11 @@ RESTRICT="mirror"
 
 S="${WORKDIR}/vmware-host-modules-${MY_COMMIT}"
 #S="${WORKDIR}/vmware-host-modules-w${PV}"
+
+PATCHES=(
+	"${FILESDIR}/linux-6.9.patch"
+	"${FILESDIR}/linux-6.9-x86cpuid.patch"
+	)
 
 pkg_setup() {
 	CONFIG_CHECK="~HIGH_RES_TIMERS"

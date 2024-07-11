@@ -1,0 +1,23 @@
+From d9f51eee7513715830ac214f1b25db79059f5270 Mon Sep 17 00:00:00 2001
+From: Veronika Kossmann <nanodesuu@gmail.com>
+Date: Sat, 18 May 2024 20:23:18 +0300
+Subject: [PATCH] Seems x86cpuid.h also need to be patched to prevent
+ array-index-out-of-bounds
+
+---
+ vmmon-only/include/x86cpuid.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/vmmon-only/include/x86cpuid.h b/vmmon-only/include/x86cpuid.h
+index e2d297bf..c46fad70 100644
+--- a/vmmon-only/include/x86cpuid.h
++++ b/vmmon-only/include/x86cpuid.h
+@@ -92,7 +92,7 @@ typedef struct CPUIDQuery {
+    uint32 eax;                // IN
+    uint32 ecx;                // IN
+    uint32 numLogicalCPUs;     // IN/OUT
+-   CPUIDReply logicalCPUs[0]; // OUT
++   CPUIDReply logicalCPUs[]; // OUT
+ } CPUIDQuery;
+ #pragma pack(pop)
+ #endif
