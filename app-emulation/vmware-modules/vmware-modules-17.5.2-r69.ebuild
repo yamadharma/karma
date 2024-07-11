@@ -30,7 +30,7 @@ IUSE=""
 RDEPEND=""
 DEPEND=""
 
-RESTRICT="mirror"
+RESTRICT="mirror userpriv"
 
 S="${WORKDIR}/vmware-host-modules-${MY_COMMIT}"
 #S="${WORKDIR}/vmware-host-modules-w${PV}"
