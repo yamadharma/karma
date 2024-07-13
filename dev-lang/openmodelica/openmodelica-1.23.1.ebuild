@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=7
+EAPI=8
 
 inherit autotools flag-o-matic multilib qmake-utils desktop
-# inherit cmake flag-o-matic multilib qmake-utils desktop
+#inherit cmake flag-o-matic multilib qmake-utils desktop
 
 OMOptimPV=1.11.0-dev.beta4
 OMSensPV=WorkPackage-2-Final
@@ -33,7 +33,7 @@ HOMEPAGE="https://openmodelica.org/"
 
 LICENSE="OMPL"
 SLOT="0"
-IUSE="+editor doc threads clang"
+IUSE="+editor doc threads clang ccache"
 
 # Don't compile with lapack-3.8
 DEPEND="sys-apps/sed
@@ -47,6 +47,7 @@ DEPEND="sys-apps/sed
 	|| ( dev-games/openscenegraph dev-games/openscenegraph-openmw )
 	threads? ( dev-libs/boost )
 	|| ( sci-libs/openblas ( sci-libs/lapack-reference sci-libs/blas-reference ) )
+	ccache? ( dev-util/ccache )
 	dev-qt/qtwebengine:5
 "
 #	dev-qt/qtwebkit
@@ -104,7 +105,7 @@ src_prepare() {
 #	make
 }
 
-src_configure_() {
+src_configure__cmake() {
 	strip-flags
 
 	append-ldflags -Wno-dev
@@ -117,8 +118,9 @@ src_configure_() {
 
 	local mycmakeargs=(
 		-DOM_OMEDIT_ENABLE_QTWEBENGINE=ON
-#		-DFMILIB_BUILD_STATIC_LIB=ON
-#		-DFMILIB_BUILD_SHARED_LIB=OFF
+		-DFMILIB_BUILD_SHARED_LIB=ON
+		-DFMILIB_BUILD_STATIC_LIB=OFF
+		-DFMILIB_DEFAULT_BUILD_TYPE_RELEASE=IN
 		-DOM_OMC_USE_CORBA=ON
 		-DOM_OMC_USE_LAPACK=ON
 		-DOM_ENABLE_GUI_CLIENTS=ON
@@ -129,6 +131,8 @@ src_configure_() {
 		-DOM_OMEDIT_INSTALL_RUNTIME_DLLS=ON
 		-DOM_OMEDIT_ENABLE_TESTS=OFF
 		-DOM_OMSHELL_ENABLE_TERMINAL=ON
+		-DOM_OMEDIT_ENABLE_LIBXML2=ON
+		-DOM_USE_CCACHE=$(usex ccache)
 	)
 
 #		-DENABLE_IMAGE_PNG=$(usex png)
@@ -149,8 +153,8 @@ src_configure() {
 #	append-ldflags -Wno-dev
 	append-ldflags $(no-as-needed)
 	append-cppflags -I/usr/lib64/libffi/include
-	append-cflags -ffloat-store
-	filter-flags -march=native
+#	append-cflags -ffloat-store
+#	filter-flags -march=native
 #	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE:BOOL=ON
 	append-cflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
 	append-cppflags -DOM_OMEDIT_ENABLE_QTWEBENGINE
@@ -170,10 +174,11 @@ src_configure() {
 #		$(use_with editor omniORB)
 #		)
 
-	local myconf=( --without-omc )
+	local myconf=()
+	myconf+=( --without-omc )
 	myconf+=( $(use_with editor omniORB) )
 
-	use clang && myconf+=( CC=clang CXX=clang++ GNUCXX=g++ )
+	#use clang && myconf+=( CC=clang CXX=clang++ GNUCXX=g++ )
 
 #		--disable-modelica3d
 #		--with-ombuilddir="${S}"/build
@@ -203,6 +208,10 @@ src_configure() {
 	#    OPENMODELICAHOME=/usr \
 	#    econf "${myconf[@]}"
 
+	cd ${S}/OMCompiler
+#	./configure
+	cd ${S}
+
 
 	# Correct the documentation installation directory: the package does not
 	# give a 'make doc' alternative, so we simply install it into a folder that
@@ -228,8 +237,8 @@ src_configure() {
 }
 
 src_compile() {
-	emake -j1
-	emake -j1 omlibrary
+	make -j1
+	make -j1 omlibrary
 }
 
 src_install() {
