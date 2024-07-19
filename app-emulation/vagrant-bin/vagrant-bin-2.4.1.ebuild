@@ -47,4 +47,7 @@ src_install() {
 	cp -ar ./* "${ED}${dir}" || die "copy files failed"
 
 	make_wrapper "${MY_PN}" "${dir}/bin/${MY_PN}"
+
+	dosym /opt/vagrant/vagrant /opt/bin/vagrant
+	dosym /opt/vagrant/vagrant-go /opt/bin/vagrant-go
 }
