@@ -48,6 +48,6 @@ src_install() {
 
 	make_wrapper "${MY_PN}" "${dir}/bin/${MY_PN}"
 
-	dosym /opt/vagrant/vagrant /opt/bin/vagrant
-	dosym /opt/vagrant/vagrant-go /opt/bin/vagrant-go
+	dosym /opt/vagrant/vagrant /usr/bin/vagrant
+	dosym /opt/vagrant/vagrant-go /usr/bin/vagrant-go
 }
