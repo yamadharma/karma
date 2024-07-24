@@ -15,20 +15,23 @@ KEYWORDS="x86 amd64"
 IUSE="${IUSE} elisp latex lsp"
 
 PDEPEND="app-emacs/ecf
-	media-fonts/fira-code
+	media-fonts/iosevka
 	sys-apps/ripgrep
 	sys-apps/fd
 	media-gfx/ditaa
 	dev-tex/LaTeXML
-	lsp? ( app-editors/emacs-lsp-booster )
+	lsp? (
+		app-editors/emacs-lsp-booster
+	     	dev-util/marksman
+	     	)
 	elisp? (
-	      app-emacs/auctex
-	      app-emacs/auto-complete
-	      app-emacs/autoconf-mode
-	      app-emacs/ebuild-mode
-	      app-emacs/ebuild-run-mode
-	      app-emacs/async
-	)
+	       app-emacs/auctex
+	       app-emacs/auto-complete
+	       app-emacs/autoconf-mode
+	       app-emacs/ebuild-mode
+	       app-emacs/ebuild-run-mode
+	       app-emacs/async
+	       )
 	latex? ( dev-tex/texlab )
 "
 
