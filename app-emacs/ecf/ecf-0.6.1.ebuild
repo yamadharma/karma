@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=7
+EAPI=8
 
 inherit elisp-common
 
@@ -15,7 +15,8 @@ KEYWORDS="x86 amd64"
 
 IUSE="${IUSE}"
 
-DEPEND="app-editors/emacs"
+DEPEND="app-editors/emacs
+	app-emacs/desire"
 
 src_install() {
 	default
