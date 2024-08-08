@@ -8,16 +8,35 @@ inherit chromium-2 unpacker desktop wrapper pax-utils xdg
 RESTRICT="bindist mirror strip"
 
 MY_PV="${PV/_p/-}"
-if [[ ${PN} == yandex-browser ]]; then
-	MY_PN=${PN}-stable
-else
-	MY_PN=${PN}
-fi
-
-FFMPEG="120"
+MY_BASE_PN="yandex-browser"
+case ${PN} in
+	yandex-browser)
+		MY_PN="${PN}-stable"
+		HOMEPAGE="https://browser.yandex.ru/"
+		BLOCK="!www-client/yandex-browser-corporate"
+		DESKTOP_FILE_NAME="${PN}"
+		FFMPEG_PV="124"
+		# check in update_ffmpeg script on unpack phase (in the string containing "jq")
+		# (don't call prepare when you want to check, as prepare phase removes it)
+		# Or you may look for "based on Chromium <version> in "control" file in the deb package.
+		;;
+	yandex-browser-beta)
+		MY_PN="${PN}"
+		HOMEPAGE="https://browser.yandex.ru/beta/"
+		DESKTOP_FILE_NAME="${PN}"
+		FFMPEG_PV="124"
+		;;
+	yandex-browser-corporate)
+		MY_PN="${PN}"
+		DESKTOP_FILE_NAME="${PN%%-corporate}"
+		BLOCK="!www-client/yandex-browser"
+		HOMEPAGE="https://browser.yandex.ru/corp"
+		FFMPEG_PV="124"
+		;;
+esac
+YANDEX_HOME="opt/${DESKTOP_FILE_NAME/-//}"
 
 DESCRIPTION="The web browser from Yandex"
-HOMEPAGE="https://browser.yandex.ru/"
 LICENSE="Yandex-EULA"
 SLOT="0"
 IUSE="+ffmpeg-codecs"
@@ -52,21 +71,21 @@ RDEPEND="
 	x11-libs/libXrandr
 	x11-libs/pango[X]
 	x11-misc/xdg-utils
-	ffmpeg-codecs? ( media-video/ffmpeg-chromium:${FFMPEG} )
+	ffmpeg-codecs? ( media-video/ffmpeg-chromium:${FFMPEG_PV} )
 	sys-libs/libudev-compat
 	dev-qt/qtcore
 	dev-qt/qtgui
 	dev-qt/qtwidgets
 	app-accessibility/at-spi2-core
+	${BLOCK}
 "
-DEPEND="
+BDEPEND="
 	>=dev-util/patchelf-0.9
 "
 
 QA_PREBUILT="*"
 QA_DESKTOP_FILE="usr/share/applications/yandex-browser.*\\.desktop"
 S=${WORKDIR}
-YANDEX_HOME="opt/${PN/-//}"
 
 pkg_setup() {
 	chromium_suid_sandbox_check_kernel_config
@@ -85,12 +104,27 @@ src_prepare() {
 
 	mv usr/share/doc/${MY_PN} usr/share/doc/${PF} || die "Failed to move docdir"
 
-	gunzip "usr/share/doc/${PF}/changelog.gz" "usr/share/man/man1/${MY_PN}.1.gz" || die "Failed to decompress docs"
-	rm "usr/share/man/man1/${PN}.1.gz" || die
+	gunzip \
+		"usr/share/doc/${PF}/changelog.gz" \
+		"usr/share/man/man1/${MY_PN}.1.gz" \
+	|| die "Failed to decompress docs"
 
-	pushd "${YANDEX_HOME}/locales" > /dev/null || die
-	chromium_remove_language_paks
+	pushd "${YANDEX_HOME}/locales" > /dev/null || die "Failed to cd into locales dir"
+		chromium_remove_language_paks
 	popd > /dev/null || die
+
+	local crap=(
+		"${YANDEX_HOME}/xdg-settings"
+		"${YANDEX_HOME}/xdg-mime"
+		"${YANDEX_HOME}/update-ffmpeg"
+		"${YANDEX_HOME}/update_codecs"
+		"${YANDEX_HOME}/compiz.sh"
+	)
+
+	test -L "usr/share/man/man1/${MY_BASE_PN}.1.gz" &&
+		crap+=("usr/share/man/man1/${MY_BASE_PN}.1.gz")
+
+	rm ${crap[@]} || die "Failed to remove bundled crap"
 
 	default
 
@@ -99,7 +133,7 @@ src_prepare() {
 		-e 's|\[(NewIncognito)|\[X-\1|g' \
 		-e 's|^TargetEnvironment|X-&|g' \
 		-e 's|-stable||g' \
-		-i usr/share/applications/${PN}.desktop || die
+		-i usr/share/applications/${DESKTOP_FILE_NAME}.desktop || die
 
 	patchelf --remove-rpath "${S}/${YANDEX_HOME}/yandex_browser-sandbox" || die "Failed to fix library rpath (sandbox)"
 	patchelf --remove-rpath "${S}/${YANDEX_HOME}/yandex_browser" || die "Failed to fix library rpath (yandex_browser)"
@@ -111,11 +145,8 @@ src_install() {
 	dodir /usr/$(get_libdir)/${MY_PN}/lib
 	mv "${D}"/usr/share/appdata "${D}"/usr/share/metainfo || die
 
-	make_wrapper "${PN}" "./${PN}" "/${YANDEX_HOME}" "/usr/$(get_libdir)/${MY_PN}/lib" || die "Failed to mae wrapper"
-
-	dosym "../../../usr/$(get_libdir)/chromium/libffmpeg.so.${FFMPEG}" "${YANDEX_HOME}/libffmpeg.so"
-
-	# yandex_browser binary loads libudev.so.0 at runtime
+	make_wrapper "${PN}" "./${DESKTOP_FILE_NAME}" "/${YANDEX_HOME}" "/usr/$(get_libdir)/${MY_PN}/lib" \
+		|| die "Failed to make a wrapper"
 
 	for icon in "${D}/${YANDEX_HOME}/product_logo_"*.png; do
 		size="${icon##*/product_logo_}"
@@ -123,6 +154,8 @@ src_install() {
 		dodir "/usr/share/icons/hicolor/${size}x${size}/apps"
 		newicon -s "${size}" "$icon" "${MY_PN}.png"
 	done
+
+	dosym ../../../usr/"$(get_libdir)"/chromium/libffmpeg.so."${FFMPEG_PV}" "${YANDEX_HOME}"/libffmpeg.so || die
 
 	fowners root:root "/${YANDEX_HOME}/yandex_browser-sandbox"
 	fperms 4711 "/${YANDEX_HOME}/yandex_browser-sandbox"
