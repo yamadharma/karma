@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install unpack
+DEPEND=>=dev-db/qdbm-1.8.37 || ( chasen? ( app-text/chasen ) mecab? ( app-text/mecab ) kakasi? ( app-i18n/kakasi ) ) zlib? ( sys-libs/zlib )
+DESCRIPTION=a personal full-text search system
+EAPI=0
+HOMEPAGE=http://estraier.sourceforge.net/
+IUSE=chasen debug kakasi mecab zlib
+KEYWORDS=amd64 ~ppc ~ppc64 ~sparc x86
+LICENSE=GPL-2
+RDEPEND=>=dev-db/qdbm-1.8.37 || ( chasen? ( app-text/chasen ) mecab? ( app-text/mecab ) kakasi? ( app-i18n/kakasi ) ) zlib? ( sys-libs/zlib )
+SLOT=0
+SRC_URI=mirror://sourceforge/estraier/estraier-1.2.29.tar.gz
+_md5_=ffe152b0891dadcc8b42df6518701ba8

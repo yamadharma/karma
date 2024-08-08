@@ -1,0 +1,10 @@
+DEFINED_PHASES=compile install
+DESCRIPTION=Interactive adduser script
+EAPI=0
+HOMEPAGE=http://cpu.sf.net/
+KEYWORDS=x86 ppc sparc ~alpha
+LICENSE=GPL-2
+RDEPEND=sys-apps/shadow
+SLOT=0
+SRC_URI=mirror://sourceforge/cpu/cpu-1.3.13.tar.gz
+_md5_=69a89a534a0def738e168df5cc1a291e

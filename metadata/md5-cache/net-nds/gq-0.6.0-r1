@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install
+DEPEND==x11-libs/gtk+-1.2* >=net-nds/openldap-2 kerberos? ( virtual/krb5 ) jpeg? ( media-libs/gdk-pixbuf ) ssl? ( dev-libs/openssl )
+DESCRIPTION=GTK-based LDAP client
+EAPI=0
+HOMEPAGE=http://www.biot.com/gq/
+IUSE=kerberos jpeg nls ssl
+KEYWORDS=x86
+LICENSE=GPL-2
+RDEPEND==x11-libs/gtk+-1.2* >=net-nds/openldap-2 kerberos? ( virtual/krb5 ) jpeg? ( media-libs/gdk-pixbuf ) ssl? ( dev-libs/openssl )
+SLOT=0
+SRC_URI=mirror://sourceforge/gqclient/gq-0.6.0.tar.gz
+_md5_=f4514ca68e70b8b40fbb97d6e189834e

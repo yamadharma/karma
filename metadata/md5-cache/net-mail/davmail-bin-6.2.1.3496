@@ -1,0 +1,15 @@
+BDEPEND=virtual/pkgconfig
+DEFINED_PHASES=compile install postinst preinst prepare setup
+DEPEND=|| ( >=virtual/jre-1.6:* >=virtual/jdk-1.6:* ) !net-mail/davmail >=dev-java/java-config-2.2.0-r3
+DESCRIPTION=POP/IMAP/SMTP/Caldav/Carddav/LDAP Exchange Gateway
+EAPI=7
+HOMEPAGE=http://davmail.sourceforge.net/
+INHERIT=java-pkg-2 desktop systemd
+IUSE=server
+KEYWORDS=amd64 x86
+LICENSE=GPL-2
+RDEPEND=|| ( >=virtual/jre-1.6:* >=virtual/jdk-1.6:* ) !net-mail/davmail server? ( acct-user/davmail acct-group/davmail ) >=dev-java/java-config-2.2.0-r3
+SLOT=0
+SRC_URI=mirror://sourceforge/davmail/davmail-6.2.1-3496.zip
+_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d	java-pkg-2	b6d755b4f6afabfd933932be28b46368	java-utils-2	b2e92a8220dc7b1bd2062ca11774798a	multilib	c19072c3cd7ac5cb21de013f7e9832e0	systemd	c8b03e8df84486aa991d4396686e8942	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=4a24e96f3c1796248aaa292d5b4ad75c

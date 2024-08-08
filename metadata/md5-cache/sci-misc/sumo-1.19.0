@@ -1,0 +1,15 @@
+BDEPEND=app-alternatives/ninja >=dev-build/cmake-3.20.5
+DEFINED_PHASES=compile configure install postinst postrm prepare test
+DEPEND=x11-libs/fox:1.6 dev-libs/xerces-c sci-libs/proj sci-libs/gdal dev-lang/swig virtual/jdk dev-cpp/eigen:3 media-video/ffmpeg x11-libs/gl2ps dev-lang/python
+DESCRIPTION=Simulation of Urban MObility
+EAPI=8
+HOMEPAGE=https://github.com/eclipse/sumo
+INHERIT=cmake xdg-utils
+KEYWORDS=amd64 ~x86
+LICENSE=GPL-2
+RDEPEND=x11-libs/fox:1.6 dev-libs/xerces-c sci-libs/proj sci-libs/gdal dev-lang/swig virtual/jdk dev-cpp/eigen:3 media-video/ffmpeg x11-libs/gl2ps dev-lang/python
+RESTRICT=network-sandbox nostrip
+SLOT=0
+SRC_URI=https://github.com/eclipse/sumo/archive/refs/tags/v1_19_0.tar.gz -> sumo-1.19.0.tar.gz
+_eclasses_=cmake	258a4691fd43b8cd5814cb1acbb3c7df	flag-o-matic	e503ea5acc20410237ba33ec3f7c857d	multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	ninja-utils	2df4e452cea39a9ec8fb543ce059f8d6	toolchain-funcs	e7e7331166166e7a516d19e264b098c2	xdg-utils	baea6080dd821f5562d715887954c9d3
+_md5_=e8d7fad7a7dfe9244689038840719610

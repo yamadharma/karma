@@ -1,0 +1,12 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl] X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=install postinst postrm setup unpack
+DESCRIPTION=A free programming font with cursive italics and ligatures
+EAPI=7
+HOMEPAGE=https://rubjo.github.io/victor-mono
+INHERIT=git-r3 font
+IUSE=X
+LICENSE=MIT
+PROPERTIES=live
+SLOT=0
+_eclasses_=font	aa113a3df9cd0a9693a1c1ee7c34a6eb	git-r3	875eb471682d3e1f18da124be97dcc81
+_md5_=6049dece723bfa0882a342cc6fd0a027

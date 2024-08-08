@@ -1,0 +1,11 @@
+DEFINED_PHASES=install
+DEPEND=x11-apps/xcursorgen
+DESCRIPTION=Xorg cursor theme inspired and based on plan9 cursors
+EAPI=8
+HOMEPAGE=https://xn--1xa.duncano.de/
+KEYWORDS=amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ppc ppc64 ~s390 sparc x86
+LICENSE=unknown
+RDEPEND=x11-libs/libXcursor
+SLOT=0
+SRC_URI=https://github.com/wintermute-cell/xcursor-plan9/archive/refs/tags/v0.2.tar.gz -> xcursor-plan9-0.2.tar.gz
+_md5_=50fd7b8ab81e001da09cb868f9c5b038

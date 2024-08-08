@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install
+DEPEND=net-ftp/curl media-gfx/transfig >=dev-libs/glib-2* >=gnome-base/libghttp-1.0.9-r3 >=sys-kernel/linux-headers-2.4 dev-util/efence
+DESCRIPTION=Intermezzo is an advanced replicating networked filesystem.
+EAPI=0
+HOMEPAGE=http://www.inter-mezzo.org
+KEYWORDS=x86
+LICENSE=GPL
+RDEPEND=net-ftp/curl media-gfx/transfig >=dev-libs/glib-2* >=gnome-base/libghttp-1.0.9-r3 >=sys-kernel/linux-headers-2.4 dev-util/efence
+SLOT=0
+SRC_URI=ftp://ftp.inter-mezzo.org/pub/intermezzo/intersync-0.9.5.tar.gz
+_md5_=48ecbb227584708acae5cfdd7fb4bce8

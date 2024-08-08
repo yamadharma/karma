@@ -1,0 +1,9 @@
+DEFINED_PHASES=install
+DEPEND=sys-devel/make
+DESCRIPTION=SSL certs
+EAPI=0
+KEYWORDS=x86 ppc sparc sparc64
+LICENSE=as-is
+RDEPEND=sys-devel/make
+SLOT=0
+_md5_=adf48efd511ba820e42963eabf61c566

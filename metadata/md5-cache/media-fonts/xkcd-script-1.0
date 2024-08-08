@@ -1,0 +1,13 @@
+BDEPEND=X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=install postinst postrm setup unpack
+DESCRIPTION=xkcd script font
+EAPI=7
+HOMEPAGE=https://github.com/ipython/xkcd-font
+INHERIT=font
+IUSE=X
+KEYWORDS=amd64 ~loong ~riscv ~x86
+LICENSE=CC-BY-SA-3.0
+SLOT=0
+SRC_URI=https://github.com/ipython/xkcd-font/blob/master/xkcd-script/font/xkcd-script.ttf?raw=true -> xkcd-script-1.0.ttf
+_eclasses_=font	aa113a3df9cd0a9693a1c1ee7c34a6eb
+_md5_=7f4553de21c5439c5e3b00598d6470f8

@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install postinst
+DEPEND=media-libs/libsamplerate media-sound/fusd-kor
+DESCRIPTION=Tool to create virtual dsp to connect OSS-based apps to jack
+EAPI=0
+HOMEPAGE=http://fort2.xdas.com/~kor/oss2jack/
+KEYWORDS=x86 amd64
+LICENSE=GPL-2
+RDEPEND=media-libs/libsamplerate media-sound/fusd-kor
+SLOT=0
+SRC_URI=http://fort2.xdas.com/~kor/oss2jack/oss2jack-0.25.tar.gz
+_md5_=6e29cce548aee670e9d86efd7582648f

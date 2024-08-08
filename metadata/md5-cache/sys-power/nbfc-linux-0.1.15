@@ -1,0 +1,13 @@
+BDEPEND=virtual/pkgconfig virtual/pkgconfig
+DEFINED_PHASES=compile install setup
+DESCRIPTION=Lightweight C port of NoteBook FanControl (no Mono required)
+EAPI=8
+HOMEPAGE=https://github.com/nbfc-linux/nbfc-linux
+INHERIT=bash-completion-r1 linux-info systemd toolchain-funcs
+KEYWORDS=-* ~amd64 ~x86
+LICENSE=GPL-3
+RDEPEND=sys-apps/dmidecode
+SLOT=0
+SRC_URI=https://github.com/nbfc-linux/nbfc-linux/archive/0.1.15.tar.gz -> nbfc-linux-0.1.15.tar.gz
+_eclasses_=bash-completion-r1	f5e7a020fd9c741740756aac61bf75ff	linux-info	ea4122ba1d8791a12b78e53f9510a2e3	multilib	c19072c3cd7ac5cb21de013f7e9832e0	systemd	c8b03e8df84486aa991d4396686e8942	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=430c41fb1a6c4dd0cc62207d1fd93ab6

@@ -1,0 +1,8 @@
+DEFINED_PHASES=-
+DESCRIPTION=Meta package for all xscreensaver hacks
+EAPI=0
+KEYWORDS=x86 amd64
+LICENSE=as-is
+RDEPEND=x11-misc/xscreensaver x11-misc/cosmos x11-misc/electricsheep x11-misc/fireflies x11-misc/goban-screensaver x11-misc/rss-glx x11-misc/sphere-eversion x11-misc/xaos x11-misc/xdaliclock x11-misc/xearth x11-misc/xmountains x11-misc/xplanet x11-misc/xsnow
+SLOT=0
+_md5_=fe754e7eae03bba0c6711ff2c3d2affe

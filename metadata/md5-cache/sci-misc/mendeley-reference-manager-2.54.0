@@ -1,0 +1,13 @@
+DEFINED_PHASES=install unpack
+DESCRIPTION=Research management tool for desktop and web
+EAPI=7
+HOMEPAGE=https://www.mendeley.com/
+INHERIT=desktop xdg-utils
+KEYWORDS=amd64
+LICENSE=Mendeley-terms
+RDEPEND=sys-libs/zlib virtual/opengl x11-libs/libX11
+RESTRICT=mirror strip bindist
+SLOT=0
+SRC_URI=https://static.mendeley.com/bin/desktop/mendeley-reference-manager-2.54.0-x86_64.AppImage
+_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d	xdg-utils	baea6080dd821f5562d715887954c9d3
+_md5_=5f8e74c334c9f2ed2c3a193c88fcde34

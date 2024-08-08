@@ -1,0 +1,11 @@
+DEFINED_PHASES=install unpack
+DESCRIPTION=A conversion script for mass converting your music collection from one format to another
+EAPI=8
+HOMEPAGE=http://lossless2lossy.sourceforge.net/
+IUSE=ape flac mp3 vorbis wavpack
+KEYWORDS=amd64 x86 ~sparc
+LICENSE=GPL-2
+RDEPEND=ape? ( media-sound/mac ) flac? ( media-libs/flac ) mp3? ( media-sound/lame ) vorbis? ( media-libs/libvorbis ) wavpack? ( media-sound/wavpack ) media-sound/id3v2
+SLOT=0
+SRC_URI=http://downloads.sourceforge.net/lossless2lossy/lossless2lossy-v1.21.gz
+_md5_=425c98ce04acb1ccd16a32d74c941b51

@@ -1,0 +1,16 @@
+DEFINED_PHASES=compile configure install preinst prepare setup unpack
+DEPEND=>=virtual/jdk-1.8 virtual/latex-base >=dev-java/java-config-2.2.0-r3 >=dev-java/ant-1.10.14-r2:0 dev-java/javatoolkit office_implementation_libreoffice? ( || ( app-office/libreoffice[java] app-office/libreoffice-bin[java] ) ) app-arch/unzip
+DESCRIPTION=Writer2Latex (w2l) - converter from OpenDocument .odt format
+EAPI=7
+HOMEPAGE=http://writer2latex.sourceforge.net
+INHERIT=java-pkg-2 java-ant-2 multilib office-ext-r1
+IUSE=doc examples office_implementation_libreoffice
+KEYWORDS=x86 amd64
+LICENSE=GPL-3
+RDEPEND=>=virtual/jre-1.8 >=dev-java/java-config-2.2.0-r3 office_implementation_libreoffice? ( || ( app-office/libreoffice[java] app-office/libreoffice-bin[java] ) )
+REQUIRED_USE=|| ( office_implementation_libreoffice )
+RESTRICT=mirror
+SLOT=0
+SRC_URI=mirror://sourceforge/writer2latex/writer2latex199beta.zip
+_eclasses_=java-ant-2	d3f6ffc6629499cbc0d4cd71b9d7e7dc	java-pkg-2	b6d755b4f6afabfd933932be28b46368	java-utils-2	b2e92a8220dc7b1bd2062ca11774798a	multilib	c19072c3cd7ac5cb21de013f7e9832e0	office-ext-r1	8bdc7a6423aa53b15e81cc2c4dd81055	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=e887e8a5c3e2f858aa0c519ef11ee29f

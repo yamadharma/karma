@@ -1,0 +1,17 @@
+BDEPEND=python_single_target_python3_10? ( dev-lang/python:3.10 ) clisp? ( dev-lisp/clisp ) clozurecl? ( dev-lisp/clozurecl app-misc/rlwrap ) clozurecl64? ( dev-lisp/clozurecl app-misc/rlwrap ) cmucl? ( dev-lisp/cmucl app-misc/rlwrap ) ecls? ( dev-lisp/ecls app-misc/rlwrap ) gcl? ( dev-lisp/gcl[ansi,readline] ) sbcl? ( dev-lisp/sbcl app-misc/rlwrap ) test? ( sci-visualization/gnuplot ) sys-apps/texinfo >=app-portage/elt-patches-20240116 sys-devel/gnuconfig || ( >=dev-build/automake-1.17-r1:1.17 >=dev-build/automake-1.16.5:1.16 ) || ( >=dev-build/autoconf-2.72-r1:2.72 >=dev-build/autoconf-2.71-r6:2.71 ) >=dev-build/libtool-2.4.7-r3
+DEFINED_PHASES=compile configure install postinst postrm prepare setup
+DEPEND=clisp? ( dev-lisp/clisp ) clozurecl? ( dev-lisp/clozurecl app-misc/rlwrap ) clozurecl64? ( dev-lisp/clozurecl app-misc/rlwrap ) cmucl? ( dev-lisp/cmucl app-misc/rlwrap ) ecls? ( dev-lisp/ecls app-misc/rlwrap ) gcl? ( dev-lisp/gcl[ansi,readline] ) sbcl? ( dev-lisp/sbcl app-misc/rlwrap ) emacs? ( >=app-editors/emacs-23.1:* ) gui? ( dev-lang/tk:0 )
+DESCRIPTION=Free computer algebra environment based on Macsyma
+EAPI=7
+HOMEPAGE=http://maxima.sourceforge.net/
+INHERIT=autotools elisp-common flag-o-matic python-single-r1 xdg-utils
+IUSE=clisp clozurecl clozurecl64 cmucl ecls emacs gcl gui nls +sbcl unicode vtk X test l10n_de l10n_es l10n_pt l10n_pt-BR +python_single_target_python3_10
+KEYWORDS=~amd64 ~x86 ~amd64-linux ~x86-linux
+LICENSE=GPL-2 GPL-2+
+RDEPEND=clisp? ( dev-lisp/clisp ) clozurecl? ( dev-lisp/clozurecl app-misc/rlwrap ) clozurecl64? ( dev-lisp/clozurecl app-misc/rlwrap ) cmucl? ( dev-lisp/cmucl app-misc/rlwrap ) ecls? ( dev-lisp/ecls app-misc/rlwrap ) gcl? ( dev-lisp/gcl[ansi,readline] ) sbcl? ( dev-lisp/sbcl app-misc/rlwrap ) emacs? ( >=app-editors/emacs-23.1:* ) gui? ( dev-lang/tk:0 ) X? ( x11-misc/xdg-utils sci-visualization/gnuplot[gd] vtk? ( python_single_target_python3_10? ( dev-lang/python:3.10 ) sci-libs/vtk[python,rendering,python_single_target_python3_10(-)?] ) ) emacs? ( virtual/latex-base app-emacs/auctex app-text/ghostscript-gpl dev-texlive/texlive-latexrecommended )
+REQUIRED_USE=^^ ( python_single_target_python3_10 ) || ( clisp clozurecl clozurecl64 cmucl ecls gcl sbcl ) gui? ( X )
+RESTRICT=!test? ( test )
+SLOT=0
+SRC_URI=mirror://sourceforge/maxima/maxima-5.45.0.tar.gz
+_eclasses_=autotools	d12ccbad07b44642a75ac97a3334d8e0	eapi8-dosym	5ac4857ad078256d939c44f7c64197a9	elisp-common	abb2dda42f680fce87602c8273f832c7	flag-o-matic	e503ea5acc20410237ba33ec3f7c857d	gnuconfig	a397adda6984a4c423e28ac274c1ba98	libtool	5f49a16f67f81bdf873e3d1f10b10001	multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	python-single-r1	f7abe75c203a988aa9b5c460b6c7d0f1	python-utils-r1	6881b056477c23167d9a6b33e146374e	toolchain-funcs	e7e7331166166e7a516d19e264b098c2	xdg-utils	baea6080dd821f5562d715887954c9d3
+_md5_=2aa9e9f14274db5aa9f47af98169d148

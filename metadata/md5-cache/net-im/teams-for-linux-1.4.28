@@ -1,0 +1,15 @@
+BDEPEND=system-ffmpeg? ( <media-video/ffmpeg-4.3[chromium] ) system-mesa? ( <media-libs/mesa-20.2[egl,gles2] )
+DEFINED_PHASES=install postinst postrm unpack
+DESCRIPTION=Unofficial Microsoft Teams client for Linux using Electron
+EAPI=7
+HOMEPAGE=https://github.com/IsmaelMartinez/teams-for-linux
+INHERIT=desktop unpacker xdg-utils
+IUSE=system-ffmpeg system-mesa
+KEYWORDS=-* amd64
+LICENSE=ms-teams-pre
+RDEPEND=app-accessibility/at-spi2-atk app-crypt/libsecret dev-libs/atk dev-libs/expat dev-libs/glib dev-libs/nspr dev-libs/nss media-libs/alsa-lib media-libs/fontconfig net-print/cups sys-apps/dbus sys-apps/util-linux x11-libs/cairo x11-libs/cairo x11-libs/gdk-pixbuf x11-libs/gtk+:3 x11-libs/libX11 x11-libs/libXScrnSaver x11-libs/libXcomposite x11-libs/libXcursor x11-libs/libXdamage x11-libs/libXext x11-libs/libXfixes x11-libs/libXi x11-libs/libXrandr x11-libs/libXrender x11-libs/libXtst x11-libs/libxcb x11-libs/libxkbfile x11-libs/pango system-ffmpeg? ( <media-video/ffmpeg-4.3[chromium] ) system-mesa? ( <media-libs/mesa-20.2[egl,gles2] )
+RESTRICT=bindist mirror splitdebug test
+SLOT=0
+SRC_URI=https://github.com/IsmaelMartinez/teams-for-linux/releases/download/v1.4.28/teams-for-linux_1.4.28_amd64.deb
+_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d	multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	toolchain-funcs	e7e7331166166e7a516d19e264b098c2	unpacker	fb4b84181244b3b9990fa0bf40232dd2	xdg-utils	baea6080dd821f5562d715887954c9d3
+_md5_=e848a591dac2a6e4de7b390d83e86cf2

@@ -1,0 +1,14 @@
+BDEPEND=X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=install postinst postrm setup
+DESCRIPTION=The package includes several Russian book font families
+EAPI=7
+HOMEPAGE=http://lizard.phys.msu.su/home/compu_sci
+INHERIT=font
+IUSE=+doc X
+KEYWORDS=alpha amd64 arm hppa ia64 mips ppc ppc64 s390 sh sparc x86
+LICENSE=as-is
+RESTRICT=nostrip
+SLOT=0
+SRC_URI=http://lizard.phys.msu.su/home/compu_sci/OldFonts-dist-39.tar.bz2 doc? ( http://lizard.phys.msu.su/home/compu_sci/sample-39.pdf )
+_eclasses_=font	aa113a3df9cd0a9693a1c1ee7c34a6eb
+_md5_=f6122a7082a0894bed0418d73d0f4207

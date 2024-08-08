@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install unpack
+DEPEND=virtual/glibc
+DESCRIPTION=Collection of tools for managing UNIX services
+EAPI=0
+HOMEPAGE=http://cr.yp.to/daemontools.html
+KEYWORDS=x86 ppc sparc sparc64
+LICENSE=freedist
+RDEPEND=virtual/glibc
+SLOT=0
+SRC_URI=http://cr.yp.to/daemontools/daemontools-0.76.tar.gz
+_md5_=2ddf9ab7b01f74717e6606cb55c0a6b4

@@ -1,0 +1,16 @@
+BDEPEND=python_targets_python3_10? ( dev-lang/python:3.10 ) >=dev-python/setuptools-69.0.3[python_targets_python3_10(-)?]
+DEFINED_PHASES=compile configure install prepare test
+DEPEND=dev-python/msal[python_targets_python3_10(-)?] >=dev-python/portalocker-1.0.0[python_targets_python3_10(-)?] dev-python/setuptools[python_targets_python3_10(-)?]
+DESCRIPTION=Microsoft authentication extensions library for Python
+EAPI=8
+HOMEPAGE=https://pypi.org/project/msal-extensions
+INHERIT=distutils-r1
+IUSE=python_targets_python3_10
+KEYWORDS=amd64 ~arm ~x86
+LICENSE=MIT
+RDEPEND=dev-python/msal[python_targets_python3_10(-)?] >=dev-python/portalocker-1.0.0[python_targets_python3_10(-)?] python_targets_python3_10? ( dev-lang/python:3.10 )
+REQUIRED_USE=|| ( python_targets_python3_10 )
+SLOT=0
+SRC_URI=mirror://pypi/m/msal-extensions/msal-extensions-0.3.0.tar.gz
+_eclasses_=distutils-r1	39c571155ace3dd926fe0d6440cf0a50	flag-o-matic	e503ea5acc20410237ba33ec3f7c857d	multibuild	d67e78a235f541871c7dfe4cf7931489	multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	ninja-utils	2df4e452cea39a9ec8fb543ce059f8d6	out-of-source-utils	1a9007554652a6e627edbccb3c25a439	python-r1	c1fc393cd1e72f093b4838e29d27918c	python-utils-r1	6881b056477c23167d9a6b33e146374e	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=916b5d1e918680ed5bd63a5d561114ec

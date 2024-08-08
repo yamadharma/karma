@@ -1,0 +1,14 @@
+DEFINED_PHASES=compile install
+DEPEND=>=sys-fs/fuse-2.2 >=net-fs/samba-3
+DESCRIPTION=A tool for mounting the network neighbourhood.
+EAPI=0
+HOMEPAGE=http://hannibal.lr-s.tudelft.nl/~vincent/fusesmb/
+INHERIT=extrafiles
+IUSE=daemontools
+KEYWORDS=x86 amd64 ~alpha ~ppc ~sparc
+LICENSE=GPL-2
+RDEPEND=>=sys-fs/fuse-2.2 >=net-fs/samba-3 >=dev-lang/python-2.3
+SLOT=0
+SRC_URI=http://hannibal.lr-s.tudelft.nl/~vincent/fusesmb/download/fusesmb-0.7.0.tar.gz
+_eclasses_=extrafiles	a174427e3c58ed4b70dc42733dfedf2e
+_md5_=22308684a331461c71fee62b9b54078f

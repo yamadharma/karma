@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install postinst
+DEPEND=virtual/linux-sources
+DESCRIPTION=Network device driver updates for Linux
+EAPI=0
+HOMEPAGE=http://www.scyld.com/network/index.html
+KEYWORDS=x86 ppc sparc sparc64
+LICENSE=GPL-2
+RDEPEND=virtual/linux-sources
+SLOT=0
+SRC_URI=ftp://ftp.scyld.com/pub/network/netdrivers.tgz
+_md5_=7789c0c99024b308789f860c431a8011

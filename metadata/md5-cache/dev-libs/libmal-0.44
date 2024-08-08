@@ -1,0 +1,11 @@
+DEFINED_PHASES=install
+DEPEND=virtual/libc >=app-pda/pilot-link-0.12.0
+DESCRIPTION=convenience library of the functions malsync distribution
+EAPI=0
+HOMEPAGE=http://jasonday.home.att.net/code/libmal/libmal.html
+KEYWORDS=amd64 ia64 ppc sparc x86
+LICENSE=MPL-1.0
+RDEPEND=virtual/libc >=app-pda/pilot-link-0.12.0
+SLOT=0
+SRC_URI=http://jasonday.home.att.net/code/libmal/libmal-0.44.tar.gz
+_md5_=8d2ae870b15ddb9ff56fdec76f3ca8cf

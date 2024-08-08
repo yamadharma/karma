@@ -1,0 +1,11 @@
+DEFINED_PHASES=install prepare
+DEPEND=dev-lang/php[cli,pcre,simplexml]
+DESCRIPTION=Drush Make
+EAPI=2
+HOMEPAGE=http://drupal.org/project/drush_make
+KEYWORDS=amd64 x86
+LICENSE=GPL-2
+RDEPEND=dev-lang/php[cli,pcre,simplexml] www-apps/drush
+SLOT=0
+SRC_URI=http://ftp.drupal.org/files/projects/drush_make-6.x-2.0-beta10.tar.gz
+_md5_=3a587e7df21d605c72d5740be887c01f

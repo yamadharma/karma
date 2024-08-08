@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install
+DEPEND=virtual/libc sys-apps/tcp-wrappers sys-libs/zlib
+DESCRIPTION=Flow-tools is a package for collecting and processing NetFlow data
+EAPI=0
+HOMEPAGE=http://www.splintered.net/sw/flow-tools/
+KEYWORDS=x86
+LICENSE=BSD
+RDEPEND=virtual/libc sys-apps/tcp-wrappers sys-libs/zlib
+SLOT=0
+SRC_URI=ftp://ftp.eng.oar.net/pub/flow-tools/flow-tools-0.67.tar.gz
+_md5_=e99c6131d59187560b6f7a5bfdf58ebf

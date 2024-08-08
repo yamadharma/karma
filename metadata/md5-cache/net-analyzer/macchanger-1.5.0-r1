@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install unpack
+DEPEND=virtual/libc
+DESCRIPTION=Utility for viewing/manipulating the MAC address of network interfaces
+EAPI=0
+HOMEPAGE=http://www.alobbs.com/macchanger
+KEYWORDS=x86 ~ppc ~sparc amd64
+LICENSE=GPL-2
+RDEPEND=virtual/libc
+SLOT=0
+SRC_URI=mirror://gnu/macchanger/macchanger-1.5.0.tar.gz mirror://gentoo/OUI.list-20051212.gz
+_md5_=5b3b9d6ad2bce3471ede64fc777e1c0b

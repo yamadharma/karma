@@ -1,0 +1,12 @@
+DEFINED_PHASES=install
+DESCRIPTION=XMLmind FO Converter (Personal Edition)
+EAPI=0
+HOMEPAGE=http://www.xmlmind.com/foconverter/index.html
+IUSE=doc
+KEYWORDS=x86 ~ppc amd64
+LICENSE=as-is
+RDEPEND=>=virtual/jre-1.4.1
+RESTRICT=nostrip nomirror
+SLOT=0
+SRC_URI=http://www.xmlmind.net/foconverter/_download/java/xfc-42p1.tgz
+_md5_=352e89041bd1979c60467d42b51757fb

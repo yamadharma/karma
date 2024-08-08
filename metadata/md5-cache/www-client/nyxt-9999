@@ -1,0 +1,15 @@
+BDEPEND=>=dev-lisp/sbcl-2.0.0 >=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=compile install postinst postrm unpack
+DEPEND=dev-libs/gobject-introspection gnome-base/gsettings-desktop-schemas media-libs/gst-plugins-bad media-libs/gst-plugins-base media-libs/gst-plugins-good media-libs/gst-plugins-ugly media-plugins/gst-plugins-libav net-libs/glib-networking net-libs/webkit-gtk:4.1 sys-libs/libfixposix
+DESCRIPTION=Nyxt - the hacker's power-browser
+EAPI=8
+HOMEPAGE=https://nyxt.atlas.engineer/
+INHERIT=desktop optfeature xdg-utils git-r3
+IUSE=doc
+LICENSE=BSD CC-BY-SA-3.0
+PROPERTIES=live
+RDEPEND=dev-libs/gobject-introspection gnome-base/gsettings-desktop-schemas media-libs/gst-plugins-bad media-libs/gst-plugins-base media-libs/gst-plugins-good media-libs/gst-plugins-ugly media-plugins/gst-plugins-libav net-libs/glib-networking net-libs/webkit-gtk:4.1 sys-libs/libfixposix
+RESTRICT=mirror strip
+SLOT=0
+_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d	git-r3	875eb471682d3e1f18da124be97dcc81	optfeature	222cb475c5a4f7ae7cfb0bf510a6fe54	xdg-utils	baea6080dd821f5562d715887954c9d3
+_md5_=5a214855fb715e879e6cbc43b8648a74

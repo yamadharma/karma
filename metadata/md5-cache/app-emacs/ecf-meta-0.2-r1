@@ -1,0 +1,10 @@
+DEFINED_PHASES=-
+DESCRIPTION=Emacs Configuration Framework meta package
+EAPI=8
+HOMEPAGE=https://github.com/yamadharma/ecf
+IUSE=elisp latex lsp
+KEYWORDS=x86 amd64
+LICENSE=GPL-2
+PDEPEND=app-emacs/ecf media-fonts/iosevka sys-apps/ripgrep sys-apps/fd media-gfx/ditaa dev-tex/LaTeXML lsp? ( app-editors/emacs-lsp-booster dev-util/marksman ) elisp? ( app-emacs/auctex app-emacs/auto-complete app-emacs/autoconf-mode app-emacs/ebuild-mode app-emacs/ebuild-run-mode app-emacs/async ) latex? ( dev-tex/texlab )
+SLOT=0
+_md5_=10117c699c38ee691a92f918f6c05f51

@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install
+DEPEND=>=media-libs/libdvdread-0.9.4 >=media-gfx/imagemagick-5.5.7.14 transcode? ( >=media-video/transcode-0.6.2 ) vcdimager? ( >=media-video/vcdimager-0.7.2 )
+DESCRIPTION=This is a program to raw copy chapters from a dvd using libdvdread
+EAPI=0
+HOMEPAGE=http://www.lallafa.de/bp/chaplin.html
+IUSE=vcdimager transcode
+KEYWORDS=amd64 ~ppc x86
+LICENSE=GPL-2
+RDEPEND=>=media-libs/libdvdread-0.9.4 >=media-gfx/imagemagick-5.5.7.14 transcode? ( >=media-video/transcode-0.6.2 ) vcdimager? ( >=media-video/vcdimager-0.7.2 )
+SLOT=0
+SRC_URI=http://www.lallafa.de/bp/files/chaplin-1.10.tgz
+_md5_=7a88c8d87e905cb9699d72df837812c4

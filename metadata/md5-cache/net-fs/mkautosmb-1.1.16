@@ -1,0 +1,10 @@
+DEFINED_PHASES=install
+DESCRIPTION=Makes the local SMB network browsable from Linux.
+EAPI=0
+HOMEPAGE=http://haywire.fatalunity.com/software
+KEYWORDS=x86 amd64
+LICENSE=GPL-2
+RDEPEND=>=dev-lang/python-2.1 net-fs/samba >=sys-fs/autofs-3.1.3
+SLOT=0
+SRC_URI=http://haywire.fatalunity.com/software/mkautosmb/mkautosmb-1.1.16.tar.gz
+_md5_=bac5bb5be0d9857d80101346c21450e4

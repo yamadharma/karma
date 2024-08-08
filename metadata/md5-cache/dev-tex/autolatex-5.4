@@ -1,0 +1,15 @@
+BDEPEND=>=dev-lang/perl-5.38.2-r3[perl_features_debug=,perl_features_ithreads=,perl_features_quadmath=] virtual/latex-base >=sys-apps/texinfo-4.2-r5
+DEFINED_PHASES=compile configure install postinst postrm prepare test
+DEPEND=>=dev-lang/perl-5.38.2-r3[perl_features_debug=,perl_features_ithreads=,perl_features_quadmath=]
+DESCRIPTION=Perl script for automatically building LaTeX documents.
+EAPI=7
+HOMEPAGE=http://www.arakhne.org/spip.php?rubrique35
+INHERIT=perl-module latex-package
+IUSE=perl_features_debug perl_features_ithreads perl_features_quadmath
+KEYWORDS=amd64 x86
+LICENSE=GPL-2
+RDEPEND=dev-perl/Config-Simple >=dev-lang/perl-5.38.2-r3[perl_features_debug=,perl_features_ithreads=,perl_features_quadmath=] dev-lang/perl:= virtual/latex-base
+SLOT=0
+SRC_URI=http://download.tuxfamily.org/arakhne/pool/autolatex/autolatex_5.4-0arakhne0.tar.gz
+_eclasses_=eapi8-dosym	5ac4857ad078256d939c44f7c64197a9	latex-package	c20e442c3953c765f636630631c96194	multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	perl-functions	c3fca037246e877693badea0df3b0ef8	perl-module	25ca2ff8e7971cb7f817f0bda4be696d	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=758d8147bf5d88eb6c76cd36a70e83f2

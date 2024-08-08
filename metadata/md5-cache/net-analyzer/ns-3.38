@@ -1,0 +1,14 @@
+DEFINED_PHASES=compile configure install setup
+DEPEND=dev-lang/python dev-libs/boost x11-libs/gtk+:3 dev-python/pygraphviz sci-libs/gsl static? ( dev-db/sqlite[static-libs] ) !static? ( dev-db/sqlite ) dev-python/pygccxml dev-python/cxxfilt || ( sci-physics/root dev-python/cppyy ) doc? ( app-doc/doxygen )
+DESCRIPTION=Network Simulator
+EAPI=8
+HOMEPAGE=http://www.nsnam.org
+INHERIT=python-single-r1
+IUSE=doc +examples +tests mpi static python_single_target_python3_10 python_single_target_python3_11
+KEYWORDS=~x86 ~amd64
+LICENSE=GPL-2
+RDEPEND=dev-lang/python dev-libs/boost x11-libs/gtk+:3 dev-python/pygraphviz sci-libs/gsl
+SLOT=3
+SRC_URI=https://www.nsnam.org/release/ns-allinone-3.38.tar.bz2
+_eclasses_=multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	python-single-r1	f7abe75c203a988aa9b5c460b6c7d0f1	python-utils-r1	6881b056477c23167d9a6b33e146374e	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=b751ae6493be1e75064c45ffc9178d06

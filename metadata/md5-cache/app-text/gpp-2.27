@@ -1,0 +1,9 @@
+DEFINED_PHASES=-
+DESCRIPTION=a general-purpose preprocessor with customizable syntax
+EAPI=7
+HOMEPAGE=http://en.nothingisreal.com/wiki/GPP
+KEYWORDS=amd64 ~x86
+LICENSE=LGPL-3+
+SLOT=0
+SRC_URI=http://files.nothingisreal.com/software/gpp/gpp-2.27.tar.bz2
+_md5_=9d08e48ffab2c6e05b76c39a8ec03883

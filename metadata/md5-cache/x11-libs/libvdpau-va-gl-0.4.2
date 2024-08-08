@@ -1,0 +1,16 @@
+BDEPEND=app-alternatives/ninja >=dev-build/cmake-3.20.5 test? ( x11-base/xorg-server[xvfb] x11-apps/xhost )
+DEFINED_PHASES=compile configure install postinst prepare test
+DEPEND=dev-libs/glib:2 media-libs/glu virtual/ffmpeg virtual/opengl media-libs/libva[X] x11-libs/libvdpau x11-libs/libX11 x11-libs/libXext
+DESCRIPTION=VDPAU driver with VA-API/OpenGL backend.
+EAPI=7
+HOMEPAGE=https://github.com/i-rinat/libvdpau-va-gl/
+INHERIT=cmake multilib virtualx pax-utils
+IUSE=test
+KEYWORDS=~amd64 ~x86
+LICENSE=LGPL-3
+RDEPEND=dev-libs/glib:2 media-libs/glu virtual/ffmpeg virtual/opengl media-libs/libva[X] x11-libs/libvdpau x11-libs/libX11 x11-libs/libXext
+RESTRICT=!test? ( test )
+SLOT=0
+SRC_URI=https://github.com/i-rinat/libvdpau-va-gl/archive/v0.4.2.tar.gz -> libvdpau-va-gl-0.4.2.tar.gz
+_eclasses_=cmake	258a4691fd43b8cd5814cb1acbb3c7df	flag-o-matic	e503ea5acc20410237ba33ec3f7c857d	multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	ninja-utils	2df4e452cea39a9ec8fb543ce059f8d6	pax-utils	91d47e5d20627c717aa878b9167c62a8	toolchain-funcs	e7e7331166166e7a516d19e264b098c2	virtualx	817571665ee28575da44ee08135089e5	xdg-utils	baea6080dd821f5562d715887954c9d3
+_md5_=eae66a7d0494ab26ad93764740917a1b

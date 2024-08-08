@@ -1,0 +1,10 @@
+DEFINED_PHASES=install
+DESCRIPTION=XSL Stylesheets for docbook2odf
+EAPI=0
+HOMEPAGE=http://open.comsultia.com/docbook2odf/
+KEYWORDS=x86 amd64
+LICENSE=GPL-2
+RDEPEND=!app-text/docbook2odf-xsl-stylesheets-svn
+SLOT=0
+SRC_URI=http://open.comsultia.com/docbook2odf/dwn/docbook2odf-0.244.tar.gz
+_md5_=f33f08e1656132fe104942edcfdd356e

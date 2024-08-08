@@ -1,0 +1,16 @@
+BDEPEND=app-text/dos2unix virtual/pkgconfig
+DEFINED_PHASES=compile configure install postinst postrm prepare setup test
+DEPEND=dev-haskell/cereal:=[profile?] dev-haskell/lens:=[profile?] dev-haskell/megaparsec:=[profile?] dev-haskell/optparse-applicative:=[profile?] dev-haskell/resourcet:=[profile?] dev-haskell/rio:=[profile?] dev-haskell/unliftio:=[profile?] >=dev-lang/ghc-8.4.3:= >=dev-haskell/cabal-2.2.0.1 test? ( dev-haskell/hspec ) hscolour? ( dev-haskell/hscolour )
+DESCRIPTION=Advanced keyboard remapping utility
+EAPI=8
+HOMEPAGE=https://github.com/kmonad/kmonad#readme
+INHERIT=haskell-cabal systemd
+IUSE=doc hscolour profile test
+KEYWORDS=amd64
+LICENSE=MIT
+RDEPEND=dev-haskell/cereal:=[profile?] dev-haskell/lens:=[profile?] dev-haskell/megaparsec:=[profile?] dev-haskell/optparse-applicative:=[profile?] dev-haskell/resourcet:=[profile?] dev-haskell/rio:=[profile?] dev-haskell/unliftio:=[profile?] >=dev-lang/ghc-8.4.3:= dev-lang/ghc:=[profile?]
+RESTRICT=!test? ( test )
+SLOT=0/0.4.2
+SRC_URI=https://github.com/kmonad/kmonad/archive/refs/tags/0.4.2.tar.gz -> kmonad-0.4.2.tar.gz
+_eclasses_=ghc-package	8e4f6eb2d0e798049f6fcaf3b84c0d4a	haskell-cabal	7a05e05c4a785428f7c2f31e22667fea	multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	systemd	c8b03e8df84486aa991d4396686e8942	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=ad0db536a305f20cc105a6ab9469cef6

@@ -1,0 +1,13 @@
+BDEPEND=>=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=install unpack
+DESCRIPTION=Orchis themes for kde plasma
+EAPI=8
+HOMEPAGE=https://github.com/vinceliuice/Orchis-kde
+INHERIT=git-r3
+KEYWORDS=amd64 ~x86
+LICENSE=GPL-3
+PROPERTIES=live
+RDEPEND=x11-themes/kvantum
+SLOT=0
+_eclasses_=git-r3	875eb471682d3e1f18da124be97dcc81
+_md5_=974920ea9ac4a43f5897f1bc11e1e067

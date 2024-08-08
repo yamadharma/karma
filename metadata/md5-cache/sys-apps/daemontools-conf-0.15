@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install unpack
+DEPEND=>=sys-apps/daemontools-0.70 >=sys-apps/skalibs-0.13 >=sys-apps/symtools-0.14 virtual/glibc
+DESCRIPTION=Configuration package for daemontools
+EAPI=0
+HOMEPAGE=http://js.hu/package/daemontools-conf.html
+KEYWORDS=x86 ppc sparc sparc64
+LICENSE=freedist
+RDEPEND=virtual/glibc
+SLOT=0
+SRC_URI=http://js.hu/package/daemontools-conf/daemontools-conf-0.15.tar.gz
+_md5_=97b05e245134f7388b0d57c8f4ba3ef2

@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install
+DEPEND=virtual/libc net-libs/libpcap sys-libs/zlib X? ( virtual/x11 x11-libs/openmotif )
+DESCRIPTION=NeTraMet is a network accounting meter.
+EAPI=0
+HOMEPAGE=http://www2.auckland.ac.nz/net/NeTraMet/
+IUSE=X ipv6
+KEYWORDS=x86
+LICENSE=GPL-2
+RDEPEND=virtual/libc net-libs/libpcap sys-libs/zlib X? ( virtual/x11 x11-libs/openmotif )
+SLOT=0
+SRC_URI=ftp://ftp.auckland.ac.nz/pub/iawg/NeTraMet/beta-versions/NeTraMet51b3.tar.gz
+_md5_=b232c5fbd4b2b9d249f1cfce54616a83

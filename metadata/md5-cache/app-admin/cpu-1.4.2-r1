@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install
+DEPEND=net-nds/openldap sys-libs/cracklib >=sys-devel/autoconf-2.54
+DESCRIPTION=LDAP user management tool written in C and loosely based on FreeBSD's pw(8)
+EAPI=0
+HOMEPAGE=http://cpu.sourceforge.net/
+KEYWORDS=x86
+LICENSE=GPL-2
+RDEPEND=net-nds/openldap sys-libs/cracklib
+SLOT=0
+SRC_URI=mirror://sourceforge/cpu/cpu-1.4.2.tar.bz2
+_md5_=1c2bf5c511f556cce0f9fd8d961691dc

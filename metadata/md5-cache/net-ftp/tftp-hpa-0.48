@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install postinst
+DEPEND=readline? ( sys-libs/readline ) tcpd? ( sys-apps/tcp-wrappers ) selinux? ( sec-policy/selinux-tftpd ) !virtual/tftp
+DESCRIPTION=port of the OpenBSD TFTP server
+EAPI=0
+HOMEPAGE=http://www.kernel.org/pub/software/network/tftp/
+IUSE=readline selinux tcpd
+KEYWORDS=~alpha amd64 ~arm ~hppa ia64 ~mips ~ppc ppc64 ~s390 ~sh sparc x86 ~x86-fbsd
+LICENSE=BSD
+RDEPEND=readline? ( sys-libs/readline ) tcpd? ( sys-apps/tcp-wrappers ) selinux? ( sec-policy/selinux-tftpd ) !virtual/tftp
+SLOT=0
+SRC_URI=mirror://kernel/software/network/tftp/tftp-hpa-0.48.tar.bz2
+_md5_=411967f44b8ea53c302f387d596e239d

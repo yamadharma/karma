@@ -1,0 +1,13 @@
+BDEPEND=app-arch/unzip X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=install postinst postrm setup
+DESCRIPTION=JuliaMono - a monospaced font for scientific and technical computing
+EAPI=7
+HOMEPAGE=https://juliamono.netlify.app/
+INHERIT=font
+IUSE=X
+KEYWORDS=amd64 ~arm arm64 x86 ~amd64-linux ~x86-linux ~x64-macos
+LICENSE=OFL
+SLOT=0
+SRC_URI=https://github.com/cormullion/juliamono/releases/download/v0.054/JuliaMono-ttf.tar.gz -> juliamono-0.054-ttf.tar.gz
+_eclasses_=font	aa113a3df9cd0a9693a1c1ee7c34a6eb
+_md5_=f3582cf7c537f99f1ee8542b532496a9

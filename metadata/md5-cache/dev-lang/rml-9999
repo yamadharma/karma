@@ -1,0 +1,14 @@
+BDEPEND=dev-vcs/subversion[http(+)] net-misc/rsync >=app-portage/elt-patches-20240116 sys-devel/gnuconfig || ( >=dev-build/automake-1.17-r1:1.17 >=dev-build/automake-1.16.5:1.16 ) || ( >=dev-build/autoconf-2.72-r1:2.72 >=dev-build/autoconf-2.71-r6:2.71 ) >=dev-build/libtool-2.4.7-r3
+DEFINED_PHASES=configure preinst unpack
+DEPEND=|| ( dev-lang/smlnj dev-lang/mlton )
+DESCRIPTION=Relational Meta-Language (RML) and Tools
+EAPI=7
+HOMEPAGE=http://www.ida.liu.se/~pelab/rml
+INHERIT=subversion autotools
+KEYWORDS=amd64 x86
+LICENSE=OSMC-PL
+PROPERTIES=live
+RDEPEND=|| ( dev-lang/smlnj dev-lang/mlton )
+SLOT=0
+_eclasses_=autotools	d12ccbad07b44642a75ac97a3334d8e0	estack	c61c368a76fdf3a82fdf8dbaebea3804	gnuconfig	a397adda6984a4c423e28ac274c1ba98	libtool	5f49a16f67f81bdf873e3d1f10b10001	multilib	c19072c3cd7ac5cb21de013f7e9832e0	subversion	44c6a1cae0381c100a526e3b348622cd	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=98bab1c17e692bedaa852435f911e8bc

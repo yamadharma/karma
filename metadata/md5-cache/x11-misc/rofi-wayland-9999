@@ -1,0 +1,14 @@
+BDEPEND=dev-libs/wayland-protocols >=dev-build/meson-1.2.3 app-alternatives/ninja dev-build/meson-format-array >=dev-vcs/git-1.8.2.1[curl]
+DEFINED_PHASES=compile configure install test unpack
+DEPEND=dev-libs/libxdg-basedir x11-libs/startup-notification x11-libs/libxkbcommon[X,wayland] x11-libs/xcb-util-wm x11-libs/xcb-util-xrm gnome-base/librsvg:2 dev-libs/glib:2 x11-libs/pango[X] x11-libs/libXinerama x11-libs/cairo[X] virtual/jpeg x11-base/xorg-proto test? ( >=dev-libs/check-0.11 )
+DESCRIPTION=Wayland fork of rofi, a window switcher, run dialog and dmenu replacement
+EAPI=7
+HOMEPAGE=https://github.com/lbonn/rofi
+INHERIT=meson git-r3
+IUSE=+drun test +windowmode
+LICENSE=MIT
+PROPERTIES=live
+RDEPEND=dev-libs/libxdg-basedir x11-libs/startup-notification x11-libs/libxkbcommon[X,wayland] x11-libs/xcb-util-wm x11-libs/xcb-util-xrm gnome-base/librsvg:2 dev-libs/glib:2 x11-libs/pango[X] x11-libs/libXinerama x11-libs/cairo[X] virtual/jpeg
+SLOT=0
+_eclasses_=eapi8-dosym	5ac4857ad078256d939c44f7c64197a9	flag-o-matic	e503ea5acc20410237ba33ec3f7c857d	git-r3	875eb471682d3e1f18da124be97dcc81	meson	99466844dd8d4fcfb07578a76f5a9922	multilib	c19072c3cd7ac5cb21de013f7e9832e0	multiprocessing	30ead54fa2e2b5f9cd4e612ffc34d0fe	ninja-utils	2df4e452cea39a9ec8fb543ce059f8d6	python-utils-r1	6881b056477c23167d9a6b33e146374e	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=e1dd6ccfab0742dd3a0d8ef907c2883b

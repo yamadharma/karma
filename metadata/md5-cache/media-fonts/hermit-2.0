@@ -1,0 +1,13 @@
+BDEPEND=X? ( >=x11-apps/mkfontscale-1.2.0 media-fonts/encodings )
+DEFINED_PHASES=install postinst postrm setup
+DESCRIPTION=Monospace font designed to be clear, pragmatic and very readable
+EAPI=7
+HOMEPAGE=https://pcaro.es/p/hermit/
+INHERIT=font
+IUSE=X
+KEYWORDS=~amd64
+LICENSE=OFL-1.1
+SLOT=0
+SRC_URI=https://pcaro.es/d/otf-hermit-2.0.tar.gz
+_eclasses_=font	aa113a3df9cd0a9693a1c1ee7c34a6eb
+_md5_=0a21e7c00511860e1f18e506e84c473a

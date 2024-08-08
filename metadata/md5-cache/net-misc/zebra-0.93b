@@ -1,0 +1,8 @@
+DEFINED_PHASES=compile install unpack
+DESCRIPTION=Routing daemon
+EAPI=0
+HOMEPAGE=http://www.zebra.org
+KEYWORDS=x86
+SLOT=0
+SRC_URI=ftp://ftp.zebra.org/pub/zebra/zebra-0.93b.tar.gz
+_md5_=c2c86e683ebde7c3ce50ea900c628dee

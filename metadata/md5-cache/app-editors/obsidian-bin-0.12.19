@@ -1,0 +1,14 @@
+DEFINED_PHASES=install
+DEPEND=>=media-libs/libpng-1.2.46 >=x11-libs/gtk+-2.24.8-r1:2 x11-libs/cairo x11-libs/libXtst !app-editors/vscode
+DESCRIPTION=Obsidian is a powerful knowledge base that works on top of a local folder of plain text Markdown files (binary version)
+EAPI=7
+HOMEPAGE=https://obsidian.md/
+INHERIT=desktop pax-utils
+KEYWORDS=-* amd64
+LICENSE=EULA
+RDEPEND=>=media-libs/libpng-1.2.46 >=x11-libs/gtk+-2.24.8-r1:2 x11-libs/cairo x11-libs/libXtst !app-editors/vscode app-accessibility/at-spi2-atk >=net-print/cups-2.0.0 x11-libs/libnotify x11-libs/libXScrnSaver dev-libs/nss app-crypt/libsecret[crypt]
+RESTRICT=mirror strip bindist
+SLOT=0
+SRC_URI=https://github.com/obsidianmd/obsidian-releases/releases/download/v0.12.19/obsidian-0.12.19.tar.gz
+_eclasses_=desktop	021728fdc1b03b36357dbc89489e0f0d	pax-utils	91d47e5d20627c717aa878b9167c62a8
+_md5_=4e3d528203a8846f7c7aaaf3556dfe52

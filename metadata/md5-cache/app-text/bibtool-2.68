@@ -1,0 +1,14 @@
+DEFINED_PHASES=compile install unpack
+DEPEND=dev-libs/kpathsea virtual/libc doc? ( app-text/texlive )
+DESCRIPTION=BibTool is a powerful command-line tool to manipulate BibTeX databases.
+EAPI=7
+HOMEPAGE=http://www.gerd-neugebauer.de/software/TeX/BibTool/en/
+INHERIT=flag-o-matic
+IUSE=doc
+KEYWORDS=x86 amd64
+LICENSE=GPL-1
+RDEPEND=dev-libs/kpathsea virtual/libc doc? ( app-text/texlive )
+SLOT=0
+SRC_URI=http://mirror.ctan.org/biblio/bibtex/utils/bibtool/BibTool-2.68.tar.gz
+_eclasses_=flag-o-matic	e503ea5acc20410237ba33ec3f7c857d	multilib	c19072c3cd7ac5cb21de013f7e9832e0	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=210ad73e45ed70e18cae5b8067ae1b76

@@ -1,0 +1,16 @@
+BDEPEND=>=dev-lang/go-1.21.6 test? ( dev-python/docutils dev-ruby/asciidoctor virtual/pandoc )
+DEFINED_PHASES=compile install postinst
+DEPEND=extended? ( dev-libs/libsass:= >=media-libs/libwebp-1.3.2:= )
+DESCRIPTION=Fast static HTML and CSS website generator
+EAPI=8
+HOMEPAGE=https://gohugo.io https://github.com/gohugoio/hugo
+INHERIT=shell-completion
+IUSE=doc +extended test
+KEYWORDS=amd64 ~arm64 ~loong ~riscv ~x86
+LICENSE=Apache-2.0 BSD BSD-2 MIT MPL-2.0 Unlicense
+RDEPEND=extended? ( dev-libs/libsass:= >=media-libs/libwebp-1.3.2:= )
+RESTRICT=!test? ( test )
+SLOT=0
+SRC_URI=https://github.com/gohugoio/hugo/releases/download/v0.123.7/hugo_extended_0.123.7_linux-amd64.tar.gz -> hugo-bin-0.123.7.tar.gz
+_eclasses_=bash-completion-r1	f5e7a020fd9c741740756aac61bf75ff	multilib	c19072c3cd7ac5cb21de013f7e9832e0	shell-completion	bb7eb6bc232cd6c4bf8af739cdd2ee14	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=8c4a0f3d3c670dd765f6427e156113f3

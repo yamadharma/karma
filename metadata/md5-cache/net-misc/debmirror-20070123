@@ -1,0 +1,10 @@
+DEFINED_PHASES=compile install
+DESCRIPTION=ECLiPt FTP mirroring tool
+EAPI=0
+HOMEPAGE=http://apt-mirror.sf.net
+KEYWORDS=~x86 ~amd64 ~ppc
+LICENSE=GPL-2
+RDEPEND=net-misc/rsync app-arch/bzip2 dev-perl/Digest-SHA1 dev-perl/LockFile-Simple dev-perl/Compress-Zlib dev-perl/libwww-perl
+SLOT=0
+SRC_URI=mirror://sourceforge/debmirror/debmirror_20070123.tar.gz
+_md5_=ca5390bb85a9ad9ff5cdf0143be7745d

@@ -1,0 +1,9 @@
+DEFINED_PHASES=install
+DESCRIPTION=JThread provides some classes to make use of threads easy on different platforms.
+EAPI=0
+HOMEPAGE=http://research.edm.luc.ac.be/jori/jthread/jthread.html
+KEYWORDS=amd64 x86
+LICENSE=MIT
+SLOT=0
+SRC_URI=http://research.edm.luc.ac.be/jori/jthread/jthread-1.2.0.tar.bz2
+_md5_=fc224101efbd35a5b8e0588ca9ea286c

@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install
+DEPEND=>=dev-lang/perl-5.6.0 >=app-arch/rpm-4.0.4-r4 >=sys-apps/bzip2-1.0.2-r2 >=app-arch/dpkg-1.10.9
+DESCRIPTION=Making Debian package building easier
+EAPI=0
+HOMEPAGE=http://kitenet.net/programs/debhelper
+KEYWORDS=x86 ppc
+LICENSE=LGPL-2.1
+RDEPEND=>=dev-lang/perl-5.6.0 >=app-arch/rpm-4.0.4-r4 >=sys-apps/bzip2-1.0.2-r2 >=app-arch/dpkg-1.10.9
+SLOT=0
+SRC_URI=ftp://ftp.debian.org/debian/pool/main/d/debhelper/debhelper_4.1.74.tar.gz
+_md5_=973b6b780206be2fcf89de8901e9b4f0

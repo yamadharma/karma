@@ -1,0 +1,12 @@
+DEFINED_PHASES=install unpack
+DESCRIPTION=Conversion between markup formats (binary package)
+EAPI=8
+HOMEPAGE=https://pandoc.org/ https://github.com/jgm/pandoc/
+IUSE=+pandoc-symlink
+KEYWORDS=-* amd64
+LICENSE=GPL-2+
+PDEPEND=~dev-haskell/pandoc-crossref-bin-0.3.17.1b
+RDEPEND=pandoc-symlink? ( !app-text/pandoc !app-text/pandoc-cli !dev-haskell/pandoc[doc] )
+SLOT=0
+SRC_URI=amd64? ( https://github.com/jgm/pandoc/releases/download/3.2.1/pandoc-3.2.1-linux-amd64.tar.gz )
+_md5_=544f37edd9a2aceab0bb559b9455887e

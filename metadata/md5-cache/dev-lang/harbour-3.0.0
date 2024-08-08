@@ -1,0 +1,14 @@
+DEFINED_PHASES=compile install test
+DEPEND=sys-libs/ncurses allegro? ( media-libs/allegro ) gpm? ( sys-libs/gpm ) odbc? ( dev-db/unixODBC ) slang? ( sys-libs/slang ) pcre? ( dev-libs/libpcre ) X? ( media-libs/freetype x11-libs/libX11 x11-libs/libXext x11-libs/libXmu x11-libs/libXpm x11-libs/libXt )
+DESCRIPTION=An extended implementation of the Clipper dialect of the xBase language family
+EAPI=7
+HOMEPAGE=http://harbour-project.org/ https://harbour.github.io/ https://github.com/harbour/core/
+INHERIT=toolchain-funcs multilib
+IUSE=allegro doc gpm odbc pcre slang threads X
+KEYWORDS=amd64 x86
+LICENSE=GPL-2-with-exceptions
+RDEPEND=sys-libs/ncurses allegro? ( media-libs/allegro ) gpm? ( sys-libs/gpm ) odbc? ( dev-db/unixODBC ) slang? ( sys-libs/slang ) pcre? ( dev-libs/libpcre ) X? ( media-libs/freetype x11-libs/libX11 x11-libs/libXext x11-libs/libXmu x11-libs/libXpm x11-libs/libXt )
+SLOT=0
+SRC_URI=mirror://sourceforge/harbour-project/harbour-3.0.0.tar.bz2
+_eclasses_=multilib	c19072c3cd7ac5cb21de013f7e9832e0	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=09cceb77048e50913898f752382c3574

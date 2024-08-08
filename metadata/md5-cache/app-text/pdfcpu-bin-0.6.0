@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install
+DESCRIPTION=A PDF processor written in Go
+EAPI=8
+HOMEPAGE=https://github.com/pdfcpu/pdfcpu
+INHERIT=bash-completion-r1
+KEYWORDS=amd64
+LICENSE=Apache-2.0
+RESTRICT=test
+SLOT=0
+SRC_URI=amd64? ( https://github.com/pdfcpu/pdfcpu/releases/download/v0.6.0/pdfcpu_0.6.0_Linux_x86_64.tar.xz )
+_eclasses_=bash-completion-r1	f5e7a020fd9c741740756aac61bf75ff	multilib	c19072c3cd7ac5cb21de013f7e9832e0	toolchain-funcs	e7e7331166166e7a516d19e264b098c2
+_md5_=1c3c037701e755d74c83ea84b7dd74bb

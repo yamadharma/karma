@@ -1,0 +1,12 @@
+DEFINED_PHASES=install
+DEPEND=x11-libs/gtk+:2 >=x11-libs/gtk+-3.18:3 x11-themes/gtk-engines-murrine
+DESCRIPTION=Qogir is a flat Design theme for GTK
+EAPI=8
+HOMEPAGE=https://github.com/vinceliuice/Qogir-theme
+KEYWORDS=~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86
+LICENSE=GPL-3
+RDEPEND=x11-libs/gtk+:2 >=x11-libs/gtk+-3.18:3 x11-themes/gtk-engines-murrine
+RESTRICT=mirror
+SLOT=0
+SRC_URI=https://github.com/vinceliuice/Qogir-theme/archive/2024-05-22.tar.gz -> qogir-theme-2024.05.22.tar.gz
+_md5_=49803b5b7ab55a25e7281f09814587cf

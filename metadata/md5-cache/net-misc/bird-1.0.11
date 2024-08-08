@@ -1,0 +1,9 @@
+DEFINED_PHASES=compile install
+DESCRIPTION=Routing daemon
+EAPI=0
+HOMEPAGE=http://bird.network.cz
+IUSE=doc ipv6
+KEYWORDS=x86 amd64
+SLOT=0
+SRC_URI=ftp://bird.network.cz/pub/bird/bird-1.0.11.tar.gz doc? ftp://bird.network.cz/pub/bird/bird-doc-1.0.11.tar.gz
+_md5_=d117aaa11adcf6a01f108755a34231f0
