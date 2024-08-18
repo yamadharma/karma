@@ -63,8 +63,10 @@ FONTS=(
 	Ubuntu
 	UbuntuMono
 	VictorMono
-	NerdFontsSymbolsOnly
 )
+
+## in media-fonts/symbols-nerd-font
+#	NerdFontsSymbolsOnly
 
 SRC_URI=""
 
