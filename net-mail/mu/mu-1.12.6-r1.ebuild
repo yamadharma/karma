@@ -35,6 +35,9 @@ BDEPEND="
 PATCHES=(
 	# https://bugs.gentoo.org/925503
 	"${FILESDIR}"/${PN}-1.12.0-no-python.patch
+
+	# https://bugs.gentoo.org/933093
+	"${FILESDIR}"/${PN}-1.12.4-timet.patch
 )
 
 DOC_CONTENTS="
