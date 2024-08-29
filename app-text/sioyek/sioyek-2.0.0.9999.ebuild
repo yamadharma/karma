@@ -22,7 +22,7 @@ else
 #		"
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/ahrm/sioyek.git"
-	EGIT_BRANCH=development
+#	EGIT_BRANCH=development
 	KEYWORDS="~amd64"
 fi
 
