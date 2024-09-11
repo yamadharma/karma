@@ -16,6 +16,10 @@ KEYWORDS="amd64 ~x86"
 RDEPEND="x11-libs/libXcursor"
 
 src_install() {
-	dodir /usr/share/cursors/xorg-x11
-	cp -R XCursor-Pro-* ${D}/usr/share/cursors/xorg-x11/
+	dodir /usr/share/icons
+	cp -R XCursor-Pro-* ${D}/usr/share/icons
+	for i in Dark Light Red
+	do	    
+	    dosym /usr/share/icons/XCursor-Pro-${i} /usr/share/cursors/xorg-x11/XCursor-Pro-${i}
+	done    	    	  	    
 }
