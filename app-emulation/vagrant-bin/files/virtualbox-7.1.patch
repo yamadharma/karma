@@ -1,0 +1,11 @@
+diff '--color=auto' -Naurp work.orig/opt/vagrant/embedded/gems/gems/vagrant-2.4.1/plugins/providers/virtualbox/driver/meta.rb work/opt/vagrant/embedded/gems/gems/vagrant-2.4.1/plugins/providers/virtualbox/driver/meta.rb
+--- vagrant.orig/embedded/gems/gems/vagrant-2.4.1/plugins/providers/virtualbox/driver/meta.rb	2024-09-26 17:22:00.307793934 +0300
++++ vagrant/embedded/gems/gems/vagrant-2.4.1/plugins/providers/virtualbox/driver/meta.rb	2024-09-26 17:24:01.482342025 +0300
+@@ -69,6 +69,7 @@ module VagrantPlugins
+             "6.0" => Version_6_0,
+             "6.1" => Version_6_1,
+             "7.0" => Version_7_0,
++            "7.1" => Version_7_0,
+           }
+ 
+           if @@version.start_with?("4.2.14")

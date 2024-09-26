@@ -31,6 +31,10 @@ RDEPEND="${DEPEND}
 
 RESTRICT="mirror"
 
+PATCHES=(
+	$FILESDIR/virtualbox-7.1.patch
+)
+
 src_unpack() {
 	unpack_deb ${A}
 }
