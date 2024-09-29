@@ -26,7 +26,7 @@ inherit java-pkg-2 java-ant-2 multilib office-ext-r1
 
 DESCRIPTION="Writer2Latex (w2l) - converter from OpenDocument .odt format"
 HOMEPAGE="http://writer2latex.sourceforge.net"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
+SRC_URI="https://downloads.sourceforge.net/${PN}/${MY_P}.zip"
 
 SLOT="0"
 LICENSE="GPL-3"
