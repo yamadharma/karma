@@ -20,6 +20,9 @@ RDEPEND="
 
 src_install() {
 	emake DESTDIR="${D}" COMPRESS_MAN=0 install
+	
+	insinto /usr/share/psd/browsers/
+	doins $FILESDIR/yandex-browser
 }
 
 pkg_postinst() {
