@@ -1,0 +1,11 @@
+diff '--color=auto' -Naurp date-155c6b9e76e462e1d47ea528ca87f366adccdea3.orig/src/tz.cpp date-155c6b9e76e462e1d47ea528ca87f366adccdea3/src/tz.cpp
+--- a/src/tz.cpp	2024-10-05 17:33:56.087112215 +0300
++++ b/src/tz.cpp	2024-10-05 17:34:47.905907375 +0300
+@@ -603,6 +603,7 @@ static
+ std::string
+ get_alpha_word(std::istream& in)
+ {
++    std::ws(in);
+     std::string s;
+     while (!in.eof() && std::isalpha(in.peek()))
+         s.push_back(static_cast<char>(in.get()));
