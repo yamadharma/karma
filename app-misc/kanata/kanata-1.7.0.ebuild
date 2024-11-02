@@ -205,7 +205,7 @@ CRATES="
 	wyz@0.5.1
 "
 
-inherit cargo
+inherit systemd cargo
 
 DESCRIPTION="Multi-layer keyboard customization"
 HOMEPAGE="https://github.com/jtroo/kanata"
@@ -225,7 +225,8 @@ RDEPEND="
 "
 
 src_install() {
-	defaults
+	cargo_src_install
 
-	dodoc -r ${S}/docs
+	systemd_newunit "${FILESDIR}"/kanata.service kanata.service
+	dodoc -r ${S}/docs/*
 }
