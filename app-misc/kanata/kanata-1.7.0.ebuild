@@ -223,3 +223,9 @@ RDEPEND="
 		acct-group/input
 		acct-group/uinput
 "
+
+src_install() {
+	defaults
+
+	dodoc -r ${S}/docs
+}
