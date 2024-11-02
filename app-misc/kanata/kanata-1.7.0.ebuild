@@ -218,3 +218,8 @@ LICENSE="LGPL-3"
 LICENSE+=" Apache-2.0 BSD ISC LGPL-3 MIT MPL-2.0 Unicode-DFS-2016"
 SLOT="0"
 KEYWORDS="amd64"
+
+RDEPEND="
+		acct-group/input
+		acct-group/uinput
+"
