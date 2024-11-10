@@ -159,7 +159,7 @@ BDEPEND="virtual/pkgconfig"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-9.2.5-pegtl-3.x.patch"
-	"${FILESDIR}/${PN}-9.3.0-pdal-2.6.0.patch"
+#	"${FILESDIR}/${PN}-9.3.0-pdal-2.6.0.patch"
 	"${FILESDIR}/${PN}-9.3.0-too-many-initializer-values.patch"
 	"${FILESDIR}/${PN}-9.3.0-java.patch"
 	"${FILESDIR}/${PN}-9.3.0-opencascade.patch"
