@@ -17,7 +17,8 @@ SRC_URI="https://github.com/djcb/mu/releases/download/v${PV}/${P}.tar.xz"
 LICENSE="BSD Boost-1.0 CC0-1.0 GPL-3+ MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86 ~x64-macos"
-IUSE="emacs readline"
+IUSE="emacs readline test"
+RESTRICT="!test? ( test )"
 
 DEPEND="
 	dev-libs/glib:2
@@ -35,9 +36,6 @@ BDEPEND="
 PATCHES=(
 	# https://bugs.gentoo.org/925503
 	"${FILESDIR}"/${PN}-1.12.0-no-python.patch
-
-	# https://bugs.gentoo.org/933093
-	"${FILESDIR}"/${PN}-1.12.4-timet.patch
 )
 
 DOC_CONTENTS="
@@ -64,6 +62,7 @@ src_prepare() {
 src_configure() {
 	local emesonargs=(
 		$(meson_feature readline)
+		$(meson_feature test tests)
 		-Dcld2=enabled
 		-Demacs="$(usex emacs "${EMACS}" emacs-not-enabled)"
 		# TODO: revisit this, it's not actually deprecated, just been reworked
