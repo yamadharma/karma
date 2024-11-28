@@ -1,0 +1,11 @@
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -1417,7 +1417,7 @@ sqltclsh$(TEXE): sqltclsh.c
+ 	$(LTLINK) sqltclsh.c -o $@ $(LIBTCL) $(TLIBS)
+ 
+ sqlite3_expert$(TEXE): $(TOP)/ext/expert/sqlite3expert.h $(TOP)/ext/expert/sqlite3expert.c $(TOP)/ext/expert/expert.c sqlite3.c
+-	$(LTLINK)	$(TOP)/ext/expert/sqlite3expert.h $(TOP)/ext/expert/sqlite3expert.c $(TOP)/ext/expert/expert.c sqlite3.c -o sqlite3_expert $(TLIBS)
++	$(LTLINK)	$(TOP)/ext/expert/sqlite3expert.c $(TOP)/ext/expert/expert.c sqlite3.c -o sqlite3_expert $(TLIBS)
+ 
+ CHECKER_DEPS =\
+   $(TOP)/tool/mkccode.tcl \
