@@ -41,4 +41,9 @@ BDEPEND="
 
 DOCS=( AUTHORS.txt CHANGELOG.rst CONTRIBUTING.rst README.rst khal.conf.sample )
 
+PATCHES=(
+	${FILESDIR}/pytz.patch
+	${FILESDIR}/icalendar.patch
+)
+
 distutils_enable_tests pytest
