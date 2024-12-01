@@ -3,7 +3,7 @@
 
 EAPI=8
 
-LLVM_MAX_SLOT=17
+LLVM_MAX_SLOT=19
 inherit cmake llvm toolchain-funcs
 
 DESCRIPTION="Fast symbolic manipulation library, written in C++"
@@ -14,13 +14,12 @@ LICENSE="MIT"
 SLOT="0/$(ver_cut 1-2)"
 KEYWORDS="amd64 ~arm arm64 ~loong ~ppc64 ~riscv ~x86 ~amd64-linux ~x86-linux"
 # BUILD_FOR_DISTRIBUTION enables threads by default so do it here
-IUSE="arb benchmarks boost debug doc ecm +flint llvm +mpc +mpfr openmp test tcmalloc +threads"
+IUSE="benchmarks boost debug doc ecm +flint llvm +mpc +mpfr openmp test tcmalloc +threads"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
 	dev-libs/gmp:=
 	sys-libs/binutils-libs:=
-	arb? ( sci-mathematics/arb:= )
 	boost? ( dev-libs/boost:= )
 	ecm? ( sci-mathematics/gmp-ecm )
 	flint? ( sci-mathematics/flint:= )
@@ -38,8 +37,6 @@ BDEPEND="doc? ( app-text/doxygen[dot] )"
 PATCHES=(
 	"${FILESDIR}"/${PN}-0.7.0-cmake-build-type.patch
 	"${FILESDIR}"/${PN}-0.8.1-fix_llvm.patch
-	# https://github.com/symengine/symengine/pull/1985
-	#"${FILESDIR}"/${PN}-0.11.1-flint-3.patch
 )
 
 pkg_pretend() {
@@ -67,7 +64,7 @@ src_configure() {
 	# not in portage yet: piranha
 	local int_class
 
-	if use arb || use flint; then
+	if use flint; then
 		int_class=flint
 	elif use mpfr; then
 		int_class=gmpxx
@@ -84,7 +81,6 @@ src_configure() {
 		-DBUILD_BENCHMARKS=$(usex benchmarks)
 		-DBUILD_DOXYGEN=$(usex doc)
 		-DBUILD_TESTS=$(usex test)
-		-DWITH_ARB=$(usex arb)
 		-DWITH_BFD=$(usex debug)
 		-DWITH_SYMENGINE_ASSERT=$(usex debug)
 		-DWITH_SYMENGINE_THREAD_SAFE=$(usex threads)
@@ -98,8 +94,6 @@ src_configure() {
 		-DWITH_ECM=$(usex ecm)
 		-DWITH_SYSTEM_CEREAL=ON
 	)
-
-	use arb && mycmakeargs+=( -DARB_INCLUDE_DIR="${ESYSROOT}"/usr/include )
 
 	cmake_src_configure
 }
