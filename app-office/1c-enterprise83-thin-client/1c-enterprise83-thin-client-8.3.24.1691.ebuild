@@ -2,21 +2,22 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="6"
+EAPI="8"
 
-inherit eutils pax-utils versionator
+inherit pax-utils 
 
 DESCRIPTION="Native linux thin client of 1C ERP system"
 HOMEPAGE="http://v8.1c.ru/"
 
 MY_PN=1c-enterprise
-MY_PV="$(replace_version_separator 3 '-' )"
+#MY_PV="$(replace_version_separator 3 '-' )"
+MY_PV="${PV:0:6}-${PV:7}"
 
-#SRC_URI="${MY_PN}-${PV}-thin-client_${MY_PV}_amd64.deb
-#	nls? ( ${MY_PN}-${PV}-thin-client-nls_${MY_PV}_amd64.deb )"
-SRC_URI="${P}.tar.gz"
+SRC_URI="${MY_PN}-${PV}-thin-client_${MY_PV}_amd64.deb
+	nls? ( ${MY_PN}-${PV}-thin-client-nls_${MY_PV}_amd64.deb )"
+#SRC_URI="${P}.tar.gz"
 
-SLOT=$(get_version_component_range 1-2)
+SLOT=${PV:0:3}
 LICENSE="1CEnterprise_en"
 KEYWORDS="amd64"
 RESTRICT="fetch strip"
@@ -27,11 +28,12 @@ RDEPEND="app-arch/dpkg
 	sys-libs/zlib"
 
 DEPEND="${RDEPEND}"
-RDEPEND="=app-office/1c-enterprise83-thin-client-support-${PV}"
+#RDEPEND="=app-office/1c-enterprise83-thin-client-support-${PV}"
+RDEPEND=""
 
 S="${WORKDIR}"
 
-src_unpack_() {
+src_unpack() {
 	for i in ${A}
 	do
 	    dpkg-deb -R "${DISTDIR}"/"${i}" ${WORKDIR}
