@@ -10,8 +10,7 @@ DESCRIPTION="Native linux thin client of 1C ERP system"
 HOMEPAGE="http://v8.1c.ru/"
 
 MY_PN=1c-enterprise
-#MY_PV="$(replace_version_separator 3 '-' )"
-MY_PV="${PV:0:6}-${PV:7}"
+MY_PV="$(ver_cut 1-3)-$(ver_cut 4)"
 
 SRC_URI="${MY_PN}-${PV}-thin-client_${MY_PV}_amd64.deb
 	nls? ( ${MY_PN}-${PV}-thin-client-nls_${MY_PV}_amd64.deb )"

@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -9,7 +9,7 @@ MY_PN="davmail"
 
 DESCRIPTION="POP/IMAP/SMTP/Caldav/Carddav/LDAP Exchange Gateway"
 HOMEPAGE="http://davmail.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${MY_PN}/${MY_PN}-$(ver_cut 1-3)-$(ver_cut 4).zip"
+SRC_URI="https://downloads.sourceforge.net/project/${MY_PN}/${MY_PN}/$(ver_cut 1-3)/${MY_PN}-$(ver_cut 1-3)-$(ver_cut 4).zip"
 
 LICENSE="GPL-2"
 SLOT="0"
