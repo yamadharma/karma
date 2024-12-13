@@ -1,0 +1,373 @@
+diff '--color=auto' -burN work/cnv/giftorle.c urt-3.1b-r3/cnv/giftorle.c
+--- work/cnv/giftorle.c	2024-10-12 12:16:05.066115418 +0200
++++ urt-3.1b-r3/cnv/giftorle.c	2024-10-12 13:17:57.236198459 +0200
+@@ -204,7 +204,7 @@
+ 	    EasyFail("EOF in extention\n",TRUE);
+ 	if (c == 0)
+ 	    return FALSE;
+-	if (read(fd,buf,(int) c)!=(int) c) 
++	if (!ReadOK(fd,buf,(int)c)) 
+ 	    EasyFail("EOF in extention\n",TRUE);
+     }
+ }
+diff '--color=auto' -burN work/get/getx11/getx11.c urt-3.1b-r3/get/getx11/getx11.c
+--- work/get/getx11/getx11.c	1995-01-10 22:16:18.000000000 +0100
++++ urt-3.1b-r3/get/getx11/getx11.c	2024-10-12 14:08:25.003266190 +0200
+@@ -72,7 +72,7 @@
+ 
+ char 		*progname = NULL;
+ Display		*dpy = NULL;
+-Window		root_window = NULL;
++Window		root_window = 0;
+ int		screen = 0;
+ 
+ Boolean		debug_flag = False;	/* set if debug mode -D */
+@@ -106,12 +106,12 @@
+ void init_img_info( i )
+ image_information *i;
+ {
+-    i->window = i->icn_window = NULL;
+-    i->pixmap = i->icn_pixmap = NULL;
+-    i->pix_info_window = NULL;
++    i->window = i->icn_window = 0;
++    i->pixmap = i->icn_pixmap = 0;
++    i->pix_info_window = 0;
+     i->gc = i->icn_gc = NULL;
+     i->image = i->icn_image = NULL;
+-    i->colormap = NULL;
++    i->colormap = 0;
+     i->visual_class = -1;
+     i->pixmap_failed = False;
+     
+diff '--color=auto' -burN work/get/getx11/timer.c urt-3.1b-r3/get/getx11/timer.c
+--- work/get/getx11/timer.c	1992-03-04 20:31:40.000000000 +0100
++++ urt-3.1b-r3/get/getx11/timer.c	2024-10-12 13:47:35.392238237 +0200
+@@ -71,8 +71,11 @@
+ wait_timer()
+ {
+ #ifndef NO_ITIMER
++    sigset_t sig_alarm_mask;
++    (void) sigemptyset(&sig_alarm_mask);
++    (void) sigaddset(&sig_alarm_mask, SIGALRM);
+     while (!ringring)
+-	sigpause( ~sigmask(SIGALRM));
++	sigsuspend(&sig_alarm_mask);
+     signal(SIGALRM, ofunc);
+ #endif
+ }
+diff '--color=auto' -burN work/get/getx11/x11_stuff.c urt-3.1b-r3/get/getx11/x11_stuff.c
+--- work/get/getx11/x11_stuff.c	2024-10-12 12:16:05.016115417 +0200
++++ urt-3.1b-r3/get/getx11/x11_stuff.c	2024-10-12 14:22:10.293284652 +0200
+@@ -51,9 +51,9 @@
+     init_separate_color_ro(), init_color_ro(), init_mono_rw(), init_mono_ro();
+ static CONST_DECL char *visual_class_to_string();
+ 
+-static Cursor circle_cursor = NULL;
+-static Cursor left_ptr_cursor = NULL;
+-static Cursor watch_cursor = NULL;
++static Cursor circle_cursor = 0;
++static Cursor left_ptr_cursor = 0;
++static Cursor watch_cursor = 0;
+ 
+ static int specified_screen = -1;	/* No specific screen. */
+ 
+@@ -83,16 +83,16 @@
+ void get_cursors( window )
+ Window window;
+ {
+-    if (circle_cursor == NULL)
++    if (circle_cursor == 0)
+ 	circle_cursor = XCreateFontCursor (dpy, XC_circle);
+     
+-    if (watch_cursor == NULL)
++    if (watch_cursor == 0)
+ 	watch_cursor = XCreateFontCursor (dpy, XC_watch);
+ 
+-    if (left_ptr_cursor == NULL)
++    if (left_ptr_cursor == 0)
+ 	left_ptr_cursor = XCreateFontCursor (dpy, XC_left_ptr);
+ 
+-    if (circle_cursor == NULL) {
++    if (circle_cursor == 0) {
+ 	Pixmap	source;
+ 	Pixmap	mask;
+ 	XColor	color_1;
+@@ -266,12 +266,12 @@
+ 	if ( img ) {
+ 	    if ( xid == img->pixmap ){
+ 		DPRINTF(stderr, "img->pixmap allocation failed\n");
+-		img->pixmap = NULL;
++		img->pixmap = 0;
+ 		img->pixmap_failed = True;
+ 	    } else
+ 	    if ( xid == img->icn_pixmap ){ 
+ 		DPRINTF(stderr, "img->icn_pixmap allocation failed\n");
+-		img->icn_pixmap = NULL;
++		img->icn_pixmap = 0;
+ 		img->pixmap_failed = True;
+ 	    } else
+ 		_XDefaultError (dpy, event);
+@@ -331,10 +331,10 @@
+     int iw = img->w * img->mag_fact;
+     int ih = img->h * img->mag_fact;
+     
+-    if (( img->pixmap != NULL && reallocate ) ||
+-	( img->pixmap != NULL && (img->pix_w < iw || img->pix_h < ih ))){
+-	free_X_pixmap( dpy, img->pixmap );
+-	img->pixmap = NULL;
++    if (( img->pixmap != 0 && reallocate ) ||
++	( img->pixmap != 0 && (img->pix_w < iw || img->pix_h < ih ))){
++	XFreePixmap( dpy, img->pixmap );
++	img->pixmap = 0;
+     }
+     
+     /* reallocate it: use the Min of the winsize and (pic * mag) */
+@@ -1384,7 +1384,7 @@
+ 	    }
+ 	}
+ 	    
+-	if (XAllocColors(dpy, img->colormap, color_defs, total_levels, status)== 0)
++	if (XAllocColor(dpy, img->colormap, color_defs, total_levels, status)== 0)
+ 	{
+ 	    for ( i = 0, j = 0; i < total_levels; i++ )
+ 		if (status[i])
+@@ -1638,7 +1638,7 @@
+ 	    }
+ 	}
+ 	    
+-	if (XAllocColors(dpy, img->colormap, color_defs, num_lvls, status)== 0)
++	if (XAllocColor(dpy, img->colormap, color_defs, num_lvls, status)== 0)
+ 	{
+ 	    for ( i = 0, j = 0; i < num_lvls; i++ )
+ 		if (status[i])
+diff '--color=auto' -burN work/get/getx11/XGetHClrs.c urt-3.1b-r3/get/getx11/XGetHClrs.c
+--- work/get/getx11/XGetHClrs.c	2024-10-12 14:26:06.848289944 +0200
++++ urt-3.1b-r3/get/getx11/XGetHClrs.c	2024-10-12 14:31:42.667297456 +0200
+@@ -1,4 +1,4 @@
+-#ifndef XLIBINT_H_NOT_AVAILABLE
++#ifdef XLIBINT_H_NOT_AVAILABLE
+ 
+ /* $XConsortium: XGetHClrs.c,v 11.10 88/09/06 16:07:50 martin Exp $ */
+ /* Copyright    Massachusetts Institute of Technology    1986	*/
+@@ -23,12 +23,13 @@
+ }
+ 
+ 
+-Status XAllocColors(dpy, cmap, defs, ndefs, statuses)
++Status XAllocColor(dpy, cmap, defs, ndefs, statuses)
+ register Display *dpy;
+ Colormap cmap;
+ XColor *defs;
+ int ndefs;
+ Status *statuses;
++
+ {
+     xAllocColorReply rep;
+     register xAllocColorReq *req;
+diff '--color=auto' -burN work/get/getx11/x11_stuff.c urt-3.1b-r3/get/getx11/x11_stuff.c
+--- work/get/getx11/x11_stuff.c	2024-10-12 14:26:07.015289948 +0200
++++ urt-3.1b-r3/get/getx11/x11_stuff.c	2024-10-12 14:38:03.175305968 +0200
+@@ -123,10 +123,10 @@
+ 	XFreePixmap (dpy, mask);
+     }
+     
+-    if (watch_cursor == NULL)
++    if (watch_cursor == 0)
+ 	watch_cursor = circle_cursor;
+ 
+-    if (left_ptr_cursor == NULL)
++    if (left_ptr_cursor == 0)
+ 	left_ptr_cursor = circle_cursor;
+ }
+ 
+@@ -147,7 +147,7 @@
+ 				 (img->binary_img ? 1 : img->dpy_depth), 
+ 				 (img->binary_img ? XYBitmap : ZPixmap), 
+ 				 NULL, &img->shm_img, width, height );
+-	if ( image != NULL )
++	if ( image != 0 )
+ 	{
+ 	    /* Allocate shared segment. */
+ 	    img->shm_img.shmid =
+@@ -521,7 +521,7 @@
+ {
+     img->colormap = XCreateColormap (dpy, root_window,
+ 				     img->dpy_visual, AllocNone );
+-    if (img->colormap == NULL) 
++    if (img->colormap == 0) 
+ 	fprintf(stderr, "getx11: Could not create color map for visual\n");
+     else {
+ 	VPRINTF(stderr, "created colormap for visual type %s\n",
+@@ -543,14 +543,14 @@
+ 	    specified_screen = atoi( dotp+1 );
+     }
+ 
+-    if (display_name == NULL || *display_name == '\0')
++    if (display_name == 0 || *display_name == '\0')
+ 	display_name = getenv("DISPLAY");
+ 
+     dpy = XOpenDisplay(display_name);
+     
+-    if (dpy == NULL) {
++    if (dpy == 0) {
+ 	fprintf(stderr, "%s: Cant open display %s\n", progname,
+-		(display_name == NULL) ? "" : display_name);
++		(display_name == 0) ? "" : display_name);
+ 	exit(1);
+     }
+ 
+@@ -608,8 +608,8 @@
+      * Now, make the window.
+      */
+     
+-    new_window = (img->window == NULL && img->icn_window == NULL);
+-    new_pixmaps = ((img->pixmap == NULL || img->icn_pixmap == NULL) &&
++    new_window = (img->window == 0 && img->icn_window == 0);
++    new_pixmaps = ((img->pixmap == 0 || img->icn_pixmap == 0) &&
+ 		   !img->pixmap_failed && !stingy_flag);
+     
+     if ( !img->window )
+@@ -1279,7 +1279,7 @@
+ 	nunique = (p - pixels) + 1;
+ 
+ 	DPRINTF(stderr, "In free_unique_pixels \n\nPixels: ");
+-	for (i=0;i<nunique;i++) DPRINTF(stderr, " %d ",pixels[i]);
++	for (i=0;i<nunique;i++) DPRINTF(stderr, " %zu ",pixels[i]);
+ 	DPRINTF(stderr, "\n");
+     }
+     else
+@@ -1340,13 +1340,13 @@
+ 	/* try to get a color map entry for each color. */
+ 	red_index = green_index = blue_index = 0;
+ 	
+-#ifdef XLIBINT_H_NOT_AVAILABLE
++#ifndef XLIBINT_H_NOT_AVAILABLE
+ 	for ( i = 0; i < total_levels; i++ ) {
+-	    color_def.red   = map[red_index] << 8;
+-	    color_def.green = map[green_index] << 8;
+-	    color_def.blue  = map[blue_index] << 8;
++	    color_defs->red   = map[red_index] << 8;
++	    color_defs->green = map[green_index] << 8;
++	    color_defs->blue  = map[blue_index] << 8;
+ 	    
+-	    if ( XAllocColor (dpy, img->colormap, &color_def ) == 0 ) {
++	    if ( XAllocColor (dpy, img->colormap, color_defs ) == 0 ) {
+ 		break;
+ 	    }
+ 	    
+@@ -1357,7 +1357,7 @@
+ 		red_index = 0;
+ 	    }
+ 	    
+-	    img->pixel_table[i] = color_def.pixel;
++	    img->pixel_table[i] = color_defs->pixel;
+ 	}
+ 	
+ 	/* Check if the colors are available */
+@@ -1592,22 +1592,22 @@
+ 	
+ 	/* try to get a color map entry for each color.  */
+ 	
+-#ifdef XLIBINT_H_NOT_AVAILABLE
++#ifndef XLIBINT_H_NOT_AVAILABLE
+ 	for ( i = 0; i < num_lvls; i++ ) {
+ 	    if ( img->mono_color ) {
+-		color_def.red   = img->in_cmap[RLE_RED][i] << 8;
+-		color_def.green = img->in_cmap[RLE_GREEN][i] << 8;
+-		color_def.blue  = img->in_cmap[RLE_BLUE][i] << 8;
++		color_defs->red   = img->in_cmap[RLE_RED][i] << 8;
++		color_defs->green = img->in_cmap[RLE_GREEN][i] << 8;
++		color_defs->blue  = img->in_cmap[RLE_BLUE][i] << 8;
+ 	    } else {
+-		color_def.red   = map[i] << 8;
+-		color_def.green = map[i] << 8;
+-		color_def.blue  = map[i] << 8;
++		color_defs->red   = map[i] << 8;
++		color_defs->green = map[i] << 8;
++		color_defs->blue  = map[i] << 8;
+ 	    }
+ 	    
+-	    if ( XAllocColor (dpy, img->colormap, &color_def ) == 0 ){ 
++	    if ( XAllocColor (dpy, img->colormap, color_defs ) == 0 ){ 
+ 		break;
+ 	    }
+-	    img->pixel_table[i] = color_def.pixel;
++	    img->pixel_table[i] = color_defs->pixel;
+ 	}
+ 	
+ 	/* Check if the colors are available */
+@@ -1981,7 +1981,7 @@
+     font_height = pixel_font_info->ascent + pixel_font_info->descent + 4;
+     y = (use_top ? 0 : (h - font_height));
+ 
+-    if ( img->pix_info_window == NULL ) {
++    if ( img->pix_info_window == 0 ) {
+ 	XSetFont (dpy, img->gc, pixel_font_info->fid );
+ 	img->pix_info_window = XCreateSimpleWindow(
+ 	    dpy, img->window, 0, y, w, font_height, 0, None,
+diff '--color=auto' -burN work/cnv/rletops.c urt-3.1-r4/cnv/rletops.c
+--- work/cnv/rletops.c	1992-01-20 19:04:10.000000000 +0100
++++ urt-3.1-r4/cnv/rletops.c	2024-10-12 15:17:53.900359449 +0200
+@@ -231,7 +231,7 @@
+ FILE *outfile;
+ unsigned char p;
+ {
+-    static npixo = 0;
++    static int npixo = 0;
+     static char tohex[] = "0123456789ABCDEF";
+ 
+     putc(tohex[(p>>4)&0xF],outfile);
+diff '--color=auto' -burN work/lib/rle_cp.c urt-3.1-r4/lib/rle_cp.c
+--- work/lib/rle_cp.c	1992-01-28 19:20:08.000000000 +0100
++++ urt-3.1-r4/lib/rle_cp.c	2024-10-12 15:15:52.038356723 +0200
+@@ -158,13 +158,13 @@
+ 	    /* Total paranoia.  nc should never be > buflen. */
+ 	    while ( nc > buflen )
+ 	    {
+-		fread( buffer, nc, 1, infile );
+-		fwrite( buffer, nc, 1, outfile );
++		(void) fread( buffer, nc, 1, infile );
++		(void) fwrite( buffer, nc, 1, outfile );
+ 		nc -= buflen;
+ 	    }
+ 
+-	    fread( buffer, nc, 1, infile );
+-	    fwrite( buffer, nc, 1, outfile );
++	    (void) fread( buffer, nc, 1, infile );
++	    (void) fwrite( buffer, nc, 1, outfile );
+ 	    break;
+ 
+ 	case RRunDataOp:
+diff '--color=auto' -burN work/tools/avg4.c urt-3.1-r4/tools/avg4.c
+--- work/tools/avg4.c	1992-04-30 16:08:43.000000000 +0200
++++ urt-3.1-r4/tools/avg4.c	2024-10-12 15:16:08.425357089 +0200
+@@ -34,7 +34,7 @@
+ #include <stdio.h>
+ #include "rle.h"
+ 
+-static bit_count[16] = {0, 63, 63, 127, 63, 127, 127,
++static int bit_count[16] = {0, 63, 63, 127, 63, 127, 127,
+     192, 63, 127, 127, 192, 127, 192, 192, 255};
+ 
+ void
+diff '--color=auto' -burN work/tools/mcut.c urt-3.1-r4/tools/mcut.c
+--- work/tools/mcut.c	1992-01-23 17:24:41.000000000 +0100
++++ urt-3.1-r4/tools/mcut.c	2024-10-12 15:16:58.238358203 +0200
+@@ -791,7 +791,7 @@
+ 		    TRACE( tmp_cb, cb_list )
+ 		    {
+ 			register color_t *newcol = &tmp_cb->color;
+-			register newdist = DISTANCE( ref_col, *newcol );
++			register int newdist = DISTANCE( ref_col, *newcol );
+ 
+ 			if ( newdist < dist )
+ 			{
+@@ -963,7 +963,7 @@
+ cmp_radices ( h1, h2 )
+ histogram_t **h1, **h2;
+ {
+-    register c1 = -1, c2 = -1;
++    register int c1 = -1, c2 = -1;
+ 
+     if ( *h1 )
+ 	c1 = (*h1)->color & mask;
