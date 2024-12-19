@@ -1,0 +1,45 @@
+From 59b846ac7fb2e4744995bdb7e0c7919c588c9b82 Mon Sep 17 00:00:00 2001
+From: "David C. Manuelda" <StormByte@gmail.com>
+Date: Thu, 19 Sep 2024 20:27:42 +0200
+Subject: [PATCH 2/6] third_party/perfetto: Adds a missing noexcept
+ specification
+
+Signed-off-by: David C. Manuelda <StormByte@gmail.com>
+---
+ .../third_party/crashpad/crashpad/util/misc/no_cfi_icall.h  | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/3rdparty/chromium/third_party/crashpad/crashpad/util/misc/no_cfi_icall.h b/src/3rdparty/chromium/third_party/crashpad/crashpad/util/misc/no_cfi_icall.h
+index 0d131e57f..dcd0b9bf1 100644
+--- a/src/3rdparty/chromium/third_party/crashpad/crashpad/util/misc/no_cfi_icall.h
++++ b/src/3rdparty/chromium/third_party/crashpad/crashpad/util/misc/no_cfi_icall.h
+@@ -50,7 +50,7 @@ template <typename Functor>
+ struct FunctorTraits;
+ 
+ template <typename R, typename... Args>
+-struct FunctorTraits<R (*)(Args...)> {
++struct FunctorTraits<R (*)(Args...) noexcept> {
+   template <typename Function, typename... RunArgs>
+   DISABLE_CFI_ICALL static R Invoke(Function&& function, RunArgs&&... args) {
+     return std::forward<Function>(function)(std::forward<RunArgs>(args)...);
+@@ -58,7 +58,7 @@ struct FunctorTraits<R (*)(Args...)> {
+ };
+ 
+ template <typename R, typename... Args>
+-struct FunctorTraits<R (*)(Args..., ...)> {
++struct FunctorTraits<R (*)(Args..., ...) noexcept> {
+   template <typename Function, typename... RunArgs>
+   DISABLE_CFI_ICALL static R Invoke(Function&& function, RunArgs&&... args) {
+     return std::forward<Function>(function)(std::forward<RunArgs>(args)...);
+@@ -67,7 +67,7 @@ struct FunctorTraits<R (*)(Args..., ...)> {
+ 
+ #if defined(OS_WIN) && defined(ARCH_CPU_X86)
+ template <typename R, typename... Args>
+-struct FunctorTraits<R(__stdcall*)(Args...)> {
++struct FunctorTraits<R(__stdcall*)(Args...) noexcept> {
+   template <typename... RunArgs>
+   DISABLE_CFI_ICALL static R Invoke(R(__stdcall* function)(Args...),
+                                     RunArgs&&... args) {
+-- 
+2.46.0
+

@@ -1,0 +1,45 @@
+From c016fd3bb93d61e25177e645148984b027b99604 Mon Sep 17 00:00:00 2001
+From: "David C. Manuelda" <StormByte@gmail.com>
+Date: Thu, 19 Sep 2024 20:28:04 +0200
+Subject: [PATCH 3/6] 3rdparty/chromium: Fix deprecated __has_trivial_xxx in
+ favor of their non deprecated ones
+
+Signed-off-by: David C. Manuelda <StormByte@gmail.com>
+---
+ src/3rdparty/chromium/base/template_util.h                  | 2 +-
+ .../chromium/sandbox/win/src/policy_opcodes_unittest.cc     | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/3rdparty/chromium/base/template_util.h b/src/3rdparty/chromium/base/template_util.h
+index 16a282650..cf1305df7 100644
+--- a/src/3rdparty/chromium/base/template_util.h
++++ b/src/3rdparty/chromium/base/template_util.h
+@@ -135,7 +135,7 @@ struct is_trivially_copyable {
+   static constexpr bool value = __is_trivially_copyable(T);
+ #else
+   static constexpr bool value =
+-      __has_trivial_copy(T) && __has_trivial_destructor(T);
++      __is_trivially_copyable(T) && __is_trivially_destructible(T);
+ #endif
+ };
+ #else
+diff --git a/src/3rdparty/chromium/sandbox/win/src/policy_opcodes_unittest.cc b/src/3rdparty/chromium/sandbox/win/src/policy_opcodes_unittest.cc
+index c83efcba1..13e1c81e3 100644
+--- a/src/3rdparty/chromium/sandbox/win/src/policy_opcodes_unittest.cc
++++ b/src/3rdparty/chromium/sandbox/win/src/policy_opcodes_unittest.cc
+@@ -78,9 +78,9 @@ TEST(PolicyEngineTest, OpcodeConstraints) {
+   EXPECT_FALSE(__is_polymorphic(PolicyOpcode));
+   // Keep developers from adding smarts to the opcodes which should
+   // be pretty much a bag of bytes with a OO interface.
+-  EXPECT_TRUE(__has_trivial_destructor(PolicyOpcode));
+-  EXPECT_TRUE(__has_trivial_constructor(PolicyOpcode));
+-  EXPECT_TRUE(__has_trivial_copy(PolicyOpcode));
++  EXPECT_TRUE(__is_trivially_destructible(PolicyOpcode));
++  EXPECT_TRUE(__is_trivially_constructible(PolicyOpcode));
++  EXPECT_TRUE(__is_trivially_copyable(PolicyOpcode));
+ }
+ 
+ TEST(PolicyEngineTest, TrueFalseOpcodes) {
+-- 
+2.46.0
+
