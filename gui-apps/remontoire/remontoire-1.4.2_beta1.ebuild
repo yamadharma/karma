@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit vala meson
+inherit gnome2-utils vala meson
 
 DESCRIPTION="A keybinding viewer for i3 and other programs"
 HOMEPAGE="https://github.com/regolith-linux/remontoire"
@@ -38,11 +38,10 @@ src_configure() {
 }
 
 pkg_postinst() {
-	xdg_pkg_postinst
+	glib-compile-schemas /usr/share/glib-2.0/schemas
 	gnome2_schemas_update
 }
 
 pkg_postrm() {
-	xdg_pkg_postrm
 	gnome2_schemas_update
 }
