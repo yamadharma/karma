@@ -23,6 +23,7 @@ PDEPEND="app-emacs/ecf
 	lsp? (
 		app-editors/emacs-lsp-booster
 	     	dev-util/marksman
+		latex? ( app-text/texlab )
 	     	)
 	elisp? (
 	       app-emacs/auctex
@@ -32,7 +33,7 @@ PDEPEND="app-emacs/ecf
 	       app-emacs/ebuild-run-mode
 	       app-emacs/async
 	       )
-	latex? ( dev-tex/texlab )
+	
 "
 
 # app-emacs/a
