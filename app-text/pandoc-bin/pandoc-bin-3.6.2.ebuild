@@ -6,7 +6,7 @@ EAPI=8
 MY_PN=${PN//-bin/}
 MY_P=${MY_PN}-${PV}
 
-CROSSREF_PV=0.3.18.0b
+CROSSREF_PV=0.3.18.1a
 
 DESCRIPTION="Conversion between markup formats (binary package)"
 HOMEPAGE="https://pandoc.org/
