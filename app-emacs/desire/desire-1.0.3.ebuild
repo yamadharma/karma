@@ -15,6 +15,7 @@ KEYWORDS="amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~riscv ~sparc x86"
 
 RDEPEND=""
 BDEPEND="${RDEPEND}"
+RESTRICT="network-sandbox"
 
 SITEFILE="50${PN}-gentoo.el"
 
