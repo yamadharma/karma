@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -14,7 +14,7 @@ if [[ ${PV} == 9999 ]]; then
 else
 	MY_PV=${PV/_rc/-rc}
 	SRC_URI="https://github.com/swaywm/${PN}/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="amd64 arm64 ~loong ~ppc64 ~riscv x86"
+	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 	S="${WORKDIR}/${PN}-${MY_PV}"
 fi
 
@@ -49,16 +49,15 @@ DEPEND="
 "
 # x11-libs/xcb-util-wm needed for xcb-iccm
 if [[ ${PV} == 9999 ]]; then
-	DEPEND+="~gui-libs/wlroots-9999:=[X?]"
+	DEPEND+="~gui-libs/wlroots-9999:=[X=]"
 else
 	DEPEND+="
-		>=gui-libs/wlroots-0.17:=[X?]
-		<gui-libs/wlroots-0.18:=[X?]
+		gui-libs/wlroots:0.18[X=]
 	"
 fi
 RDEPEND="
-	x11-misc/xkeyboard-config
 	${DEPEND}
+	x11-misc/xkeyboard-config
 "
 BDEPEND="
 	>=dev-libs/wayland-protocols-1.24
@@ -79,7 +78,6 @@ src_configure() {
 	local emesonargs=(
 		$(meson_feature man man-pages)
 		$(meson_feature tray)
-		$(meson_feature X xwayland)
 		$(meson_feature swaybar gdk-pixbuf)
 		$(meson_use swaynag)
 		$(meson_use swaybar)
