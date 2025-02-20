@@ -1,0 +1,95 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d140acb..063bcc3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -85,9 +85,6 @@ if(APPLE)
+ elseif(MSVC)
+   add_subdirectory(src/update-checker/WinRTHttpClient)
+   target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE WinRTHttpClient)
+-elseif(UNIX)
+-  add_subdirectory(src/update-checker/CurlClient)
+-  target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE CurlClient)
+ endif()
+ 
+ target_sources(
+@@ -96,8 +93,6 @@ target_sources(
+           src/ort-utils/ort-session-utils.cpp
+           src/obs-utils/obs-utils.cpp
+           src/obs-utils/obs-config-utils.cpp
+-          src/update-checker/github-utils.cpp
+-          src/update-checker/update-checker.cpp
+           src/background-filter-info.c
+           src/background-filter.cpp
+           src/enhance-filter.cpp
+diff --git a/src/background-filter.cpp b/src/background-filter.cpp
+index 9ce62a0..94a716a 100644
+--- a/src/background-filter.cpp
++++ b/src/background-filter.cpp
+@@ -29,7 +29,6 @@
+ #include "ort-utils/ort-session-utils.h"
+ #include "obs-utils/obs-utils.h"
+ #include "consts.h"
+-#include "update-checker/update-checker.h"
+ 
+ struct background_removal_filter : public filter_data {
+ 	bool enableThreshold = true;
+@@ -259,12 +258,6 @@ obs_properties_t *background_filter_properties(void *data)
+ 	// use std::regex_replace instead of QString::arg because the latter doesn't work on Linux
+ 	std::string basic_info = std::regex_replace(
+ 		PLUGIN_INFO_TEMPLATE, std::regex("%1"), PLUGIN_VERSION);
+-	// Check for update
+-	if (get_latest_version() != nullptr) {
+-		basic_info += std::regex_replace(
+-			PLUGIN_INFO_TEMPLATE_UPDATE_AVAILABLE, std::regex("%1"),
+-			get_latest_version());
+-	}
+ 	obs_properties_add_text(props, "info", basic_info.c_str(),
+ 				OBS_TEXT_INFO);
+ 
+diff --git a/src/enhance-filter.cpp b/src/enhance-filter.cpp
+index 7e2c0a3..268794d 100644
+--- a/src/enhance-filter.cpp
++++ b/src/enhance-filter.cpp
+@@ -23,7 +23,6 @@
+ #include "models/ModelTBEFN.h"
+ #include "models/ModelZeroDCE.h"
+ #include "models/ModelURetinex.h"
+-#include "update-checker/update-checker.h"
+ 
+ struct enhance_filter : public filter_data {
+ 	cv::Mat outputBGRA;
+@@ -80,12 +79,6 @@ obs_properties_t *enhance_filter_properties(void *data)
+ 	// replace the placeholder with the current version using std::regex_replace
+ 	std::string basic_info = std::regex_replace(
+ 		PLUGIN_INFO_TEMPLATE, std::regex("%1"), PLUGIN_VERSION);
+-	// Check for update
+-	if (get_latest_version() != nullptr) {
+-		basic_info += std::regex_replace(
+-			PLUGIN_INFO_TEMPLATE_UPDATE_AVAILABLE, std::regex("%1"),
+-			get_latest_version());
+-	}
+ 	obs_properties_add_text(props, "info", basic_info.c_str(),
+ 				OBS_TEXT_INFO);
+ 
+diff --git a/src/plugin-main.c b/src/plugin-main.c
+index 8bc2a61..d4eb579 100644
+--- a/src/plugin-main.c
++++ b/src/plugin-main.c
+@@ -20,8 +20,6 @@ with this program. If not, see <https://www.gnu.org/licenses/>
+ 
+ #include "plugin-support.h"
+ 
+-#include "update-checker/update-checker.h"
+-
+ OBS_DECLARE_MODULE()
+ OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
+ 
+@@ -40,8 +38,6 @@ bool obs_module_load(void)
+ 	obs_log(LOG_INFO, "Plugin loaded successfully (version %s)",
+ 		PLUGIN_VERSION);
+ 
+-	check_update();
+-
+ 	return true;
+ }
+ 

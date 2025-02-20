@@ -1,0 +1,17 @@
+diff --git a/cmake/FetchOnnxruntime.cmake b/cmake/FetchOnnxruntime.cmake
+index 78d2766..93487eb 100644
+--- a/cmake/FetchOnnxruntime.cmake
++++ b/cmake/FetchOnnxruntime.cmake
+@@ -46,11 +46,7 @@ else()
+   set(Onnxruntime_HASH "${CUSTOM_ONNXRUNTIME_HASH}")
+ endif()
+ 
+-FetchContent_Declare(
+-  onnxruntime
+-  URL ${Onnxruntime_URL}
+-  URL_HASH ${Onnxruntime_HASH})
+-FetchContent_MakeAvailable(onnxruntime)
++set(onnxruntime_SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/../onnxruntime-linux-x64-gpu-${Onnxruntime_VERSION}")
+ 
+ if(APPLE)
+   set(Onnxruntime_LIB "${onnxruntime_SOURCE_DIR}/lib/libonnxruntime.${Onnxruntime_VERSION}.dylib")
