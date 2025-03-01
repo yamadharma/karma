@@ -21,7 +21,7 @@ KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 RDEPEND="dev-vcs/git"
 SLOT="0"
 
-RESTRICT="mirror"
+RESTRICT="mirror strip"
 
 QA_PREBUILT="
 	usr/bin/${MY_PN}"
@@ -33,12 +33,25 @@ src_unpack() {
 }
 
 src_install() {
-	insinto /
-	doins -r *
+	default
 
-	fperms +x /usr/bin/${MY_PN}
+	dobin usr/bin/chezmoi
 
-	# newbashcomp completions/${PN}-completion.bash ${PN}
-	# dofishcomp completions/${PN}.fish
-	# newzshcomp completions/${PN}.zsh _${PN}
+	insinto /usr/share/bash-completion/completions
+	doins usr/share/bash-completion/completions/chezmoi
+
+	insinto /usr/share/zsh/vendor-completions
+	doins usr/share/zsh/vendor-completions/_chezmoi
+
+	insinto /usr/share/fish/vendor_completions.d
+	doins usr/share/fish/vendor_completions.d/chezmoi.fish
+
+
+#	insinto /
+#	doins -r *
+#	fperms +x /usr/bin/${MY_PN}
+
+#	newbashcomp completions/${PN}-completion.bash ${PN}
+#	dofishcomp completions/${PN}.fish
+#	newzshcomp completions/${PN}.zsh _${PN}
 }
