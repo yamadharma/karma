@@ -16,18 +16,15 @@ then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 #	EGIT_SUBMODULES=()
-	KEYWORDS="amd64 ~x86"
+	KEYWORDS="amd64 x86"
 else
-	SRC_URI="https://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="amd64 ~x86"
-#	S=${WORKDIR}/td-${PV}
+	SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/VCMI-Sources.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="amd64 x86"
+	S=${WORKDIR}
 fi
-
-
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
 # TODO: other arches
 IUSE="+editor debug erm +launcher lua +nullkiller-ai +translations"
 
