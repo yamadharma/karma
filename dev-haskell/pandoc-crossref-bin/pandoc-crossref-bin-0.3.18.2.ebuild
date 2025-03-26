@@ -3,10 +3,10 @@
 
 EAPI=8
 
-PANDOC_PV=3.6.2
+PANDOC_PV=3.6.4
 
 DESCRIPTION="Pandoc filter for cross-references"
-HOMEPAGE="https://github.com/lierdakil/pandoc-crossref#readme"
+HOMEPAGE="https://github.com/lierdakil/pandoc-crossref"
 SRC_URI="https://github.com/lierdakil/pandoc-crossref/releases/download/v${PV}/pandoc-crossref-Linux-X64.tar.xz -> ${P}.tar.xz"
 
 LICENSE="GPL-2"
