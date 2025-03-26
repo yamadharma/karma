@@ -1,7 +1,9 @@
 # From https://github.com/quarto-dev/quarto-cli/discussions/5065
 EAPI=8
 DESCRIPTION="An open-source scientific and technical publishing system"
-HOMEPAGE="https://quarto.org/"
+HOMEPAGE="https://quarto.org/
+	https://github.com/quarto-dev/quarto-cli
+	"
 
 SRC_URI="https://github.com/quarto-dev/quarto-cli/releases/download/v${PV}/${P}-linux-amd64.tar.gz"
 
