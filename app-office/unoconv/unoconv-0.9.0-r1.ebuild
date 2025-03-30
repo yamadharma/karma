@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..12} )
+PYTHON_COMPAT=( python3_{9..13} )
 inherit python-single-r1
 
 DESCRIPTION="Convert between document formats supported by LibreOffice"
