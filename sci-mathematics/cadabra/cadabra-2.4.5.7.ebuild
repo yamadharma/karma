@@ -59,7 +59,7 @@ BDEPEND="
 	$(python_gen_cond_dep 'dev-python/pybind11[${PYTHON_USEDEP}]')
 "
 
-#PATCHES=( "${FILESDIR}/${CADABRA}-2.4.5.7-cmake.patch" )
+PATCHES=( "${FILESDIR}/${CADABRA}-2.4.5.7-cmake.patch" )
 
 DOCS=( CODE_OF_CONDUCT.md CONTRIBUTING.md JUPYTER.rst README.rst )
 
