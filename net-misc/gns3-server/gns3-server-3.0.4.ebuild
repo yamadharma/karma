@@ -31,9 +31,11 @@ RDEPEND="
 	>=dev-python/psutil-6.1.0[${PYTHON_USEDEP}]
 	>=dev-python/py-cpuinfo-9.0.0[${PYTHON_USEDEP}]
 	>=dev-python/truststore-0.10.0[${PYTHON_USEDEP}]
-	dev-python/uvicorn[${PYTHON_USEDEP}]
 	net-misc/ubridge
 	sys-apps/busybox[static]
+	dev-python/uvicorn[${PYTHON_USEDEP}]
+	dev-python/email-validator[${PYTHON_USEDEP}]
+	dev-python/fastapi[${PYTHON_USEDEP}]
 "
 BDEPEND="
 	test? (
