@@ -36,6 +36,8 @@ RDEPEND="
 	dev-python/uvicorn[${PYTHON_USEDEP}]
 	dev-python/email-validator[${PYTHON_USEDEP}]
 	dev-python/fastapi[${PYTHON_USEDEP}]
+	dev-python/joserfc[${PYTHON_USEDEP}]
+	dev-python/alembic[${PYTHON_USEDEP}]
 "
 BDEPEND="
 	test? (
