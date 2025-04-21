@@ -257,7 +257,7 @@ LICENSE+="
 SLOT="0"
 KEYWORDS="amd64"
 
-IUSE="cmd"
+IUSE="+cmd"
 
 QA_FLAGS_IGNORED="usr/bin/kanata"
 
