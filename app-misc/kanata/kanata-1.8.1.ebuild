@@ -240,7 +240,7 @@ CRATES="
 	x11rb@0.13.1
 "
 
-inherit cargo
+inherit cargo systemd
 
 DESCRIPTION="Multi-layer keyboard customization"
 HOMEPAGE="https://github.com/jtroo/kanata"
@@ -277,6 +277,8 @@ src_install() {
 	cargo_src_install
 
 	systemd_newunit "${FILESDIR}"/kanata.service kanata.service
+	systemd_newuserunit "${FILESDIR}"/kanata.service kanata.service
+
 	dodoc -r ${S}/docs
 	dodoc -r ${S}/cfg_samples
 }
