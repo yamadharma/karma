@@ -6,7 +6,7 @@ EAPI=8
 DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( pypy3 pypy3_11 python3_{10..13} )
 
-inherit distutils-r1 pypi
+inherit distutils-r1
 
 DESCRIPTION="A DjVu to PDF converter with a focus on small output size and the ability to preserve document outlines and text layers"
 HOMEPAGE="https://github.com/kcroker/dpsprep"
@@ -21,5 +21,13 @@ RDEPEND="
 	dev-python/python-djvulibre[${PYTHON_USEDEP}]
 	dev-python/pdfrw[${PYTHON_USEDEP}]
 	dev-python/fpdf2[${PYTHON_USEDEP}]
+	dev-python/loguru[${PYTHON_USEDEP}]
 	app-text/OCRmyPDF
 "
+
+src_install() {
+	distutils-r1_src_install
+
+	dobin ${S}/bin/dpsprep
+	doman dpsprep.1
+}
