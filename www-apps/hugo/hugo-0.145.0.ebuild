@@ -1,4 +1,4 @@
-# Copyright 2018-2024 Gentoo Authors
+# Copyright 2018-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -8,15 +8,14 @@ inherit shell-completion
 
 DESCRIPTION="Fast static HTML and CSS website generator"
 HOMEPAGE="https://gohugo.io https://github.com/gohugoio/hugo"
-SRC_URI="https://github.com/gohugoio/hugo/releases/download/v${PV}/hugo_extended_${PV}_linux-amd64.tar.gz -> ${PN}-bin-${PV}.tar.gz"
-
+SRC_URI="https://github.com/gohugoio/hugo/releases/download/v${PV}/hugo_extended_withdeploy_${PV}_linux-amd64.tar.gz -> ${PN}-bin-${PV}.tar.gz"
 
 # NOTE: To create the vendor tarball, run:
 # `go mod vendor && cd .. && tar -caf ${P}-vendor.tar.xz ${P}/vendor`
 
 LICENSE="Apache-2.0 BSD BSD-2 MIT MPL-2.0 Unlicense"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~loong ~riscv ~x86"
+KEYWORDS="amd64 ~arm64 ~loong ~riscv ~x86"
 IUSE="doc +extended test"
 
 BDEPEND="
