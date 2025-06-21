@@ -6,7 +6,7 @@ EAPI=8
 MAJOR="$(ver_cut 1)"
 CADABRA="${PN}${MAJOR}"
 
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} )
 
 inherit xdg-utils python-single-r1 cmake
 
