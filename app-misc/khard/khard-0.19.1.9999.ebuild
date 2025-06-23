@@ -51,6 +51,10 @@ DOCS=(
 	doc/source/examples/khard.conf.example
 )
 
+PATCHES=(
+	"${FILESDIR}/date-python313.patch"
+)
+
 distutils_enable_tests unittest
 distutils_enable_sphinx docs \
 	dev-python/sphinx-autoapi \
