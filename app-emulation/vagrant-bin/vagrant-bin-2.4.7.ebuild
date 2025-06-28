@@ -32,7 +32,7 @@ RDEPEND="${DEPEND}
 RESTRICT="mirror"
 
 PATCHES=(
-	$FILESDIR/virtualbox-7.1.patch
+#	$FILESDIR/virtualbox-7.1.patch
 )
 
 src_unpack() {
