@@ -54,4 +54,7 @@ src_install() {
 
 	dosym /opt/vagrant/bin/vagrant /usr/bin/vagrant
 	dosym /opt/vagrant/bin/vagrant-go /usr/bin/vagrant-go
+
+	## Remove libreadline
+	rm ${D}/opt/vagrant/embedded/lib/libreadline*
 }
