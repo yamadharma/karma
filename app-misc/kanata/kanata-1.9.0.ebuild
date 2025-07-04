@@ -88,10 +88,7 @@ CRATES="
 	js-sys@0.3.72
 	kanata-interception@0.3.0
 	kanata-keyberon-macros@0.2.0
-	kanata-keyberon@0.180.1
-	kanata-parser@0.180.1
-	kanata-tcp-protocol@0.180.1
-	karabiner-driverkit@0.1.4
+	karabiner-driverkit@0.1.5
 	lazy_static@1.5.0
 	libc@0.2.161
 	libredox@0.1.3
@@ -243,7 +240,7 @@ CRATES="
 	x11rb@0.13.1
 "
 
-inherit cargo
+inherit cargo systemd
 
 DESCRIPTION="Multi-layer keyboard customization"
 HOMEPAGE="https://github.com/jtroo/kanata"
@@ -258,9 +255,9 @@ LICENSE+="
 	Apache-2.0 BSD Boost-1.0 ISC LGPL-3 MIT MPL-2.0 Unicode-DFS-2016
 "
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
-IUSE="cmd"
+IUSE="+cmd"
 
 QA_FLAGS_IGNORED="usr/bin/kanata"
 
@@ -280,5 +277,8 @@ src_install() {
 	cargo_src_install
 
 	systemd_newunit "${FILESDIR}"/kanata.service kanata.service
-	dodoc -r ${S}/docs/*
+	systemd_newuserunit "${FILESDIR}"/kanata.service kanata.service
+
+	dodoc -r ${S}/docs
+	dodoc -r ${S}/cfg_samples
 }
