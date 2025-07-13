@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -10,6 +10,8 @@ PYTHON_COMPAT=( python3_{10..14} )
 
 inherit xdg-utils python-single-r1 cmake
 
+BUNDLED_MICROTEX_SUBMODULE_SHA="9dd1fb04884cbb1701806c6ad6f5405b4f01d934"
+
 DESCRIPTION="Field-theory motivated approach to computer algebra"
 HOMEPAGE="https://cadabra.science/
 	https://github.com/kpeeters/cadabra2/"
@@ -19,10 +21,9 @@ if [[ "${PV}" == *9999* ]] ; then
 
 	EGIT_REPO_URI="https://github.com/kpeeters/${CADABRA}.git"
 else
-	SRC_URI="https://github.com/kpeeters/${CADABRA}/archive/${PV}.tar.gz
-		-> ${P}.tar.gz"
+	SRC_URI="https://github.com/kpeeters/${CADABRA}/archive/${PV}.tar.gz -> ${P}.tar.gz
+			https://github.com/kpeeters/MicroTeX/archive/${BUNDLED_MICROTEX_SUBMODULE_SHA}.tar.gz -> microtex-${BUNDLED_MICROTEX_SUBMODULE_SHA}.tar.gz"
 	S="${WORKDIR}/${CADABRA}-${PV}"
-
 	KEYWORDS="~amd64 ~x86"
 fi
 
@@ -59,7 +60,7 @@ BDEPEND="
 	$(python_gen_cond_dep 'dev-python/pybind11[${PYTHON_USEDEP}]')
 "
 
- PATCHES=( "${FILESDIR}/${CADABRA}-${PV}-cmake.patch" )
+PATCHES=( "${FILESDIR}/${CADABRA}-2.5.12-cmake.patch" )
 
 DOCS=( CODE_OF_CONDUCT.md CONTRIBUTING.md JUPYTER.rst README.rst )
 
@@ -72,6 +73,10 @@ xdg_update() {
 }
 
 src_prepare() {
+	# Bundled submodules
+	mkdir -p "${S}/submodules/microtex/"
+	cp -rl "${WORKDIR}/MicroTeX-${BUNDLED_MICROTEX_SUBMODULE_SHA}"/* "${S}/submodules/microtex/"
+
 	# Clean postinst script which calls libtool and icon-cache update
 	echo '#!/bin/sh' > "${S}/config/postinst.in" || die
 
