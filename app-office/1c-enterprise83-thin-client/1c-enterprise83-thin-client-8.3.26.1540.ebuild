@@ -28,8 +28,7 @@ RDEPEND="app-arch/dpkg
 
 DEPEND="${RDEPEND}"
 #RDEPEND="=app-office/1c-enterprise83-thin-client-support-${PV}"
-RDEPEND="net-libs/webkit-gtk:4
-	"
+RDEPEND="net-libs/webkit-gtk:4"
 
 S="${WORKDIR}"
 
