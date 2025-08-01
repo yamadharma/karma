@@ -22,7 +22,7 @@ RESTRICT="!test? ( test )"
 
 DEPEND="
 	dev-libs/glib:2
-	dev-libs/gmime:3.0
+	>=dev-libs/gmime-3.2:3.0
 	>=dev-libs/xapian-1.4:=
 	sci-libs/cld2
 	emacs? ( >=app-editors/emacs-25.3:* )
