@@ -12,7 +12,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="x86 amd64"
 
-IUSE="${IUSE} elisp latex lsp"
+IUSE="${IUSE} bibtex elisp latex lsp markdown"
 
 PDEPEND="app-emacs/ecf
 	media-fonts/iosevka
@@ -22,18 +22,31 @@ PDEPEND="app-emacs/ecf
 	dev-tex/LaTeXML
 	lsp? (
 		app-editors/emacs-lsp-booster
-	     	dev-util/marksman
+		app-emacs/lsp-mode
+		app-emacs/lsp-ui
+		app-emacs/eglot
 		latex? ( app-text/texlab )
-	     	)
+		markdown? ( dev-util/marksman )
+   	)
 	elisp? (
-	       app-emacs/auctex
 	       app-emacs/auto-complete
 	       app-emacs/autoconf-mode
 	       app-emacs/ebuild-mode
 	       app-emacs/ebuild-run-mode
 	       app-emacs/async
-	       )
-	
+		   app-emacs/burly
+		   bibtex? (
+		   app-emacs/biblio
+		   app-emacs/ebib
+		   )
+		   latex? (
+		   app-emacs/auctex
+		   )
+		   markdown? (
+		   app-emacs/markdown-mode
+		   )
+    )
+
 "
 
 # app-emacs/a
@@ -57,7 +70,6 @@ PDEPEND="app-emacs/ecf
 # app-emacs/avy
 # app-emacs/avy-embark-collect
 # app-emacs/bbdb
-# app-emacs/biblio
 # app-emacs/binclock
 # app-emacs/bind-chord
 # app-emacs/bind-key
@@ -71,7 +83,6 @@ PDEPEND="app-emacs/ecf
 # app-emacs/browse-kill-ring
 # app-emacs/bubblet
 # app-emacs/bui
-# app-emacs/burly
 # app-emacs/buttercup
 # app-emacs/calfw
 # app-emacs/cape
@@ -144,7 +155,6 @@ PDEPEND="app-emacs/ecf
 # app-emacs/dune-format
 # app-emacs/dwarf-mode
 # app-emacs/earthfile-mode
-# app-emacs/ebib
 # app-emacs/ecb
 # app-emacs/ecukes
 # app-emacs/edb
@@ -153,7 +163,6 @@ PDEPEND="app-emacs/ecf
 # app-emacs/editorconfig-emacs
 # app-emacs/edit-server
 # app-emacs/ef-themes
-# app-emacs/eglot
 # app-emacs/eimp
 # app-emacs/eldev
 # app-emacs/eldoc-box
@@ -280,9 +289,7 @@ PDEPEND="app-emacs/ecf
 # app-emacs/lookup
 # app-emacs/lsp-docker
 # app-emacs/lsp-java
-# app-emacs/lsp-mode
 # app-emacs/lsp-treemacs
-# app-emacs/lsp-ui
 # app-emacs/lua-mode
 # app-emacs/lv
 # app-emacs/lyskom-elisp-client
@@ -292,7 +299,6 @@ PDEPEND="app-emacs/ecf
 # app-emacs/magit-popup
 # app-emacs/mailcrypt
 # app-emacs/marginalia
-# app-emacs/markdown-mode
 # app-emacs/mastodon
 # app-emacs/math-symbol-lists
 # app-emacs/matlab
