@@ -15,7 +15,7 @@ SRC_URI="https://github.com/gohugoio/hugo/releases/download/v${PV}/hugo_extended
 
 LICENSE="Apache-2.0 BSD BSD-2 MIT MPL-2.0 Unlicense"
 SLOT="0"
-KEYWORDS="amd64 ~arm64 ~loong ~riscv ~x86"
+#KEYWORDS="amd64 ~arm64 ~loong ~riscv ~x86"
 IUSE="doc +extended test"
 
 BDEPEND="
