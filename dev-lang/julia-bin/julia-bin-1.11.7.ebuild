@@ -21,15 +21,21 @@ else
 	MY_P=${MY_PN}-${PV/_/-}
 	MY_PV=$(ver_cut 1-2)
 	BASE_SRC_URI="https://julialang-s3.julialang.org/bin"
-
 	SRC_URI="
-		x86? ( ${BASE_SRC_URI}/linux/x86/${MY_PV}/${MY_P}-linux-i686.tar.gz )
 		amd64? (
 			elibc_glibc? ( ${BASE_SRC_URI}/linux/x64/${MY_PV}/${MY_P}-linux-x86_64.tar.gz )
-			elibc_musl? ( ${BASE_SRC_URI}/musl/x64/${MY_PV}/${MY_P}-musl-x86_64.tar.gz )
 		)
-		arm64? ( ${BASE_SRC_URI}/linux/aarch64/${MY_PV}/${MY_P}-linux-aarch64.tar.gz )
 	"
+
+
+#	SRC_URI="
+#		x86? ( ${BASE_SRC_URI}/linux/x86/${MY_PV}/${MY_P}-linux-i686.tar.gz )
+#		amd64? (
+#			elibc_glibc? ( ${BASE_SRC_URI}/linux/x64/${MY_PV}/${MY_P}-linux-x86_64.tar.gz )
+#			elibc_musl? ( ${BASE_SRC_URI}/musl/x64/${MY_PV}/${MY_P}-musl-x86_64.tar.gz )
+#		)
+#		arm64? ( ${BASE_SRC_URI}/linux/aarch64/${MY_PV}/${MY_P}-linux-aarch64.tar.gz )
+#	"
 	S="${WORKDIR}/${MY_P}"
 
 	SLOT="${MY_PV}"
