@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -10,23 +10,24 @@ HOMEPAGE="https://www.djcbsoftware.nl/code/mu/ https://github.com/djcb/mu"
 SRC_URI="https://github.com/djcb/mu/releases/download/v${PV}/${P}.tar.xz"
 
 # mu: GPL-3+
-# + cli11: BSD
-# + fmt: MIT
 # + tl: CC0-1.0
 # + variant-lite: Boost-1.0
 LICENSE="BSD Boost-1.0 CC0-1.0 GPL-3+ MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86 ~x64-macos"
+KEYWORDS="~amd64 ~arm ~arm64 ~x86 ~x64-macos"
 IUSE="emacs readline test"
 RESTRICT="!test? ( test )"
 
 DEPEND="
+	>=dev-cpp/cli11-2.4
 	dev-libs/glib:2
 	>=dev-libs/gmime-3.2:3.0
+	>=dev-libs/libfmt-11.1:=
 	>=dev-libs/xapian-1.4:=
 	sci-libs/cld2
 	emacs? ( >=app-editors/emacs-25.3:* )
-	readline? ( sys-libs/readline:= )"
+	readline? ( sys-libs/readline:= )
+"
 RDEPEND="${DEPEND}"
 BDEPEND="
 	sys-apps/texinfo
@@ -36,6 +37,7 @@ BDEPEND="
 PATCHES=(
 	# https://bugs.gentoo.org/925503
 	"${FILESDIR}"/${PN}-1.12.0-no-python.patch
+	"${FILESDIR}"/${P}-libfmt-12.patch
 )
 
 DOC_CONTENTS="
@@ -67,6 +69,9 @@ src_configure() {
 		-Demacs="$(usex emacs "${EMACS}" emacs-not-enabled)"
 		# TODO: revisit this, it's not actually deprecated, just been reworked
 		-Dguile=disabled
+		-Dscm=disabled
+		-Duse-embedded-fmt=false
+		-Duse-embedded-cli11=false
 	)
 	meson_src_configure
 }
