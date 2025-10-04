@@ -8,10 +8,10 @@ inherit xdg-utils
 
 DESCRIPTION="A flat colorful design icon theme for linux desktops"
 HOMEPAGE="https://github.com/vinceliuice/Qogir-icon-theme"
-SRC_URI="https://github.com/vinceliuice/${PN}/archive/refs/tags/2020-11-22.tar.gz"
+SRC_URI="https://github.com/vinceliuice/${PN}/archive/refs/tags/2025-02-15.tar.gz"
 
 # Extract to a non-default name
-S=${WORKDIR}/Qogir-icon-theme-2020-11-22
+S=${WORKDIR}/Qogir-icon-theme-2025-02-15
 
 LICENSE="GPL-3"
 SLOT="0"
