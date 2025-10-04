@@ -13,5 +13,5 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="amd64 ~arm64"
 
-IDEPEND=">=dev-lang/sassc-3.6.2"
+IDEPEND="dev-util/dart-sass"
 RDEPEND=">=gui-libs/gtk-4.20.0:4"
