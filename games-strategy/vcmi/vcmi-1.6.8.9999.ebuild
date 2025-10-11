@@ -16,7 +16,7 @@ then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 #	EGIT_SUBMODULES=()
-	KEYWORDS="amd64 x86"
+#	KEYWORDS="amd64 x86"
 else
 	SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/VCMI-Sources.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="amd64 x86"
