@@ -51,6 +51,7 @@ RDEPEND="
 	x11-libs/xcb-util-renderutil
 	x11-libs/xcb-util-wm
 	media-libs/tiff-compat
+	dev-libs/libxml2-compat
 "
 
 QA_PREBUILT="opt/pt/*"
