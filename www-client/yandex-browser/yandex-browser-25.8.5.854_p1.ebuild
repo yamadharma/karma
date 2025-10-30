@@ -139,4 +139,5 @@ src_install() {
 	
 	dodir /etc
 	cp ${FILESDIR}/yandex-browser-flags.conf ${D}/etc
+
 }
