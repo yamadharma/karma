@@ -36,9 +36,6 @@ RDEPEND="${DEPEND}"
 
 BDEPEND="virtual/pkgconfig"
 
-PATCHES=(
-	"${FILESDIR}/zathura-pdf-mupdf-0.4.3-meson-mupdfthird.patch"
-)
 
 src_prepare() (
 	default
