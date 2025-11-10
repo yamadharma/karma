@@ -18,8 +18,14 @@ SLOT="0"
 KEYWORDS="amd64"
 
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+		dev-python/click-repl[${PYTHON_USEDEP}]
+		dev-python/delorean[${PYTHON_USEDEP}]
+		dev-python/humanize[${PYTHON_USEDEP}]
+		dev-python/yaspin[${PYTHON_USEDEP}]
+		dev-python/markdownify[${PYTHON_USEDEP}]
+"
 
 src_configure() {
-        export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
+		export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
 }
