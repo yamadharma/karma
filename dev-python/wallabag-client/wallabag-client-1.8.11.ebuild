@@ -3,8 +3,9 @@
 
 EAPI=8
 
+DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{11..13} )
+PYTHON_COMPAT=( python3_{11..14} )
 
 inherit distutils-r1
 
@@ -18,3 +19,7 @@ KEYWORDS="amd64"
 
 DEPEND=""
 RDEPEND="${DEPEND}"
+
+src_configure() {
+        export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
+}
