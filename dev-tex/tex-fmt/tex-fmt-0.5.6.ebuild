@@ -129,6 +129,7 @@ DESCRIPTION="LaTeX formatter written in Rust"
 HOMEPAGE=""
 SRC_URI="
 	${CARGO_CRATE_URIS}
+	https://github.com/WGUNDERWOOD/tex-fmt/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 "
 
 LICENSE="MIT"
