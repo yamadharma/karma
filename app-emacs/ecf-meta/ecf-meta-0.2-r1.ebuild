@@ -45,8 +45,8 @@ PDEPEND="app-emacs/ecf
 		   markdown? (
 		   app-emacs/markdown-mode
 		   )
-    )
-
+	)
+	latex? ( dev-tex/tex-fmt )
 "
 
 # app-emacs/a
