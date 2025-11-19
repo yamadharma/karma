@@ -8,7 +8,7 @@ HOMEPAGE="https://quarto.org/
 SRC_URI="https://github.com/quarto-dev/quarto-cli/releases/download/v${PV}/${P}-linux-amd64.tar.gz"
 
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+#KEYWORDS="amd64 ~x86"
 IUSE=""
 
 DEPEND=""
