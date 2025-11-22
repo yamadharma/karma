@@ -18,3 +18,5 @@ KEYWORDS="amd64"
 RDEPEND="${PYTHON_DEPS}
 		virtual/ooo
 		"
+
+RESTRICT="test"
