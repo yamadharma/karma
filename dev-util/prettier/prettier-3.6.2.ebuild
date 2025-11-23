@@ -21,7 +21,7 @@ SRC_URI="${YARN_SRC_URI}"
 RESTRICT="mirror"
 
 LICENSE="Apache-2 MIT"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
 S="${WORKDIR}"
 
