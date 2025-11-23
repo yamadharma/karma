@@ -20,3 +20,12 @@ RDEPEND="
 	>=dev-python/regex-2024.11.6[${PYTHON_USEDEP}]
 	>=dev-python/strif-3.0.1[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.12.2[${PYTHON_USEDEP}]"
+
+RESTRICT="test"
+
+## Hack
+src_prepare() {
+	distutils-r1_src_prepare
+
+	sed -i -e "s/^dynamic = .*/version = \"${PV}\"/g" ${S}/pyproject.toml
+	}
