@@ -18,3 +18,12 @@ KEYWORDS="amd64"
 DEPEND="
 		dev-python/uv-dynamic-versioning
 		"
+
+RESTRICT="test"
+
+## Hack
+src_prepare() {
+	distutils-r1_src_prepare
+
+	sed -i -e "s/^dynamic = .*/version = \"${PV}\"/g" ${S}/pyproject.toml
+	}
