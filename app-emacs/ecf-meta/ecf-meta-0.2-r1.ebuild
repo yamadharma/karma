@@ -47,6 +47,8 @@ PDEPEND="app-emacs/ecf
 		   )
 	)
 	latex? ( dev-tex/tex-fmt )
+	dev-python/flowmark 
+	dev-util/prettier
 "
 
 # app-emacs/a
