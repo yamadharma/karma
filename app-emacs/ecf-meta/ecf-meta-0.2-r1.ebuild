@@ -47,6 +47,7 @@ PDEPEND="app-emacs/ecf
 		   )
 	)
 	latex? ( dev-tex/tex-fmt )
+	app-emacs/apheleia
 	dev-python/flowmark 
 	dev-util/prettier
 "
@@ -65,7 +66,6 @@ PDEPEND="app-emacs/ecf
 # app-emacs/ansi
 # app-emacs/apache-mode
 # app-emacs/apel
-# app-emacs/apheleia
 # app-emacs/assess
 # app-emacs/atomic-chrome
 # app-emacs/autothemer
