@@ -46,10 +46,11 @@ PDEPEND="app-emacs/ecf
 		   app-emacs/markdown-mode
 		   )
 	)
-	latex? ( dev-tex/tex-fmt )
 	app-emacs/apheleia
+	latex? ( dev-tex/tex-fmt )
 	dev-python/flowmark 
 	dev-util/prettier
+	dev-util/shfmt
 "
 
 # app-emacs/a
