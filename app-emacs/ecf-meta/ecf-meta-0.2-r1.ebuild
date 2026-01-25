@@ -24,7 +24,6 @@ PDEPEND="app-emacs/ecf
 		app-editors/emacs-lsp-booster
 		app-emacs/lsp-mode
 		app-emacs/lsp-ui
-		app-emacs/eglot
 		latex? ( app-text/texlab )
 		markdown? ( dev-util/marksman )
    	)
