@@ -48,7 +48,7 @@ PDEPEND="app-emacs/ecf
 	)
 	app-emacs/apheleia
 	latex? ( dev-tex/tex-fmt )
-	dev-python/flowmark 
+	dev-python/flowmark
 	dev-util/prettier
 	dev-util/shfmt
 "
@@ -380,7 +380,6 @@ PDEPEND="app-emacs/ecf
 # app-emacs/psgml
 # app-emacs/puppet-mode
 # app-emacs/pymacs
-# app-emacs/python-mode
 # app-emacs/pyvenv
 # app-emacs/quack
 # app-emacs/queue
