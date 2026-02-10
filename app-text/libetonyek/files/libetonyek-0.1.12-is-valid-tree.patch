@@ -1,0 +1,11 @@
+--- libetonyek-0.1.12/src/lib/IWORKTable.cpp	2024-11-05 21:56:01.000000000 +0000
++++ libetonyek-0.1.12_new/src/lib/IWORKTable.cpp	2025-10-24 00:41:57.952664295 +0100
+@@ -168,7 +168,7 @@
+ 
+ void writeBorder(librevenge::RVNGPropertyList &props, const char *name, IWORKGridLine_t &line, unsigned index)
+ {
+-  if (!line.is_tree_valid())
++  if (!line.valid_tree())
+     line.build_tree();
+ 
+   IWORKStylePtr_t style;
