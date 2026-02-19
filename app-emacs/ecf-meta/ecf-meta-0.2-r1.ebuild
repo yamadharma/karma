@@ -20,6 +20,7 @@ PDEPEND="app-emacs/ecf
 	sys-apps/fd
 	media-gfx/ditaa
 	dev-tex/LaTeXML
+    media-libs/vips
 	lsp? (
 		app-editors/emacs-lsp-booster
 		app-emacs/lsp-mode
