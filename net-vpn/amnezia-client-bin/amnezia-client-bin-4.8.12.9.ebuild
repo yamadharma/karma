@@ -14,7 +14,7 @@ SRC_URI="https://github.com/amnezia-vpn/${MY_PN}/releases/download/${PV}/Amnezia
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
 DEPEND="
 	dev-qt/qtbase
