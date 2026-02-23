@@ -1,0 +1,22 @@
+#!/sbin/openrc-run
+
+description="AmneziaVPN Service"
+
+pidfile="/run/amnezia-vpn.pid"
+
+depend() {
+    after net
+}
+
+start() {
+    ebegin "Starting AmneziaVPN Service"
+    export LD_LIBRARY_PATH=/opt/AmneziaVPN/client/lib:$LD_LIBRARY_PATH
+    start-stop-daemon --start --background --make-pidfile --pidfile "$pidfile" --exec /opt/AmneziaVPN/service/AmneziaVPN-service.sh
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping AmneziaVPN Service"
+    start-stop-daemon --stop --pidfile "$pidfile"
+    eend $?
+}
