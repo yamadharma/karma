@@ -285,6 +285,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-6.1-nomancompress.patch"
 	"${FILESDIR}/${PN}-24.2-qtdetect.patch"
 	"${FILESDIR}/${PN}-25.2-cflags.patch"
+	"${FILESDIR}/${PN}-25.2.7.2-poppler-26.02.patch"
 )
 
 _check_reqs() {
