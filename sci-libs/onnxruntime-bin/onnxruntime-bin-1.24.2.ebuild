@@ -41,4 +41,8 @@ src_install() {
 	cp -R lib/. "${ED}"/$(get_libdir)/. || die
 
 	einstalldocs
+
+	## FIX for vcmi
+	dodir /usr/include/onnxruntime
+	touch ${D}/usr/include/onnxruntime/.keep
 }
