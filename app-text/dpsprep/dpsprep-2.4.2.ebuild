@@ -1,10 +1,10 @@
-# Copyright 1999-2025 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=poetry
-PYTHON_COMPAT=( pypy3 pypy3_11 python3_{10..13} )
+DISTUTILS_USE_PEP517=uv-build
+PYTHON_COMPAT=( pypy3 pypy3_11 python3_{10..14} )
 
 inherit distutils-r1
 
@@ -15,6 +15,8 @@ SRC_URI="https://github.com/kcroker/dpsprep/archive/refs/tags/v${PV}.tar.gz -> $
 LICENSE="GPL-3.0-only"
 SLOT="0"
 KEYWORDS="amd64 ~arm arm64 ~loong ~riscv x86"
+
+RESTRICT="test"
 
 RDEPEND="
 	>=dev-python/pillow-9.1.0[${PYTHON_USEDEP}]
@@ -28,6 +30,6 @@ RDEPEND="
 src_install() {
 	distutils-r1_src_install
 
-	dobin ${S}/bin/dpsprep
+	# dobin ${S}/bin/dpsprep
 	doman dpsprep.1
 }
