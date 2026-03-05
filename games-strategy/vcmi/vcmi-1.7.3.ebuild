@@ -58,6 +58,7 @@ CDEPEND="
 	sys-libs/zlib[minizip]
 	dev-libs/libsquish
 	|| ( sci-libs/onnxruntime-bin sci-libs/onnxruntime )
+	dev-cpp/glaze
 "
 
 BDEPEND="
