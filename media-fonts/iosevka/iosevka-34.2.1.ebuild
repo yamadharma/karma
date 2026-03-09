@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,12 +6,14 @@ EAPI=8
 inherit font
 
 # [...document.querySelectorAll('[colspan="3"] > b')]
-#     .map(x => "[\""
-#          + (x = x.innerText.trim()).toLowerCase().replaceAll("\xa0", "-")
+#     .map(x => x.innerText.trim())
+#     .map(x => x.substring(x.indexOf(' ') + 1).replaceAll("\xa0", " "))
+#     .map(x => "\t[\""
+#          + x.toLowerCase().replaceAll(" ", "-")
 #          + "\"]=\""
 #          + x
 #          + "\"")
-#     .join("\n\t")
+#     .join("\n")
 declare -A MY_FONT_VARIANTS=(
 	["iosevka"]="Iosevka"
 	["iosevka-slab"]="Iosevka Slab"
