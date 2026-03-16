@@ -24,6 +24,9 @@ RDEPEND="
 	dev-python/pdfrw[${PYTHON_USEDEP}]
 	dev-python/fpdf2[${PYTHON_USEDEP}]
 	dev-python/loguru[${PYTHON_USEDEP}]
+	media-gfx/oxipng
+	app-text/djvu
+	app-text/poppler
 	app-text/OCRmyPDF
 "
 
