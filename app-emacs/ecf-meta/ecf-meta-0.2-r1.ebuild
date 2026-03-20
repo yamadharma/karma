@@ -48,10 +48,11 @@ PDEPEND="app-emacs/ecf
 	)
 	app-emacs/apheleia
 	latex? ( dev-tex/tex-fmt )
-	dev-python/flowmark
-	dev-util/prettier
+ 	dev-util/prettier
 	dev-util/shfmt
 "
+
+#	dev-python/flowmark
 
 # app-emacs/a
 # app-emacs/ace-window
