@@ -16,7 +16,9 @@ IUSE=""
 RDEPEND="
 	app-shells/bash
 	net-misc/rsync[xattr]
-	sys-apps/systemd"
+	sys-apps/systemd
+	sys-fs/fuse-overlayfs
+"
 
 src_install() {
 	emake DESTDIR="${D}" COMPRESS_MAN=0 install
