@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit rpm desktop
+inherit rpm desktop xdg-utils
 
 DESCRIPTION="MAX Messenger — российский мессенджер от VK с поддержкой звонков, каналов и ботов"
 HOMEPAGE="https://max.ru"
