@@ -49,9 +49,9 @@ src_install() {
 }
 
 pkg_postinst() {
-	xdg_desktop_database_update()
+	xdg_desktop_database_update
 }
 
 pkg_postrm() {
-	xdg_desktop_database_update()
+	xdg_desktop_database_update
 }
