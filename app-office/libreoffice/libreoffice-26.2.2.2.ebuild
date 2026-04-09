@@ -12,8 +12,8 @@ MY_PV="${MY_PV/_beta/.beta}"
 # Usually the tarballs are moved a lot so this should make everyone happy.
 DEV_URI="
 	https://dev-builds.libreoffice.org/pre-releases/src
-	https://download.documentfoundation.org/libreoffice/src/${MY_PV:0:5}/
-	https://downloadarchive.documentfoundation.org/libreoffice/old/${MY_PV}/src
+#	https://download.documentfoundation.org/libreoffice/src/${MY_PV:0:5}/
+#	https://downloadarchive.documentfoundation.org/libreoffice/old/${MY_PV}/src
 "
 ADDONS_URI="https://dev-www.libreoffice.org/src/"
 
@@ -280,12 +280,11 @@ fi
 
 PATCHES=(
 	# "${WORKDIR}"/${PATCHSET/.tar.xz/}
-
+	"${FILESDIR}/${PN}-26.2.2.2-poppler-26.04.0.patch"
 	# not upstreamable stuff
 	"${FILESDIR}/${PN}-6.1-nomancompress.patch"
 	"${FILESDIR}/${PN}-24.2-qtdetect.patch"
 	"${FILESDIR}/${PN}-25.2-cflags.patch"
-	"${FILESDIR}/${PN}-25.2.7.2-poppler-26.02.patch"
 )
 
 _check_reqs() {
