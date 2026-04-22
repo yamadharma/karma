@@ -6,63 +6,64 @@
 EAPI=8
 
 CRATES="
-	aho-corasick@1.1.3
-	anstream@0.6.21
-	anstyle-parse@0.2.7
-	anstyle-query@1.1.4
-	anstyle-wincon@3.0.10
-	anstyle@1.0.13
+	aho-corasick@1.1.4
+	anstream@1.0.0
+	anstyle-parse@1.0.0
+	anstyle-query@1.1.5
+	anstyle-wincon@3.0.11
+	anstyle@1.0.14
 	autocfg@1.5.0
-	bitflags@2.9.4
-	bstr@1.12.0
-	bumpalo@3.19.0
-	cfg-if@1.0.3
-	clap@4.5.48
-	clap_builder@4.5.48
-	clap_complete@4.5.58
-	clap_lex@0.7.5
-	clap_mangen@0.2.29
-	colorchoice@1.0.4
+	bstr@1.12.1
+	bumpalo@3.20.2
+	cfg-if@1.0.4
+	clap@4.6.0
+	clap_builder@4.6.0
+	clap_complete@4.6.0
+	clap_lex@1.1.0
+	clap_mangen@0.2.33
+	colorchoice@1.0.5
 	colored@2.2.0
 	crossbeam-deque@0.8.6
 	crossbeam-epoch@0.9.18
 	crossbeam-utils@0.8.21
 	dirs-sys@0.4.1
 	dirs@5.0.1
-	env_filter@0.1.3
-	env_logger@0.11.8
+	either@1.15.0
+	env_filter@1.0.1
+	env_logger@0.11.10
 	equivalent@1.0.2
-	getrandom@0.2.16
-	globset@0.4.16
-	hashbrown@0.16.0
-	ignore@0.4.23
-	indexmap@2.11.4
-	is_terminal_polyfill@1.70.1
-	jiff-static@0.2.15
-	jiff@0.2.15
-	js-sys@0.3.77
+	getrandom@0.2.17
+	globset@0.4.18
+	hashbrown@0.16.1
+	ignore@0.4.25
+	indexmap@2.13.0
+	is_terminal_polyfill@1.70.2
+	itertools@0.14.0
+	jiff-static@0.2.23
+	jiff@0.2.23
+	js-sys@0.3.91
 	lazy_static@1.5.0
-	libc@0.2.176
-	libredox@0.1.10
-	log@0.4.28
-	memchr@2.7.6
+	libc@0.2.183
+	libredox@0.1.15
+	log@0.4.29
+	memchr@2.8.0
 	merge@0.2.0
 	merge_derive@0.2.0
 	num-traits@0.2.19
-	once_cell@1.21.3
-	once_cell_polyfill@1.70.1
+	once_cell@1.21.4
+	once_cell_polyfill@1.70.2
 	option-ext@0.2.0
-	portable-atomic-util@0.2.4
-	portable-atomic@1.11.1
+	portable-atomic-util@0.2.6
+	portable-atomic@1.13.1
 	proc-macro-error-attr2@2.0.0
 	proc-macro-error2@2.0.1
-	proc-macro2@1.0.101
-	quote@1.0.41
+	proc-macro2@1.0.106
+	quote@1.0.45
 	redox_users@0.4.6
-	regex-automata@0.4.11
-	regex-syntax@0.8.6
-	regex@1.11.3
-	roff@0.2.2
+	regex-automata@0.4.14
+	regex-syntax@0.8.10
+	regex@1.12.3
+	roff@1.1.0
 	rustversion@1.0.22
 	same-file@1.0.6
 	serde@1.0.228
@@ -71,56 +72,45 @@ CRATES="
 	serde_spanned@0.6.9
 	similar@2.7.0
 	strsim@0.11.1
-	syn@2.0.106
+	syn@2.0.117
 	thiserror-impl@1.0.69
 	thiserror@1.0.69
 	toml@0.8.23
 	toml_datetime@0.6.11
 	toml_edit@0.22.27
 	toml_write@0.1.2
-	unicode-ident@1.0.19
+	unicode-ident@1.0.24
 	utf8parse@0.2.2
 	walkdir@2.5.0
 	wasi@0.11.1+wasi-snapshot-preview1
-	wasm-bindgen-backend@0.2.100
-	wasm-bindgen-macro-support@0.2.100
-	wasm-bindgen-macro@0.2.100
-	wasm-bindgen-shared@0.2.100
-	wasm-bindgen@0.2.100
+	wasm-bindgen-macro-support@0.2.114
+	wasm-bindgen-macro@0.2.114
+	wasm-bindgen-shared@0.2.114
+	wasm-bindgen@0.2.114
 	web-time@1.1.0
 	winapi-util@0.1.11
-	windows-link@0.2.0
+	windows-link@0.2.1
 	windows-sys@0.48.0
 	windows-sys@0.59.0
-	windows-sys@0.60.2
-	windows-sys@0.61.1
+	windows-sys@0.61.2
 	windows-targets@0.48.5
 	windows-targets@0.52.6
-	windows-targets@0.53.4
 	windows_aarch64_gnullvm@0.48.5
 	windows_aarch64_gnullvm@0.52.6
-	windows_aarch64_gnullvm@0.53.0
 	windows_aarch64_msvc@0.48.5
 	windows_aarch64_msvc@0.52.6
-	windows_aarch64_msvc@0.53.0
 	windows_i686_gnu@0.48.5
 	windows_i686_gnu@0.52.6
-	windows_i686_gnu@0.53.0
 	windows_i686_gnullvm@0.52.6
-	windows_i686_gnullvm@0.53.0
 	windows_i686_msvc@0.48.5
 	windows_i686_msvc@0.52.6
-	windows_i686_msvc@0.53.0
 	windows_x86_64_gnu@0.48.5
 	windows_x86_64_gnu@0.52.6
-	windows_x86_64_gnu@0.53.0
 	windows_x86_64_gnullvm@0.48.5
 	windows_x86_64_gnullvm@0.52.6
-	windows_x86_64_gnullvm@0.53.0
 	windows_x86_64_msvc@0.48.5
 	windows_x86_64_msvc@0.52.6
-	windows_x86_64_msvc@0.53.0
-	winnow@0.7.13
+	winnow@0.7.15
 "
 
 inherit cargo
@@ -134,6 +124,6 @@ SRC_URI="
 
 LICENSE="MIT"
 # Dependent crate licenses
-LICENSE+="Apache-2.0 MIT MPL-2.0 Unicode-3.0"
+LICENSE+=" Apache-2.0 MIT MPL-2.0 Unicode-3.0"
 SLOT="0"
 KEYWORDS="amd64"
