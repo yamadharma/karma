@@ -40,22 +40,17 @@ CDEPEND="
 	media-libs/sdl2-ttf
 	media-video/ffmpeg
 	launcher? (
-		dev-qt/qtgui
-		dev-qt/qtcore
-		dev-qt/qtnetwork
-		dev-qt/qtwidgets
-		translations? ( dev-qt/linguist-tools )
+		dev-qt/qtbase
 	)
 	editor? (
-		dev-qt/qtgui
-		dev-qt/qtcore
-		dev-qt/qtnetwork
-		dev-qt/qtwidgets
-		translations? ( dev-qt/linguist-tools )
+		dev-qt/qtbase
 	)
 	dev-libs/fuzzylite
 	nullkiller-ai? ( dev-cpp/tbb )
 	sys-libs/zlib[minizip]
+	dev-libs/libsquish
+	|| ( sci-libs/onnxruntime-bin sci-libs/onnxruntime )
+	dev-cpp/glaze
 "
 
 BDEPEND="
@@ -88,6 +83,7 @@ src_configure() {
 		-DENABLE_GITVERSION=OFF
 		-DBoost_NO_BOOST_CMAKE=ON
 		-DENABLE_INNOEXTRACT=ON
+		-DQT_VERSION_MAJOR=6
 	)
 	export CCACHE_SLOPPINESS="time_macros"
 	cmake_src_configure

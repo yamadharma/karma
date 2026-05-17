@@ -40,6 +40,7 @@ CDEPEND="
 	media-libs/sdl2-ttf
 	media-video/ffmpeg
 	launcher? (
+		dev-qt/qtbase
 		dev-qt/qtgui
 		dev-qt/qtcore
 		dev-qt/qtnetwork
@@ -47,6 +48,7 @@ CDEPEND="
 		translations? ( dev-qt/linguist-tools )
 	)
 	editor? (
+		dev-qt/qtbase
 		dev-qt/qtgui
 		dev-qt/qtcore
 		dev-qt/qtnetwork
@@ -91,6 +93,7 @@ src_configure() {
 		-DENABLE_GITVERSION=OFF
 		-DBoost_NO_BOOST_CMAKE=ON
 		-DENABLE_INNOEXTRACT=ON
+		-DQT_VERSION_MAJOR=6
 	)
 	export CCACHE_SLOPPINESS="time_macros"
 	cmake_src_configure
