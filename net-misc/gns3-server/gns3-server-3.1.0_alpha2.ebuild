@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -8,13 +8,15 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 optfeature systemd
 
+MY_PV=${PV/_alpha/a}
 DESCRIPTION="GNS3 server to asynchronously manage emulators"
 HOMEPAGE="https://www.gns3.com https://github.com/GNS3/gns3-server"
-SRC_URI="https://github.com/GNS3/gns3-server/archive/v${PV/_alpha/a}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/GNS3/gns3-server/archive/v${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64"
+S=${WORKDIR}/${PN}-${MY_PV}
 
 RDEPEND="
 	acct-group/gns3
