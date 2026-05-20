@@ -245,7 +245,7 @@ CRATES="
 	x11rb@0.13.1
 "
 
-inherit cargo
+inherit cargo systemd
 
 DESCRIPTION="Multi-layer keyboard customization"
 HOMEPAGE="https://github.com/jtroo/kanata"
