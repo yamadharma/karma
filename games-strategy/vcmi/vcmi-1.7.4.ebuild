@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -19,7 +19,7 @@ then
 	KEYWORDS="amd64 x86"
 else
 	SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/VCMI-Sources.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="amd64 x86"
+#	KEYWORDS="amd64 x86"
 	S=${WORKDIR}
 fi
 
@@ -77,14 +77,26 @@ src_configure() {
 		-DENABLE_TRANSLATIONS=$(usex translations)
 		-DENABLE_PCH=$(usex !debug)
 		-DENABLE_NULLKILLER_AI=$(usex nullkiller-ai)
+		-DENABLE_NULLKILLER2_AI=$(usex nullkiller-ai)
+		-DENABLE_MMAI=ON
+		-DENABLE_GOLDMASTER=ON
 		-DENABLE_MONOLITHIC_INSTALL=OFF
 		-DFORCE_BUNDLED_FL=OFF
-		-DFORCE_BUNDLED_MINIZIP=OFF
 		-DENABLE_GITVERSION=OFF
-		-DBoost_NO_BOOST_CMAKE=ON
 		-DENABLE_INNOEXTRACT=ON
 		-DQT_VERSION_MAJOR=6
+		-DENABLE_DISCORD=OFF
+		-DENABLE_LOBBY=OFF
+		-Wno-dev
+		-DBoost_USE_STATIC_LIBS=OFF
+		-DCMAKE_POLICY_VERSION_MINIMUM=3.5
+		-DCMAKE_VERBOSE_MAKEFILE=ON
+		-DBoost_DEBUG=ON
+		-DENABLE_TEST=0
 	)
+	# 		-DFORCE_BUNDLED_MINIZIP=OFF
+	# 		-DBoost_NO_BOOST_CMAKE=ON
+
 	export CCACHE_SLOPPINESS="time_macros"
 	cmake_src_configure
 }

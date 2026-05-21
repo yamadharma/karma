@@ -34,7 +34,7 @@ S=${WORKDIR}
 
 # Signature '\x37\x7A\xBC\xAF\x27\x1C' version '\x00\x04'
 _archive_offset=0x1ABF361
-_archive_size=0x5380539
+_archive_size=0x5387384
 
 src_unpack() {
 	unpack "${A}" || die
