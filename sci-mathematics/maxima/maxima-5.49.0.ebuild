@@ -98,7 +98,7 @@ pkg_setup() {
 }
 
 PATCHES=(
-	"${FILESDIR}/imaxima-0.patch"
+#	"${FILESDIR}/imaxima-0.patch"
 	"${FILESDIR}/xdg-utils-1.patch"
 	"${FILESDIR}/wish-2.patch"
 	"${FILESDIR}/rmaxima-0.patch"
