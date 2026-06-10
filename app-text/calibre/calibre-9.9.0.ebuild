@@ -1,4 +1,4 @@
-# Copyright 1999-2025 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -78,6 +78,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 		dev-python/pyqt6[gui,network,opengl,printsupport,quick,svg,widgets,${PYTHON_USEDEP}]
 		dev-python/pyqt6-webengine[widgets,${PYTHON_USEDEP}]
 		dev-python/regex[${PYTHON_USEDEP}]
+		dev-python/tzlocal[${PYTHON_USEDEP}]
 		dev-python/xxhash[${PYTHON_USEDEP}]
 		>=dev-python/zeroconf-0.75.0[${PYTHON_USEDEP}]
 	')
@@ -125,8 +126,12 @@ PATCHES=(
 	# Skip calling a binary (JxrDecApp) from libjxr which is used for tests
 	# We don't (yet?) package libjxr and it seems to be dead upstream
 	# (last commit in 2017)
-	"${FILESDIR}/${PN}-7.0.0-jxr-test.patch"
-	"${FILESDIR}/${PN}-8.9.0-piper.patch"
+	"${FILESDIR}/${PN}-9.7.0-jxr-test.patch"
+	"${FILESDIR}/${PN}-9.9.0-disable-piper.patch"
+	# Python 3.14's tzdata package raises on import (PEP 615);
+	# drop the redundant tzdata import from test_build
+	"${FILESDIR}/${PN}-9.7.0-py314-tzdata.patch"
+	"${FILESDIR}/${PN}-9.9.0-drop-libpostproc.patch"
 )
 
 src_prepare() {
