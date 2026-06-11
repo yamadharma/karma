@@ -11,8 +11,8 @@ inherit edo toolchain-funcs python-single-r1 qmake-utils verify-sig xdg
 DESCRIPTION="Ebook management application"
 HOMEPAGE="https://calibre-ebook.com/"
 SRC_URI="
-	https://download.calibre-ebook.com/${PV}/${P}.tar.xz
 	https://github.com/kovidgoyal/calibre/releases/download/v${PV}/${P}.tar.xz
+	https://download.calibre-ebook.com/${PV}/${P}.tar.xz
 	verify-sig? ( https://calibre-ebook.com/signatures/${P}.tar.xz.sig )
 "
 VERIFY_SIG_OPENPGP_KEY_PATH=/usr/share/openpgp-keys/kovidgoyal.gpg
