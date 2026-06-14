@@ -37,7 +37,7 @@ S=${WORKDIR}
 
 # signature '\x37\x7A\xBC\xAF\x27\x1C' version '\x00\x04'
 _archive_offset=0x1ABF361
-_archive_size=0x538A61B
+_archive_size=0x538A7B2
 
 src_unpack() {
 	unpack "${A}" || die
@@ -45,8 +45,8 @@ src_unpack() {
 
 	## Extract files
 	## Technically, trimming data after the end of the archive is not necessary, 7zip will simply discard it (with warning).
-	# tail -c +$((_archive_offset+1)) ${S}/AmneziaVPN_Linux_Installer.bin | head -c $((_archive_size)) > ${S}/data.7z
-	tail -c +$((_archive_offset+1)) ${S}/AmneziaVPN_Linux_Installer.bin > ${S}/data.7z
+	tail -c +$((_archive_offset+1)) ${S}/AmneziaVPN_Linux_Installer.bin | head -c $((_archive_size)) > ${S}/data.7z
+	# tail -c +$((_archive_offset+1)) ${S}/AmneziaVPN_Linux_Installer.bin > ${S}/data.7z
 	rm -f AmneziaVPN_Linux_Installer.bin
 
 	## 7z x data.7z -o'AmneziaVPN'
