@@ -394,10 +394,7 @@ DEPEND="
 	tpm? ( app-crypt/tpm2-tss )
 "
 RDEPEND="${DEPEND}"
-BDEPEND="
-	dev-util/cargo
-	virtual/rust
-"
+BDEPEND=""
 
 src_compile() {
 	local myfeatures=()
