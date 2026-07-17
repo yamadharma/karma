@@ -11,9 +11,9 @@ MY_PV="${MY_PV/_beta/.beta}"
 # experimental ; release ; old
 # Usually the tarballs are moved a lot so this should make everyone happy.
 DEV_URI="
+	https://download.documentfoundation.org/libreoffice/src/${MY_PV:0:5}
+	https://downloadarchive.documentfoundation.org/libreoffice/old/${MY_PV}/src
 	https://dev-builds.libreoffice.org/pre-releases/src
-#	https://download.documentfoundation.org/libreoffice/src/${MY_PV:0:5}/
-#	https://downloadarchive.documentfoundation.org/libreoffice/old/${MY_PV}/src
 "
 ADDONS_URI="https://dev-www.libreoffice.org/src/"
 
@@ -51,7 +51,9 @@ ADDONS_SRC=(
 	# not packaged in Gentoo, https://github.com/serge-sans-paille/frozen
 	"${ADDONS_URI}/frozen-1.2.0.tar.gz"
 	# not packaged in Gentoo, https://skia.org/
-	"${ADDONS_URI}/skia-m142-f4ed99d2443962782cf5f8b4dd27179f131e7cbe.tar.xz"
+	"${ADDONS_URI}/skia-m147-ad8ecedbfdef9f4ae4b1e73347b6dd56e6637d38.tar.xz"
+	#
+	${ADDONS_URI}/box2d-3.1.1.tar.gz
 
 	"base? (
 		${ADDONS_URI}/ba2930200c9f019c2d93a8c88c651a0f-flow-engine-0.9.4.zip
@@ -85,7 +87,7 @@ LICENSE="|| ( LGPL-3 MPL-1.1 )"
 SLOT="0"
 
 [[ ${MY_PV} == *9999* ]] || \
-KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86 ~amd64-linux"
+KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # Extensions that need extra work:
 LO_EXTS="nlpsolver scripting-beanshell scripting-javascript wiki-publisher"
@@ -149,7 +151,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	>=dev-libs/redland-1.0.16
 	dev-libs/zxcvbn-c
 	>=dev-libs/xmlsec-1.2.35:=[nss]
-	>=games-engines/box2d-2.4.1:0
+	>=games-engines/box2d-3.1.1:0
 	media-gfx/fontforge
 	media-gfx/graphite2
 	media-libs/fontconfig
@@ -170,8 +172,8 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	media-libs/tiff:=
 	media-libs/zxing-cpp:=
 	net-misc/curl
-	sci-mathematics/lpsolve:=
-	virtual/zlib
+	libreoffice_extensions_nlpsolver? ( sci-mathematics/lpsolve:= )
+	virtual/zlib:=
 	virtual/opengl
 	x11-libs/cairo
 	x11-libs/libXinerama
@@ -280,11 +282,12 @@ fi
 
 PATCHES=(
 	# "${WORKDIR}"/${PATCHSET/.tar.xz/}
-	"${FILESDIR}/${PN}-26.2.2.2-poppler-26.04.0.patch"
+
 	# not upstreamable stuff
 	"${FILESDIR}/${PN}-6.1-nomancompress.patch"
-	"${FILESDIR}/${PN}-24.2-qtdetect.patch"
+	#"${FILESDIR}/${PN}-24.2-qtdetect.patch"
 	"${FILESDIR}/${PN}-25.2-cflags.patch"
+	#"${FILESDIR}/${PN}-26.2.4.2-poppler-26.06.0.patch"
 )
 
 _check_reqs() {
@@ -323,8 +326,8 @@ src_unpack() {
 		branch="master"
 		mypv=${MY_PV/.9999}
 		[[ ${mypv} != ${MY_PV} ]] && branch="${PN}-${mypv/./-}"
-		git-r3_fetch "${base_uri}/${PN}/core" "refs/heads/${branch}"
-		git-r3_checkout "${base_uri}/${PN}/core"
+		git-r3_fetch "${base_uri}/core" "refs/heads/${branch}"
+		git-r3_checkout "${base_uri}/core"
 		LOCOREGIT_VERSION=${EGIT_VERSION}
 
 		git-r3_fetch "${base_uri}/${PN}/help" "refs/heads/master"
@@ -448,6 +451,9 @@ src_configure() {
 		strip-flags
 	fi
 
+	# Workaround for bug #967047
+	tc-is-gcc && [[ $(gcc-major-version) -ge 16 ]] && append-cxxflags -fno-devirtualize-speculatively
+
 	# Show flags set at the end
 	einfo "  Used CFLAGS:    ${CFLAGS}"
 	einfo "  Used LDFLAGS:   ${LDFLAGS}"
@@ -482,7 +488,6 @@ src_configure() {
 	# --without-system-sane: just sane.h header that is used for scan in writer,
 	#   not linked or anything else, worthless to depend on
 	# --disable-pdfium: not yet packaged
-	# --disable-qt6-multimedia: TODO
 	# --disable-cpdb: not yet packaged
 	local myeconfargs=(
 		--with-system-dicts
@@ -566,6 +571,8 @@ src_configure() {
 		$(use_with odk doxygen)
 		$(use_with valgrind)
 		--enable-skia-vulkan-validation
+		--disable-lpsolve --disable-ext-nlpsolver
+
 	)
 
 	if use eds || use gtk ; then
