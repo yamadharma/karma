@@ -47,13 +47,12 @@ unset DEV_URI
 ADDONS_SRC=(
 	# not packaged in Gentoo
 	"${ADDONS_URI}/dragonbox-1.1.3.tar.gz"
-	# >=26.8 detects system box2d through pkg-config and wants the 3.x API;
-	# games-engines/box2d is stuck at 2.4.x and ships no box2d.pc at all.
-	"${ADDONS_URI}/box2d-3.1.1.tar.gz"
+	# not packaged in Gentoo, https://www.netlib.org/fp/dtoa.c
+	"${ADDONS_URI}/dtoa-20180411.tgz"
 	# not packaged in Gentoo, https://github.com/serge-sans-paille/frozen
 	"${ADDONS_URI}/frozen-1.2.0.tar.gz"
 	# not packaged in Gentoo, https://skia.org/
-	"${ADDONS_URI}/skia-m147-ad8ecedbfdef9f4ae4b1e73347b6dd56e6637d38.tar.xz"
+	"${ADDONS_URI}/skia-m142-f4ed99d2443962782cf5f8b4dd27179f131e7cbe.tar.xz"
 
 	"base? (
 		${ADDONS_URI}/ba2930200c9f019c2d93a8c88c651a0f-flow-engine-0.9.4.zip
@@ -87,7 +86,7 @@ LICENSE="|| ( LGPL-3 MPL-1.1 )"
 SLOT="0"
 
 [[ ${MY_PV} == *9999* ]] || \
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86 ~amd64-linux"
 
 # Extensions that need extra work:
 LO_EXTS="nlpsolver scripting-beanshell scripting-javascript wiki-publisher"
@@ -151,11 +150,12 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	>=dev-libs/redland-1.0.16
 	dev-libs/zxcvbn-c
 	>=dev-libs/xmlsec-1.2.35:=[nss]
+	>=games-engines/box2d-2.4.1:0
 	media-gfx/fontforge
 	media-gfx/graphite2
 	media-libs/fontconfig
 	>=media-libs/freetype-2.11.0-r1:2
-	>=media-libs/harfbuzz-8.3.1:=[graphite,icu]
+	>=media-libs/harfbuzz-5.1.0:=[graphite,icu]
 	media-libs/lcms:2
 	>=media-libs/libcdr-0.1.0
 	media-libs/libeot
@@ -280,7 +280,7 @@ BDEPEND="
 	virtual/pkgconfig
 	odk? ( >=app-text/doxygen-1.8.4 )
 "
-if [[ ${MY_PV} != *9999* ]]; then
+if [[ ${MY_PV} != *9999* ]] && [[ ${PV} != *_* ]]; then
 	PDEPEND="=app-office/libreoffice-l10n-$(ver_cut 1-2)*"
 else
 	# Translations are not reliable on live ebuilds
@@ -293,15 +293,14 @@ PATCHES=(
 
 	# not upstreamable stuff
 	"${FILESDIR}/${PN}-6.1-nomancompress.patch"
+	"${FILESDIR}/${PN}-24.2-qtdetect.patch"
 	"${FILESDIR}/${PN}-25.2-cflags.patch"
 
-	# ${PN}-24.2-qtdetect.patch dropped: upstream reworked moc detection, the
-	# MOC6 search path now starts with ${QT6DIR}/libexec:${QT6DIR}/bin and the
-	# result is validated against "moc -v". The MOC5 hunk is dead code here
-	# because we always configure with --disable-qt5.
-	#
-	# ${PN}-26.2-svlockbytes.patch dropped: merged upstream, commit
-	# e3ea377f2daa2756a412dd974eb39fd9f5db1366
+	# upstream backport: anchor SvLockBytes vtable in tools library so that
+	# svidl (idl/source/prj/{database,parser}.cxx) links cleanly
+	# https://gerrit.libreoffice.org/c/core/+/197842
+	# commit e3ea377f2daa2756a412dd974eb39fd9f5db1366
+	"${FILESDIR}/${PN}-26.2-svlockbytes.patch"
 )
 
 _check_reqs() {
@@ -551,7 +550,6 @@ src_configure() {
 		--without-helppack-integration
 		--with-system-gpgmepp
 		--with-system-zxcvbn
-		--without-system-box2d
 		--without-system-dragonbox
 		--without-system-frozen
 		--without-system-java-websocket

@@ -20,13 +20,13 @@ BDEPEND="doc? ( app-text/doxygen )"
 
 RESTRICT="network-sandbox"
 
-#src_prepare() {
-#	cmake_src_prepare
+src_prepare() {
+	cmake_src_prepare
 
 	# unbundle doctest
 	#rm unit-test/doctest.h || die
 	#ln -s "${ESYSROOT}"/usr/include/doctest/doctest.h unit-test/ || die
-#}
+}
 
 src_configure() {
 	local mycmakeargs=(
