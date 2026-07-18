@@ -18,13 +18,15 @@ RESTRICT="!test? ( test )"
 DEPEND="test? ( dev-cpp/doctest )"
 BDEPEND="doc? ( app-text/doxygen )"
 
-src_prepare() {
-	cmake_src_prepare
+RESTRICT="network-sandbox"
+
+#src_prepare() {
+#	cmake_src_prepare
 
 	# unbundle doctest
 	#rm unit-test/doctest.h || die
 	#ln -s "${ESYSROOT}"/usr/include/doctest/doctest.h unit-test/ || die
-}
+#}
 
 src_configure() {
 	local mycmakeargs=(
