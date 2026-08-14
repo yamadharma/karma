@@ -10,7 +10,7 @@ HOMEPAGE="https://amnezia.org"
 
 MY_PN=${PN/-bin}
 
-SRC_URI="https://github.com/amnezia-vpn/${MY_PN}/releases/download/${PV}/AmneziaVPN_${PV}_linux_x64.tar -> ${P}.tar"
+SRC_URI="https://github.com/amnezia-vpn/${MY_PN}/releases/download/${PV}/AmneziaVPN_${PV}_linux_x64.run -> ${P}.run"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -28,6 +28,11 @@ RDEPEND="
 	${DEPEND}
 "
 
+BDEPEND="
+	${DEPEND}
+	app-misc/binwalk:3
+"
+
 RESTRICT="bindist mirror strip"
 
 S=${WORKDIR}
@@ -36,30 +41,43 @@ S=${WORKDIR}
 # And _archive_size can be omitted if you remove | head -c $((_archive_size)) in prepare(), 7zip will unpack the archive, with a harmless warning about garbage data after the end of the archive.
 
 # signature '\x37\x7A\xBC\xAF\x27\x1C' version '\x00\x04'
-_archive_offset=0x1ABF361
-_archive_size=0x538A139
+#_archive_offset=0x1ABF361
+#_archive_size=0x537B753
 
 src_unpack() {
-	unpack "${A}" || die
+	# unpack "${A}" || die
 	# unpacker ${S}/"AmneziaVPN_Linux_Installer.tar"  || die
+
+	# Rip archives from the installer and extract them
+	binwalk3 -qe -y=7zip ${DISTDIR}/"${P}.run"
 
 	## Extract files
 	## Technically, trimming data after the end of the archive is not necessary, 7zip will simply discard it (with warning).
-	tail -c +$((_archive_offset+1)) ${S}/AmneziaVPN_Linux_Installer.bin | head -c $((_archive_size)) > ${S}/data.7z
+	# tail -c +$((_archive_offset+1)) ${S}/AmneziaVPN_Linux_Installer.bin | head -c $((_archive_size)) > ${S}/data.7z
 	# tail -c +$((_archive_offset+1)) ${S}/AmneziaVPN_Linux_Installer.bin > ${S}/data.7z
-	rm -f AmneziaVPN_Linux_Installer.bin
+	# rm -f AmneziaVPN_Linux_Installer.bin
 
 	## 7z x data.7z -o'AmneziaVPN'
-	mkdir AmneziaVPN && bsdtar -xf data.7z -C AmneziaVPN
-	rm -f data.7z
+	# mkdir AmneziaVPN && bsdtar -xf data.7z -C AmneziaVPN
+	# rm -f data.7z
 
 	## Clean up useless files containing hashes.
-	rm -f "$srcdir"/AmneziaVPN/client/bin/*.sha256
+	# rm -f "$srcdir"/AmneziaVPN/client/bin/*.sha256
+
+	# Flatten the file tree
+	rm -rf AmneziaVPN && mkdir AmneziaVPN
+	for item in ${S}/extractions/${P}.run.extracted/*/*; do
+		[ -e "$item" ] || continue
+		mv "$item" AmneziaVPN
+	done
+
+	# Cleanup
+	rm -rf extractions
 
 	## Fix desktop file
 	sed -i 's#/usr/share/pixmaps/AmneziaVPN.png#AmneziaVPN#g' "${S}"/AmneziaVPN/AmneziaVPN.desktop
 
-	sed -i '$ i\export QT_QPA_PLATFORM=xcb' "${S}"/AmneziaVPN/client/AmneziaVPN.sh
+	# sed -i '$ i\export QT_QPA_PLATFORM=xcb' "${S}"/AmneziaVPN/client/AmneziaVPN.sh
 
 }
 
@@ -88,7 +106,9 @@ src_install() {
 	doins ${S}/AmneziaVPN/AmneziaVPN.desktop
 
 	dodir /usr/bin
-	ln -s /opt/AmneziaVPN/client/AmneziaVPN.sh ${D}/usr/bin/AmneziaVPN
+	# ln -s /opt/AmneziaVPN/bin/AmneziaVPN ${D}/usr/bin/AmneziaVPN
+	dobin ${FILESDIR}/AmneziaVPN
+	chmod 755 ${D}/usr/bin/*
 }
 
 pkg_postinst() {
