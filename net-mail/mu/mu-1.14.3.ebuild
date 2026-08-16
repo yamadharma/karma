@@ -4,7 +4,8 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{11..14} )
-inherit elisp-common meson readme.gentoo-r1 python-any-r1
+inherit elisp-common meson readme.gentoo-r1 python-any-r1 shell-completion
+inherit xdg-utils
 
 DESCRIPTION="Set of tools to deal with Maildirs, in particular, searching and indexing"
 HOMEPAGE="https://www.djcbsoftware.nl/code/mu/ https://github.com/djcb/mu"
@@ -69,6 +70,10 @@ src_configure() {
 		-Dscm=disabled
 		-Duse-embedded-fmt=false
 		-Duse-embedded-cli11=false
+		-Dbash-completion=enabled
+		-Dbash-completion-dir="$(get_bashcompdir)"
+		-Dzsh-completion=enabled
+		-Dzsh-completion-dir="$(get_zshcompdir)"
 	)
 	meson_src_configure
 }
@@ -94,9 +99,11 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_icon_cache_update
 	use emacs && readme.gentoo_create_doc
 }
 
 pkg_postrm() {
+	xdg_icon_cache_update
 	use emacs && elisp-site-regen
 }
