@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -53,7 +53,8 @@ src_install() {
 	doexe "opt/${_PN^}/${_PN}"
 
 	# keep executable portable library
-	doexe opt/${_PN^}/{chrome-sandbox,chrome_crashpad_handler,lib*}
+	# doexe opt/${_PN^}/{chrome-sandbox,chrome_crashpad_handler,lib*}
+	doexe opt/${_PN^}/{chrome_crashpad_handler,lib*}
 
 	dosym "${FERDIUM_HOME}/${_PN}" "/usr/bin/${PN}"
 
