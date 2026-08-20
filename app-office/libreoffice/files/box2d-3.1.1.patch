@@ -1,0 +1,17 @@
+--- a/configure.ac	2026-08-04 16:47:15.539887108 +0700
++++ b/configure.ac	2026-08-04 16:47:47.407339909 +0700
+@@ -12251,11 +12251,11 @@
+     AC_MSG_RESULT([external])
+     SYSTEM_BOX2D=TRUE
+     AC_LANG_PUSH([C++])
+-    BOX2D_VERSION=`$PKG_CONFIG --modversion box2d 2>/dev/null`
++    BOX2D_VERSION="3.1.1"
+     BOX2D_MAJOR=`echo $BOX2D_VERSION | cut -d"." -f1`
+     BOX2D_MINOR=`echo $BOX2D_VERSION | cut -d"." -f2`
+-    if test "$BOX2D_MAJOR" -eq "2"; then
+-        if test "$BOX2D_MINOR" -eq "4"; then
++    if test "$BOX2D_MAJOR" -eq "3"; then
++        if test "$BOX2D_MINOR" -eq "1"; then
+             _BOX2D_LIB=box2d
+             AC_DEFINE(BOX2D_HEADER,<box2d/box2d.h>)
+         else

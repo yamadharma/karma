@@ -7,14 +7,13 @@ PYTHON_COMPAT=( python3_{13..14} )
 PYTHON_REQ_USE="threads(+),xml(+)"
 
 MY_PV="${PV/_alpha/.alpha}"
-MY_PV="${MY_PV/_beta/.beta}"
-MY_PV="${MY_PV/_pre/}"
+#MY_PV="${MY_PV/_beta/.beta}"
 # experimental ; release ; old
 # Usually the tarballs are moved a lot so this should make everyone happy.
 DEV_URI="
-	https://download.documentfoundation.org/libreoffice/src/${MY_PV:0:6}/
-	https://dev-builds.libreoffice.org/pre-releases/src
+	https://download.documentfoundation.org/libreoffice/src/${MY_PV:0:6}
 	https://downloadarchive.documentfoundation.org/libreoffice/old/${MY_PV}/src
+	https://dev-builds.libreoffice.org/pre-releases/src
 "
 ADDONS_URI="https://dev-www.libreoffice.org/src/"
 
@@ -52,7 +51,9 @@ ADDONS_SRC=(
 	# not packaged in Gentoo, https://github.com/serge-sans-paille/frozen
 	"${ADDONS_URI}/frozen-1.2.0.tar.gz"
 	# not packaged in Gentoo, https://skia.org/
-	"${ADDONS_URI}/skia-m142-f4ed99d2443962782cf5f8b4dd27179f131e7cbe.tar.xz"
+	"${ADDONS_URI}/skia-m147-ad8ecedbfdef9f4ae4b1e73347b6dd56e6637d38.tar.xz"
+	#
+	${ADDONS_URI}/box2d-3.1.1.tar.gz
 
 	"base? (
 		${ADDONS_URI}/ba2930200c9f019c2d93a8c88c651a0f-flow-engine-0.9.4.zip
@@ -86,13 +87,13 @@ LICENSE="|| ( LGPL-3 MPL-1.1 )"
 SLOT="0"
 
 [[ ${MY_PV} == *9999* ]] || \
-KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86 ~amd64-linux"
+KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 
 # Extensions that need extra work:
 LO_EXTS="nlpsolver scripting-beanshell scripting-javascript wiki-publisher"
 
 IUSE="accessibility base bluetooth +branding coinmp +cups custom-cflags +dbus debug eds
-googledrive gstreamer +gtk3 gtk4 kde ldap +mariadb odk pdfimport postgres qt6 test valgrind vulkan
+googledrive gstreamer gtk kde ldap +mariadb odk pdfimport postgres qt6 test valgrind vulkan
 $(printf 'libreoffice_extensions_%s ' ${LO_EXTS})"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
@@ -150,7 +151,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	>=dev-libs/redland-1.0.16
 	dev-libs/zxcvbn-c
 	>=dev-libs/xmlsec-1.2.35:=[nss]
-	>=games-engines/box2d-2.4.1:0
+	>=games-engines/box2d-3.1.1:0
 	media-gfx/fontforge
 	media-gfx/graphite2
 	media-libs/fontconfig
@@ -171,8 +172,8 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	media-libs/tiff:=
 	media-libs/zxing-cpp:=
 	net-misc/curl
-	sci-mathematics/lpsolve:=
-	virtual/zlib
+	libreoffice_extensions_nlpsolver? ( sci-mathematics/lpsolve:= )
+	virtual/zlib:=
 	virtual/opengl
 	x11-libs/cairo
 	x11-libs/libXinerama
@@ -197,20 +198,11 @@ COMMON_DEPEND="${PYTHON_DEPS}
 		media-libs/gstreamer:1.0
 		media-libs/gst-plugins-base:1.0
 	)
-	gtk3? (
-		app-accessibility/at-spi2-core:2
+	gtk? (
 		dev-libs/glib:2
 		gnome-base/dconf
 		media-libs/mesa[egl(+)]
-		x11-libs/gtk+:3[wayland,X]
-		x11-libs/pango
-	)
-	gtk4? (
-		app-accessibility/at-spi2-core:2
-		dev-libs/glib:2
-		gnome-base/dconf
-		media-libs/mesa[egl(+)]
-		gui-libs/gtk:4[wayland,X]
+		gui-libs/gtk[wayland,X]
 		x11-libs/pango
 	)
 	kde? (
@@ -293,14 +285,11 @@ PATCHES=(
 
 	# not upstreamable stuff
 	"${FILESDIR}/${PN}-6.1-nomancompress.patch"
-	"${FILESDIR}/${PN}-24.2-qtdetect.patch"
+	#"${FILESDIR}/${PN}-24.2-qtdetect.patch"
 	"${FILESDIR}/${PN}-25.2-cflags.patch"
-
-	# upstream backport: anchor SvLockBytes vtable in tools library so that
-	# svidl (idl/source/prj/{database,parser}.cxx) links cleanly
-	# https://gerrit.libreoffice.org/c/core/+/197842
-	# commit e3ea377f2daa2756a412dd974eb39fd9f5db1366
-	"${FILESDIR}/${PN}-26.2-svlockbytes.patch"
+	#"${FILESDIR}/${PN}-26.2.4.2-poppler-26.06.0.patch"
+	# box2d-3.1.1 workaeound patch
+	"${FILESDIR}/box2d-3.1.1.patch"
 )
 
 _check_reqs() {
@@ -339,8 +328,8 @@ src_unpack() {
 		branch="master"
 		mypv=${MY_PV/.9999}
 		[[ ${mypv} != ${MY_PV} ]] && branch="${PN}-${mypv/./-}"
-		git-r3_fetch "${base_uri}/${PN}/core" "refs/heads/${branch}"
-		git-r3_checkout "${base_uri}/${PN}/core"
+		git-r3_fetch "${base_uri}/core" "refs/heads/${branch}"
+		git-r3_checkout "${base_uri}/core"
 		LOCOREGIT_VERSION=${EGIT_VERSION}
 
 		git-r3_fetch "${base_uri}/${PN}/help" "refs/heads/master"
@@ -464,6 +453,9 @@ src_configure() {
 		strip-flags
 	fi
 
+	# Workaround for bug #967047
+	tc-is-gcc && [[ $(gcc-major-version) -ge 16 ]] && append-cxxflags -fno-devirtualize-speculatively
+
 	# Show flags set at the end
 	einfo "  Used CFLAGS:    ${CFLAGS}"
 	einfo "  Used LDFLAGS:   ${LDFLAGS}"
@@ -498,7 +490,6 @@ src_configure() {
 	# --without-system-sane: just sane.h header that is used for scan in writer,
 	#   not linked or anything else, worthless to depend on
 	# --disable-pdfium: not yet packaged
-	# --disable-qt6-multimedia: TODO
 	# --disable-cpdb: not yet packaged
 	local myeconfargs=(
 		--with-system-dicts
@@ -565,8 +556,7 @@ src_configure() {
 		$(use_enable debug)
 		$(use_enable eds evolution2)
 		$(use_enable gstreamer gstreamer-1-0)
-		$(use_enable gtk3)
-		$(use_enable gtk4)
+		$(use_enable gtk gtk4)
 		$(use_enable kde kf6)
 		$(use_enable ldap)
 		$(use_enable odk)
@@ -583,9 +573,11 @@ src_configure() {
 		$(use_with odk doxygen)
 		$(use_with valgrind)
 		--enable-skia-vulkan-validation
+		--disable-lpsolve --disable-ext-nlpsolver
+
 	)
 
-	if use eds || use gtk3 || use gtk4 ; then
+	if use eds || use gtk ; then
 		myeconfargs+=( --enable-dconf --enable-gio )
 	else
 		myeconfargs+=( --disable-dconf --disable-gio )
@@ -642,10 +634,10 @@ src_install() {
 
 	# TODO: still relevant for gtk4?
 	# bug #593514
-	if use gtk3; then
-		dosym libreoffice/program/liblibreofficekitgtk.so \
-			/usr/$(get_libdir)/liblibreofficekitgtk.so
-	fi
+	#if use gtk3; then
+	#	dosym libreoffice/program/liblibreofficekitgtk.so \
+	#		/usr/$(get_libdir)/liblibreofficekitgtk.so
+	#fi
 
 	# bash completion aliases
 	bashcomp_alias \
