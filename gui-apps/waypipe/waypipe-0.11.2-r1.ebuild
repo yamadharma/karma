@@ -1,10 +1,12 @@
-# Copyright 2026 Gentoo Authors
+# Copyright 2020-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-RUST_MIN_VER="1.77.0"
+PYTHON_COMPAT=( python3_{11..14} )
+inherit cargo meson
 
+RUST_MIN_VER="1.77.0"
 CRATES="
 	anstream@0.6.18
 	anstyle-parse@0.2.6
@@ -43,22 +45,20 @@ CRATES="
 	windows_x86_64_msvc@0.52.6
 "
 
-inherit cargo
-
-DESCRIPTION="Network transparency with Wayland"
+DESCRIPTION="Transparent network proxy for Wayland compositors"
 HOMEPAGE="https://gitlab.freedesktop.org/mstoeckl/waypipe"
+
 SRC_URI="
 	https://gitlab.freedesktop.org/mstoeckl/waypipe/-/archive/v${PV}/${P}.tar.gz
 	${CARGO_CRATE_URIS}
 "
-
 S=${WORKDIR}/${PN}-v${PV}-a1ffdd8d0f44cbdb25a3edd1c6adc0a30cfcf754
 
 LICENSE="GPL-3+"
 # Dependent crate licenses
 LICENSE+=" ISC MIT"
 SLOT="0"
-KEYWORDS="amd64"
+# KEYWORDS="~amd64"
 
 # assuming vaapi is still required for video
 IUSE="debug +gbm ffmpeg +lz4 +man test vaapi +vulkan +zstd"
@@ -101,3 +101,14 @@ BDEPEND="
 # test? dev-libs/weston[examples,headless,remoting,screen-sharing,wayland-compositor]
 
 RDEPEND="${DEPEND}"
+
+src_configure() {
+	local emesonargs=(
+		$(meson_feature vulkan with_dmabuf)
+		$(meson_feature ffmpeg with_video)
+		$(meson_feature lz4 with_lz4)
+		$(meson_feature zstd with_zstd)
+		$(meson_feature man man-pages)
+	)
+	meson_src_configure
+}
