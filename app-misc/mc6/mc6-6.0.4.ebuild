@@ -11,7 +11,7 @@ S="${WORKDIR}/mc6-${PV}"
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
-IUSE="+arcmc +ftp +gpm +magic +mongo +s3 +samba +sftp +shell-link +shell-ssh2 +slang"
+IUSE="+arcmc +ftp +gpm +magic mongo +s3 +samba +sftp +shell-link +shell-ssh2 +slang"
 REQUIRED_USE="shell-ssh2? ( shell-link )"
 
 # A strong blocker deliberately requires an explicit migration from the
