@@ -28,11 +28,11 @@ REQUIRED_USE="
 RDEPEND="
 	dev-libs/json-glib
 	dev-db/sqlite:3
-	>=dev-libs/girara-2026.02.03:=[X?]
+	>=dev-libs/girara-${PV}:=[X?]
 	>=dev-libs/glib-2.76:2
 	sys-apps/file
 	x11-libs/cairo
-	>=x11-libs/gtk+-3.24:3[wayland?,X?]
+	gui-libs/gtk:4[wayland?,X?]
 	x11-libs/pango
 	man? ( dev-python/sphinx )
 	seccomp? ( sys-libs/libseccomp )
@@ -63,7 +63,6 @@ src_configure() {
 		$(meson_feature landlock)
 		$(meson_feature seccomp)
 		$(meson_feature synctex)
-		$(meson_feature test tests)
 	)
 	meson_src_configure
 }

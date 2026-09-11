@@ -55,7 +55,6 @@ src_configure() {
 
 	local emesonargs=(
 		$(meson_feature doc docs)
-		$(meson_feature test tests)
 	)
 	meson_src_configure
 }
