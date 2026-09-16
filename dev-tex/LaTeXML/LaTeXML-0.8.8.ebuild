@@ -45,7 +45,8 @@ RDEPEND="${DEPEND}"
 myconf="TEXMF=/usr/share/texmf-site/"
 
 src_install() {
-	emake install || die "emake install failed"
+	perl-module_src_install
+#	emake install || die "emake install failed"
 	perl_delete_module_manpages
 	perl_delete_localpod
 	perl_delete_packlist
