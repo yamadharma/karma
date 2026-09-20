@@ -1,24 +1,40 @@
 #!/bin/bash
 
+git remote get-url --all github &>/dev/null
+if [[ $? == 0 ]]; then
+	is_github=1
+fi
+
+git remote get-url --all gitverse &>/dev/null
+if [[ $? == 0 ]]; then
+	is_gitverse=1
+fi
+
+git remote get-url --all src &>/dev/null
+if [[ $? == 0 ]]; then
+	is_sourcecraft=1
+fi
+
 git pull
+# [[ $is_gitverse == 1 ]] && git pull gitverse master
+# [[ $is_github == 1 ]] && git pull github master
+# [[ $is_sourcecraft == 1 ]] && git pull src master
 
-# Push
-git add -A .
-git commit -am "$(date)"
-# git push
-git push git@github.com:yamadharma/karma.git
+git add .
+git commit -am "chore(main): $(date)"
+git push --all
+[[ $is_gitverse == 1 ]] && git push gitverse --all
+[[ $is_github == 1 ]] && git push github --all
+[[ $is_sourcecraft == 1 ]] && git push src --all
 
-# Mirror
-#git push --mirror git@github.com:yamadharma/karma.git
-#git push --mirror git@bitbucket.org:yamadharma/gentoo-portage-local.git
-
-# git compress
-if [[ $1 == "compress" ]]
-then
-    if [[ -d .git ]]
-    then
-	git fsck
-	git gc --prune=now
-	git gc --aggressive --prune=now
-    fi
+### Сжатие git
+if [[ "$1" == "compress" ]]; then
+	if [[ -d .git ]]; then
+		find . -type f -name "*Конфликтующая*" -delete
+		find . -type f -name "*conflicted*" -delete
+		find . -depth -path ./.stversions -prune -o -name ".syncthing.*.tmp" -delete
+		git fsck
+		git gc --prune=now
+		git gc --aggressive --prune=now
+	fi
 fi
