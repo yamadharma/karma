@@ -16,7 +16,7 @@ SRC_URI="https://github.com/JabRef/jabref/releases/download/v${PV/_alpha/-alpha.
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="amd64 ~x86"
+# KEYWORDS="amd64 ~x86"
 
 RESTRICT="preserve-libs strip"
 
