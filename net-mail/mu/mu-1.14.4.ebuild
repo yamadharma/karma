@@ -3,9 +3,11 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{11..14} )
-inherit elisp-common meson readme.gentoo-r1 python-any-r1 shell-completion
-inherit xdg-utils
+GUILE_COMPAT=( 3-0 )
+NEED_EMACS=28.1
+PYTHON_COMPAT=( python3_{12..14} )
+inherit elisp-common meson guile-single readme.gentoo-r1 python-any-r1
+inherit shell-completion xdg-utils
 
 DESCRIPTION="Set of tools to deal with Maildirs, in particular, searching and indexing"
 HOMEPAGE="https://www.djcbsoftware.nl/code/mu/ https://github.com/djcb/mu"
@@ -14,11 +16,12 @@ SRC_URI="https://github.com/djcb/mu/releases/download/v${PV}/${P}.tar.xz"
 # mu: GPL-3+
 # + tl: CC0-1.0
 # + variant-lite: Boost-1.0
-LICENSE="BSD Boost-1.0 CC0-1.0 GPL-3+ MIT"
+LICENSE="GPL-3+ BSD Boost-1.0 CC0-1.0 MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86 ~x64-macos"
-IUSE="emacs readline test"
+IUSE="emacs guile readline test"
 RESTRICT="!test? ( test )"
+REQUIRED_USE="guile? ( ${GUILE_REQUIRED_USE} )"
 
 DEPEND="
 	>=dev-cpp/cli11-2.4
@@ -27,6 +30,7 @@ DEPEND="
 	>=dev-libs/libfmt-11.1:=
 	>=dev-libs/xapian-1.4.22:=
 	emacs? ( >=app-editors/emacs-28.1:* )
+	guile? ( ${GUILE_DEPS} )
 	readline? ( sys-libs/readline:= )
 	sci-libs/cld2
 "
@@ -44,6 +48,18 @@ DOC_CONTENTS="
 	https://www.djcbsoftware.nl/code/mu/mu4e/
 "
 SITEFILE="70mu-gentoo-autoload.el"
+
+pkg_setup() {
+	[[ ${MERGE_TYPE} == binary ]] && return
+
+	if use emacs ; then
+		elisp-check-emacs-version
+	fi
+
+	if use guile; then
+		guile-single_pkg_setup
+	fi
+}
 
 src_prepare() {
 	default
@@ -65,13 +81,11 @@ src_configure() {
 		$(meson_feature test tests)
 		-Dcld2=enabled
 		-Demacs="$(usex emacs "${EMACS}" emacs-not-enabled)"
-		# TODO: revisit this, it's not actually deprecated, just been reworked
-		-Dguile=disabled
-		-Dscm=disabled
-		-Duse-embedded-fmt=false
-		-Duse-embedded-cli11=false
+		-Dscm=enabled
 		-Dbash-completion=enabled
 		-Dbash-completion-dir="$(get_bashcompdir)"
+		-Dfish-completion=enabled
+		-Dfish-completion-dir="$(get_fishcompdir)"
 		-Dzsh-completion=enabled
 		-Dzsh-completion-dir="$(get_zshcompdir)"
 	)
@@ -96,6 +110,8 @@ src_install() {
 
 		readme.gentoo_create_doc
 	fi
+
+	use guile && guile_unstrip_ccache
 }
 
 pkg_postinst() {
