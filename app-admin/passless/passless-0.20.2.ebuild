@@ -99,7 +99,6 @@ src_install() {
 
 pkg_postinst() {
 	udev_reload
-	systemd_user_service_reload
 
 	elog "To use passless:"
 	elog " 1. Add yourself to the fido group:"
