@@ -16,7 +16,7 @@ RESTRICT="mirror strip"
 RDEPEND=""
 DEPEND=""
 
-S="${WORKDIR}"
+S="${WORKDIR}"/f4
 
 src_install() {
 	# 1. Устанавливаем бинарник в /usr/libexec/f4/
