@@ -7,7 +7,7 @@ inherit rpm desktop xdg
 
 DESCRIPTION="MAX Messenger — российский мессенджер от VK с поддержкой звонков, каналов и ботов"
 HOMEPAGE="https://max.ru"
-SRC_URI="https://download.max.ru/linux/rpm/el/9/x86_64/MAX-26.11.0.54111.rpm"
+SRC_URI="https://download.max.ru/linux/rpm/el/9/x86_64/MAX-${PV}.rpm"
 
 LICENSE="as-is"
 SLOT="0"
