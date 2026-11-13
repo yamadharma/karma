@@ -1,4 +1,4 @@
-# Copyright 1999-2025 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -7,10 +7,9 @@ inherit meson xdg
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://git.pwmt.org/pwmt/zathura-cb.git"
-	EGIT_BRANCH="develop"
+	EGIT_REPO_URI="https://github.com/pwmt/zathura-cb.git"
 else
-	KEYWORDS="amd64 arm ~riscv x86"
+	KEYWORDS="~amd64 ~arm ~riscv ~x86"
 	SRC_URI="https://pwmt.org/projects/zathura-cb/download/${P}.tar.xz"
 fi
 
@@ -24,7 +23,7 @@ SLOT="0"
 RESTRICT="test"
 
 RDEPEND="app-arch/libarchive:=
-	>=app-text/zathura-0.3.9
+	>=app-text/zathura-2026.07.18:=
 	dev-libs/girara:=
 	dev-libs/glib:2
 	x11-libs/cairo

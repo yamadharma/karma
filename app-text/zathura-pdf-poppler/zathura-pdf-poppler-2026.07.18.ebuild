@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -7,15 +7,14 @@ inherit meson xdg-utils
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://git.pwmt.org/pwmt/zathura-pdf-poppler.git"
-	EGIT_BRANCH="develop"
+	EGIT_REPO_URI="https://github.com/pwmt/zathura-pdf-poppler.git"
 else
-	KEYWORDS="amd64 arm ~arm64 ~riscv x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 	SRC_URI="https://github.com/pwmt/zathura-pdf-poppler/archive/${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
 DESCRIPTION="PDF plug-in for zathura"
-HOMEPAGE="https://pwmt.org/projects/zathura-pdf-poppler"
+HOMEPAGE="https://pwmt.org/projects/zathura-pdf-poppler/"
 
 LICENSE="ZLIB"
 SLOT="0"
@@ -24,7 +23,7 @@ SLOT="0"
 RESTRICT="test"
 
 DEPEND=">=app-text/poppler-21.12.0:=[cairo]
-	>=app-text/zathura-0.5.3:=
+	>=app-text/zathura-2026.07.18:=
 	dev-libs/girara:=
 	dev-libs/glib:2
 	x11-libs/cairo"
