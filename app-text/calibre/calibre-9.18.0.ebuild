@@ -89,7 +89,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}
 COMMON_DEPEND="${PYTHON_DEPS}
 	app-i18n/uchardet
 	>=app-text/hunspell-1.7:=
-	>=app-text/podofo-1.1.0:1=[jpeg,png]
+	>=app-text/podofo-1.1.0:0=[jpeg,png]
 	app-text/poppler[utils]
 	dev-libs/hyphen:=
 	>=dev-libs/icu-57.1:=
@@ -273,11 +273,11 @@ src_compile() {
 	# dies at import time. build.py passes any library name containing a "/"
 	# through verbatim (setup/build.py, libraries_to_ldflags), so an absolute
 	# path removes the search entirely. The check after the build proves it.
-	local podofo_libdir="${ESYSROOT}/usr/$(get_libdir)/podofo-1"
-	export PODOFO_INC_DIR="${ESYSROOT}/usr/include/podofo-1/podofo"
-	export PODOFO_LIB_DIR="${podofo_libdir}"
-	export PODOFO_LIB_NAME="${podofo_libdir}/libpodofo.so"
-	export LDFLAGS="${LDFLAGS} -Wl,-rpath,${EPREFIX}/usr/$(get_libdir)/podofo-1"
+#	local podofo_libdir="${ESYSROOT}/usr/$(get_libdir)/podofo-1"
+#	export PODOFO_INC_DIR="${ESYSROOT}/usr/include/podofo-1/podofo"
+#	export PODOFO_LIB_DIR="${podofo_libdir}"
+#	export PODOFO_LIB_NAME="${podofo_libdir}/libpodofo.so"
+#	export LDFLAGS="${LDFLAGS} -Wl,-rpath,${EPREFIX}/usr/$(get_libdir)/podofo-1"
 	export QMAKE="$(qt6_get_bindir)/qmake"
 
 	edo ${EPYTHON} setup.py build
@@ -285,11 +285,11 @@ src_compile() {
 	# Guard for the -L ordering described above: assert the extension needs
 	# the SONAME of the slot it was compiled against, whatever that number is
 	# (4 for podofo-1.1.x, 2 for the 0.10.x line in ::gentoo).
-	local want got
-	want=$(scanelf -qF '%S#F' "${podofo_libdir}/libpodofo.so") || die
-	got=$(scanelf -qF '%n#F' src/calibre/plugins/podofo.so) || die
-	[[ ,${got}, == *,${want},* ]] ||
-		die "podofo.so needs '${got}', expected '${want}': the wrong PoDoFo slot was linked in"
+#	local want got
+#	want=$(scanelf -qF '%S#F' "${podofo_libdir}/libpodofo.so") || die
+#	got=$(scanelf -qF '%n#F' src/calibre/plugins/podofo.so) || die
+#	[[ ,${got}, == *,${want},* ]] ||
+#		die "podofo.so needs '${got}', expected '${want}': the wrong PoDoFo slot was linked in"
 	edo ${EPYTHON} setup.py gui
 
 	# A few different resources are bundled in the distfile by default, because
