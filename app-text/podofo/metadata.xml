@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>lucascs@proton.me</email>
+		<name>Lucas Couts</name>
+	</maintainer>
+	<longdescription lang="en">
+		PoDoFo is a C++ library to work with the PDF file format. This package
+		provides the 1.x API, which is source-incompatible with the 0.10.x
+		series shipped by ::gentoo. It installs into a private prefix
+		(/usr/include/podofo-1 and /usr/$(get_libdir)/podofo-1) so both slots
+		can be installed at the same time: consumers ported to 1.x, such as
+		app-text/calibre 9.15 and newer, opt in explicitly, while
+		app-office/scribus and kde-misc/krename keep using slot 0.
+	</longdescription>
+	<use>
+		<flag name="fontconfig">Enable the font search mechanism
+			(PODOFO_WITH_FONTMANAGER), which requires
+			<pkg>media-libs/fontconfig</pkg></flag>
+	</use>
+	<upstream>
+		<remote-id type="github">podofo/podofo</remote-id>
+	</upstream>
+</pkgmetadata>
