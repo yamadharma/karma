@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>lucascs@proton.me</email>
+		<name>Lucas C.S.</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">kovidgoyal/calibre</remote-id>
+		<changelog>https://calibre-ebook.com/whats-new</changelog>
+	</upstream>
+	<use>
+		<flag name="font-subsetting">Enable font subsetting support</flag>
+		<flag name="piper">Build the neural Read aloud engine (Piper and Kokoro voices, downloaded at first use) against <pkg>app-accessibility/espeak-ng</pkg> and <pkg>sci-libs/onnxruntime</pkg></flag>
+		<flag name="system-mathjax">Use a system copy of mathjax</flag>
+		<flag name="unrar">Enable support for comic books compressed with the non-free Rar format</flag>
+	</use>
+</pkgmetadata>
