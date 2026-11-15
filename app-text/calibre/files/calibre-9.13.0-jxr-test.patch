@@ -1,0 +1,30 @@
+Skip calling a binary (JxrDecApp) from libjxr which is used for tests.
+We don't package libjxr and it seems to be dead upstream (last commit in 2017).
+
+--- a/src/calibre/utils/img.py
++++ b/src/calibre/utils/img.py
+@@ -131,8 +131,6 @@
+     i = QImage()
+     if not imageops.load_from_data_without_gil(i, data):
+         q = what(None, data)
+-        if q == 'jxr':
+-            return load_jxr_data(data)
+         ba = QByteArray(data)
+         buf = QBuffer(ba)
+         buf.open(QIODevice.OpenModeFlag.ReadOnly)
+@@ -886,15 +884,6 @@
+     despeckle_image(img)
+     remove_borders_from_image(img)
+     image_to_data(img, fmt='GIF')
+-    p = subprocess.Popen(
+-        [get_exe_path('JxrDecApp'), '-h'],
+-        creationflags=subprocess.DETACHED_PROCESS if iswindows else 0,
+-        stdout=subprocess.PIPE,
+-    )
+-    raw, _ = p.communicate()
+-    p.wait()
+-    if b'JPEG XR Decoder Utility' not in raw:
+-        raise SystemExit('Failed to run JxrDecApp')
+ 
+ 
+ # }}}
