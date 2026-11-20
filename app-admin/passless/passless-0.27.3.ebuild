@@ -39,6 +39,8 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+RESTRICT="mirror"
+
 src_compile() {
 	local myfeatures=()
 	use tpm && myfeatures+=( "tpm" )
